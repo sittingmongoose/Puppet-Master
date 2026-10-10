@@ -532,13 +532,8 @@
       var form = PMU.cards.headForm(def, r.w, r.h, current.cls ? current.cls.pitchX : 48);
       if (card.getAttribute('data-head') !== form) card.setAttribute('data-head', form);
     }
-    /* a card's chrome from PMU.cards.build, which is handed this board; until 42-cards.js places through the board it is
-       handed (D10 step two), a card of another board than PMU.board is placed again here, on this board */
-    function buildCard(id, room, rect) {
-      var c = PMU.cards.build(id, room, rect, api);
-      if (rect && c._pmuBoard !== api) place(c, rect);
-      return c;
-    }
+    /* a card's chrome from PMU.cards.build, which is handed this board and places the card through it (place, above) */
+    function buildCard(id, room, rect) { return PMU.cards.build(id, room, rect, api); }
     /* one batched read of every body, then the writes and renders (DESIGN-SPEC 8.4) */
     function tierPass(cards, mode) {
       var reads = cards.map(function (card) { var body = card.querySelector('.pmu-cardbody'); return { card: card, body: body, bw: body ? body.clientWidth : 0, bh: body ? body.clientHeight : 0 }; });
@@ -1881,6 +1876,25 @@
     }
     listeners.mount = (listeners.mount || []).concat([function () { scheduleHold(); }]);
     listeners['class'] = (listeners['class'] || []).concat([function () { scheduleHold(); }]);
+    /* a look change (D10 U4, WS-020): the Usage board holds too, so its fit-height presets re-resolve in the new look (a
+       fit height is measured per look: Retro's mono face and NieR's capitals wrap rows the Basic face fits). Only the
+       face counts (data-theme and NieR Mode, as the fit heights are kept); at the same pitch a card at a fixed preset
+       already has its size, so only fit presets move. Heard from <html> itself, not PMU.theme.onChange: that one compares
+       with the look last read, not the look last announced, so a change something reads before its frame passes
+       unannounced (NieR Mode on and off, every time in a trace). A change while the Usage page is hidden (its pane 0
+       wide: nothing can be measured) holds at the next width pass that sees the page. A dashboard hears its host's look
+       through relook(). */
+    var lookSeen = null, lookDirty = false;
+    function lookKey() { var r = document.documentElement; return (r.getAttribute('data-theme') || 'basic-dark') + (r.getAttribute('data-o55-nier') === 'on' ? '+nier' : ''); }
+    if (!hosted && window.MutationObserver) {
+      lookSeen = lookKey();
+      new MutationObserver(function () {
+        var k = lookKey(); if (k === lookSeen) return;
+        lookSeen = k;
+        if (dead) return;
+        if (current.mounted && view.w > 0) scheduleHold(); else lookDirty = true;
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-o55-nier'] });
+    }
     function setVisible(id, visible) {
       ensure();
       completeStream();
@@ -2019,6 +2033,7 @@
     var roTimer = 0, roPending = 0, ro = null;
     function onWidth() {
       var W = boardWidth(); if (W <= 0) return;
+      if (lookDirty) { lookDirty = false; if (current.mounted) scheduleHold(); }   /* a look change while the page was hidden */
       if (current.pending || !current.mounted) { mount(current.room || st.room, FILM && FILM.holding() ? { held: true, onBuilt: FILM.rehold() } : {}); return; }
       var next = pickClass(W);
       if (!current.cls || next.name !== current.cls.name) {
