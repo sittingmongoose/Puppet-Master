@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25836-L26358
+Source lines: L25836-L26382
 
-Source SHA256: `3e9706d75bf05901e093c5ecae11dfe2c045e7854b7b7be1ce3620d07bd78a97`
+Source SHA256: `feebda270b973277d4b4a0cae68190f72e5f59f5cfdf0812801562b276d988c1`
 
 ---
 
@@ -468,7 +468,24 @@ canonical_text: >-
   and texture, so it changes no timing or order, and each voice's exact values are its design tokens
   (DL-113), not unit text. These voices are the only motion voices: every surface that moves, the
   Usage page included, takes them from this unit and keeps no voice or per-view override of its own
-  (DR-043). Reduced
+  (DR-043). Within one moment every voice keeps the beats' order and start times; on every surface,
+  as DL-138 allows for a card's own changes, a voice may also set the length of an element's own
+  travel. Basic is crisp and exact: the old view pans away, arrivals rise straight and one light floor
+  crosses the lead element. Friendly steps the old view back and tilts it away, and arrivals hop up
+  on one soft spring with an alternating lifted corner; a warm bloom rises under the lead element,
+  and travelling marks follow a hop arc and land with a small puff. Glass moves the camera in depth:
+  going forward the old view keeps its size, drifts and defocuses at the lens while the new view
+  comes toward the viewer, and going back the old view shrinks away defocused while the new view
+  settles back from in front; the focus racks to the new view, which arrives sharp with the lead
+  element first, one refraction band crosses the surface, and travelling marks rise toward the
+  viewer with a glint. Retro and NieR Mode step every motion, NieR keeping its own owners (SSYS-043,
+  F3-598), and their travelling marks take a stepped early leg rather than standing still. In every
+  voice a value never overshoots: springs, hops and arcs move plates, marks, beads and paths, never
+  a number, and a hop that lands on a number moves it a few pixels at most and never scales it. No
+  voice scales the outgoing view above 1 or draws an arriving surface through a blur. A voice may
+  blur only on a computer with a GPU, only the outgoing view's one layer, at most 6 px, ending at
+  exactly zero and removed on finish and on every interruption; without a GPU no voice blurs.
+  Continuous motion uses transform and opacity only, and nothing animates at idle. Reduced
   motion, from the operating system or general.visual.reduce-animations, lands every beat at its end
   state. The chat's sound cues (DL-107) are send, first word, work started, step finished, failure,
   needs you, answer arriving, turn complete and stop. They are events of the Notifications & Sounds
@@ -489,6 +506,7 @@ acceptance_criteria:
   - "Per-theme card or sheet durations cannot change transcript entrance timing or order."
   - "The same beat has the same timing and order in all four families."
   - "Friendly and Glass motion are visibly distinct from Basic in path, easing and texture, as Retro's is, on every surface that uses the voices, chat and Usage alike."
+  - "In no voice does a value overshoot, the outgoing view scale above 1 or an arriving surface draw through a blur; a blur appears only with a GPU, only on the outgoing layer, and is gone after every finish and interruption."
   - "Reduced motion from either source lands end states."
   - "Chat cues route through the Notifications & Sounds owner; no chat-local sound setting or volume exists."
   - "No more than one cue plays per 120ms and no step tick within 250ms of another; nothing plays before a user gesture."
@@ -511,6 +529,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-106"
   - "Plans/Decision_Log.md#DL-107"
   - "Plans/Decision_Log.md#DL-179 (owner note of 2026-10-09: Friendly and Glass distinct from Basic)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/b-motion-REPORT.md, SHA-256 a1f292802f9ae740765c721f8f6196b44ad98ec3a41271f208528c7c03fed87a (the Usage port's motion lane: the voices as built, with GPU evidence for the blur and scale rules)"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
 preserved_exact_tokens:
   - "DL-138"
@@ -520,8 +539,13 @@ preserved_exact_tokens:
   - "Retro"
   - "general.visual.reduce-animations"
   - "general.interaction.sound-effects"
+  - "Usage"
+  - "NieR Mode"
 negative_constraints:
   - "Do not let a voice change timing or order."
+  - "Do not let a voice make a value overshoot."
+  - "Do not draw an arriving surface through a blur."
+  - "Do not scale the outgoing view above 1."
   - "Do not add a chat-local sound setting, volume or registry."
   - "Do not let a sound carry information alone."
   - "Do not offer a per-theme voice override as a product setting."

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3871-L13155
+Source lines: L3871-L13156
 
-Source SHA256: `783b525bdf5b1989fe63c87557077131f5e8d547c3a7568480dd298d17893f17`
+Source SHA256: `36e7647491089d6e43cbef806a39aeb1fa67a4b241be7daa9846e75f36f4045d`
 
 ---
 
@@ -8959,8 +8959,9 @@ canonical_text: >-
   cmd.settings.transaction.preview and cmd.settings.transaction.apply with scope=provider (SSYS-044, SSYS-009,
   SSYS-018) and never copied into Usage; an account card's body and Details stay a local inspector (UF-093, UCC-147).
   ai.accounts.multi-account-switching, ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and
-  ai.accounts.cooldown-policy gain the provider scope and ai.accounts.cooldown-policy also the global scope (F3-441);
-  the global value is the default for all four, and MA-073 owns the resolution order. The warning level and the
+  ai.accounts.cooldown-policy gain the provider scope and ai.accounts.cooldown-policy also the global and project
+  scopes (F3-441); a provider without its own value follows the shared project or global value, and MA-073 owns the
+  resolution order. The warning level and the
   rest period are edited in Settings, not on the Usage card. The switch follows the AI Account
   Center's rules: two or more accounts, a notch at the provider's switch point on each of its meters, only a fresh
   identity-bound reading decides, the target is the eligible account with the most left, the switch waits for the

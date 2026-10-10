@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L3863
 
-Source SHA256: `783b525bdf5b1989fe63c87557077131f5e8d547c3a7568480dd298d17893f17`
+Source SHA256: `36e7647491089d6e43cbef806a39aeb1fa67a4b241be7daa9846e75f36f4045d`
 
 ---
 
@@ -3684,7 +3684,7 @@ ContractRef: ContractName:Plans/usage-feature.md#UF-107, ContractName:Plans/Fina
 
 **What the spec now says:**
 1. **Per-provider auto-switch** (`Plans/Multi-Account.md#MA-073`): the provider scope, the order in which account, provider, project and global values apply, the global value as the default for all four, one value edited by the Usage card and by Settings through the Settings owner, and the switching rules above.
-2. **The provider scope in the settings inventory** (`Plans/FinalGUISpec.md#F3-441`, amended, and `Plans/settings_inventory.json`): `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the `provider` scope, and `ai.accounts.cooldown-policy` also the `global` scope.
+2. **The provider scope in the settings inventory** (`Plans/FinalGUISpec.md#F3-441`, amended, and `Plans/settings_inventory.json`): `ai.accounts.multi-account-switching`, `ai.accounts.hard-switch-level`, `ai.accounts.soft-warning-level` and `ai.accounts.cooldown-policy` gain the `provider` scope, and `ai.accounts.cooldown-policy` also the `global` and `project` scopes.
 3. **Settings controls shown on Usage commit through Settings** (`Plans/Settings_System.md#SSYS-044`, over `#SSYS-009` and `#SSYS-018`): the card's toggle and level dispatch `cmd.settings.transaction.preview` and then `cmd.settings.transaction.apply` with `scope=provider`; Usage keeps no copy of the value.
 4. **The Accounts room acts in place** (`Plans/usage-feature.md#UF-093`, amended, and `#UF-107`): an account card's body and Details stay a local inspector that dispatches nothing; Use this account and the provider's Auto-switch toggle and switch level are the owner-routed actions carved out of that rule (`Plans/Commands_System.md#CS-067`, amended).
 5. **Commands and wiring** (`Plans/UI_Command_Catalog.md#UCC-147`, dispositions): Use this account dispatches the existing `cmd.account.select_profile`, the toggle and level dispatch the Settings transaction pair, and Open in Settings reuses `cmd.settings.open` with `target_type=setting`. No command is added; the existing production wiring rows for these commands (`catalog.account_select_profile`, `catalog.settings_transaction_preview`, `catalog.settings_transaction_apply`) name the Accounts room controls in their locations (`Plans/Wiring_Matrix.md#WM-043`).

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30758-L31637
+Source lines: L30758-L31638
 
-Source SHA256: `cd565db534a964f90654091d88978a3baf84614c772aee4fc81a7639e14d90f9`
+Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
 
 ---
 
@@ -697,11 +697,12 @@ decides the accent color and the app font. Its parts and background rows show on
 
 Amended 2026-10-09 (per-provider auto-switch, `Plans/Decision_Log.md#DL-174`, owner `Plans/Multi-Account.md#MA-073`):
 four rows gain the `provider` scope beside the scopes they already have, `ai.accounts.cooldown-policy` also gains
-the `global` scope so that each of the four has a global value as the default, and the row count stays 916:
+the `global` and `project` scopes so that each of the four has a global value and resolves through the same order,
+and the row count stays 916:
 `ai.accounts.multi-account-switching` (global, project, provider), `ai.accounts.hard-switch-level` and
 `ai.accounts.soft-warning-level` (global, project, provider, account), and `ai.accounts.cooldown-policy` (global,
-provider, account). MA-073 owns the order in which these scopes resolve, the global value as the default for every
-provider without a value of its own, and the switching rules. The provider value is set in the provider's own section of
+project, provider, account). MA-073 owns the order in which these scopes resolve, the shared value that a provider
+without a value of its own follows, and the switching rules. The provider value is set in the provider's own section of
 Settings > AI > Providers & Accounts and, for the toggle and the switch level, also on the Usage Accounts room's
 provider controls (`Plans/usage-feature.md#UF-107`); both are the same row, written only through the Settings owner's
 `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with `scope=provider` (SSYS-009, SSYS-018,

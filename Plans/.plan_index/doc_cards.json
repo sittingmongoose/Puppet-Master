@@ -623,7 +623,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 27123,
+      "line_count": 27147,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 483,
       "plan_unit_ids": [
@@ -1462,7 +1462,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "3e9706d75bf05901e093c5ecae11dfe2c045e7854b7b7be1ce3620d07bd78a97",
+      "sha256": "feebda270b973277d4b4a0cae68190f72e5f59f5cfdf0812801562b276d988c1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 482,
@@ -5721,7 +5721,7 @@
         "scripts/pm_pnc019_currentness.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 13183,
+      "line_count": 13184,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 155,
       "plan_unit_ids": [
@@ -6035,7 +6035,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "783b525bdf5b1989fe63c87557077131f5e8d547c3a7568480dd298d17893f17",
+      "sha256": "36e7647491089d6e43cbef806a39aeb1fa67a4b241be7daa9846e75f36f4045d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 155
@@ -7577,7 +7577,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 42863,
+      "line_count": 42913,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 616,
       "plan_unit_ids": [
@@ -8334,7 +8334,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "cd565db534a964f90654091d88978a3baf84614c772aee4fc81a7639e14d90f9",
+      "sha256": "531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 615,
@@ -11031,7 +11031,7 @@
         "future AuthenticationProfileRegistry handlers",
         "future provider account/profile and credential-reference contracts"
       ],
-      "line_count": 5471,
+      "line_count": 5483,
       "path": "Plans/Multi-Account.md",
       "plan_unit_count": 73,
       "plan_unit_ids": [
@@ -11188,7 +11188,7 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "a8b5581087437e0a209e710ed727b27c2e3081fa1b19b1d74a3b08afeffdb1cc",
+      "sha256": "474dbbcfa80086acff88f62eed476ea5d59059858f58dce18df44ea073b13628",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 73
@@ -11207,7 +11207,7 @@
         "Plan/quota mismatch does not masquerade as model unsupported",
         "Plans/multi_account_contract_fixtures.json",
         "Plans/multi_account_contracts.schema.json",
-        "Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global scope on ai.accounts.cooldown-policy)",
+        "Plans/settings_inventory.json (provider scope on the four ai.accounts rows, and global and project scopes on ai.accounts.cooldown-policy)",
         "Provider model capable but route denied is surfaced accurately",
         "Shared pressure and cooldown fixtures",
         "bounded markdown/YAML structure check for MA-070",
@@ -17198,7 +17198,7 @@
         "theme_or_layout_cross_project_leak",
         "unowned_preference_or_scope_drift"
       ],
-      "sha256": "8c13916f3c060bcf237d4fea29a32a9bf4c0a8b798efec2008f5df9e387cdda7",
+      "sha256": "40369f57bf2553609057c55726f15c1471c5f7f83ed8f8795593c43cad5c2845",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 44
@@ -19598,7 +19598,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "74f9cc0f6d0cb3d1a7d659979632d55b4c9d1adc9572a006cae2757130d77ec6",
+      "sha256": "5d05b43508a60e88b53b21fa2a8645f08716d6f8b5ea6dbaf31c09c1b6f045bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 175,
@@ -19897,7 +19897,7 @@
         "Plans/usage_run_estimate_contracts.schema.json",
         "future usage events"
       ],
-      "line_count": 7357,
+      "line_count": 7363,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 107,
       "plan_unit_ids": [
@@ -20050,7 +20050,7 @@
         "usage_workspace_state_orphan_or_preview_persistence",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "41d0f17b8b5a1e6336db0baa4e7d043fae3ddc801868fbd92367120d6202f819",
+      "sha256": "f1b1de40aa84794ec9f37bed185aa8e0cceb55d41081c952386c33822f6afc65",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 107
@@ -20707,7 +20707,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-10-10T11:07:29Z",
+  "generated_at_utc": "2026-10-10T11:14:45Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
