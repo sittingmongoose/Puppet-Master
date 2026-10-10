@@ -1576,6 +1576,19 @@
       /* two-line rows when they show every row; otherwise the one-line form whenever it shows more rows */
       var fit2 = C.fit(ctx.tier.bh, 48, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
       var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 48;
+      /* (lane c-presets, agent 5) the one-line form only where its longest name (or that name's short word) fits beside
+         a 36 px bar and the value: at 239 px (the Costs provider value on a 487 px board, or the kind resized to its
+         5 tracks at 1440) the name column shrank to 30 px and "Claud/e", "Codin/g Plan" broke letter by letter while the
+         last row ran past the card; the two-line form gives the name the row's width less the value */
+      if (inline) {
+        var kInl = PMU.theme.look().nier || PMU.theme.look().family === 'retro' ? 1.15 : 1.06, valInl = 0, nameInl = 0;
+        rows.forEach(function (r) {
+          valInl = Math.max(valInl, C.wrapW(r.valueShort || r.valueText || '', 13, 620));
+          var nm = r.short && C.wrapW(r.short, 13, 560) < C.wrapW(r.name || '', 13, 560) ? r.short : r.name || '';
+          nameInl = Math.max(nameInl, C.wrapW(nm, 13, 560) * kInl + (r.mark ? 24 : 0));
+        });
+        if (nameInl > ctx.tier.bw - 16 - 36 - valInl - 20) { inline = false; rowH = 48; }
+      }
       var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
       var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;

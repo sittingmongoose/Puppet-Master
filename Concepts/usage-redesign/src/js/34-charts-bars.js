@@ -268,7 +268,8 @@
   };
   function drawRanked(c, morph) {
     var spec = c.spec || {}, rows = spec.rows || [], w = c._w || 300;
-    var inline = (c.opts.tier && (c.opts.tier.w === 'xs' || c.opts.tier.w === 's')) || w < 248 || spec.inline;
+    /* (lane c-presets) a spec that says inline: false (the ranked kind measured no room for its names) keeps two lines */
+    var inline = spec.inline === false ? false : (c.opts.tier && (c.opts.tier.w === 'xs' || c.opts.tier.w === 's')) || w < 248 || spec.inline;
     var max = spec.scale || 0;
     rows.forEach(function (r) { if (finite(r.value)) max = Math.max(max, r.value); });
     var old = c._old || {};
