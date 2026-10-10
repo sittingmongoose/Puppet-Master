@@ -3418,7 +3418,7 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The terminal has one appearance model (DL-183, D15). Four layers resolve field by field, an unset field falling
-  through: the look's defaults ("Follow theme": the current look's scheme, face and effects), then the app default
+  through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the app default
   (Settings > Terminal), then the project default, then the per-tab override, each later layer winning (F3-642). The
   Appearance popover in the terminal's More menu, Settings > Terminal and the per-look defaults read and write this
   one model: the popover writes This terminal (the tab's override) or All terminals (the app default), only Settings
@@ -3462,13 +3462,14 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15, D16)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, section 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3, Appendix 7, E.3.4 and E.5 (worklist)"
 preserved_exact_tokens:
-  - "Follow theme"
+  - "Follow look"
   - "This terminal"
   - "All terminals"
   - "Settings > Terminal"
@@ -3479,6 +3480,7 @@ negative_constraints:
   - "Do not mark a terminal appearance setting as needing a restart."
   - "Do not let the popover write the project default."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/DRY_Rules.md

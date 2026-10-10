@@ -44904,9 +44904,9 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   The terminal's appearance is one layered model (DL-183, DR-068), resolved field by field: the look's defaults
-  ("Follow theme") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
+  ("Follow look") under the app default (Settings > Terminal, SSYS-051) under the project default (written through Settings transactions, in the Project's settings) under this tab's override; a field left unset falls through to the layer
   below. Every field applies live, and no terminal appearance setting carries a restart badge; the terminal draws its
-  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow theme"
+  own glyphs (DL-035), so section 6.4's restart rule for the app's font families does not reach it. "Follow look"
   resolves per look, light and dark: Friendly Catppuccin Latte and Mocha; Glass Tokyo Night Day and Storm, drawn at
   70 % (light) and 74 % (dark) opacity over the shell's existing glass blur, the terminal adding no backdrop blur of
   its own (F3-431); Retro PM Paper Teletype and PM Phosphor Green, with PM Phosphor Amber as Phosphor Green's
@@ -44921,7 +44921,7 @@ canonical_text: >-
   iTerm2-Color-Schemes collection (no single licence) and Modus (GPL-3.0) are not bundled, and import covers them.
   These schemes are one code colour-scheme catalog that serves the editor and the terminal (Addendum 2 D27, amending
   D15 and D21): each curated scheme carries the terminal palette and the editor's syntax colours. Each surface's
-  scheme choice defaults to "Follow look" — the terminal's "Follow theme" per-look scheme above, the editor's
+  scheme choice defaults to "Follow look" — the terminal's "Follow look" per-look scheme above, the editor's
   per-look syntax colours (F3-426, F3-639) — and each surface keeps its own scheme choice. The Appearance popover is
   one component, opened from the terminal's ⋮ menu and from the editor's ⋮ menu (F3-639); no surface keeps a scheme
   list or popover of its own (DR-068).
@@ -44932,16 +44932,16 @@ canonical_text: >-
   neighbours, and a selection uses the scheme's selection text colour. Import reads iTerm2 `.itermcolors`, Windows
   Terminal JSON (one scheme, or a settings file's list of schemes), kitty `.conf`, Ghostty themes, Alacritty TOML and
   its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
-  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow theme,
-  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow theme, JetBrains Mono,
+  and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow look,
+  or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow look, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644);
   font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
-  shape (Follow theme, block, bar or underline); cursor blink (on); cursor trail (Follow theme, off, soft, glow,
-  phosphor or trace); background (Follow theme, theme surface, solid colour, gradient or image) with its colour, its
+  shape (Follow look, block, bar or underline); cursor blink (on); cursor trail (Follow look, off, soft, glow,
+  phosphor or trace); background (Follow look, theme surface, solid colour, gradient or image) with its colour, its
   gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image), image dim (0.45) and image
   blur (0 px, baked once into the image and never a backdrop blur); opacity (Glass); padding (8 px across, the
-  vertical padding 60 % of it); effects (Follow theme, off or custom) with the effect fields of F3-643; inactive
-  dimming; smooth scrolling; bell (Follow theme, visual or off); sticky header (on); copy on select (off); and
+  vertical padding 60 % of it); effects (Follow look, off or custom) with the effect fields of F3-643; inactive
+  dimming; smooth scrolling; bell (Follow look, visual or off); sticky header (on); copy on select (off); and
   Sixtyfour's scan and bleed axes. Cell geometry: a cell is a whole number of device pixels, its width
   round((advance + letter spacing) x device pixel ratio) and its height round(font size in px x line height x device
   pixel ratio), never less than 90 % of the font's ascent plus descent, with the baseline centred; the padding is
@@ -44964,7 +44964,7 @@ depends_on: [DL-183, F3-640, F3-431, DR-068, SSYS-051, SP-331]
 unblocks: [F3-643, F3-644, UCC-201, ATS-076]
 acceptance_criteria:
   - "Every field resolves tab override, then project default, then app default, then the look's default, and an unset field falls through."
-  - "Each look's Follow theme scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
+  - "Each look's Follow look scheme is the one listed for its light and dark variant, and Glass draws its scheme at 70 % and 74 % opacity with no backdrop blur of the terminal's own."
   - "Exactly the 34 schemes listed ship, each third-party scheme with its licence and source record, and the iTerm2-Color-Schemes collection and Modus are not bundled."
   - "The minimum-contrast floor defaults to 4.5:1, offers Off, 3:1, 4.5:1 and 7:1, changes only OKLab lightness, and leaves block, powerline and sextant glyphs alone."
   - "Import accepts the seven formats listed, refuses input over 256 KB, evaluates nothing and shows fixed errors that never echo the file."
@@ -44990,12 +44990,13 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 5 and 6 (concept lineage only)"
 preserved_exact_tokens:
-  - "Follow theme"
+  - "Follow look"
   - "Switch with light and dark"
   - "Thirty-four schemes"
   - "4.5:1"
@@ -45011,6 +45012,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's field names and its settings keys under a terminal prefix are lineage only; the product ids are SSYS-051's rows."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L16): All terminals writes the project default through the Settings transaction and shows in this project; no app-wide value is written until q-035 admits one."

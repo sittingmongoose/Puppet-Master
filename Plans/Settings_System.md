@@ -3186,20 +3186,20 @@ canonical_text: >-
   Settings > Terminal binds the terminal's one appearance model (Plans/FinalGUISpec.md#F3-642,
   Plans/DRY_Rules.md#DR-068; DL-183) with one row per field, each applying live with no restart badge: the restart
   badges on code.terminal.theme and code.terminal.font-family are removed. The model resolves field by field: the
-  look's defaults ("Follow theme"), the app default, the project default, then the tab's override. Each row is a
+  look's defaults ("Follow look"), the app default, the project default, then the tab's override. Each row is a
   field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one. The tab's override is the tab's serialized state (SP-331), written by the popover's This
   terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow look or
-  one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow theme, JetBrains Mono,
+  one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow look, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow
   theme), code.terminal.font-size (Font default), code.terminal.copy-on-select (off) and code.terminal.sticky-header
   (on). Added rows carry the rest: code.terminal.scheme-pair (on), min-contrast (Off, 3:1, 4.5:1 or 7:1; 4.5:1),
   import-scheme (an action), font-weight (400), line-height (Font default), letter-spacing (0), ligatures (on),
-  bold-bright (off), cursor-shape, cursor-blink (on), cursor-trail, background (Follow theme, theme surface,
+  bold-bright (off), cursor-shape, cursor-blink (on), cursor-trail, background (Follow look, theme surface,
   solid, gradient or image) with background-color, background-gradient, background-image, background-image-file,
-  background-dim (0.45) and background-blur (0, made once on the picture), opacity (Glass; Follow theme, 70 % light
-  and 74 % dark), padding (8), effects (Follow theme, Off or Custom) with scanlines, scan-strength (0.30), glow,
+  background-dim (0.45) and background-blur (0, made once on the picture), opacity (Glass; Follow look, 70 % light
+  and 74 % dark), padding (8), effects (Follow look, Off or Custom) with scanlines, scan-strength (0.30), glow,
   glow-strength (0.45), crt (off), curvature (0.08), burn-in (on), noise (0.035), flicker (off) and flicker-amount
-  (0.02, never above 0.03), inactive-dim, smooth-scroll, bell (Follow theme, Visual or Off), sixtyfour-scan and
+  (0.02, never above 0.03), inactive-dim, smooth-scroll, bell (Follow look, Visual or Off), sixtyfour-scan and
   sixtyfour-bleed; a field without a settled default falls through to the look. Detail rows show only while the
   row they depend on makes them apply, and no row turns on what F3-643 keeps off: effects run only in the focused
   terminal, and every moving part stops under Reduce Animations and on battery saver. The rows sit in SSYS-040's
@@ -3212,7 +3212,7 @@ canonical_text: >-
   the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
   a terminal's Text size zoom are not rows.
   The terminal scheme row binds the same code colour-scheme catalog as Settings > Editor (SSYS-050, F3-642).
-  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow theme".
+  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow look".
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3220,10 +3220,10 @@ depends_on: [DL-181, DL-182, DL-183, DR-068, SSYS-002, SSYS-009, SSYS-028, SSYS-
 unblocks: [F3-120, F3-121, F3-642, SP-331]
 acceptance_criteria:
   - "Every field of F3-642 has exactly one inventory row, each with the default listed here, scope global and project, and no terminal row carries a restart badge."
-  - "Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field left at Follow theme, Font default or no default falls through to the look's default."
+  - "Changing a row changes every open terminal at once unless that terminal's own override sets the field, and a field left at Follow look, Font default or no default falls through to the look's default."
   - "Settings and the enabled popover's All terminals write the project default through the same Settings transaction over its exact id; only the popover's This terminal writes a tab override, and Settings never does."
   - "The popover's All terminals is enabled, writes the SSYS-051 project default through the same Settings transaction Settings uses and changes every terminal while this Project is open; its hover tag says in this project, and no surface writes an app-wide value until q-035 admits one."
-  - "Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow theme, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
+  - "Terminal Colors offers Follow look and the shared catalog of F3-642 plus imported ones; Terminal Font offers Follow look, the six built-in faces and System monospace; Minimum Text Contrast offers Off, 3:1, 4.5:1 and 7:1."
   - "Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal Opacity (Glass) shows only under a Glass theme."
   - "With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on battery saver."
   - "Settings shows the terminal rows under SSYS-040's groups and Terminal look: more options, with no row for degauss or the Text size zoom."
@@ -3245,6 +3245,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-183"
@@ -3255,7 +3256,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b, sections 2, 4, 5 and 6 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (Appendix E)"
 preserved_exact_tokens:
-  - "Follow theme"
+  - "Follow look"
   - "All terminals"
   - "This terminal"
   - "4.5:1"
@@ -3273,6 +3274,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."
   - "Amended 2026-10-10 (lead ruling L16): All terminals is enabled and writes the project default through the Settings transaction, with the hover tag in this project and no app-wide write."
