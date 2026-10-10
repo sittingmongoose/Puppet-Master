@@ -87,7 +87,14 @@
         return {
           unmount: function () { rec.view.dispose(); rec.session.dispose(); records.delete(rec.session.id); },
           serialize: function () { var sh = rec.session.shell; return { session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: rec.view.tabAppearance || {} }; },
-          onResize: function () { rec.view.onResize(); },
+          /* while a divider drag is still moving the body (final === false) the reflow and PTY resize wait,
+             at most every 120 ms; the final call lays out at once */
+          onResize: function (sz) {
+            var v = rec.view;
+            if (sz && sz.final === false) { if (!v._resizeTimer) v._resizeTimer = setTimeout(function () { v._resizeTimer = 0; v.onResize(); }, 120); return; }
+            if (v._resizeTimer) { clearTimeout(v._resizeTimer); v._resizeTimer = 0; }
+            v.onResize();
+          },
           onShow: function () { rec.view.onShow(); },
           onHide: function () { rec.view.onHide(); },
           onFocus: function () { rec.view.setDimmed(false); },
