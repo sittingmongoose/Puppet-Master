@@ -35552,8 +35552,10 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    the later slices, PERF-3); the frames enter at once and each body waits unseen by opacity until it is built (never
    by visibility: an animation created under visibility: hidden runs on the main thread) */
 #panel-usage .pmu-board > .pmu-card[data-body-wait] > .pmu-cardbody { opacity: 0; }
-/* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer */
-#panel-usage .pmu-board[data-film] > .pmu-card { will-change: transform, opacity; }
+/* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
+   its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
+   that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
+#panel-usage .pmu-board[data-film] > .pmu-card:not([data-film-rest]) { will-change: transform, opacity; }
 
 /* ---- the room key light (2.1; WOW-SPEC-3 4.2): one static light under the board, visible in the gutters and behind the
    transparent stage head; a key at the top-left and a low bounce light at the bottom-right (tokens --pmu-l-* in
@@ -36328,7 +36330,16 @@ html[data-theme^="retro"] #panel-usage .pmu-keysw { border-radius: 0; }
 #panel-usage .pmu-cardtitles { transition: margin-right 0s linear calc(300ms * var(--pmu-speed, 1)); }
 #panel-usage .pmu-card:hover > .pmu-cardhead > .pmu-cardtitles, #panel-usage .pmu-card:focus-visible > .pmu-cardhead > .pmu-cardtitles,
 #panel-usage .pmu-cardhead[data-tools-on] > .pmu-cardtitles { margin-right: var(--pmu-head-room, 0px); transition-delay: 0s; }
-#panel-usage .pmu-cardhead[data-title-lines] .pmu-cardtitle { -webkit-line-clamp: var(--pmu-title-lines, 2); overflow: hidden; }
+/* (written above 70-wrap.css's tile and line clamps, which come later in the cascade: at equal weight their clamp of 3
+   won and a yielding tile title wrapped to a new line, growing the head). The title's box is cut to the lines it shows
+   (the clamp alone adds the ellipsis but keeps the box of every line) and the titles block keeps its resting height,
+   so the head's box is exactly as it rests when the title shows fewer lines; the line it shows sits at the block's middle,
+   level with the provider mark beside it, not on the first line's place above it */
+#panel-usage .pmu-card > .pmu-cardhead[data-title-lines] .pmu-cardtitle { -webkit-line-clamp: var(--pmu-title-lines, 2); overflow: hidden; height: var(--pmu-title-h, auto); }
+#panel-usage .pmu-card > .pmu-cardhead[data-title-lines] > .pmu-cardtitles { min-height: var(--pmu-titles-h, 0px); justify-content: center; }
+/* a title that yields to one line runs on that line to the room's edge and ends there in an ellipsis ("GitHub Cop...",
+   "Usage he..."): a one-line clamp breaks the line at a word first and showed "GitHub..." with room to spare */
+#panel-usage .pmu-card > .pmu-cardhead[data-title-lines="1"] .pmu-cardtitles .pmu-cardtitle { display: block; white-space: nowrap; text-overflow: ellipsis; overflow-wrap: normal; -webkit-line-clamp: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtitles { margin-right: 0; transition: none; }
 #panel-usage .pmu-board[data-op] .pmu-cardtools { opacity: 0 !important; pointer-events: none !important; }
 html[data-theme^="retro"] #panel-usage .pmu-cardtools, html[data-theme^="retro"] #panel-usage .pmu-cardtools .pmu-iconbtn { border-radius: 0; }
@@ -40423,7 +40434,36 @@ var PMU_SERIES = {
   function fam() { return M.family(); }
   function anim(el, frames, o) {
     o = o || {};
-    return M.animate(el, frames, { dur: o.dur == null ? 300 : o.dur, delay: o.delay || 0, easing: o.easing || E.out, fill: o.fill || 'backwards' });
+    var a = M.animate(el, frames, { dur: o.dur == null ? 300 : o.dur, delay: o.delay || 0, easing: o.easing || E.out, fill: o.fill || 'backwards' });
+    if (a && el.classList && el.classList.contains('pmu-card')) plateLayer(el, a);
+    return a;
+  }
+  /* Sharp plates (Jared's note 5, 2026-10-09): a plate keeps its film layer (05-film.css: will-change under the board's
+     data-film) only while its own entrance runs, not for the whole moment. Chrome keeps the raster scale a will-change
+     layer took during a scaled entrance (Glass scale(1.02), a Friendly hop with scale), so a plate at rest drew its text
+     from a resampled layer until the board's film window closed, about 1 s after it had landed (GPU probe at 1920: title
+     sharpness 0.44-0.58 of rest in Glass, back to 1.0 the moment the window closed). Each plate animation made here
+     counts on the card; when the card's last one ends (finished, finished early by a rapid switch, or cancelled) the card
+     takes data-film-rest, written for every card that ended in the same 60 ms in one batch, and drops its layer. A new
+     entrance takes the attribute off before it starts. Not on the no-GPU profile: its entrances are opacity only (no
+     raster scale to keep) and a dropped layer would re-raster the plate on the CPU inside the moment (PERF-3). */
+  var restQ = [], restT = 0;
+  function flushRest() {
+    restT = 0;
+    var list = restQ; restQ = [];
+    list.forEach(function (c) { if (!c._pmuPlateRuns && c.isConnected) c.setAttribute('data-film-rest', ''); });
+  }
+  function plateLayer(card, a) {
+    if (soft()) return;
+    if (card.hasAttribute('data-film-rest')) card.removeAttribute('data-film-rest');
+    card._pmuPlateRuns = (card._pmuPlateRuns || 0) + 1;
+    var end = function () {
+      card._pmuPlateRuns = Math.max(0, (card._pmuPlateRuns || 1) - 1);
+      if (card._pmuPlateRuns) return;
+      restQ.push(card);
+      if (!restT) restT = setTimeout(flushRest, reduced() ? 0 : 60);
+    };
+    a.finished.then(end, end);
   }
   /* cleanup is batched: a finished film layer stays (invisible: every film animation ends at opacity 0 or on its final
      frame with fill both) until the burst of finishes is over, then every finished layer goes and every finished odometer
@@ -49980,7 +50020,7 @@ var PMU_SERIES = {
     var hb = head.getBoundingClientRect(), k = hb.width ? hw / hb.width : 1;   /* a card still entering may be scaled */
     var tcs = getComputedStyle(tools), btn = parseFloat(getComputedStyle(tools.lastElementChild).width) || 24;
     var right = hw - (parseFloat(tcs.right) || 6), pad = (parseFloat(tcs.paddingLeft) || 2) * 2;
-    var tl = titles.offsetLeft, tr = tl + titles.offsetWidth, tb = title.getBoundingClientRect();
+    var tl = titles.offsetLeft, tr = tl + titles.offsetWidth, tb = title.getBoundingClientRect(), titlesH = titles.getBoundingClientRect().height * k;
     var rg = document.createRange(); rg.selectNodeContents(title);
     var textR = tl, tops = [];
     Array.prototype.forEach.call(rg.getClientRects(), function (r) {
@@ -49999,23 +50039,54 @@ var PMU_SERIES = {
     }
     var yieldTitle = textR > pick.limit + 0.5;
     var room = Math.max(0, Math.ceil(tr - pick.limit));
+    /* a title that fits keeps a whole pixel clear of its last glyph: the room never narrows its box to the text's own
+       width, where the line breaker (1/64 px) and the measured glyphs disagree and the title wrapped ("Kimi / Code",
+       "Claud / e") and the head grew */
+    if (!yieldTitle) room = Math.min(room, Math.max(0, Math.floor(tr - textR - 1)));
+    /* a yielding title keeps the room it has at rest (the titles block's height is held, so the head never grows or
+       shrinks and the body never moves) and the lines it has at rest, the last ending in an ellipsis; where a word of a wrapped title would
+       not fit the narrower box whole (it would break inside the word, "Gemin / i API"), the title shows one line ending
+       in an ellipsis instead. The words are measured here, as the title rests, before the room is written. */
+    var lines = Math.max(1, tops.length);
+    if (yieldTitle && lines > 1) {
+      var wide = 0, wr = document.createRange(), walk = document.createTreeWalker(title, NodeFilter.SHOW_TEXT), tn, re = /\S+/g, mm;
+      while ((tn = walk.nextNode())) { re.lastIndex = 0; while ((mm = re.exec(tn.data))) { wr.setStart(tn, mm.index); wr.setEnd(tn, mm.index + mm[0].length); wide = Math.max(wide, wr.getBoundingClientRect().width * k); } }
+      if (wide > tr - room - (tb.left - hb.left) * k - 2) lines = 1;
+    }
     head.style.setProperty('--pmu-head-room', room + 'px');
     head.style.setProperty('--pmu-head-slide', (pick.slide ? -Math.ceil(pick.slide) : 0) + 'px');
     if (tools.getAttribute('data-fold') !== pick.fold) tools.setAttribute('data-fold', pick.fold);
-    if (yieldTitle) { head.style.setProperty('--pmu-title-lines', String(Math.max(1, tops.length))); head.setAttribute('data-title-lines', ''); }
+    if (yieldTitle) {
+      head.style.setProperty('--pmu-title-lines', String(lines));
+      head.style.setProperty('--pmu-title-h', (tb.height * k * lines / Math.max(1, tops.length)) + 'px');
+      /* the resting height, read above: read here, under :hover the room is already taken and the title has wrapped */
+      head.style.setProperty('--pmu-titles-h', titlesH + 'px');
+      head.setAttribute('data-title-lines', lines === 1 ? '1' : '');
+    }
     card._pmuFitOn = true;
   }
-  /* the clamp of a yielding title goes once the title has its room back (its margin returns 300 after leaving: the
-     cluster fades 140, then the head tools slide back 160) */
+  /* the clamp of a yielding title goes only once the title has its room back. Its margin returns 300 after leaving (the
+     cluster fades 140, then the head tools slide back 160), and the clamp waits for the margin itself, read every frame
+     from then on, never for a timer of its own: a timer of 340 raced the transition, often fired first, and the title,
+     unclamped in the still narrowed box, wrapped to an extra line for a frame or more (head 20 > 30 px, body dropping).
+     The margin is read in a frame callback, before that frame's style and layout, so the frame that paints the margin
+     back also paints the title unclamped. A pointer that comes back first leaves the clamp to the next fit. */
   function unfitSoon(card) {
     if (!card || !card._pmuFitOn) return;
-    setTimeout(function () {
-      if (card.matches(':hover') || card.matches(':focus-visible')) return;
+    var token = card._pmuUnfit = (card._pmuUnfit || 0) + 1, frames = 0;
+    function back() {
+      if (card._pmuUnfit !== token || !card._pmuFitOn) return;
+      if (!card.isConnected || card.matches(':hover') || card.matches(':focus-visible')) return;
       var head = card.querySelector(':scope > .pmu-cardhead');
       if (head && head.hasAttribute('data-tools-on')) return;
+      var titles = head && head.querySelector(':scope > .pmu-cardtitles');
+      /* (a yielding title always took at least a pixel, so its room is back exactly when the margin reads 0; the cap only
+         guards a card whose margin is held by something else, so a clamp is never left on a resting head) */
+      if (titles && parseFloat(getComputedStyle(titles).marginRight) > 0 && ++frames < 120) { requestAnimationFrame(back); return; }
       if (head) head.removeAttribute('data-title-lines');
       card._pmuFitOn = false;
-    }, 340 * M.speed());
+    }
+    setTimeout(function () { requestAnimationFrame(back); }, 280 * M.speed());
   }
   /* a card whose head changes while it shows its tools (a resize from its own size menu, a live update) is fitted again */
   function refitSoon(card) {
