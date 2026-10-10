@@ -1129,7 +1129,9 @@
       if (!a.pastSwitch || !a.binding) return PMU.accounts.useAccount(key);
       var p = PMU.roster.provider(a.providerId), pol = a.policy || PMU.roster.thresholds(a.providerId), at = 100 - pol.switchLeft, used = Math.round(a.binding.pct);
       var el = anchor && anchor.isConnected ? anchor : document.querySelector('#pmuBoard .pmu-accrow[data-acct="' + key + '"] .pmu-usebtn');
-      PMU.menu.choice(el, { title: used + '% used, above the ' + at + '% switch point', current: '', width: 320,
+      var qTitle = used + '% used, above the ' + at + '% switch point';
+      /* the menu is as wide as its question (at 320 px the title was cut: "... switch poi…") */
+      PMU.menu.choice(el, { title: qTitle, current: '', width: Math.min(440, Math.max(320, Math.ceil(C.wrapW(qTitle, 14, 700) * 1.12) + 48)),
         foot: (pol.auto ? 'Auto-switch would move off it again on its next check. ' : 'Auto-switch is off for ' + (p ? p.name : 'this provider') + ', so it stays until you switch. ') + t('accounts.not_consent'),
         options: [{ value: 'use', label: 'Use ' + a.nickname + ' anyway', sub: (a.binding.short || 'Binding') + ' window ' + used + '% used · ' + PMU.fmt.resetLine(a.binding).text },
           { value: 'keep', label: p && p.effective ? 'Keep ' + p.effective.nickname : 'Cancel', sub: p && p.effective && p.effective.binding ? Math.round(p.effective.binding.pct) + '% used' : '' }],
