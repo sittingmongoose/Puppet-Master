@@ -1,0 +1,182 @@
+/* ---- 14. Runtime artifacts (#panel-artifacts, lane E) ----------------------------------------------------------------
+   Each receipt card keeps its coloured box (today's structure) and is drawn like a shelf: the box is the only box, its
+   identity row sits one inset from the edge with the inner radius, so the hover fill is concentric with the card. The
+   row reads the label on line 1 (the whole width is its room), the family · age and the state word on line 2, the way
+   a run row in Actions & pipelines reads; what the card holds when open is a quiet stack of facts and small text
+   buttons. The Investigation shelf lists its trail as words, not tags. */
+
+/* the sort line: what the list is, how many, and the order (a chat-style dropdown) */
+§@artifacts .sh-sortrow { display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 6px !important; padding: 0 2px var(--d-g) !important; min-width: 0; }
+§@artifacts .sh-sortrow > .sh-sortlab { font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important; }
+§@artifacts .sh-sortrow > .pm-chip { font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; }
+§@artifacts .sh-sortrow .pm6-tb-menu-wrap { margin-left: auto; flex: none; min-width: 0; }
+§@artifacts .sh-sortrow .pm6-tb-menu-trigger {
+  display: inline-flex !important; align-items: center; gap: 5px !important; min-height: 26px; padding: 2px 6px 2px 8px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.25 var(--body-font) !important; color: var(--d-text) !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+§@artifacts .sh-sortrow .pm6-tb-menu-trigger:hover, §@artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+§@artifacts .sh-sortrow .pm6-tb-menu-trigger > .pm-ico { width: 12px !important; height: 12px !important; color: var(--d-text-3); transition: transform var(--d-t2) var(--d-spring); }
+§@artifacts .sh-sortrow .pm6-tb-menu-trigger.is-menu-open > .pm-ico { transform: rotate(180deg); }
+§@artifacts .sh-sortrow .pm6-tb-menu-label { font: inherit !important; color: inherit !important; }
+
+/* ---- the card: a shelf-like box ---- */
+§@artifacts .sh-card {
+  position: relative; margin: 0 0 var(--d-g) !important; padding: 0 !important; cursor: default;
+  border-radius: var(--d-R) !important; overflow: clip !important; box-shadow: none !important; transform: none !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), var(--surface)) !important;
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-line), transparent) !important;
+}
+§{glass}@artifacts .sh-card { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-fill), transparent) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08) !important; }
+§{friendly}@artifacts .sh-card { box-shadow: 0 1px 2px rgba(0, 0, 0, .10), 0 4px 14px -8px color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important; }
+§{friendly,light}@artifacts .sh-card { box-shadow: 0 1px 2px rgba(80, 60, 110, .06), 0 6px 16px -10px color-mix(in srgb, var(--cat, var(--accent-blue)) 45%, transparent) !important; }
+§{retro}@artifacts .sh-card { box-shadow: 2px 2px 0 color-mix(in srgb, var(--cat, var(--accent-blue)) 38%, transparent) !important; }
+§{nier}@artifacts .sh-card { border-color: var(--d-line-2) !important; box-shadow: none !important; }
+§@artifacts .sh-card:hover { transform: none !important; }
+§@artifacts .sh-card.expired { opacity: .72 !important; }
+/* the identity row: the label, then family · age and the state word */
+§@artifacts .sh-card > .sh-r1 {
+  display: grid !important; grid-template-columns: calc(9px + var(--d-gap)) minmax(0, max-content) auto minmax(0, 1fr) auto;
+  grid-template-areas: "chev label label label label" "chev fam age . state"; column-gap: 0 !important; row-gap: 1px; align-items: center;
+  min-height: 0; margin: var(--d-in) !important; padding: 4px var(--d-pad) !important; cursor: pointer;
+  border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
+}
+§@artifacts .sh-card > .sh-r1:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@artifacts .sh-card.open > .sh-r1 { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent); }
+§@artifacts .sh-card > .sh-r1:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§@artifacts .sh-r1 > .sh-accchev { grid-area: chev; align-self: start; justify-self: start; width: 9px !important; height: 9px !important; margin-top: 4px; color: var(--d-text-3) !important; }
+§@artifacts .sh-r1 > .sh-rlabel {
+  grid-area: label; min-width: 0; font: 600 var(--d-fs-name)/var(--d-lh) var(--body-font) !important; color: var(--d-text) !important;
+  white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; text-overflow: clip !important; text-wrap: pretty;
+}
+/* the family is the card's kind: always shown (the shell hides it below 250 px), a word, not a tag */
+§@artifacts .sh-card .sh-r1 > .sh-fam {
+  grid-area: fam; display: block !important; min-width: 0; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-2) !important;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+§@artifacts .sh-r1 > .pm-chip { grid-area: state; justify-self: end; margin-left: 8px; }
+§@artifacts .sh-r1 > .sh-age {
+  grid-area: age; align-self: center; justify-self: start; display: inline-flex !important; align-items: baseline; gap: 0 !important; margin: 0 !important;
+  font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+§@artifacts .sh-r1 > .sh-age::before { content: '\00B7'; margin: 0 5px; font-family: var(--body-font); color: var(--d-text-3); }
+§@artifacts .sh-r1 > .sh-age > :is(.dot, .d-gl) { display: none !important; }
+/* when family · age and the state word do not fit on one line, the state goes under them (measured, JS) */
+§@artifacts .sh-card > .sh-r1[data-d-stack] { grid-template-areas: "chev label label label label" "chev fam age . ." "chev state state state state"; }
+§@artifacts .sh-card > .sh-r1[data-d-stack] > .pm-chip { justify-self: start; margin-left: 0; }
+/* lines that stay visible on a closed card: the failing test, the live stream */
+§@artifacts .sh-card > :is(.sh-logline, .sh-liveline) {
+  margin: 0 0 7px !important; padding: 0 calc(var(--d-in) + var(--d-pad)) 0 calc(var(--d-in) + var(--d-pad) + 9px + var(--d-gap)) !important;
+}
+§@artifacts .sh-card > .sh-logline {
+  font: 400 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-fail) !important;
+  white-space: normal !important; overflow-wrap: anywhere; text-overflow: clip !important;
+  display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+§@artifacts .sh-card.open > .sh-logline { display: block !important; -webkit-line-clamp: none; }
+§@artifacts .sh-card > .sh-liveline { display: flex !important; align-items: center; gap: 6px !important; font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; }
+§@artifacts .sh-liveline > span:not(.d-gl) { min-width: 0; }
+§@artifacts .sh-liveline > .pm-minibtn { margin-left: auto !important; }
+
+/* ---- an open card: a quiet stack of facts, small text buttons at the end ---- */
+§@artifacts .sh-card > .sh-accb { padding: 0 calc(var(--d-in) + var(--d-pad)) 0 calc(var(--d-in) + var(--d-pad) + 9px + var(--d-gap)) !important; }
+§@artifacts .sh-card > .sh-accb > .pm-acc-inner { display: flex; flex-direction: column; gap: 5px; }
+/* the accordion grows its body from zero height: a fact never shrinks to fit the body mid-open (the thumbnail would
+   grow out of nothing and push the facts down) */
+§@artifacts .sh-card > .sh-accb > .pm-acc-inner > * { flex-shrink: 0; }
+§@artifacts .sh-card > .sh-accb > .pm-acc-inner > :first-child { margin-top: 2px !important; }
+§@artifacts .sh-card > .sh-accb > .pm-acc-inner > :last-child { margin-bottom: 9px !important; }
+§@artifacts .sh-card .sh-accb > .pm-acc-inner > * { margin-top: 0 !important; padding-left: 0 !important; }
+§@artifacts .sh-prev {
+  font: 400 var(--d-fs-small)/1.45 var(--mono-font) !important; color: var(--d-text-2) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+§@artifacts .sh-rmeta {
+  font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important;
+  white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+/* fact lines wrap between their parts (JS keeps a ref or a count whole), in even lines, so an age or a word is never
+   left alone on a line (Chrome's text-wrap: pretty leaves "2h" alone there; balance does not) */
+§@artifacts :is(.sh-rmeta, .sh-liveline > span, .sh-time, .sh-retn, .sh-row.flat > .sh-meta, .sh-kv > .sh-v:not(.sh-mono)) { text-wrap: balance; }
+§@artifacts .sh-thumb { height: 56px; border-radius: var(--d-r) !important; border: 1px solid var(--d-line) !important; }
+§@artifacts .sh-vals { display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 4px 14px !important; margin: 0 !important; }
+§@artifacts .sh-val { display: inline-flex !important; flex-direction: row !important; align-items: baseline; gap: 4px; }
+§@artifacts .sh-valn { font: 600 var(--d-fs-title)/1.2 var(--mono-font) !important; color: var(--d-text) !important; font-variant-numeric: tabular-nums; }
+§@artifacts .sh-valn.ok { color: var(--d-ok) !important; }
+§@artifacts .sh-valn.err { color: var(--d-fail) !important; }
+§@artifacts .sh-valk { margin: 0 !important; font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important; }
+§@artifacts .sh-recrow { display: flex !important; align-items: center; gap: 8px !important; }
+§@artifacts .sh-play {
+  width: 26px !important; height: 26px !important; flex: none; padding: 0; border-radius: var(--d-r) !important;
+  border: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 40%, transparent) !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) 14%, transparent) !important; color: var(--cat, var(--accent-blue)) !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§@artifacts .sh-play:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) 24%, transparent) !important; }
+§@artifacts .sh-ticks {
+  height: 10px !important; border-radius: min(var(--d-r), 2px) !important; border: 1px solid var(--d-line) !important;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--cat, var(--accent-blue)) 55%, transparent) 0 2px, transparent 2px 7px) !important;
+}
+§@artifacts .sh-idrow { margin: 0 !important; }
+§@artifacts .sh-time { display: flex !important; align-items: center; gap: 0 !important; font: 400 var(--d-fs-small)/1.35 var(--mono-font) !important; color: var(--d-text-3) !important; }
+§@artifacts .sh-time > :is(.dot, .d-gl) { display: none !important; }
+/* retention: the sentence wraps in its column, the Pin button keeps its place at the end */
+§@artifacts .sh-retn { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+§@artifacts .sh-retn > .pm-minibtn { justify-self: end; margin: 0 !important; }
+/* the action strip: separated from the facts by a hairline; buttons carry words, so they size to them */
+§@artifacts .sh-prov {
+  display: flex !important; flex-wrap: wrap; align-items: center; gap: 4px 6px !important;
+  margin-top: 1px !important; padding-top: 6px !important; border-top: 1px solid color-mix(in srgb, var(--cat, var(--accent-blue)) 22%, transparent) !important;
+}
+§@artifacts .sh-prov .pm-minibtn {
+  width: auto !important; min-width: 0; height: 24px !important; padding: 0 7px !important; gap: 4px; display: inline-flex !important; align-items: center;
+  border-radius: var(--d-rs) !important; font: 600 var(--d-fs-small)/1 var(--body-font) !important; color: var(--d-text-2) !important; white-space: nowrap;
+}
+§@artifacts .sh-prov .pm-minibtn svg, §@artifacts .sh-prov .pm-minibtn .pm-ico,
+§@artifacts .sh-liveline .pm-minibtn svg, §@artifacts .sh-retn .pm-minibtn svg { width: 12px !important; height: 12px !important; }
+§@artifacts .sh-liveline .pm-minibtn, §@artifacts .sh-retn .pm-minibtn, §@artifacts .sh-idrow .pm-minibtn { height: 24px !important; }
+§@artifacts .pm-chip[data-d-st="token"] { color: var(--d-text-3) !important; font-weight: 500 !important; }
+§@artifacts .pm-chip[data-d-st="token"] > .d-gl { display: none !important; }
+
+/* a run still producing its artifact */
+§@artifacts .sh-scroll > .pm-empty {
+  display: flex; align-items: flex-start; gap: 6px; margin: 0 0 var(--d-g) !important; padding: 7px calc(var(--d-in) + var(--d-pad)) !important;
+  border: 1px dashed var(--d-line-2) !important; border-radius: var(--d-R) !important; background: none !important;
+  font: 400 var(--d-fs-meta)/1.45 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+§@artifacts .sh-scroll > .pm-empty > .d-gl { margin-top: 2px; }
+
+/* ---- Investigation: the head states the outcome; the facts are words; each step a row ---- */
+§@artifacts .sh-head > .pm-chip { margin-left: auto; }
+/* the facts sit apart by space, not by separators, so a wrapped line never ends on a dangling dot */
+§@artifacts .sh-chiprow { display: flex !important; flex-wrap: wrap; gap: 2px 12px !important; margin: 0 !important; padding: 4px var(--d-pad) 4px !important; }
+§@artifacts .sh-chiprow > .pm-chip { font: 500 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-2) !important; }
+/* a step reads like every other row: its word on line 1, what it is on line 2 */
+§@artifacts .sh-shelf .sh-row.flat {
+  display: grid !important; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "fam badge" "meta meta"; column-gap: 6px; row-gap: 1px; align-items: baseline;
+  min-height: 0; padding: 4px var(--d-pad) !important; border-radius: var(--d-r) !important; transform: none !important;
+  transition: background-color var(--d-t1) var(--d-ease);
+}
+§@artifacts .sh-shelf .sh-row.flat[data-demo-action] { cursor: pointer; }
+§@artifacts .sh-shelf .sh-row.flat[data-demo-action]:hover {
+  transform: none !important; background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important;
+}
+§@artifacts .sh-row.flat > .sh-fam {
+  grid-area: fam; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 600 var(--d-fs-label)/1.35 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important;
+}
+§@artifacts .sh-row.flat > .sh-grpbadge {
+  grid-area: badge; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important;
+}
+§@artifacts .sh-row.flat > .sh-grpbadge::before { content: '\00B7'; margin-right: 6px; color: var(--d-text-3); }
+§@artifacts .sh-row.flat > .sh-meta {
+  grid-area: meta; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere;
+}
+
+
+/* ---- families and modes ---- */
+/* NieR headers: the sort label takes the shared label capitals (90-themes covers shelf labels and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-artifacts .sh-sortlab { text-transform: uppercase !important; letter-spacing: .07em !important; }

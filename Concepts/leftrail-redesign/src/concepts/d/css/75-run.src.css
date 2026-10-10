@@ -1,0 +1,375 @@
+/* ---- 75. Debug & Run (#panel-run) and the bottom Debug tab (#bottomDebugHost) --------------------------------------
+   Fixed shelf order (F3-485): launch row, Session, Variables & watch, Call stack, Breakpoints. The launch row is a
+   configuration field over a Start Debugging split button; shelves follow the shared shelf; rows are flat with the
+   inner radius; every session state is glyph + word. The bottom tab takes the same type, buttons and glyphs. */
+§R { --d-paused: var(--cat-amber, var(--accent-warning)); }
+§R[data-o55-nier="on"] { --d-paused: var(--o55-nier-ink); }
+:is(§@run, §@#bottomDebugHost) [data-d-st="paused"] { color: var(--d-paused) !important; }
+§@#bottomDebugHost [data-d-st="ok"], §@#bottomDebugHost [data-d-st="live"] { color: var(--d-ok) !important; }
+§@#bottomDebugHost [data-d-st="run"] { color: var(--d-run) !important; }
+§@#bottomDebugHost [data-d-st="warn"], §@#bottomDebugHost [data-d-st="stale"] { color: var(--d-warn) !important; }
+§@#bottomDebugHost [data-d-st="fail"], §@#bottomDebugHost [data-d-st="blocked"] { color: var(--d-fail) !important; }
+§@#bottomDebugHost [data-d-st="pending"], §@#bottomDebugHost [data-d-st="info"] { color: var(--d-pend) !important; }
+§@#bottomDebugHost [data-d-st="idle"], §@#bottomDebugHost [data-d-st="unknown"] { color: var(--d-idle) !important; }
+/* the session picker's menu (PMR.menu, in the body portal): the state glyph leads each session */
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] .pmr-mi > .d-gl { margin-right: 8px; }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="live"] { color: var(--d-live); }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="paused"] { color: var(--d-paused); }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="pending"] { color: var(--d-pend); }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="fail"] { color: var(--d-fail); }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] { color: var(--d-idle); }
+§R .pmr-menu[data-pmr-menu="d-rd-sessions"] [data-d-st="idle"] + .pm6-chat-modelname { text-decoration: line-through; color: var(--d-text-3); }
+§R[data-o55-nier="on"] .pmr-menu[data-pmr-menu="d-rd-sessions"] .pmr-mi:hover > .d-gl { color: inherit; }
+
+/* header status: the skin's line replaces the shell's two lengths */
+§@run #rdStatus > .sh-btext { display: none !important; }
+
+/* ---- launch row: the configuration field with its gear (Open configurations file) beside it, then Start Debugging |
+   Run Without Debugging across the whole width. The actions box opens up (display: contents) so the gear can sit on
+   the field's line: at 240 px with a scrollbar, a gear on the button's line left Start Debugging F5 too little room. ---- */
+§@run .sh-launchrow { display: block !important; margin: 0 0 var(--d-g) !important; padding: 0 !important; }
+§@run .sh-launch-cluster { display: flex !important; flex-wrap: wrap !important; align-items: stretch !important; column-gap: 0 !important; row-gap: 6px !important; width: 100%; min-width: 0; }
+§@run .sh-cfgwrap { order: 0; flex: 1 1 0 !important; min-width: 0 !important; width: auto; margin-right: 6px !important; }
+§@run :is(.sh-cfgbtn, .sh-af-adapter .pm6-tb-menu-trigger, .sh-bpedit-mode .pm6-tb-menu-trigger, .sh-sesspick) {
+  display: flex !important; align-items: center; gap: 7px !important; width: 100% !important; max-width: none !important; min-width: 0 !important;
+  min-height: 28px; margin: 0 !important; padding: 4px 8px !important; box-sizing: border-box;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 500 var(--d-fs-name)/1.25 var(--body-font) !important; color: var(--d-text) !important; text-align: left; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+§@run :is(.sh-cfgbtn, .sh-af-adapter .pm6-tb-menu-trigger, .sh-bpedit-mode .pm6-tb-menu-trigger, .sh-sesspick):is(:hover, .is-menu-open) { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+§@run :is(.sh-cfgbtn, .sh-af-adapter .pm6-tb-menu-trigger, .sh-bpedit-mode .pm6-tb-menu-trigger, .sh-sesspick) > .pm-ico:last-child {
+  display: inline-flex !important; margin-left: auto; width: 12px !important; height: 12px !important; flex: none; color: var(--d-text-3);
+  transition: transform var(--d-t2) var(--d-spring);
+}
+§@run :is(.sh-cfgbtn, .sh-af-adapter .pm6-tb-menu-trigger, .sh-bpedit-mode .pm6-tb-menu-trigger, .sh-sesspick).is-menu-open > .pm-ico:last-child { transform: rotate(180deg); }
+§@run :is(.sh-af-adapter, .sh-bpedit-mode) .pm6-tb-menu-label { display: block !important; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: inherit !important; }
+§@run .sh-cfgbtn { min-height: 38px; padding: 4px 8px 4px 9px !important; }
+§@run .sh-cfgbtn > .pm-ico:first-child { display: inline-flex !important; width: 14px !important; height: 14px !important; flex: none; color: var(--d-text-3); }
+§@run .sh-cfgbtn > .sh-cfglabel { display: none !important; }
+§@run .d-cfg { display: flex; flex-direction: column; gap: 0; flex: 1 1 auto; min-width: 0; }
+§@run .d-cfgname { font: 600 var(--d-fs-name)/1.3 var(--body-font); color: var(--d-text); overflow-wrap: anywhere; }
+§@run .d-cfgcmd { font: 400 var(--d-fs-small)/1.3 var(--mono-font); color: var(--d-text-3); overflow-wrap: anywhere; }
+§@run .d-cfgcmd:empty { display: none; }
+§@run .sh-launch-acts { display: contents !important; }
+§@run .sh-startbtn {
+  order: 2; flex: 1 1 calc(100% - 32px) !important; min-width: 0; min-height: 30px !important; justify-content: flex-start !important; gap: 7px !important;
+  padding: 4px 10px !important; border-radius: var(--d-r) 0 0 var(--d-r) !important;
+}
+§@run .sh-startbtn .eq-full { display: inline !important; }
+§@run .sh-startbtn .eq-abbr { display: none !important; }
+§@run .sh-startbtn .sh-keyhint {
+  display: inline !important; margin-left: auto; padding: 0 !important; border: 0 !important; background: none !important;
+  font: 500 var(--d-fs-small)/1 var(--mono-font) !important; color: inherit !important; opacity: .72;
+}
+§@run .sh-startalt {
+  order: 3; flex: none !important; width: 32px; min-height: 30px !important; padding: 0 !important; margin: 0 !important;
+  border: 0 !important; border-radius: 0 var(--d-r) var(--d-r) 0 !important;
+  background: var(--accent-primary) !important; color: var(--d-on-accent) !important;
+  box-shadow: inset 1px 0 0 color-mix(in srgb, var(--d-on-accent) 38%, transparent) !important;
+}
+§@run .sh-startalt:hover { background: color-mix(in srgb, var(--accent-primary) 88%, var(--text-primary)) !important; }
+§@run .sh-startalt svg, §@run .sh-startalt .pm-ico { color: inherit !important; }
+§@run .sh-launch-acts > .pm-minibtn {
+  order: 1; align-self: stretch; width: 32px !important; height: auto !important; min-height: 30px; border: 1px solid var(--d-ctl-line) !important; background: var(--d-ctl-bg) !important;
+}
+/* NieR and Retro: the shared family rules for .pm-btn in 90-themes come later with the same weight, so these name the
+   button by its place in the launch row to win (NieR would otherwise make this half transparent and invisible) */
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startalt {
+  border: 0 !important; background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
+  box-shadow: inset 1px 0 0 rgba(var(--o55-nier-paper-rgb, 238, 233, 216), .4) !important;
+}
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startalt:hover { background: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .82) !important; }
+§{nier}@run .sh-launch-acts > .pm-btn.sh-startbtn { border-color: var(--o55-nier-ink) !important; }
+§{retro}@run .sh-launch-acts > .pm-btn.sh-startalt { box-shadow: inset 1px 0 0 color-mix(in srgb, var(--d-on-accent) 38%, transparent), 1px 1px 0 var(--d-ctl-line) !important; }
+
+/* add-configuration form: one neutral box, each label above its field (no clipped label column) */
+§@run .sh-addform {
+  margin: 0 0 var(--d-g) !important; padding: 6px var(--d-pad) 8px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-R) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+}
+§@run .sh-af-row { display: flex !important; flex-direction: column; align-items: stretch !important; gap: 3px !important; margin: 0 0 6px !important; }
+§@run .sh-af-row:last-child { margin-bottom: 0 !important; }
+§@run .sh-af-label { width: auto !important; font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; color: var(--d-text-3) !important; }
+§@run .sh-af-adapter, §@run .sh-af-input { flex: none !important; width: 100%; }
+§@run .sh-af-acts { flex-direction: row !important; flex-wrap: wrap; justify-content: flex-start !important; gap: 6px !important; margin-top: 8px !important; }
+§@run .sh-af-acts > .pm-btn { flex: 1 1 auto; }
+
+
+/* ---- shelf heads: the trail box opens up, so label, summary and actions are one row; a summary that does not fit
+   moves under the label (data-d-stack, set by 52-run.js) ---- */
+§@run .sh-shelf > .sh-head { flex-wrap: nowrap !important; row-gap: 1px !important; }
+§@run .sh-head > .sh-htrail { display: contents !important; }
+§@run .sh-head > .sh-hlabel { flex: 0 1 auto !important; }
+§@run .sh-htrail > .sh-hcount {
+  flex: 0 0 auto; margin-left: auto !important; max-width: none !important; min-width: 0; padding: 0 !important;
+  border: 0 !important; border-radius: 0 !important; background: none !important; box-shadow: none !important;
+  font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; font-variant-numeric: tabular-nums;
+  color: var(--d-text-2) !important; white-space: nowrap; overflow: visible !important; text-overflow: clip !important;
+}
+§@run .sh-head .sh-hacts { display: inline-flex !important; align-items: center; gap: 0 !important; flex: none !important; margin: 0 -4px 0 2px !important; }
+§@run .sh-shelf[data-acc]:not(.open) > .sh-head .sh-hacts { display: none !important; }
+§@run .sh-shelf[data-acc].open > .sh-head .sh-hacts-wide { flex: none !important; justify-content: flex-end; }
+§@run .sh-shelf > .sh-head[data-d-stack] { flex-wrap: wrap !important; padding-top: 7px !important; padding-bottom: 8px !important; }
+§@run .sh-head[data-d-stack] > .sh-hlabel { flex: 1 1 0 !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important; overflow-wrap: anywhere; }
+§@run .sh-head[data-d-stack] .sh-hacts { margin-left: auto !important; }
+§@run .sh-head[data-d-stack] .sh-hcount {
+  order: 9; flex: 1 1 100% !important; margin-left: var(--d-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere; text-align: left;
+}
+
+/* ---- Session: the transport, the picker on its own line, then one row per session ---- */
+§@run .sh-transport { display: flex !important; flex-wrap: wrap !important; align-items: center; gap: 1px !important; row-gap: 4px !important; padding: 2px 3px 6px !important; }
+§@run .sh-transport .pm-minibtn { width: 26px !important; height: 26px !important; min-width: 26px; }
+§@run .sh-transport > .is-primary { background: var(--d-sel) !important; color: var(--accent-primary) !important; border: 0 !important; }
+§@run .sh-transport > .is-primary:hover { background: color-mix(in srgb, var(--accent-primary) 26%, transparent) !important; }
+§@run .sh-tsep { flex: none; width: 1px !important; height: 14px !important; margin: 0 4px !important; background: var(--d-line-2) !important; }
+§@run .sh-tspace { display: none !important; }
+§@run .sh-ttrail { display: flex !important; flex: 1 1 100% !important; align-items: center; gap: 2px !important; min-width: 0; }
+§@run .sh-ttrail > .sh-sesswrap { order: -1; flex: 1 1 auto !important; min-width: 0 !important; margin-right: 4px; }
+§@run .sh-sesspick { padding: 3px 8px !important; gap: 6px !important; }
+§@run .sh-sesspick > :is(.sh-sdot, .sh-sess-sym) { display: none !important; }
+§@run .sh-sesspick > .pm6-tb-menu-label { display: block !important; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 var(--d-fs-name)/1.25 var(--body-font) !important; }
+§@run .sh-sesspick .eq-full { display: inline !important; }
+§@run .sh-sesspick .eq-abbr { display: none !important; }
+§@run :is(.pm-minibtn, .pm-btn):is([data-demo-disabled="1"], [aria-disabled="true"]) { opacity: .4 !important; cursor: not-allowed; }
+§@run .pm-minibtn:is([data-demo-disabled="1"], [aria-disabled="true"]):hover { background: transparent !important; color: var(--d-text-2) !important; }
+§@run .sh-sess {
+  display: grid !important; grid-template-columns: 12px minmax(0, 1fr) auto; grid-template-areas: "gl name name" "gl line chip";
+  column-gap: var(--d-gap); row-gap: 1px; align-items: baseline; min-height: var(--d-row-h); margin: 0 0 2px !important;
+  padding: 5px var(--d-pad) 5px calc(var(--d-pad) - 3px) !important;
+  border: 0 !important; border-radius: var(--d-r) !important; background: transparent; cursor: pointer; transition: background-color var(--d-t1) var(--d-ease);
+}
+§@run .sh-sess:last-child { margin-bottom: 0 !important; }
+§@run .sh-sess:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@run .sh-sess.is-active { background: var(--d-sel) !important; }
+§@run .sh-sess.is-child { margin-left: 0 !important; padding-left: calc(var(--d-pad) + 10px) !important; }
+§@run .sh-sess > .d-gl { grid-area: gl; align-self: start; margin-top: 3px; }
+§@run .sh-sess > .sh-sdot, §@run .sh-sess .sh-sessline { display: none !important; }
+§@run .sh-sess > .sh-sessmeta { display: contents !important; }
+§@run .sh-sessname { grid-area: name; min-width: 0; font: 600 var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; white-space: normal !important; overflow: visible !important; overflow-wrap: anywhere; }
+§@run .sh-sess .d-stl { grid-area: line; }
+§@run .sh-sess .d-stl > .d-str { font-variant-numeric: tabular-nums; }
+/* state line and adapter tag do not fit side by side: the tag takes a third line (data-d-stack, set by 52-run.js) */
+§@run .sh-sess[data-d-stack] { grid-template-areas: "gl name name" "gl line line" "gl chip chip"; }
+§@run .sh-sess[data-d-stack] > .sh-chip { justify-self: start; }
+§@run .sh-sess[data-d-stack] .d-stl { flex-wrap: wrap; }
+§@run .sh-sess[data-d-stack] .d-stl > .d-str { white-space: normal; overflow: visible; }
+§@run .sh-sess > .sh-chip {
+  grid-area: chip; justify-self: end; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+
+/* ---- Variables & watch, Call stack: name and value side by side, the value under the name when both do not fit ---- */
+§@run .sh-glabel { padding: 6px var(--d-pad) 2px !important; font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text-3) !important; }
+/* names start in the column the names after a chevron use (pad + chevron + gap: 24 px in Basic); a row with a chevron
+   (a variable with members) keeps the plain pad */
+§@run :is(.sh-watch, .sh-var:not([data-acc]), .sh-var-h, .sh-frame) {
+  position: relative; display: flex !important; align-items: baseline; gap: 8px !important; min-height: 26px; margin: 0 !important;
+  padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 13px) !important; border-radius: var(--d-r) !important; background: transparent; transition: background-color var(--d-t1) var(--d-ease);
+}
+§@run .sh-var.is-childvar { padding-left: calc(var(--d-pad) + 26px) !important; }
+§@run .sh-var[data-acc] { display: block !important; padding: 0 !important; border-radius: var(--d-r) !important; }
+§@run .sh-var > .sh-var-h { gap: var(--d-gap) !important; padding-left: var(--d-pad) !important; cursor: pointer; }
+§@run .sh-var-h > .sh-accchev, §@run .sh-scope-h > .sh-accchev { width: 9px !important; height: 9px !important; flex: none; align-self: center; color: var(--d-text-3) !important; }
+§@run .sh-var-h > .sh-vname { margin-right: 4px; }
+§@run .sh-var[data-acc] > .sh-accb { padding: 0 !important; }
+§@run :is(.sh-watch, .sh-var:not([data-acc]), .sh-var-h, .sh-frame, .sh-scope-h):hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@run :is(.sh-wexpr, .sh-vname, .sh-fname) {
+  flex: 0 1 auto !important; min-width: 0; max-width: none !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 500 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important;
+}
+§@run .sh-wexpr { color: var(--d-text-2) !important; }
+§@run .sh-vname { color: var(--accent-blue) !important; }
+§@run :is(.sh-wval, .sh-vval, .sh-floc) {
+  flex: 1 1 auto !important; min-width: 0; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 400 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important;
+}
+§@run .sh-floc { font-size: var(--d-fs-small) !important; color: var(--d-text-3) !important; }
+§@run [data-d-stack]:is(.sh-watch, .sh-var, .sh-var-h, .sh-frame) { flex-wrap: wrap !important; row-gap: 0 !important; }
+§@run [data-d-stack] > :is(.sh-wexpr, .sh-vname, .sh-fname) { flex: 1 1 100% !important; white-space: normal; overflow-wrap: anywhere; }
+§@run [data-d-stack] > :is(.sh-wval, .sh-vval, .sh-floc) { flex: 1 1 100% !important; text-align: left; white-space: normal; overflow-wrap: anywhere; }
+§@run .sh-var-h[data-d-stack] > .sh-vval { margin-left: 13px; }
+§@run .sh-vval > .sh-chip {
+  display: inline-flex !important; align-items: center; gap: 4px; margin-left: 6px; padding: 0 !important; vertical-align: -1px;
+  border: 0 !important; border-radius: 0 !important; background: none !important; font: 600 var(--d-fs-small)/1.3 var(--body-font) !important;
+}
+§@run .sh-scope-h { display: flex !important; align-items: center; gap: var(--d-gap) !important; min-height: 26px; padding: 4px var(--d-pad) !important; border-radius: var(--d-r) !important; cursor: pointer; transition: background-color var(--d-t1) var(--d-ease); }
+§@run .sh-scope-h > .sh-main { display: flex !important; flex-direction: row !important; align-items: baseline; gap: 6px; flex: 1 1 auto; min-width: 0; font: 600 var(--d-fs-label)/1.3 var(--body-font) !important; color: var(--d-text) !important; }
+§@run .sh-scope-h .sh-meta { display: inline !important; margin-left: auto; font: 500 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; font-variant-numeric: tabular-nums; overflow: visible; }
+§@run .sh-scope > .sh-accb { padding: 0 !important; }
+/* row actions float over the row's end instead of pushing its text about */
+§@run .sh-rowbtns {
+  position: absolute; right: 2px; top: 50%; transform: translateY(-50%); z-index: 1; gap: 0 !important; padding: 0 1px;
+  border-radius: var(--d-r); background: color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
+  box-shadow: -10px 0 8px -6px color-mix(in srgb, var(--cat, var(--accent-blue)) 18%, var(--surface));
+}
+/* Glass: an opaque tint (its surfaces are see-through, which let the covered end of the name read through the icons;
+   no blur per row) */
+§{glass}@run .sh-rowbtns {
+  --d-rb: color-mix(in srgb, rgb(var(--glass-tint-rgb, 46, 34, 72)) 86%, var(--text-primary));
+  background: var(--d-rb); box-shadow: -10px 0 8px -6px var(--d-rb);
+}
+:is(§@run) :is(.sh-watch, .sh-var, .sh-frame, .sh-bp):focus-within .sh-rowbtns { display: inline-flex; }
+§{nier}@run .pmr-cur:hover > .sh-rowbtns { background: var(--o55-nier-ink); box-shadow: none; }
+§{nier}@run .pmr-cur:hover > .sh-rowbtns .pm-minibtn { color: var(--o55-nier-on-ink) !important; }
+§{nier}@run .pmr-cur:hover > .sh-rowbtns .pm-minibtn:hover { background: rgba(var(--o55-nier-paper-rgb, 238, 233, 216), .2) !important; color: var(--o55-nier-on-ink) !important; }
+/* call stack: the thread, then its frames; the paused reason is a status */
+§@run .sh-thread-h {
+  display: flex !important; flex-wrap: wrap; align-items: baseline; gap: 2px 8px !important; padding: 4px var(--d-pad) 2px calc(var(--d-pad) + 13px) !important;
+  font: 600 var(--d-fs-mono)/1.35 var(--mono-font) !important; color: var(--d-text) !important;
+}
+§@run .sh-thread-h > .sh-chip {
+  display: inline-flex !important; align-items: center; gap: 4px; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important; align-self: center;
+}
+§@run .sh-frame { cursor: pointer; }
+§@run .sh-frame.is-active { background: var(--d-sel) !important; }
+§@run .sh-frame.is-lib { opacity: .62; }
+§@run .sh-more {
+  display: block; margin: 0 !important; padding: 4px var(--d-pad) 4px calc(var(--d-pad) + 13px) !important; min-height: 24px; border-radius: var(--d-r) !important;
+  font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-pend) !important; cursor: pointer;
+}
+§@run .sh-more:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+
+/* ---- Breakpoints: toggle glyph, location (opens the source), the function and the condition after it ---- */
+§@run .sh-bp {
+  position: relative; display: flex !important; align-items: flex-start; gap: var(--d-gap) !important; min-height: 28px; margin: 0 !important;
+  padding: 2px var(--d-pad) 2px calc(var(--d-pad) - 3px) !important; border-radius: var(--d-r) !important; transition: background-color var(--d-t1) var(--d-ease);
+}
+/* a 12 px column with a 16 px hit area (the 2 px each side overlap the row's pad and the gap); no fill on hover, which
+   on a strip this narrow would read as a capsule */
+§@run .sh-bp > .sh-bptog { width: 16px !important; min-width: 16px !important; height: 24px !important; margin: 0 -2px !important; background: transparent !important; }
+§@run .sh-bp > .sh-bptog svg, §@run .sh-bp > .sh-bptog .pm-ico { width: 12px !important; height: 12px !important; }
+§@run .sh-bp > .sh-bptog:hover { background: transparent !important; color: color-mix(in srgb, var(--d-fail) 72%, var(--d-text)) !important; }
+§@run .sh-bp.is-disabled > .sh-bptog:hover { color: var(--d-text-2) !important; }
+§@run .sh-bp:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@run .sh-bp.is-disabled { opacity: .55; }
+§@run .sh-bptog { color: var(--d-fail) !important; }
+§@run .sh-bp.is-disabled .sh-bptog { color: var(--d-text-3) !important; }
+§@run .sh-bploc {
+  flex: 1 1 auto; min-width: 0; display: flex !important; flex-wrap: wrap; align-items: baseline; column-gap: 6px; row-gap: 0; padding: 4px 0 3px;
+  font: 500 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important; white-space: normal !important; overflow: visible !important; cursor: pointer;
+}
+§@run .sh-bploc > .sh-meta { display: inline !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; white-space: nowrap; overflow: visible; }
+§@run .sh-bploc > .sh-chip {
+  display: inline !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important;
+  font: 500 var(--d-fs-small)/1.4 var(--mono-font) !important; color: var(--d-warn) !important; white-space: nowrap;
+}
+§@run .sh-bploc > .sh-chip::before { content: 'when '; font-family: var(--body-font); font-weight: 400; color: var(--d-text-3); }
+/* the inline edit strip: a tinted block inside the shelf, mode, condition, then Apply / Cancel */
+§@run .sh-bpedit {
+  display: flex !important; flex-direction: column; align-items: stretch !important; gap: 6px !important; width: auto !important; max-width: none !important;
+  margin: 2px 0 4px !important; padding: 6px var(--d-pad) !important; border: 0 !important; border-radius: var(--d-r) !important;
+  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-open), transparent) !important;
+}
+§@run .sh-bpedit > * { flex: none !important; width: 100%; max-width: none !important; min-width: 0 !important; }
+§@run .sh-bpedit-acts { display: flex !important; flex-wrap: nowrap !important; gap: 6px !important; }
+§@run .sh-bpedit-acts > .pm-btn { flex: 1 1 0 !important; }
+§@run .sh-bpx {
+  display: flex !important; align-items: center; gap: 8px !important; min-height: 26px; margin: 0 !important; padding: 4px var(--d-pad) !important;
+  border-radius: var(--d-r) !important; font: 400 var(--d-fs-name)/1.3 var(--body-font) !important; color: var(--d-text) !important; cursor: pointer;
+}
+§@run .sh-bpx:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-hover), transparent) !important; }
+§@run .sh-bpx input {
+  -webkit-appearance: none !important; appearance: none !important; flex: none; width: 14px !important; height: 14px !important; margin: 0 !important; padding: 0 !important;
+  box-sizing: border-box; border: 1.5px solid var(--d-line-2) !important; border-radius: min(var(--d-r), 3px) !important;
+  background: transparent !important; box-shadow: none !important; cursor: pointer;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+/* checked: the accent box with the tick knocked out of it (a mask, like the status glyphs), so it shows the row behind */
+§@run .sh-bpx input:checked {
+  border-color: var(--accent-primary) !important; background: var(--accent-primary) !important;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><defs><mask id='m'><rect width='16' height='16' fill='white'/><path d='M4 8.3l2.7 2.7L12 5.6' fill='none' stroke='black' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/></mask></defs><rect width='16' height='16' mask='url(%23m)'/></svg>") center / 100% no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><defs><mask id='m'><rect width='16' height='16' fill='white'/><path d='M4 8.3l2.7 2.7L12 5.6' fill='none' stroke='black' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/></mask></defs><rect width='16' height='16' mask='url(%23m)'/></svg>") center / 100% no-repeat;
+}
+§@run .sh-bpx input:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+§{nier}@run .sh-bpx input:checked { border-color: var(--o55-nier-ink) !important; background: var(--o55-nier-ink) !important; }
+/* NieR headers: the group labels take the shared label capitals (90-themes covers the shelf labels and the title) */
+§R[data-o55-nier-parts~="headers"] #panel-run .sh-glabel { text-transform: uppercase !important; letter-spacing: .07em !important; }
+
+/* ---- the bottom Debug tab ---- */
+§@#bottomDebugHost { font-family: var(--body-font); color: var(--d-text); }
+§@#bottomDebugHost .pm-bottom-linked-header {
+  gap: 8px !important; padding: 6px 12px !important; border-bottom: 1px solid var(--d-line) !important; background: var(--d-chrome) !important;
+  font: 400 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+§@#bottomDebugHost .pm6-bottom-kicker { font: 600 var(--d-fs-label)/1.3 var(--display-font, var(--body-font)) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--d-text) !important; }
+§@#bottomDebugHost .pm6-bottom-empty { gap: 6px !important; padding: 24px 16px !important; }
+§@#bottomDebugHost .pm6-bottom-empty-kicker {
+  display: inline-flex; align-items: center; gap: 5px; font: 600 var(--d-fs-meta)/1.3 var(--body-font) !important;
+  letter-spacing: 0 !important; text-transform: none !important;
+}
+§@#bottomDebugHost .pm6-bottom-empty-title { font: 600 15px/1.3 var(--display-font, var(--body-font)) !important; color: var(--d-text) !important; }
+§@#bottomDebugHost .pm6-bottom-empty-hint { font: 400 var(--d-fs-name)/1.45 var(--body-font) !important; color: var(--d-text-2) !important; }
+§@#bottomDebugHost .rd-empty-acts { justify-content: center; gap: 6px !important; margin-top: 10px !important; }
+§@#bottomDebugHost .pm-tiny-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 28px; margin: 0 !important; padding: 4px 10px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important;
+  font: 600 var(--d-fs-label)/1.2 var(--body-font) !important; color: var(--d-text) !important; white-space: nowrap;
+  transition: background-color var(--d-t1) var(--d-ease), border-color var(--d-t1) var(--d-ease);
+}
+§@#bottomDebugHost .pm-tiny-btn:hover { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+§@#bottomDebugHost .pm-tiny-btn:active { transform: scale(.97); }
+§@#bottomDebugHost .pm-tiny-btn.rd-startbtn { background: var(--accent-primary) !important; border-color: transparent !important; color: var(--d-on-accent) !important; }
+§@#bottomDebugHost .pm-tiny-btn.rd-startbtn:hover { background: color-mix(in srgb, var(--accent-primary) 88%, var(--text-primary)) !important; }
+§@#bottomDebugHost .pm-tiny-btn:is([data-demo-disabled="1"], [aria-disabled="true"]) { opacity: .45; cursor: not-allowed; }
+§{nier}@#bottomDebugHost .pm-tiny-btn.rd-startbtn { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
+§{retro}@#bottomDebugHost .pm-tiny-btn { box-shadow: 1px 1px 0 var(--d-ctl-line) !important; }
+§@#bottomDebugHost .pm6-tb-menu-trigger {
+  display: inline-flex !important; align-items: center; gap: 7px !important; min-height: 28px; padding: 4px 9px !important;
+  border: 1px solid var(--d-ctl-line) !important; border-radius: var(--d-r) !important; background: var(--d-ctl-bg) !important; box-shadow: none !important; outline: 0;
+  font: 500 var(--d-fs-name)/1.25 var(--body-font) !important; color: var(--d-text) !important;
+}
+§@#bottomDebugHost .pm6-tb-menu-trigger:is(:hover, .is-menu-open) { background: var(--d-press) !important; border-color: var(--d-line-2) !important; }
+§@#bottomDebugHost .pm6-tb-menu-trigger:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 1px; }
+§@#bottomDebugHost .pm6-tb-menu-trigger > .pm-ico { width: 13px; height: 13px; color: var(--d-text-3); }
+/* attached: session tabs as the rail's tab ink, the session chrome, the console with stream words, the REPL */
+§@#bottomDebugHost .rd-sestabs { gap: 2px !important; padding: 4px 8px !important; border-bottom: 1px solid var(--d-line) !important; }
+§@#bottomDebugHost .rd-sestab {
+  display: inline-flex !important; align-items: center; gap: 6px !important; min-height: 28px; padding: 0 10px !important;
+  border: 0 !important; border-radius: var(--d-r) !important; font: 600 var(--d-fs-label)/1 var(--body-font) !important; color: var(--d-text-3) !important;
+  transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease);
+}
+§@#bottomDebugHost .rd-sestab:hover { color: var(--d-text-2) !important; background: var(--d-hover); }
+§@#bottomDebugHost .rd-sestab.active {
+  color: var(--d-text) !important; background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+§{nier}@#bottomDebugHost .rd-sestab.active { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink) !important; box-shadow: none; }
+§{nier}@#bottomDebugHost .rd-sestab.active > .d-gl { color: inherit !important; }
+§@#bottomDebugHost .rd-sestab > .sh-sdot { display: none !important; }
+§@#bottomDebugHost .rd-chrome {
+  flex-wrap: wrap; gap: 6px 12px !important; min-height: 40px; padding: 5px 12px !important; border-bottom: 1px solid var(--d-line) !important;
+  font: 400 var(--d-fs-meta)/1.3 var(--body-font) !important; color: var(--d-text-3) !important;
+}
+§@#bottomDebugHost .rd-adapter { font: 400 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; }
+§@#bottomDebugHost #rdChromeState, §@#bottomDebugHost .rd-term .rd-adapter { display: none !important; }
+§@#bottomDebugHost .rd-chrome > .d-stl { font-size: var(--d-fs-label); }
+§@#bottomDebugHost .rd-elapsed { font: 500 var(--d-fs-mono)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important; font-variant-numeric: tabular-nums; }
+§@#bottomDebugHost .rd-chrome-btns { gap: 6px !important; }
+§@#bottomDebugHost .rd-console { padding: 6px 12px !important; font: 400 var(--d-fs-mono)/1.55 var(--mono-font) !important; }
+§@#bottomDebugHost .rd-line { gap: 12px !important; }
+§@#bottomDebugHost .rd-tag {
+  width: 7ch !important; flex: none; padding: 0 !important; border-radius: 0 !important; background: none !important; text-align: left !important;
+  font: 600 var(--d-fs-small)/1.55 var(--mono-font) !important; letter-spacing: 0 !important; text-transform: lowercase;
+}
+§@#bottomDebugHost .rd-tag-adapter { color: var(--d-pend) !important; }
+§@#bottomDebugHost .rd-tag-stdout { color: var(--d-text-3) !important; }
+§@#bottomDebugHost .rd-tag-stderr { color: var(--d-fail) !important; }
+§@#bottomDebugHost .rd-tag-repl { color: var(--cat-purple, var(--accent-primary)) !important; }
+§@#bottomDebugHost .rd-text { color: var(--d-text-2) !important; }
+§@#bottomDebugHost .rd-replrow { gap: 8px !important; padding: 6px 12px !important; border-top: 1px solid var(--d-line) !important; }
+§@#bottomDebugHost .rd-prompt { font: 700 var(--d-fs-title)/1 var(--mono-font); color: var(--accent-primary) !important; }
+§@#bottomDebugHost .rd-replrow input {
+  background: transparent !important; border: 0 !important; box-shadow: none !important;
+  font: 400 var(--d-fs-mono)/1.4 var(--mono-font) !important; color: var(--d-text) !important;
+}
+§@#bottomDebugHost .rd-replrow input::placeholder { color: var(--d-text-3); }
+/* ended: the session tabs, the ended chrome (exit code, Restart), and the console scrollback the shell keeps (F3-490) */
+§@#bottomDebugHost[data-rd-state="term"] .rd-live, §@#bottomDebugHost[data-rd-state="term"] .rd-term { display: contents !important; }
+§@#bottomDebugHost[data-rd-state="term"] .rd-live > :is(.rd-chrome, .rd-replrow) { display: none !important; }
+§@#bottomDebugHost[data-rd-state="term"] .rd-sestabs { order: 0; }
+§@#bottomDebugHost[data-rd-state="term"] .rd-term > .rd-chrome { order: 1; }
+§@#bottomDebugHost[data-rd-state="term"] .rd-console { order: 2; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+§@#bottomDebugHost[data-rd-state="term"] .rd-termnote { order: 3; padding: 4px 12px 8px !important; font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text-3) !important; }
+

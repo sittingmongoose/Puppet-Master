@@ -48,8 +48,8 @@
 /* the Files root picker sits on the status line as a quiet text trigger */
 §F .sh-banner > .sh-bbranch { width: auto !important; max-width: 100%; margin: 0 0 0 -5px !important; flex: none; }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger {
-  display: inline-flex !important; width: auto !important; border: 0 !important; background: none !important; padding: 1px 5px !important; min-height: 22px; gap: 5px !important; max-width: 100%;
-  border-radius: var(--d-r) !important; font: 500 var(--d-fs-meta)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important;
+  display: inline-flex !important; width: auto !important; border: 0 !important; background: none !important; box-shadow: none !important; padding: 1px 5px !important; min-height: 22px; gap: 5px !important; max-width: 100%;
+  border-radius: var(--d-rs) !important; font: 500 var(--d-fs-meta)/1.3 var(--mono-font) !important; color: var(--d-text-2) !important;
 }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-label { display: inline !important; font: inherit !important; color: inherit !important; max-width: none !important; }
 §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger:hover, §F .sh-banner > .sh-bbranch .pm6-tb-menu-trigger.is-menu-open { background: var(--d-hover) !important; color: var(--d-text) !important; }
@@ -85,48 +85,7 @@
 }
 §{light}S .pm7-scm-engine-switch > .d-thumb { box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px var(--d-ctl-line); }
 
-/* ---- tabs: one strip, the ink is exactly the active tab's box ----
-   The strip itself is a full-bleed chrome plate; the visible box is drawn by ::before, inset by the gutter, so the
-   frosted scroll-under never shows through a side gutter. Items sit inside with the same inset the rows use. */
-§ .pm-segtab {
-  position: relative !important; display: flex !important; gap: 0; box-sizing: border-box !important;
-  width: auto !important; max-width: none !important; min-width: 0 !important;
-  margin: 0 !important; padding: calc(var(--d-in) + 1px) calc(var(--d-gx) + var(--d-in) + 1px) calc(var(--d-g) + var(--d-in) + 1px) !important;
-  border: 0 !important; border-radius: 0 !important; overflow: visible !important; box-shadow: none !important;
-}
-§ .pm-segtab::before {
-  content: ''; position: absolute; z-index: 0; inset: 0 var(--d-gx) var(--d-g); pointer-events: none;
-  border-radius: var(--d-R); background: var(--d-ctl-bg); box-shadow: inset 0 0 0 1px var(--d-ctl-line);
-}
-§ .pm-segtab-ink {
-  z-index: 0 !important; border-radius: var(--d-r) !important;
-  background: color-mix(in srgb, var(--accent-primary) 16%, var(--surface-elevated)) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .16), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 24%, transparent) !important;
-}
-§{light} .pm-segtab-ink { background: var(--surface-elevated) !important; box-shadow: 0 1px 3px rgba(0, 0, 0, .12), inset 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent) !important; }
-§ .pm-segtab-item {
-  position: relative; z-index: 1; flex: 1 1 0 !important; min-width: 0 !important; height: 28px;
-  display: flex !important; flex-direction: row !important; align-items: center; justify-content: center; gap: 0;
-  margin: 0 !important; padding: 0 6px !important; border: 0 !important; border-radius: var(--d-r) !important;
-  background: none !important; box-shadow: none !important;
-  font: 600 var(--d-fs-label)/1 var(--body-font) !important; letter-spacing: 0 !important; text-transform: none !important;
-  color: var(--d-text-3) !important;
-  transition: color var(--d-t2) var(--d-ease);
-}
-§ .pm-segtab-item:hover { color: var(--d-text-2) !important; }
-§ .pm-segtab-item.active { color: var(--d-text) !important; }
-§ .pm-segtab-item svg, § .pm-segtab-item .pm-ico { width: 15px !important; height: 15px !important; flex: none; transform: none !important; }
-§ .pm-segtab-item.active svg { color: var(--accent-primary); }
-/* labels: shown for every tab when they all fit, for the active tab only when only that fits, never abbreviated */
-§ .pm-segtab-item > span, § .pm-segtab-item > .eq-full {
-  display: inline-block !important; overflow: hidden; white-space: nowrap; text-overflow: clip;
-  max-width: 120px; padding: 0 !important; margin-left: 5px; opacity: 1;
-  transition: max-width var(--d-t2) var(--d-ease), margin-left var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease);
-}
-§ .pm-segtab-item > .eq-abbr { display: none !important; }
-§ .pm-segtab[data-d-tabs="active"] .pm-segtab-item:not(.active) > :is(span, .eq-full),
-§ .pm-segtab[data-d-tabs="icons"] .pm-segtab-item > :is(span, .eq-full) { max-width: 0; margin-left: 0; opacity: 0; }
-§ .pm-segtab[data-d-tabs="active"] .pm-segtab-item.active { flex: 0 0 auto !important; padding: 0 8px !important; }
+/* tab strips: 22-tabs.src.css */
 
 /* Files toolbar: icon buttons on the chrome plate, no box around them */
 §F .fm-toolbar-wrap { margin: 0 !important; padding: 0 var(--d-gx) var(--d-g) !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
@@ -169,3 +128,10 @@
 }
 § .sh-foot .fm-footstat { gap: 6px; align-items: flex-start !important; font: 500 var(--d-fs-meta)/1.35 var(--body-font) !important; color: var(--d-text-2) !important; white-space: normal !important; overflow: visible; min-width: 0; }
 § .sh-foot .fm-footmeta { font: 400 var(--d-fs-small)/1.3 var(--body-font) !important; color: var(--d-text-3) !important; }
+/* Files: the watch status takes the whole first line; the list facts sit under it, starting under its words and
+   wrapping instead of being cut (at 280 px the shell shows them beside the status, where neither fits) */
+§F .sh-foot { flex-wrap: wrap; row-gap: 1px; }
+§F .sh-foot > :is(.fm-footstat, .fm-indexchip) { flex: 1 1 100%; }
+§F .sh-foot > .fm-footmeta {
+  flex: 1 1 100%; margin-left: 18px !important; white-space: normal !important; overflow: visible !important; text-overflow: clip !important;
+}

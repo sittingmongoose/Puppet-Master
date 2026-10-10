@@ -1,6 +1,7 @@
-/* The concept switcher: one status-bar item ("Rail  A · Ledger") opening a chat-style menu of the concepts and today's
-   rail. Review-copy chrome only, never part of the product. Alt+Shift+1..5 switch directly; ?rail=a|b|c|current
-   picks the first concept on load; the last choice is remembered per viewer. */
+/* The concept switcher: one status-bar item ("Rail  A · Ledger") opening a chat-style menu of the concepts and the
+   original rail. Review-copy chrome only (rail_layer.apply_review), never part of the published page.
+   Alt+Shift+1..5 switch directly; ?rail=a|b|c|d|current picks the first concept on load; the last choice is
+   remembered per viewer. "current" is labelled Original (the rail before Polish); its id stays "current". */
 
 function switcherMenu() {
   const cur = PMR.concepts.current();
@@ -17,8 +18,8 @@ function switcherMenu() {
 }
 function switcherText(id) {
   const c = PMR.concepts.list().find(x => x.id === id);
-  if (!c) return 'Current';
-  return c.id === 'current' ? 'Current rail' : c.id.toUpperCase() + ' · ' + c.label;
+  if (!c) return 'Original';
+  return c.id === 'current' ? 'Original rail' : c.id.toUpperCase() + ' · ' + c.label;
 }
 
 function installSwitcher() {
@@ -28,7 +29,7 @@ function installSwitcher() {
   const strong = PMR.h('strong.pmr-switch-name', { text: switcherText(PMR.concepts.current()) });
   const btn = PMR.h('button', { type: 'button', class: 'pm7-statusitem pmr-switch', 'aria-haspopup': 'menu', 'aria-expanded': 'false' },
     PMR.icon('layers', 'pmr-switch-ico'), PMR.h('span.pmr-switch-k', { text: 'Rail' }), strong, PMR.icon('chevD', 'pmr-switch-chev'));
-  PMR.hover(btn, 'Left rail concept', 'Review copy only. Switches between the rail concepts and the current rail (Alt+Shift+1 to 5).');
+  PMR.hover(btn, 'Left rail concept', 'Review copy only. Switches between the rail concepts and the original rail (Alt+Shift+1 to 5).');
   btn.addEventListener('click', ev => {
     ev.preventDefault();
     PMR.menu.toggle(switcherMenu(), btn, { width: 300, onPick: it => PMR.concepts.set(it.value) });
@@ -55,5 +56,8 @@ document.addEventListener('keydown', ev => {
   ev.preventDefault();
   PMR.concepts.set(list[n].id);
 });
+
+/* the choice is remembered here, not by the host: the published page has no switcher and remembers nothing */
+document.addEventListener('pmr:concept', ev => { try { localStorage.setItem('pmr.concept.v2', ev.detail.id); } catch (e) { /* storage off */ } });
 
 PMR.switcher = { install: installSwitcher, initial: initialConcept };
