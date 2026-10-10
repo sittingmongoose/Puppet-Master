@@ -71,8 +71,14 @@ element) and `11bad014f6` (add selection).
    `agent-cursor` (tone paused), busy `status('working')`, news `st-info` (tone idle). Every mark gets `nx-self`, so a
    tab's hover plays only its kind glyph. The tooltip lists any marks the winner hides. Remove `.pmw-agentmark`,
    `.pmw-tattn` and every rule that paints them; the warning-coloured square goes, because an agent's ask (needs you)
-   and a background tab's news must not look alike (order and split: lead ruling). **Busy** is `st-working` in the
-   slot for every kind, the terminal included (lead ruling): a naming glyph stays still and motion is a status's.
+   and a background tab's news must not look alike (order and split: lead ruling). **News** marks a tab an agent opened
+   in the background (Jared's D8: it never takes focus), new output or a bell, and clears the first time the tab is
+   shown. **Busy** is `st-working` in the slot for every kind, the terminal included (lead ruling), and follows the
+   panels' P12 (nothing animates at idle; a dev server or a watcher is busy for hours), agreed with home-panels:
+   shown only while the tab is not on screen (an inactive tab, a hidden or collapsed panel), still
+   (`PM56_NEON.status('working', 12, 'nx-still nx-self')`: lit, no orbit, its act plays once as it mounts, when the
+   work starts), and at the end it remounts once, so the act plays again, then leaves after `--nx-d1` (440 ms; 396 in
+   Retro); under Reduced Motion it comes and goes at once. If the work failed, `failed` takes the slot instead.
    Busy had no strip visual at all before (`[data-busy]` had no CSS).
 4. **Dirty** stays in the close slot as `change-modified` (12 px, status role, still), swapped for `close` on the tab's
    hover or focus as `.pmw-tdot` is today. **Preview** stays the italic label; no glyph.
@@ -99,3 +105,12 @@ element) and `11bad014f6` (add selection).
    all ten looks (lowest: the breakpoints' blocked ink, 3.16:1 in NieR Dark and 3.58:1 in Friendly Light; every other
    glyph is 3.79:1 or more).
 10. **Reduced Motion:** nothing extra; neon-icons.css stops every act and the lit rest pose carries each state.
+11. **Round two and addendum 3** (home-panels, 2026-10-10): the '+' menu's SSH hosts row `server` (objects), Debug
+    Console sub-tab states (D33) running `working`, paused `paused`, ended by how it ended (`complete`, `failed`, or
+    `skipped` when you stopped it; not `idle`, which means ready for input), the "paused at <file:line>" link
+    `ring-dot`, a session's run `play`, the dashboard's "Demo time" fact `clock`, its Live mark
+    `status('working', 12, 'nx-still')` (the vocabulary's "live"): lit and still, and the board's beat event remounts
+    it so its act plays once per beat (P12: nothing moves between beats; Live stays on for hours); under Reduced
+    Motion it never moves. The ended mapping fits D33 as built (home-panels). Board menu rows: Start from
+    `layout`, Save as preset `save`, Play the next hour `play`, Back to now `clock`, Live readings `signal`; the Output
+    picker's "Open in new tab" `open`. The empty dashboard's sketch is an illustration, not a glyph.
