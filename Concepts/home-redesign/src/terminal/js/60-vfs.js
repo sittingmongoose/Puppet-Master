@@ -391,9 +391,10 @@
   VFS.prototype.hostname = function () { try { return this.readText('/etc/hostname').trim(); } catch (e) { return this.host; } };
 
   /* ---------- git model ---------- */
+  var assetSizes = new Map();   /* asset signature -> its file size, so `git diff --stat` can say Bin A -> B bytes */
   function sig(n) {
     if (!n || n.t !== 'file') return null;
-    if (n.lazy) return 'asset:' + n.lazy.asset + ':' + n.lazy.w + 'x' + n.lazy.h + ':' + n.lazy.fmt;
+    if (n.lazy) { var a = 'asset:' + n.lazy.asset + ':' + n.lazy.w + 'x' + n.lazy.h + ':' + n.lazy.fmt; if (n.size) assetSizes.set(a, n.size); return a; }
     if (n.bytes) { var h = 0x811c9dc5; for (var i = 0; i < n.bytes.length; i++) { h ^= n.bytes[i]; h = Math.imul(h, 0x01000193) >>> 0; } return 'bytes:' + n.bytes.length + ':' + h; }
     return n.text;
   }
@@ -501,6 +502,10 @@
     stats.hash = hash;
     return stats;
   };
+  /* the working-tree signature git compares (text, or 'asset:' / 'bytes:' for binaries), or null when the file is gone */
+  VFS.prototype.gitSig = function (repo, rel) {
+    try { return sig(this._lookup(repo.root + '/' + rel, false).node); } catch (e) { return null; }
+  };
   /* text of a tracked file at HEAD, or null for binaries and unknown files */
   VFS.prototype.gitHeadText = function (repo, rel) {
     var c = repo.committed[rel];
@@ -559,6 +564,12 @@
     return out;
   }
   VFS.diffLines = diffLines;
+  /* bytes a binary signature stands for (0 when there is no file) */
+  VFS.sigSize = function (s) {
+    if (typeof s !== 'string') return 0;
+    if (s.indexOf('bytes:') === 0) return Number(s.split(':')[1]) || 0;
+    return s.indexOf('asset:') === 0 ? assetSizes.get(s) || 0 : s.length;
+  };
   VFS.hunks = hunks;
   VFS.hex40 = hex40;
   VFS.fnv = fnv;

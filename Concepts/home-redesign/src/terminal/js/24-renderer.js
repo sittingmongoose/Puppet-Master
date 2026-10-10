@@ -63,36 +63,49 @@
     return painted;
   };
 
-  /* phosphor schemes map colours outside the 16 onto the tube by brightness, so 38;5;196 never paints red on green */
+  /* phosphor schemes map colours outside the 16 onto the tube by brightness, so 38;5;196 never paints red on green.
+     A colour a program sets (OSC 4 on one of the 16, OSC 10/11/12) is a program colour too and is mapped the same way;
+     only the scheme's own 16 are drawn as authored. */
   function mono(rgb, th) {
     var L = Math.sqrt(C.lum(rgb));
     /* light grounds (parchment): darker colours become stronger ink; dark grounds: brighter colours become brighter */
     return C.mix(th.mono.lo, th.mono.hi, th.mono.light ? 0.35 + 0.65 * (1 - L) : 0.18 + 0.82 * L);
   }
-  Renderer.prototype._fg = function (st, pal, th, term) {
+  function bgMono(rgb, th) { var L = Math.sqrt(C.lum(rgb)); return C.mix(th.mono.lo, th.mono.hi, th.mono.light ? 0.6 * (1 - L) : 0.6 * L); }
+  function programPal(term, idx) { return idx >= 16 || term.paletteOverride.has(idx); }
+  /* the colours default cells and the cursor are painted with: the program's (OSC 10/11/12) over the scheme's. The
+     view paints the screen ground (--pmt-bg) from the same values, so the contrast floor measures what is shown. */
+  Renderer.prototype.defaults = function () {
+    var th = this.view.theme, d = this.view.term.dynamic;
+    return {
+      fg: d.fg === null ? th.fg : th.mono ? mono(d.fg, th) : d.fg,
+      bg: d.bg === null ? th.bg : th.mono ? bgMono(d.bg, th) : d.bg,
+      cursor: d.cursor === null ? th.cursor : th.mono ? mono(d.cursor, th) : d.cursor
+    };
+  };
+  Renderer.prototype._fg = function (st, pal, th, term, defFg) {
     var c = st.fg, rgb;
-    if (c === 0) rgb = term.dynamic.fg !== null ? term.dynamic.fg : th.fg;
+    if (c === 0) rgb = defFg;
     else if (c < 0x200) {
       var idx = c - 0x100;
       if ((st.flags & A.BOLD) && idx < 8 && this.view.opts.boldBright) idx += 8;
       rgb = pal[idx];
-      if (th.mono && idx >= 16) rgb = mono(rgb, th);
+      if (th.mono && programPal(term, idx)) rgb = mono(rgb, th);
     } else { rgb = c & 0xffffff; if (th.mono) rgb = mono(rgb, th); }
     return rgb;
   };
   Renderer.prototype._bg = function (st, pal, th, term) {
     var c = st.bg, rgb;
     if (c === 0) return -1;
-    var bgMono = function (v) { var L = Math.sqrt(C.lum(v)); return C.mix(th.mono.lo, th.mono.hi, th.mono.light ? 0.6 * (1 - L) : 0.6 * L); };
-    if (c < 0x200) { rgb = pal[c - 0x100]; if (th.mono && c - 0x100 >= 16) rgb = bgMono(rgb); return rgb; }
+    if (c < 0x200) { rgb = pal[c - 0x100]; if (th.mono && programPal(term, c - 0x100)) rgb = bgMono(rgb, th); return rgb; }
     rgb = c & 0xffffff;
-    return th.mono ? bgMono(rgb) : rgb;
+    return th.mono ? bgMono(rgb, th) : rgb;
   };
 
   Renderer.prototype._row = function (ctx, y, abs, line, cols, m, th, pal, hasCursor) {
     var v = this.view, term = v.term, styles = term.styles;
     var W = m.devW, H = m.devH, y0 = y * H, x, i;
-    var defBg = term.dynamic.bg !== null ? term.dynamic.bg : th.bg;
+    var dc = this.defaults(), defBg = dc.bg;
     var reverse = term.modes.reverse;
     var minC = v.opts.minContrast || 0;
     ctx.save();
@@ -100,7 +113,7 @@
     /* 1. default background: the screen body paints it (--pmt-bg), so the canvas stays transparent there. That keeps
        translucent (Glass) backgrounds single-layered and lets glow and effects act on glyphs only. */
     ctx.clearRect(0, y0, cols * W, H);
-    if (reverse) { ctx.fillStyle = C.toHex(th.fg); ctx.fillRect(0, y0, cols * W, H); }
+    if (reverse) { ctx.fillStyle = C.toHex(dc.fg); ctx.fillRect(0, y0, cols * W, H); }
     else if (v.fx && v.fx.active) {
       /* the GPU effects see the whole screen (curvature, bezel and scanlines act on the background too) */
       var bgA = th.bgAlpha === undefined ? 1 : th.bgAlpha;
@@ -119,7 +132,7 @@
     var fgs = new Int32Array(cols), bgs = new Int32Array(cols);
     for (x = 0; x < cols; x++) {
       var st = styles.get(line.st[x]);
-      var fg = this._fg(st, pal, th, term), bg = this._bg(st, pal, th, term);
+      var fg = this._fg(st, pal, th, term, dc.fg), bg = this._bg(st, pal, th, term);
       if (st.flags & A.INVERSE) { var tmp = bg < 0 ? defBg : bg; bg = fg; fg = tmp; }
       if (reverse) { var tmp2 = bg < 0 ? defBg : bg; bg = fg; fg = tmp2; }
       if (st.flags & A.DIM) fg = C.mix(fg, bg < 0 ? defBg : bg, 0.45);
@@ -134,7 +147,7 @@
     if (finds) for (i = 0; i < finds.length; i++) if (finds[i].current) {
       /* the current match also gets a 1 px outline in the text colour (fills alone can sit too close together) */
       var lw = Math.max(1, Math.round(m.dpr));
-      ctx.strokeStyle = css(term.dynamic.fg !== null ? term.dynamic.fg : th.fg); ctx.lineWidth = lw;
+      ctx.strokeStyle = css(dc.fg); ctx.lineWidth = lw;
       ctx.strokeRect(finds[i].x0 * W + lw / 2, y0 + lw / 2, (finds[i].x1 - finds[i].x0) * W - lw, H - lw);
     }
     if (images) images.drawRow(ctx, abs, y0, 'under-text', v);
@@ -174,14 +187,20 @@
         x += span; continue;
       }
       if (lig) {
-        /* a run of same-style narrow cells in one call so the font's ligatures apply */
+        /* a run of same-style narrow cells in one call so the font's ligatures apply. It also ends where the cell
+           background changes (a find match, the selection), because its one colour met the floor against the first. */
         var x1 = x + 1, str = String.fromCharCode(cp);
         while (x1 < cols) {
           var c2 = line.cp[x1], f2 = line.fl[x1];
-          if (f2 || c2 === 0 || c2 > 0xffff || line.st[x1] !== line.st[x] || fgs[x1] !== fgs[x] || T.Glyphs.has(c2) || c2 === 0x10eeee) break;
+          if (f2 || c2 === 0 || c2 > 0xffff || line.st[x1] !== line.st[x] || fgs[x1] !== fgs[x] || bgs[x1] !== bgs[x] || T.Glyphs.has(c2) || c2 === 0x10eeee) break;
           str += String.fromCharCode(c2); x1++;
         }
-        ctx.fillText(str, x * W, baseY);
+        /* the font advances by its own width, not the cell's whole device pixels (7.8 px against 8 at 13 px), so a
+           long run would drift cells off the grid: stretch it to its cells (letterSpacing would turn ligatures off) */
+        var span2 = (x1 - x) * W, rw = x1 - x > 1 ? ctx.measureText(str).width : 0;
+        if (rw > 0 && Math.abs(rw - span2) > 0.5) {
+          ctx.save(); ctx.translate(x * W, 0); ctx.scale(span2 / rw, 1); ctx.fillText(str, 0, baseY); ctx.restore();
+        } else ctx.fillText(str, x * W, baseY);
         x = x1; continue;
       }
       ctx.fillText(String.fromCharCode(cp), x * W, baseY);
@@ -196,7 +215,7 @@
       var x1d = x + 1;
       while (x1d < cols && line.st[x1d] === line.st[x] && v.isHoverLink(abs, x1d, sd.link) === hoverLink) x1d++;
       var color = sd.ul ? (sd.ul < 0x200 ? pal[sd.ul - 0x100] : sd.ul & 0xffffff) : fgs[x];
-      if (sd.ul && th.mono && (sd.ul >= 0x200 || sd.ul - 0x100 >= 16)) color = mono(color, th);
+      if (sd.ul && th.mono && (sd.ul >= 0x200 || programPal(term, sd.ul - 0x100))) color = mono(color, th);
       var thick = Math.max(1, Math.round(m.dpr));
       var uy = y0 + Math.min(H - thick, m.baseline + Math.max(thick, Math.round(m.descent * m.dpr * 0.45)));
       ctx.fillStyle = css(color); ctx.strokeStyle = css(color); ctx.lineWidth = thick;
@@ -230,7 +249,7 @@
     var x = Math.min(cur.x, term.cols - 1), wide = line.fl[x] & CELL.WIDE ? 2 : 1;
     var cs = term.cursorStyle || v.opts.cursor;
     var shape = cs.shape || 'block';
-    var color = term.dynamic.cursor !== null ? term.dynamic.cursor : th.cursor;
+    var color = this.defaults().cursor;
     var cx = x * W, cw = W * wide;
     var thick = Math.max(1, Math.round(m.dpr * (shape === 'bar' ? 2 : 2)));
     ctx.fillStyle = css(color);
@@ -245,10 +264,9 @@
     if (shape === 'bar') { ctx.fillRect(cx, y0, thick, H); return; }
     if (shape === 'underline') { ctx.fillRect(cx, y0 + H - thick, cw, thick); return; }
     ctx.fillRect(cx, y0, cw, H);
-    /* the character under a block cursor in the cursor-text colour */
-    var cp = line.cp[x];
-    if (cp && cp !== 32) {
-      var st = term.styles.get(line.st[x]);
+    /* the character under a block cursor in the cursor-text colour (never a concealed cell or an image placeholder) */
+    var cp = line.cp[x], st = term.styles.get(line.st[x]);
+    if (cp && cp !== 32 && cp !== 0x10eeee && !(st.flags & A.INVISIBLE)) {
       var tc = th.cursorText >= 0 ? th.cursorText : (bgs[x] < 0 ? defBg : bgs[x]);
       ctx.fillStyle = css(tc);
       if (T.Glyphs.has(cp)) { T.Glyphs.draw(ctx, cp, cx, y0, W, H); return; }

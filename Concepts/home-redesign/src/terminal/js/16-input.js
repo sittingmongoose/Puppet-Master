@@ -1,7 +1,18 @@
-/* Keyboard, mouse, focus and paste encoding (xterm conventions, the kitty keyboard protocol's disambiguate and
-   all-keys flags, SGR and SGR-pixel mouse, bracketed paste with the end marker stripped from pasted text). */
+/* Keyboard, mouse, focus and paste encoding (xterm conventions, the kitty keyboard protocol's disambiguate flag,
+   SGR and SGR-pixel mouse, bracketed paste with the end marker stripped from pasted text). AltGr characters and,
+   on macOS, Option characters are text: Option is Meta only when optionAsMeta is set, as in Terminal.app. */
 (function () {
   var CSI = '\x1b[', SS3 = '\x1bO';
+  var mac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
+  var win = typeof navigator !== 'undefined' && /Win/.test(navigator.platform || navigator.userAgent || '');
+  /* each key's two characters on a US layout: a Ctrl+Alt chord gives one of them, AltGr a third-level character */
+  var US = { Backquote: '`~', Minus: '-_', Equal: '=+', BracketLeft: '[{', BracketRight: ']}', Backslash: '\\|', Semicolon: ';:',
+    Quote: '\'"', Comma: ',<', Period: '.>', Slash: '/?', Space: ' ' };
+  '1!2@3#4$5%6^7&8*9(0)'.replace(/(.)(.)/g, function (p, d, s) { US['Digit' + d] = d + s; return p; });
+  function chordChar(e) {
+    var k = /^Key([A-Z])$/.exec(e.code || ''), pair = k ? k[1].toLowerCase() + k[1] : US[e.code];
+    return pair ? pair.indexOf(e.key) >= 0 : /^[a-z0-9 ]$/i.test(e.key);
+  }
   var KEYS = {
     ArrowUp: 'A', ArrowDown: 'B', ArrowRight: 'C', ArrowLeft: 'D', Home: 'H', End: 'F'
   };
@@ -14,7 +25,7 @@
   /* returns the bytes to send, or null when the key is not the terminal's (let the page have it) */
   function encodeKey(e, term, opts) {
     var md = term.modes, mods = modBits(e), key = e.key, kflags = term.kittyFlags ? term.kittyFlags() : 0;
-    var optionMeta = !opts || opts.optionAsMeta !== false;
+    var optionMeta = opts && opts.optionAsMeta !== undefined ? opts.optionAsMeta !== false : !mac;
     if (e.isComposing || key === 'Dead' || key === 'Process' || key === 'Unidentified') return null;
     if (key === 'Shift' || key === 'Control' || key === 'Alt' || key === 'Meta' || key === 'CapsLock') return null;
     var m = mods ? ';' + (mods + 1) : '';
@@ -25,6 +36,14 @@
     }
     if (TILDE[key] !== undefined) return CSI + TILDE[key] + m + '~';
     if (SS3F[key]) return mods ? CSI + '1' + m + SS3F[key] : SS3 + SS3F[key];
+    /* a character the layout produced is text, not a chord: AltGr for @ [ ] { } | ~, backslash and the like, and macOS
+       Option while Option is not Meta. Windows reports AltGr as Ctrl+Alt (where the browser does not name it), so there
+       a Ctrl+Alt key counts as AltGr only when it gave something other than the key's own character; Linux names it */
+    if (/^.$/u.test(key) && !e.metaKey) {
+      var altGr = (e.getModifierState && e.getModifierState('AltGraph')) ||
+        (win && e.ctrlKey && e.altKey && !chordChar(e));
+      if (altGr || (mac && e.altKey && !e.ctrlKey && !optionMeta)) return key;
+    }
     if (kflags & 1) {
       /* disambiguate: keys that are ambiguous in legacy encoding become CSI u */
       if (key === 'Escape') return CSI + '27' + (mods ? ';' + (mods + 1) : '') + 'u';
@@ -55,7 +74,12 @@
       if (key === '?' || key === '8') return '\x7f';
       return null;
     }
-    if (e.altKey && optionMeta) return '\x1b' + (e.ctrlKey && /^[a-z]$/i.test(key) ? String.fromCharCode(key.toLowerCase().charCodeAt(0) - 96) : key);
+    if (e.altKey && optionMeta) {
+      /* macOS Option composes a character (Option+B gives '\u222b'): Meta wants the key's own letter or digit */
+      var mc = mac ? /^(?:Key([A-Z])|Digit([0-9]))$/.exec(e.code || '') : null;
+      if (mc) key = mc[1] ? (e.shiftKey ? mc[1] : mc[1].toLowerCase()) : mc[2];
+      return '\x1b' + (e.ctrlKey && /^[a-z]$/i.test(key) ? String.fromCharCode(key.toLowerCase().charCodeAt(0) - 96) : key);
+    }
     return key;
   }
 

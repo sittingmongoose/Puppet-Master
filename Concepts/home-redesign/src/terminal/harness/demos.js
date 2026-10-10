@@ -43,21 +43,30 @@
   async function agentDeploy() {
     var id = PMT.agent.open('Builder', { cwd: '/home/jared/tastebook/api' });
     await sleep(500);
+    /* the seeded tree's broken test module fails every `cargo test`, so the Builder restores the committed one first;
+       the seeded text goes back afterwards, so the failing-test demos still fail */
+    var sess = PMT.session(id), vfs = sess && sess.vfs, imp = '/home/jared/tastebook/api/src/media/import.rs', seeded = null;
+    try { seeded = vfs ? vfs.readText(imp) : null; } catch (e) { seeded = null; }
     var steps = [
       ['git status', 'Checking the tree'],
+      ['git restore src/media/import.rs', 'Restoring the committed test'],
       ['cargo build --workspace', 'Building'],
       ['cargo test --workspace', 'Testing'],
       ['./scripts/deploy.sh --stage', 'Deploying to staging'],
       ['echo deployed', 'Done']
     ];
-    for (var i = 0; i < steps.length; i++) {
-      PMT.agent.step(id, 'Builder', i + 1, steps.length, steps[i][1]);
-      var r = await PMT.agent.run(id, 'Builder', steps[i][0], { step: i + 1, steps: steps.length, label: steps[i][1] });
-      if (!r.ok) { console.log('[demo] Builder stopped:', r.reason); return; }
-      if (r.exit !== 0) { console.log('[demo] step failed', r.exit); break; }
-      await sleep(400);
+    try {
+      for (var i = 0; i < steps.length; i++) {
+        PMT.agent.step(id, 'Builder', i + 1, steps.length, steps[i][1]);
+        var r = await PMT.agent.run(id, 'Builder', steps[i][0], { step: i + 1, steps: steps.length, label: steps[i][1] });
+        if (!r.ok) { console.log('[demo] Builder stopped:', r.reason); return; }
+        if (r.exit !== 0) { console.log('[demo] step failed', r.exit); break; }
+        await sleep(400);
+      }
+      PMT.agent.done(id);
+    } finally {
+      if (seeded !== null) { try { vfs.write(imp, seeded); } catch (e) {} }
     }
-    PMT.agent.done(id);
   }
   async function agentAsks() {
     var s = await ensureHuman();

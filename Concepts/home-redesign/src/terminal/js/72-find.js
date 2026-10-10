@@ -102,7 +102,9 @@
         st.q = input.value; st.run(keep);
         bar.classList.toggle('pmt-find-error', st.error);
         count.textContent = st.error ? 'Invalid pattern' : !st.q ? '' : st.matches.length ? (st.index + 1) + ' of ' + st.matches.length + (st.matches.length >= MAX ? '+' : '') : 'No results';
-        reveal();
+        /* only what the person did in the bar moves the view; the refresh after output (keep) recounts and repaints
+           the marks and leaves the scroll position, and following the bottom, alone */
+        if (!keep) reveal();
         view.marksDirty = true; view.schedule();
       }
       function reveal() {

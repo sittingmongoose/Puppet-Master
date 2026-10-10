@@ -17,7 +17,8 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-inactive .pmt-body::after { opacity: var(--pmt-dim-amount, 0); }
 .pmt-root[data-pmt-look="retro"] { --pmt-dim-color: #000; }
 .pmt-root[data-pmt-look="glass"] { --pmt-dim-color: transparent; }
-.pmt-root[data-pmt-look="glass"].pmt-inactive .pmt-grid, .pmt-root[data-pmt-look="glass"].pmt-inactive .pmt-fxcanvas { opacity: .8; }
+/* an ended session keeps its own, deeper 72 % (10-view.css) */
+.pmt-root[data-pmt-look="glass"].pmt-inactive:not(.pmt-ended) :is(.pmt-grid, .pmt-fxcanvas) { opacity: .8; }
 
 /* ---- bell ---- */
 .pmt-root[data-pmt-bell="flash"].pmt-bell .pmt-body::after { opacity: 0; background: var(--pmt-fg); animation: pmt-bell-flash .4s ease-out; }

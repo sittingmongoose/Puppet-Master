@@ -33,6 +33,7 @@
     var dash = DASH[cp];
     if (dash) { dashed(c, x, y, w, h, U || D ? 'v' : 'h', U === 2 || L === 2 || R === 2 ? hv : lt, dash); return; }
     var gap = lt; /* distance from the centre line to each line of a double pair */
+    var o = gap + Math.floor(lt / 2); /* offset of each double line's centre from the middle */
     var anyDoubleV = U === 3 || D === 3, anyDoubleH = L === 3 || R === 3;
     function th(wt) { return wt === 2 ? hv : lt; }
     /* single and heavy arms */
@@ -40,7 +41,9 @@
     function armH(dir, wt) {
       var t = th(wt), ty = my - Math.floor(t / 2);
       var stop; /* inner end of the arm */
-      if (anyDoubleV) stop = dir < 0 ? mx - gap - Math.ceil(lt / 2) + lt : mx + gap + Math.ceil(lt / 2) - lt;
+      if (anyDoubleV && L && R) stop = mx; /* ╥ ╨ ╫: the line runs through the pair's gap */
+      else if (anyDoubleV && !(U && D)) stop = dir < 0 ? mx + o + Math.ceil(lt / 2) : mx - o - Math.floor(lt / 2); /* ╓ ╖ ╙ ╜: to the far line */
+      else if (anyDoubleV) stop = dir < 0 ? mx - o + Math.ceil(lt / 2) : mx + o - Math.floor(lt / 2); /* ╟ ╢: to the near line */
       else { var vt = th(vMax || 1); stop = dir < 0 ? mx + Math.ceil(vt / 2) : mx - Math.floor(vt / 2); }
       if (!U && !D) stop = dir < 0 ? mx + Math.ceil(t / 2) : mx - Math.floor(t / 2);
       if (dir < 0) rect(c, x, ty, stop - x, t); else rect(c, stop, ty, x + w - stop, t);
@@ -48,7 +51,9 @@
     function armV(dir, wt) {
       var t = th(wt), tx = mx - Math.floor(t / 2);
       var stop;
-      if (anyDoubleH) stop = dir < 0 ? my - gap - Math.ceil(lt / 2) + lt : my + gap + Math.ceil(lt / 2) - lt;
+      if (anyDoubleH && U && D) stop = my; /* ╞ ╡ ╪ */
+      else if (anyDoubleH && !(L && R)) stop = dir < 0 ? my + o + Math.ceil(lt / 2) : my - o - Math.floor(lt / 2); /* ╒ ╕ ╘ ╛ */
+      else if (anyDoubleH) stop = dir < 0 ? my - o + Math.ceil(lt / 2) : my + o - Math.floor(lt / 2); /* ╤ ╧ */
       else { var ht = th(hMax || 1); stop = dir < 0 ? my + Math.ceil(ht / 2) : my - Math.floor(ht / 2); }
       if (!L && !R) stop = dir < 0 ? my + Math.ceil(t / 2) : my - Math.floor(t / 2);
       if (dir < 0) rect(c, tx, y, t, stop - y); else rect(c, tx, stop, t, y + h - stop);
@@ -58,7 +63,6 @@
     if (U && U !== 3) armV(-1, U);
     if (D && D !== 3) armV(1, D);
     /* double arms: two lines; where each starts depends on the perpendicular arms (see SPEC.md glyph rules) */
-    var o = gap + Math.floor(lt / 2); /* offset of each line's centre from the middle */
     function startFor(sideArm, otherArm) {
       /* returns the offset from the centre at which a double line on 'side' begins (negative = before centre) */
       if (sideArm === 3) return o;            /* inner corner meets the inner perpendicular line */
@@ -75,8 +79,7 @@
         var opp = dir < 0 ? R : L;
         var from;
         if (s === null) from = opp ? mx : (dir < 0 ? mx + Math.ceil(lt / 2) : mx - Math.floor(lt / 2));
-        else from = dir < 0 ? mx + s + Math.ceil(lt / 2) - (s > 0 ? lt : 0) : mx - s - Math.floor(lt / 2) + (s > 0 ? lt : 0);
-        if (s !== null && s < 0) from = dir < 0 ? mx - s + Math.ceil(lt / 2) : mx + s - Math.floor(lt / 2);
+        else from = dir < 0 ? mx - s + Math.ceil(lt / 2) : mx + s - Math.floor(lt / 2);
         if (dir < 0) rect(c, x, ly, from - x, lt); else rect(c, from, ly, x + w - from, lt);
       });
     }
@@ -88,8 +91,7 @@
         var opp = dir < 0 ? D : U;
         var from;
         if (s === null) from = opp ? my : (dir < 0 ? my + Math.ceil(lt / 2) : my - Math.floor(lt / 2));
-        else from = dir < 0 ? my + s + Math.ceil(lt / 2) - (s > 0 ? lt : 0) : my - s - Math.floor(lt / 2) + (s > 0 ? lt : 0);
-        if (s !== null && s < 0) from = dir < 0 ? my - s + Math.ceil(lt / 2) : my + s - Math.floor(lt / 2);
+        else from = dir < 0 ? my - s + Math.ceil(lt / 2) : my + s - Math.floor(lt / 2);
         if (dir < 0) rect(c, lx, y, lt, from - y); else rect(c, lx, from, lt, y + h - from);
       });
     }

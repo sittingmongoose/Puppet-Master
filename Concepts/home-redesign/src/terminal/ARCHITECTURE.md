@@ -115,7 +115,11 @@ absolute line number = trimmed + index in lines
 ```
 
 Reflow (primary screen only, on column change): logical lines are re-wrapped; marks, command references and image
-anchors move with the cell they were on (`Buffer.resize` returns a remap `(oldLine, col) -> {line, col}`).
+anchors move with the cell they were on. `Buffer.resize` returns `{ remap, lineMap, gone }`: `remap` is
+`(oldLine, col) -> {line, col}`, and `gone` is the lines the resize removed (scrollback overflow, lines cut below the
+screen, blank lines popped below the cursor). `Terminal.resize` calls `images.onResize(remap, gone)` and then trims
+`gone` (`_onTrim`). Buffers also have an `onRecycle(lines)` hook for lines a region scroll reuses, which the terminal
+wires to the image store.
 
 ### Terminal (`T.Terminal`)
 
@@ -148,7 +152,8 @@ ctx.env             { HOME, USER, HOSTNAME, PWD, TERM: 'xterm-256color', COLORTE
                       'PuppetMaster', PM_AGENT (when an agent launched it), ... }
 ctx.cwd, ctx.setCwd(path)
 ctx.out(str)        write to the terminal ("\n" becomes "\r\n"); escape sequences pass through untouched
-ctx.err(str)        same stream
+ctx.err(str)        same stream, unless the command line sends fd 2 elsewhere (`2>file`, `2>>file`, `2>&-`);
+                    `2>&1` and `>&2` change nothing
 ctx.sleep(ms)       resolves after ms; rejects with T.Signal('SIGINT'|...) when a signal arrives, unless trapped
 ctx.signal          { aborted: bool, name }   ctx.onSignal(fn)   ctx.trap(name, bool)
 ctx.setRaw(bool)    raw mode: keys arrive through ctx.readKey()
@@ -162,6 +167,9 @@ ctx.query(seq, { timeout, until }) Promise<string>  write `seq`, collect the ter
 ctx.vfs             T.VFS (the remote host's VFS inside ssh)
 ctx.remote          null | { host }   (file, temp-file and shared-memory image media are refused when remote)
 ctx.by              'user' | 'agent:<name>'
+ctx.session         the T.Session: per-terminal in-memory state (sudo's credential cache), never saved
+ctx.enterRemote()   returns a function that ends it; while held the shell counts as remote for the file-media rule
+                    (`ssh host cmd` uses it; pipeline stages after a remote one get it automatically)
 ctx.assets          T.Assets
 ctx.subshell(opts)  Promise<exitCode>: run an interactive shell inside this job (ssh uses it):
                     { host, user, vfs, remote: true, motd } ; it returns when that shell exits
@@ -199,6 +207,12 @@ Paint order per frame (the Skia order the native renderer will use):
 4. decorations: underline kinds, strike, overline, link hover underline,
 5. search highlights, selection, cursor,
 6. images with z >= 0.
+
+With ligatures on, text runs also split where the cell background changes, and each run is stretched to its cell span
+so it never drifts off the grid. `renderer.defaults()` returns `{ fg, bg, cursor }`: the OSC 10/11/12 colours over the
+scheme's, mapped on phosphor schemes; the view paints `--pmt-bg`, `--pmt-bg-solid` and `--pmt-fg` from it, and the
+fx trail and the evicted-image placeholder use it too. DOM overlays under Full CRT place themselves with
+`view.cellToOverlay(col, row)`, which goes through `fx.unmapPointer`.
 
 Only dirty rows repaint (row `ver` vs the painted version, plus viewport and selection changes). The canvas is sized
 in device pixels and snapped to them. Cell metrics: `cellW = ceil(advance(fontPx) * dpr) / dpr + letterSpacing`,

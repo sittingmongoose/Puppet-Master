@@ -79,6 +79,8 @@
   function scheme(id) { var l = allSchemes(); for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
   function pairOf(s, mode) {
     if (!s || s.appearance === mode) return s;
+    /* 'Imported' is where every import goes, not a family: an imported scheme has no sibling and stays as it is */
+    if (s.family === 'Imported' || s.licence === 'user') return s;
     /* the sibling of the same family in the other appearance, preferring the documented pairs */
     var PAIRS = { 'pm-phosphor-green': 'pm-paper-teletype', 'pm-phosphor-amber': 'pm-paper-teletype', 'pm-paper-teletype': 'pm-phosphor-green',
       'pm-yorha-ink': 'pm-yorha-parchment', 'pm-yorha-parchment': 'pm-yorha-ink', 'pm-high-contrast-dark': 'pm-high-contrast-light',
@@ -172,7 +174,9 @@
   function layerOf(view, key) {
     if (view && view.tabAppearance && view.tabAppearance[key] !== undefined && view.tabAppearance[key] !== null) return 'tab';
     if (projectGet(key) !== undefined) return 'project';
-    var a = appGet(key); if (a !== undefined && a !== null) return 'app';
+    /* the host model answers its registered default when nothing is stored there, and that is nobody's choice */
+    var a = appGet(key), s = settings(), d = s && s.defaults ? s.defaults()['terminal.' + key] : undefined;
+    if (a !== undefined && a !== null && (localApp[key] !== undefined || a !== d)) return 'app';
     return 'look';
   }
 
@@ -227,26 +231,29 @@
     else if (bgKind === 'image') { bg.url = T.Appearance.imageUrl(f('bgImage'), f('bgImageData'), f('bgBlur')); bg.dim = f('bgDim'); }
     if (f('background') === 'follow' && lk === 'nier') bg.paper = true;
 
-    /* effects (D16) */
+    /* effects (D16): Theme (follow) is the look's own effects whatever the per-effect fields hold; ticking an effect in
+       the popover switches to Custom first, so choosing Theme again undoes it */
     var custom = f('effects');
-    var fxOff = custom === 'off';
-    var gl = function (k, lookDefault) { var v = f(k); return v === null || v === undefined ? lookDefault : v; };
+    var fxOff = custom === 'off', follow = custom !== 'custom' && !fxOff;
+    var gl = function (k, lookDefault) { if (follow) return lookDefault; var v = f(k); return v === null || v === undefined ? lookDefault : v; };
+    var crtOn = !fxOff && !follow && !!f('crt');
     var retroDark = lk === 'retro' && mode === 'dark';
     var effects = {
       look: lk, mode: mode, reduced: reduced, off: fxOff,
-      dim: fxOff ? 0 : (gl('inactiveDim', L.dim > 0) ? L.dim : 0),
+      /* Basic has no dimming of its own; turned on there, it dims as Friendly does (18 %) */
+      dim: fxOff ? 0 : (gl('inactiveDim', L.dim > 0) ? (L.dim || 0.18) : 0),
       focus: L.focus, bell: f('bell') === 'off' ? 'off' : L.bell, blink: L.blink,
       trail: fxOff ? 'off' : trail,
       smoothScroll: !reduced && gl('smoothScroll', lk !== 'retro'),
       paper: false, /* NieR's ground is the page's grid (40-nier.css, part 'ground'), never a texture */
       scanlines: { on: !fxOff && gl('scanlines', retroDark && !!L.scanlines), strength: f('scanStrength'), period: 3 },
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
-      crt: !fxOff && !!f('crt'),
-      curvature: { on: !fxOff && !!f('crt'), amount: f('curvature') },
-      bezel: { on: !fxOff && !!f('crt') }, vignette: { on: !fxOff && !!f('crt'), strength: 0.25 },
-      burnIn: { on: !fxOff && !!f('crt') && f('burnIn') && !reduced, persistMs: 450 },
-      noise: { on: !fxOff && !!f('crt') && f('noise') > 0 && !reduced, amount: f('noise') },
-      flicker: { on: !fxOff && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
+      crt: crtOn,
+      curvature: { on: crtOn, amount: f('curvature') },
+      bezel: { on: crtOn }, vignette: { on: crtOn, strength: 0.25 },
+      burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
+      noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
+      flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
       glowColor: theme && theme.roles.glow
     };
     var bgShow = lk === 'glass' && bgKind === 'theme';
@@ -264,6 +271,7 @@
 
   /* ---- writes ---- */
   var views = new Set();
+  var writing = 0; /* inside our own host writes: they refresh once when done, not once per key */
   function refreshAll() { views.forEach(function (v) { v.applyAppearance(resolve(v)); }); }
   function set(scope, key, value, view) {
     if (scope === 'tab' && view) {
@@ -274,7 +282,7 @@
       return;
     }
     var s = settings(), k = scope === 'project' ? 'terminal.project.' + key : 'terminal.' + key;
-    if (s) { try { s.set(k, value); } catch (e) { console.warn('[pmt] settings write failed', e); } }
+    if (s) { writing++; try { s.set(k, value); } catch (e) { console.warn('[pmt] settings write failed', e); } writing--; }
     if (scope !== 'project') {
       if (value === null || value === undefined) delete localApp[key]; else localApp[key] = value;
       try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {}
@@ -283,7 +291,9 @@
   }
   function resetScope(scope, view) {
     if (scope === 'tab' && view) { view.tabAppearance = {}; view.state.appearance = {}; view.applyAppearance(resolve(view)); return; }
+    writing++;
     Object.keys(FIELDS).forEach(function (k) { if (localApp[k] !== undefined) delete localApp[k]; var s = settings(); if (s) try { s.set('terminal.' + k, null); } catch (e) {} });
+    writing--;
     try { localStorage.setItem('pm.home.terminal:v1:app', JSON.stringify(localApp)); } catch (e) {}
     refreshAll();
   }
@@ -302,6 +312,15 @@
      backdrop blur, so the closed blur budget F3-431 is untouched) */
   var imgCache = new Map();
   function imageUrl(name, data, blur) {
+    /* a chosen image is a reference ('img:<hash>') to the copy kept on this machine (76-popover.js); one that is gone
+       (evicted, or named by another machine's settings) falls back to the default image. Resolved before the cache,
+       whose key holds only the data's length, the same for every reference */
+    if (name === 'custom' && data && data.indexOf('img:') === 0) {
+      var stored = null;
+      try { stored = localStorage.getItem('pm.home.terminal:v1:bg:' + data.slice(4)); } catch (e) {}
+      if (stored) return stored;
+      name = 'hills'; data = null;
+    }
     var key = name + '|' + (data ? data.length : 0) + '|' + blur;
     if (imgCache.has(key)) return imgCache.get(key);
     var cv = document.createElement('canvas'); cv.width = 960; cv.height = 600;
@@ -347,7 +366,11 @@
       var schema = {}; var defs = {};
       Object.keys(FIELDS).forEach(function (k) { schema['terminal.' + k] = FIELDS[k]; defs['terminal.' + k] = FIELDS[k].default; });
       PH.settings.register('terminal', schema, defs);
-      if (PH.settings.on) PH.settings.on('*', function (key) { if (!key || String(key).indexOf('terminal.') === 0) refreshAll(); });
+      /* the host emits one { key, value, old } object per change (Settings > Terminal, the only writer of the project layer) */
+      if (PH.settings.on) PH.settings.on('*', function (e) {
+        var k = e && typeof e === 'object' ? e.key : e;
+        if (!writing && (!k || String(k).indexOf('terminal.') === 0)) refreshAll();
+      });
     } catch (e) { console.warn('[pmt] settings registration failed', e); }
   }
 })();

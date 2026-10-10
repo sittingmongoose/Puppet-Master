@@ -39,8 +39,11 @@
     this.owner = opts.by && /^agent:/.test(opts.by) ? opts.by : 'user';
     this.grants = new Set(this.owner !== 'user' ? [this.owner] : []);
     this.lease = this.owner;            /* who may write now: 'user' | 'agent:<name>' */
-    this.paused = null;                 /* agent paused by a take-over */
+    this.paused = null;                 /* agent paused by a take-over; the human holds the terminal until Hand back or Stop.
+                                           One slot is enough: no other agent may type meanwhile (canWrite), so no
+                                           second take-over can come first */
     this.inTerminal = new Set();        /* agents allowed in this terminal for the rest of their run (DL-181; never saved) */
+    this.onceGrants = new Set();        /* agents allowed once: the grant ends when the command they typed ends */
     this.heldGrant = null;              /* the grant a take-over suspended: { agent, inTerminal } */
     this.secret = false;
     this.state = 'starting';            /* running | ended */
@@ -59,6 +62,7 @@
     this.history = HISTORY_SEED.slice();
     this.startedAt = Date.now();
     this.lastTyper = 'user';
+    this.sudoUntil = 0;                  /* sudo's credential cache: this terminal's only, in memory, never saved */
   }
   T.Session = Session;
 
@@ -97,6 +101,8 @@
     if (by === 'user' || !by) return { ok: true };
     if (this.secret) return { ok: false, reason: 'secret_input' };
     if (this.paused === by) return { ok: false, reason: 'preempted' };
+    /* the human took this terminal from another agent: no other agent types (or asks) until Hand back or Stop */
+    if (this.paused) return { ok: false, reason: 'busy' };
     if (!this.grants.has(by)) return { ok: false, reason: 'needs_permission' };
     if (this.lease !== by && this.lease !== null && this.lease !== 'user') return { ok: false, reason: 'busy' };
     return { ok: true };
@@ -106,8 +112,9 @@
     by = by || 'user';
     var ok = this.canWrite(by);
     if (!ok.ok) { this.emit('refused', { by: by, reason: ok.reason }); return ok; }
-    if (by === 'user' && /^agent:/.test(this.lease || '') && !this._typingAsAgent) {
-      /* any human keystroke takes over: the agent is paused and told so */
+    if (by === 'user' && !this.secret && /^agent:/.test(this.lease || '') && !this._typingAsAgent) {
+      /* any human keystroke takes over: the agent is paused and told so. Answering a secret prompt is not a take-over:
+         only the human can answer it, and the agent keeps the lease and waits for that */
       var agent = this.lease;
       this.paused = agent; this.lease = 'user';
       this._suspend(agent);
@@ -121,20 +128,22 @@
   /* scope: 'once' (one command) or 'terminal' (the rest of this agent's run here) */
   Session.prototype.grant = function (agent, scope) {
     this.grants.add(agent);
-    if (scope === 'terminal') this.inTerminal.add(agent);
+    if (scope === 'terminal') { this.inTerminal.add(agent); this.onceGrants.delete(agent); }
+    else if (!this.inTerminal.has(agent)) this.onceGrants.add(agent);
     this.emit('grant', { agent: agent, scope: scope === 'terminal' ? 'terminal' : 'once' });
   };
   Session.prototype.revoke = function (agent) {
-    this.grants.delete(agent); this.inTerminal.delete(agent);
+    this.grants.delete(agent); this.inTerminal.delete(agent); this.onceGrants.delete(agent);
     if (this.heldGrant && this.heldGrant.agent === agent) this.heldGrant = null;
     if (this.lease === agent) this.lease = 'user';
     this.emit('grant', { agent: agent, revoked: true });
   };
-  /* a take-over ends an agent's grant in a terminal a human opened; Hand back restores it for the rest of that run */
+  /* a take-over ends an agent's grant in a terminal a human opened; Hand back restores it for the rest of that run.
+     A held "Allow once" comes back as once: it still ends with the next command that agent types */
   Session.prototype._suspend = function (agent) {
     if (agent === this.owner || !this.grants.has(agent)) return;
     this.heldGrant = { agent: agent, inTerminal: this.inTerminal.has(agent) };
-    this.grants.delete(agent); this.inTerminal.delete(agent);
+    this.grants.delete(agent); this.inTerminal.delete(agent); this.onceGrants.delete(agent);
     this.emit('grant', { agent: agent, suspended: true });
   };
   Session.prototype.takeOver = function () {
@@ -260,8 +269,11 @@
     while (!this.done) {
       var line = await this.readCommand();
       if (line === null) break; /* EOF */
-      if (!line.trim()) continue;
-      await this.execLine(line);
+      var typed = this.lineAgents, s = this.s;
+      if (line.trim()) await this.execLine(line);
+      /* "Allow once" ends with the command it allowed (DL-181), also one typed after a Hand back. Inside ssh too: a
+         line the agent typed into the remote shell is a command of its own, so an allowed `ssh` lends it no more */
+      typed.forEach(function (a) { if (s.onceGrants.has(a)) s.revoke(a); });
     }
     return this.exitCode !== undefined ? this.exitCode : this.last;
   };
@@ -286,15 +298,18 @@
     this.rawOut('\x1b]7;file://' + this.host + encodeURI(this.cwd) + '\x07');
     this.mark('A');
     this.rawOut(this.promptText());
+    /* the prompt starts at column 0 (PROMPT_SP above); its width says where input starts even while the terminal is
+       holding output for an image decode (the cursor has not moved yet then). A prompt that exactly fills its rows
+       leaves the cursor in pending wrap: input starts on the next row, so the cursor goes there before the input mark */
+    this.promptWidth = visibleWidth(this.promptText());
+    if (this.promptWidth && this.promptWidth % term.cols === 0) this.rawOut(' \r');
     this.mark('B');
     this.rawOut('\x1b[?2004h');
     this.mode = 'edit';
-    /* the prompt starts at column 0 (PROMPT_SP above); its width says where input starts even while the terminal is
-       holding output for an image decode (the cursor has not moved yet then) */
-    this.promptWidth = visibleWidth(this.promptText());
     this.ed = new LineEditor(this);
     var res = await this.ed.run();
     this.rawOut('\x1b[?2004l');
+    this.lineAgents = this.ed.agents;
     this.ed = null;
     return res;
   };
@@ -325,7 +340,19 @@
       if (c === '&' && line[i + 1] === '&') { push(); toks.push({ op: '&&' }); i += 2; continue; }
       if (c === '|' && line[i + 1] === '|') { push(); toks.push({ op: '||' }); i += 2; continue; }
       if (c === '|') { push(); toks.push({ op: '|' }); i++; continue; }
-      if (c === '>' ) { push(); var app = line[i + 1] === '>'; toks.push({ op: app ? '>>' : '>' }); i += app ? 2 : 1; continue; }
+      /* redirections: [n]> [n]>> &> &>> >&file and [n]>&m / [n]>&-, where n is a lone unquoted digit right before > */
+      if (c === '>' || (c === '&' && line[i + 1] === '>')) {
+        var fd = 1;
+        if (c === '&') { push(); fd = '&'; i++; }
+        else if (has && /^[0-9]$/.test(cur) && line[i - 1] === cur && (i < 2 || /[\s;|&]/.test(line[i - 2]))) { fd = +cur; cur = ''; has = false; }
+        else push();
+        var app = line[i + 1] === '>'; i += app ? 2 : 1;
+        var dup = fd !== '&' && !app && /^&([0-9]|-)/.exec(line.slice(i));
+        if (dup) { toks.push({ op: 'dup', fd: fd, to: dup[1] }); i += dup[0].length; continue; }
+        if (fd !== '&' && line[i] === '&') { fd = '&'; i++; }
+        toks.push({ op: app ? '>>' : '>', fd: fd });
+        continue;
+      }
       if (c === '$') { var m = /^\$(\w+|\?|\{\w+\})/.exec(line.slice(i)); if (m) { var nm = m[1].replace(/[{}]/g, ''); cur += env(nm); has = true; i += m[0].length; continue; } }
       if (c === '~' && !has && (i + 1 === line.length || line[i + 1] === '/' || line[i + 1] === ' ')) { cur += env('HOME'); has = true; i++; continue; }
       cur += c; has = true; i++;
@@ -359,13 +386,26 @@
   };
   Shell.prototype.endMark = function () { this.mark('D', this.last); };
 
+  /* a command run on a remote host without a remote shell (`ssh host cmd`), or a later pipeline stage printing what one
+     sent: while it runs this shell counts as remote for the file-media rule. Returns the function that ends it (once) */
+  Shell.prototype.enterRemote = function () {
+    var self = this, done = false;
+    this.remoteRuns = (this.remoteRuns || 0) + 1; this.remoteEntered = (this.remoteEntered || 0) + 1;
+    return function () { if (!done) { done = true; self.remoteRuns--; } };
+  };
+
   Shell.prototype.runPipeline = async function (pipe) {
-    var stdin = null, code = 0;
+    var stdin = null, code = 0, remoteIn = false;
     for (var i = 0; i < pipe.length; i++) {
-      var words = pipe[i], redirect = null, argv = [];
+      var words = pipe[i], redirect = null, errRedirect = null, argv = [];
       for (var k = 0; k < words.length; k++) {
         var t = words[k];
-        if (t.op === '>' || t.op === '>>') { redirect = { append: t.op === '>>', path: words[k + 1] && words[k + 1].w }; k++; }
+        /* err follows out unless 2> sends it elsewhere, so 2>&1 and >&2 change nothing; n>&- closes n */
+        if (t.op === 'dup') { if (t.to === '-') { if (t.fd === 2) errRedirect = { path: '/dev/null' }; else if (t.fd === 1) redirect = { path: '/dev/null' }; } continue; }
+        if (t.op === '>' || t.op === '>>') {
+          var rd = { append: t.op === '>>', path: words[k + 1] && words[k + 1].w }; k++;
+          if (t.fd === 2) errRedirect = rd; else if (t.fd === 1 || t.fd === '&') redirect = rd;
+        }
         else if (t.w !== undefined) argv.push(t.w);
       }
       /* FOO=bar cmd */
@@ -373,17 +413,28 @@
       while (argv.length && /^\w+=/.test(argv[0])) { var e = argv.shift().split('='); envAdd[e[0]] = e.slice(1).join('='); }
       if (!argv.length) { Object.assign(this.env, envAdd); continue; }
       if (this.aliases[argv[0]] && !this._inAlias) { argv = this.aliases[argv[0]].split(' ').concat(argv.slice(1)); }
-      var capture = i < pipe.length - 1 || !!redirect;
-      var r = await this.runCommand(argv, { stdin: stdin, capture: capture, env: envAdd });
+      var capture = i < pipe.length - 1 || !!redirect, errSink = errRedirect ? [] : null;
+      /* `ssh host cmd | less`: the stages after a remote one print the remote host's bytes, so they count as remote too */
+      var entered = this.remoteEntered || 0, leave = remoteIn ? this.enterRemote() : null, r;
+      try { r = await this.runCommand(argv, { stdin: stdin, capture: capture, env: envAdd, errSink: errSink }); }
+      finally { if (leave) leave(); }
+      if ((this.remoteEntered || 0) !== entered) remoteIn = true;
       code = r.code;
       stdin = capture ? r.output : null;
-      if (redirect && redirect.path && this.vfs) {
-        try { var p = this.vfs.resolve(this.cwd, redirect.path); var prev = redirect.append ? (this.vfs.readText(p) || '') : ''; this.vfs.write(p, prev + (r.output || '')); }
-        catch (err) { this.out('zsh: ' + (err.code === 'EACCES' ? 'permission denied' : 'no such file or directory') + ': ' + redirect.path + '\n'); code = 1; }
-      }
+      if (errRedirect && errRedirect.path && this.vfs && !this.redirectTo(errRedirect, errSink.join(''))) code = 1;
+      if (redirect && redirect.path && this.vfs && !this.redirectTo(redirect, r.output || '')) code = 1;
       if (this.done) break;
     }
     return code;
+  };
+  /* writes a redirection's captured text to its file (>> onto what is there; a new file starts empty) */
+  Shell.prototype.redirectTo = function (rd, text) {
+    try {
+      var p = this.vfs.resolve(this.cwd, rd.path), prev = '';
+      if (rd.append) { try { prev = this.vfs.readText(p) || ''; } catch (e) { if (e.code !== 'ENOENT') throw e; } }
+      this.vfs.write(p, prev + text);
+      return true;
+    } catch (err) { this.out('zsh: ' + (err.code === 'EACCES' ? 'permission denied' : 'no such file or directory') + ': ' + rd.path + '\n'); return false; }
   };
 
   var BUILTINS = ['cd', 'pwd', 'echo', 'printf', 'export', 'unset', 'alias', 'history', 'clear', 'exit', 'true', 'false',
@@ -393,35 +444,54 @@
   Shell.prototype.runCommand = async function (argv, o) {
     var name = argv[0], self = this, out = [];
     var write = function (s) { if (o.capture) out.push(String(s)); else self.out(s); };
+    var err = o.errSink ? function (s) { o.errSink.push(String(s)); } : write; /* 2>file */
     if (BUILTINS.indexOf(name) >= 0) {
-      var code = await this.builtin(name, argv, write, o);
+      var code = await this.builtin(name, argv, write, o, err);
       return { code: code, output: out.join('') };
     }
-    var prog = T.Programs && T.Programs[name];
+    var prog = program(name);
     /* a path (./scripts/deploy.sh, /usr/bin/git): run the program the file stands for */
     if (!prog && name.indexOf('/') >= 0 && this.vfs) {
-      var fp = this.vfs.resolve(this.cwd, name), fst = this.vfs.stat(fp);
-      if (!fst) { write('zsh: no such file or directory: ' + name + '\n'); return { code: 127, output: out.join('') }; }
-      if (fst.type === 'dir' || !(fst.mode & 73)) { write('zsh: permission denied: ' + name + '\n'); return { code: 126, output: out.join('') }; }
-      prog = T.Programs[fst.exec || fp.replace(/^.*\//, '')];
-      if (!prog) { write('zsh: exec format error: ' + name + '\n'); return { code: 126, output: out.join('') }; }
+      var pc = this.pathCommand(name);
+      if (!pc.prog) { err('zsh: ' + pc.err + ': ' + name + '\n'); return { code: pc.code, output: out.join('') }; }
+      prog = pc.prog;
     }
     if (!prog) {
-      write('zsh: command not found: ' + name + '\n');
+      err('zsh: command not found: ' + name + '\n');
       return { code: 127, output: out.join('') };
     }
     return this.runProgram(prog, argv, o, write, out);
   };
+  function program(name) { return T.Programs && Object.prototype.hasOwnProperty.call(T.Programs, name) ? T.Programs[name] : null; }
+  var EXEC_ERR = { ENOENT: 'no such file or directory', ENOTDIR: 'not a directory', ELOOP: 'too many levels of symbolic links',
+    EACCES: 'permission denied' };
+  /* a command word with a slash: { prog } or { err, code } with zsh's message. Only a regular file with an execute bit
+     runs, as the program its exec names (never by its file name). The programs `which` reports in /usr/bin (and /bin,
+     merged into it) run by that path though the VFS keeps no file there. found: an executable file is there, so
+     type and which report it even when it cannot run */
+  Shell.prototype.pathCommand = function (name) {
+    var fp = this.vfs.resolve(this.cwd, name), fst = null, ecode = 'ENOENT';
+    try { fst = this.vfs.statOrThrow(fp); } catch (e) { ecode = e.code || 'ENOENT'; }
+    if (!fst) {
+      var base = program(fp.replace(/^.*\//, ''));
+      if (ecode === 'ENOENT' && /^\/(usr\/)?bin\/[^\/]+$/.test(fp) && base) return { prog: base, found: true };
+      return { err: EXEC_ERR[ecode] || EXEC_ERR.ENOENT, code: ecode === 'EACCES' ? 126 : 127 };
+    }
+    if (fst.type !== 'file' || !(fst.mode & 73)) return { err: 'permission denied', code: 126 };
+    var prog = fst.exec ? program(fst.exec) : null;
+    return prog ? { prog: prog, found: true } : { err: 'exec format error', code: 126, found: true };
+  };
 
-  Shell.prototype.builtin = async function (name, argv, write, o) {
+  Shell.prototype.builtin = async function (name, argv, write, o, err) {
     var self = this, vfs = this.vfs;
+    err = err || write;
     switch (name) {
       case 'cd': {
         var target = argv[1] === undefined || argv[1] === '~' ? this.home() : argv[1] === '-' ? (this.oldpwd || this.cwd) : argv[1];
         var path = vfs ? vfs.resolve(this.cwd, target) : target;
         var st = vfs ? vfs.stat(path) : { type: 'dir' };
-        if (!st) { write('cd: no such file or directory: ' + argv[1] + '\n'); return 1; }
-        if (st.type !== 'dir') { write('cd: not a directory: ' + argv[1] + '\n'); return 1; }
+        if (!st) { err('cd: no such file or directory: ' + argv[1] + '\n'); return 1; }
+        if (st.type !== 'dir') { err('cd: not a directory: ' + argv[1] + '\n'); return 1; }
         this.oldpwd = this.cwd; this.cwd = path; this.env.PWD = path; this.s.cwd = this.remote ? this.s.cwd : path;
         return 0;
       }
@@ -455,7 +525,8 @@
         argv.slice(1).forEach(function (a) {
           if (BUILTINS.indexOf(a) >= 0) write(name === 'which' ? a + ': shell built-in command\n' : a + ' is a shell builtin\n'); /* program output */
           else if (self.aliases[a]) write(a + ' is an alias for ' + self.aliases[a] + '\n');
-          else if (T.Programs && T.Programs[a]) write(name === 'which' ? '/usr/bin/' + a + '\n' : a + ' is /usr/bin/' + a + '\n');
+          else if (a.indexOf('/') >= 0 && vfs && self.pathCommand(a).found) write(name === 'which' ? a + '\n' : a + ' is ' + a + '\n');
+          else if (program(a)) write(name === 'which' ? '/usr/bin/' + a + '\n' : a + ' is /usr/bin/' + a + '\n');
           else { write(a + ' not found\n'); rc = 1; }
         });
         return rc;
@@ -463,8 +534,8 @@
       case 'env': Object.keys(this.env).sort().forEach(function (k) { write(k + '=' + self.env[k] + '\n'); }); return 0;
       case 'jobs': return 0;
       case 'source': return 0;
-      case 'fg': write('fg: no current job\n'); return 1;
-      case 'kill': write('kill: not enough arguments\n'); return 1;
+      case 'fg': err('fg: no current job\n'); return 1;
+      case 'kill': err('kill: not enough arguments\n'); return 1;
       case 'sleep': {
         var secs = parseFloat(argv[1] || '0') || 0;
         var job = this.startJob('sleep', o);
@@ -512,7 +583,7 @@
       get cwd() { return self.cwd; },
       setCwd: function (p) { self.cwd = p; self.env.PWD = p; },
       out: function (str) { if (!job.aborted || job.signalName === null) write(str); },
-      err: function (str) { write(str); },
+      err: o && o.errSink ? function (str) { o.errSink.push(String(str)); } : function (str) { write(str); },
       stdin: o && o.stdin !== undefined ? o.stdin : null,
       isatty: !(o && o.capture),
       sleep: function (ms) {
@@ -557,6 +628,8 @@
       },
       vfs: this.vfs,
       remote: this.remote,
+      session: s,
+      enterRemote: function () { return self.enterRemote(); },
       by: this.typer || s.lastTyper || 'user',
       assets: T.Assets,
       subshell: function (opts) { return self.runSubshell(job, opts); }
@@ -573,7 +646,7 @@
   };
 
   Shell.prototype.runProgram = async function (prog, argv, o, write, out) {
-    var job = this.startJob(argv[0], { capture: o.capture, sink: out, env: o.env, stdin: o.stdin });
+    var job = this.startJob(argv[0], { capture: o.capture, sink: out, env: o.env, stdin: o.stdin, errSink: o.errSink });
     job.ctx.argv = argv.slice();
     var code;
     try {
@@ -583,9 +656,11 @@
       if (e instanceof T.Signal || (e && e.signal)) code = e.name === 'SIGKILL' ? 137 : e.name === 'SIGHUP' ? 129 : e.name === 'SIGQUIT' ? 131 : 130;
       else { console.error('[pmt] program failed', argv[0], e); this.out('\n' + argv[0] + ': internal error\n'); code = 1; }
     }
-    /* a program that left the alternate screen or modes behind is cleaned up, like a shell's reset hook */
+    /* a program that left the alternate screen or modes behind is cleaned up, like a shell's reset hook. A signal drops
+       the program's own cleanup output, so mouse reporting, focus events and kitty key flags are reset here too
+       (the kitty pop runs after ?1049l, on the primary screen's stack) */
     if (this.s.term.buf === this.s.term.alt) this.rawOut('\x1b[?1049l');
-    this.rawOut('\x1b[?25h\x1b[0m');
+    this.rawOut('\x1b[?1000l\x1b[?1002l\x1b[?1003l\x1b[?1006l\x1b[?1016l\x1b[?1004l\x1b[<99u\x1b[?25h\x1b[0m');
     if (this.s.term.progress.state) this.rawOut('\x1b]9;4;0\x07');
     this.endJob(job);
     return { code: code & 255, output: out.join('') };
@@ -596,7 +671,13 @@
     var self = this;
     if (prompt) this.out(prompt);
     this.mode = 'line';
-    if (opts.secret) { this.s.secret = true; this.s.emit('secret', { on: true, prompt: prompt }); }
+    if (opts.secret) {
+      this.s.secret = true; this.s.emit('secret', { on: true, prompt: prompt });
+      /* agent typeahead queued before the prompt opened never answers it (D18): only the human does */
+      var refused = new Set();
+      this.queue = this.queue.filter(function (q) { if (/^agent:/.test(q.by || '')) refused.add(q.by); return q.by === 'user'; });
+      refused.forEach(function (a) { self.s.emit('refused', { by: a, reason: 'secret_input' }); });
+    }
     var buf = '';
     return new Promise(function (res, rej) {
       var rec = { reject: function (e) { finish(); rej(e); } };
@@ -605,11 +686,27 @@
       (function loop() {
         self._next().then(function (item) {
           if (job.aborted) return;
+          if (opts.secret && item && item.by !== 'user') {
+            if (/^agent:/.test(item.by || '')) self.s.emit('refused', { by: item.by, reason: 'secret_input' });
+            loop(); return;
+          }
           var d = item ? item.data : '';
           for (var i = 0; i < d.length; i++) {
             var c = d[i], code = d.charCodeAt(i);
-            if (c === '\r' || c === '\n') { self.rawOut('\r\n'); finish(); res(buf); return; }
-            if (code === 0x7f || code === 8) { if (buf.length) { buf = buf.slice(0, -1); if (!opts.secret) self.rawOut('\b \b'); } continue; }
+            if (c === '\r' || c === '\n') {
+              /* the rest of the chunk is typeahead for whoever reads next, as on a tty */
+              if (i + 1 < d.length) self.queue.unshift({ data: d.slice(i + 1), by: item.by });
+              self.rawOut('\r\n'); finish(); res(buf); return;
+            }
+            if (code === 0x7f || code === 8) {
+              if (buf.length) {
+                buf = buf.slice(0, -1);
+                /* at the right margin with a wrap pending the last character is under the cursor and BS steps past it:
+                   BS then CUF lands back on it with the wrap cleared, and EL erases it there */
+                if (!opts.secret) self.rawOut(self.s.term.buf.cursor.pendingWrap ? '\b\x1b[C\x1b[K' : '\b \b');
+              }
+              continue;
+            }
             if (code === 0x15) { if (!opts.secret) self.rawOut('\r\x1b[K' + (prompt || '')); buf = ''; continue; }
             if (code === 0x1b) { var m = /^\x1b(\[[0-9;?]*[ -\/]*[@-~]|O.|\][^\x07\x1b]*(\x07|\x1b\\)|_[^\x1b]*\x1b\\|.)/.exec(d.slice(i)); i += m ? m[0].length - 1 : 0; continue; }
             if (code < 0x20) continue;
@@ -637,6 +734,7 @@
     this.sh = sh; this.buf = ''; this.pos = 0; this.hist = sh.s.history; this.hi = this.hist.length;
     this.saved = ''; this.yank = ''; this.search = null; this.endRow = 0;
     this.pending = '';
+    this.agents = new Set();              /* agents that typed into this line */
     this.term = sh.s.term;
     var pw = sh.promptWidth !== undefined ? sh.promptWidth : this.term.buf.cursor.x;
     this.startX = pw % this.term.cols;     /* where input starts on the prompt line */
@@ -654,19 +752,29 @@
     }
   };
   LineEditor.prototype.cols = function () { return this.term.cols; };
-  /* width-aware position of an index in the buffer, relative to the input start */
-  LineEditor.prototype.posOf = function (idx) {
-    var cols = this.cols(), x = this.startX, row = 0, s = this.buf.slice(0, idx);
+  /* width-aware position after text written from the input start, measured the way displayText draws it: a newline
+     starts a row, other control characters are ^X (two cells that wrap like any two). pend: the text ends at the
+     right margin, where the terminal's cursor is still in pending wrap on the row above */
+  LineEditor.prototype.measure = function (s) {
+    var cols = this.cols(), x = this.startX, row = 0, wrapped = false;
     for (var i = 0; i < s.length; i++) {
       var c = s.codePointAt(i); if (c > 0xffff) i++;
-      var w = T.wcwidth(c);
-      if (x + w > cols) { row++; x = 0; }
-      x += w;
-      if (x >= cols && i < s.length - 1) { row++; x = 0; }
+      if (c === 10) { if (!wrapped) row++; x = 0; wrapped = false; continue; }
+      var cells = c < 0x20 || c === 0x7f ? [1, 1] : [T.wcwidth(c)];
+      for (var k = 0; k < cells.length; k++) {
+        var w = cells[k];
+        if (w) wrapped = false;
+        if (x + w > cols) { row++; x = 0; }
+        x += w;
+        if (x >= cols && (i < s.length - 1 || k < cells.length - 1)) { row++; x = 0; wrapped = true; }
+      }
     }
-    if (x >= cols) { row++; x = 0; }
-    return { row: row, x: x };
+    var pend = x >= cols;
+    if (pend) { row++; x = 0; }
+    return { row: row, x: x, pend: pend };
   };
+  /* width-aware position of an index in the buffer, relative to the input start */
+  LineEditor.prototype.posOf = function (idx) { return this.measure(this.buf.slice(0, idx)); };
   LineEditor.prototype.refresh = function () {
     var out = '';
     /* back to the input start */
@@ -678,18 +786,22 @@
       out += '\x1b[J';
       var label = (this.search.fail ? 'failing ' : '') + 'bck-i-search: ' + this.search.q + '_';
       var match = this.search.match || '';
-      /* zsh shows the match on the line and the search under it */
-      out += match + '\r\n' + label;
+      /* zsh shows the match on the line and the search under it. CR LF out of a pending wrap moves down one row,
+         so a match that ends at the margin puts the label on the row measure already counted */
+      out += displayText(match) + '\r\n' + label;
       this.sh.rawOut(out);
-      var lines = 1 + Math.floor((this.startX + strWidth(match)) / this.cols());
+      var mm = this.measure(match);
+      var lines = (mm.pend ? mm.row : mm.row + 1) + Math.floor((strWidth(label) - 1) / this.cols());
       this.curRow = lines;
       this.endRow = lines;
       return;
     }
-    out += this.render(shown) + '\x1b[J';
+    out += this.render(shown);
     var end = this.posOf(this.buf.length), at = this.posOf(this.pos);
-    /* the terminal's own cursor after writing sits at end (or pending wrap) */
-    if (end.x === 0 && end.row > 0 && this.buf.length) out += ' \r';
+    /* the terminal's own cursor after writing sits at end, or in pending wrap at the margin: a space and CR move it to
+       the next row first, so the clear cannot erase the last character */
+    if (end.pend) out += ' \r';
+    out += '\x1b[J';
     var up = end.row - at.row;
     if (up > 0) out += '\x1b[' + up + 'A';
     out += '\r' + (at.x ? '\x1b[' + at.x + 'C' : '');
@@ -699,11 +811,17 @@
   /* light syntax colouring like zsh-syntax-highlighting: known command green, unknown red, strings yellow */
   LineEditor.prototype.render = function (s) {
     var m = /^(\s*)(\S+)([\s\S]*)$/.exec(s);
-    if (!m) return s;
+    if (!m) return displayText(s);
     var cmd = m[2], known = T.BUILTINS.indexOf(cmd) >= 0 || (T.Programs && T.Programs[cmd]) || this.sh.aliases[cmd] || /^\.?\//.test(cmd);
-    var rest = m[3].replace(/("[^"]*"?|'[^']*'?)/g, '\x1b[33m$1\x1b[39m');
-    return m[1] + (known ? '\x1b[32m' : '\x1b[31m') + cmd + '\x1b[39m' + rest;
+    var rest = displayText(m[3]).replace(/("[^"]*"?|'[^']*'?)/g, '\x1b[33m$1\x1b[39m');
+    return displayText(m[1]) + (known ? '\x1b[32m' : '\x1b[31m') + displayText(cmd) + '\x1b[39m' + rest;
   };
+  /* buffer text as the terminal is sent it: a newline (Alt+Enter) as CR LF, a pasted tab or other control character
+     as ^X, never raw, so the screen and measure agree */
+  function displayText(s) {
+    return s.replace(/[\x00-\x09\x0b-\x1f\x7f]/g, function (c) { return '^' + (c === '\x7f' ? '?' : String.fromCharCode(c.charCodeAt(0) + 64)); })
+      .replace(/\n/g, '\r\n');
+  }
   LineEditor.prototype.afterResize = function () {
     /* the terminal reflowed the prompt's logical line: recompute where input starts and where the cursor is */
     var cols = this.cols();
@@ -714,12 +832,29 @@
     this.buf = this.buf.slice(0, this.pos) + s + this.buf.slice(this.pos);
     this.pos += s.length;
   };
+  /* one character left or right of an index, by code point, so a move or delete never splits a surrogate pair */
+  LineEditor.prototype.prevPos = function (p) {
+    if (p <= 0) return 0;
+    var lo = this.buf.charCodeAt(p - 1);
+    if (p >= 2 && lo >= 0xdc00 && lo <= 0xdfff) { var hi = this.buf.charCodeAt(p - 2); if (hi >= 0xd800 && hi <= 0xdbff) return p - 2; }
+    return p - 1;
+  };
+  LineEditor.prototype.nextPos = function (p) {
+    if (p >= this.buf.length) return this.buf.length;
+    return p + (this.buf.codePointAt(p) > 0xffff ? 2 : 1);
+  };
   LineEditor.prototype.wordLeft = function () { var p = this.pos; while (p > 0 && /\s/.test(this.buf[p - 1])) p--; while (p > 0 && !/[\s\/]/.test(this.buf[p - 1])) p--; return p; };
   LineEditor.prototype.wordRight = function () { var p = this.pos; while (p < this.buf.length && /\s/.test(this.buf[p])) p++; while (p < this.buf.length && !/[\s\/]/.test(this.buf[p])) p++; return p; };
+  /* Enter ends the line: the rest of the chunk (a confirmed multi-line paste, typeahead) waits for the next reader */
+  LineEditor.prototype.keepRest = function (data, i, by) {
+    if (i < data.length) this.sh.queue.unshift({ data: data.slice(i), by: by });
+  };
   LineEditor.prototype.accept = function () {
     var line = this.buf;
     this.pos = this.buf.length; this.refresh();
-    this.sh.rawOut('\r\n');
+    /* input that ends at the margin or on a newline left the cursor at the start of a fresh row already */
+    var end = this.posOf(this.buf.length);
+    if (!(end.x === 0 && end.row > 0)) this.sh.rawOut('\r\n');
     if (line.trim()) {
       if (this.hist[this.hist.length - 1] !== line) this.hist.push(line);
       if (this.hist.length > 500) this.hist.shift();
@@ -733,6 +868,7 @@
   };
   LineEditor.prototype.feed = function (data, by) {
     if (by && by !== 'terminal') this.typer = this.typer && this.typer !== by ? 'user' : by;
+    if (/^agent:/.test(by || '')) this.agents.add(by);
     data = this.pending + data; this.pending = '';
     var i = 0, n = data.length, dirty = false, sh = this.sh;
     while (i < n) {
@@ -749,13 +885,13 @@
         var seq = m[1];
         if (this.search && /^(\[|O)/.test(seq) && !/^\[[\d;]*[RcnyStu]$/.test(seq)) { this.endSearch(true); }
         switch (seq) {
-          case '[D': case 'OD': if (this.pos > 0) this.pos--; break;
-          case '[C': case 'OC': if (this.pos < this.buf.length) this.pos++; break;
+          case '[D': case 'OD': this.pos = this.prevPos(this.pos); break;
+          case '[C': case 'OC': this.pos = this.nextPos(this.pos); break;
           case '[A': case 'OA': this.histMove(-1); break;
           case '[B': case 'OB': this.histMove(1); break;
           case '[H': case 'OH': case '[1~': this.pos = 0; break;
           case '[F': case 'OF': case '[4~': this.pos = this.buf.length; break;
-          case '[3~': if (this.pos < this.buf.length) this.buf = this.buf.slice(0, this.pos) + this.buf.slice(this.pos + 1); break;
+          case '[3~': this.buf = this.buf.slice(0, this.pos) + this.buf.slice(this.nextPos(this.pos)); break;
           case '[1;5D': case '[1;3D': case 'b': this.pos = this.wordLeft(); break;
           case '[1;5C': case '[1;3C': case 'f': this.pos = this.wordRight(); break;
           case '\x7f': { var wl = this.wordLeft(); this.yank = this.buf.slice(wl, this.pos); this.buf = this.buf.slice(0, wl) + this.buf.slice(this.pos); this.pos = wl; break; }
@@ -771,22 +907,22 @@
         if (code === 7 || code === 3) { this.endSearch(false); dirty = true; continue; }
         if (code >= 0x20) { this.search.q += c; this.searchUpdate(); dirty = true; continue; }
         this.endSearch(true);
-        if (code === 13) { return this.accept(); }
+        if (code === 13) { this.keepRest(data, i, by); return this.accept(); }
         dirty = true; continue;
       }
       switch (code) {
-        case 13: case 10: return this.accept();
+        case 13: case 10: this.keepRest(data, i, by); return this.accept();
         case 3: /* Ctrl+C at the prompt */
           this.pos = this.buf.length; this.refresh(); sh.rawOut('^C\r\n'); sh.rawOut('\x1b]133;D;pmn=' + sh.s.nonce + '\x07');
           this.buf = ''; this.pos = 0; return '';
         case 4: if (!this.buf.length) { sh.rawOut('\r\n'); sh.done = true; sh.exitCode = 0; return null; }
-          if (this.pos < this.buf.length) this.buf = this.buf.slice(0, this.pos) + this.buf.slice(this.pos + 1); break;
+          this.buf = this.buf.slice(0, this.pos) + this.buf.slice(this.nextPos(this.pos)); break;
         case 1: this.pos = 0; break;
         case 5: this.pos = this.buf.length; break;
-        case 2: if (this.pos > 0) this.pos--; break;
-        case 6: if (this.pos < this.buf.length) this.pos++; break;
+        case 2: this.pos = this.prevPos(this.pos); break;
+        case 6: this.pos = this.nextPos(this.pos); break;
         case 0x7f: case 8:
-          if (this.pos > 0) { var cpb = this.buf.codePointAt(this.pos - 2); var step = cpb > 0xffff ? 2 : 1; this.buf = this.buf.slice(0, this.pos - step) + this.buf.slice(this.pos); this.pos -= step; }
+          if (this.pos > 0) { var pp = this.prevPos(this.pos); this.buf = this.buf.slice(0, pp) + this.buf.slice(this.pos); this.pos = pp; }
           break;
         case 0x15: this.yank = this.buf.slice(0, this.pos); this.buf = this.buf.slice(this.pos); this.pos = 0; break;
         case 0x0b: this.yank = this.buf.slice(this.pos); this.buf = this.buf.slice(0, this.pos); break;
@@ -818,6 +954,7 @@
     var sh = this.sh;
     sh.rawOut(sh.promptText());
     var pw = visibleWidth(sh.promptText());
+    if (pw && pw % this.term.cols === 0) sh.rawOut(' \r');
     this.startX = pw % this.term.cols; this.startOff = pw; this.curRow = 0;
   };
   LineEditor.prototype.histMove = function (d) {
@@ -838,7 +975,7 @@
   LineEditor.prototype.endSearch = function (keep) {
     var s = this.search; this.search = null;
     /* clear the search line under the input */
-    var out = '\x1b[' + this.curRow + 'A\r' + (this.startX ? '\x1b[' + this.startX + 'C' : '') + '\x1b[J';
+    var out = (this.curRow > 0 ? '\x1b[' + this.curRow + 'A' : '') + '\r' + (this.startX ? '\x1b[' + this.startX + 'C' : '') + '\x1b[J';
     this.sh.rawOut(out); this.curRow = 0;
     if (keep && s.match) { this.buf = s.match; this.pos = this.buf.length; }
   };
@@ -865,7 +1002,7 @@
     if (common.length > word.length) { this.insert(common.slice(word.length)); return; }
     /* list candidates under the line, then redraw the prompt and input */
     var end = this.posOf(this.buf.length);
-    var out = (end.row - this.curRow > 0 ? '\x1b[' + (end.row - this.curRow) + 'B' : '') + '\r\n';
+    var out = (end.row - this.curRow > 0 ? '\x1b[' + (end.row - this.curRow) + 'B' : '') + (end.x === 0 && end.row > 0 ? '\r' : '\r\n');
     var w = Math.max.apply(null, cands.map(function (x) { return strWidth(x); })) + 2, per = Math.max(1, Math.floor(this.cols() / w));
     cands.slice(0, 60).forEach(function (cnd, k) { out += cnd + ' '.repeat(w - strWidth(cnd)); if ((k + 1) % per === 0) out += '\r\n'; });
     if (cands.length % per) out += '\r\n';

@@ -61,6 +61,13 @@
     }
     function set(key, value) { A().set(scope, key, value, v); render(true); }
     var ap = function () { return v.appearance; };
+    /* the font metrics this scope has, so "All terminals" never starts from this tab's zoom: the scope's own value,
+       otherwise the default of the font that scope resolves to */
+    function scopeFont() {
+      var fid = val('font'); if (fid === 'follow' || !A().FONTS[fid]) fid = A().LOOKS[ap().lookKey].font;
+      var fd = A().FONTS[fid];
+      return { size: val('fontSize') || fd.size, lineHeight: val('lineHeight') || fd.lineHeight, letterSpacing: val('letterSpacing') || 0 };
+    }
 
     function render(keepScroll) {
       var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
@@ -83,12 +90,13 @@
         '</section>';
       /* font */
       var fonts = [['follow', 'Follow theme (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
+      var sf = scopeFont();
       html += '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', val('font'), fonts)) +
-        row('Size', stepper('fontSize', R.font.size, 8, 32, 0.5)) +
+        row('Size', stepper('fontSize', sf.size, 8, 32, 0.5)) +
         row('Weight', select('fontWeight', val('fontWeight') || 400, [[400, 'Regular'], [500, 'Medium'], [600, 'Semibold']])) +
-        row('Line height', range('lineHeight', R.font.lineHeight, 1, 2, 0.05, R.font.lineHeight.toFixed(2))) +
-        row('Letter spacing', range('letterSpacing', R.font.letterSpacing, -1, 3, 0.25, R.font.letterSpacing + ' px')) +
+        row('Line height', range('lineHeight', sf.lineHeight, 1, 2, 0.05, sf.lineHeight.toFixed(2))) +
+        row('Letter spacing', range('letterSpacing', sf.letterSpacing, -1, 3, 0.25, sf.letterSpacing + ' px')) +
         row('Ligatures', check('ligatures', val('ligatures'), 'Join ligatures where the font has them')) +
         (R.font.id === 'sixtyfour' || R.font.id === 'sixtyfour-raster' ? '<p class="pmt-pop-note">Sixtyfour Raster is Sixtyfour with its scanline and bleed axes set (45, 40): a CRT look with no motion.</p>' : '') +
         '</section>';
@@ -109,7 +117,8 @@
         html += row('Dim', range('bgDim', val('bgDim'), 0, 0.9, 0.05, Math.round(val('bgDim') * 100) + '%'));
         html += row('Blur', range('bgBlur', val('bgBlur'), 0, 24, 1, val('bgBlur') + ' px'));
       }
-      if (look === 'glass' || val('opacity') !== null) html += row('Opacity', range('opacity', R.theme.bgAlpha || 1, 0.4, 1, 0.02, Math.round((R.theme.bgAlpha || 1) * 100) + '%'));
+      var op = val('opacity'); if (op === null || op === undefined) op = R.theme.bgAlpha || 1;
+      if (look === 'glass' || val('opacity') !== null) html += row('Opacity', range('opacity', op, 0.4, 1, 0.02, Math.round(op * 100) + '%'));
       html += row('Padding', range('padding', val('padding'), 0, 24, 1, val('padding') + ' px'));
       html += '</section>';
       /* effects */
@@ -122,13 +131,15 @@
           row('Scrolling', check('smoothScroll', fx.smoothScroll, 'Smooth scrolling')) +
           row('Scanlines', check('scanlines', fx.scanlines.on, 'Scanlines') + (fx.scanlines.on ? range('scanStrength', val('scanStrength'), 0, 0.6, 0.05, Math.round(val('scanStrength') * 100) + '%') : '')) +
           row('Glow', check('glow', fx.glow.on, 'Phosphor glow') + (fx.glow.on ? range('glowStrength', val('glowStrength'), 0, 1, 0.05, Math.round(val('glowStrength') * 100) + '%') : '')) +
-          row('Full CRT', check('crt', !!val('crt'), 'Curvature, bezel, burn-in and noise')) +
-          (val('crt') ? row('Curvature', range('curvature', val('curvature'), 0, 0.2, 0.01, String(val('curvature')))) + row('Burn-in', check('burnIn', val('burnIn'), 'Afterglow when text moves')) + row('Noise', range('noise', val('noise'), 0, 0.12, 0.005, String(val('noise')))) : '') +
-          row('Flicker', check('flicker', !!val('flicker'), 'Flicker (at most 3% brightness change, below the WCAG flash threshold)')) +
+          /* Full CRT and Flicker show what applies: Theme does not apply a stored custom choice */
+          row('Full CRT', check('crt', fx.crt, 'Curvature, bezel, burn-in and noise')) +
+          (fx.crt ? row('Curvature', range('curvature', val('curvature'), 0, 0.2, 0.01, String(val('curvature')))) + row('Burn-in', check('burnIn', val('burnIn'), 'Afterglow when text moves')) + row('Noise', range('noise', val('noise'), 0, 0.12, 0.005, String(val('noise')))) : '') +
+          row('Flicker', check('flicker', fxMode === 'custom' && !!val('flicker'), 'Flicker (at most 3% brightness change, below the WCAG flash threshold)')) +
           (look === 'retro' ? '<div class="pmt-pop-row"><span></span><button type="button" class="pmt-textbtn" data-act="degauss">Degauss</button></div>' : '');
       }
       var notes = [];
       if (fx.reduced) notes.push('Reduced Motion is on: nothing moves; static looks stay.');
+      else if (eff.motion && /^Battery saver/.test(eff.motion)) notes.push('Battery saver is on: nothing moves; static looks stay.');
       if (eff.curvature && /not drawn/.test(eff.curvature)) notes.push('No GPU on this machine: curvature, burn-in and noise are not drawn; scanlines and glow use the flat fallback.');
       if (notes.length) html += '<p class="pmt-pop-note">' + notes.map(esc).join(' ') + '</p>';
       html += '</section></div>';
@@ -205,7 +216,7 @@
       var b = e.target.closest('button, .pmt-scheme'); if (!b) return;
       if (b.classList.contains('pmt-scheme')) { A().endPreview(v); set('scheme', b.getAttribute('data-id')); v.announce('Scheme: ' + b.querySelector('.pmt-scheme-name').textContent); return; }
       if (b.hasAttribute('data-scope')) { scope = v._apScope = b.getAttribute('data-scope'); render(true); return; }
-      if (b.hasAttribute('data-step')) { var k = b.getAttribute('data-key'); set(k, T.util.clamp(ap().font.size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
+      if (b.hasAttribute('data-step')) { var k = b.getAttribute('data-key'); set(k, T.util.clamp(scopeFont().size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { set(b.getAttribute('data-key'), b.getAttribute('data-value')); return; }
       var act = b.getAttribute('data-act');
       if (act === 'close') v.closeAppearance();
@@ -244,7 +255,7 @@
         if (f.size > 256 * 1024) { v.announce('That file is too large for a colour scheme'); return; }
         f.text().then(function (text) {
           var r = T.SchemeImport ? T.SchemeImport.parse(text, f.name) : { ok: false, error: 'Import is not available' };
-          if (!r.ok) { v.notice({ id: 'import', tone: 'warn', text: 'Could not import that scheme: ' + r.error, actions: [{ label: 'OK' }] }); return; }
+          if (!r.ok) { v.notice({ id: 'import', tone: 'warn', focus: true, text: 'Could not import that scheme: ' + r.error, actions: [{ label: 'OK' }] }); return; }
           var entry = A().addUserScheme(r.scheme);
           set('scheme', entry.id);
           v.announce('Imported ' + entry.name);
@@ -252,14 +263,48 @@
       });
       input.click();
     }
+    /* the image is kept once, on this machine, under its own key and a content hash; the layers hold only 'img:<hash>'.
+       A data URL in a layer would push this tab's saved state over the host's 16 KB cap (the whole state then stops
+       saving) or fill the settings store. It is scaled down (never up) to just cover the 960 x 600 the background uses,
+       as a JPEG */
+    function storeImage(img) {
+      var k = Math.min(1, Math.max(960 / img.naturalWidth, 600 / img.naturalHeight));
+      var cv = el('canvas'); cv.width = Math.max(1, Math.round(img.naturalWidth * k)); cv.height = Math.max(1, Math.round(img.naturalHeight * k));
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      var data = cv.toDataURL('image/jpeg', 0.85);
+      var h1 = 0x811c9dc5, h2 = 0x01000193;
+      for (var i = 0; i < data.length; i++) { var c = data.charCodeAt(i); h1 = Math.imul(h1 ^ c, 0x01000193); h2 = Math.imul(h2 ^ c, 0x5bd1e995); }
+      var hash = (h1 >>> 0).toString(16) + (h2 >>> 0).toString(16), KEY = 'pm.home.terminal:v1:bg';
+      try {
+        /* the four most recent images stay, and the ones All terminals and this terminal use; an older one another tab
+           still names falls back to the default image. The old ones go first, so they make room for the new one */
+        var used = [A().get(null, 'bgImageData'), v.tabAppearance && v.tabAppearance.bgImageData];
+        var kept = JSON.parse(localStorage.getItem(KEY) || '[]').filter(function (x) { return x !== hash; });
+        var drop = kept.length + 1 - 4;
+        kept = kept.filter(function (x) {
+          if (drop <= 0 || used.indexOf('img:' + x) >= 0) return true;
+          drop--; localStorage.removeItem(KEY + ':' + x); return false;
+        });
+        kept.push(hash);
+        localStorage.setItem(KEY, JSON.stringify(kept));
+        localStorage.setItem(KEY + ':' + hash, data);
+      } catch (e) { return null; }
+      return 'img:' + hash;
+    }
     function uploadImage() {
       var input = el('input'); input.type = 'file'; input.accept = 'image/png,image/jpeg,image/webp';
       input.addEventListener('change', function () {
         var f = input.files && input.files[0]; if (!f) return;
         if (f.size > 4 * 1024 * 1024) { v.announce('Choose an image under 4 MB'); return; }
-        var rd = new FileReader();
-        rd.onload = function () { A().set(scope, 'bgImageData', String(rd.result), v); set('bgImage', 'custom'); };
-        rd.readAsDataURL(f);
+        var url = URL.createObjectURL(f), img = new Image();
+        img.onload = function () {
+          URL.revokeObjectURL(url);
+          var ref = storeImage(img);
+          if (!ref) { v.announce('There is no room to keep that image on this machine'); return; }
+          A().set(scope, 'bgImageData', ref, v); set('bgImage', 'custom');
+        };
+        img.onerror = function () { URL.revokeObjectURL(url); v.announce('That image could not be read'); };
+        img.src = url;
       });
       input.click();
     }
@@ -269,11 +314,12 @@
     if (first) { first.focus({ preventScroll: true }); if (first.scrollIntoView) first.scrollIntoView({ block: 'nearest' }); }
     v._apRender = render;
   };
-  T.View.prototype.closeAppearance = function () {
+  /* noFocus: the view is going away (dispose), so the focus is left where it is */
+  T.View.prototype.closeAppearance = function (noFocus) {
     if (!this.pop) return;
     T.Appearance.endPreview(this);
     this.pop.remove(); this.pop = null;
     document.removeEventListener('mousedown', this._popOutside, true);
-    this.focus();
+    if (!noFocus) this.focus();
   };
 })();

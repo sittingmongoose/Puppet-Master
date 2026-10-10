@@ -49,6 +49,10 @@
 .pmt-mark:hover { background: var(--pmt-tint); }
 .pmt-mark:focus-visible { outline: 2px solid var(--pmt-accent); outline-offset: -2px; }
 
+/* ---- header row: the running command and its elapsed time m:ss (D12); the command ellipsizes, the time never ---- */
+.pmt-hrow-run { display: inline-flex; align-items: baseline; gap: 6px; min-width: 0; }
+.pmt-hrow-elapsed { flex: none; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--pmw-text-3, var(--text-muted)); }
+
 /* ---- scrollbar: the editor minimap's language (thumb box, heat strips) ---- */
 .pmt-scrollbar { position: relative; flex: 0 0 14px; cursor: default; }
 .pmt-sb-marks { position: absolute; inset: 0 3px 0 3px; width: calc(100% - 6px); height: 100%; pointer-events: none; transition: inset .15s; }
@@ -147,7 +151,9 @@
 .pmt-a11y-body h3:focus { outline: 2px solid var(--pmt-accent); outline-offset: 2px; }
 
 /* ---- states ---- */
-.pmt-ended .pmt-grid { opacity: .72; }
+/* an ended session dims to 72 %: the grid on the 2D path; on the WebGL path the grid is the hidden source and the
+   effects canvas is what shows */
+.pmt-ended :is(.pmt-grid, .pmt-fxcanvas) { opacity: .72; }
 .pmt-copymode .pmt-screen { cursor: default; }
 .pmt-root::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; }
 

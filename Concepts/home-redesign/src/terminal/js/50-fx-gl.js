@@ -14,6 +14,8 @@
    fx.unmapPointer(x, y, w, h) -> {x, y} | null  the forward direction (source -> screen), for placing DOM overlays.
    fx.animating(params, nowMs) -> bool   true only while burn-in is still decaying (until its clean frame is drawn),
               degauss runs, or noise or flicker are on.
+   fx.burning(params, nowMs) -> bool     the burn-in part of animating(): true while the burn-in still decays, so the
+              caller can run those frames at the display rate and ambient-only ones at most AMBIENT_FPS.
    fx.resize(deviceW, deviceH, dpr), fx.dispose(), fx.lost, fx.info { webgl2, renderer, vendor, maxTexture }.
    Context loss: render() returns false while lost; after 'webglcontextrestored' everything is rebuilt and re-uploaded.
    opts: { onLost(), onRestored(), allowSoftware } (allowSoftware is for measuring the software path only).
@@ -166,8 +168,10 @@
     if (p.noise.on && p.noise.amount > 0) return true;
     if (p.flicker.on && p.flicker.amount > 0) return true;
     if (p.degauss && this.degaussDone !== p.degauss.startMs) return true;
-    if (p.burnIn.on && (!this.burnClean || nowMs < this.lastChange + p.burnIn.persistMs)) return true;
-    return false;
+    return this.burning(p, nowMs);
+  };
+  Timeline.prototype.burning = function (p, nowMs) {
+    return p.burnIn.on && (!this.burnClean || nowMs < this.lastChange + p.burnIn.persistMs);
   };
   Timeline.prototype.reset = function () { this.lastChange = -Infinity; this.burnClean = true; };
 
@@ -270,7 +274,10 @@
     '    c.rgb = min(c.rgb, vec3(c.a));',
     '  }',
     '  if (uScan.x > 0.0) {',
-    '    float row = (1.0 - t.y) * uSrcPx.y;',
+    // flat, the phase follows the source rows (a degauss wobbles them with the picture). With curvature or the bezel it
+    // follows the output rows from the screen's top edge: the inset and the warp scale a 3 px source period to about
+    // 2.8 output px, which beats with the pixel grid (doubled lines, banding along the curve)
+    '    float row = (uCurv > 0.0 || uBezel > 0.0) ? uOut.y - gl_FragCoord.y - uBezelPx : (1.0 - t.y) * uSrcPx.y;',
     '    float sl = 0.5 - 0.5 * cos(6.2831853 * row / uScan.y);',
     '    c.rgb *= (1.0 - uScan.x * sl) * (1.0 + ' + (SCAN_BOOST * 0.5).toFixed(4) + ' * uScan.x);',
     '  }',
@@ -608,6 +615,7 @@
     return o ? { x: o[0] * w, y: o[1] * h } : null;
   };
   FX.prototype.animating = function (params, nowMs) { return this.timeline.animating(normalize(params), nowMs); };
+  FX.prototype.burning = function (params, nowMs) { return this.timeline.burning(normalize(params), nowMs); };
 
   FX.prototype.dispose = function () {
     if (this.disposed) return;

@@ -194,7 +194,8 @@
     if (o.quitIfOneScreen && wrapped.length <= rows - 1) { ctx.out(text); return 0; }
     var top = 0, search = null, typing = null, msg = '', quit = false, h = {};
     ctx.trap('SIGINT', true);
-    ctx.onSignal(function (n) { if (n === 'SIGINT' || n === 'SIGTERM') { quit = true; if (h.wake) h.wake(); } });
+    /* an Interrupt from the menu or an agent quits at once, as htop does; Ctrl-C typed in the pager arrives as a key */
+    ctx.onSignal(function (n) { if (n === 'SIGINT' || n === 'SIGTERM') { quit = true; h.done = true; if (h.wake) h.wake(); } });
     ctx.setRaw(true);
     ctx.out(CSI + '?1049h' + CSI + 'H' + CSI + '2J');
     var maxTop = function () { return Math.max(0, wrapped.length - (rows - 1)); };
@@ -300,7 +301,7 @@
     summary: 'list directory contents',
     run: async function (ctx) {
       var a = parse(ctx.argv.slice(1), ['color', 'hyperlink', 'sort']), f = a.f, vfs = ctx.vfs;
-      var long = f.l || f.n || f.g, all = f.a, almost = f.A, human_ = f.h, one = f['1'], dirOnly = f.d, rev = f.r;
+      var long = f.l || f.n || f.g, all = f.a || f.all, almost = f.A || f['almost-all'], human_ = f.h, one = f['1'], dirOnly = f.d, rev = f.r;
       var colorMode = f.color === true ? 'always' : f.color || 'auto';
       var color = colorMode === 'always' || (colorMode === 'auto' && colorOn(ctx));
       var hyper = f.hyperlink === true || f.hyperlink === 'always' || (f.hyperlink === 'auto' && ctx.isatty !== false);
@@ -365,7 +366,7 @@
       dirs.forEach(function (d, i) {
         var names;
         try { names = vfs.list(d.path); } catch (e) { ctx.err("ls: cannot open directory '" + d.name + "': " + errText(e) + '\n'); rc = 2; return; }
-        if (!all) names = names.filter(function (n) { return n[0] !== '.'; });
+        if (!all && !almost) names = names.filter(function (n) { return n[0] !== '.'; });
         if (all && !almost) names = ['.', '..'].concat(names);
         else if (almost) names = names.filter(function (n) { return n !== '.' && n !== '..'; });
         var list = names.map(function (n) {
@@ -437,7 +438,7 @@
         var p = abs(ctx, fn), st = ctx.vfs.stat(p);
         if (!st) { ctx.err('grep: ' + fn + ': ' + ERR.ENOENT + '\n'); err = true; return; }
         if (st.type === 'dir') {
-          if (!recursive) { ctx.err('grep: ' + fn + ': ' + ERR.EISDIR + '\n'); return; }
+          if (!recursive) { ctx.err('grep: ' + fn + ': ' + ERR.EISDIR + '\n'); err = true; return; }
           ctx.vfs.walk(p, function (q, s) {
             var b = T.VFS.basename(q);
             if (s.type === 'dir') return q === p || ['.git', 'target', 'node_modules'].indexOf(b) < 0;
@@ -809,7 +810,7 @@
       [['F5, t', 'tree view'], ['F6, P, M', 'sort by a column, by CPU, by memory'], ['Up, Down', 'select a process'], ['q, F10', 'quit']]],
     kitten: ['kitten-icat - display images in the terminal', 'kitten icat [options] image_file...', 'A cat like utility to display images in the terminal using the kitty graphics protocol.',
       [['--transfer-mode', 'detect, file, stream, memory or temp: how the image data reaches the terminal'], ['--place WxH@LxT', 'display the image in the given rectangle of cells'],
-        ['--z-index N', 'z-index of the image; negative values place it under the text'], ['--unicode-placeholder', 'use Unicode placeholder characters for the image'], ['--clear', 'remove all images currently displayed on the screen'],
+        ['--z-index N', 'z-index of the image; negative values place it under the text, a double minus (--1) under the cell backgrounds'], ['--unicode-placeholder', 'use Unicode placeholder characters for the image'], ['--clear', 'remove all images currently displayed on the screen'],
         ['--align', 'center, left or right']]],
     ssh: ['ssh - OpenSSH remote login client', 'ssh [-p port] [-l login_name] destination [command]', 'ssh is a program for logging into a remote machine and for executing commands on a remote machine.',
       [['-p port', 'port to connect to on the remote host'], ['-l login_name', 'the user to log in as on the remote machine']]],
@@ -845,6 +846,7 @@
 
   /* ------------------------------------------------------------------ git */
   function short(h) { return h ? h.slice(0, 7) : ''; }
+  function isBinSig(s) { return typeof s === 'string' && /^(asset|bytes):/.test(s); }
   function relDate(ms) {
     var s = Math.max(1, Math.round((Date.now() - ms) / 1000));
     if (s < 60) return s + ' seconds ago'; var m = Math.round(s / 60); if (m < 60) return m + ' minute' + (m === 1 ? '' : 's') + ' ago';
@@ -892,6 +894,18 @@
     var tot = ins + del;
     return ' ' + pad(rel, width_) + ' | ' + lpad(String(tot), 3) + ' ' + sgr('32') + '+'.repeat(Math.min(ins, 40)) + R0 + sgr('31') + '-'.repeat(Math.min(del, 40)) + R0;
   }
+  /* one branch's history, newest first: follow parents through commits made here; the seed graph has no
+     parents, so from the first seed commit on it is the rest of the list (edge rows kept for --graph) */
+  function branchHistory(repo, tip) {
+    var at = {}; repo.commits.forEach(function (c, i) { if (!c.edge) at[c.hash] = i; });
+    var out = [], h = tip;
+    while (h && at[h] !== undefined) {
+      var c = repo.commits[at[h]];
+      if (!c.parents) return out.concat(repo.commits.slice(at[h]));
+      out.push(c); h = c.parents[0];
+    }
+    return out;
+  }
   function headCommit(repo) {
     var h = repo.branches[repo.branch];
     for (var i = 0; i < repo.commits.length; i++) if (repo.commits[i].hash === h) return repo.commits[i];
@@ -901,7 +915,7 @@
     rev = rev || 'HEAD';
     var list = repo.commits.filter(function (c) { return !c.edge; });
     var m = /^(HEAD|@)(?:~(\d+)|\^)?$/.exec(rev);
-    if (m) { var head = headCommit(repo), i = list.indexOf(head) + (m[2] ? +m[2] : rev.slice(-1) === '^' ? 1 : 0); return list[i] || null; }
+    if (m) { var hl = branchHistory(repo, repo.branches[repo.branch]).filter(function (c) { return !c.edge; }), i = hl.indexOf(headCommit(repo)) + (m[2] ? +m[2] : rev.slice(-1) === '^' ? 1 : 0); return hl[i] || null; }
     if (repo.branches[rev]) rev = repo.branches[rev];
     else if (repo.tags[rev]) rev = repo.tags[rev];
     else if (repo.remoteBranches && repo.remoteBranches[rev]) rev = repo.remoteBranches[rev];
@@ -953,7 +967,7 @@
         var untracked = rows.filter(function (r) { return r.index === '?'; });
         var out = 'On branch ' + repo.branch + '\n';
         if (repo.branch === 'main') {
-          var ahead = 0, list = repo.commits.filter(function (c) { return !c.edge; });
+          var ahead = 0, list = branchHistory(repo, repo.branches[repo.branch]).filter(function (c) { return !c.edge; });
           for (var i = 0; i < list.length && list[i].hash !== repo.remoteBranches['origin/main']; i++) ahead++;
           out += ahead ? "Your branch is ahead of 'origin/main' by " + ahead + ' commit' + (ahead === 1 ? '' : 's') + '.\n  (use "git push" to publish your local commits)\n' : "Your branch is up to date with 'origin/main'.\n";
         }
@@ -980,9 +994,9 @@
         a.pos.forEach(function (p) { if (/^-\d+$/.test(p)) n = parseInt(p.slice(1), 10); });
         argv.forEach(function (p) { if (/^-\d+$/.test(p)) n = parseInt(p.slice(1), 10); });
         var oneline = f.oneline || f.pretty === 'oneline' || f.format === 'oneline', graph = f.graph, decorate = f.decorate !== 'no';
-        var out2 = '', shown = 0;
-        for (var k = 0; k < repo.commits.length && shown < n; k++) {
-          var c = repo.commits[k];
+        var out2 = '', shown = 0, hist = f.all ? repo.commits : branchHistory(repo, repo.branches[repo.branch]);
+        for (var k = 0; k < hist.length && shown < n; k++) {
+          var c = hist[k];
           if (c.edge) { if (graph && shown) out2 += colorGraph(c.graph, color).replace(/\s+$/, '') + '\n'; continue; }
           var g = graph ? colorGraph(c.graph, color) : '';
           var dec = decorate ? decorations(repo, c.hash, color) : '';
@@ -991,7 +1005,7 @@
             var bar = graph ? colorGraph(c.graph.replace('*', '|').replace(/\s+$/, ''), color) + ' ' : '';
             out2 += g + (color ? sgr('33') + 'commit ' + c.hash + R0 : 'commit ' + c.hash) + dec + '\n';
             if (c.merge) {
-              var rest = repo.commits.slice(k + 1).filter(function (x) { return !x.edge; });
+              var rest = hist.slice(k + 1).filter(function (x) { return !x.edge; });
               var p1 = rest.filter(function (x) { return x.graph.charAt(0) === '*'; })[0], p2 = rest.filter(function (x) { return x.graph.indexOf('| *') === 0; })[0];
               out2 += bar + 'Merge: ' + short(p1 && p1.hash) + ' ' + short(p2 && p2.hash) + '\n';
             }
@@ -1011,7 +1025,16 @@
           var A, Bv;
           if (cached) { if (r.index === ' ' || r.index === '?') return; A = r.index === 'A' ? null : vfs.gitHeadText(repo, r.path); Bv = r.index === 'D' ? null : (typeof repo.staged[r.path] === 'string' && !/^(asset|bytes):/.test(repo.staged[r.path]) ? repo.staged[r.path] : current(r.path)); }
           else { if (r.work !== 'M' && r.work !== 'D') return; A = baseText(r.path); Bv = r.work === 'D' ? null : current(r.path); }
-          if (A !== null && typeof A !== 'string') { out3 += 'Binary files a/' + r.path + ' and b/' + r.path + ' differ\n'; return; }
+          /* binaries are compared by signature: their text is null at HEAD and noise in the tree */
+          var aSig = cached || !(r.path in repo.staged) ? repo.committed[r.path] : repo.staged[r.path];
+          var bSig = cached ? (r.index === 'D' ? null : repo.staged[r.path]) : (r.work === 'D' ? null : vfs.gitSig(repo, r.path));
+          if (isBinSig(aSig) || isBinSig(bSig)) {
+            var hb = function (s) { return color ? sgr('1') + s + R0 : s; }, aGone = aSig === undefined || aSig === null;
+            stats.push([r.path, -1, -1, T.VFS.sigSize(aSig), T.VFS.sigSize(bSig)]);
+            out3 += hb('diff --git a/' + r.path + ' b/' + r.path) + '\n' + (aGone ? hb('new file mode 100644') + '\n' : bSig === null ? hb('deleted file mode 100644') + '\n' : '') +
+              'Binary files ' + (aGone ? '/dev/null' : 'a/' + r.path) + ' and ' + (bSig === null ? '/dev/null' : 'b/' + r.path) + ' differ\n';
+            return;
+          }
           var d = T.VFS.diffLines(A || '', Bv || ''), ins = 0, del = 0;
           d.forEach(function (l) { if (l.t === '+') ins++; else if (l.t === '-') del++; });
           stats.push([r.path, ins, del]);
@@ -1019,8 +1042,8 @@
         });
         if (f.stat) {
           var wmax = Math.max.apply(null, stats.map(function (s) { return s[0].length; }).concat([1]));
-          out3 = stats.map(function (s) { return statLine(s[0], s[1], s[2], wmax); }).join('\n') + (stats.length ? '\n' : '');
-          var ti = stats.reduce(function (x, s) { return x + s[1]; }, 0), td = stats.reduce(function (x, s) { return x + s[2]; }, 0);
+          out3 = stats.map(function (s) { return s[1] < 0 ? ' ' + pad(s[0], wmax) + ' | Bin ' + s[3] + ' -> ' + s[4] + ' bytes' : statLine(s[0], s[1], s[2], wmax); }).join('\n') + (stats.length ? '\n' : '');
+          var ti = stats.reduce(function (x, s) { return x + Math.max(0, s[1]); }, 0), td = stats.reduce(function (x, s) { return x + Math.max(0, s[2]); }, 0);
           if (stats.length) out3 += ' ' + stats.length + ' file' + (stats.length === 1 ? '' : 's') + ' changed, ' + ti + ' insertion' + (ti === 1 ? '' : 's') + '(+), ' + td + ' deletion' + (td === 1 ? '' : 's') + '(-)\n';
         }
         if (f.quiet || f['exit-code']) return stats.length ? 1 : 0;
@@ -1130,7 +1153,7 @@
         ctx.out(sub === 'pull' ? 'Already up to date.\n' : ''); return 0;
       }
       if (sub === 'push') {
-        var list2 = repo.commits.filter(function (c) { return !c.edge; }), ahead2 = 0;
+        var list2 = branchHistory(repo, repo.branches[repo.branch]).filter(function (c) { return !c.edge; }), ahead2 = 0;
         for (var z = 0; z < list2.length && list2[z].hash !== repo.remoteBranches['origin/' + repo.branch]; z++) ahead2++;
         if (!repo.remoteBranches['origin/' + repo.branch]) ahead2 = 1;
         if (!ahead2) { await ctx.sleep(500); ctx.err('Everything up-to-date\n'); return 0; }
@@ -1141,7 +1164,35 @@
         ctx.err('To ' + repo.remoteUrl.replace(/^git@/, '').replace(':', '/') + '\n   ' + short(old || '0000000') + '..' + short(repo.branches[repo.branch]) + '  ' + repo.branch + ' -> ' + repo.branch + '\n');
         return 0;
       }
-      if (sub === 'stash') { ctx.out('No local changes to save\n'); return 0; }
+      if (sub === 'stash') {
+        /* tracked text changes only: push saves them and resets the files to HEAD, pop and apply write them back unstaged */
+        var op = a.pos[0] || 'push', stashes = repo.stashes = repo.stashes || [];
+        if (op === 'list') { ctx.out(stashes.map(function (e, i) { return 'stash@{' + i + '}: ' + e.label + '\n'; }).join('')); return 0; }
+        if (op === 'pop' || op === 'apply' || op === 'drop') {
+          if (!stashes.length) { ctx.err('No stash entries found.\n'); return 1; }
+          var se = stashes[0];
+          if (op !== 'drop') {
+            var dirtyNow = vfs.gitStatus(repo).map(function (r) { return r.path; }).filter(function (rel) { return rel in se.files; });
+            if (dirtyNow.length) { ctx.err('error: Your local changes to the following files would be overwritten by merge:\n' + dirtyNow.map(function (rel) { return '\t' + showPath(rel) + '\n'; }).join('') + 'Please commit your changes or stash them before you merge.\nAborting\n'); return 1; }
+            Object.keys(se.files).forEach(function (rel) { try { if (se.files[rel] === null) vfs.unlink(repo.root + '/' + rel); else vfs.write(repo.root + '/' + rel, se.files[rel]); } catch (e) {} });
+          }
+          if (op !== 'apply') { stashes.shift(); ctx.out('Dropped refs/stash@{0} (' + se.hash + ')\n'); }
+          return 0;
+        }
+        if (op !== 'push' && op !== 'save') { ctx.err('error: unknown subcommand: ' + op + '\n'); return 129; }
+        var dirty = vfs.gitStatus(repo).filter(function (r) { return r.index !== '?' && r.index !== 'A' && (r.work === 'M' || r.work === 'D' || r.index === 'M') && vfs.gitHeadText(repo, r.path) !== null; });
+        if (!dirty.length) { ctx.out('No local changes to save\n'); return 0; }
+        var saved = {};
+        dirty.forEach(function (r) {
+          saved[r.path] = r.work === 'D' ? null : current(r.path);
+          delete repo.staged[r.path];
+          try { vfs.write(repo.root + '/' + r.path, vfs.gitHeadText(repo, r.path)); } catch (e) {}
+        });
+        var label = (typeof f.m === 'string' ? 'On ' + repo.branch + ': ' + f.m : 'WIP on ' + repo.branch + ': ' + short(head && head.hash) + ' ' + (head ? head.subject : ''));
+        stashes.unshift({ label: label, files: saved, hash: T.VFS.hex40('stash' + label + Date.now()) });
+        ctx.out('Saved working directory and index state ' + label + '\n');
+        return 0;
+      }
       if (sub === 'blame') {
         var rel2 = toRel(a.pos[0] || ''), txt = current(rel2);
         if (txt === null) { ctx.err("fatal: no such path '" + rel2 + "' in HEAD\n"); return 128; }
@@ -1292,7 +1343,8 @@
         }
         if (sub === 'test') {
           var filter = a.pos[0] || '';
-          var rc = await compile(ctx, proj, { test: true, failOnBug: /^media(::|$)/.test(filter), profile: '`test` profile [unoptimized + debuginfo]' });
+          /* the whole test binary compiles before the filter picks tests, so a broken test module fails every `cargo test` */
+          var rc = await compile(ctx, proj, { test: true, failOnBug: true, profile: '`test` profile [unoptimized + debuginfo]' });
           if (rc) return rc;
           var names = TEST_NAMES.filter(function (t) { return !filter || t.indexOf(filter) >= 0; });
           ctx.out(cargoStatus(color, 'Running', 'unittests src/main.rs (target/debug/deps/' + proj.name.replace(/-/g, '_') + '-1f6b2c9d0e3a4b57)') + '\n\nrunning ' + names.length + ' test' + (names.length === 1 ? '' : 's') + '\n');
@@ -1789,6 +1841,8 @@
       ctx.onSignal(function (n) { if (n === 'SIGINT' || n === 'SIGTERM') { quit = true; h.done = true; if (h.wake) h.wake(); } });
       ctx.out(CSI + '?1049h' + CSI + '?25l' + CSI + '?1000h' + CSI + '?1006h' + CSI + 'H' + CSI + '2J');
       try { await loop(ctx, h); }
+      /* to the terminal, never into a 2> file; after an untrapped SIGTERM or SIGKILL ctx.out drops it, and the shell's
+         reset after every program turns the same modes off */
       finally { ctx.out(CSI + '?1006l' + CSI + '?1000l' + CSI + '?25h' + CSI + '?1049l'); ctx.setRaw(false); ctx.trap('SIGINT', false); }
       return 0;
     }
@@ -2050,8 +2104,9 @@
     var mode = f['transfer-mode'] || f.t || 'detect';
     if (['detect', 'file', 'stream', 'memory', 'temp'].indexOf(mode) < 0) { ctx.err('Error: ' + mode + ' is not a valid choice for --transfer-mode\n'); return 1; }
     var z = f['z-index'] !== undefined ? f['z-index'] : f.z;
-    if (z !== undefined && !/^-?\d+$/.test(String(z).replace(/^--/, '-'))) { ctx.err('Error: ' + z + ' is not a valid z-index\n'); return 1; }
-    if (z !== undefined) z = parseInt(String(z).replace(/^--/, '-'), 10);
+    if (z !== undefined && !/^-{0,2}\d+$/.test(String(z))) { ctx.err('Error: ' + z + ' is not a valid z-index\n'); return 1; }
+    /* as kitty's icat: a double minus counts down from -1,073,741,824, the under-background tier (--1 is -1,073,741,825) */
+    if (z !== undefined) { var zs = String(z); z = zs.slice(0, 2) === '--' ? -1073741824 - parseInt(zs.slice(2), 10) : parseInt(zs, 10); }
     if (f.clear) { ctx.out(apc('a=d,d=A')); if (!files.length) return 0; }
     if (!files.length && !f['detect-support']) { ctx.err(ICAT_USAGE); return 1; }
     if (ctx.isatty === false) { ctx.err('Error: Must be run in a terminal: stdout is not a TTY\n'); return 1; }
@@ -2285,18 +2340,21 @@
   P.sudo = {
     summary: 'execute a command as the superuser (the password prompt goes to the human)',
     run: async function (ctx) {
-      var args = ctx.argv.slice(1), vfs = ctx.vfs, user = userOf(ctx);
-      if (args[0] === '-k' || args[0] === '-K') { vfs.sudoUntil = 0; args = args.slice(1); if (!args.length) return 0; }
+      var args = ctx.argv.slice(1), user = userOf(ctx);
+      /* the credential cache is per terminal (Ubuntu's timestamp_type=tty): a password typed in one tab never lets another terminal's agent skip the prompt.
+         A remote login is a tty of its own, so it keeps its own cache */
+      var holder = ctx.remote || ctx.session || ctx.shell || ctx.vfs;
+      if (args[0] === '-k' || args[0] === '-K') { holder.sudoUntil = 0; args = args.slice(1); if (!args.length) return 0; }
       var validateOnly = args[0] === '-v';
       if (!args.length) { ctx.err('usage: sudo -h | -K | -k | -V\nusage: sudo -v [-ABkNnS] [-g group] [-h host] [-p prompt] [-u user]\nusage: sudo [-ABbEHkNnPS] [-C num] [-D directory] [-g group] [-h host] [-p prompt] [-R directory] [-T timeout] [-u user] [VAR=value] [-i | -s] [command [arg ...]]\n'); return 1; }
-      if (!(vfs.sudoUntil > Date.now())) {
+      if (!(holder.sudoUntil > Date.now())) {
         var ok = false;
         for (var i = 0; i < 3 && !ok; i++) {
           var pw = await ctx.readLine('[sudo] password for ' + user + ': ', { secret: true });
           if (pw.length) ok = true; else ctx.err('Sorry, try again.\n');
         }
         if (!ok) { ctx.err('sudo: 3 incorrect password attempts\n'); return 1; }
-        vfs.sudoUntil = Date.now() + 15 * 60000;
+        holder.sudoUntil = Date.now() + 15 * 60000;
       }
       if (validateOnly) return 0;
       var name = args[0];
@@ -2351,8 +2409,18 @@
       if (!ok) { ctx.err(user + '@' + host + ': Permission denied (publickey,password).\n'); return 255; }
       var rvfs = T.VFS.remote ? T.VFS.remote(host) : vfs;
       if (cmd.length) {
-        var code = await runSub(ctx, cmd, { vfs: rvfs, remote: { host: host }, cwd: rvfs.home, env: Object.assign({}, ctx.env, { HOSTNAME: host, HOME: rvfs.home, USER: user, PWD: rvfs.home }) });
-        if (code === null) { ctx.err('bash: line 1: ' + cmd[0] + ': command not found\n'); return 127; }
+        /* like OpenSSH: the words are joined with spaces and the remote shell splits them again, so a quoted command and the builtins a one-shot command needs work */
+        var rargv = splitWords(cmd.join(' ')), rb = rargv[0];
+        if (rb === 'echo') { ctx.out(rargv.slice(1).join(' ') + '\n'); return 0; }
+        if (rb === 'pwd') { ctx.out(rvfs.home + '\n'); return 0; }
+        if (!rargv.length || rb === 'true' || rb === 'cd' || rb === ':') return 0;
+        if (rb === 'false') return 1;
+        /* no remote shell runs it, so the shell counts as remote while it does: the remote host never reads local files
+           through kitty file media */
+        var leave = ctx.enterRemote ? ctx.enterRemote() : null, code;
+        try { code = await runSub(ctx, rargv, { vfs: rvfs, remote: { host: host }, cwd: rvfs.home, env: Object.assign({}, ctx.env, { HOSTNAME: host, HOME: rvfs.home, USER: user, PWD: rvfs.home }) }); }
+        finally { if (leave) leave(); }
+        if (code === null) { ctx.err('bash: line 1: ' + rb + ': command not found\n'); return 127; }
         return code;
       }
       var last = new Date(Date.now() - 20 * 3600000);

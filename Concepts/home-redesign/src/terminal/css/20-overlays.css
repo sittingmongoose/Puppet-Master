@@ -12,6 +12,9 @@
 .pmt-agent-secret { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 14%, var(--pmw-surface-2, var(--surface-elevated))); border-bottom-color: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 30%, transparent); }
 .pmt-agent-secret .pmt-agent-sq { stroke: var(--pmw-accent, var(--accent-primary)); }
 .pmt-agent-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* a permission request shows the whole command it approves, wrapped, never cut off with an ellipsis */
+.pmt-agent-permission .pmt-agent-text { white-space: normal; overflow-wrap: anywhere; }
+.pmt-agent-permission code { white-space: pre-wrap; }
 .pmt-agent-acts { display: flex; gap: 2px; flex: none; }
 .pmt-agent-acts .pmt-textbtn { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
 @container pmw-body (max-width: 520px) { .pmt-agent-text { white-space: normal; } .pmt-agentrow { flex-wrap: wrap; } }

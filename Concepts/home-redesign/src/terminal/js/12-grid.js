@@ -54,6 +54,8 @@
     if (from === undefined) from = 0; if (to === undefined) to = this.cols;
     from = Math.max(0, from); to = Math.min(this.cols, to);
     if (from >= to) return;
+    /* an erased line holds nothing the earlier session wrote: its placeholder cells name this session's images */
+    if (from === 0 && to === this.cols) this.restored = false;
     /* never leave half a wide character behind */
     if (from > 0 && (this.fl[from] & SPACER)) { this.cp[from - 1] = 0; this.fl[from - 1] = 0; }
     if (to < this.cols && (this.fl[to] & SPACER)) { this.cp[to] = 0; this.fl[to] = 0; }
@@ -137,11 +139,15 @@
     for (var x = 8; x < this.cols; x += 8) this.tabs[x] = 1;
   };
 
-  /* scroll the region up by n lines; full-screen scrolls on the primary buffer feed scrollback */
+  /* scroll the region up by n lines; full-screen scrolls on the primary buffer feed scrollback. A region scroll clears
+     the lines it pushes out and reuses them at the other end with a new id; onRecycle (set by the terminal) hears of
+     them, so what was anchored on them can go */
   Buffer.prototype.scrollUp = function (n, st, onTrim) {
     var top = this.scrollTop, bot = this.scrollBottom, i;
     if (n <= 0) return;
     if (top === 0 && bot === this.rows - 1 && !this.isAlt) {
+      /* scrolling past screen plus scrollback leaves the same result: every older line is pruned anyway */
+      n = Math.min(n, this.rows + this.maxScrollback);
       for (i = 0; i < n; i++) this.lines.push(new Line(this.cols, st));
       var excess = this.lines.length - this.rows - this.maxScrollback;
       if (excess > 0) {
@@ -159,9 +165,10 @@
     var base = this.ybase;
     var removed = this.lines.splice(base + top, n);
     for (i = 0; i < n; i++) {
-      var l = removed[i]; l.clear(0, l.cols, st); l.wrapped = false; l.mark = null; l.id = ++lineSeq;
+      var l = removed[i]; l.clear(0, l.cols, st); l.wrapped = false; l.mark = null; l.restored = false; l.id = ++lineSeq;
       this.lines.splice(base + bot - n + 1 + i, 0, l);
     }
+    if (this.onRecycle) this.onRecycle(removed);
   };
   Buffer.prototype.scrollDown = function (n, st) {
     var top = this.scrollTop, bot = this.scrollBottom, i;
@@ -170,29 +177,40 @@
     var base = this.ybase;
     var removed = this.lines.splice(base + bot - n + 1, n);
     for (i = 0; i < n; i++) {
-      var l = removed[i]; l.clear(0, l.cols, st); l.wrapped = false; l.mark = null; l.id = ++lineSeq;
+      var l = removed[i]; l.clear(0, l.cols, st); l.wrapped = false; l.mark = null; l.restored = false; l.id = ++lineSeq;
       this.lines.splice(base + top + i, 0, l);
     }
+    if (this.onRecycle) this.onRecycle(removed);
   };
   Buffer.prototype.touchAll = function () {
     for (var i = Math.max(0, this.lines.length - this.rows); i < this.lines.length; i++) this.lines[i].ver++;
   };
 
-  /* Resize with reflow. Returns { remap(line, col) -> {line, col} | null, lineMap: Map(oldFirstLine -> newLine) }.
-     The alternate screen never reflows: it is truncated or padded. */
+  /* Resize with reflow. Returns { remap(line, col) -> {line, col} | null, lineMap: Map(oldFirstLine -> newLine),
+     gone: [Line] }, gone being the lines (after remap) the resize removed: blank ones below the cursor, rewrapped ones
+     past the screen below it, and the scrollback overflow at the top. Whatever remap put on them goes with them.
+     The alternate screen never reflows: it is truncated or padded. The saved cursor (DECSC, the 1049 save) follows
+     its cell the way the live cursor does, so leaving the alternate screen after a resize lands on the right row. */
   Buffer.prototype.resize = function (cols, rows) {
     var self = this;
-    var cur = this.cursor;
-    var oldCols = this.cols;
+    var cur = this.cursor, sv = this.saved;
+    var oldCols = this.cols, gone = [];
     if (this.isAlt || cols === oldCols) {
       var i;
+      /* a pending wrap survives an unchanged width; a wider line puts the cursor after its last cell instead */
+      var fitX = function (c) {
+        if (cols === oldCols) return;
+        if (c.pendingWrap && cols > oldCols) c.x++;
+        c.x = Math.min(c.x, cols - 1); c.pendingWrap = false;
+      };
       if (cols !== oldCols) for (i = 0; i < this.lines.length; i++) this.lines[i].resize(cols);
       /* rows: trim blank lines below the cursor first, then take from or give to the top */
       var curAbs = this.lines.length - this.rows + cur.y;
+      var svAbs = sv ? this.lines.length - this.rows + sv.y : 0;
       if (rows < this.rows) {
         var drop = this.rows - rows;
-        while (drop > 0 && this.lines.length - 1 > curAbs && this.lines[this.lines.length - 1].isBlank()) { this.lines.pop(); drop--; }
-        if (this.isAlt && drop > 0) { this.lines.splice(0, drop); curAbs -= drop; }
+        while (drop > 0 && this.lines.length - 1 > curAbs && this.lines[this.lines.length - 1].isBlank()) { gone.push(this.lines.pop()); drop--; }
+        if (this.isAlt && drop > 0) { this.lines.splice(0, drop); curAbs -= drop; svAbs -= drop; }
       } else if (rows > this.rows) {
         var add = rows - this.rows;
         if (this.isAlt) { for (i = 0; i < add; i++) this.lines.push(new Line(cols)); }
@@ -205,16 +223,20 @@
       this.rows = rows; this.cols = cols;
       while (this.lines.length < rows) this.lines.push(new Line(cols));
       cur.y = T.util.clamp(curAbs - (this.lines.length - rows), 0, rows - 1);
-      cur.x = Math.min(cur.x, cols - 1); cur.pendingWrap = false;
+      fitX(cur);
+      if (sv) { sv.y = T.util.clamp(svAbs - (this.lines.length - rows), 0, rows - 1); fitX(sv); }
       this.scrollTop = 0; this.scrollBottom = rows - 1;
       if (cols !== oldCols) this.resetTabs();
       this.touchAll();
-      return { remap: function (line, col) { return { line: line, col: Math.min(col, cols - 1) }; }, lineMap: null };
+      return { remap: function (line, col) { return { line: line, col: Math.min(col, cols - 1) }; }, lineMap: null, gone: this.isAlt ? [] : gone };
     }
 
     /* primary screen with a column change: rewrap logical lines */
     var lines = this.lines, n = lines.length;
     var curAbsIdx = n - this.rows + cur.y;
+    /* the saved cursor's cell, found again through remap once the lines are rewrapped */
+    var svLine = sv ? lines[n - this.rows + T.util.clamp(sv.y, 0, this.rows - 1)] : null;
+    var svX = sv ? sv.x + (sv.pendingWrap ? 1 : 0) : 0;
     var logical = [];  /* {segs: [Line], cells: count} */
     var cursorLogical = -1, cursorOffset = 0;
     var idx = 0;
@@ -229,7 +251,8 @@
     for (var li = 0; li < logical.length; li++) {
       var segsL = logical[li];
       if (curAbsIdx >= count && curAbsIdx < count + segsL.length) {
-        cursorLogical = li; cursorOffset = (curAbsIdx - count) * oldCols + cur.x;
+        /* a pending wrap sits one cell past x: the next character belongs after the last one, not on it */
+        cursorLogical = li; cursorOffset = (curAbsIdx - count) * oldCols + cur.x + (cur.pendingWrap ? 1 : 0);
         break;
       }
       count += segsL.length;
@@ -238,6 +261,7 @@
     while (logical.length - 1 > cursorLogical && logical[logical.length - 1].length === 1 && logical[logical.length - 1][0].isBlank() && !logical[logical.length - 1][0].mark) logical.pop();
 
     var out = [], segMap = new Map(); /* old Line -> [{newLine, startCol(old offset in logical), newStartOffset}] */
+    var colAt = function (pl, o) { var c = o - pl.start; for (var s = 0; s < pl.skip.length && pl.skip[s] < o; s++) c--; return c; };
     var offsetIndex = []; /* per logical: array of new lines and their starting logical offset */
     var newCursor = null;
     for (li = 0; li < logical.length; li++) {
@@ -251,7 +275,9 @@
       var produced = [];
       var off = 0;
       do {
-        var nl = new Line(cols), startOff = off;
+        /* skip: offsets this line passes over without a cell (padding, a stray spacer), so columns are off - start less
+           the skips before off */
+        var nl = new Line(cols), startOff = off, skip = [];
         if (!produced.length) { nl.id = group[0].id; nl.mark = group[0].mark; }
         if (group[0].restored) nl.restored = true;
         var x = 0;
@@ -259,7 +285,9 @@
           var gi = Math.floor(off / oldCols), gx = off % oldCols, src = group[gi];
           if (!src) { off++; continue; }
           var f = src.fl[gx];
-          if (f & SPACER) { off++; continue; }
+          if (f & SPACER) { skip.push(off++); continue; }
+          /* the empty last cell an early-wrapped wide character left behind is padding, not a space */
+          if (gx === oldCols - 1 && gi < group.length - 1 && !src.cp[gx] && !f && !src.st[gx] && (group[gi + 1].fl[0] & WIDE)) { skip.push(off++); continue; }
           if ((f & WIDE) && x === cols - 1) break; /* a wide char that does not fit wraps early */
           nl.cp[x] = src.cp[gx]; nl.st[x] = src.st[gx]; nl.fl[x] = f;
           if (f & GRAPHEME) nl.setGrapheme(x, src.gr.get(gx));
@@ -267,7 +295,7 @@
           x++; off++;
         }
         if (off === startOff && off < len) off++; /* guard: always progress */
-        produced.push({ line: nl, start: startOff, end: off });
+        produced.push({ line: nl, start: startOff, end: off, skip: skip });
         out.push(nl);
       } while (off < len);
       for (var p = 0; p < produced.length - 1; p++) produced[p].line.wrapped = true;
@@ -277,9 +305,9 @@
         for (p = 0; p < produced.length; p++) {
           var st0 = produced[p].start, en0 = produced[p].end;
           if (cursorOffset >= st0 && (cursorOffset < en0 || p === produced.length - 1)) {
-            var cx = cursorOffset - st0;
-            if (cx >= cols) { cx = cols - 1; }
-            newCursor = { idx: out.length - produced.length + p, x: cx };
+            var cx = colAt(produced[p], cursorOffset), pend = false;
+            if (cx >= cols) { cx = cols - 1; pend = true; }
+            newCursor = { idx: out.length - produced.length + p, x: cx, pend: pend };
             break;
           }
         }
@@ -290,31 +318,45 @@
     /* keep the cursor on screen */
     var ybase = Math.max(0, out.length - rows);
     if (newCursor.idx < ybase) {
-      /* cursor would be above the screen: drop trailing lines below it */
-      out.length = Math.max(newCursor.idx + 1, rows);
+      /* cursor would be above the screen: put it on row 0 and keep as much below it as fits */
+      gone = out.splice(Math.max(rows, Math.min(out.length, newCursor.idx + rows)));
       ybase = Math.max(0, out.length - rows);
     }
     this.lines = out; this.cols = cols; this.rows = rows;
-    cur.y = T.util.clamp(newCursor.idx - ybase, 0, rows - 1); cur.x = newCursor.x; cur.pendingWrap = false;
+    cur.y = T.util.clamp(newCursor.idx - ybase, 0, rows - 1); cur.x = newCursor.x; cur.pendingWrap = !!newCursor.pend;
     this.scrollTop = 0; this.scrollBottom = rows - 1;
     this.resetTabs();
     /* trim scrollback overflow after reflow */
     var excess = this.lines.length - this.rows - this.maxScrollback;
-    if (excess > 0) { this.lines.splice(0, excess); this.trimmed += excess; }
+    if (excess > 0) { gone = this.lines.splice(0, excess).concat(gone); this.trimmed += excess; }
 
     var lineMap = new Map();
     offsetIndex.forEach(function (e) { lineMap.set(e.group[0], e.produced[0].line); });
+    /* old line and column -> new line and unclamped column (col === cols means one past the last cell) */
+    var locate = function (line, col) {
+      var m = segMap.get(line);
+      if (!m) return null;
+      var e = offsetIndex[m.li], off = m.base + col;
+      for (var k = 0; k < e.produced.length; k++) {
+        var pl = e.produced[k];
+        if (off < pl.end || k === e.produced.length - 1) return { line: pl.line, col: Math.max(0, colAt(pl, off)) };
+      }
+      return null;
+    };
+    if (sv) {
+      var sm = svLine ? locate(svLine, svX) : null, si = sm ? this.lines.indexOf(sm.line) : -1;
+      if (si >= 0) {
+        sv.y = T.util.clamp(si - (this.lines.length - rows), 0, rows - 1);
+        sv.x = Math.min(sm.col, cols - 1); sv.pendingWrap = sm.col >= cols;
+      } else { sv.y = Math.min(sv.y, rows - 1); sv.x = Math.min(sv.x, cols - 1); sv.pendingWrap = false; }
+    }
     return {
       lineMap: lineMap,
+      gone: gone,
       remap: function (line, col) {
-        var m = segMap.get(line);
-        if (!m) return null;
-        var e = offsetIndex[m.li], off = m.base + col;
-        for (var k = 0; k < e.produced.length; k++) {
-          var pl = e.produced[k];
-          if (off < pl.end || k === e.produced.length - 1) return { line: pl.line, col: Math.max(0, Math.min(cols - 1, off - pl.start)) };
-        }
-        return null;
+        var r = locate(line, col);
+        if (r) r.col = Math.min(cols - 1, r.col);
+        return r;
       }
     };
   };

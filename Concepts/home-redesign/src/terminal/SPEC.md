@@ -163,6 +163,8 @@ sixel, and iTerm2 inline images (single and multipart).
 | Sixel | 10,000 x 10,000 px, 16,777,216 pixels, 1024 colour registers (private per image), 16 MiB of data; DECSDM (mode 80) set = no scrolling, image at the top-left, cursor stays; 8452 puts the cursor right of the image |
 | File and shared-memory names | at most 2048 bytes |
 | Relative placements | 8 levels |
+| Placements per screen buffer | 4096 in the concept; past it the oldest placements that no other placement hangs from are dropped |
+| Placement size (`c=`, `r=`) | at most 10,000 cells |
 | Fastest animation frame shown | 20 ms (50 fps) |
 
 Security (the 2026-09-14 kitty hardening, all of it): file media accept regular files only; the resolved path is checked
@@ -273,8 +275,9 @@ the glyphs, does not draw curvature, burn-in or noise, and the Appearance popove
 | Visual bell | 9 % flash, 400 ms | rim brightens, 420 ms | inverse video, 120 ms | a line under the header | brackets snap in, 240 ms | at most one visual bell per second; Reduced Motion: a static 1 px outline |
 | Progress (OSC 9;4) | 3 px bar | 2 px white bar | 4 px block segments | 2 px bar | ink line with a 6 px square head | the indeterminate state sweeps (1.4 s), static under Reduced Motion |
 
-Phosphor schemes map colours outside the 16 (the 256-colour cube and truecolor) onto the phosphor by brightness, so a
-program's `38;5;196` never paints red on a green tube.
+Phosphor schemes map colours outside the 16 (the 256-colour cube and truecolor), and any colour a program sets (OSC 4,
+10, 11, 12), onto the phosphor by brightness, so a program's `38;5;196` never paints red on a green tube. The scheme's
+own 16 stay as authored.
 
 ## 10. Performance
 

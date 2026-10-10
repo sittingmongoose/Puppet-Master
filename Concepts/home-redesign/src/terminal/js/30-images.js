@@ -15,6 +15,8 @@
     maxData: 64 * 1024 * 1024,         /* assembled base64-decoded payload per image in this concept (kitty: 400 MB) */
     maxPath: 2048,                     /* bytes of a file or shared-memory name */
     maxDepth: 8,                       /* relative placement chain */
+    maxPlacements: 4096,               /* placements per screen buffer; past it the oldest that no other hangs from go */
+    maxCells: 10000,                   /* columns or rows of one placement (c= and r= accept up to 2^32 - 1) */
     minGapMs: 20                       /* fastest animation frame the concept will show (50 fps) */
   };
   var Z_UNDER_BG = -1073741824;
@@ -34,12 +36,15 @@
     this.gen = 1;
     this.loading = null;    /* chunked upload in progress */
     this.nextAuto = 0x7f000000;
+    this.nextSeq = 0;       /* transmit order: an image number names the newest image that has it */
     this.timers = new Set();
     this.descr = new Map();
   }
   Store.prototype._empty = function () { return { images: new Map(), placements: [], bytes: 0, frameBytes: 0 }; };
   Store.prototype.cur = function () { return this.term.buf === this.term.alt ? this.bufs.alt : this.bufs.primary; };
-  Store.prototype.bump = function () { this.gen++; this._rebuildCover(); this.term.emit('dirty'); };
+  /* keepCover: the change added nothing text can cut (kitty placements and frames), so the cover set stands; a set
+     left holding lines of a removed image only costs one empty noteText */
+  Store.prototype.bump = function (keepCover) { this.gen++; if (!keepCover) this._rebuildCover(); this.term.emit('dirty'); };
   /* lines covered by images that text can cut (sixel, iTerm2), so printing checks one Set lookup per run */
   Store.prototype._rebuildCover = function () {
     var B = this.cur(), buf = this.term.buf, set = null, self = this;
@@ -75,6 +80,20 @@
     return out;
   }
 
+  /* each chunk of an upload is decoded as it arrives (kitty), so '=' padding may end any chunk and the cap counts
+     bytes; a chunk that is not base64 fails the whole upload once, at its final chunk */
+  function addChunk(L, s) {
+    var b = T.base64.decode(s);
+    if (!b) { L.bad = true; return; }
+    L.parts.push(b); L.size += b.length;
+  }
+  function joinParts(parts, size) {
+    if (parts.length === 1) return parts[0];
+    var out = new Uint8Array(size), o = 0;
+    for (var i = 0; i < parts.length; i++) { out.set(parts[i], o); o += parts[i].length; }
+    return out;
+  }
+
   Store.prototype.kitty = function (data, overflow) {
     var semi = data.indexOf(';');
     var ctl = parseControl(semi < 0 ? data : data.slice(0, semi));
@@ -85,21 +104,22 @@
     /* a continuation chunk of an upload in progress (kitty: any direct-medium transmit while loading continues it) */
     if (this.loading && (ctl.t === undefined || ctl.t === 'd') && a !== 'd' && a !== 'p' && a !== 'a' && a !== 'c') {
       var L = this.loading;
-      L.parts.push(payload); L.size += payload.length;
       if (ctl.q !== undefined) L.ctl.q = ctl.q;
-      if (L.size > LIMITS.maxData * 4 / 3) { this._reply(L.ctl, ERR.EFBIG); this.loading = null; return; }
-      if (!ctl.m) { this.loading = null; this._transmit(L.ctl, L.parts.join(''), L.anchor); }
+      addChunk(L, payload);
+      if (L.size > LIMITS.maxData) { this._reply(L.ctl, ERR.EFBIG); this.loading = null; return; }
+      /* the image goes where the cursor is when the final chunk arrives (kitty), in the buffer shown then */
+      if (!ctl.m) { this.loading = null; if (L.bad) this._reply(L.ctl, ERR.EINVAL); else this._transmit(L.ctl, joinParts(L.parts, L.size), this._cursorAnchor()); }
       return;
     }
     if (a === 'd') { this.loading = null; this._delete(ctl); return; }
     if ((ctl.i && ctl.I)) { this._reply(ctl, 'EINVAL:Must not specify both image id and image number'); return; }
     if (a === 't' || a === 'T' || a === 'q' || a === 'f') {
-      var anchor = this._cursorAnchor();
       if (ctl.m && (ctl.t === undefined || ctl.t === 'd')) {
-        this.loading = { ctl: ctl, parts: [payload], size: payload.length, anchor: anchor };
+        this.loading = { ctl: ctl, parts: [], size: 0, bad: false };
+        addChunk(this.loading, payload);
         return;
       }
-      this._transmit(ctl, payload, anchor);
+      this._transmit(ctl, payload, this._cursorAnchor());
       return;
     }
     if (a === 'p') { this._put(ctl, this._cursorAnchor()); return; }
@@ -125,15 +145,17 @@
     this.term.reply('\x1b_G' + keys.join(',') + ';' + msg + '\x1b\\');
   };
 
-  /* who may use file media: never a remote shell, never a command an agent typed (exfiltration risk) */
+  /* who may use file media: never a remote shell, never a command an agent typed (exfiltration risk). Fails closed: an
+     agent holding the terminal, or the last to type into it or into any shell in the chain, refuses it too, so the rule
+     never rests on the command's recorded author alone */
   Store.prototype._fileMediaAllowed = function () {
     var s = this.session; if (!s) return false;
-    var sh = s.shell; while (sh && sh.child) sh = sh.child;
-    if (sh && sh.remote) return false;
+    var agent = function (who) { return /^agent:/.test(who || ''); };
+    /* every shell in the chain: a remote shell, or one running a remote command now (`ssh host cmd` makes no shell) */
+    for (var sh = s.shell; sh; sh = sh.child) if (sh.remote || sh.remoteRuns > 0 || agent(sh.typer)) return false;
     var cmd = this.term.curCmd;
-    if (cmd && /^agent:/.test(cmd.by || '')) return false;
-    if (/^agent:/.test(s.owner || '')) return false;
-    return true;
+    if (cmd && agent(cmd.by)) return false;
+    return !agent(s.owner) && !agent(s.lease) && !agent(s.lastTyper);
   };
 
   /* read file / temp / shm media with kitty's checks; resolves to bytes or rejects with the one generic error */
@@ -154,7 +176,8 @@
     }
     if (t === 's') {
       if (name[0] !== '/' || name.indexOf('/', 1) >= 0 || !vfs.shm) return Promise.reject(ERR.EBADF);
-      var data = vfs.shm.read(name);
+      var data;
+      try { data = vfs.shm.read(name); } catch (e) { return Promise.reject(ERR.EBADF); }   /* missing, a bad name or not a file */
       try { vfs.shm.unlink(name); } catch (e) {}
       if (!data) return Promise.reject(ERR.EBADF);
       return Promise.resolve(data).then(function (b) { return slice(b instanceof Uint8Array ? b : new Uint8Array(b)); });
@@ -167,22 +190,37 @@
     if (first === 'proc' || first === 'sys' || (first === 'dev' && real.indexOf('/dev/shm/') !== 0)) return Promise.reject(ERR.EBADF);
     var st = vfs.stat(real);
     if (!st || st.type !== 'file') return Promise.reject(ERR.EBADF);
-    if (t === 'f') ctl._name = real.replace(/^.*\//, '').replace(/[\x00-\x1f\x7f]/g, '').slice(0, 120);
-    return Promise.resolve(vfs.readBytes(real)).then(function (b) {
-      if (!b) throw ERR.EBADF;
-      var out = slice(b instanceof Uint8Array ? b : new Uint8Array(b));
-      if (t === 't' && name.indexOf('tty-graphics-protocol') >= 0 && (real.indexOf('/tmp/') === 0 || real.indexOf('/dev/shm/') === 0)) {
-        try { vfs.unlink(real); } catch (e) {}
+    if (t === 'f') ctl._name = Array.from(real.replace(/^.*\//, '').replace(/[\x00-\x1f\x7f]/g, '')).slice(0, 120).join('');
+    /* a temporary file goes once it opened, whether or not the read then fails; the path given is removed (a link, not
+       its target), and only when it resolves inside /tmp or /dev/shm (kitty) */
+    var del = t === 't' && name.indexOf('tty-graphics-protocol') >= 0 && (real.indexOf('/tmp/') === 0 || real.indexOf('/dev/shm/') === 0);
+    var read;
+    try { read = Promise.resolve(vfs.readBytes(real)); } catch (e) { return Promise.reject(ERR.EBADF); }
+    return read.then(function (b) {
+      try {
+        if (!b) throw ERR.EBADF;
+        return slice(b instanceof Uint8Array ? b : new Uint8Array(b));
+      } finally {
+        if (del) { try { vfs.unlink(name); } catch (e) {} }
       }
-      return out;
     }, function () { throw ERR.EBADF; });
   };
 
-  function inflate(bytes) {
+  /* zlib, read until the output passes cap and then cancelled with overErr: a small payload never inflates without bound */
+  function inflate(bytes, cap, overErr) {
     if (typeof DecompressionStream === 'undefined') return Promise.reject(ERR.EINVAL);
-    var ds = new DecompressionStream('deflate');
-    var stream = new Blob([bytes]).stream().pipeThrough(ds);
-    return new Response(stream).arrayBuffer().then(function (ab) { return new Uint8Array(ab); }, function () { throw ERR.EINVAL; });
+    var reader = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate')).getReader();
+    var parts = [], total = 0;
+    function pump() {
+      return reader.read().then(function (r) {
+        if (r.done) return joinParts(parts, total);
+        total += r.value.length;
+        if (total > cap) { reader.cancel().catch(function () {}); throw overErr; }
+        parts.push(r.value);
+        return pump();
+      });
+    }
+    return pump().catch(function (e) { throw e === overErr ? e : ERR.EINVAL; });
   }
   function decodeBlob(bytes, mime) {
     var blob = new Blob([bytes], { type: mime || 'image/png' });
@@ -219,16 +257,27 @@
     if (ctl.s > LIMITS.maxDim || ctl.v > LIMITS.maxDim) return Promise.reject(ERR.ENOMEM);
     if (ctl.o !== undefined && ctl.o !== 'z') return Promise.reject(ERR.EINVAL);
     if ('dfts'.indexOf(t) < 0) return Promise.reject(ERR.EINVAL);
+    var bpp = fmt === 24 ? 3 : 4, need = fmt === 100 ? 0 : ctl.s * ctl.v * bpp;
+    /* raw pixels that could never fit the quota are refused before anything is read or inflated; a query is checked
+       the way the transmit it asks about would be */
+    if (need && ctl.s * ctl.v * 4 > LIMITS.quota) return Promise.reject(ERR.ENOSPC);
     var bytesP;
     if (t === 'd') {
-      var b = T.base64.decode(payload);
+      var b = typeof payload === 'string' ? T.base64.decode(payload) : payload;   /* a chunked upload arrives decoded */
       if (!b) return Promise.reject(ERR.EINVAL);
       if (b.length > LIMITS.maxData) return Promise.reject(ERR.EFBIG);
       bytesP = Promise.resolve(b);
     } else bytesP = this._readMedium(ctl, payload);
-    return bytesP.then(function (bytes) {
-      return ctl.o === 'z' ? inflate(bytes) : bytes;
+    var out = bytesP.then(function (bytes) {
+      /* no further than the image can use: raw pixels exactly s*v*bpp, a PNG the data cap */
+      if (ctl.o !== 'z') return bytes;
+      return fmt === 100 ? inflate(bytes, LIMITS.maxData, ERR.EFBIG) : inflate(bytes, need, ERR.EINVAL);
     }).then(function (bytes) {
+      if (t !== 'd' && need && ctl.o !== 'z') {
+        /* raw pixels from a file medium: kitty reads no more than s*v*bpp, and a short file is the one generic error */
+        if (bytes.length < need) throw ERR.EBADF;
+        if (bytes.length > need) bytes = bytes.subarray(0, need);
+      }
       if (fmt === 100) {
         return decodeBlob(bytes, 'image/png').then(function (bmp) {
           if (bmp.width > LIMITS.maxDim || bmp.height > LIMITS.maxDim) throw ERR.ENOMEM;
@@ -237,13 +286,19 @@
       }
       return { canvas: rawToCanvas(bytes, ctl.s, ctl.v, fmt), w: ctl.s, h: ctl.v };
     });
+    /* a file medium answers every failure with the one generic error: whether a file exists, is zlib, a PNG or the
+       right size never shows in the reply */
+    return t === 'd' ? out : out.catch(function () { throw ERR.EBADF; });
   };
 
   Store.prototype._transmit = function (ctl, payload, anchor) {
     var self = this, a = ctl.a || 't', term = this.term;
     var bufKey = term.buf === term.alt ? 'alt' : 'primary';
     term.hold();
-    this._decode(ctl, payload).then(function (img) {
+    /* nothing between hold and release may throw, or later output would wait for good */
+    var work;
+    try { work = this._decode(ctl, payload); } catch (e) { work = Promise.reject(typeof e === 'string' ? e : (ctl.t && ctl.t !== 'd') ? ERR.EBADF : ERR.EINVAL); }
+    work.then(function (img) {
       if (a === 'q') { self._reply(ctl, 'OK'); return; }
       if (a === 'f') { self._frame(ctl, img); return; }
       var B = self.bufs[bufKey];
@@ -253,12 +308,12 @@
       var bytes = img.w * img.h * 4;
       if (!self._makeRoom(B, bytes)) { self._reply(ctl, ERR.ENOSPC); return; }
       if (id && B.images.has(id)) self._removeImage(B, B.images.get(id));
-      var image = { id: id || self._freeId(B, true), clientId: id, number: ctl.I || 0, w: img.w, h: img.h, frames: [{ canvas: img.canvas, gap: 0 }],
+      var image = { id: id || self._freeId(B, true), clientId: id, number: ctl.I || 0, seq: ++self.nextSeq, w: img.w, h: img.h, frames: [{ canvas: img.canvas, gap: 0 }],
         current: 0, anim: { state: 1, loops: 1, played: 0 }, bytes: bytes, transient: !!(ctl.N & 1), lastUsed: Date.now(), gen: 1, source: 'kitty', name: ctl._name || '' };
       B.images.set(image.id, image); B.bytes += bytes;
       self._reply(ctl, 'OK');
       if (a === 'T') self._place(image, ctl, anchor, bufKey);
-      self.bump();
+      self.bump(true);
     }, function (err) {
       self._reply(ctl, typeof err === 'string' ? err : ERR.EINVAL);
     }).then(function () { term.release(); }, function () { term.release(); });
@@ -272,8 +327,9 @@
   Store.prototype._findImage = function (B, ctl) {
     if (ctl.i) return B.images.get(ctl.i) || null;
     if (ctl.I) {
+      /* the newest image with that number (ids for numbered images are random, so they say nothing about order) */
       var best = null;
-      B.images.forEach(function (im) { if (im.number === ctl.I && (!best || im.id > best.id)) best = im; });
+      B.images.forEach(function (im) { if (im.number === ctl.I && (!best || (im.seq || 0) > (best.seq || 0))) best = im; });
       return best;
     }
     return null;
@@ -295,7 +351,8 @@
   };
   Store.prototype._hasPlacements = function (B, im) { return B.placements.some(function (p) { return p.image === im; }); };
   Store.prototype._removeImage = function (B, im) {
-    B.placements = B.placements.filter(function (p) { return p.image !== im; });
+    /* its placements go, and with them every placement made relative to one of them (and an image only those held) */
+    this._dropPlacements(B, B.placements.filter(function (p) { return p.image === im; }), false, true);
     if (B.images.get(im.id) === im) { B.images.delete(im.id); B.bytes -= im.bytes; im.frames.slice(1).forEach(function (f) { B.frameBytes -= im.w * im.h * 4; }); }
     if (im.timer) { clearTimeout(im.timer); im.timer = null; }
   };
@@ -308,7 +365,7 @@
     if (!im) { this._reply(ctl, ERR.ENOENT); return; }
     var r = this._place(im, ctl, anchor, this.term.buf === this.term.alt ? 'alt' : 'primary');
     this._reply(ctl, r || 'OK');
-    this.bump();
+    this.bump(true);
   };
   Store.prototype._place = function (im, ctl, anchor, bufKey) {
     var B = this.bufs[bufKey], term = this.term, buf = bufKey === 'alt' ? term.alt : term.primary;
@@ -317,12 +374,15 @@
     var sw = ctl.w ? Math.min(ctl.w, im.w - sx) : im.w - sx, sh = ctl.h ? Math.min(ctl.h, im.h - sy) : im.h - sy;
     if (sw <= 0 || sh <= 0) return ERR.EINVAL;
     var offX = Math.min(ctl.X || 0, cell.w - 1), offY = Math.min(ctl.Y || 0, cell.h - 1);
-    var cols = ctl.c || 0, rows = ctl.r || 0;
+    /* c= and r= are bounded, so neither the cursor move below nor drawing ever meets a size in the billions */
+    var cols = Math.min(ctl.c || 0, LIMITS.maxCells), rows = Math.min(ctl.r || 0, LIMITS.maxCells);
     if (!cols && !rows) { cols = Math.ceil((sw + offX) / cell.w); rows = Math.ceil((sh + offY) / cell.h); }
-    else if (!cols) cols = Math.ceil(rows * cell.h * sw / sh / cell.w);
-    else if (!rows) rows = Math.ceil(cols * cell.w * sh / sw / cell.h);
-    var pl = { image: im, pid: ctl.p || 0, line: anchor.line, col: anchor.col, cols: cols, rows: rows, sx: sx, sy: sy, sw: sw, sh: sh,
+    else if (!cols) cols = Math.min(LIMITS.maxCells, Math.ceil(rows * cell.h * sw / sh / cell.w));
+    else if (!rows) rows = Math.min(LIMITS.maxCells, Math.ceil(cols * cell.w * sh / sw / cell.h));
+    var pl = { image: im, pid: ctl.p || 0, line: anchor.line, lineId: anchor.line.id, col: anchor.col, cols: cols, rows: rows, sx: sx, sy: sy, sw: sw, sh: sh,
       offX: offX, offY: offY, z: ctl.z || 0, virtual: ctl.U === 1, fit: !!(ctl.c || ctl.r), parent: null, H: ctl.H || 0, V: ctl.V || 0, masks: null };
+    /* the placement this one replaces (same image id and placement id) */
+    var old = pl.pid && im.clientId ? B.placements.filter(function (q) { return q.image === im && q.pid === pl.pid; }) : [];
     /* relative placements */
     if (ctl.P) {
       if (pl.virtual) return ERR.EINVAL;
@@ -330,21 +390,32 @@
       if (!parentImg) return ERR.ENOPARENT;
       var parent = B.placements.find(function (q) { return q.image === parentImg && (!ctl.Q || q.pid === ctl.Q); });
       if (!parent) return ERR.ENOPARENT;
-      var depth = 1, p2 = parent, seen = new Set([pl]);
-      while (p2.parent) { if (seen.has(p2.parent)) return ERR.ECYCLE; seen.add(p2); p2 = p2.parent; depth++; if (depth > LIMITS.maxDepth) return ERR.ETOODEEP; }
       if (parent.image === im && parent.pid === pl.pid) return ERR.ECYCLE;
+      /* the chain above must not reach this placement, by image and placement id, counting the one it replaces */
+      for (var p2 = parent, depth = 1; p2; p2 = p2.parent, depth++) {
+        if (old.indexOf(p2) >= 0 || (pl.pid && p2.image === im && p2.pid === pl.pid)) return ERR.ECYCLE;
+        if (depth > LIMITS.maxDepth) return ERR.ETOODEEP;
+      }
       pl.parent = parent;
     }
-    /* same image id and placement id: replace in place (moves without flicker) */
-    if (pl.pid && im.clientId) B.placements = B.placements.filter(function (q) { return !(q.image === im && q.pid === pl.pid); });
-    B.placements.push(pl);
+    if (old.length) {
+      /* replace in place (moves without flicker): the new placement takes the old one's slot, so a parent stays ahead of
+         its children, and the children follow it */
+      B.placements.forEach(function (q) { if (old.indexOf(q.parent) >= 0) q.parent = pl; });
+      if (old.length > 1) B.placements = B.placements.filter(function (q) { return q === old[0] || old.indexOf(q) < 0; });
+      B.placements[B.placements.indexOf(old[0])] = pl;
+    } else {
+      B.placements.push(pl);
+      this._capPlacements(B);
+    }
     im.lastUsed = Date.now();
     this._startAnim(im);
     /* cursor: kitty moves right by cols and down by rows - 1 unless C=1, a relative or a virtual placement */
     if (!ctl.C && !pl.parent && !pl.virtual) {
       var cur = buf.cursor;
-      cur.x += cols; var down = rows - 1;
-      for (var k = 0; k < down; k++) this.term._index();
+      /* the cursor ends on the image's last row (kitty); rows is at most maxCells, so a huge r= never hangs the tab */
+      cur.x += cols;
+      for (var k = 0; k < rows - 1; k++) this.term._index();
       if (cur.x >= buf.cols) { cur.x = 0; this.term._index(); }
       cur.pendingWrap = false;
     }
@@ -354,6 +425,10 @@
   /* absolute row of a placement's anchor (cached index, validated) */
   Store.prototype._anchorAbs = function (pl, buf) {
     if (pl.parent) { var pa = this._anchorAbs(pl.parent, buf); return pa < 0 ? -1 : pa + pl.V; }
+    /* a line that scrolls out of a region (alternate screen, margins, IL/DL, RI) is cleared and reused at the other end
+       with a new id: the image left with the line's content, it does not jump to the far edge */
+    if (pl.lineId === undefined) pl.lineId = pl.line.id;
+    else if (pl.line.id !== pl.lineId) return -1;
     var idx = pl._idx;
     if (idx !== undefined && buf.lines[idx] === pl.line) return buf.trimmed + idx;
     var a = buf.absOf(pl.line);
@@ -390,39 +465,59 @@
     var term = this.term, buf = term.buf, B = this.cur();
     if (!B.placements.length) return;
     var m = view.metrics, W = m.devW, H = m.devH, dpr = m.dpr;
-    for (var i = 0; i < B.placements.length; i++) {
-      var pl = B.placements[i];
-      if (pl.virtual) continue;
-      var tier = pl.z < Z_UNDER_BG ? 'under-bg' : pl.z < 0 ? 'under-text' : 'over-text';
+    /* the placements in this row and tier, painted lower z first, then lower image id, then in the order placed (kitty) */
+    var list = null, i;
+    for (i = 0; i < B.placements.length; i++) {
+      var p = B.placements[i];
+      if (p.virtual) continue;
+      var tier = p.z < Z_UNDER_BG ? 'under-bg' : p.z < 0 ? 'under-text' : 'over-text';
       if (tier !== layer) continue;
-      var a = this._anchorAbs(pl, buf);
-      if (a < 0 || abs < a || abs >= a + pl.rows) continue;
-      var col = this._anchorCol(pl);
-      if (pl.image.ghost) { this._drawGhost(ctx, col * W, y0 - (abs - a) * H, pl.cols * W, pl.rows * H, pl.image, view, true); continue; }
-      var x = col * W + pl.offX * dpr, y = y0 - (abs - a) * H + pl.offY * dpr;
-      var dw, dh;
-      if (pl.stretch) { dw = pl.cols * W; dh = pl.rows * H; }
-      else if (pl.fit) {
-        var bw = pl.cols * W - pl.offX * dpr, bh = pl.rows * H - pl.offY * dpr, sc = Math.min(bw / pl.sw, bh / pl.sh);
-        dw = pl.sw * sc; dh = pl.sh * sc;
-      } else { dw = pl.sw * (W / (m.cellW * dpr)) * dpr; dh = pl.sh * (H / (m.cellH * dpr)) * dpr; }
-      var frame = pl.image.frames[pl.image.current] || pl.image.frames[0];
-      if (!frame || !frame.canvas) continue;
-      ctx.drawImage(this._frameCanvas(frame, view), pl.sx, pl.sy, pl.sw, pl.sh, x, y, dw, dh);
-      /* text written over sixel and iTerm2 images cuts the image out of those cells (foot) */
+      var pa = this._anchorAbs(p, buf);
+      if (pa < 0 || abs < pa || abs >= pa + p.rows) continue;
+      (list || (list = [])).push(p);
+    }
+    if (!list) return;
+    if (list.length > 1) list.sort(function (u, v) { return (u.z - v.z) || (u.image.id - v.image.id); });
+    for (i = 0; i < list.length; i++) {
+      var pl = list[i], a = this._anchorAbs(pl, buf), col = this._anchorCol(pl), top = y0 - (abs - a) * H;
+      /* text written over sixel and iTerm2 images cuts the image out of those cells (foot): the image is clipped away
+         there, so those cells keep exactly what the renderer painted (inverse, concealed, palette, selection, cursor) */
+      var cut = null;
       if (pl.masks && pl.masks.size) {
-        var row = abs - a, self = this;
+        var row = abs - a, ln = buf.lineAtAbs(abs);
         pl.masks.forEach(function (key) {
-          var rr = Math.floor(key / 4096), cc = key % 4096;
-          if (rr !== row) return;
-          self._repaintCell(ctx, abs, cc, y0, view);
+          if (Math.floor(key / 4096) !== row) return;
+          var cc = key % 4096; (cut || (cut = new Set())).add(cc);
+          if (ln && (ln.fl[cc] & T.CELL.WIDE)) cut.add(cc + 1);   /* the spacer half of a wide character */
         });
       }
+      if (cut) {
+        /* a Set: a cell listed twice would cancel itself out under the even-odd rule */
+        ctx.save(); ctx.beginPath(); ctx.rect(0, y0, buf.cols * W, H);
+        cut.forEach(function (cc) { ctx.rect(cc * W, y0, W, H); });
+        ctx.clip('evenodd');
+      }
+      if (pl.image.ghost) this._drawGhost(ctx, col * W, top, pl.cols * W, pl.rows * H, pl.image, view, true, (buf.cols - col) * W);
+      else {
+        var x = col * W + pl.offX * dpr, y = top + pl.offY * dpr;
+        var dw, dh;
+        if (pl.stretch) { dw = pl.cols * W; dh = pl.rows * H; }
+        else if (pl.fit) {
+          var bw = pl.cols * W - pl.offX * dpr, bh = pl.rows * H - pl.offY * dpr, sc = Math.min(bw / pl.sw, bh / pl.sh);
+          dw = pl.sw * sc; dh = pl.sh * sc;
+        } else { dw = pl.sw * (W / (m.cellW * dpr)) * dpr; dh = pl.sh * (H / (m.cellH * dpr)) * dpr; }
+        var frame = pl.image.frames[pl.image.current] || pl.image.frames[0];
+        if (frame && frame.canvas) ctx.drawImage(this._frameCanvas(frame, view), pl.sx, pl.sy, pl.sw, pl.sh, x, y, dw, dh);
+      }
+      if (cut) ctx.restore();
     }
   };
-  /* an image the saved scrollback could not keep: a hairline box in its cells with a short label naming it */
-  Store.prototype._drawGhost = function (ctx, x, y, w, h, im, view, box) {
-    var m = view.metrics, th = view.theme, dpr = m.dpr || 1, lw = Math.max(1, Math.round(dpr)), fg = C.toHex(th.fg);
+  /* an image the saved scrollback could not keep: a hairline box in its cells with a short label naming it, in the
+     default text colour as the renderer works it out (OSC 10/11, reverse screen); the label wraps inside labelW, the
+     part of the box left of the screen's right edge */
+  Store.prototype._drawGhost = function (ctx, x, y, w, h, im, view, box, labelW) {
+    var m = view.metrics, term = this.term, dpr = m.dpr || 1, lw = Math.max(1, Math.round(dpr));
+    var d = view.renderer.defaults(), fg = C.toHex(term.modes.reverse ? d.bg : d.fg);
     ctx.save();
     ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
     if (box) {
@@ -432,50 +527,58 @@
     ctx.globalAlpha = 0.75; ctx.fillStyle = fg; ctx.font = m.font; ctx.textBaseline = 'alphabetic';
     var pad = box ? Math.round(3 * dpr) : 0;
     var maxRows = box ? Math.max(1, Math.floor(h / m.devH)) : 1;
-    var rows = wrapLabel(ctx, T.Saved ? T.Saved.label(im) : '[image]', w - 2 * pad, maxRows);
-    if (rows.cut && T.Saved) rows = wrapLabel(ctx, T.Saved.label(im, true), w - 2 * pad, maxRows);   /* without the size */
+    var rows = this._ghostRows(ctx, im, Math.min(w, labelW === undefined ? w : Math.max(0, labelW)) - 2 * pad, maxRows);
     for (var k = 0; k < rows.length; k++) ctx.fillText(rows[k], x + pad, y + m.baseline + k * m.devH);
     ctx.restore();
   };
-  /* the label in as many rows as the box has, words kept whole where they fit, the last row ellipsized */
+  /* the wrapped label, kept on the image per width, row count and font: a repaint (every animation frame) measures nothing */
+  Store.prototype._ghostRows = function (ctx, im, maxW, maxRows) {
+    var cache = im._lbl || (im._lbl = new Map()), key = maxW + '|' + maxRows + '|' + ctx.font, rows = cache.get(key);
+    if (rows) return rows;
+    rows = wrapLabel(ctx, T.Saved ? T.Saved.label(im) : '[image]', maxW, maxRows);
+    if (rows.cut && T.Saved) rows = wrapLabel(ctx, T.Saved.label(im, true), maxW, maxRows);   /* without the size */
+    if (cache.size >= 8) cache.clear();
+    cache.set(key, rows);
+    return rows;
+  };
+  /* user-perceived characters, so a break never splits a surrogate pair, an emoji sequence or a combining mark */
+  var graphemeSeg = typeof Intl !== 'undefined' && Intl.Segmenter ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null;
+  function graphemes(s) { return graphemeSeg ? Array.from(graphemeSeg.segment(s), function (g) { return g.segment; }) : Array.from(s); }
+  /* the label in as many rows as the box has, words kept whole where they fit, the last row ellipsized; a word wider
+     than the box breaks between characters, each piece grown forward (one measurement per character), and nothing
+     past the last row is measured */
   function wrapLabel(ctx, text, maxW, maxRows) {
     var fits = function (t) { return ctx.measureText(t).width <= maxW; };
     var out = [], cur = '', words = text.split(' ');
-    for (var i = 0; i < words.length; i++) {
+    for (var i = 0; i < words.length && out.length <= maxRows; i++) {
       var next = cur ? cur + ' ' + words[i] : words[i];
       if (fits(next)) { cur = next; continue; }
       if (cur) { out.push(cur); cur = ''; }
-      var wd = words[i];
-      while (!fits(wd) && wd.length > 1) { var n = wd.length - 1; while (n > 1 && !fits(wd.slice(0, n))) n--; out.push(wd.slice(0, n)); wd = wd.slice(n); }
-      cur = wd;
+      if (fits(words[i])) { cur = words[i]; continue; }
+      var gs = graphemes(words[i]);
+      for (var g = 0; g < gs.length && out.length <= maxRows; g++) {
+        if (cur && !fits(cur + gs[g])) { out.push(cur); cur = ''; }
+        cur += gs[g];
+      }
     }
-    if (cur) out.push(cur);
+    if (cur && out.length <= maxRows) out.push(cur);
     if (out.length > maxRows) {
       out = out.slice(0, maxRows);
-      var last = out[maxRows - 1];
-      while (last.length > 1 && !fits(last + '…')) last = last.slice(0, -1);
-      out[maxRows - 1] = last + '…';
+      var last = graphemes(out[maxRows - 1]);
+      while (last.length > 1 && !fits(last.join('') + '…')) last.pop();
+      out[maxRows - 1] = last.join('') + '…';
       out.cut = true;
     }
     return out;
   }
-  Store.prototype._repaintCell = function (ctx, abs, x, y0, view) {
-    var m = view.metrics, line = this.term.buf.lineAtAbs(abs); if (!line) return;
-    var th = view.theme, st = this.term.styles.get(line.st[x]);
-    var bg = st.bg ? (st.bg < 0x200 ? th.palette[st.bg - 0x100] : st.bg & 0xffffff) : th.bg;
-    ctx.fillStyle = C.toHex(bg); ctx.fillRect(x * m.devW, y0, m.devW, m.devH);
-    if (line.cp[x] && line.cp[x] !== 32) {
-      var fg = st.fg ? (st.fg < 0x200 ? th.palette[st.fg - 0x100] : st.fg & 0xffffff) : th.fg;
-      ctx.fillStyle = C.toHex(fg); ctx.font = m.font; ctx.fillText(line.chars(x), x * m.devW, y0 + m.baseline);
-    }
-  };
   /* printing over an image cell (called from the renderer's view of the terminal; cheap check) */
   Store.prototype.noteText = function (line, x) {
     var B = this.cur(), buf = this.term.buf;
     for (var i = 0; i < B.placements.length; i++) {
       var pl = B.placements[i];
       if (!pl.cuttable) continue;
-      var a = this._anchorAbs(pl, buf), la = buf.absOf(line);
+      var a = this._anchorAbs(pl, buf); if (a < 0) continue;
+      var la = buf.absOf(line);
       if (la < a || la >= a + pl.rows || x < pl.col || x >= pl.col + pl.cols) continue;
       (pl.masks || (pl.masks = new Set())).add((la - a) * 4096 + x);
     }
@@ -521,7 +624,8 @@
     var cols = vp.cols, rows = vp.rows;
     var r = cell.row - 1, c = cell.col - 1;
     if (r >= rows || c >= cols) return;
-    if (im.ghost) { if (r === 0 && c === 0) this._drawGhost(ctx, px, py, cols * W, H, im, view, false); return; }
+    /* the label from the run's first cell, wrapped inside the screen rather than the run's full width */
+    if (im.ghost) { if (r === 0 && c === 0) this._drawGhost(ctx, px, py, Math.min(cols * W, Math.max(0, (this.term.buf.cols - x) * W)), H, im, view, false); return; }
     var boxW = cols * W, boxH = rows * H, sc = Math.min(boxW / im.w, boxH / im.h);
     var dw = im.w * sc, dh = im.h * sc, ox = (boxW - dw) / 2, oy = (boxH - dh) / 2;
     /* this cell's slice of the fitted image */
@@ -532,7 +636,7 @@
     if (clipX1 <= clipX0 || clipY1 <= clipY0) return;
     ctx.drawImage(this._frameCanvas(frame, view), clipX0, clipY0, clipX1 - clipX0, clipY1 - clipY0,
       px + (clipX0 - sx0) * sc, py + (clipY0 - sy0) * sc, (clipX1 - clipX0) * sc, (clipY1 - clipY0) * sc);
-    im.lastUsed = Date.now();
+    im.lastUsed = im._drawnAt = Date.now();
     this._startAnim(im);
   };
 
@@ -547,7 +651,7 @@
     };
     var victims;
     switch (lower) {
-      case 'a': victims = B.placements.filter(function (p) { if (p.virtual) return false; var a = self._anchorAbs(p, buf); return a + p.rows - 1 >= top && a < top + buf.rows; }); break;
+      case 'a': victims = B.placements.filter(function (p) { if (p.virtual) return false; var a = self._anchorAbs(p, buf); return a < 0 || (a + p.rows - 1 >= top && a < top + buf.rows); }); break;
       case 'i': { var im = B.images.get(ctl.i); if (!im) return; victims = B.placements.filter(function (p) { return p.image === im && (!ctl.p || p.pid === ctl.p); }); if (free && (!ctl.p || victims.length === B.placements.filter(function (p) { return p.image === im; }).length)) { this._removeImage(B, im); this.bump(); return; } break; }
       case 'n': { var imn = this._findImage(B, { I: ctl.I }); if (!imn) return; victims = B.placements.filter(function (p) { return p.image === imn && (!ctl.p || p.pid === ctl.p); }); if (free && !ctl.p) { this._removeImage(B, imn); this.bump(); return; } break; }
       case 'c': victims = B.placements.filter(function (p) { return !p.virtual && hit(p, cur.x, buf.abs(cur.y)); }); break;
@@ -558,7 +662,11 @@
       case 'z': victims = B.placements.filter(function (p) { return !p.virtual && p.z === (ctl.z || 0); }); break;
       case 'r': {
         var lo = ctl.x || 0, hi = ctl.y || 0;
-        Array.from(B.images.values()).forEach(function (imr) { if (imr.clientId >= lo && imr.clientId <= hi) { if (free) self._removeImage(B, imr); else B.placements = B.placements.filter(function (p) { return p.image !== imr; }); } });
+        Array.from(B.images.values()).forEach(function (imr) {
+          if (imr.clientId < lo || imr.clientId > hi) return;
+          if (free) self._removeImage(B, imr);
+          else self._dropPlacements(B, B.placements.filter(function (p) { return p.image === imr; }), false, true);   /* children go too */
+        });
         this.bump(); return;
       }
       case 'f': {
@@ -572,7 +680,8 @@
     }
     this._dropPlacements(B, victims, free);
   };
-  Store.prototype._dropPlacements = function (B, victims, free) {
+  /* quiet: the caller bumps once it is done */
+  Store.prototype._dropPlacements = function (B, victims, free, quiet) {
     if (!victims || !victims.length) return;
     var set = new Set(victims), self = this;
     /* relative children die with their parents */
@@ -584,7 +693,17 @@
       var left = B.placements.some(function (p) { return p.image === im; });
       if (!left && (free || !im.clientId)) self._removeImage(B, im);
     });
-    this.bump();
+    if (!quiet) this.bump();
+  };
+  /* past the placement cap the oldest eighth that no other placement hangs from goes at once, so a flood of puts costs
+     no more per put than it does below the cap; their images go with them unless an id keeps them. Called after the
+     push: the newest placement and its parent are never among them */
+  Store.prototype._capPlacements = function (B) {
+    if (B.placements.length <= LIMITS.maxPlacements) return;
+    var parents = new Set(), victims = [], i;
+    B.placements.forEach(function (q) { if (q.parent) parents.add(q.parent); });
+    for (i = 0; i < B.placements.length - 1 && victims.length < LIMITS.maxPlacements / 8; i++) if (!parents.has(B.placements[i])) victims.push(B.placements[i]);
+    this._dropPlacements(B, victims, false, true);
   };
 
   /* ---- animation ---- */
@@ -613,13 +732,13 @@
     im.gen++;
     this._reply(ctl, 'OK');
     this._startAnim(im);
-    this.bump();
+    this.bump(true);
   };
   Store.prototype._animControl = function (ctl) {
     var B = this.cur(), im = this._findImage(B, ctl); if (!im) return;
     if (ctl.r && ctl.z !== undefined) { var fr = im.frames[ctl.r - 1]; if (fr) fr.gap = ctl.z > 0 ? Math.max(LIMITS.minGapMs, ctl.z) : 0; }
     if (ctl.v) { im.anim.loops = ctl.v; im.anim.played = 0; }
-    if (ctl.c) { im.current = Math.min(im.frames.length, ctl.c) - 1; im.gen++; this.bump(); }
+    if (ctl.c) { im.current = Math.min(im.frames.length, ctl.c) - 1; im.gen++; this.bump(true); }
     if (ctl.s) { im.anim.state = ctl.s; if (ctl.s === 1) { im.anim.played = 0; if (im.timer) { clearTimeout(im.timer); im.timer = null; } } }
     this._startAnim(im);
   };
@@ -635,7 +754,7 @@
     if (ctl.C === 1) g.clearRect(dx, dy, w, h);
     g.drawImage(src.canvas, sx, sy, w, h, dx, dy, w, h);
     dst.canvas._gen = (dst.canvas._gen || 0) + 1;
-    im.gen++; this._reply(ctl, 'OK'); this.bump();
+    im.gen++; this._reply(ctl, 'OK'); this.bump(true);
   };
   /* frames advance only while the terminal is visible and Reduced Motion is off (content motion still moves) */
   Store.prototype._startAnim = function (im) {
@@ -649,6 +768,12 @@
       im.timer = null;
       if (!self.cur().images.has(im.id) && !self.bufs.primary.images.has(im.id) && !self.bufs.alt.images.has(im.id)) return;
       if (self.paused || T.look().reduced) return;
+      /* nothing draws it (every placement deleted or cleared): a=p or a placeholder cell starts it again */
+      if (!self._hasPlacements(self.bufs.primary, im) && !self._hasPlacements(self.bufs.alt, im)) return;
+      /* only a Unicode-placeholder placement, and no cell of it drawn lately (cleared, or scrolled out of view): the next
+         placeholder cell drawn starts it again */
+      var cells = function (B) { return B.placements.some(function (p) { return p.image === im && !p.virtual; }); };
+      if (!cells(self.bufs.primary) && !cells(self.bufs.alt) && Date.now() - (im._drawnAt || 0) > Math.max(1000, 4 * (im.frames[im.current].gap || 40))) return;
       var n = im.current, guard = 0;
       do { n = (n + 1) % im.frames.length; guard++; } while (im.frames[n].gap === 0 && n !== 0 && guard < im.frames.length + 1);
       if (n === 0 || n < im.current) {
@@ -657,7 +782,7 @@
         if (im.anim.loops > 1 && im.anim.played >= im.anim.loops - 1) { im.anim.state = 1; return; }
       }
       im.current = n; im.gen++;
-      self.bump();
+      self.bump(true);
       im.timer = setTimeout(step, Math.max(LIMITS.minGapMs, im.frames[n].gap || 40));
     };
     im.timer = setTimeout(step, Math.max(LIMITS.minGapMs, gap || 40));
@@ -698,11 +823,13 @@
     var cols = o.cols || Math.ceil(w / cell.w), rows = o.rows || Math.ceil(h / cell.h);
     cols = Math.min(cols, buf.cols - buf.cursor.x);
     var anchor = this._cursorAnchor();
-    var pl = { image: im, pid: 0, line: anchor.line, col: anchor.col, cols: cols, rows: rows, sx: 0, sy: 0, sw: cv.width, sh: cv.height,
+    var pl = { image: im, pid: 0, line: anchor.line, lineId: anchor.line.id, col: anchor.col, cols: cols, rows: rows, sx: 0, sy: 0, sw: cv.width, sh: cv.height,
       offX: 0, offY: 0, z: 0, virtual: false, fit: !!(o.cols || o.rows || o.drawW), stretch: !!o.stretch, parent: null, H: 0, V: 0, masks: null, cuttable: true };
     B.placements.push(pl);
+    this._capPlacements(B);
     if (!o.noCursor) {
-      /* scroll so the whole image is on screen, cursor on the image's last row (xterm, iTerm2) */
+      /* scroll so the whole image is on screen, cursor on the image's last row (xterm, iTerm2); rows is bounded by
+         maxDim (and iTerm2's own cap) */
       for (var k = 0; k < rows - 1; k++) term._index();
       if (o.sixelCursor && term.modes.sixelCursorRight) { buf.cursor.x = Math.min(buf.cols - 1, anchor.col + cols); }
       else if (o.itermCursor) { buf.cursor.x = Math.min(buf.cols - 1, anchor.col + cols); }
@@ -722,18 +849,33 @@
   Store.prototype.onClearScreen = function (buf) {
     var B = buf === this.term.alt ? this.bufs.alt : this.bufs.primary, self = this;
     var top = buf.abs(0);
-    var victims = B.placements.filter(function (p) { if (p.virtual) return false; var a = self._anchorAbs(p, buf); return a + p.rows - 1 >= top; });
+    /* a placement whose line a region scroll reused (anchor -1) is gone from view too */
+    var victims = B.placements.filter(function (p) { if (p.virtual) return false; var a = self._anchorAbs(p, buf); return a < 0 || a + p.rows - 1 >= top; });
     this._dropPlacements(B, victims, false);
   };
-  Store.prototype.onResize = function (remap) {
-    var B = this.bufs.primary, self = this, cell = this._cellPx();
-    B.placements = B.placements.filter(function (p) {
-      if (p.parent) return true;
-      var r = remap(p.line, p.col); if (!r) return false;
-      p.line = r.line; p.col = r.col; p._idx = undefined; return true;
+  /* gone: the lines the resize removed. The terminal trims them next (onTrim), which drops what sits on them; a
+     Unicode-placeholder placement is not drawn at its line, so it moves to the first line and its cells still name it */
+  Store.prototype.onResize = function (remap, gone) {
+    var B = this.bufs.primary, victims = [], lines = this.term.primary.lines, cut = gone && gone.length ? new Set(gone) : null;
+    B.placements.forEach(function (p) {
+      if (p.parent) return;
+      /* a reused line would hand the placement a fresh id below: it left with the line's old content */
+      if (!p.virtual && p.lineId !== undefined && p.line.id !== p.lineId) { victims.push(p); return; }
+      var r = remap(p.line, p.col); if (!r) { victims.push(p); return; }
+      if (p.virtual && cut && cut.has(r.line) && lines.length) r = { line: lines[0], col: 0 };
+      p.line = r.line; p.col = r.col; p.lineId = r.line.id; p._idx = undefined;
     });
-    void self; void cell;
+    this._dropPlacements(B, victims, false, true);   /* their relative children go with them */
     this.bump();
+  };
+  /* lines a region scroll cleared and reused at the other end (alternate screen, margins, IL/DL, CSI S/T, RI): the
+     images anchored on them go, as kitty drops images that scroll out of the region */
+  Store.prototype.onRecycle = function (buf, lines) {
+    var B = buf === this.term.alt ? this.bufs.alt : this.bufs.primary;
+    if (!B.placements.length || !lines) return;
+    var gone = lines instanceof Set ? lines : new Set(lines);
+    var victims = B.placements.filter(function (p) { var root = p; while (root.parent) root = root.parent; return !root.virtual && gone.has(root.line); });
+    this._dropPlacements(B, victims, false);
   };
 
   /* plain-text description for the accessible buffer and agent reads: images never reach scrollback text */
@@ -744,8 +886,14 @@
       if (p.image.ghost) { out.push(T.Saved ? T.Saved.label(p.image) : '[image]'); return; }
       out.push('[image ' + p.image.w + '×' + p.image.h + ' px' + (p.image.frames.length > 1 ? ', animated' : '') + ']');
     });
-    var runs = line.cp.indexOf ? null : null; void runs;
-    for (var x = 0; x < line.cols; x++) if (line.cp[x] === 0x10eeee) { out.push('[image]'); break; }
+    /* Unicode-placeholder runs, one per image: one saved scrollback could not keep reads as its placeholder label */
+    var seen = new Set();
+    this._placeholderRuns(line).forEach(function (cell) {
+      if (seen.has(cell.id)) return;
+      seen.add(cell.id);
+      var im = line.restored ? (B.phAlias ? B.phAlias.get(cell.id) : null) : B.images.get(cell.id);
+      out.push(im && im.ghost && T.Saved ? T.Saved.label(im) : '[image]');
+    });
     return out.length ? out.join(' ') : '';
   };
   Store.prototype.stats = function () {

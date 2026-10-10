@@ -150,13 +150,18 @@ var T = {};
       delin(-0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s));
   };
   /* Minimum-contrast floor: keep hue and chroma, move OKLab lightness away from the background until the WCAG
-     ratio holds (the Ghostty / VS Code rule). Returns fg unchanged when it already passes or ratio <= 1. */
-  var ensureCache = new Map();
+     ratio holds (the Ghostty / VS Code rule). Returns fg unchanged when it already passes or ratio <= 1.
+     One cache per floor, keyed by the exact integer fg * 2^24 + bg (a floor folded into the key's fraction rounds
+     away above 2^47, so 3:1 and 4.5:1 shared entries). It holds more pairs than a full screen has cells (231 x 62 is
+     14,322) and drops its oldest entry when full, so a full repaint never starts again from an empty cache. */
+  var ensureCache = new Map(), ENSURE_MAX = 32768;
   C.ensure = function (fg, bg, ratio) {
     if (!ratio || ratio <= 1) return fg;
     if (C.contrast(fg, bg) >= ratio) return fg;
-    var key = fg * 16777216 + bg + ratio / 100;
-    var hit = ensureCache.get(key); if (hit !== undefined) return hit;
+    var cache = ensureCache.get(ratio);
+    if (!cache) { cache = new Map(); ensureCache.set(ratio, cache); }
+    var key = fg * 16777216 + bg;
+    var hit = cache.get(key); if (hit !== undefined) return hit;
     var lab = C.oklab(fg), bgL = C.lum(bg);
     var up = bgL < 0.18; /* dark background: lighten; light background: darken */
     var lo = lab[0], hi = up ? 1 : 0, best = up ? 0xffffff : 0, i;
@@ -164,8 +169,8 @@ var T = {};
       var mid = (lo + hi) / 2, cand = C.fromOklab(mid, lab[1], lab[2]);
       if (C.contrast(cand, bg) >= ratio) { best = cand; hi = mid; } else { lo = mid; }
     }
-    if (ensureCache.size > 4096) ensureCache.clear();
-    ensureCache.set(key, best);
+    if (cache.size >= ENSURE_MAX) cache.delete(cache.keys().next().value);
+    cache.set(key, best);
     return best;
   };
   /* xterm 256: 16 from the scheme, a 6x6x6 cube, a 24-step grey ramp */

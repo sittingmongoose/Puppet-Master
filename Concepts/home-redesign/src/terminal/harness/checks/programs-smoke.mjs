@@ -191,7 +191,13 @@ await t('git outside repo', ['git', 'status'], { cwd: '/tmp' }, { code: 128, has
 
 // ---------------- cargo, npm, python, make, deploy
 await t('cargo build', ['cargo', 'build'], {}, { code: 0, has: [/\x1b\[1m\x1b\[32m   Compiling\x1b\[0m tokio v1\.40\.0/, /\x1b\]9;4;1;\d+\x1b\\/, /src\/media\/import\.rs:71:13/, /Finished\x1b\[0m `dev` profile/, /\x1b\]9;4;0\x1b\\/] });
-await t('cargo test', ['cargo', 'test'], {}, { code: 0, has: [/running 214 tests/, /test result: \x1b\[32mok\x1b\[0m\. 214 passed; 0 failed/] });
+// the test binary compiles whole before a filter picks tests, so the seeded broken test module fails every `cargo test`
+await t('cargo test', ['cargo', 'test'], {}, { code: 101, has: [/error\[E0425\]/, /could not compile `tastebook-api`/], not: [/running 214 tests/] });
+{
+  const T = makeT(), vfs = T.VFS.local();
+  await t('git restore import.rs', ['git', 'restore', 'src/media/import.rs'], { T, vfs }, { code: 0 });
+  await t('cargo test after restore', ['cargo', 'test'], { T, vfs }, { code: 0, has: [/running 214 tests/, /test result: \x1b\[32mok\x1b\[0m\. 214 passed; 0 failed/] });
+}
 await t('cargo test media::', ['cargo', 'test', 'media::'], {}, { code: 101, has: [/error\[E0425\]/, /cannot find value `pool` in this scope/, /--> src\/media\/import\.rs:128:14/, /128 \|/, /could not compile `tastebook-api`/] });
 await t('cargo bench', ['cargo', 'bench'], {}, { code: 0, has: [/Benchmarking import\/content_hash: Warming up/, /time:   \[24\.117 µs/, /Performance has improved/] });
 await t('cargo run stops on Ctrl+C', ['cargo', 'run'], { interruptAfter: 80 }, { code: 130, has: [/Running\x1b\[0m `target\/debug\/tastebook-api`/, /listening on/] });

@@ -30,9 +30,16 @@
     this.pendingWho = null;
     this.images = null;
     this.focused = false;
+    this._wireBuffers();
     this.resetState();
   }
   T.Terminal = Terminal;
+
+  /* lines a region scroll reuses take the images anchored on them along (kitty drops what scrolls out of a region) */
+  Terminal.prototype._wireBuffers = function () {
+    var self = this;
+    this.primary.onRecycle = this.alt.onRecycle = function (lines) { if (self.images) self.images.onRecycle(this, lines); };
+  };
 
   Terminal.prototype.resetState = function () {
     this.pen = { fg: 0, bg: 0, ul: 0, flags: 0, link: 0 };
@@ -100,6 +107,7 @@
         cp = s.codePointAt(i); i += cp > 0xffff ? 2 : 1;
         if (cs === '0' && cp >= 0x60 && cp <= 0x7e) cp = DEC_SPECIAL[cp] || cp;
         w = T.wcwidth(cp);
+        if (w !== 0 && cp >= 0x2190 && this._clusters(lastLine ? { line: lastLine, x: lastX } : this.lastCell, cp)) w = 0;
         if (w === 0) {
           if (lastLine) this.lastCell = { line: lastLine, x: lastX };
           this._join(cp); line = buf.line(cur.y); continue;
@@ -137,14 +145,33 @@
     }
     if (lastLine) this.lastCell = { line: lastLine, x: lastX };
   };
+  /* emoji ZWJ sequences and regional-indicator flags cluster into one cell (mode 2027) */
+  function pictograph(cp) { return (cp >= 0x2190 && cp <= 0x2bff) || (cp >= 0x1f000 && cp <= 0x1faff); }
+  function regional(cp) { return cp >= 0x1f1e6 && cp <= 0x1f1ff; }
+  Terminal.prototype._clusters = function (pc, cp) {
+    if (!pc || !pc.line.cp[pc.x]) return false;
+    var line = pc.line, x = pc.x, cur = this.buf.cursor;
+    /* only the cell the cursor has just left: a cluster never reaches back across a cursor move */
+    var end = x + ((line.fl[x] & CELL.WIDE) ? 2 : 1);
+    if (this.buf.line(cur.y) !== line || (cur.x !== end && !(cur.pendingWrap && end === line.cols))) return false;
+    var s = line.chars(x), first = s.codePointAt(0);
+    /* after a ZWJ the next pictograph joins the sequence */
+    if (s.charCodeAt(s.length - 1) === 0x200d) return pictograph(first) && pictograph(cp);
+    /* a second regional indicator pairs with an unpaired first one into one flag */
+    return regional(cp) && regional(first) && s.length === 2;
+  };
   Terminal.prototype._join = function (cp) {
     var lc = this.lastCell;
     if (!lc || lc.line.cp[lc.x] === 0) return;
     var line = lc.line, x = lc.x;
     var base = line.chars(x);
+    /* a cell holds at most 32 UTF-16 units, as kitty and xterm cap it: endless combining marks are dropped */
+    if (base.length >= 32) { line.ver++; return; }
     line.setGrapheme(x, base + String.fromCodePoint(cp));
-    /* VS16 asks for emoji presentation: widen a narrow cell when there is room (mode 2027 semantics) */
-    if (cp === 0xfe0f && !(line.fl[x] & CELL.WIDE) && x + 1 < line.cols && line.cp[x] >= 0x2000) {
+    /* VS16 asks for emoji presentation and a flag pair is one wide glyph: widen a narrow cell when there is room
+       (mode 2027 semantics) */
+    var widen = (cp === 0xfe0f && line.cp[x] >= 0x2000) || regional(cp);
+    if (widen && !(line.fl[x] & CELL.WIDE) && x + 1 < line.cols) {
       var cur = this.buf.cursor;
       if (cur.y >= 0 && this.buf.line(cur.y) === line && cur.x === x + 1) {
         line.fl[x] |= CELL.WIDE; line.cp[x + 1] = 0; line.fl[x + 1] = CELL.SPACER; line.st[x + 1] = line.st[x];
@@ -164,8 +191,10 @@
   };
 
   /* ---- cursor motion ---- */
+  /* IND, NEL and RI end a pending wrap like LF does */
   Terminal.prototype._index = function () {
     var buf = this.buf, cur = buf.cursor;
+    cur.pendingWrap = false;
     if (cur.y === buf.scrollBottom) this._scrollUp(1);
     else if (cur.y < buf.rows - 1) cur.y++;
   };
@@ -182,6 +211,7 @@
   };
   Terminal.prototype._reverseIndex = function () {
     var buf = this.buf, cur = buf.cursor;
+    cur.pendingWrap = false;
     if (cur.y === buf.scrollTop) buf.scrollDown(1, this._eraseStyle());
     else if (cur.y > 0) cur.y--;
   };
@@ -198,7 +228,8 @@
     var buf = this.buf, cur = buf.cursor;
     switch (c) {
       case 7: this.emit('bell'); break;
-      case 8: if (cur.pendingWrap) cur.pendingWrap = false; else if (cur.x > 0) cur.x--; break;
+      /* BS in the pending-wrap state still moves left, as xterm does (no reverse-wrap mode here) */
+      case 8: cur.pendingWrap = false; if (cur.x > 0) cur.x--; break;
       case 9: {
         var x = cur.x + 1;
         while (x < buf.cols - 1 && !buf.tabs[x]) x++;
@@ -253,6 +284,7 @@
     this.primary = new T.Buffer(this.cols, this.rows, { scrollback: this.primary.maxScrollback });
     this.alt = new T.Buffer(this.cols, this.rows, { alt: true });
     this.buf = this.primary;
+    this._wireBuffers();
     this.commands = []; this.curCmd = null;
     this.resetState();
     if (this.images) this.images.reset();
@@ -280,27 +312,34 @@
       case 'B': case 'e': n = arg(p, 0, 1); cur.y = Math.min(cur.y <= buf.scrollBottom ? buf.scrollBottom : rows - 1, cur.y + n); cur.pendingWrap = false; break;
       case 'C': case 'a': n = arg(p, 0, 1); cur.x = Math.min(cols - 1, cur.x + n); cur.pendingWrap = false; break;
       case 'D': n = arg(p, 0, 1); cur.x = Math.max(0, cur.x - n); cur.pendingWrap = false; break;
-      case 'E': n = arg(p, 0, 1); cur.y = Math.min(buf.scrollBottom, cur.y + n); cur.x = 0; cur.pendingWrap = false; break;
-      case 'F': n = arg(p, 0, 1); cur.y = Math.max(buf.scrollTop, cur.y - n); cur.x = 0; cur.pendingWrap = false; break;
+      case 'E': n = arg(p, 0, 1); cur.y = Math.min(cur.y <= buf.scrollBottom ? buf.scrollBottom : rows - 1, cur.y + n); cur.x = 0; cur.pendingWrap = false; break;
+      case 'F': n = arg(p, 0, 1); cur.y = Math.max(cur.y >= buf.scrollTop ? buf.scrollTop : 0, cur.y - n); cur.x = 0; cur.pendingWrap = false; break;
       case 'G': case '`': cur.x = T.util.clamp(arg(p, 0, 1) - 1, 0, cols - 1); cur.pendingWrap = false; break;
       case 'H': case 'f': this._setCursor(arg(p, 1, 1) - 1, arg(p, 0, 1) - 1); break;
-      case 'I': n = arg(p, 0, 1); while (n-- > 0) this.execute(9); break;
+      /* a row holds no more tab stops than columns: cap the count so a huge one cannot spin */
+      case 'I': n = Math.min(arg(p, 0, 1), cols); while (n-- > 0) this.execute(9); break;
       case 'J': this._eraseDisplay(arg(p, 0, 0, true)); break;
       case 'K': this._eraseLine(arg(p, 0, 0, true)); break;
       case 'L': this._insertLines(arg(p, 0, 1)); break;
       case 'M': this._deleteLines(arg(p, 0, 1)); break;
       case 'P': this._deleteChars(arg(p, 0, 1)); break;
-      case 'S': n = arg(p, 0, 1); this._scrollUp(n); break;
+      case 'S': n = Math.min(arg(p, 0, 1), rows + buf.maxScrollback); this._scrollUp(n); break;
       case 'T': n = arg(p, 0, 1); buf.scrollDown(n, this._eraseStyle()); break;
       case 'X': n = arg(p, 0, 1); buf.line(cur.y).clear(cur.x, cur.x + n, this._eraseStyle()); break;
-      case 'Z': n = arg(p, 0, 1); while (n-- > 0) { var x = cur.x - 1; while (x > 0 && !buf.tabs[x]) x--; cur.x = Math.max(0, x); } break;
+      case 'Z': n = Math.min(arg(p, 0, 1), cols); while (n-- > 0) { var x = cur.x - 1; while (x > 0 && !buf.tabs[x]) x--; cur.x = Math.max(0, x); } break;
       case 'b': {
         n = arg(p, 0, 1);
-        if (this.lastCell) { var ch = this.lastCell.line.chars(this.lastCell.x); var rep = ''; for (i = 0; i < Math.min(n, 4096); i++) rep += ch; this.print(rep); }
+        if (this.lastCell) {
+          /* an oversized cluster (restored from an older save) repeats as its base character only */
+          var ch = this.lastCell.line.chars(this.lastCell.x), rep = '';
+          if (ch.length > 32) ch = String.fromCodePoint(ch.codePointAt(0));
+          for (i = 0; i < Math.min(n, 4096); i++) rep += ch;
+          this.print(rep);
+        }
         break;
       }
       case 'c': if (arg(p, 0, 0, true) === 0) this.reply('\x1b[?62;4;22c'); break;
-      case 'd': cur.y = T.util.clamp(arg(p, 0, 1) - 1, 0, rows - 1); cur.pendingWrap = false; break;
+      case 'd': this._setCursor(cur.x, arg(p, 0, 1) - 1); break; /* origin mode applies, as for CUP */
       case 'g': n = arg(p, 0, 0, true); if (n === 0) buf.tabs[cur.x] = 0; else if (n === 3) buf.tabs.fill(0); break;
       case 'm': this._sgr(p); break;
       case 'n': n = arg(p, 0, 0, true);
@@ -493,7 +532,7 @@
         1000: md.mouse === 1000, 1002: md.mouse === 1002, 1003: md.mouse === 1003, 1004: md.focusEvents, 1006: md.mouseSgr,
         1016: md.mousePixels, 1049: this.buf === this.alt, 2004: md.bracketedPaste, 2026: md.sync, 80: !md.sixelScrolling,
         8452: md.sixelCursorRight };
-      if (m === 2027) v = 3; /* grapheme clustering: always on */
+      if (m === 2027) v = 3; /* grapheme clustering: always on (combining marks, VS16, ZWJ sequences, flags) */
       else if (m in map) v = map[m] ? 1 : 2;
       this.reply('\x1b[?' + m + ';' + v + '$y');
     } else {
@@ -504,10 +543,11 @@
   Terminal.prototype._kittyKeys = function (prefix, p) {
     var stack = this.buf === this.alt ? this.kitty.alt : this.kitty.primary;
     if (prefix === '?') { this.reply('\x1b[?' + stack[stack.length - 1] + 'u'); return; }
-    if (prefix === '>') { if (stack.length > 32) stack.shift(); stack.push(arg(p, 0, 0, true) & 31); }
+    /* only the flags encodeKey honours are stored, so a query never reports what is not done (1: disambiguate) */
+    if (prefix === '>') { if (stack.length > 32) stack.shift(); stack.push(arg(p, 0, 0, true) & 1); }
     else if (prefix === '<') { var n = arg(p, 0, 1); while (n-- > 0 && stack.length > 1) stack.pop(); if (stack.length === 1 && n >= 0) stack[0] = 0; }
     else if (prefix === '=') {
-      var flags = arg(p, 0, 0, true) & 31, mode = arg(p, 1, 1);
+      var flags = arg(p, 0, 0, true) & 1, mode = arg(p, 1, 1);
       var top = stack.length - 1;
       if (mode === 1) stack[top] = flags; else if (mode === 2) stack[top] |= flags; else if (mode === 3) stack[top] &= ~flags;
     }
@@ -710,7 +750,10 @@
       var b = T.base64.decode(parts[2] || '');
       this.pendingCmdline = b ? T.util.utf8Decode(b).slice(0, 4096) : '';
     } else if (parts[1] === 'W') {
-      this.pendingWho = /^(user|agent:[A-Za-z0-9 _.-]{1,40})$/.test(parts[2] || '') ? parts[2] : 'user';
+      /* an agent is never recorded as the human, whatever its name holds: the name is only cleaned for display */
+      var w = parts.slice(2).join(';');
+      if (/^agent:/.test(w)) this.pendingWho = 'agent:' + (Array.from(w.slice(6).replace(/[\x00-\x1f\x7f-\x9f]/g, '')).slice(0, 40).join('') || 'unknown');
+      else this.pendingWho = 'user';
     }
   };
 
@@ -767,7 +810,9 @@
     });
     var alive = new Set(this.primary.lines);
     this.commands = this.commands.filter(function (c) { return c.promptLine && alive.has(c.promptLine); });
-    if (this.images) this.images.onResize(remap);
+    if (this.images) this.images.onResize(remap, r.gone);
+    /* placements are remapped first, so the trim drops those the resize left on removed lines and frees their images */
+    if (r.gone && r.gone.length) this._onTrim(r.gone);
     this.lastCell = null;
     this.emit('resize', { cols: cols, rows: rows });
     return r;
