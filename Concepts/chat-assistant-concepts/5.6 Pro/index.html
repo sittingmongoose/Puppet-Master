@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark light">
   <title>Puppet Master — Assistant Concept Lab 5.6 Pro</title>
+  <script>/* first paint (build.py): the stored look, read only, before the first frame */(function(){var d=document.documentElement,t="basic-dark",p=null,n=null;try{p=JSON.parse(localStorage.getItem("pm56-prefs")||"null");}catch(e){p=null;}var g={"basic-dark":"#09090b","basic-light":"#f1f1f3","friendly-dark":"#111018","friendly-light":"#f8f2ef","glass-dark":"#130d2b","glass-light":"#e7e3f5","retro-dark":"#10120e","retro-light":"#f5f0e8","nier-dark":"#2f2d26","nier-light":"#ccc8b1"};if(p&&Object.prototype.hasOwnProperty.call(g,p.theme))t=p.theme;var m=/-(light|dark)$/.exec(t),b=t;if(/^nier-/.test(t)){try{n=JSON.parse(localStorage.getItem("pm56-nier")||"null");}catch(e){n=null;}var k=["square","cursor","headers","ground","brackets","diamonds","reboot","slice","decode","wipe","particles","sweep","glitch","sounds","voice","pod","pointer","boot","readouts","blocks","charts","ticks","glyphs","intel","icons","pod042","quests","empty","save"];if(n&&Array.isArray(n.parts))k=k.filter(function(x){return n.parts.indexOf(x)>=0;});d.setAttribute("data-o55-nier","on");d.setAttribute("data-o55-nier-parts",k.join(" "));b="basic-"+m[1];}var s=document.createElement("style");s.id="pm56-first-paint";s.setAttribute("data-body-theme",b);s.textContent="html{background:"+g[t]+";color-scheme:"+m[1]+"}";document.head.appendChild(s);})();</script>
+  <link rel="expect" href="#pmRoot" blocking="render">
   <style>/* Embedded webfonts. --font-ui has always named Inter first (and the friendly
    themes Poppins), but no @font-face ever backed them, so every machine
    without the fonts installed silently fell back to Segoe/system-ui. The
@@ -20624,6 +20626,7 @@ html[data-o55-nier-scene] .chat-stage > .transcript { background-attachment: scr
 </style>
 </head>
 <body>
+  <script>(function(){var s=document.getElementById("pm56-first-paint");if(s){document.body.setAttribute("data-theme",s.getAttribute("data-body-theme"));s.remove();}})();</script>
   <div id="pmRoot" aria-busy="true"></div>
   <div id="pmOverlayRoot"></div>
   <script>

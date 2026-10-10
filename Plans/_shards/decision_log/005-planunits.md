@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3637-L12519
+Source lines: L3667-L12599
 
-Source SHA256: `b6d9ae7078d9a088a0a0b93f76f4a032f6ebc68f187bdbce5f4b3f712577a3e4`
+Source SHA256: `0571c1c8323748f65fb7059636532100ca6b71711cd236aeb3030744779aed52`
 
 ---
 
@@ -8759,6 +8759,56 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-159 - The Chat Opens In The Look You Chose, From Its First Frame
+
+```yaml
+plan_unit_id: DL-159
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-159 records the owner request of 2026-10-09. The assistant chat, as a page of its own, paints the viewer's stored
+  look in its first frame, applying F3-468's boot paint: a reader reads the chat's own look store before the first
+  frame, never writes it and keeps no copy of the theme, and the chat's renderer and NieR Mode's engine still own the
+  look (F3-612). NieR Mode's boot log and reboot moment behave as before. One first-paint reader serves a page, and the
+  chat's reader is dropped when the chat is ported into PMConcept7 (DR-054). No command, action id, setting or wiring
+  entry changes.
+gui_related: true
+gui_classification_reason: Records an owner decision on what the assistant chat shows in its first frame.
+split_recommended: false
+depends_on: [DL-144]
+unblocks: [F3-612, DR-054]
+acceptance_criteria:
+  - "The chat's first frame is the stored look, and opening the chat writes no look setting (F3-612)."
+  - "No command, action id, setting or wiring entry is added, changed or retired by this decision."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-159"
+  - "first frame"
+negative_constraints:
+  - "Do not store a new key or a copy of the theme to paint the first frame."
+  - "Do not play the reboot moment on a reload."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-162 - The Left Rail Takes The Polish Design

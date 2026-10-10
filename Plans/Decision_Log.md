@@ -3544,6 +3544,36 @@ SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-plan-card-actions-2026
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Scheduling_and_Quota_Resume.md#SQR-015, ContractName:Plans/DRY_Rules.md#DR-047
 
+### DL-159: The chat opens in the look you chose, from its first frame
+
+**Question:** What should the assistant chat show in its first moments, before it has drawn itself?
+
+**Why it came up:** The 5.6 Pro chat concept opened on the browser's own dark grey and switched to the look a person had chosen only when the chat first drew itself, 1.3 to 1.7 seconds in. For a Light theme the whole window went from dark to light; for NieR Mode the dark grey came before the parchment or ink and the boot log. PMConcept7 had just fixed the same thing for its own page (its boot paint, F3-468, DL-153), and Jared approved doing the same for the chat on 2026-10-09.
+
+**What you get:**
+- The chat opens in the look you chose from its very first frame, in all ten themes, NieR Mode with any parts, and with reduced motion on. With nothing chosen yet it opens in Basic Dark.
+- No flash: nothing large changes colour while the chat draws itself.
+- Nothing new is stored. The first frame reads the chat's own saved look and changes nothing; the chat and NieR Mode still own the look.
+- NieR Mode's boot log plays as before, only when the chat opens in NieR Mode with Boot sequence installed and motion allowed, and the chat never shows before it. The reboot moment still plays only when you turn NieR Mode on or off, never on a reload.
+- The pinned history drawer stays in place from the first frame.
+
+**What it costs:**
+- The chat's page carries a small reader of its own for now. When the chat is ported into PMConcept7, PMConcept7's boot paint takes over and the chat's reader is removed.
+
+**Options considered:** None were offered; the request named PMConcept7's pattern. Painting only a background colour first was not chosen: the attributes the chat already uses paint every family's ground, NieR Mode's included, with no colour table to keep in step.
+
+**What the owner decided** (in plain words):
+- 2026-10-09, relayed by the round's orchestrator thread: the chat should paint the viewer's stored look before its first frame, as PMConcept7 does, reading its own store and never writing it.
+
+**What the spec now says:**
+1. **The chat's first paint** (`Plans/FinalGUISpec.md#F3-612`), applying the boot paint of `Plans/FinalGUISpec.md#F3-468` to the chat's own page.
+2. **One first-paint reader per page** (`Plans/DRY_Rules.md#DR-054`): the reader reads the look owner's store and never writes it, and the chat's reader is dropped when the chat becomes part of PMConcept7's page.
+3. **Unchanged:** the look's owners, NieR Mode's contract and the chat under NieR Mode (`Plans/FinalGUISpec.md#F3-589`). No command, action id, setting, settings key or wiring entry is added, changed or removed, so `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/UI_Wiring_Rules.md` and both Wiring Matrix files are untouched.
+
+SourceRef: `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md`, SHA-256 `8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be` (the owner request as relayed); `/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md`, SHA-256 `edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7` (frame 1 before and after, per stored look).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/DRY_Rules.md#DR-054
+
 ### DL-162: The left rail takes the Polish design
 
 **Question:** Which of the left-rail concepts becomes the left rail?
@@ -12385,6 +12415,56 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-159 - The Chat Opens In The Look You Chose, From Its First Frame
+
+```yaml
+plan_unit_id: DL-159
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-159 records the owner request of 2026-10-09. The assistant chat, as a page of its own, paints the viewer's stored
+  look in its first frame, applying F3-468's boot paint: a reader reads the chat's own look store before the first
+  frame, never writes it and keeps no copy of the theme, and the chat's renderer and NieR Mode's engine still own the
+  look (F3-612). NieR Mode's boot log and reboot moment behave as before. One first-paint reader serves a page, and the
+  chat's reader is dropped when the chat is ported into PMConcept7 (DR-054). No command, action id, setting or wiring
+  entry changes.
+gui_related: true
+gui_classification_reason: Records an owner decision on what the assistant chat shows in its first frame.
+split_recommended: false
+depends_on: [DL-144]
+unblocks: [F3-612, DR-054]
+acceptance_criteria:
+  - "The chat's first frame is the stored look, and opening the chat writes no look setting (F3-612)."
+  - "No command, action id, setting or wiring entry is added, changed or retired by this decision."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-159"
+  - "first frame"
+negative_constraints:
+  - "Do not store a new key or a copy of the theme to paint the first frame."
+  - "Do not play the reboot moment on a reload."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-162 - The Left Rail Takes The Polish Design
