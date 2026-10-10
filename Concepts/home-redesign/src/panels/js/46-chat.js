@@ -132,16 +132,24 @@ chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma
 chatCol.installStrip = function () {
   var btn = h('button', { type: 'button', id: 'pmw-chat-strip', class: 'pmw-chat-strip', hidden: true, 'aria-label': 'Open the chat', 'data-pm-hover-label': 'Chat', 'data-pm-hover-detail': 'The window is narrow, so the chat waits here' }, [icon('chat', { size: 16 })]);
   overlay().appendChild(btn);
-  btn.addEventListener('click', function () { var ma = qs('.main-area'); if (ma) ma.setAttribute('data-pmw-chat-peek', ''); });
-  doc.addEventListener('pointerdown', function (e) {
+  function peeking() { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-peek')); }
+  function setPeek(on) {
     var ma = qs('.main-area');
-    if (!ma || !ma.hasAttribute('data-pmw-chat-peek')) return;
+    if (!ma) return;
+    if (on) ma.setAttribute('data-pmw-chat-peek', ''); else ma.removeAttribute('data-pmw-chat-peek');
+    place();
+  }
+  btn.addEventListener('click', function () { setPeek(true); });
+  doc.addEventListener('pointerdown', function (e) {
+    if (!peeking()) return;
     if (e.target.closest && e.target.closest('#chatPanel, #pmw-chat-strip, #pmw-overlay .pmw-menu')) return;
-    ma.removeAttribute('data-pmw-chat-peek');
+    setPeek(false);
   }, true);
-  doc.addEventListener('keydown', function (e) { var ma = qs('.main-area'); if (e.key === 'Escape' && ma && ma.hasAttribute('data-pmw-chat-peek')) ma.removeAttribute('data-pmw-chat-peek'); });
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && peeking()) setPeek(false); });
   function place() {
-    var strip = narrow.state.chatStrip && chatCol.isVisible() && !chatCol.isFloating();
+    // the button hides while the chat is open over the centre (it would sit on the chat's header); Escape or a click
+    // outside closes the chat and brings it back
+    var strip = narrow.state.chatStrip && chatCol.isVisible() && !chatCol.isFloating() && !peeking();
     btn.hidden = !strip;
     if (!strip) return;
     var c = chatPanel().getBoundingClientRect();
