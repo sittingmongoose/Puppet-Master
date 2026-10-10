@@ -858,7 +858,7 @@ Core rules:
 - Historical command and audit details show the frozen permission/runtime snapshot that actually governed execution, including policy/mode/project changes; current Settings state must not replace historical `/policy/mode/project` evidence.
 - Dedicated log and audit surfaces provide richer search plus `/filter/drill-down`, `/changes`, `/summaries`, `/transparency`, and `/logging/subagents` over event-log summaries and blobs, while in-thread transparency remains concise and user-facing.
 
-Amended 2026-10-09 (DL-181): a terminal is one session per tab in the universal panels (UCC-201). `cmd.terminal.detach`, `cmd.terminal.split_pane`, `cmd.terminal.move_pane` and `cmd.terminal.close_pane` are retired: a terminal tab is split with `cmd.workspace_layout.split` and a terminal spec, moved with `cmd.panel_tab.move` and closed with `cmd.panel_tab.close`; no tab pops out. The rows stay below for lineage.
+Amended 2026-10-09 (DL-181): a terminal is one session per tab in the universal panels (UCC-201). `cmd.terminal.detach`, `cmd.terminal.split_pane`, `cmd.terminal.move_pane` and `cmd.terminal.close_pane` are retired: a terminal tab is split with `cmd.workspace_layout.split` and a terminal spec, moved with `cmd.panel_tab.move` and closed with `cmd.panel_tab.close`; no tab pops out. The rows stay below for lineage. In the Rules list below, the pane step of the reuse precedence is gone (UCC-068 as amended: exact `terminal_session_id`, then the workflow-bound thread, tool or dev-session binding, then, for `Show Terminal` only, the most recently focused terminal tab), and no terminal is detached or reattached (UCC-201); the two rules that say otherwise stay for lineage.
 
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 | --- | --- | --- | --- |
@@ -897,8 +897,8 @@ Rules:
 - attach failure recovery differs for live process, ended process, and inline-only completed command
 - Retry identity follows the requested action: replacement execution creates a new session and invocation/card; explicit same-session rerun creates a new invocation/block/card in the bound session. Attachment recovery and movement reconciliation preserve the original invocation and never replay its command. Unavailable same-session continuity is disclosed instead of silently creating a replacement shell.
 - `Open in Terminal` and `Show Terminal` must focus the same live session
-- Reuse precedence is exact `terminal_session_id`, then explicit `/pane/session`, then workflow-bound `/thread/tool` or dev-session binding, then workspace-bound most-recent terminal context only for `Show Terminal`; commands that imply same-session continuity must not fall back to a fresh shell silently.
-- `/moving/detaching/reattaching` terminal UI is layout presentation over the same underlying session; focusing or moving a terminal must preserve `/tab/pane/session` identity unless the command explicitly asks for a new terminal.
+- Reuse precedence is exact `terminal_session_id`, then explicit `/pane/session`, then workflow-bound `/thread/tool` or dev-session binding, then workspace-bound most-recent terminal context only for `Show Terminal`; commands that imply same-session continuity must not fall back to a fresh shell silently. (Amended 2026-10-09, DL-181: no pane step; see the note above the table.)
+- `/moving/detaching/reattaching` terminal UI is layout presentation over the same underlying session; focusing or moving a terminal must preserve `/tab/pane/session` identity unless the command explicitly asks for a new terminal. (Amended 2026-10-09, DL-181: nothing is detached or reattached; moving a terminal tab keeps its session.)
 - Agent follow-up actions for shell-like work continue targeting the same bound session; if no appropriate binding exists, PM creates a clearly scoped new session, records the binding, and later follow-up actions use it. An exited-session or `/exited` session may be revealed for review, copy-output, or `/restart/replace` rather than being treated as a live shell.
 - Chat-owned terminal command cards distinguish compact-audit ownership from live-terminal ownership: `/assistant-chat-design.md` consumers may render bounded audit previews, but any live PTY intervention, takeover, or same-session reveal routes through `Open in Terminal` or `Show Terminal`.
 - Inline terminal cards keep `/collapse` and expand controls local to the chat preview; `/background` moves long-running work into terminal-owned session state without changing the owning `terminal_session_id`.
@@ -933,9 +933,11 @@ Rules:
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
+Amended 2026-10-09 (DL-181): closing a terminal tab is not a layout action. `cmd.panel_tab.close` ends the tab's session after the terminal kind's close check (the inline `two_step` row that names what is still running); moving, collapsing, maximizing or hiding a terminal tab never touches its session. `termination_policy` retires with `cmd.terminal.close_pane`; a session is ended without closing its tab by `cmd.terminal.terminate_session` or `cmd.terminal.kill_session` (UCC-072, UCC-201). The second rule below stays for lineage.
+
 Rules:
 - `cmd.terminal.clear_scrollback` preserves runtime identity
-- close commands are layout actions unless `termination_policy` requests runtime shutdown
+- close commands are layout actions unless `termination_policy` requests runtime shutdown (retired 2026-10-09 for terminal tabs; see the note above)
 - `cmd.dev.show_output`, `cmd.dev.show_problems`, and `cmd.dev.show_ports` reveal surfaces linked to the owning `dev_session_id`
 - Debug recovery or rerun commands for a linked `dev_session_id` degrade to `attention_required` when no canonical rerun command exists, the failure depends on local hardware `/device/manual` interaction, or the environment is too flaky to classify automatically.
 - Command catalog updates alone are not complete until corresponding `Plans/Wiring_Matrix.md` and `/Wiring_Matrix.md` rows bind stable command IDs to handlers, UI surfaces, and acceptance checks; otherwise terminal reveal and handoff coverage is a false positive.
@@ -5306,7 +5308,9 @@ plan_unit_id: UCC-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Terminal clear, close, and dev reveal commands preserve runtime identity and dev_session_id ownership; debug recovery/rerun degrades to attention_required when no canonical rerun exists or local/device/manual/flaky conditions prevent classification, and catalog updates require Wiring Matrix rows.
+canonical_text: >-
+  Terminal clear, close, and dev reveal commands preserve runtime identity and dev_session_id ownership; debug recovery/rerun degrades to attention_required when no canonical rerun exists or local/device/manual/flaky conditions prevent classification, and catalog updates require Wiring Matrix rows.
+  Amended 2026-10-09 (DL-181): closing a terminal tab is not a layout action. cmd.panel_tab.close ends the tab's session after the terminal kind's close check (the inline two_step row that names what is still running); moving, collapsing, maximizing or hiding a terminal tab never touches its session. termination_policy retires with cmd.terminal.close_pane; ending a session while keeping its tab is cmd.terminal.terminate_session or cmd.terminal.kill_session (UCC-201).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5315,9 +5319,11 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - UCC-072 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- "Closing a terminal tab with cmd.panel_tab.close ends its session only after the close check; moving, collapsing, maximizing or hiding it never ends or replaces the session (amended 2026-10-09, DL-181)."
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -5351,7 +5357,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): closing a terminal tab ends its session after its close check, and termination_policy retires with cmd.terminal.close_pane."
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -9007,9 +9014,9 @@ gui_classification_reason: Registers user-visible terminal reveal, terminate, ki
 depends_on: [UCC-067, UCC-068, DL-181]
 unblocks: []
 acceptance_criteria:
-  - Rule 4.2 terminal coverage (reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, focus-session) resolves to cataloged commands with production wiring rows.
+  - "Rule 4.2 terminal coverage resolves to cataloged commands with production wiring rows as UCC-201 keeps or replaces them (amended 2026-10-09, DL-181): reveal, show and rerun to cmd.terminal.reveal, cmd.terminal.show and cmd.terminal.rerun; split to cmd.workspace_layout.split with a terminal spec; close to cmd.panel_tab.close; clear to cmd.terminal.clear_scrollback (and the context menu Clear to cmd.terminal.clear); restart to cmd.terminal.restart_replace; terminate and kill to cmd.terminal.terminate_session and cmd.terminal.kill_session; focus-session to cmd.terminal.focus (cmd.terminal.focus_session is its alias, UCC-202). Detach and reattach are retired and have no production row."
   - terminate and kill remain distinct commands with distinct escalation semantics.
-  - reattach_section preserves tab, pane, and session identity across the layout change.
+  - "Retired 2026-10-09 (DL-181): the criterion that reattach_section preserves tab, pane and session identity across the layout change is lineage only; no terminal is detached or reattached (UCC-201), and moving a terminal tab with cmd.panel_tab.move never touches its session."
   - reveal focuses the existing bound session and never spawns a duplicate shell.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -9039,6 +9046,7 @@ negative_constraints:
   - Do not collapse terminate and kill into one command or imply a killed session remains live.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-181): reveal is panel-neutral; reattach_section retires."
+  - "Amended 2026-10-09 (DL-181): the rule 4.2 coverage criterion now resolves to UCC-201's kept rows and replacements, and the reattach_section criterion is retired to lineage."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md
