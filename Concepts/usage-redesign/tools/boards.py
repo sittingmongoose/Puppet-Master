@@ -526,6 +526,26 @@ B = {
     },
 }
 
+# The 'dashboard' default set (home/panels planner, 2026-10-10): a new dashboard tab (home-panels' per-instance boards)
+# starts from this small set, not from a Usage room. It is its own set id with its own version, so the Usage page's room
+# boards and their default_set_version (PMU_BOARDS.version) are untouched. Content: the usage summary (Overview's
+# Usage health tile: readings healthy, freshness, warnings, sync age, routes, policy) and one provider plate per provider
+# (the Accounts room's provider kind, roster order). Every card is placed at a preset of its kind: 'id@preset', the size
+# is the preset's at that class (validated). Compact plates show the active account; a provider's other accounts fold
+# to the plate's "N more" line (hover lists them, Details has everything). XL is written out here (the room boards
+# project it from L).
+SET_CLASSES = {'S': 12, 'M': 20, 'L': 24, 'XL': 30}
+SET_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
+              'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
+              'acct-gemini-direct', 'acct-cursor-cli']
+SETS = {
+    'dashboard': {
+        'version': 'pmu-dash-2026-10-10',
+        'boards': {cls: ['health@standard'] + [pid + '@compact' for pid in SET_PLATES] for cls in SET_CLASSES},
+    },
+}
+
+
 # WOW-SPEC-3 section 7 / WOW-TASKS-3 N3-2 (content, 2026-10-02): the explicit hero of each room per board class (one
 # widget id, or a list of ids that act as one hero). The engine marks it `data-hero` (E3-5) instead of guessing the largest
 # plate. XL is projected from L by the engine and uses L's hero. `--check` fails when a hero is not on the room's first
@@ -693,7 +713,10 @@ def build():
                 top, h, first = e['y'], e['h'], FIRST_ROWS[cls]
                 if top >= first or (min(top + h, first) - top) * 2 < h:
                     problems.append(f'{room}/{cls}: hero {hid} rows {top}-{top + h} is not on the first screen ({first} rows)')
-    placed_ids = {e['id'] for r in boards.values() for e in r['M']}
+    sets, set_problems = build_sets()
+    problems += set_problems
+    boards['_sets'] = sets
+    placed_ids = {e['id'] for r in ROOMS for e in boards[r]['M']}
     dynamic = re.compile(r'^(plan-|tok-|free-\d|alert-\d|cache-\d|tool-\d|signal-\d)')
     for wid in known_ids():
         if wid not in placed_ids and wid not in MIGRATE:
@@ -704,6 +727,40 @@ def build():
     return boards, problems
 
 
+def build_sets():
+    """The non-room default sets: each card at a preset of its kind (size from the preset at that class), packed with
+    the room boards' first-fit rule, no hole, every widget a known one at Glance."""
+    problems, out = [], {}
+    for sid, spec in SETS.items():
+        out[sid] = {'version': spec['version'], 'boards': {}}
+        for cls, cols in SET_CLASSES.items():
+            items, presets = [], {}
+            for tok in spec['boards'][cls]:
+                wid, _, pid = tok.partition('@')
+                if wid not in W:
+                    problems.append(f'set {sid}/{cls}: {wid} is not a widget')
+                    continue
+                kind = W[wid][0]
+                pr = next((p for p in KINDS[kind][4] if p['id'] == pid), None)
+                if pr is None:
+                    problems.append(f'set {sid}/{cls}: {wid} has no preset {pid!r} ({kind})')
+                    continue
+                if pr.get('from') and CLS_ORDER.index(cls) < CLS_ORDER.index(pr['from']):
+                    problems.append(f'set {sid}/{cls}: preset {pid} of {kind} is offered from {pr["from"]}')
+                if W[wid][1] != 'G':
+                    problems.append(f'set {sid}/{cls}: {wid} is not at Glance')
+                w, h = pr['w'][cls], pr['h']
+                if w > cols:
+                    problems.append(f'set {sid}/{cls}: {wid} {w} tracks is wider than the board')
+                items.append((wid, w, h))
+                presets[wid] = pid
+            placed = pack(items, cols)
+            if holes(placed, cols, 0):
+                problems.append(f'set {sid}/{cls}: {holes(placed, cols, 0)} empty cells inside the board')
+            out[sid]['boards'][cls] = [{'id': wid, 'x': x, 'y': y, 'w': w, 'h': h, 'preset': presets[wid]} for wid, x, y, w, h in placed]
+    return out, problems
+
+
 def js(boards) -> str:
     widgets = {wid: {'kind': k, 'level': LEVELS[lv], 'title': t, 'meta': m} for wid, (k, lv, t, m) in W.items()}
     kinds = {k: {'wMin': a, 'wMax': b, 'hMin': c, 'hMax': d, 'presets': p} for k, (a, b, c, d, p) in KINDS.items()}
@@ -712,11 +769,16 @@ def js(boards) -> str:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
     data = {'version': 'pmu-b2-boards-2026-10-10-presets', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED,
-            'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS}}
+            'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS},
+            # sets[set_id] = {version, boards: {class: [[widget_id, x, y, w, h, preset_id], ...]}} for S, M, L and XL
+            'sets': {sid: {'version': st['version'], 'boards': {cls: [[e['id'], e['x'], e['y'], e['w'], e['h'], e['preset']] for e in b]
+                                                                  for cls, b in st['boards'].items()}} for sid, st in boards['_sets'].items()}}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'
             '   Data only. rooms[room][class] = [[widget_id, x, y, w, h], ...] in tracks and rows (row pitch 30 px);\n'
-            '   classes S = 12 tracks, M = 20, L = 24 (XL = 30 is projected from L by the engine). */\n'
+            '   classes S = 12 tracks, M = 20, L = 24 (XL = 30 is projected from L by the engine).\n'
+            '   sets[set_id].boards[class] = [[widget_id, x, y, w, h, preset_id], ...]: default sets that are not a room (the\n'
+            '   dashboard tab), with their own version, written for S, M, L and XL. */\n'
             f'var PMU_BOARDS = {body};\n')
 
 

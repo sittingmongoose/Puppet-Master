@@ -25,11 +25,14 @@
     });
     return bits.join('<i class="pmu-dot"> · </i>');
   }
-  function amountLines(a, max, narrow) {
+  /* stack: the value goes under its label, its words wrapping across the plate (40-widgets.css .is-stack), where label and
+     value do not fit side by side (a 4-track plate on a 400 px board is 128 px: "$12.40 settled · limit not exposed"
+     broke letter by letter beside "Spend") */
+  function amountLines(a, max, narrow, stack) {
     return (a.amounts || []).slice(0, max == null ? 9 : max).map(function (x) {
       var vsA = x.vs && x.vs !== 'ok', label = narrow && /^Spend/.test(x.label) ? 'Spend' : x.label;
-      var val = vsA ? C.vs(x.vs, x.word) : '<b>' + esc(x.value) + '</b>' + (x.suffix ? (narrow ? '<em class="pmu-amtline2">' + esc(x.suffix) + '</em>' : ' <em>' + esc(x.suffix) + '</em>') : '');
-      return '<div class="pmu-amount pmu-amt"' + C.hover(x.label + (x.value ? ' ' + x.value : ''), [x.suffix, x.note].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(x.glyph || 'info')) + '<span>' + esc(label) + '</span><span class="pmu-amtv">' + val + '</span></div>' +
+      var val = vsA ? C.vs(x.vs, x.word) : '<b>' + esc(x.value) + '</b>' + (x.suffix ? (narrow && !stack ? '<em class="pmu-amtline2">' + esc(x.suffix) + '</em>' : ' <em>' + esc(x.suffix) + '</em>') : '');
+      return '<div class="pmu-amount pmu-amt' + (stack ? ' is-stack' : '') + '"' + C.hover(x.label + (x.value ? ' ' + x.value : ''), [x.suffix, x.note].filter(Boolean).join(' · ')) + '>' + (vsA ? '<span></span>' : C.glyph(x.glyph || 'info')) + '<span>' + esc(label) + '</span><span class="pmu-amtv">' + val + '</span></div>' +
 '';
     }).join('');
   }
@@ -556,8 +559,16 @@
       a = Object.assign({}, a, { amounts: a.amounts.map(function (x) { return x.label === spend.label ? spend : x; }) });
     }
     wins.forEach(function (w, i) { blocks.push({ h: mh, html: '<div class="pmu-accmeter" data-win="' + esc(w.key) + '"' + C.shareAttr('win:' + a.key + '/' + w.key) + '></div>', win: w }); });
-    if (!p.windows.length && (a.noWindowsWord || !a.amounts.length)) blocks.push({ h: 58, html: '<div class="pmu-accmeter is-na"><div class="pmu-natrack"></div>' + C.vs('not_exposed', a.noWindowsWord ? a.noWindowsWord.charAt(0).toUpperCase() + a.noWindowsWord.slice(1) : 'Quota not exposed') + '</div>' });
-    a.amounts.forEach(function (x) { var nar = ctx.tier.bw < 260; blocks.push({ h: x.suffix && nar ? 50 : 32, html: amountLines({ amounts: [x] }, 1, nar) }); });
+    /* the word wraps under its glyph on a narrow plate (50-accounts.css), 17 px a line more */
+    var naWord = a.noWindowsWord ? a.noWindowsWord.charAt(0).toUpperCase() + a.noWindowsWord.slice(1) : 'Quota not exposed';
+    if (!p.windows.length && (a.noWindowsWord || !a.amounts.length)) blocks.push({ h: 58 + 17 * (Math.min(3, C.wrapLines(naWord, ctx.tier.bw - 18, 13, 520)) - 1), html: '<div class="pmu-accmeter is-na"><div class="pmu-natrack"></div>' + C.vs('not_exposed', naWord) + '</div>' });
+    a.amounts.forEach(function (x) {
+      var nar = ctx.tier.bw < 260, vsA = x.vs && x.vs !== 'ok', label = nar && /^Spend/.test(x.label) ? 'Spend' : x.label;
+      var valT = vsA ? String(x.word || '') : String(x.value || '') + (x.suffix ? ' ' + x.suffix : '');
+      /* the glyph column (18) and the label beside the value's first word ("$12.40"), 10 px between */
+      var st = nar && 18 + C.wrapW(label, 13) + 10 + C.wrapW(vsA ? valT.split(' ')[0] : String(x.value || ''), 13, 600) + (vsA ? 18 : 0) > ctx.tier.bw;
+      blocks.push({ h: st ? 26 + 17 * Math.min(4, C.wrapLines(valT, ctx.tier.bw - 18, 12.5, 500)) : x.suffix && nar ? 50 : 32, html: amountLines({ amounts: [x] }, 1, nar, st) });
+    });
     /* the plate's facts in priority order, each hidden whole when it does not fit (a tall plate shows them all instead
        of an empty band); a fact's height follows its wrapped label and value. A wide plate (a 10 x 5 strip) lays them
        out in columns under its meters (C.factLayout) instead of one per line (round 3: OpenCode Go at 1920 showed no fact
@@ -592,8 +603,12 @@
     if (res.hidden.length && !headP && !wideFacts) res = C.stack(blocks, bh - footH - 8 - 30);
     var hiddenWins = res.hidden.filter(function (b) { return b.win; }).length, hiddenN = res.hidden.length;
     body._pmuWinHidden = hiddenWins;
-    var foot = '<div class="pmu-accsfoot"><span class="pmu-sampled' + (a.fresh.stale ? ' is-stale' : '') + '">' + (a.fresh.stale ? C.glyph('clockCircle') : '') + esc(a.fresh.ageS === null ? 'no reading yet' : 'sampled ' + a.ageText.replace(/^cached /, '')) + '</span>' +
-      (ctx.tier.bw < 200 && actText(a).btn ? '' : '<span class="pmu-host">' + esc(a.host || '') + '</span>') + (actText(a).btn ? useBtn(a, false) : '') + '</div>';
+    /* the host gives way where it does not fit beside the sampled words on one line (a 128 px plate printed "Ubuntu" over
+       "sampled 2h ago"); it moves into the sampled words' hover tag */
+    var sampT = a.fresh.ageS === null ? 'no reading yet' : 'sampled ' + a.ageText.replace(/^cached /, '');
+    var hostOk = !!a.host && !(ctx.tier.bw < 200 && actText(a).btn) && (a.fresh.stale ? 16 : 0) + C.wrapW(sampT, 12) + 8 + C.wrapW(a.host, 12) <= ctx.tier.bw;
+    var foot = '<div class="pmu-accsfoot"><span class="pmu-sampled' + (a.fresh.stale ? ' is-stale' : '') + '"' + (a.host && !hostOk ? C.hover(sampT, 'on ' + a.host) : '') + '>' + (a.fresh.stale ? C.glyph('clockCircle') : '') + esc(sampT) + '</span>' +
+      (ctx.tier.bw < 200 && actText(a).btn ? '' : '<span class="pmu-host">' + (hostOk ? esc(a.host) : '') + '</span>') + (actText(a).btn ? useBtn(a, false) : '') + '</div>';
     /* the windows and facts the plate has no room for: listed in the "N more" line's hover tag, or the plate's (CONTENT-3) */
     var oneFold = res.hidden.map(function (b) { return b.win ? b.win.label + ' ' + (b.win.pct === null ? PMU.roster.vsWord(b.win) : C.fmt(b.win.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(b.win).text) : String(b.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(); }).filter(Boolean);
     C.headMore(ctx, body, headP ? oneFold : []);

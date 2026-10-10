@@ -322,14 +322,19 @@
         body.innerHTML = '<div class="pmu-limit is-h0"' + C.foldHover(all.length ? all.map(foldLine) : b && b.pct !== null ? [b.label + ' ' + C.fmt(b.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(b).text] : []) + '><span class="pmu-limitinline">' + parts.map(function (x) { return x.h; }).join(' · ') + '</span></div>';
         return;
       }
-      if (wins.length * mh + footH > bh + 2) footH = 0;   /* every window stays visible before the foot does (R-PLAN-01) */
-      var meterRoom = Math.max(1, C.fit(bh - footH, mh));
+      /* a missing reading's word wraps beside its window code in a narrow meter (30-charts.css), 15 px a line more ("Limit
+         not exposed" ran 14 px past a 157 px plate on a 487 px board) */
+      var mhOf = function (w) { return w.pct === null ? mh + 15 * (Math.min(3, C.wrapLines(PMU.roster.vsWord(w), ctx.tier.bw - 48, 13, 520)) - 1) : mh; };
+      var sumMh = function (ws) { return ws.reduce(function (s, w) { return s + mhOf(w); }, 0); };
+      if (sumMh(wins) + footH > bh + 2) footH = 0;   /* every window stays visible before the foot does (R-PLAN-01) */
+      var meterRoom = 0; while (meterRoom < wins.length && sumMh(wins.slice(0, meterRoom + 1)) <= bh - footH + 0.5) meterRoom++;
+      meterRoom = Math.max(1, meterRoom);
       var shownWins = wins.slice(0, meterRoom), hiddenWins = wins.length - shownWins.length;
       var meters = '<div class="pmu-limitmeters">' + shownWins.map(function (w, i) { return '<div class="pmu-limitmeter" data-i="' + i + '"' + (m.account ? C.shareAttr('win:' + m.account.key + '/' + w.key) : '') + '></div>'; }).join('') +
         (hiddenWins ? '<div class="pmu-more"' + C.foldHover(wins.slice(shownWins.length).map(function (w) { return w.label + ' ' + (w.pct === null ? PMU.roster.vsWord(w) : C.fmt(w.pct, 'pct') + ' used · ' + PMU.fmt.resetLine(w).text); })) + '>' + esc(hiddenWins + ' more ' + (hiddenWins === 1 ? 'window' : 'windows') + ' at a larger size') + '</div>' : '') +
         (!wins.length ? '<div class="pmu-limitnone">' + C.vs('not_exposed', 'Quota not exposed') + '</div>' : '') + '</div>';
       /* the meters block: 44 px meters 8 px apart (measured), its own "N more windows" line (21 + 4) */
-      var used = Math.max(0, shownWins.length * mh - 8) + (hiddenWins ? 25 : 0) + (wins.length ? 0 : 30);
+      var used = Math.max(0, sumMh(shownWins) - 8) + (hiddenWins ? 25 : 0) + (wins.length ? 0 : 30 + 17 * (Math.min(3, C.wrapLines('Quota not exposed', ctx.tier.bw - 18, 12.5, 520)) - 1));
       var lines = (m.amounts || []).map(function (a) {
         var nar = ctx.tier.bw < 260, label = nar && /^Spend/.test(a.label) ? 'Spend' : a.label, vsA = a.vs && a.vs !== 'ok';
         /* a state word that does not fit beside its label stacks under it (OWNER-REVIEW 4: "Chat (vs) disabled by" was

@@ -248,6 +248,11 @@ html[data-theme="glass-light"] #panel-usage .pmu-readout { background: #FBFCFE; 
 #panel-usage .pmu-meter[data-tone="over"] .pmu-meterval { color: var(--pmu-ink-over); }
 #panel-usage .pmu-meterna { font-size: 13px; font-weight: 520; color: var(--pmu-ink-3); }
 #panel-usage .pmu-meterna .pmu-vs { font-size: 13px; }
+/* a missing reading's word wraps inside a narrow meter instead of running past its card ("Limit not exposed" beside "MO"
+   on a 157 px plate); the plates count the extra line (52-w-plans.js limit) */
+#panel-usage .pmu-meterna { min-width: 0; }
+#panel-usage .pmu-meter .pmu-meterna .pmu-vs { white-space: normal; align-items: flex-start; }
+#panel-usage .pmu-meter .pmu-meterna .pmu-vs .pmu-ico { margin-top: 1px; }
 #panel-usage .pmu-metertrack { position: relative; height: var(--mt); margin-top: 5px; border-radius: var(--mr); background-color: var(--pmu-track);
   transition: background-color 220ms cubic-bezier(.2,.8,.2,1), transform 220ms cubic-bezier(.2,.8,.2,1); }
 #panel-usage .pmu-meter[data-size="k"] .pmu-metertrack { margin-top: 5px; }

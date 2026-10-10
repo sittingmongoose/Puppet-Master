@@ -641,7 +641,10 @@
          when neither side has room they go to the hover only (the marker stays) */
       var labOf = function (m) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[m.w.key] || m.w.short.slice(0, 3).toUpperCase()) + ' ' + C.fmt(m.w.pct, m.w.pct < 10 && m.w.pct % 1 ? 'pct1' : 'pct') + (m.at && m.at - now > span ? ' · ' + F.date(m.at) : ''); };
       var pendLab = function (w) { return ({ fiveHour: '5H', weekly: 'WK', monthly: 'MO' }[w.key] || w.short.slice(0, 3).toUpperCase()) + ' pending'; };
-      var labPx = function (t) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(t, 11, true) : t.length * 6.6) + 22; };
+      /* a marker's drawn width: its words as laid out (textW's mono reading is 0.9 of the canvas width, and the em adds
+         .03em a letter), its 6 px of em padding and the 11 px glyph with its 5 px gap. The 0.9 reading let a 487 px
+         board print "WK 44%" into "MO 31% · Nov 1" (lane c-presets GPU bprobe, S at a 41 px pitch) */
+      var labPx = function (t) { return (PMU.charts && PMU.charts.textW ? PMU.charts.textW(t, 11, true) / 0.9 : t.length * 6.6) + t.length * 0.33 + 22; };
       lanes.forEach(function (ln) {
         /* a pending window (reset passed, no new reading) sits at NOW and its words come first */
         var items = ln.pend.map(function (w) { return { pend: w, x: 0, w: labPx(pendLab(w)), beyond: false, m: {} }; }).concat(ln.ms.filter(function (m) { return m.at; }).map(function (m) {
