@@ -572,6 +572,8 @@ Rules:
 - hand off to `assistant`, `general-purpose`, or a specialty Persona when the task becomes real implementation/build work.
 - PM documentation coverage is a product dependency for this Persona; missing feature/help coverage must be surfaced instead of guessed.
 
+Amended 2026-10-09 (DL-181): `teacher` also explains commands and terminal output in the chat when the user asks. Jared, 2026-10-09: "The explain what commands do can be part of the teacher persona that explains puppet masters systems in chat." This replaces the terminal's own "Explain What Commands Do" setting, which retires with `code.terminal.explanations`; the terminal itself has no AI feature (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). No new setting is added. Teacher reads only what the user shares with the chat (a pasted command, or a terminal selection or output the user references) or what the terminal's accessible plain-text buffer exposes through the agent read rules (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`: rendered text with a read state, never raw bytes or images), under the user's existing permissions. It never reads a terminal on its own initiative (scrollback is not model context, `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-133`) and never types into a terminal; when the user wants a command run or fixed, it hands off as P-055 says. How the chat shows this is `Plans/assistant-chat-design.md#ACD-500`.
+
 ### 11.9 `overseer`
 
 `overseer` is a governance/conductor Persona, not the scheduler personified and not a normal node-worker implementation Persona. It supervises package/seam execution, selects or recommends workers, demands evidence, judges readiness, and prevents incomplete or weakly integrated work from being treated as done. It may express delegation-first, verification-first, wiring/completeness-sensitive, integration-aware, audit-minded behavior, and it may select or spawn specialist workers where runtime policy permits. It must not claim canonical ownership of dispatch, readiness, blocked state, retry budgets, wakeups, or hard Orchestrator mechanics.
@@ -2484,18 +2486,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  teacher is a warm, highly explanatory, user-facing help Persona for teaching Puppet Master usage, settings, workflows, modes, Personas, Orchestrator behavior, adjacent developer tooling, and concrete steps, while surfacing missing product documentation instead of guessing.
+  teacher is a warm, highly explanatory, user-facing help Persona for teaching Puppet Master usage, settings,
+  workflows, modes, Personas, Orchestrator behavior, adjacent developer tooling, and concrete steps, while surfacing
+  missing product documentation instead of guessing.
+  Amended 2026-10-09 (DL-181): teacher also explains commands and terminal output in the chat when the user asks, in
+  place of the terminal's retired Explain What Commands Do setting (code.terminal.explanations), with no new setting; it reads only what the user
+  shares or what the terminal's accessible buffer exposes through SMPFS-182's agent reads under existing permissions,
+  never reads a terminal on its own initiative and never types into one.
 gui_related: true
 gui_classification_reason: This unit defines user-facing help behavior tied to Puppet Master's UI, settings, and workflows.
 split_recommended: false
 depends_on:
   - P-031
   - P-032
+  - DL-181
 unblocks: []
 acceptance_criteria:
   - teacher remains user-facing and not a subagent Persona.
   - teaching anchors in Puppet Master's actual UI, settings, flows, capabilities, and terminology.
   - missing feature/help coverage is surfaced rather than guessed.
+  - "Amended 2026-10-09 (DL-181): asked to explain a command or terminal output, teacher explains it in the chat from what the user shared or from the terminal's accessible buffer under existing permissions; it adds no terminal control, no setting and no unprompted terminal read."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2516,8 +2526,11 @@ preserved_exact_tokens:
   - "workflows"
   - "Orchestrator behavior"
   - "PM documentation coverage"
+  - "Explain What Commands Do"
 negative_constraints:
   - "teacher must surface missing feature/help coverage instead of guessing."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): teacher takes over explaining commands from the terminal's retired Explain What Commands Do setting, in the chat only."
 owner_hints:
   - Plans/Personas.md
 ```
