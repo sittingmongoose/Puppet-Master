@@ -176,7 +176,9 @@
          lists them (CONTENT-3: "Forecast used" was nowhere on the Overview card) */
       var factsOk = C.h(ctx, 'h3') && m.facts && ctx.tier.bw >= 300;
       if (!factsOk && m.facts && m.facts.length) hero = hero.replace(/<\/div>$/, caveat(cavText(m, false)) + '</div>');
-      var mixOk = m.mix && C.w(ctx, 'xl') && C.h(ctx, 'h3');
+      /* (lane c-presets, agent 5) the plan-versus-metered bar from 420 px of body, not the xl tier (520): the Expanded
+         preset is 516-542 px wide in Friendly, Glass and Retro at 1440, and there it showed no bar at all */
+      var mixOk = m.mix && ctx.tier.bw >= 420 && C.h(ctx, 'h3');
       /* the one-line hero is 29 px plus a 6 px gap (measured); compact heroes wrap to two lines */
       var reserve = (compact ? 56 : 40) + (factsOk ? 30 : 0) + (mixOk ? 40 : 0);
       /* the plot takes whatever the hero leaves (the hero wraps to a second line at some widths), so no band stays empty */
