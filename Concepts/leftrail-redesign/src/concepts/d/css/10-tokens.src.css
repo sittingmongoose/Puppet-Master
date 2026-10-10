@@ -50,6 +50,7 @@
   --d-pend: var(--accent-blue);
   --d-idle: var(--text-muted);
   --d-conflict: var(--accent-magenta, var(--graph-failed));
+  --d-orange: var(--accent-orange, var(--d-warn));   /* orphaned (Source), errored (Testing) */
   /* motion: Basic is crisp */
   --d-t1: 120ms;
   --d-t2: 200ms;
@@ -88,9 +89,18 @@
 §R[data-theme="basic-light"], §R[data-theme="friendly-light"] { --d-shelf-fill: 6%; --d-shelf-head: 11%; --d-shelf-line: 26%; --d-on-accent: #fff; }
 §R[data-theme="retro-light"] { --d-on-accent: #fff; }
 §R[data-theme="glass-light"] { --d-on-accent: #fff; }
-/* NieR Mode paints over Basic: square, ink and paper, hairlines; motion is a hard ink wipe */
+/* Glass's surfaces are about half transparent (and a blur does not take inside the frosted rail), so its chrome plates
+   take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
+§R[data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
+§R[data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
+/* Glass light's failure red (#C0566B) read 1.6:1 where its translucent shelves sit over the backdrop's mid tones
+   (measured rgb 146,164,175 and 182,145,127 behind the words) and 3.9:1 on its pale plates. Half way to black it reads
+   3.9:1 to 4.3:1 over the darkest backdrop and 9.9:1 on the plates, and stays a red; a full 4.5:1 there needs a colour
+   too close to the body text to read as a failure */
+§R[data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 50%, #000); }
+/* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
+   hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 §R[data-o55-nier="on"] {
-  --d-R: 0px; --d-r: 0px;
   --d-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .26);
   --d-line-2: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .44);
   --d-hover: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .10);
@@ -98,7 +108,11 @@
   --d-ctl-bg: transparent;
   --d-ctl-line: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .42);
   --d-on-accent: var(--o55-nier-on-ink, var(--surface));
+  /* states are ink, as everywhere else in NieR (the palette's gold running and olive warning tones read as a second
+     accent): the glyph's shape tells them apart; only a failure (and a conflict) keeps NieR's red */
   --d-ok: var(--o55-nier-ink); --d-live: var(--o55-nier-ink); --d-idle: rgba(var(--o55-nier-ink-rgb, 33, 31, 27), .55);
+  --d-run: var(--o55-nier-ink); --d-warn: var(--o55-nier-ink); --d-orange: var(--o55-nier-ink);
   --d-ease: cubic-bezier(.7, 0, .2, 1);
   --d-spring: cubic-bezier(.7, 0, .2, 1);
 }
+§R[data-o55-nier-parts~="square"] { --d-R: 0px; --d-r: 0px; }

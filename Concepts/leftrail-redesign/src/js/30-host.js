@@ -1,12 +1,17 @@
 /* PMR host: mounts the chosen concept into the shell without disturbing the shell's own rail.
 
-   The original band stays: #activityBar, #sidePanelSlot and all nine .side-panel-view panels. For each redesigned panel
-   the host adds a sibling <section class="pmr-view" data-pmr-for="panel-files"> at the end of #sidePanelSlot. CSS
-   (src/css/20-host.css) hides the original panel and shows its pmr-view whenever the original is .active, so every
-   existing way of switching panels (icon click, Ctrl+1..9, cmd.panel.switch, the tour) keeps working unchanged.
-   html[data-rail-concept="a|b|c|d|current"] scopes each concept's CSS; "current" shows today's rail untouched. A skin
-   concept (D, Polish) keeps the shell's panels and restyles them under html[data-rail-skin]: register with skin: true and
-   mount(ctx) -> { show(info), destroy() } instead of render().
+   Two pages carry it. The published page (PMConcept7.html) holds only concept D, Polish: a skin that keeps the shell's
+   panels and restyles them under html[data-rail-skin="d"] (written into the <html> tag at build time, so D's look is
+   there from the first frame). The review copy (LeftRailPMConcept7.html) adds the view concepts A, B and C, their
+   fixture (PMR.data) and the switcher.
+   The original band stays: #activityBar, #sidePanelSlot and all nine .side-panel-view panels. For a view concept the
+   host adds, on first use, a sibling <section class="pmr-view" data-pmr-for="panel-files"> per redesigned panel at the
+   end of #sidePanelSlot; CSS (src/css/25-review.css) hides the original panel and shows its pmr-view whenever the
+   original is .active, so every existing way of switching panels (icon click, Ctrl+1..9, cmd.panel.switch, the tour)
+   keeps working unchanged. A skin concept creates no views.
+   html[data-rail-concept="a|b|c|d|current"] scopes each concept's CSS; "current" (labelled Original) is the shell's own
+   rail with every concept unmounted. A skin concept registers with skin: true and mount(ctx) -> { show(info),
+   destroy() } instead of render().
 
    A concept registers itself:
      PMR.concepts.register('a', {
@@ -21,12 +26,21 @@ const CONCEPTS = new Map();
 const HOST = { views: {}, inst: {}, bar: null, concept: null, observers: [] };
 const ORDER = ['a', 'b', 'c', 'd', 'current'];
 
+/* the panels the view concepts redraw, in rail order, and their original .side-panel-view ids (a skin is told about
+   all nine rail panels: notifyShown) */
+PMR.PANELS = [
+  { id: 'files', target: 'panel-files' },
+  { id: 'source', target: 'panel-source' },
+  { id: 'docker', target: 'panel-docker' },
+];
+PMR.panelFor = target => PMR.PANELS.find(p => p.target === target || p.id === target) || null;
+
 PMR.concepts = {
   register(id, def) { CONCEPTS.set(id, Object.assign({ id }, def)); },
   get: id => CONCEPTS.get(id) || null,
   list() {
     const out = ORDER.filter(id => id === 'current' || CONCEPTS.has(id)).map(id => (id === 'current'
-      ? { id, label: 'Current', blurb: "Today's rail, unchanged" }
+      ? { id, label: 'Original', blurb: 'The rail before Polish' }
       : { id, label: CONCEPTS.get(id).label, blurb: CONCEPTS.get(id).blurb || '' }));
     return out;
   },
@@ -50,7 +64,7 @@ function ensureViews() {
   PMR.PANELS.forEach(p => {
     let v = HOST.views[p.id];
     if (!v || !v.isConnected) {
-      v = PMR.h('section', { class: 'pmr-view', id: 'pmr-view-' + p.id, 'data-pmr-for': p.target, 'aria-label': ((PMR.data[p.id] || {}).title) || p.id });
+      v = PMR.h('section', { class: 'pmr-view', id: 'pmr-view-' + p.id, 'data-pmr-for': p.target, 'aria-label': ((PMR.data && PMR.data[p.id]) || {}).title || p.id });
       s.appendChild(v);
       HOST.views[p.id] = v;
     }
@@ -80,9 +94,11 @@ function mountConcept(id) {
     if (def.bar && barEl) { try { HOST.bar = def.bar(barEl, { concept: id, activeTarget }) || null; } catch (e) { console.error('[pm-rail] concept ' + id + ' bar', e); } }
     return;
   }
+  /* a view concept draws into the host's sections, made on first use (review copy only) */
+  if (!ensureViews()) return;
   PMR.PANELS.forEach(p => {
     const v = HOST.views[p.id];
-    const panel = PMR.data[p.id];
+    const panel = PMR.data ? PMR.data[p.id] : null;
     v.classList.add('pmr-view-' + id);
     v.setAttribute('data-concept', id);
     if (!panel) { v.appendChild(PMR.h('div.pmr-missing', { text: 'This panel has no data yet.' })); return; }
@@ -104,16 +120,18 @@ function setConcept(id, opts) {
   opts = opts || {};
   if (!ORDER.includes(id) || (id !== 'current' && !CONCEPTS.has(id))) id = 'current';
   if (id === HOST.concept && !opts.force) return;
-  if (!ensureViews()) return;
   const s = slot();
+  if (!s) return;
   const swap = () => {
     teardown();
     HOST.concept = id;
-    document.documentElement.setAttribute('data-rail-concept', id);
+    /* the root attributes are written only when they change: the published page carries data-rail-concept="d" and
+       data-rail-skin="d" in its <html> tag, and re-setting an attribute on <html> restyles the whole document */
+    const root = document.documentElement;
+    if (root.getAttribute('data-rail-concept') !== id) root.setAttribute('data-rail-concept', id);
     const skinDef = CONCEPTS.get(id);
-    if (skinDef && skinDef.skin) document.documentElement.setAttribute('data-rail-skin', id);
-    else document.documentElement.removeAttribute('data-rail-skin');
-    try { localStorage.setItem('pmr.concept.v2', id); } catch (e) { /* storage off */ }
+    if (skinDef && skinDef.skin) { if (root.getAttribute('data-rail-skin') !== id) root.setAttribute('data-rail-skin', id); }
+    else if (root.hasAttribute('data-rail-skin')) root.removeAttribute('data-rail-skin');
     if (id !== 'current') mountConcept(id);
     const t = activeTarget();
     if (t) notifyShown(t, { reason: 'concept' });
@@ -129,11 +147,12 @@ function setConcept(id, opts) {
 function notifyShown(target, info) {
   const p = PMR.panelFor(target);
   if (HOST.bar && HOST.bar.panel) { try { HOST.bar.panel(target, info); } catch (e) { console.error('[pm-rail] bar panel', e); } }
+  /* a skin restyles every rail panel, not only the three the view concepts redraw */
+  const skin = HOST.inst.skin;
+  if (skin && skin.show) { try { skin.show(Object.assign({ target, panelId: p ? p.id : target }, info)); } catch (e) { console.error('[pm-rail] skin show', target, e); } }
   if (!p) return;
   const inst = HOST.inst[p.id];
   if (inst && inst.show) { try { inst.show(Object.assign({ target }, info)); } catch (e) { console.error('[pm-rail] show', p.id, e); } }
-  const skin = HOST.inst.skin;
-  if (skin && skin.show) { try { skin.show(Object.assign({ target, panelId: p.id }, info)); } catch (e) { console.error('[pm-rail] skin show', p.id, e); } }
 }
 
 /* panel changes: the shell flips .active on its panels and .hidden on the slot; watch both */
