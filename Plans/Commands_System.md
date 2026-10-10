@@ -7633,7 +7633,7 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/Commands_System.md#CS-060, ContractName:Plans/Commands_System.md#CDRY-006, ContractName:Plans/Contracts_V0.md#CV-361
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/UI_Command_Catalog.md#UCC-201, ContractName:Plans/Commands_System.md#CS-060, ContractName:Plans/Contracts_V0.md#CV-361
 
 ### CS-101 - Aliases And Retired Ids Of The Panel And Terminal Redesign
 
