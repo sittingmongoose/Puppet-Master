@@ -6736,7 +6736,8 @@
     "ANSI palette",
     "contrast",
     "follow theme",
-    "Match App Theme"
+    "Match App Theme",
+    "Follow theme"
    ],
    "related_features": [
     "editor",
@@ -6746,10 +6747,10 @@
   {
    "id": "code.terminal.font-family",
    "label": "Terminal Font",
-   "desc": "The terminal's typeface. Follow theme uses JetBrains Mono in every look except Retro, which uses VT323. Departure Mono, Sixtyfour and Sixtyfour Raster are Retro-style faces, and Atkinson Hyperlegible Mono is made for easy reading. Every face other than System monospace, which uses the computer's own monospace face, is built in; applies at once.",
+   "desc": "The terminal's typeface. Follow look uses JetBrains Mono in every look except Retro, which uses VT323. Departure Mono, Sixtyfour and Sixtyfour Raster are Retro-style faces, and Atkinson Hyperlegible Mono is made for easy reading. Every face other than System monospace, which uses the computer's own monospace face, is built in; applies at once.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "JetBrains Mono",
     "Atkinson Hyperlegible Mono",
     "VT323",
@@ -6758,7 +6759,7 @@
     "Sixtyfour Raster",
     "System monospace"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -6770,7 +6771,9 @@
     "terminal font family",
     "JetBrains Mono",
     "VT323",
-    "retro font"
+    "retro font",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "editor",
@@ -7326,7 +7329,7 @@
   {
    "id": "code.terminal.scheme-pair",
    "label": "Switch With Light and Dark",
-   "desc": "When the app changes between light and dark, a scheme you picked swaps for its family's other version, such as Catppuccin Latte and Mocha. Follow theme always does.",
+   "desc": "When the app changes between light and dark, a scheme you picked swaps for its family's other version, such as Catppuccin Latte and Mocha. Follow look always does.",
    "type": "toggle",
    "default": true,
    "scope": [
@@ -7337,7 +7340,9 @@
    "search": [
     "light and dark",
     "scheme pair",
-    "auto dark"
+    "auto dark",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7489,15 +7494,15 @@
   {
    "id": "code.terminal.cursor-shape",
    "label": "Cursor Shape",
-   "desc": "The shape of the terminal's cursor. Follow theme uses the look's own shape.",
+   "desc": "The shape of the terminal's cursor. Follow look uses the look's own shape.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "Block",
     "Bar",
     "Underline"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7507,7 +7512,9 @@
     "cursor",
     "caret",
     "block cursor",
-    "bar cursor"
+    "bar cursor",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7535,17 +7542,17 @@
   {
    "id": "code.terminal.cursor-trail",
    "label": "Cursor Trail",
-   "desc": "A short trail when the cursor jumps. Follow theme uses the look's own trail; there is none under Reduce Animations.",
+   "desc": "A short trail when the cursor jumps. Follow look uses the look's own trail; there is none under Reduce Animations.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "Off",
     "Soft",
     "Glow",
     "Phosphor",
     "Trace"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7553,7 +7560,9 @@
    "tier": "simple",
    "search": [
     "cursor trail",
-    "cursor animation"
+    "cursor animation",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7562,16 +7571,16 @@
   {
    "id": "code.terminal.background",
    "label": "Terminal Background",
-   "desc": "What is drawn behind the text: Follow theme uses the look's own, Theme surface the panel's surface, or a Solid color, a Gradient or an Image you choose below.",
+   "desc": "What is drawn behind the text: Follow look uses the look's own, Theme surface the panel's surface, or a Solid color, a Gradient or an Image you choose below.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "Theme surface",
     "Solid color",
     "Gradient",
     "Image"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7580,7 +7589,9 @@
    "search": [
     "background",
     "wallpaper",
-    "backdrop"
+    "backdrop",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7710,9 +7721,9 @@
   {
    "id": "code.terminal.opacity",
    "label": "Terminal Opacity (Glass)",
-   "desc": "Glass themes only: how much of the app's glass shows through the terminal. Follow theme draws the terminal at 70 % in light and 74 % in dark; the terminal adds no blur of its own.",
+   "desc": "Glass themes only: how much of the app's glass shows through the terminal. Follow look draws the terminal at 70 % in light and 74 % in dark; the terminal adds no blur of its own.",
    "type": "slider",
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7721,7 +7732,9 @@
    "search": [
     "opacity",
     "transparency",
-    "glass"
+    "glass",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7750,14 +7763,14 @@
   {
    "id": "code.terminal.effects",
    "label": "Terminal Effects",
-   "desc": "Follow theme uses the look's own effects, such as Retro's scanlines and glow in dark. Off draws none. Custom lets you choose them below. Effects run only in the terminal you are in, stop when it is idle, and nothing moves under Reduce Animations or on battery saver.",
+   "desc": "Follow look uses the look's own effects, such as Retro's scanlines and glow in dark. Off draws none. Custom lets you choose them below. Effects run only in the terminal you are in, stop when it is idle, and nothing moves under Reduce Animations or on battery saver.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "Off",
     "Custom"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7769,7 +7782,9 @@
     "retro",
     "spectacle",
     "glow",
-    "scanlines"
+    "scanlines",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7781,11 +7796,11 @@
    "desc": "Thin horizontal lines over the text, like an old monitor.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "On",
     "Off"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7793,7 +7808,9 @@
    "tier": "simple",
    "search": [
     "scanlines",
-    "crt"
+    "crt",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7823,11 +7840,11 @@
    "desc": "A soft glow around the text in the scheme's glow color.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "On",
     "Off"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7836,7 +7853,9 @@
    "search": [
     "glow",
     "phosphor",
-    "bloom"
+    "bloom",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -7977,14 +7996,14 @@
   {
    "id": "code.terminal.inactive-dim",
    "label": "Dim Terminals I'm Not In",
-   "desc": "Dims terminals other than the one you are typing in. Follow theme uses the look's own dimming.",
+   "desc": "Dims terminals other than the one you are typing in. Follow look uses the look's own dimming.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "On",
     "Off"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -7993,7 +8012,9 @@
    "search": [
     "inactive dimming",
     "unfocused",
-    "dim"
+    "dim",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -8002,14 +8023,14 @@
   {
    "id": "code.terminal.smooth-scroll",
    "label": "Smooth Scrolling",
-   "desc": "Glides when you scroll instead of jumping a line at a time. Follow theme uses the look's own; it never glides under Reduce Animations.",
+   "desc": "Glides when you scroll instead of jumping a line at a time. Follow look uses the look's own; it never glides under Reduce Animations.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "On",
     "Off"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -8017,7 +8038,9 @@
    "tier": "simple",
    "search": [
     "smooth scrolling",
-    "scroll animation"
+    "scroll animation",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -8026,14 +8049,14 @@
   {
    "id": "code.terminal.bell",
    "label": "Terminal Bell",
-   "desc": "What happens when a program rings the bell: Visual flashes the terminal in the look's own way, Off does nothing, Follow theme uses the look's choice.",
+   "desc": "What happens when a program rings the bell: Visual flashes the terminal in the look's own way, Off does nothing, Follow look uses the look's choice.",
    "type": "select",
    "options": [
-    "Follow theme",
+    "Follow look",
     "Visual",
     "Off"
    ],
-   "default": "Follow theme",
+   "default": "Follow look",
    "scope": [
     "global",
     "project"
@@ -8042,7 +8065,9 @@
    "search": [
     "bell",
     "beep",
-    "visual bell"
+    "visual bell",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "terminal"
@@ -8249,7 +8274,9 @@
     "editor colours",
     "color scheme",
     "syntax colours",
-    "Follow look"
+    "Follow look",
+    "Follow theme",
+    "Match App Theme"
    ],
    "related_features": [
     "editor"
@@ -8280,6 +8307,7 @@
    "label": "Editor Line Spacing",
    "desc": "Space between lines of code in editor tabs, as a multiple of the text size, separate from the app's line spacing. Applies at once.",
    "type": "slider",
+   "default": 1.55,
    "scope": [
     "global"
    ],

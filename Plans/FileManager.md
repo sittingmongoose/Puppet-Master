@@ -19,9 +19,9 @@
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip is lineage (section 2.1).
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip is lineage (section 2.1).
 
-This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`#F3-630`).
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`Plans/FinalGUISpec.md#F3-630`).
 
 **Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
 
@@ -92,8 +92,8 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/L
 ### Definitions
 
 - **Buffer:** In-memory representation of a file's content; one per file path. Edits apply to the buffer until Save.
-- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group). Amended 2026-10-09 (DL-180): a path is at most one editor tab in the whole workspace, and opening it again reveals that tab where it is (`Plans/FinalGUISpec.md#F3-635`, `#F3-634`).
-- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model. Amended 2026-10-09 (DL-180): an editor group is now a home panel holding editor tabs among other kinds (`Plans/FinalGUISpec.md#F3-630`, `#F3-639`).
+- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group). Amended 2026-10-09 (DL-180): a path is at most one editor tab in the whole workspace, and opening it again reveals that tab where it is (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-634`).
+- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model. Amended 2026-10-09 (DL-180): an editor group is now a home panel holding editor tabs among other kinds (`Plans/FinalGUISpec.md#F3-630`, `Plans/FinalGUISpec.md#F3-639`).
 - **Dirty:** Buffer state when in-memory content differs from last-saved content; UI shows unsaved indicator.
 - **Preset:** Language/framework configuration (e.g. Rust, Python) that defines run/debug configs and tools (§11).
 - **redb:** Durable key-value store for settings, sessions, project state, and editor state (see rewrite-tie-in-memo).
@@ -254,9 +254,9 @@ The app includes an **IDE-style editor** so users can open, view, and edit proje
 ### 2.1 Placement and layout
 
 Superseded 2026-10-09 (DL-180): the editor is now the editor tab kind in any panel of the home centre
-(`Plans/FinalGUISpec.md#F3-635`, `#F3-639`). The File Editor strip, its collapse, dragging the editor out into its own
+(`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`). The File Editor strip, its collapse, dragging the editor out into its own
 window and back, and the one-floating-editor policy below are lineage; where a file opens is F-090 and
-`Plans/FinalGUISpec.md#F3-634`, tabs and their close and reorder are the panel tab strip's (`#F3-631`), and their
+`Plans/FinalGUISpec.md#F3-634`, tabs and their close and reorder are the panel tab strip's (`Plans/FinalGUISpec.md#F3-631`), and their
 persistence is the v2 Home layout record's (`Plans/storage-plan.md#SP-330`). The editing, saving and display rules of
 2.2 and 2.3 are unchanged.
 
@@ -306,7 +306,7 @@ Remote `/offline` and remote-degraded editor-state use explicit user-visible `/s
 
 Amended 2026-10-09 (DL-180): editor groups are now home panels (`Plans/FinalGUISpec.md#F3-630`), and a path is one tab
 in the whole workspace, so the same file is never open in two panels. A file from the File Manager or the chat goes to
-the last-focused panel that holds documents (`#F3-634`), not to the focused group; "Open in other group" and "Open in
+the last-focused panel that holds documents (`Plans/FinalGUISpec.md#F3-634`), not to the focused group; "Open in other group" and "Open in
 new group" become Open to the side and Open in new panel (F-090). The one shared buffer per path below still serves
 the editor tab and every other surface that opens the path, such as the embedded document pane of 2.4.1.
 
@@ -374,7 +374,7 @@ ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/stora
 ### 2.8 Keyboard shortcuts
 
 Amended 2026-10-09 (DL-180): there is no floating editor window any more (F-017); the editor is the editor tab kind in a
-home panel (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`), and where an open-file action lands is F-090's and
+home panel (`Plans/FinalGUISpec.md#F3-635`, `Plans/FinalGUISpec.md#F3-639`), and where an open-file action lands is F-090's and
 `Plans/FinalGUISpec.md#F3-634`'s. Closing a tab and moving between tabs use the panel keyboard map of
 `Plans/FinalGUISpec.md#F3-635`, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs; the next and previous tab keys
 below are lineage. Save, Go to line and Save As stay editor keys while focus is in an editor tab (F-029).
@@ -494,7 +494,7 @@ HTML preview uses source-backed preview subjects and may route to workspace or d
 Amended 2026-10-09 (DL-180, DL-181): editor, terminal and browser are tab kinds of the home panels
 (`Plans/FinalGUISpec.md#F3-635`). A terminal is one session per tab with no panes: `terminal_tab_id` holds the panel tab
 id, `terminal_pane_id` retires, and `terminal_session_id` stays the session identity (F-040). Pinning and labels are the
-panel tab strip's (`#F3-631`).
+panel tab strip's (`Plans/FinalGUISpec.md#F3-631`).
 
 FileManager consumes terminal and browser tab ownership without collapsing them. Terminal tabs use `terminal_tab_id`, `terminal_pane_id`, and `terminal_session_id` from the terminal model; browser tabs use browser-session identity from the browser owner docs. Pinning, capability badges, and tab labels must keep terminal tab state separate from browser-tab state, so the source shorthand `/cap/browser-tab` is retired as an ambiguous combined concept rather than a live tab type.
 
@@ -4960,9 +4960,9 @@ owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/FileSafe.md]
 Superseded 2026-10-09 (DL-180): Home is one universal panel system (`Plans/FinalGUISpec.md#F3-630`). The four stable
 editor panel identities, the Open in Panel submenu with Panel 1 to Panel 4, `target_editor_panel_id` routing and the
 floating editor panels below are retired; the file tree opens files by F-090 through the opening module of
-`#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
+`Plans/FinalGUISpec.md#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
 reveals, never a placeholder, and closing a panel or a tab never silently discards a shared buffer, its dirty state,
-undo history or save authority: a dirty editor tab asks first (`#F3-635`).
+undo history or save authority: a dirty editor tab asks first (`Plans/FinalGUISpec.md#F3-635`).
 
 Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
 through the canonical open path so the buffer is added to the panel's open-tab model, the

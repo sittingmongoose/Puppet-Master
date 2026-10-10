@@ -990,7 +990,7 @@ The promoted provider/runtime rewrite and the updated terminal/editor model requ
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
-Amended 2026-10-09 (DL-181): of the terminal families below, `terminal_workspace_state`, `terminal_section_record`, `terminal_tab_record`, `terminal_pane_record`, `terminal_leaf_pane_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs; terminal placement lives in the v2 Home layout record (SP-330), and `terminal_session_record` (value v2, with an optional `tab_id`), `terminal_command_block` and `dev_session_record` stay current (SP-332).
+Amended 2026-10-09 (DL-181): of the terminal families below, `terminal_workspace_state`, `terminal_section_record`, `terminal_tab_record`, `terminal_pane_record`, `terminal_leaf_pane_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs; terminal placement lives in the v2 Home layout record (SP-330), and `terminal_session_record` (value v2, with an optional `panel_tab_id`), `terminal_command_block` and `dev_session_record` stay current (SP-332).
 
 Required canonical record and projection families include:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
@@ -1060,7 +1060,7 @@ Blocked-projection migration/versioning rule:
 
 Canonical record field-level minima:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` stores `project_id`, `node_id`, `attempt_number`, `run_id`, `attempt_id`, `execution_unit_context_ref?`, `permission_snapshot_id?`, recovery/safe-point lineage refs, and result or blocked-state refs. SCM-capable attempts also carry `repo_id`, `worktree_id`, `worktree_path`, `branch_name`, `head_commit_oid`, `baseline_commit_oid`, `compare_target_ref`, `git_operation_ref`, and `pr_ref`.
-- `terminal_workspace_state.v1`, `terminal_section_record.v1`, `terminal_tab_record.v1`, `terminal_pane_record.v1`, `terminal_leaf_pane_record.v1`, `terminal_workgroup_record.v1`, `editor_terminal_panel_state.v1`, `terminal_session_record.v1`, and `terminal_command_block.v1` preserve workspace tab identity, section/tab/pane split identity, layout slot/order, labels, active/focus state, cwd/cwd snapshot, shell profile, runtime or historical state, transcript/scrollback anchors, command text, exit status, and command-block metadata without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the section, pane, layout slot and order minima describe migration inputs only; a terminal tab's place, order, label and focus are minima of the v2 Home record (SP-330), and a session's record carries an optional `tab_id` (SP-332).
+- `terminal_workspace_state.v1`, `terminal_section_record.v1`, `terminal_tab_record.v1`, `terminal_pane_record.v1`, `terminal_leaf_pane_record.v1`, `terminal_workgroup_record.v1`, `editor_terminal_panel_state.v1`, `terminal_session_record.v1`, and `terminal_command_block.v1` preserve workspace tab identity, section/tab/pane split identity, layout slot/order, labels, active/focus state, cwd/cwd snapshot, shell profile, runtime or historical state, transcript/scrollback anchors, command text, exit status, and command-block metadata without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the section, pane, layout slot and order minima describe migration inputs only; a terminal tab's place, order, label and focus are minima of the v2 Home record (SP-330), and a session's record carries an optional `panel_tab_id` (SP-332).
 - `dev_session_record.v1:{project_id}:{dev_session_id}` stores `project_id`, `dev_session_id`, linked `run_id?`, `thread_id?`, `workspace_tab_id?`, `terminal_session_id?`, DAP/debugger identity refs, target binding summary, lifecycle phase/state, historical/live verification state, last restore or reopen outcome, and relevant `artifact_ids[]` / `artifact_refs[]`. `dev_session_id` owns higher-level dev workflow continuity and must not replace `terminal_session_id` when exact PTY reuse is required.
 
 GitHub Actions panel state:
@@ -8063,7 +8063,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional tab_id (SP-332).
+  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional panel_tab_id (SP-332).
 gui_related: true
 gui_classification_reason: This unit preserves terminal GUI layout/focus fields and backend attempt/dev-session minima.
 split_recommended: true
@@ -8093,6 +8093,7 @@ node_compile_hint:
   mode: canonical_field_minima_for_attempt_terminal_dev_records
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
 preserved_exact_tokens:
@@ -8118,6 +8119,7 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): terminal layout and focus minima move to the v2 Home record (SP-330, SP-332)."
 owner_hints:
 - Plans/storage-plan.md
@@ -9535,7 +9537,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
+  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional panel_tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal panes, session bindings, labels, layout style, and restore flow.
 split_recommended: false
@@ -9565,6 +9567,7 @@ node_compile_hint:
   mode: terminal_pane_session_and_restore_identity_split
   create_worknodes: false
 source_lineage:
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
 preserved_exact_tokens:
@@ -9586,6 +9589,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): the section/tab/pane/session split becomes tab/session."
 owner_hints:
 - Plans/storage-plan.md
@@ -16865,7 +16869,7 @@ Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
 ### Terminal Storage Family Reconciliation
 
-Amended 2026-10-09 (DL-181): seven of these nine families (workspace, section, tab, pane, leaf pane, workgroup and editor terminal panel) are now read-only migration inputs; `terminal_session_record` moves to value v2 with an optional `tab_id`, and `terminal_command_block` is unchanged (SP-332).
+Amended 2026-10-09 (DL-181): seven of these nine families (workspace, section, tab, pane, leaf pane, workgroup and editor terminal panel) are now read-only migration inputs; `terminal_session_record` moves to value v2 with an optional `panel_tab_id`, and `terminal_command_block` is unchanged (SP-332).
 
 Repairs row `sfk-6e2bf4e4dd077d9ae2743668`.
 
@@ -27388,11 +27392,11 @@ negative_constraints:
 
 ## DL-180 to DL-185 — The v2 Home layout record, terminal appearance and terminal records (2026-10-09)
 
-This addendum compiles Jared's home and terminal decisions of 2026-10-09 into storage: `Plans/Decision_Log.md#DL-180` (one universal panel system), `#DL-181` (one terminal session per tab), `#DL-182` (terminal images) and `#DL-183` (terminal appearance). It adds SP-330 (the v2 Home layout record, its key, transaction and the migration from v1 and from the Home part of `layout:v1`), SP-331 (where terminal appearance is stored) and SP-332 (the terminal records re-scoped, with saved scrollback). SP-330 replaces the v1 record as the selected Home layout: SP-245 and the PMConcept7 Home Workspace layout passage are amended so the v1 key is a read-only migration input. SP-122 is superseded by SP-332. SP-014, SP-093, SP-100, SP-114, SP-118, SP-123, SP-124, SP-126, SP-127 and SP-273 are amended in place, and so are the terminal persistence passages and the bounded-collections table of section 2. The panel model is `Plans/FinalGUISpec.md#F3-630`, the tab kinds and their host contract are `#F3-635`, and the terminal as one session per tab is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`; this document owns keys, transactions, migration, retention and failure behaviour only.
+This addendum compiles Jared's home and terminal decisions of 2026-10-09 into storage: `Plans/Decision_Log.md#DL-180` (one universal panel system), `Plans/Decision_Log.md#DL-181` (one terminal session per tab), `Plans/Decision_Log.md#DL-182` (terminal images) and `Plans/Decision_Log.md#DL-183` (terminal appearance). It adds SP-330 (the v2 Home layout record, its key, transaction and the migration from v1 and from the Home part of `layout:v1`), SP-331 (where terminal appearance is stored) and SP-332 (the terminal records re-scoped, with saved scrollback). SP-330 replaces the v1 record as the selected Home layout: SP-245 and the PMConcept7 Home Workspace layout passage are amended so the v1 key is a read-only migration input. SP-122 is superseded by SP-332. SP-014, SP-093, SP-100, SP-114, SP-118, SP-123, SP-124, SP-126, SP-127 and SP-273 are amended in place, and so are the terminal persistence passages and the bounded-collections table of section 2. The panel model is `Plans/FinalGUISpec.md#F3-630`, the tab kinds and their host contract are `Plans/FinalGUISpec.md#F3-635`, and the terminal as one session per tab is `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`; this document owns keys, transactions, migration, retention and failure behaviour only.
 
 ### The v2 Home layout record (SP-330)
 
-**Key and schema.** The Home layout of a project and workspace tab is one record under `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, family `home_workspace_layout_v2`, schema `pm.home_workspace_layout.v2` 2.0.0 in `Plans/home_workspace_layout_v2.schema.json`, retention `RP-CONFIG-CURRENT`. It is the only Home layout authority. `home_workspace_layout.v1:{project_id}:{workspace_tab_id}` and the Home part of `layout:v1` (`Plans/FinalGUISpec.md` section 15.1 and `#F3-217`) are read-only migration inputs.
+**Key and schema.** The Home layout of a project and workspace tab is one record under `home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, family `home_workspace_layout_v2`, schema `pm.home_workspace_layout.v2` 2.0.0 in `Plans/home_workspace_layout_v2.schema.json`, retention `RP-CONFIG-CURRENT`. It is the only Home layout authority. `home_workspace_layout.v1:{project_id}:{workspace_tab_id}` and the Home part of `layout:v1` (`Plans/FinalGUISpec.md` section 15.1 and `Plans/FinalGUISpec.md#F3-217`) are read-only migration inputs.
 
 **What it holds.** The panel split tree (splits with an axis, children and sizes as proportions; panels with their ordered tab ids, active tab, preview tab, pinned count, collapsed and locked flags), the tab records keyed by tab id (kind, user label, pinned, kept or preview, the kind's serialized state of at most 16 KB, the domain reference), a view-state block (focused panel, maximized panel or none, recent-tab order), the chat column (width or the window default, History pinned, popped out, shown), the user's saved named layouts (shape, sizes and the kinds each slot holds), a closed-tab stack of at most 20, `revision`, `updated_at` and the migration stamp. The schema's `$comment` lists the invariants it cannot express (sizes sum to 1, one tab in exactly one panel, pinned tabs first, one preview tab per panel, no two terminal tabs showing the same session, the 16 KB cap and the rest); the owner checks them before every write. The shipped named layouts are canon in `Plans/FinalGUISpec.md#F3-630` and are not stored.
 
@@ -27400,7 +27404,7 @@ This addendum compiles Jared's home and terminal decisions of 2026-10-09 into st
 
 **Transaction and receipt.** Every committed structural change is one admitted command (`Plans/UI_Command_Catalog.md#UCC-200`) that validates the candidate against the schema and the invariants, writes the canonical key, reads it back, and only then advances `revision` by exactly one, publishes its result and one dispatch receipt, and appends one `workspace.layout_changed` whose `change` names what happened (`Plans/Contracts_V0.md#CV-361`). A write or readback failure restores the exact prior record and commits a failed receipt with `rolled_back=true` and no event. An open that only reveals an existing tab, and a release that changes nothing, return `no_change` with no write and no event; a reveal whose tab sits in a collapsed panel expands that panel as one committed `panel_expanded` change under the open's command id (`Plans/Contracts_V0.md#CV-360`). View state (`ui.panel_tab.activate`, `ui.workspace_layout.focus_panel`, `ui.workspace_layout.maximize`, the recent-tab order, History pinned and the chat column's `shown`) is written with the record but never advances `revision`, never takes a receipt and never appends an event. So are the chat column's `popped_out`, whose pop-out and return append only their own `panel.undocked` or `panel.redocked`, and a terminal tab's domain reference moving to a new session after Restart or a restore, which keeps the tab id (SP-332). SP-273's custody carries over to v2 writes: the transaction slot holds the prior and candidate v2 bytes while a change is unresolved, the operation receipt holds the content-free result, and the reader checkpoint stays disposable. The existing slot and receipt schemas (`Plans/home_layout_pending_receipt.schema.json` and its siblings) are typed for v1 layouts and v1 event semantics and stay the v1 readers. The successor slot and receipt schema for v2 writes is not written in this addendum: it must reference `pm.home_workspace_layout.v2` and the CV-361 payload by `$ref` instead of copying them inline, and until it exists no native v2 writer is admitted through those families.
 
-**First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
+**First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `Plans/FinalGUISpec.md#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
 
 The conversion table:
 
@@ -27416,7 +27420,7 @@ The conversion table:
 | Geometry | The top row holds the non-terminal surfaces in host order (`dock_left`, `home_main` by slot index, `dock_right`, `dock_top`, then floating ones); the bottom row holds the terminal sections; the column is 0.6 over 0.4, the Home layout's proportions, because v1 stores the bottom dock's thickness in pixels without the window height. A row's shares are its surfaces' `flex_weight` normalized to sum to 1, and the row uses equal shares when every weight is 0 or any normalized share would be at or below 0.02. A row with one panel is that panel; with no terminal sections the top row is the root. |
 | Collapsed, focus and recent order | A collapsed v1 surface stays collapsed. The surface with the highest `last_focus_seq` becomes the focused panel; the recent-tab order is each surface's active tab, newest `last_focus_seq` first. |
 | Ids | A converted panel keeps its v1 surface instance id as its panel id; splits get new ids. |
-| `layout:v1` Home part | The same table: `layout:v1` gives geometry only (centre splits and terminal section split ratios become row shares); tabs come from the editor and terminal records; a detached Home surface's geometry is dropped and the surface docks. `layout:v1` keeps its other part, side-panel dock state and the popped-out chat window's geometry (`Plans/FinalGUISpec.md#F3-217`); only its Home part is conversion input. |
+| `layout:v1` Home part | The same table: `layout:v1` gives geometry only (centre splits and terminal section split ratios become row shares); tabs come from the editor and terminal records; a detached Home surface's geometry is dropped and the surface docks. `layout:v1` keeps its other part, side-panel dock state and the popped-out chat window's geometry (`Plans/FinalGUISpec.md#F3-217`); a popped-out chat comes back in its fixed column after a restart, regardless of that retained geometry; only its Home part is conversion input. |
 
 **An unreadable source.** When the v1 record (or the `layout:v1` blob) fails its schema, its identity is ambiguous or its conversion breaks an invariant, the conversion writes the default Home layout with stamp `default_after_unreadable_source` (revision 0 and no event, like a newly created default), keeps the old record unchanged where it was, and Home shows a notice that the saved layout could not be read and the old one is kept (`Plans/FinalGUISpec.md#F3-630` owns its words). The editor's and the terminal's own records are untouched, so their tabs can still be opened.
 
@@ -27442,7 +27446,7 @@ canonical_text: >-
   never written. Every committed structural change validates, writes, reads back, then advances revision by one,
   publishes one result and receipt and appends one workspace.layout_changed (CV-361); failure rolls back with
   rolled_back=true and no event; a reveal-only open is no_change, and a reveal into a collapsed panel is one
-  panel_expanded. View state, the chat column's shown and popped_out, and a terminal tab's ref moving to a new
+  panel_expanded. View state, the chat column's shown, history_pinned and popped_out, and a terminal tab's ref moving to a new
   session are written with the record without a revision advance, receipt or event. The first read without a v2 record converts the v1 record, else the Home part
   of layout:v1, through the StorageMigrationCoordinator by the conversion table of this section: editor panels
   become panels holding their editor tabs, the dashboard a panel with dashboard:home, each terminal section a
@@ -27469,6 +27473,7 @@ acceptance_criteria:
   - "An unreadable v1 record yields the default Home layout with stamp default_after_unreadable_source, the old record kept unchanged and a notice; no source record is ever reset or deleted by the conversion."
   - "No v2 record holds a buffer, scrollback, browser history, chat message, credential, dashboard widget layout, narrow state, overlay, menu or drag state."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "A popped-out chat comes back in its fixed column after restart; retained legacy pop-out geometry does not reopen a separate chat window."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27488,6 +27493,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage only)"
@@ -27515,6 +27521,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Clarifies conversion-table geometry does not restore popped-out chat after restart."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
   - "Supersedes the v1 record as the selected Home layout (SP-245 amended 2026-10-09, DL-180)."
 owner_hints:
@@ -27527,16 +27535,16 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Final
 
 ### Terminal appearance storage (SP-331)
 
-The terminal's appearance is one model resolved field by field: the look's defaults ("Follow theme"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. Until an app-wide Settings store is admitted (`Plans/Settings_System.md#SSYS-028`), the app default and the project default share one stored value per field, so today two values are stored, not three:
+The terminal's appearance is one model resolved field by field: the look's defaults ("Follow look"), then the app default, then the project default, then this terminal (`Plans/FinalGUISpec.md#F3-642`, `Plans/DRY_Rules.md#DR-068`). The look's defaults ship with the product and are never stored. Until an app-wide Settings store is admitted (`Plans/Settings_System.md#SSYS-028`), the app default and the project default share one stored value per field, so today two values are stored, not three:
 
 | Layer | Where it is stored | Written by |
 |---|---|---|
 | App default and project default (one shared value) | The Settings rows of `Plans/Settings_System.md#SSYS-051`, held like every Settings value in the open Project's settings snapshot (`pm.project_settings_snapshot.v1`, Settings custody `scd.settings.durable.v1`): one stored value per row over the row's bundled default. "All terminals" therefore reaches the terminals of the open Project only, and there is no separate app-level value for a project-level value to fall through to. | Settings > Terminal, and the Appearance popover's "All terminals", only through Settings transactions |
 | This terminal | The terminal tab's serialized state in the v2 Home record (SP-330), inside its 16 KB | The Appearance popover's "This terminal" |
 
-Each stored value holds only the fields the user set there; an unset field is absent and falls through, never a copy: the tab override to the shared Settings value, and that to the look's defaults. When an app-wide store is admitted, the app default moves into it as its own level, the project default stays in the Project's settings snapshot, and a project field that is cleared falls through to the app default; until then that step does not exist. The field list is `#F3-642`'s. Every field applies live; nothing stored carries a restart flag. A terminal tab moved to another panel keeps its override, because the override is part of the tab; a terminal reopened from the closed-tab stack keeps it too. An imported scheme (`#F3-642` lists the formats) is stored as its parsed colour table in Settings custody, never as the imported file.
+Each stored value holds only the fields the user set there; an unset field is absent and falls through, never a copy: the tab override to the shared Settings value, and that to the look's defaults. When an app-wide store is admitted, the app default moves into it as its own level, the project default stays in the Project's settings snapshot, and a project field that is cleared falls through to the app default; until then that step does not exist. The field list is `Plans/FinalGUISpec.md#F3-642`'s. Every field applies live; nothing stored carries a restart flag. A terminal tab moved to another panel keeps its override, because the override is part of the tab; a terminal reopened from the closed-tab stack keeps it too. An imported scheme (`Plans/FinalGUISpec.md#F3-642` lists the formats) is stored as its parsed colour table in Settings custody, never as the imported file.
 
-**Background images.** A custom background image is never stored inline in a settings row or in a tab's state. It follows SP-222's uploaded-asset pattern: the image bytes are stored once by content hash with a manifest (content hash, media type, byte size, scope), and the layer stores only the asset reference. Dim and blur are fields of the layer; the blur is baked once into the image when the terminal draws it, never a backdrop blur (`#F3-642`), and no pre-blurred copy is stored. An asset no layer references any more is deleted. Backup follows the layer: an image the app or project default references is backed up with Settings; an image only a tab override references follows the Home record, which is resettable UI state and is not backed up, and when it is missing the tab falls through to the next layer's background. The assets' physical family is registered with Settings custody, whose physical registration is still pending in `Plans/storage_value_registry.json` (`physical_family_registration_pending`).
+**Background images.** A custom background image is never stored inline in a settings row or in a tab's state. It follows SP-222's uploaded-asset pattern: the image bytes are stored once by content hash with a manifest (content hash, media type, byte size, scope), and the layer stores only the asset reference. Dim and blur are fields of the layer; the blur is baked once into the image when the terminal draws it, never a backdrop blur (`Plans/FinalGUISpec.md#F3-642`), and no pre-blurred copy is stored. An asset no layer references any more is deleted. Backup follows the layer: an image the app or project default references is backed up with Settings; an image only a tab override references follows the Home record, which is resettable UI state and is not backed up, and when it is missing the tab falls through to the next layer's background. The assets' physical family is registered with Settings custody, whose physical registration is still pending in `Plans/storage_value_registry.json` (`physical_family_registration_pending`).
 
 This replaces SP-122's global `terminal_font.v1:global` and `terminal_color.v1:global` and fills SP-127's "per-tab overrides, font and color references".
 
@@ -27596,6 +27604,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-183"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15)"
@@ -27614,6 +27623,7 @@ negative_constraints:
 compatibility_only_notes:
   - "terminal_font.v1:global and terminal_color.v1:global were prose-only keys (SP-122) and map to the app layer."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look consistently in the appearance-model prose and field tables."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Stores the editor scheme choice beside the terminal choice as Settings values and never stores the built-in catalog."
   - "Amended 2026-10-10 (lead ruling L16): The enabled All terminals popover writes the project default through the Settings transaction and never an app-wide value until q-035 admits one."
   - "Replaces SP-122's global font and colour keys (DL-183)."
@@ -27649,7 +27659,7 @@ Amended 2026-10-10 (lead ruling L1): the session record references its home pane
 
 Saved images follow saved scrollback's own rules, the transcript chunks': the same 64 MiB quota of the tab, the same retention after close and the same exclusion from backups, exports and sync.
 
-**Writes, restore and retention.** The copy is written 1.5 s after output settles, at most every 5 s while output streams, and when the page hides; an unchanged terminal is not written again. Clear scrollback empties the saved copy at the next save. A tab with no live session loads its saved copy before its new session starts (`#SMPFS-180`, `#F3-645`); placeholder cells on restored lines resolve only to restored images; a command still running when the page went away comes back ended and indeterminate, never done (SP-125, `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-023`). The load budget is 5 s; past it the tab starts without its scrollback and says so. A closed tab's copy is kept while the tab can be reopened (the closed-tab stack holds 20, SP-330) and for at most 7 days, then deleted. An open tab's copy is never deleted for age; the quota bounds it. A missing or unreadable chunk reads as partial or unavailable, never as empty output (SP-125).
+**Writes, restore and retention.** The copy is written 1.5 s after output settles, at most every 5 s while output streams, and when the page hides; an unchanged terminal is not written again. Clear scrollback empties the saved copy at the next save. A tab with no live session loads its saved copy before its new session starts (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`, `Plans/FinalGUISpec.md#F3-645`); placeholder cells on restored lines resolve only to restored images; a command still running when the page went away comes back ended and indeterminate, never done (SP-125, `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-023`). The load budget is 5 s; past it the tab starts without its scrollback and says so. A closed tab's copy is kept while the tab can be reopened (the closed-tab stack holds 20, SP-330) and for at most 7 days, then deleted. An open tab's copy is never deleted for age; the quota bounds it. A missing or unreadable chunk reads as partial or unavailable, never as empty output (SP-125).
 
 **On this machine only.** Saved scrollback and its images stay on this machine: they are excluded from backups, exports and sync. SP-047's rule that the durable store does not persist interactive transcript or stdin by default covers the privileged-session evidence store Puppet Master keeps for its own external operations; it does not cover the user's terminal scrollback (lead ruling 2026-10-10). SP-047 itself is unchanged. Secret prompts need no rule of their own here, because their input is never echoed. The saved lines are the output as the terminal showed it, unredacted, like the live screen. Command blocks still point at them only by `transcript_ref` and never hold output or command text inline (the no-secret rule of `terminal_command_block` in `Plans/storage_value_registry.json`); the chunks are those refs' targets, and they stay unredacted because they never leave this machine and are deleted as above. No storage family holds an agent's write grant for a terminal (`Plans/Contracts_V0.md#CV-362`).
 

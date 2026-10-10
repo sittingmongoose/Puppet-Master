@@ -1630,6 +1630,16 @@ canonical_text: >-
   tab, and a widget gesture never moves or sizes a panel (DR-066). This supersedes WS-009's one Dashboard namespace and
   WS-013's limit to some Usage widgets, both amended in place, and amends the Home Workspace boundary addendum's
   sentences that assume one dashboard.
+  Within a dashboard tab, the grid column correction applies at widths 700-1060 px, with 8 px gaps and at
+  least 200 px per column at four columns. It uses 3 columns if any visible widget spans an odd number of
+  tracks, else 4 if (width minus 3 gaps) / 4 is at least 200 px, else 2. Below that range the page's grid
+  rules give 2 columns. Source measurements in Focus or maximized at windows 1920, 1680 and 1470 px give
+  grid widths 1005, 924 and 924 px: Home/Monitoring use 4 columns and Metrics 3. Home layout grids measure
+  437-488 px and Build 294-332 px, both 2 columns. Reset captures each board's starting widget set at load
+  and saves 240 ms after reset: Home's orchestrator progress is 2 × 2, active lanes/recent results/custom
+  metrics 2 × 1; Metrics has quota summary 2 × 1 and budget donuts/analytics chart 1 × 1; Monitoring has
+  lane health and containers 2 × 1. These board measurements do not settle the separate per-kind Usage
+  widget preset table.
 gui_related: true
 gui_classification_reason: Defines which boards a person can open as dashboard tabs, what each can show, and how each board's widget layout is kept and restored.
 split_recommended: false
@@ -1661,6 +1671,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (section 2, dashboard tab ids; concept lineage only)"
@@ -1686,6 +1697,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept moves the page's one dashboard node between dashboard tabs and keeps the Main, Metrics and Monitoring grids behind it; that stand-in is concept lineage, not the product's board model."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard grid columns, board reset spans, measured widths and reset-save delay."
   - "Superseded 2026-10-09 (DL-180): the one Dashboard widget-layout namespace and the singleton Dashboard surface."
 owner_boundary_notes:
   - "F3-638 owns how a dashboard tab looks in its panel; WS-017, WS-018, WS-019 and WS-020 keep the widget sizes, gestures and record fields the Usage thread amends; usage-feature.md owns the Usage widgets themselves."

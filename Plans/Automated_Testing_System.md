@@ -5947,13 +5947,13 @@ canonical_text: >-
   without taking focus (F3-634); the narrow ladder at the panels concept's seven measured window widths, 1920, 1680,
   1470, 1440, 1280, 1024 and 900 px, each matching F3-636's rail, chat and centre widths with the default rail and chat,
   its 48 px hysteresis, and none of its states ever saved (F3-636); the chat column's default width, its drag range, the
-  600 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
+  960 px centre floor, Pop out and its return, and its height from the title bar to the status bar (F3-637); dashboard
   tabs and their boards (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions,
   applying one keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved
   layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
   hover tag showing the key that works where the app runs (F3-635); the tab kinds: each of F3-635's fifteen kinds
   registered once with its id prefixes and content minimum (terminal 320 x 120 px, browser 360 x 200, dashboard 320 x
-  120, run 360 x 200, every other kind 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
+  120, run 360 x 200, plan/document/artifact/transcript/context 280 x 160, editor/record/tools 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
   only when it is first shown, and each tab body sized by its own box, never the window (F3-635); the shared header row,
   30 px tall with 24 px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with
   hover tags below it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+"
@@ -6007,6 +6007,7 @@ acceptance_criteria:
   - "No result from the panels concept or its harness is reported as native certification."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Editor and terminal list the same code colour-scheme catalog and open the same Appearance popover component."
+  - "In every look and in NieR, text and state colours (dim text, accent, ok, warn, bad and inactive tabs) mixed from the page's own colours reach 4.5:1 while the Settings accent flows through, and primary buttons choose black or white ink from fill luminance with at least 4.5:1 contrast."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -6022,6 +6023,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-184"
@@ -6045,6 +6047,9 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Matches the 960 px chat-drag centre floor in the wrapped certification prose."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
@@ -6091,7 +6096,7 @@ canonical_text: >-
   Plans/DRY_Rules.md#DR-068): each field resolves this tab, then the project default, then the app default, then the
   look's default, an unset field falling through; every field applies live from the Appearance popover and from
   Settings and none shows a restart badge; the popover writes This terminal or All terminals and only Settings writes
-  the project default; each look's Follow theme scheme in light and dark; the minimum-contrast floor at 4.5:1 by
+  the project default; each look's Follow look scheme in light and dark; the minimum-contrast floor at 4.5:1 by
   default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
   alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
   cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
@@ -6192,6 +6197,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-wave2-numbers-5e549d6961.md, SHA-256 f9d7756f94f26c5285b35400a380afed57fb27dfaee6d29683c3916604b4a15a (R34, adopted effects budgets; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D27)"
   - "Plans/Decision_Log.md#DL-181"
@@ -6227,6 +6233,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
