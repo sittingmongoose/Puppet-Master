@@ -312,9 +312,9 @@
   View.prototype._headerLeft = function () {
     var left = [{ id: 'cwd', text: this._cwd ? this._cwd() : '~', mono: true, title: 'Folder' }];
     var br = this._branch ? this._branch() : '';
-    if (br) left.push({ id: 'branch', text: br, icon: 'branch', title: 'Branch' });
+    if (br) left.push({ id: 'branch', text: br, icon: 'branch', title: 'Branch', priority: 1 });
     var run = this._running ? this._running() : null;
-    if (run) left.push({ id: 'run', text: run.cmdline.length > 48 ? run.cmdline.slice(0, 47) + '…' : run.cmdline, detail: T.util.fmtElapsed(Date.now() - run.start), icon: 'clock', title: 'Running: ' + run.cmdline });
+    if (run) left.push({ id: 'run', text: run.cmdline.length > 48 ? run.cmdline.slice(0, 47) + '…' : run.cmdline, detail: T.util.fmtElapsed(Date.now() - run.start), icon: 'clock', title: 'Running: ' + run.cmdline, priority: 2 });
     return left;
   };
   View.prototype._headerActions = function () {
@@ -807,7 +807,14 @@
   };
 
   /* ---- lifecycle from the host ---- */
-  View.prototype.onResize = function () { this.layout(); };
+  View.prototype.onResize = function () {
+    this.layout();
+    /* the host may have maximized or restored the panel itself (its menu, a key): keep the action's label true */
+    if (this.hrow && this.api && this.api.isMaximized) {
+      var max = !!this.api.isMaximized();
+      if (max !== this._max) { this._max = max; this.hrow.setAction('max', { label: max ? 'Restore' : 'Maximize', icon: max ? 'restore' : 'maximize' }); }
+    }
+  };
   View.prototype.onShow = function () { this.visible = true; this.layout(); this.schedule(true); if (this.fx) this.fx.visible(true); };
   View.prototype.onHide = function () { this.visible = false; if (this.fx) this.fx.visible(false); };
   View.prototype.onLook = function () {
