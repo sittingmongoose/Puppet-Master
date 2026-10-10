@@ -1,0 +1,45 @@
+URL: https://uppy.io/docs/aws-s3/
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-UPPY-01.txt
+Original SHA256: b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5
+Original numbered lines; gaps omitted. Not full response.
+
+28: AWS S3
+29: The @uppy/aws-s3 plugin uploads files from the browser directly to an S3
+30: bucket, or to any S3-compatible service such as Cloudflare R2, MinIO, or
+31: DigitalOcean Spaces.
+32: Small files are sent in a single request (a presigned PUT in the direct modes,
+33: a POST form upload through Companion), large files as a multipart upload.
+34: Every request to S3 has to be signed, and you choose how that happens:
+35: | Option | Who signs | What you run
+36: | getCredentials | the browser, with SigV4 | an endpoint handing out temporary credentials
+37: | signRequest | your own code | an endpoint returning a presigned URL per operation
+38: | companionEndpoint | Companion | Companion
+39: The three modes are mutually exclusive. Pass exactly one: the plugin throws if
+40: you pass none.
+41: note
+42: Upgrading from Uppy 5.x? All signing options changed names and shapes. See the
+43: migration guide.
+44: When should I use it?​
+45: tip
+46: Not sure which uploader is best for you? Read
+47: “Choosing the uploader you need”.
+48: Use this plugin when you prefer a client-to-storage over a
+49: client-to-server-to-storage (such as Transloadit or
+50: Tus) setup. This may in some cases be preferable, for instance, to
+51: reduce costs or the complexity of running a server and load balancer with
+52: Tus.
+53: Multipart uploads become valuable for larger files, as the object is uploaded as
+54: a set of parts. Only failed parts have to be retried, and an interrupted upload
+55: can resume where it stopped instead of starting over. The downside is request
+56: overhead: creation, signing, and completion requests on top of the upload
+57: requests themselves. For a file of a couple of kilobytes with 100 ms
+58: roundtrip latency, that overhead is most of the upload. We recommend keeping the
+59: default shouldUseMultipart, which uses multipart only for large files.
+60: Which signing mode to pick:
+61: signRequest keeps your credentials on your server and
+62: is the safest default.
+63: getCredentials removes one round trip per S3 operation,
+64: because the browser signs locally. In exchange, the browser holds credentials
+218: signRequest(request)​
+241: | Request | S3 operation
+361: ExposeHeaders has to include ETag, or multipart uploads cannot be completed:

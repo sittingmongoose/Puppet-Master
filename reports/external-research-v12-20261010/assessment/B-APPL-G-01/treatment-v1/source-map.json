@@ -1,0 +1,796 @@
+{
+  "schema": "er12-independent-source-map-v1",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "slot_id": "B-APPL-G-01",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "retrieval_manifest": "evidence/retrievals.json",
+  "sources": [
+    {
+      "source_id": "P1-expire",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "retrieval_started_utc": "2026-10-10T04:12:50.708022+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://redis.io/docs/latest/commands/expire/",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a482ca01495a38ea-EWR",
+        "CF-Cache-Status": "MISS",
+        "Accept-Ranges": "bytes",
+        "Age": "3532",
+        "Cache-Control": "public, max-age=14400",
+        "Expires": "Sat, 10 Oct 2026 08:12:50 GMT",
+        "Last-Modified": "Tue, 06 Oct 2026 22:28:35 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=10368000; includeSubDomains; preload",
+        "x-goog-generation": "1791325715760396",
+        "x-goog-hash": "crc32c=cVpH+Q==",
+        "x-goog-meta-goog-reserved-file-mtime": "1791325666",
+        "x-goog-metageneration": "1",
+        "x-goog-storage-class": "STANDARD",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "1468313",
+        "x-guploader-uploadid": "AP6rU80lWqnAHbiEMR8YldwxWDEq0ia0Hhnlmc-WAnPWW6u5jlbiOqjBe1BijV7bp11nn5k",
+        "set-cookie": "__cf_bm=zk7o6haM6S2JGP2jjkjv2slv.vnoL0Ybxrk9b1KFQi8-1791605570.767207-1.0.1.1-2sP2Rv0mgVGdapCV8MPz_ss7H.UP122apr1VYj0LdQv07SCwmRly0UtgM.LyV1yp1.pcKzs5fpLK5oF2CZLEEfO1dZOxCdMS7dy_3XMJc8hgjX04U42K.CUorNJPTqOB; HttpOnly; SameSite=None; Secure; Path=/; Domain=redis.io; Expires=Sat, 10 Oct 2026 04:42:50 GMT",
+        "Server-Timing": "cfCacheStatus;desc=\"MISS\""
+      },
+      "raw_evidence": "evidence/P1-expire.html",
+      "sha256": "92cf8b506f8c6c40062f488e05924eabd11a91b1ce984022488316b315b34f8b",
+      "bytes": 1468674,
+      "retrieval_completed_utc": "2026-10-10T04:12:51.042229+00:00",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "readable_evidence": "evidence/P1-expire.readable.txt",
+      "readable_sha256": "5702b0c3ae19d2e76d0639f85570e51886cb024e820aaa067403b0ee5be9dfa9",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 172,
+          "end_line": 179,
+          "section": "Description: in-place HSET changes",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:172",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 188,
+          "end_line": 191,
+          "section": "Description: non-positive timeout event",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:188",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 197,
+          "end_line": 206,
+          "section": "Optional arguments: NX/XX/GT/LT",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:197",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 3738,
+          "end_line": 3773,
+          "section": "Appendix: accuracy, timestamps, expiration, replication",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:3738",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 3786,
+          "end_line": 3796,
+          "section": "Return information and history",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:3786",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        }
+      ]
+    },
+    {
+      "source_id": "P2-set",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "retrieval_started_utc": "2026-10-10T04:12:50.709488+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://redis.io/docs/latest/commands/set/",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a482ca0159fef78d-EWR",
+        "CF-Cache-Status": "HIT",
+        "Accept-Ranges": "bytes",
+        "Age": "198",
+        "Cache-Control": "public, max-age=14400",
+        "Expires": "Sat, 10 Oct 2026 08:12:50 GMT",
+        "Last-Modified": "Fri, 09 Oct 2026 15:07:28 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=10368000; includeSubDomains; preload",
+        "x-goog-generation": "1791558448524491",
+        "x-goog-hash": "crc32c=WXyLOQ==",
+        "x-goog-meta-goog-reserved-file-mtime": "1791558406",
+        "x-goog-metageneration": "1",
+        "x-goog-storage-class": "STANDARD",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "631302",
+        "x-guploader-uploadid": "AP6rU81nrciiEsiYCGGsTnpAQ6IGeUOeRQAGkiFuXEKAz2u9f4RtX63OEYIg1LhsJ_S-hW4MCjl_m1Q",
+        "set-cookie": "__cf_bm=BRzIoqp3yZaAMZV2iBqPs_Jf2dChAMAvuc9pOYK32B4-1791605570.7750995-1.0.1.1-mYJSTRVO2AROxEgJF7DPGJVTbmJM8TIxCUN16hg_nZ9T_oONceSkZIhRj2bYmM6GMWn4iw7kdJP.bCqbhtAFLh4LUxYDRwq.DOeC4aAfroIlf29uAYjt55LDgFxUVaTp; HttpOnly; SameSite=None; Secure; Path=/; Domain=redis.io; Expires=Sat, 10 Oct 2026 04:42:50 GMT",
+        "Server-Timing": "cfCacheStatus;desc=\"HIT\""
+      },
+      "raw_evidence": "evidence/P2-set.html",
+      "sha256": "7b75af37422a19ec020d047b51e7425a781ecdfb526776e9c3ffd6ad4c0971b7",
+      "bytes": 631663,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.851242+00:00",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "readable_evidence": "evidence/P2-set.readable.txt",
+      "readable_sha256": "1c8ca703670680612e6b17d75a67dc4961437f180d6c036e27e9511203d87053",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 186,
+          "end_line": 219,
+          "section": "Description and optional arguments",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt:186",
+          "primary_locator": "https://redis.io/docs/latest/commands/set/"
+        },
+        {
+          "start_line": 1099,
+          "end_line": 1104,
+          "section": "History: KEEPTTL 6.0, EXAT/PXAT 6.2, comparison additions 8.4",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt:1099",
+          "primary_locator": "https://redis.io/docs/latest/commands/set/"
+        }
+      ]
+    },
+    {
+      "source_id": "P3-hset",
+      "url": "https://redis.io/docs/latest/commands/hset/",
+      "retrieval_started_utc": "2026-10-10T04:12:50.710866+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://redis.io/docs/latest/commands/hset/",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a482ca015f7fd92a-EWR",
+        "CF-Cache-Status": "MISS",
+        "Accept-Ranges": "bytes",
+        "Cache-Control": "public, max-age=14400",
+        "Expires": "Sat, 10 Oct 2026 08:12:50 GMT",
+        "Last-Modified": "Tue, 06 Oct 2026 22:28:37 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=10368000; includeSubDomains; preload",
+        "x-goog-generation": "1791325717776523",
+        "x-goog-hash": "crc32c=rWKjjQ==",
+        "x-goog-meta-goog-reserved-file-mtime": "1791325666",
+        "x-goog-metageneration": "1",
+        "x-goog-storage-class": "STANDARD",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "1376815",
+        "x-guploader-uploadid": "AP6rU83iyiiZEaE-4bm1zQpb4ljq9mk_K9wUpkaqyTCpQDZwReUOSaWjT7v_DOTwe43nuD7-15mSoog",
+        "set-cookie": "__cf_bm=NwQ5rBJGS4_yJXihEarGSHaxaQ.Pe4uk5YRoSV4GwPo-1791605570.775405-1.0.1.1-0DH_FPAuGLE9UScRgwiuJZ9P4m38M2xBhNtizoGFz3_uZRkaE7QRBJymvg6nWFqwbHoyW2czFQOQKST1cg1f9WtusPfLr7LPJvTXsW56LAubdXNApcWHfVmLu2L2su6j; HttpOnly; SameSite=None; Secure; Path=/; Domain=redis.io; Expires=Sat, 10 Oct 2026 04:42:50 GMT",
+        "Server-Timing": "cfCacheStatus;desc=\"MISS\""
+      },
+      "raw_evidence": "evidence/P3-hset.html",
+      "sha256": "2d522748307439110904f335f3c30560c25587b20403ca938df77e3978c0da0a",
+      "bytes": 1377176,
+      "retrieval_completed_utc": "2026-10-10T04:12:51.155009+00:00",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "readable_evidence": "evidence/P3-hset.readable.txt",
+      "readable_sha256": "b8b19f8fec4cf6139f4945f69095af548b5b705e6625303326eca8601a58078c",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 154,
+          "section": "Since 2.0.0; fields overwritten; absent hash created",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt:140",
+          "primary_locator": "https://redis.io/docs/latest/commands/hset/"
+        }
+      ]
+    },
+    {
+      "source_id": "P4-ttl",
+      "url": "https://redis.io/docs/latest/commands/ttl/",
+      "retrieval_started_utc": "2026-10-10T04:12:50.712396+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://redis.io/docs/latest/commands/ttl/",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a482ca015e4e5791-EWR",
+        "CF-Cache-Status": "MISS",
+        "Accept-Ranges": "bytes",
+        "Age": "0",
+        "Cache-Control": "public, max-age=14400",
+        "Expires": "Sat, 10 Oct 2026 08:12:50 GMT",
+        "Last-Modified": "Tue, 06 Oct 2026 22:28:42 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=10368000; includeSubDomains; preload",
+        "x-goog-generation": "1791325722355937",
+        "x-goog-hash": "crc32c=kdxqjQ==",
+        "x-goog-meta-goog-reserved-file-mtime": "1791325667",
+        "x-goog-metageneration": "1",
+        "x-goog-storage-class": "STANDARD",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "1346507",
+        "x-guploader-uploadid": "AP6rU83EGOmGb9XDt7PcVzwSiS4JMetr9cWD5dBX1AN1M7w7oasnfUvrVX9r9YGP3Hj_EnHWSdRNPgU",
+        "set-cookie": "__cf_bm=HUtpJat54LiP4N_9Y0kQfog4ee5dQ0ZY8htd5wlNAgM-1791605570.775085-1.0.1.1-4lHsIYUuzTiIqW_1zknT6_jlBRiI_w.1.18TI6Ixl_tgPP8R.YHqDSAc9WbmNLpWbSpTla7UDEorSvFbsvZu7Fdc_Ay.49yLi6zNowWLaBcIMTTMPrrz09oz7JE0Lh1_; HttpOnly; SameSite=None; Secure; Path=/; Domain=redis.io; Expires=Sat, 10 Oct 2026 04:42:50 GMT",
+        "Server-Timing": "cfCacheStatus;desc=\"MISS\""
+      },
+      "raw_evidence": "evidence/P4-ttl.html",
+      "sha256": "a2d3748fb5de8db65976f305e3b0d670337f9b89448e596af2f35899de0da2d4",
+      "bytes": 1346868,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.949772+00:00",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "readable_evidence": "evidence/P4-ttl.readable.txt",
+      "readable_sha256": "242e0af15c5f281ffc978e33aa1506c16274c238680ab4a6e2094ab1a8a5abe5",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 67,
+          "end_line": 74,
+          "section": "Description: seconds resolution; -1 persistent, -2 missing",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.readable.txt:67",
+          "primary_locator": "https://redis.io/docs/latest/commands/ttl/"
+        }
+      ]
+    },
+    {
+      "source_id": "P5-notifications",
+      "url": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/",
+      "retrieval_started_utc": "2026-10-10T04:12:50.713556+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/",
+      "response_headers": {
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Content-Type": "text/html",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "CF-Ray": "a482ca016954b7a0-EWR",
+        "CF-Cache-Status": "HIT",
+        "Accept-Ranges": "bytes",
+        "Age": "188",
+        "Cache-Control": "public, max-age=14400",
+        "Expires": "Sat, 10 Oct 2026 08:12:50 GMT",
+        "Last-Modified": "Tue, 06 Oct 2026 22:29:07 GMT",
+        "Server": "cloudflare",
+        "Strict-Transport-Security": "max-age=10368000; includeSubDomains; preload",
+        "x-goog-generation": "1791325747537616",
+        "x-goog-hash": "crc32c=h1zqmg==",
+        "x-goog-meta-goog-reserved-file-mtime": "1791325667",
+        "x-goog-metageneration": "1",
+        "x-goog-storage-class": "STANDARD",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "129678",
+        "x-guploader-uploadid": "AP6rU80oqMmhi3QsC5oTiRlzbebRfR7PpEQwSZc4cfxVj-s2ete3ULO5b-yIf2xGAouF9bRm",
+        "set-cookie": "__cf_bm=4BUWaYK3JZXLjaLzBe4X401t94HI5PhroteZGfgvuAA-1791605570.7831964-1.0.1.1-yX.mLANyB0bQ64TjXVkhICh.KRlzsEL0hSEzHs5iwNgiRBKu13Z_1RVtrrCCEOkPL2fWuvk8H.CfbI.0fdHD5l_5n5j0LzK.hkA8PY30SdASC2RHtwsU2jwnp3yLMrQ1; HttpOnly; SameSite=None; Secure; Path=/; Domain=redis.io; Expires=Sat, 10 Oct 2026 04:42:50 GMT",
+        "Server-Timing": "cfCacheStatus;desc=\"HIT\""
+      },
+      "raw_evidence": "evidence/P5-notifications.html",
+      "sha256": "eac5aa9353b6386e05acdc84695180f40863dbd7c91798b78d89c5718fe715a6",
+      "bytes": 130039,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.834031+00:00",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "readable_evidence": "evidence/P5-notifications.readable.txt",
+      "readable_sha256": "47a7be7a7d82534be35d32be146ad44101860d8868a572ecb17823e74ce30eed",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 9,
+          "end_line": 11,
+          "section": "Pub/Sub disconnected delivery loss",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:9",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 32,
+          "end_line": 62,
+          "section": "Configuration defaults and event masks",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:32",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 67,
+          "end_line": 68,
+          "section": "DEL and EXPIRE events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:67",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 117,
+          "end_line": 117,
+          "section": "Ordinary expiration event",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:117",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 122,
+          "end_line": 122,
+          "section": "Events require actual modification",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:122",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 134,
+          "end_line": 140,
+          "section": "Event timing and no TTL-zero delivery guarantee",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:134",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        }
+      ]
+    },
+    {
+      "source_id": "P6-v720-expire-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c",
+      "retrieval_started_utc": "2026-10-10T04:12:50.834122+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c",
+      "response_headers": {
+        "Connection": "close",
+        "Content-Length": "30411",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9a7088d8ea10247991986bcf14ccf6937dbf5e4acc5749c91d24a5b9d1e337cb\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "44DC:3D1B0D:302C37:4E2E3E:6AC9B8C3",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740074-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791605571.852731,VS0,VE45",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "49470dd6caaa46bf0c906ad88fc31ad7e235b173",
+        "Expires": "Sat, 10 Oct 2026 04:17:50 GMT",
+        "Source-Age": "0"
+      },
+      "raw_evidence": "evidence/P6-v720-expire-c.txt",
+      "sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65",
+      "bytes": 30411,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.916371+00:00",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "readable_evidence": "evidence/P6-v720-expire-c.txt",
+      "readable_sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 159,
+          "section": "activeExpireCycle: configured effort",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:140",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L140"
+        },
+        {
+          "start_line": 195,
+          "end_line": 275,
+          "section": "activeExpireCycle: time budget and incremental dictionary scanning",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:195",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L195"
+        },
+        {
+          "start_line": 477,
+          "end_line": 483,
+          "section": "checkAlreadyExpired: primary/loading conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:477",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L477"
+        },
+        {
+          "start_line": 491,
+          "end_line": 532,
+          "section": "parseExtendedExpireArgumentsOrReply",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:491",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L491"
+        },
+        {
+          "start_line": 549,
+          "end_line": 664,
+          "section": "expireGenericCommand: seconds, domain, conditions, del/expire events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:549",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L549"
+        },
+        {
+          "start_line": 687,
+          "end_line": 727,
+          "section": "ttlGenericCommand: rounding; TTL/PTTL/EXPIRETIME/PEXPIRETIME",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:687",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687"
+        }
+      ]
+    },
+    {
+      "source_id": "P7-v720-t-string-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_string.c",
+      "retrieval_started_utc": "2026-10-10T04:12:50.851525+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_string.c",
+      "response_headers": {
+        "Connection": "close",
+        "Content-Length": "34470",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"693778b25a3d8ff38220084f8fce0a5cc55573fc92929f3881f86053c9802d02\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "1BD0:38AD30:346A19:526D28:6AC9B8C1",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740052-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791605571.866790,VS0,VE35",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "608513857cfa17ae01c30647d05f03b6ad80719f",
+        "Expires": "Sat, 10 Oct 2026 04:17:50 GMT",
+        "Source-Age": "0"
+      },
+      "raw_evidence": "evidence/P7-v720-t-string-c.txt",
+      "sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f",
+      "bytes": 34470,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.923917+00:00",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "readable_evidence": "evidence/P7-v720-t-string-c.txt",
+      "readable_sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 84,
+          "end_line": 129,
+          "section": "setGenericCommand: conditional abort, KEEPTTL, explicit deadline",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:84",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L84"
+        },
+        {
+          "start_line": 153,
+          "end_line": 188,
+          "section": "getExpireMillisecondsOrReply: units and domain",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:153",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L153"
+        },
+        {
+          "start_line": 209,
+          "end_line": 287,
+          "section": "parseExtendedStringArgumentsOrReply: options and mutual exclusions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:209",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L209"
+        },
+        {
+          "start_line": 293,
+          "end_line": 305,
+          "section": "SET command",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:293",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L293"
+        }
+      ]
+    },
+    {
+      "source_id": "P8-v720-t-hash-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_hash.c",
+      "retrieval_started_utc": "2026-10-10T04:12:50.916446+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_hash.c",
+      "response_headers": {
+        "Connection": "close",
+        "Content-Length": "39709",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"11a6e0b74b12ec18a5c12623f2008d3e2a5ef9bfbfbf833b6b6f88fc39b6ec0e\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "D134:16D013:313770:4F3B6F:6AC9B8C3",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740077-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791605571.932789,VS0,VE34",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "2a335aa1640800957e3f5d303f973e455ec435c1",
+        "Expires": "Sat, 10 Oct 2026 04:17:50 GMT",
+        "Source-Age": "0"
+      },
+      "raw_evidence": "evidence/P8-v720-t-hash-c.txt",
+      "sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6",
+      "bytes": 39709,
+      "retrieval_completed_utc": "2026-10-10T04:12:50.991229+00:00",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "readable_evidence": "evidence/P8-v720-t-hash-c.txt",
+      "readable_sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 443,
+          "end_line": 451,
+          "section": "hashTypeLookupWriteOrCreate: type and create conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt:443",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L443"
+        },
+        {
+          "start_line": 606,
+          "end_line": 633,
+          "section": "hsetCommand: existing object mutated, expiry not removed",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt:606",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L606"
+        }
+      ]
+    },
+    {
+      "source_id": "P9-v720-redis-conf",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/redis.conf",
+      "retrieval_started_utc": "2026-10-10T04:12:50.923977+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/redis/redis/7.2.0/redis.conf",
+      "response_headers": {
+        "Connection": "close",
+        "Content-Length": "107512",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"c50716b3fd4e76d5fb0a8530ecfc5706ea19f3a91f11a40a5b709402886c2cac\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "FFFE:3E6D3B:19F977:3981A8:6AC9BB38",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:12:50 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740060-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791605571.939599,VS0,VE37",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "a17469a46a0023ff76003b7039fb1780d2c6b4a0",
+        "Expires": "Sat, 10 Oct 2026 04:17:50 GMT",
+        "Source-Age": "0"
+      },
+      "raw_evidence": "evidence/P9-v720-redis-conf.txt",
+      "sha256": "319286fcdc3d98e9c248d9730f28c3e5bae106a58173f64302039e15507dca14",
+      "bytes": 107512,
+      "retrieval_completed_utc": "2026-10-10T04:12:51.004319+00:00",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "readable_evidence": "evidence/P9-v720-redis-conf.txt",
+      "readable_sha256": "319286fcdc3d98e9c248d9730f28c3e5bae106a58173f64302039e15507dca14",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 583,
+          "end_line": 583,
+          "section": "Default replica-read-only yes",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:583",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L583"
+        },
+        {
+          "start_line": 1259,
+          "end_line": 1259,
+          "section": "Default lazyfree-lazy-expire no",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:1259",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L1259"
+        },
+        {
+          "start_line": 1869,
+          "end_line": 1919,
+          "section": "Keyspace events, masks, KEA classes, default disabled",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:1869",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L1869"
+        }
+      ]
+    },
+    {
+      "source_id": "P10-v720-db-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/db.c",
+      "retrieval_started_utc": "2026-10-10T04:12:50.950089+00:00",
+      "operation": "Independent Python urllib HTTPS GET; retrieved bytes treated only as data",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/db.c",
+      "response_headers": {
+        "Connection": "close",
+        "Content-Length": "94016",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"ea5e1d6a098961b7bcb17f86ba3d4cd68ba18de8bb3401f42e45333afd74c646\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "0884:245804:31BF8D:4FC26A:6AC9B8C3",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:12:51 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740089-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791605571.970598,VS0,VE50",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "4bb0a5787000f11d5616b685cce7f9023b11a84f",
+        "Expires": "Sat, 10 Oct 2026 04:17:51 GMT",
+        "Source-Age": "0"
+      },
+      "raw_evidence": "evidence/P10-v720-db-c.txt",
+      "sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6",
+      "bytes": 94016,
+      "retrieval_completed_utc": "2026-10-10T04:12:51.050085+00:00",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "readable_evidence": "evidence/P10-v720-db-c.txt",
+      "readable_sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 88,
+          "end_line": 109,
+          "section": "lookupKey: read-only replica and force-delete conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:88",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L88"
+        },
+        {
+          "start_line": 282,
+          "end_line": 315,
+          "section": "setKey: TTL removed unless KEEPTTL flag",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:282",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L282"
+        },
+        {
+          "start_line": 1649,
+          "end_line": 1677,
+          "section": "setExpire/getExpire: absolute milliseconds",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1649",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1649"
+        },
+        {
+          "start_line": 1679,
+          "end_line": 1726,
+          "section": "deleteExpiredKeyAndPropagate/propagateDeletion",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1679",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1679"
+        },
+        {
+          "start_line": 1746,
+          "end_line": 1817,
+          "section": "expireIfNeeded: logical expiration versus physical deletion; writable-replica exception",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1746",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1746"
+        }
+      ]
+    }
+  ],
+  "claim_evidence": [
+    {
+      "claim": 1,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:7",
+      "source_locators": [
+        "P1-expire:172-179",
+        "P3-hset:140-154",
+        "P8-v720-t-hash-c:443-451,606-633"
+      ]
+    },
+    {
+      "claim": 2,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:11",
+      "source_locators": [
+        "P2-set:186-219,1099-1104",
+        "P7-v720-t-string-c:84-129,153-188",
+        "P10-v720-db-c:282-315"
+      ]
+    },
+    {
+      "claim": 3,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:15",
+      "source_locators": [
+        "P2-set:186-219,1099-1104",
+        "P7-v720-t-string-c:97-125,232-287",
+        "P10-v720-db-c:282-315,1649-1677"
+      ]
+    },
+    {
+      "claim": 4,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:19",
+      "source_locators": [
+        "P1-expire:197-206,3795-3796",
+        "P6-v720-expire-c:549-625"
+      ]
+    },
+    {
+      "claim": 5,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:23",
+      "source_locators": [
+        "P1-expire:188-191",
+        "P5-notifications:9-11,32-68,117,122,134-140",
+        "P6-v720-expire-c:477-483,629-660",
+        "P9-v720-redis-conf:1869-1919",
+        "P10-v720-db-c:1679-1688"
+      ]
+    },
+    {
+      "claim": 6,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:27",
+      "source_locators": [
+        "P1-expire:3738-3773",
+        "P5-notifications:134-140",
+        "P6-v720-expire-c:140-159,195-275",
+        "P10-v720-db-c:88-109,1679-1817"
+      ]
+    }
+  ],
+  "finding_evidence": [
+    {
+      "finding_id": "F1",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:19",
+      "independent_source_locators": [
+        "P1-expire:197-206",
+        "P6-v720-expire-c:605-625"
+      ],
+      "primary_locators": [
+        "https://redis.io/docs/latest/commands/expire/#optional-arguments",
+        "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L605"
+      ]
+    },
+    {
+      "finding_id": "F2",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:37",
+      "independent_source_locators": [
+        "P4-ttl:67-74",
+        "P6-v720-expire-c:687-727",
+        "P7-v720-t-string-c:97-117",
+        "P10-v720-db-c:282-315"
+      ],
+      "primary_locators": [
+        "https://redis.io/docs/latest/commands/ttl/",
+        "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687",
+        "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L97",
+        "https://github.com/redis/redis/blob/7.2.0/src/db.c#L282"
+      ]
+    }
+  ],
+  "candidate_and_input_hashes": "inspected-input-hashes.json",
+  "raw_retrieval_retained": true,
+  "retrieval_failures": [],
+  "terminal_provenance": {
+    "freeze_original": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/terminal-science-freeze.json",
+    "freeze_sha256": "050a08cf28b3a8c143f83b5de063688e1e4c74427bacb829698cdb50dbe63ede",
+    "freeze_preserved": "evidence/terminal-science-freeze.preserved.json",
+    "assigned_row_host_provenance_original": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-G-01-provider-native-evidence.json",
+    "assigned_row_host_provenance_sha256": "93601a34b19f2f3232e9702f0b57bc2e401a28f29acd33e6b76159e9ec446ac9",
+    "assigned_row_host_provenance_preserved": "evidence/assigned-row-provider-native-evidence.preserved.json",
+    "independent_verification": "terminal-freeze-status.json",
+    "scope": "Byte identity and assigned-row metadata; no inference of native success, effective execution or billing"
+  },
+  "initial_source_map_preserved": "source-map.initial-saved.json"
+}

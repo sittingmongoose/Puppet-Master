@@ -1,0 +1,109 @@
+URL: https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/exclude.c
+Original locator: ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-exclude.c
+Original SHA256: 619fac1e03234d8d8c173e29abe80c3670fd755488e8cce3eb71862d74b1cb92
+Original numbered lines; gaps omitted. Not full response.
+
+902: static int rule_matches(const char *fname, filter_rule *ex, int name_flags)
+903: {
+904: 	int slash_handling, str_cnt = 0, anchored_match = 0;
+905: 	int ret_match = ex->rflags & FILTRULE_NEGATE ? 0 : 1;
+906: 	char *p, *pattern = ex->pattern;
+907: 	const char *strings[16]; /* more than enough */
+908: 	const char *name = fname + (*fname == '/');
+909: 
+910: 	if (!*name || ex->elide == cur_elide_value)
+911: 		return 0;
+912: 
+913: 	if (!(name_flags & NAME_IS_XATTR) ^ !(ex->rflags & FILTRULE_XATTR))
+914: 		return 0;
+915: 
+916: 	if (!ex->u.slash_cnt && !(ex->rflags & FILTRULE_WILD2)) {
+917: 		/* If the pattern does not have any slashes AND it does
+918: 		 * not have a "**" (which could match a slash), then we
+919: 		 * just match the name portion of the path. */
+920: 		if ((p = strrchr(name,'/')) != NULL)
+921: 			name = p+1;
+922: 	} else if (ex->rflags & FILTRULE_ABS_PATH && *fname != '/'
+923: 	    && curr_dir_len > module_dirlen + 1) {
+924: 		/* If we're matching against an absolute-path pattern,
+925: 		 * we need to prepend our full path info. */
+926: 		strings[str_cnt++] = curr_dir + module_dirlen + 1;
+927: 		strings[str_cnt++] = "/";
+928: 	} else if (ex->rflags & FILTRULE_WILD2_PREFIX && *fname != '/') {
+929: 		/* Allow "**"+"/" to match at the start of the string. */
+930: 		strings[str_cnt++] = "/";
+931: 	}
+932: 	strings[str_cnt++] = name;
+933: 	if (name_flags & NAME_IS_DIR) {
+934: 		/* Allow a trailing "/"+"***" to match the directory. */
+935: 		if (ex->rflags & FILTRULE_WILD3_SUFFIX)
+936: 			strings[str_cnt++] = "/";
+937: 	} else if (ex->rflags & FILTRULE_DIRECTORY)
+938: 		return !ret_match;
+939: 	strings[str_cnt] = NULL;
+940: 
+941: 	if (*pattern == '/') {
+942: 		anchored_match = 1;
+943: 		pattern++;
+944: 	}
+945: 
+946: 	if (!anchored_match && ex->u.slash_cnt
+947: 	    && !(ex->rflags & FILTRULE_WILD2)) {
+948: 		/* A non-anchored match with an infix slash and no "**"
+949: 		 * needs to match the last slash_cnt+1 name elements. */
+950: 		slash_handling = ex->u.slash_cnt + 1;
+951: 	} else if (!anchored_match && !(ex->rflags & FILTRULE_WILD2_PREFIX)
+952: 				   && ex->rflags & FILTRULE_WILD2) {
+953: 		/* A non-anchored match with an infix or trailing "**" (but not
+954: 		 * a prefixed "**") needs to try matching after every slash. */
+955: 		slash_handling = -1;
+956: 	} else {
+957: 		/* The pattern matches only at the start of the path or name. */
+958: 		slash_handling = 0;
+959: 	}
+960: 
+961: 	if (ex->rflags & FILTRULE_WILD) {
+962: 		if (wildmatch_array(pattern, strings, slash_handling))
+963: 			return ret_match;
+964: 	} else if (str_cnt > 1) {
+965: 		if (litmatch_array(pattern, strings, slash_handling))
+966: 			return ret_match;
+967: 	} else if (anchored_match) {
+968: 		if (strcmp(name, pattern) == 0)
+969: 			return ret_match;
+970: 	} else {
+971: 		int l1 = strlen(name);
+972: 		int l2 = strlen(pattern);
+973: 		if (l2 <= l1 &&
+974: 		    strcmp(name+(l1-l2),pattern) == 0 &&
+975: 		    (l1==l2 || name[l1-(l2+1)] == '/')) {
+976: 			return ret_match;
+1035: /* Return -1 if file "name" is defined to be excluded by the specified
+1036:  * exclude list, 1 if it is included, and 0 if it was not matched. */
+1037: int check_filter(filter_rule_list *listp, enum logcode code,
+1038: 		 const char *name, int name_flags)
+1039: {
+1040: 	filter_rule *ent;
+1041: 
+1042: 	for (ent = listp->head; ent; ent = ent->next) {
+1043: 		if (ignore_perishable && ent->rflags & FILTRULE_PERISHABLE)
+1044: 			continue;
+1045: 		if (ent->rflags & FILTRULE_PERDIR_MERGE) {
+1046: 			int rc = check_filter(ent->u.mergelist, code, name, name_flags);
+1047: 			if (rc)
+1048: 				return rc;
+1049: 			continue;
+1050: 		}
+1051: 		if (ent->rflags & FILTRULE_CVS_IGNORE) {
+1052: 			int rc = check_filter(&cvs_filter_list, code, name, name_flags);
+1053: 			if (rc)
+1054: 				return rc;
+1055: 			continue;
+1056: 		}
+1057: 		if (rule_matches(name, ent, name_flags)) {
+1058: 			report_filter_result(code, name, ent, name_flags, listp->debug_type);
+1059: 			return ent->rflags & FILTRULE_INCLUDE ? 1 : -1;
+1060: 		}
+1061: 	}
+1062: 
+1063: 	return 0;

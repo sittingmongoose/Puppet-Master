@@ -1,0 +1,126 @@
+{
+  "hashed_at_utc": "2026-10-10T04:17:03.673373+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "bytes": 608,
+      "sha256": "aa8d9730b741a31b0e474ae5e1dc2f0d2fab1a4fb6c9365366f5c63c9e9cab33",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md",
+      "bytes": 1806,
+      "sha256": "8f18c6f76f0788ad1dbfe7e817859d81d1cf0be0abeb84cefbf016a158eb130f",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/freeze.json",
+      "bytes": 2018,
+      "sha256": "745db2e12cfcd327a324033bf12aad92fbf98e8a609afeadbda6878422a720d9",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md",
+      "bytes": 5918,
+      "sha256": "0877ec905c20c11957faafbdf561aec949b71c239417d4806df88cdd4ed74b58",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/source-map.json",
+      "bytes": 7469,
+      "sha256": "b11cd8f2f12bd6e44dff988bb7a2ea65411b6603f818e824fba05d910a07b6a7",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_receipt.json",
+      "bytes": 1976,
+      "sha256": "a7e5dcb689c008a68a719a077d61cb6987d98a7248b73f57aab4fd1f41ce7b49",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_activation.err",
+      "bytes": 77,
+      "sha256": "47a1456b8656ffe2f3b004626fc43b7ebeb778f09951d4a673d6c0b039349f14",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "bytes": 3108,
+      "sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "bytes": 1664,
+      "sha256": "3769783a77959a4303e88ce4f120a94850484d97827327d7bd097a08b823d6b9",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "bytes": 1065,
+      "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "bytes": 963,
+      "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "bytes": 1305,
+      "sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R1-expire.md",
+      "bytes": 3603,
+      "sha256": "60a0e0960d811bb0550de5778d5232dbcdf22743cffc126f5ebe6c0d7adb9968",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R2-set.md",
+      "bytes": 1249,
+      "sha256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R3-hset.md",
+      "bytes": 1028,
+      "sha256": "f9c9ff5fe800d6113d3d8740d336078f551ae40312bfbcf1766ce9023a8d2fba",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R4-ttl.md",
+      "bytes": 893,
+      "sha256": "1ef2de5de3ff8e9982919b25230702ab8185df4e082bdc42ce37098a5e63f5df",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R5-keyspace-notifications.md",
+      "bytes": 2439,
+      "sha256": "65bd7c1d4a31e00882a3079efc5f16e8e358d02da1081c6b71abf67042c038a7",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/root-review-request.json",
+      "bytes": 2841,
+      "sha256": "6297302e3fb4f5f648f11076998f8f5037490a3d38058311c8e39376ad8455eb",
+      "fully_inspected": true
+    }
+  ],
+  "terminal_science_freeze_found": []
+}

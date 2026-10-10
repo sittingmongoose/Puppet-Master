@@ -1,0 +1,184 @@
+{
+  "case_id": "ER12-B-FINAL-M-01-FRESH",
+  "role_scope": "Criticism adjudication and complete bounded finalization",
+  "allowed_write_root": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role",
+  "native_goal": {
+    "activation_receipt": "goal-activation-receipt.json",
+    "threadId": "01a12408-1e34-7120-a950-cb018d47e9dd",
+    "objective": "ER12 B-FINAL-M-01/control: execute ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "activation_status_observed": "active",
+    "completion": {
+      "completion_receipt": "goal-completion-receipt.json",
+      "status_observed": "complete",
+      "tokensUsed": 71264,
+      "timeUsedSeconds": 538,
+      "createdAt": 1791605897,
+      "updatedAt": 1791606435
+    }
+  },
+  "inputs_read": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+      "operation": "local control-assignment read; co-read with stage input-map before Goal activation",
+      "retrieval_utc": "before native Goal activation at 2026-10-10T04:18:17Z; exact read time UNKNOWN"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "operation": "local control-map read before Goal activation; re-read after activation before reading common assignment/case corpus",
+      "retrieval_utc": "first read before 2026-10-10T04:18:17Z; reread after activation and before 2026-10-10T04:18:36Z; exact read times UNKNOWN"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "operation": "local common-assignment read after Goal activation",
+      "retrieval_utc": "after native Goal activation at 2026-10-10T04:18:17Z and before 2026-10-10T04:18:36Z; exact read time UNKNOWN"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "operation": "local file read after Goal activation",
+      "retrieval_utc": "2026-10-10T04:18:36Z (read ran in parallel with clock call; subsecond order UNKNOWN)"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json and S1.md, S2.md",
+      "operation": "local file reads after Goal activation",
+      "retrieval_utc": "2026-10-10T04:18:36Z (read ran in parallel with clock call; subsecond order UNKNOWN)"
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://curl.se/docs/manpage.html",
+      "version": "supplied snapshot observed online curl 8.23.0",
+      "locator": "navigation listed --retry, --retry-all-errors, --retry-max-time, --max-time, --fail-with-body",
+      "retrieval_utc": "2026-10-10T03:54:10Z (supplied corpus metadata)",
+      "retrieval_operation": "read local corpus excerpt; used as locator only",
+      "conditions_exceptions_applicability": "newer live manual may contain semantic changes after target 8.10.1; target-tag pages govern conclusions",
+      "evidence_file": "inputs/corpus/S1.md"
+    },
+    {
+      "id": "S2",
+      "url": "https://curl.se/docs/optionsall.html",
+      "version": "supplied live option-introduction table for target curl 8.10.1",
+      "locator": "option introduction history",
+      "retrieval_utc": "2026-10-10T03:54:10Z (supplied corpus metadata)",
+      "retrieval_operation": "read local corpus excerpt; used as version locator",
+      "conditions_exceptions_applicability": "introduction date does not establish every later semantic behavior; target-tag pages govern conclusions",
+      "evidence_file": "inputs/corpus/S2.md"
+    },
+    {
+      "id": "P1",
+      "title": "curl 8.10.1 --retry",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "lines 16-28",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "retry count is additional to initial attempt; target default list includes timeout and listed HTTP codes; FTP condition is inapplicable to HTTPS; Retry-After honored",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    },
+    {
+      "id": "P2",
+      "title": "curl 8.10.1 --retry-all-errors",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "lines 15-20, 30-36",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "broad retry may duplicate data; HTTP status default behavior requires explicit failure handling",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    },
+    {
+      "id": "P3",
+      "title": "curl 8.10.1 --retry-max-time",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "lines 16-21",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "prevents a retry from starting after timer limit; an already-started request may exceed it",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    },
+    {
+      "id": "P4",
+      "title": "curl 8.10.1 --max-time",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "lines 17-25",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "per-transfer maximum resets on each retry; not process-wide deadline",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    },
+    {
+      "id": "P5",
+      "title": "curl 8.10.1 --fail-with-body",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "lines 16-25",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "HTTP response code 400 or greater yields error 22 while body remains available",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    },
+    {
+      "id": "P6",
+      "title": "curl 8.10.1 --write-out",
+      "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md",
+      "version": "official curl/curl source tag curl-8_10_1",
+      "locator": "num_retries lines 125-130; response_code lines 154-156; time_total lines 222-224",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
+      "conditions_exceptions_applicability": "per-transfer metadata; process-wide elapsed time should be measured by supervisor",
+      "evidence_file": "sources/curl-8.10.1-reference-notes.md"
+    }
+  ],
+  "primary_source_claims": [
+    {
+      "claim": "--retry count is in addition to the initial transfer; versioned default transient list, backoff, and Retry-After behavior",
+      "sources": [
+        "P1"
+      ]
+    },
+    {
+      "claim": "--max-time is per transfer and resets; retry-max-time does not stop an already-started attempt",
+      "sources": [
+        "P3",
+        "P4"
+      ]
+    },
+    {
+      "claim": "HTTP 400+ can be made a curl failure while retaining body",
+      "sources": [
+        "P5"
+      ]
+    },
+    {
+      "claim": "--retry-all-errors is broader and carries duplicate data risk",
+      "sources": [
+        "P2"
+      ]
+    },
+    {
+      "claim": "write-out can expose retries and response code",
+      "sources": [
+        "P6"
+      ]
+    }
+  ],
+  "proposed_acceptance_checks": [
+    "503, 503, 503, 200 sequence with Retry-After; verify at most four total attempts and publication only after valid 200.",
+    "404 and repeated 503 cases; verify no retry for 404, four-attempt cap for transient 503, failure diagnostics and no publication.",
+    "Cancel during a retry delay; verify child stops, cancellation is recorded and no empty or partial catalog is published."
+  ],
+  "executed_checks": {
+    "runtime_tests": "none; no runtime test has run",
+    "research_operations": "read listed local assignment, fixture, corpus index and S1/S2; web search and opened version-tagged official curl 8.10.1 option sources",
+    "artifact_check": "deliverables are saved under the allowed output root; no runtime behavior was inferred from executed code"
+  },
+  "remaining_uncertainty": [
+    "whether the deployed curl binary/build and actual launcher use the described 8.10.1 options",
+    "whether supervisor cancellation and process deadline enforce the intended cutoff and what overshoot occurs",
+    "whether emitted diagnostics redact credentials and host/path/query fields as required",
+    "acceptance-check results and endpoint-specific success-status/schema rules remain unverified"
+  ],
+  "procedural_note": "The stage control assignment and input-map were co-read before Goal activation. The common assignment, fixture and corpus were read only after the actual Goal was active. No source/case inference preceded activation. The stage input-map was re-read after activation before common assignment/corpus access."
+}

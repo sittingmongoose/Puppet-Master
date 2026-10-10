@@ -1,0 +1,640 @@
+{
+  "schema": "er12-independent-review-source-map-v1",
+  "slot": "B-FINAL-G-01",
+  "arm": "treatment",
+  "saved_at_utc": "2026-10-10T04:18:45.035172+00:00",
+  "authority": "Independent evaluator; governing sources are the exact3.2.7 official tarball. No candidate feedback.",
+  "retrievals": [
+    {
+      "id": "P1",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "retrieval_started_utc": "2026-10-10T04:13:02.839875+00:00",
+      "retrieval_completed_utc": "2026-10-10T04:13:03.771651+00:00",
+      "operation": "Independent unauthenticated HTTPS GET; tar member bytes extracted as data, no downloaded code executed",
+      "http_status": 200,
+      "final_url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "headers": {
+        "date": "Sat, 10 Oct 2026 04:13:03 GMT",
+        "referrer-policy": "strict-origin",
+        "strict-transport-security": "max-age=63072000;includeSubDomains;preload",
+        "x-frame-options": "sameorigin",
+        "connection": "Upgrade",
+        "last-modified": "Fri, 21 Oct 2022 00:58:48 GMT",
+        "accept-ranges": "bytes",
+        "content-length": "1149787",
+        "content-type": "application/gzip",
+        "alt-svc": "h3=\":443\"; ma=999999; persistent=1"
+      },
+      "bytes": 1149787,
+      "sha256": "4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb",
+      "raw_file": "rsync-3.2.7.tar.gz",
+      "members": [
+        {
+          "archive_member": "rsync-3.2.7/rsync.1",
+          "file": "rsync.1.txt",
+          "bytes": 233638,
+          "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c"
+        },
+        {
+          "archive_member": "rsync-3.2.7/receiver.c",
+          "file": "receiver.c.txt",
+          "bytes": 28254,
+          "sha256": "1f0747cbcc0e9475e89d324bd15873a1431172cd39801dc041291c620e70c373"
+        },
+        {
+          "archive_member": "rsync-3.2.7/cleanup.c",
+          "file": "cleanup.c.txt",
+          "bytes": 7798,
+          "sha256": "07b982f666c9c78dfe1eacc88a666adf65410ec5402378f3a6860f11c0b43c2d"
+        },
+        {
+          "archive_member": "rsync-3.2.7/generator.c",
+          "file": "generator.c.txt",
+          "bytes": 68293,
+          "sha256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79"
+        },
+        {
+          "archive_member": "rsync-3.2.7/options.c",
+          "file": "options.c.txt",
+          "bytes": 96256,
+          "sha256": "465892bdaefdeaafe1cfd2889aa1943fb5d34c9019ba3f5411af4004ffeb9029"
+        },
+        {
+          "archive_member": "rsync-3.2.7/NEWS.md",
+          "file": "NEWS.md.txt",
+          "bytes": 208035,
+          "sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529"
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "retrieval_started_utc": "2026-10-10T04:14:05.871307+00:00",
+      "retrieval_completed_utc": "2026-10-10T04:14:06.610114+00:00",
+      "operation": "Independent unauthenticated HTTPS GET, raw content saved as data",
+      "http_status": 200,
+      "final_url": "https://download.samba.org/pub/rsync/rsync.1",
+      "headers": {
+        "date": "Sat, 10 Oct 2026 04:14:06 GMT",
+        "content-location": "rsync.1.html",
+        "vary": "negotiate,Accept-Encoding",
+        "tcn": "choice",
+        "referrer-policy": "strict-origin",
+        "strict-transport-security": "max-age=63072000;includeSubDomains;preload",
+        "x-frame-options": "sameorigin",
+        "connection": "Upgrade",
+        "last-modified": "Mon, 21 Sep 2026 04:00:03 GMT",
+        "accept-ranges": "bytes",
+        "content-length": "304411",
+        "content-type": "text/html",
+        "alt-svc": "h3=\":443\"; ma=999999; persistent=1"
+      },
+      "bytes": 304411,
+      "sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "raw_file": "live-rsync-man.html",
+      "scope": "Live unpinned supplemental navigation, not governing 3.2.7 evidence"
+    },
+    {
+      "id": "P3",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "retrieval_started_utc": "2026-10-10T04:14:06.613885+00:00",
+      "retrieval_completed_utc": "2026-10-10T04:14:06.945266+00:00",
+      "operation": "Independent unauthenticated HTTPS GET, raw content saved as data",
+      "http_status": 200,
+      "final_url": "https://rsync.samba.org/FAQ.html",
+      "headers": {
+        "date": "Sat, 10 Oct 2026 04:14:06 GMT",
+        "referrer-policy": "strict-origin",
+        "strict-transport-security": "max-age=63072000;includeSubDomains;preload",
+        "x-frame-options": "sameorigin",
+        "connection": "Upgrade",
+        "accept-ranges": "bytes",
+        "vary": "Accept-Encoding",
+        "transfer-encoding": "chunked",
+        "content-type": "text/html",
+        "alt-svc": "h3=\":443\"; ma=999999; persistent=1"
+      },
+      "bytes": 13720,
+      "sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "raw_file": "rsync-FAQ.html",
+      "scope": "Live unpinned supplemental navigation, not governing 3.2.7 evidence"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "P1-rsync.1",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/rsync.1",
+      "saved_as": "evidence/independent/rsync.1.txt",
+      "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "bytes": 233638,
+      "read_line_ranges": [
+        [
+          1,
+          5051
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P1-receiver.c",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/receiver.c",
+      "saved_as": "evidence/independent/receiver.c.txt",
+      "sha256": "1f0747cbcc0e9475e89d324bd15873a1431172cd39801dc041291c620e70c373",
+      "bytes": 28254,
+      "read_line_ranges": [
+        [
+          406,
+          475
+        ],
+        [
+          531,
+          590
+        ],
+        [
+          731,
+          980
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P1-cleanup.c",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/cleanup.c",
+      "saved_as": "evidence/independent/cleanup.c.txt",
+      "sha256": "07b982f666c9c78dfe1eacc88a666adf65410ec5402378f3a6860f11c0b43c2d",
+      "bytes": 7798,
+      "read_line_ranges": [
+        [
+          96,
+          275
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P1-generator.c",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/generator.c",
+      "saved_as": "evidence/independent/generator.c.txt",
+      "sha256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79",
+      "bytes": 68293,
+      "read_line_ranges": [
+        [
+          128,
+          250
+        ],
+        [
+          272,
+          345
+        ],
+        [
+          1506,
+          1530
+        ],
+        [
+          2286,
+          2310
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P1-options.c",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/options.c",
+      "saved_as": "evidence/independent/options.c.txt",
+      "sha256": "465892bdaefdeaafe1cfd2889aa1943fb5d34c9019ba3f5411af4004ffeb9029",
+      "bytes": 96256,
+      "read_line_ranges": [
+        [
+          2111,
+          2210
+        ],
+        [
+          2371,
+          2440
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P1-NEWS.md",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "version": "3.2.7,20 Oct2022",
+      "archive_member": "rsync-3.2.7/NEWS.md",
+      "saved_as": "evidence/independent/NEWS.md.txt",
+      "sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529",
+      "bytes": 208035,
+      "read_line_ranges": [
+        [
+          1,
+          100
+        ]
+      ],
+      "retrieval_metadata": "evidence/independent/P1-retrieval.json"
+    },
+    {
+      "source_id": "P2",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "version": "live3.5.1",
+      "saved_as": "evidence/independent/live-rsync-man.html",
+      "sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "bytes": 304411,
+      "read_scope": "Web tool navigation and relevant passages only; supplemental, not version authority",
+      "retrieval_metadata": "evidence/independent/P2-retrieval.json"
+    },
+    {
+      "source_id": "P3",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "version": "live unpinned FAQ",
+      "saved_as": "evidence/independent/rsync-FAQ.html",
+      "sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "bytes": 13720,
+      "read_scope": "Web tool navigation and relevant passages only; supplemental, not version authority",
+      "retrieval_metadata": "evidence/independent/P3-retrieval.json"
+    }
+  ],
+  "finding_navigation": {
+    "F1": [
+      {
+        "file": "evidence/independent/rsync.1.txt",
+        "lines": [
+          1992,
+          2023
+        ],
+        "section_or_symbol": "--delete default timing and --delete-during",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/rsync.1",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/rsync.1.txt",
+        "lines": [
+          3506,
+          3539
+        ],
+        "section_or_symbol": "--delay-updates storage and rename conditions",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/rsync.1",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/receiver.c.txt",
+        "lines": [
+          421,
+          448
+        ],
+        "section_or_symbol": "handle_delayed_updates",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/receiver.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/receiver.c.txt",
+        "lines": [
+          559,
+          584
+        ],
+        "section_or_symbol": "recv_files phase 2",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/receiver.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/receiver.c.txt",
+        "lines": [
+          789,
+          797
+        ],
+        "section_or_symbol": "fstat transfer error continues",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/receiver.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/receiver.c.txt",
+        "lines": [
+          901,
+          918
+        ],
+        "section_or_symbol": "failed partial-directory creation discards file",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/receiver.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/cleanup.c.txt",
+        "lines": [
+          210,
+          219
+        ],
+        "section_or_symbol": "final exit RERR_PARTIAL after transfer errors",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/cleanup.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      },
+      {
+        "file": "evidence/independent/generator.c.txt",
+        "lines": [
+          1520,
+          1525
+        ],
+        "section_or_symbol": "non-incremental delete-during",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/generator.c",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      }
+    ],
+    "L1": [
+      {
+        "file": "evidence/independent/rsync.1.txt",
+        "lines": [
+          1814,
+          1828
+        ],
+        "section_or_symbol": "--dry-run trial run/output limits",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/rsync.1",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      }
+    ],
+    "L2": [
+      {
+        "file": "evidence/independent/rsync.1.txt",
+        "lines": [
+          2098,
+          2110
+        ],
+        "section_or_symbol": "--max-delete",
+        "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+        "archive_member": "rsync-3.2.7/rsync.1",
+        "version": "rsync 3.2.7, 20 Oct 2022"
+      }
+    ]
+  },
+  "claim_coverage": [
+    {
+      "id": "C1",
+      "claim": "target version, source contents/trailing slash",
+      "status": "SUPPORTED_IN_ASSIGNED_DIRECTORY_SCOPE",
+      "candidate_lines": [
+        8,
+        10,
+        23
+      ],
+      "primary_sections": [
+        "USAGE, lines 137-174",
+        "COPYING TO A DIFFERENT NAME, lines 189-215"
+      ],
+      "conditions": "3.2.7 both peers; source is specified directory, not bare host/module default. Existing destination and changed arguments affect layout; no always claim generalized."
+    },
+    {
+      "id": "C2",
+      "claim": "recursive receiving-side obsolete-asset deletion",
+      "status": "SUPPORTED",
+      "candidate_lines": [
+        10,
+        25
+      ],
+      "primary_sections": [
+        "--delete, lines 1971-2003"
+      ],
+      "conditions": "Whole directory in synchronization scope, not shell-expanded contents wildcard. Sender I/O errors suppress deletion absent --ignore-errors. Product cannot call a failed transfer complete."
+    },
+    {
+      "id": "C3",
+      "claim": "plain local-notes/ exclusion protects directory",
+      "status": "SUPPORTED_IN_DECLARED_FILTER_SCOPE",
+      "candidate_lines": [
+        10,
+        20
+      ],
+      "primary_sections": [
+        "--delete-excluded, lines 2050-2068",
+        "FILTER RULES, lines 4111-4122, 4221-4239"
+      ],
+      "conditions": "Ordinary unqualified directory exclude without earlier conflicting include or sender-only modifiers; directory matches any depth. Explicit sr/receiver protect can survive delete-excluded; candidate drops that option instead."
+    },
+    {
+      "id": "C4",
+      "claim": "mandatory no-change deletion preview",
+      "status": "SUPPORTED_WITH_L1",
+      "candidate_lines": [
+        12,
+        21,
+        24
+      ],
+      "primary_sections": [
+        "--dry-run, lines 1814-1828",
+        "--itemize-changes, lines 3148-3180 and 3253-3256"
+      ],
+      "conditions": "Dry-run trial does not write transfer changes; verbose/itemized or application logging needed for inspection; tree can change. No claim of a tested application preview implementation credited."
+    },
+    {
+      "id": "C5",
+      "claim": "max-delete cap and zero/25 behavior",
+      "status": "MINOR_LIMITATION_L2",
+      "candidate_lines": [
+        12,
+        21
+      ],
+      "primary_sections": [
+        "--max-delete, lines 2098-2110"
+      ],
+      "conditions": "NUM files or dirs, excess attempts trigger skips; higher-priority error may override25. Zero no deletions since3.0.0; older unlimited exception inapplicable to3.2.7. Zero not a no-write dry run."
+    },
+    {
+      "id": "C6",
+      "claim": "explicit product publish and no whole-tree atomicity",
+      "status": "SUPPORTED",
+      "candidate_lines": [
+        8,
+        14,
+        22
+      ],
+      "primary_sections": [
+        "--delay-updates, lines 3506-3539"
+      ],
+      "conditions": "Publish is assignment/product policy; no rsync publication primitive inferred. Delay-updates temporary per-file rename only; conflicts inplace/append, disables incremental scan, needs additional space."
+    },
+    {
+      "id": "C7",
+      "claim": "failure/cancellation hidden temporary state and later reuse/cleanup",
+      "status": "MATERIAL_ERROR_F1",
+      "candidate_lines": [
+        14,
+        29
+      ],
+      "primary_sections": [
+        "--delete timing, lines 1992-2023",
+        "--partial-dir, lines 3421-3505",
+        "--delay-updates, lines 3506-3539",
+        "receiver.c and cleanup.c exact F1 locators"
+      ],
+      "conditions": "Delay-updates sets default partial dir and keep_partial in options.c2384-2425, so partial retention is real when possible; do not wrongly reject all retention. It does not hide prior tree changes or guarantee retention on storage failure. Local whole-file defaults can remove rather than reuse basis temporaries; cleanup is conditional."
+    },
+    {
+      "id": "C8",
+      "claim": "three prospective checks and needed filter/interruption evidence",
+      "status": "HONEST_UNEXECUTED_CHECKS",
+      "candidate_lines": [
+        16,
+        29
+      ],
+      "primary_sections": [
+        "--delete",
+        "FILTER RULES",
+        "--delay-updates",
+        "EXIT VALUES"
+      ],
+      "conditions": "No binaries or deployment supplied; no executed fixtures required for bounded prose finalization. Ordinary both-peer exclusion is source-resolvable; real configuration and interruption outcomes remain unobserved."
+    }
+  ],
+  "candidate_artifacts": [
+    {
+      "id": "A001",
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "snapshot": "evidence/inspected-science/001-RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspected_at_utc": "2026-10-10T04:12:32.906636+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A002",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "snapshot": "evidence/inspected-science/002-input-map.json",
+      "bytes": 626,
+      "sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "inspected_at_utc": "2026-10-10T04:12:32.906844+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A003",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+      "snapshot": "evidence/inspected-science/003-assignment.md",
+      "bytes": 1810,
+      "sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "inspected_at_utc": "2026-10-10T04:12:32.907020+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A004",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/freeze.json",
+      "snapshot": "evidence/inspected-science/004-freeze.json",
+      "bytes": 2849,
+      "sha256": "5c7d4746092117fb093b71b607035003739d33385c52519c143714700b4d6824",
+      "inspected_at_utc": "2026-10-10T04:12:32.907232+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A005",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "snapshot": "evidence/inspected-science/005-assignment.md",
+      "bytes": 5043,
+      "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "inspected_at_utc": "2026-10-10T04:12:32.907413+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A006",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "snapshot": "evidence/inspected-science/006-fixture.json",
+      "bytes": 1652,
+      "sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "inspected_at_utc": "2026-10-10T04:12:32.907571+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A007",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "snapshot": "evidence/inspected-science/007-manifest.json",
+      "bytes": 624,
+      "sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "inspected_at_utc": "2026-10-10T04:12:32.907742+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A008",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "snapshot": "evidence/inspected-science/008-S1.md",
+      "bytes": 944,
+      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "inspected_at_utc": "2026-10-10T04:12:32.907903+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A009",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "snapshot": "evidence/inspected-science/009-S2.md",
+      "bytes": 795,
+      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "inspected_at_utc": "2026-10-10T04:12:32.908075+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A010",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "snapshot": "evidence/inspected-science/010-index.json",
+      "bytes": 1281,
+      "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "inspected_at_utc": "2026-10-10T04:12:32.908230+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A011",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "snapshot": "evidence/inspected-science/011-final-section.md",
+      "bytes": 7111,
+      "sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "inspected_at_utc": "2026-10-10T04:12:32.908411+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A012",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+      "snapshot": "evidence/inspected-science/012-source-map.json",
+      "bytes": 5911,
+      "sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "inspected_at_utc": "2026-10-10T04:12:32.908594+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A013",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/goal-record.md",
+      "snapshot": "evidence/inspected-science/013-goal-record.md",
+      "bytes": 1929,
+      "sha256": "cfce03efbe99bd8311411fddc38a83912e20f4a8bcd2f9cb470a1bc205167a83",
+      "inspected_at_utc": "2026-10-10T04:12:32.908779+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A014",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "snapshot": "evidence/inspected-science/014-rsync-3.2.7-man.txt",
+      "bytes": 233638,
+      "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "inspected_at_utc": "2026-10-10T04:12:32.910117+00:00",
+      "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+    },
+    {
+      "id": "A015",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/terminal-science-freeze.json",
+      "snapshot": "evidence/inspected-science/015-terminal-science-freeze.json",
+      "bytes": 9867,
+      "sha256": "fc57667cbea26e7c81fe50d89ebbc364439bd4787b6d24f71f6f2e8401a4cf48",
+      "inspected_at_utc": "2026-10-10T04:15:57.715015+00:00",
+      "full_read_status": "complete; actual host terminal-science-freeze read and byte-preserved without alteration"
+    }
+  ],
+  "retained_evidence_note": "Raw HTTPS response bodies, archive and headers/timestamps/hashes retained. Archive extraction was text-only; no code run. Full candidate sources member read; independently retrieved duplicate manual checked and relevant passages read from matching versioned source. Other extracted source files read selectively as located."
+}

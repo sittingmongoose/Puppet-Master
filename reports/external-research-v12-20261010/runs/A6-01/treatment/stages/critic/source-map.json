@@ -1,0 +1,491 @@
+{
+  "run_id": "A6-01-treatment",
+  "stage": "critic",
+  "access_observed_utc": "2026-10-10T04:02:01Z",
+  "evidence_index": "sources/index.md",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "GTFS Schedule Reference",
+      "url": "https://gtfs.org/documentation/schedule/reference/",
+      "released_version_or_commit": "Page states revised April 27, 2026; no numbered release.",
+      "locator": [
+        "Dataset Publishing & General Practices",
+        "Term Definitions: service day and Time",
+        "agency.txt: agency_timezone",
+        "routes.txt: route_type",
+        "stop_times.txt: arrival_time/departure_time"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Official reference distinguishes service date/time from civil clock date, assigns stop_times to agency timezone, defines the ferry route type and describes publishing stable/current feeds.",
+      "condition_default_exception": "A service day can run past midnight with times above 24:00; stop_times use agency.agency_timezone rather than stop_timezone; the time base has a daylight-saving caveat; route_type 4 denotes ferry.",
+      "applicability": "Directly governs the proposed GTFS Schedule based ferry departure display; actual operator identifiers/calendar remain unknown.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Schedule reference: service day and >24:00 time, agency timezone vs stop_timezone, ferry type 4, feed_info version recommendation."
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "GTFS Overview",
+      "url": "https://gtfs.org/documentation/overview/",
+      "released_version_or_commit": "Current maintained overview as accessed; no numbered version.",
+      "locator": [
+        "GTFS Schedule",
+        "GTFS Realtime",
+        "source-of-truth paragraph"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Schedule is a static ZIP with routes/trips/stops/stop_times/calendars; Realtime describes trip updates, service alerts and vehicle positions; reference docs are declared the source of truth.",
+      "condition_default_exception": "Realtime capabilities are optional in this proposed consumer; the overview is descriptive, with detailed semantics delegated to the separate references.",
+      "applicability": "Frames two ingestion/display routes and supports schedule-only fallback as a product design inference.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Official overview: static Schedule files and supported Realtime entity categories."
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "GTFS Realtime Reference",
+      "url": "https://gtfs.org/documentation/realtime/reference/",
+      "released_version_or_commit": "GTFS Realtime 2.0; current maintained reference at access. Source code/reference branch is mutable; no immutable commit observed.",
+      "locator": [
+        "FeedMessage and FeedHeader",
+        "TripDescriptor: trip_id/route_id/direction_id/start_time/start_date",
+        "TripUpdate.ScheduleRelationship"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Every feed relates to an existing static GTFS; FeedHeader.timestamp is generation time; optional feed_version matches static feed_info.feed_version; trip descriptors identify scheduled/frequency instances with different required keys.",
+      "condition_default_exception": "Frequency trips require trip_id+start_date+start_time. For scheduled trips, start_date is required for ambiguity/collision cases and if trip_id omitted; route_id alone in TripDescriptor is not a route-wide alert selector. Unresolved zero/multiple trip matches can be discarded.",
+      "applicability": "Directly governs realtime/static matching and version mismatch states; producer's actual feed version field and ID discipline are unknown.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Realtime reference: FeedHeader version, TripDescriptor conditions, stop identity, NEW/REPLACEMENT semantics and required StopTimeUpdates."
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "GTFS Realtime Best Practices",
+      "url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "released_version_or_commit": "Current maintained recommendations at access; no numbered release.",
+      "locator": [
+        "Feed Publishing & General Practices",
+        "TripDescriptor",
+        "TripUpdate timestamp and StopTimeUpdate recommendations"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Recommended refresh interval is at most 30 seconds and embedded TripUpdate/VehiclePosition data age no more than 90 seconds; Service Alerts no more than 10 minutes. Provides advice on stable IDs and trip schedule relationship values.",
+      "condition_default_exception": "These are best-practice recommendations, not an operator-specific service guarantee. Header refresh alone does not prove embedded event freshness.",
+      "applicability": "Starting point only for proposed pilot freshness checks; local stale threshold needs duty manager and partner agreement.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Best practices: 30-second refresh and embedded age recommendations; guidance, not a local SLA."
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "GTFS Realtime Trip Updates",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "released_version_or_commit": "Current maintained guidance at access; no numbered release.",
+      "locator": [
+        "Trip Updates opening semantics",
+        "TripDescriptor repeated trip_ids",
+        "StopTimeUpdate defaults, NO_DATA and propagation"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "No TripUpdate means no real-time information, not on-time; stop updates can contain time/delay; NO_DATA marks unknown portions; repeated/frequency trip IDs require service-date/time.",
+      "condition_default_exception": "Delay is meaningful only relative to matching scheduled static time; missing stop updates and NO_DATA mean unknown; a missing update cannot justify an ETA.",
+      "applicability": "Directly governs board's prediction suppression and trip identity.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Trip Updates: missing update is not on-time; stop event and NO_DATA semantics."
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "GTFS Realtime Service Alerts",
+      "url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "released_version_or_commit": "Current maintained guidance at access; revision history lists June 2026 active-period additions.",
+      "locator": [
+        "TimeRange",
+        "EntitySelector",
+        "Cause and Effect"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Trip-specific delays/cancellations ordinarily use TripUpdates. An alert time range defines display period; without one, the documented display duration is while present. Multiple selectors are independent; multiple fields within one selector are ANDed.",
+      "condition_default_exception": "Only GTFS-ID-matching entities apply; route+stop constrains alert to that route at that stop. Alert is a broader notice and must not become an estimated trip time.",
+      "applicability": "Directly governs two-terminal route/stop banner applicability.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Service Alerts: time ranges and EntitySelector AND/separate-selector behavior."
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "GTFS Realtime Full Revision History",
+      "url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "released_version_or_commit": "Maintained history accessed 2026-10-10; relevant entries Dec 2024 and May 2025, with later entries through June 2026.",
+      "locator": [
+        "December 2024: feed_version",
+        "May 2025: ADDED deprecated / NEW and REPLACEMENT"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Records the release of FeedHeader schedule feed version linkage and later trip schedule relationship clarifications.",
+      "condition_default_exception": "History identifies spec changes, not which partner/consumer has deployed each version.",
+      "applicability": "Historical applicability for version-aware static/RT cutover and feed producer compatibility.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Official revision history: December 2024 feed_version; current reference also records later trip relationships."
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "GTFS Realtime PR #434 and issue #362",
+      "url": "https://github.com/google/transit/pull/434",
+      "related_urls": [
+        "https://github.com/google/transit/issues/362"
+      ],
+      "released_version_or_commit": "PR #434 merged 2024-12-05; related source commit displayed as 1c7d8b5; current GTFS-RT revision record says Dec 2024.",
+      "locator": [
+        "PR conversation: initial version and URL proposal; URL removal; Swiss producer and TransSee consumer report; merge metadata"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "An issue identified lack of static schedule version in realtime. The change retained optional feed_version matching static feed_info.feed_version and removed gtfs_url after current/upcoming URL ambiguity. Swiss producer and TransSee consumer reported switching static GTFS when version changed.",
+      "condition_default_exception": "feed_version is optional. Schedule publishing and realtime activation can occur at different times; the PR does not mandate a cutover algorithm.",
+      "applicability": "A relevant released failure/change chain for timetable revision synchronization; local proposal to compare versions and withhold incompatible RT is an inference.",
+      "critic_review": {
+        "status": "partially checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "The official revision history and supplemental S21 confirm the field/proposal context. Direct GitHub PR fetch timed out; removal rationale and Swiss/TransSee account were not independently corroborated."
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "OneBusAway Application Modules README",
+      "url": "https://github.com/OneBusAway/onebusaway-application-modules/blob/main/README.md",
+      "released_version_or_commit": "README on moving main, accessed 2026-10-10; deployment guide identifies v2.x. Not release-pinned.",
+      "locator": [
+        "Application Suite and sign-mode",
+        "Getting Started",
+        "GTFS Data / static and real-time data changes"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "OneBusAway offers a large-screen sign-mode and REST API; setup uses GTFS_URL, agency timezone, separate tripUpdatesUrl/vehiclePositionsUrl/alertsUrl, agencyId, refresh interval and optional auth headers.",
+      "condition_default_exception": "Project expects schedule GTFS and realtime source for standard full service; stated Docker setup is under development; no ferry feed or mismatch behavior verified.",
+      "applicability": "Plausible second display/ingestion route; requires a pilot fit test and operational overhead review.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OneBusAway main README: sign-mode, API, static and separate realtime feed configuration; moving documentation."
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "OneBusAway Application Modules Releases",
+      "url": "https://github.com/OneBusAway/onebusaway-application-modules/releases",
+      "released_version_or_commit": "Latest listed release at access is v2.7.1, commit 095bf1a.",
+      "locator": [
+        "v2.7.1 release metadata and changelog"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "Release page distinguishes tagged product release from moving main docs and lists current version commit.",
+      "condition_default_exception": "Release metadata alone does not establish ferry feature compatibility or current docs behavior.",
+      "applicability": "Pins the candidate product alternative's reviewed release label; use the release itself in any later validation.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OneBusAway release page: v2.7.1 marked latest at review and commit 095bf1a."
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "DfT Technical Guidance: SIRI-VM",
+      "url": "https://www.gov.uk/government/publications/technical-guidance-publishing-location-data-using-the-bus-open-data-service-siri-vm/technical-guidance-siri-vm",
+      "released_version_or_commit": "DfT BODS-specific SIRI-VM 2.0(Q) profile; maintained web guidance, accessed 2026-10-10.",
+      "locator": [
+        "SIRI standards family",
+        "subscription and heartbeat",
+        "profile identifiers and timestamps",
+        "BODS consumer endpoint"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "SIRI is modular; guidance describes scheduled and realtime exchange family, SIRI-VM subscription/incremental updates, 30-second heartbeat/update expectations, UTC timestamps, and ID matching.",
+      "condition_default_exception": "This concrete implementation is a UK bus profile, not the complete CEN standard and not a ferry implementation. Different SIRI profiles remain valid for other workflows.",
+      "applicability": "Analogue only; informs an alternate if the partner already publishes SIRI but does not establish local capability.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "DfT BODS SIRI-VM technical profile: cadence/heartbeat and profile-specific fields; bus applicability."
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "DfT Bus Open Data Implementation Guide",
+      "url": "https://www.gov.uk/government/publications/bus-open-data-implementation-guide/bus-open-data-implementation-guide",
+      "released_version_or_commit": "DfT guidance for TransXChange 2.4 and SIRI-VM 2.0/2.0Q; maintained publication, accessed 2026-10-10.",
+      "locator": [
+        "Publishing location data",
+        "Location Matching",
+        "TransXChange and SIRI-VM cross-reference fields"
+      ],
+      "access_utc": "2026-10-10T04:02:01Z",
+      "observed_operation": "The bus profile matches timetable and realtime using same IDs for OperatorRef, BlockRef and VehicleJourneyRef; operational ID changes require revised timetable data; incomplete IDs reduce matching quality.",
+      "condition_default_exception": "For UK buses and the BODS profile; cannot be applied as ferry-specific requirement.",
+      "applicability": "Analogous schedule-plus-event/update integration mechanism and an explicit warning that shared identity must be operationally managed.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "DfT implementation guide: TransXChange/SIRI-VM shared identifier/revision relationship; bus-profile limit."
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "OpenTripPlanner v2.10.0 release and changelog",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/releases",
+      "related_urls": [
+        "https://docs.opentripplanner.org/en/v2.10.0/Changelog/"
+      ],
+      "released_version_or_commit": "v2.10.0, release commit 521cd5d, dated 2026-09-09.",
+      "locator": [
+        "release page v2.10.0",
+        "changelog v2.10.0"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "Pins a current OTP candidate release; official changelog describes feature/fix changes incorporated in each version, and the 2.10.0 changelog lists release contents.",
+      "condition_default_exception": "A tagged version alone does not prove local configuration, data-feed compatibility, or suitable display behavior.",
+      "applicability": "Use v2.10.0 for any OTP fit check; do not treat latest docs as proof of ferry-specific operation.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP release page: v2.10.0, commit 521cd5d, 2026-09-09."
+      }
+    },
+    {
+      "source_id": "S14",
+      "title": "OpenTripPlanner v2.10.0 GTFS-RT updater configuration",
+      "url": "https://docs.opentripplanner.org/en/v2.10.0/GTFS-RT-Config/",
+      "released_version_or_commit": "OTP 2.10.0 versioned documentation.",
+      "locator": [
+        "Alerts updater",
+        "TripUpdates via HTTP(S)",
+        "backwardsDelayPropagationType",
+        "forwardsDelayPropagationType",
+        "Vehicle Positions"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "Separate updaters consume alert, trip-update and vehicle-position feeds. HTTP polling frequency defaults to PT1M; TripUpdates and Alerts require feedId; fuzzy trip matching defaults false; headers can be supplied.",
+      "condition_default_exception": "Backwards delay propagation default is required-no-data; forwards default propagates estimates with documented special handling for NO_DATA/SKIPPED. Updater acceptance and output are dependent on matching and stop-time conditions.",
+      "applicability": "Concrete candidate integration behavior for partner-confirmed feed types. It does not set this board's freshness threshold or manual advisory policy.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP v2.10.0 GTFS-RT updater types, feedId, polling defaults and matching configuration."
+      }
+    },
+    {
+      "source_id": "S15",
+      "title": "OpenTripPlanner v2.10.0 Feed ID",
+      "url": "https://docs.opentripplanner.org/en/v2.10.0/features-explained/Feed-ID/",
+      "released_version_or_commit": "OTP 2.10.0 versioned documentation.",
+      "locator": [
+        "Determining feedId",
+        "GTFS build-config priority",
+        "non-standard feed_info.feed_id fallback",
+        "automatically assigned fallback"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "OTP scopes static feed identifiers and uses them to associate real-time feeds with static datasets. A build-config value has priority; feed_info.feed_id is non-standard; automatic increasing numeric IDs are fallback.",
+      "condition_default_exception": "feedId is a dataset namespace configured at graph build and is not the GTFS Schedule feed_info.feed_version or realtime FeedHeader.feed_version.",
+      "applicability": "Choose a stable explicit feedId for the one-route feed and bind updater to it; separately expose/compare feed_version for revision status.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP v2.10.0 Feed ID documentation: static namespace and explicit build-config preference, distinct from dataset version."
+      }
+    },
+    {
+      "source_id": "S16",
+      "title": "OTP old vehicle-position cleanup fix PR #6523",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6523",
+      "related_urls": [
+        "https://docs.opentripplanner.org/en/v2.10.0/Changelog/"
+      ],
+      "released_version_or_commit": "PR merged 2025-03-14 as commit 273f879; included in the OTP v2.8.0 release line (2025-09-10); current candidate 2.10.0 is later.",
+      "locator": [
+        "PR summary and merge metadata",
+        "OTP changelog v2.8.0 detailed changes, PR #6523"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "Maintainer reports old vehicle data from the previous poll/download was not correctly removed. The fix changed the repository update to copy-on-write semantics, added tests and exposed last vehicle-position update time in ISO format.",
+      "condition_default_exception": "This concerns VehiclePositions snapshot replacement and a returned last-update timestamp; it is not evidence of a configured max-age cutoff for TripUpdates/Alerts or a timetable-version gate.",
+      "applicability": "Released consumer-history evidence for stale vehicle-position handling; still propose explicit freshness monitoring and test the actual selected release.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "PR text and v2.8.0 changelog confirm the VehiclePositions cleanup and release inclusion; exact SHA detail is carried from investigator metadata, not independently rechecked."
+      }
+    },
+    {
+      "source_id": "S17",
+      "title": "OTP GraphQL feed-version exposure PR #7445",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/pull/7445",
+      "related_urls": [
+        "https://docs.opentripplanner.org/en/v2.10.0/Changelog/"
+      ],
+      "released_version_or_commit": "PR #7445 merged 2026-03-30; included in OTP 2.10.0; initial commit shown as 2bc44a8.",
+      "locator": [
+        "PR summary: client identifies data version used by an OTP instance",
+        "schema comment feedVersion",
+        "2.10.0 changelog entry"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "Adds the static GTFS feed version to GraphQL output so a client can identify the data revision in a specific OTP instance and avoid unnecessary refreshes.",
+      "condition_default_exception": "This exposes the loaded static feed version; it does not compare it against an incoming realtime FeedHeader or automatically switch timetable revisions.",
+      "applicability": "Useful observability for a display client, but product logic must still compare/handle version mismatch.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP PR #7445 and v2.10.0 changelog: static GTFS version exposed through GraphQL."
+      }
+    },
+    {
+      "source_id": "S18",
+      "title": "OTP missing-start_date vehicle-position failure and linked fix",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner/issues/4058",
+      "related_urls": [
+        "https://github.com/opentripplanner/OpenTripPlanner/pull/4066"
+      ],
+      "released_version_or_commit": "Issue opened 2022-04-01 against commit b0c9829e3bfe10daddae72485a09a7f48b0be8ff; issue closed as completed in PR #4066 on 2022-04-22. A released tag containing the fix was not directly established in the inspected changelog.",
+      "locator": [
+        "Issue observed behavior",
+        "discussion of conditional start_date, service day, midnight/server-time concern",
+        "closed-by relation to PR #4066"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "OTP discarded GTFS-RT VehiclePosition entities lacking start_date even where the feed's scheduled trip could otherwise be matched. Maintainers explained that realtime trip-time updates may create per-service-day logical trips; the linked fix inferred a service day.",
+      "condition_default_exception": "Condition applies to a vehicle-position entity missing start_date and to OTP's internal trip-instance/service-day resolution. It is not evidence of a static feed-version bug; release inclusion remains unknown from this read.",
+      "applicability": "Shows why trip_id alone is not enough for every message and why service date/time-zone cases must be tested; not a product-validation result.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP issue #4058/closed-by #4066 record; release inclusion remains unestablished as the investigator states."
+      }
+    },
+    {
+      "source_id": "S19",
+      "title": "OpenTripPlanner v2.10.0 SIRI updater configuration",
+      "url": "https://docs.opentripplanner.org/en/v2.10.0/SIRI-Config/",
+      "released_version_or_commit": "OTP 2.10.0 versioned documentation; updater supports the Nordic and EPIP SIRI profiles as subsets.",
+      "locator": [
+        "SIRI overview",
+        "SIRI-ET Request/Response via HTTPS",
+        "SIRI-SX Request/Response via HTTPS"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "OTP documents request/response SIRI-ET and SIRI-SX updaters; both use a feedId, default to PT1M polling, and identify profiles rather than the entire SIRI standard.",
+      "condition_default_exception": "Requires a compatible profile/server; docs do not claim any arbitrary SIRI implementation or ferry provider can be consumed directly.",
+      "applicability": "A possible if-partner-already-has-it analogue/adapter route; require profile and field mapping confirmation.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP v2.10.0 SIRI docs: ET/SX updater supports Nordic and EPIP subsets, not arbitrary SIRI."
+      }
+    },
+    {
+      "source_id": "S20",
+      "title": "OpenTripPlanner v2.10.0 project overview",
+      "url": "https://github.com/opentripplanner/OpenTripPlanner",
+      "released_version_or_commit": "Project repository describes OTP2 as the current supported major line; reviewed tag v2.10.0 is pinned separately in S13.",
+      "locator": [
+        "Project overview",
+        "README description of multimodal journey-planning APIs and GTFS/OSM data"
+      ],
+      "access_utc": "2026-10-10T04:06:37Z",
+      "observed_operation": "OTP is an open-source multimodal public-transport trip planner, with GTFS and other open standard inputs and APIs consumed by client applications.",
+      "condition_default_exception": "Its purpose is trip planning; the documentation does not describe a ferry terminal departure board as a turnkey output.",
+      "applicability": "Supports OTP as an ingestion/data backend candidate only when paired with a board frontend.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "OTP project description: multimodal journey-planning backend, not a turnkey terminal board."
+      }
+    },
+    {
+      "source_id": "S21",
+      "title": "GTFS Digest — February 2024",
+      "url": "https://gtfs.org/blog/2024/03/01/gtfs-digest---february-2024/",
+      "released_version_or_commit": "Official GTFS Digest, February 2024 edition, posted 2024-03-01.",
+      "locator": [
+        "Active Proposals",
+        "Add Feed Version and GTFS url to the GTFS real time FeedHeader #434"
+      ],
+      "access_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+      "observed_operation": "The official digest describes PR #434's initial proposal as adding feed_version matching GTFS feed_info.feed_version and a GTFS_url pointing to the schedule file.",
+      "condition_default_exception": "This is proposal context from before the eventual December 2024 field adoption; it does not establish why GTFS_url was later removed or the PR discussion's implementation anecdotes.",
+      "applicability": "Partial corroboration for the initial proposal history; the official revision history S07 is relied upon for the adopted field.",
+      "critic_review": {
+        "status": "independently checked",
+        "access_window_utc": "2026-10-10T04:12:38Z/2026-10-10T04:15:50Z",
+        "review_note": "Supports only initial proposal context, not all S08 discussion claims."
+      }
+    }
+  ],
+  "reviewed_source_map": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+  "critic_review": {
+    "access_window_utc": {
+      "start": "2026-10-10T04:12:38Z",
+      "end": "2026-10-10T04:15:50Z",
+      "precision_note": "The browser did not expose per-fetch timestamps; exact window endpoints are clock observations."
+    },
+    "method": "Grouped primary-source review by Schedule, Realtime, OTP, OneBusAway and SIRI neighborhoods; resolved each field/condition separately.",
+    "native_goal": {
+      "tool": "create_goal",
+      "threadId": "01a12402-7c63-73d1-b249-882036b29d40",
+      "objective": "ER12 critic stage, run A6-01-treatment: execute ER12_RUNTIME/runs/A6-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status_at_last_observation": "active",
+      "status_observed_at_utc": "2026-10-10T04:20:52Z",
+      "tokensUsed": 172429,
+      "timeUsedSeconds": 509,
+      "createdAt_raw": 1791605543,
+      "createdAt_utc_derived": "2026-10-10T04:12:23Z",
+      "updatedAt_raw": 1791606052,
+      "updatedAt_utc_derived": "2026-10-10T04:20:52Z",
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "provenance_limit": "Actual create_goal/get_goal tool results were observed. No additional native Goal audit/provenance fields were exposed.",
+      "providerInstanceId": "UNKNOWN (native Goal tool did not expose actual provider instance)",
+      "model": "UNKNOWN (native Goal tool did not expose actual model)",
+      "reasoningEffort": "UNKNOWN (native Goal tool did not expose actual reasoning effort)",
+      "creation_result_fields": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791605543,
+        "updatedAt": 1791605543,
+        "remainingTokens": null,
+        "completionBudgetReport": null
+      },
+      "get_goal_observation_fields": {
+        "status": "active",
+        "tokensUsed": 172429,
+        "timeUsedSeconds": 509,
+        "createdAt": 1791605543,
+        "updatedAt": 1791606052,
+        "remainingTokens": null,
+        "completionBudgetReport": null
+      },
+      "terminal_status": "UNKNOWN until update_goal is actually observed"
+    },
+    "primary_review_findings": [
+      "S03/S07: the NEW and REPLACEMENT distinctions and required stop-update fields are current and relevant to the board acceptance scope.",
+      "S08: official final revision history and S21 corroborate the field and initial proposal context, but the GitHub PR discussion itself timed out; URL-removal rationale and producer/consumer anecdote were not independently rechecked."
+    ]
+  }
+}

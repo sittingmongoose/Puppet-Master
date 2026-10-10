@@ -1,0 +1,1063 @@
+{
+  "schema": "er12-independent-role-assessment-v1",
+  "assessment_id": "B-DISC-M-01/control-v1",
+  "slot_id": "B-DISC-M-01",
+  "case_id": "ER12-B-DISC-M-01-FRESH",
+  "arm": "control",
+  "role": "Brief-only discovery",
+  "rubric": "assessment/RUBRIC-v1.md",
+  "saved_at_utc": "2026-10-10T04:13:54.404772+00:00",
+  "source_judgment": "FAIL",
+  "source_judgment_basis": "One supported material applicability omission, F1; no automatic whole-product or paired conclusion.",
+  "delivery": {
+    "judgment": "PASS",
+    "output_present": true,
+    "word_count": 839,
+    "word_count_method": "str.split() over complete Markdown including table/headings",
+    "all_ten_terminal_frozen_file_hashes_match": true,
+    "T3_terminal": "completed",
+    "hasPendingChildRuns": false
+  },
+  "coverage": {
+    "judgment": "SUBSTANTIAL_WITH_MATERIAL_BOUNDARY_GAP",
+    "axes": [
+      {
+        "axis": "original_obligations_and_negative_constraints",
+        "coverage": "all enumerated in O01–O20",
+        "judgment": "FORM_AND_SCOPE_MET; MATERIAL_BOUNDARY_GAP_F1"
+      },
+      {
+        "axis": "consequential_source_applicability",
+        "coverage": "C01–C17; each submitted approach and implementation/history lead",
+        "judgment": "FAIL",
+        "finding_ids": [
+          "F1"
+        ]
+      },
+      {
+        "axis": "useful_unfamiliar_discovery_and_alternatives",
+        "coverage": "four variants, implementation and history opportunities",
+        "judgment": "PASS_AT_BOUNDED_DISCOVERY_SCOPE"
+      },
+      {
+        "axis": "wrong_corrections_rejections_and_exact_plan_dispositions",
+        "coverage": "no input plan/critique or numbered verification claims",
+        "judgment": "NOT_APPLICABLE"
+      },
+      {
+        "axis": "supported_pipeline_meaning_preservation",
+        "coverage": "no draft/critique/final pipeline assigned",
+        "judgment": "NOT_APPLICABLE"
+      },
+      {
+        "axis": "proposed_versus_executed_validation",
+        "coverage": "identity, range and finalization discriminators plus next investigation",
+        "judgment": "PASS; ALL_BEHAVIORAL_CHECKS_PROPOSED_ONLY"
+      }
+    ],
+    "obligations": [
+      {
+        "id": "O01",
+        "obligation": "One-artifact resume/integrity scope; no existing design to repair",
+        "status": "MET",
+        "candidate_lines": [
+          5,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      {
+        "id": "O02",
+        "obligation": "Four meaningfully different approaches or variants",
+        "status": "MET",
+        "candidate_lines": [
+          11,
+          12,
+          13,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      {
+        "id": "O03",
+        "obligation": "Evidence for each mechanism and failure boundary",
+        "status": "MATERIAL_GAP",
+        "candidate_lines": [
+          16,
+          22
+        ]
+      },
+      {
+        "id": "O04",
+        "obligation": "Compact mechanism/tradeoff comparison",
+        "status": "MET",
+        "candidate_lines": [
+          9,
+          11,
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "id": "O05",
+        "obligation": "Two concrete inspectable implementation leads",
+        "status": "MET",
+        "candidate_lines": [
+          26,
+          27
+        ]
+      },
+      {
+        "id": "O06",
+        "obligation": "One historical/version lead",
+        "status": "MET",
+        "candidate_lines": [
+          29
+        ]
+      },
+      {
+        "id": "O07",
+        "obligation": "Three discriminating questions or small prospective tests",
+        "status": "MET",
+        "candidate_lines": [
+          33,
+          34,
+          35
+        ]
+      },
+      {
+        "id": "O08",
+        "obligation": "At least three primary sources from at least two organizations/projects",
+        "status": "MET",
+        "candidate_lines": []
+      },
+      {
+        "id": "O09",
+        "obligation": "700–1000-word discovery.md",
+        "status": "MET",
+        "candidate_lines": []
+      },
+      {
+        "id": "O10",
+        "obligation": "Citations with source/version/section and separated inference",
+        "status": "MET_WITH_LIMITATION",
+        "candidate_lines": [
+          16,
+          18,
+          20,
+          26,
+          27,
+          29
+        ]
+      },
+      {
+        "id": "O11",
+        "obligation": "Unknowns and bounded next investigation",
+        "status": "MET",
+        "candidate_lines": [
+          5,
+          22,
+          27,
+          37
+        ]
+      },
+      {
+        "id": "O12",
+        "obligation": "Network range support, identity change and interrupted finalization",
+        "status": "PARTIAL_MATERIAL",
+        "candidate_lines": [
+          16,
+          22,
+          33,
+          34,
+          35
+        ]
+      },
+      {
+        "id": "O13",
+        "obligation": "Pause/restart, 50 MB–2 GB context and retained state",
+        "status": "MET_AT_DISCOVERY_SCOPE",
+        "candidate_lines": [
+          16,
+          27
+        ]
+      },
+      {
+        "id": "O14",
+        "obligation": "No partial artifact exposed as complete; understandable integrity failure",
+        "status": "PRESERVED_AT_DISCOVERY_SCOPE",
+        "candidate_lines": [
+          5,
+          12,
+          18,
+          20,
+          33,
+          35
+        ]
+      },
+      {
+        "id": "O15",
+        "obligation": "Do not equate fewer transferred bytes with integrity",
+        "status": "MET",
+        "candidate_lines": [
+          11,
+          20,
+          26
+        ]
+      },
+      {
+        "id": "O16",
+        "obligation": "No finished product specification, automatic winner or full-pipeline success",
+        "status": "MET",
+        "candidate_lines": [
+          5,
+          37
+        ]
+      },
+      {
+        "id": "O17",
+        "obligation": "Retrieval failures recorded if encountered",
+        "status": "NO_FAILURE_REPORTED; COMPLETENESS_UNKNOWN",
+        "candidate_lines": []
+      },
+      {
+        "id": "O18",
+        "obligation": "Source cap, isolation, tools, no execution/install/auth/fixture changes",
+        "status": "CONSISTENT_REPORTED_PROTOCOL; FULL_ACTION_HISTORY_UNKNOWN",
+        "candidate_lines": []
+      },
+      {
+        "id": "O19",
+        "obligation": "Native Goal and complete science saved before completion",
+        "status": "RECEIPT_AND_FREEZE_SUPPORT",
+        "candidate_lines": []
+      },
+      {
+        "id": "O20",
+        "obligation": "Fixed 900-second deadline, at most 600 seconds investigation and writing reserve",
+        "status": "DELIVERY_WITHIN_DEADLINE; EXACT_PHASE_PARTITION_UNKNOWN",
+        "candidate_lines": []
+      }
+    ],
+    "claim_checks": [
+      {
+        "id": "C01",
+        "candidate_lines": [
+          5,
+          16,
+          18
+        ],
+        "topic": "Locator versus artifact identity",
+        "judgment": "SUPPORTED_GENERAL_DISTINCTION",
+        "sources": [
+          "http-rfc9110",
+          "tuf-spec-v1.0.36"
+        ],
+        "qualification": "Resource transition in validator-only variant remains F1."
+      },
+      {
+        "id": "C02",
+        "candidate_lines": [
+          11,
+          16
+        ],
+        "topic": "Sequential Range/If-Range mechanism and restart state",
+        "judgment": "SUPPORTED_WITH_MATERIAL_APPLICABILITY_OMISSION",
+        "sources": [
+          "http-rfc9110"
+        ],
+        "finding_ids": [
+          "F1"
+        ]
+      },
+      {
+        "id": "C03",
+        "candidate_lines": [
+          16,
+          34
+        ],
+        "topic": "206/status/Content-Range gates and conservative restart policy",
+        "judgment": "SUPPORTED_WITH_POLICY_INFERENCE",
+        "sources": [
+          "http-rfc9110"
+        ],
+        "qualification": "Client restart rules are proposed policy, not a claim that every conforming server must follow the policy."
+      },
+      {
+        "id": "C04",
+        "candidate_lines": [
+          16,
+          34
+        ],
+        "topic": "Content coding and saved byte offset",
+        "judgment": "SUPPORTED",
+        "sources": [
+          "http-rfc9110"
+        ]
+      },
+      {
+        "id": "C05",
+        "candidate_lines": [
+          12,
+          18
+        ],
+        "topic": "Trusted whole-file metadata and final verification",
+        "judgment": "SUPPORTED_WITH_CLEAR_TRUST_PRECONDITION",
+        "sources": [
+          "tuf-spec-v1.0.36"
+        ]
+      },
+      {
+        "id": "C06",
+        "candidate_lines": [
+          18
+        ],
+        "topic": "Delayed application access and consistent-snapshot naming",
+        "judgment": "SUPPORTED",
+        "sources": [
+          "tuf-spec-v1.0.36"
+        ]
+      },
+      {
+        "id": "C07",
+        "candidate_lines": [
+          18,
+          35
+        ],
+        "topic": "Whole-file-only retry tradeoff; TUF resume/promotion boundaries",
+        "judgment": "SUPPORTED_BOUNDED_INFERENCE",
+        "sources": [
+          "tuf-spec-v1.0.36"
+        ],
+        "qualification": "Late whole-file failure does not localize damage; full retransfer is an approach tradeoff, not a theorem excluding other recovery methods."
+      },
+      {
+        "id": "C08",
+        "candidate_lines": [
+          13,
+          20
+        ],
+        "topic": "Ordered piece manifest, remainder and retry mechanism",
+        "judgment": "SUPPORTED_WITH_DESIGN_INFERENCE",
+        "sources": [
+          "metalink-rfc5854"
+        ]
+      },
+      {
+        "id": "C09",
+        "candidate_lines": [
+          20
+        ],
+        "topic": "Optional signatures, weaker hash types and manifest trust",
+        "judgment": "SUPPORTED",
+        "sources": [
+          "metalink-rfc5854"
+        ]
+      },
+      {
+        "id": "C10",
+        "candidate_lines": [
+          14,
+          22
+        ],
+        "topic": "Parallel fan-out identity binding and combination applicability",
+        "judgment": "MATERIAL_APPLICABILITY_OMISSION",
+        "sources": [
+          "http-rfc9110",
+          "metalink-rfc5854"
+        ],
+        "finding_ids": [
+          "F1"
+        ],
+        "qualification": "Concurrency is a meaningful scheduling variant; the authenticated-manifest branch is not implicated by F1."
+      },
+      {
+        "id": "C11",
+        "candidate_lines": [
+          20,
+          22
+        ],
+        "topic": "Multiple locations and possible parallel performance",
+        "judgment": "SUPPORTED_PRECEDENT_AND_CONDITIONAL_INFERENCE",
+        "sources": [
+          "metalink-rfc5854"
+        ],
+        "qualification": "No target-service support or measured throughput is claimed."
+      },
+      {
+        "id": "C12",
+        "candidate_lines": [
+          26
+        ],
+        "topic": "libcurl large-offset API and addition version",
+        "judgment": "SUPPORTED_INSPECTABLE_LEAD",
+        "sources": [
+          "curl-resume-large",
+          "curl-http-implementation"
+        ]
+      },
+      {
+        "id": "C13",
+        "candidate_lines": [],
+        "candidate_artifact": "source-map.json / curl-resume; sources/evidence.md",
+        "topic": "Legacy long-offset API/version context",
+        "judgment": "SUPPORTED_SUPPLEMENTARY_LEAD",
+        "sources": [
+          "curl-resume"
+        ]
+      },
+      {
+        "id": "C14",
+        "candidate_lines": [
+          27
+        ],
+        "topic": "Go TUF updater verification/write control flow and memory caveat",
+        "judgment": "SUPPORTED_WITH_MINOR_LOCATOR_LIMITATION",
+        "sources": [
+          "go-tuf-updater",
+          "go-tuf-length-hashes"
+        ],
+        "limitation_ids": [
+          "L1",
+          "L2"
+        ],
+        "qualification": "Local persistence is conditional on cache being enabled; the artifact offers a control-flow lead rather than an always-write guarantee."
+      },
+      {
+        "id": "C15",
+        "candidate_lines": [
+          29
+        ],
+        "topic": "Historical/version investigation lead",
+        "judgment": "SUPPORTED_LEAD",
+        "sources": [
+          "http-rfc9110"
+        ]
+      },
+      {
+        "id": "C16",
+        "candidate_lines": [
+          33,
+          34,
+          35,
+          37
+        ],
+        "topic": "Three prospective discriminators and next investigation",
+        "judgment": "MEANINGFUL_PROPOSED_NOT_EXECUTED",
+        "sources": [],
+        "qualification": "These are candidate-authored questions/oracles, not observed service or crash behavior."
+      },
+      {
+        "id": "C17",
+        "candidate_lines": [
+          5,
+          35
+        ],
+        "topic": "Private staging and interruption-safe exposure obligation",
+        "judgment": "PRESERVED_AS_REQUIREMENT_AND_PROSPECTIVE_ORACLE",
+        "sources": [],
+        "qualification": "No filesystem implementation or crash-durability guarantee is claimed."
+      }
+    ]
+  },
+  "material_findings": [
+    {
+      "id": "F1",
+      "material": true,
+      "category": "missing governing applicability condition",
+      "title": "ETag identity binding omits resource scope at the brief’s locator/mirror transition",
+      "candidate_locations": [
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/discovery.md",
+          "line": 16
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/discovery.md",
+          "line": 22
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/source-map.json",
+          "locator": "http-rfc9110.conditions_exceptions and applicability"
+        }
+      ],
+      "source_ids": [
+        "http-rfc9110"
+      ],
+      "governing_sections": [
+        "RFC 9110 §8.8.1",
+        "RFC 9110 §15.3.7.3"
+      ],
+      "impact": "The validator-only branches omit a known boundary that changes whether replacement-locator or mirror bytes can be recombined. This is central to the declared identity-change topic, not an extra product requirement.",
+      "evidence_and_counterexample_ref": "assessment.md, F1 paragraph and analytical witness",
+      "analytical_witness": {
+        "kind": "source-supported thought experiment; NOT an executed server test",
+        "resources": [
+          "/objects/A",
+          "/objects/B"
+        ],
+        "A_bytes": "AAAAXXXX",
+        "B_bytes": "YYYYBBBB",
+        "saved_A_prefix": "AAAA",
+        "both_lengths": 8,
+        "both_strong_entity_tags": "\"v1\"",
+        "request_to_B": "Range: bytes=4-7; If-Range: \"v1\"",
+        "B_response": "206; Content-Range: bytes 4-7/8; ETag: \"v1\"; body BBBB",
+        "combined_bytes": "AAAABBBB",
+        "condition": "The resources are distinct; each tag may be strong within its own resource. No cross-resource identity proof is supplied."
+      },
+      "counterevidence_considered": [
+        "Line 5 separates locator from identity.",
+        "Line 11 denies cryptographic identity.",
+        "Line 16 says URL rotation is not identity evidence.",
+        "Line 22 leaves refreshed-URL support unknown.",
+        "Line 33 proposes reused-ETag and trusted-digest cases."
+      ],
+      "adjudication": "Those cautions and prospective checks deserve credit, but do not state the known resource-scope boundary or condition the ETag alternative on it. The manifest-backed branches and same-resource HTTP rule remain supported.",
+      "candidate_fix_or_feedback_sent": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "material": false,
+      "topic": "Go source locator",
+      "description": "The cited 2045–2138 positions match browser-rendered text positions, not repository source lines. The retrieved file is 740 lines and DownloadTarget starts at line 214. The symbol and path make the lead recoverable.",
+      "sources": [
+        "go-tuf-updater"
+      ]
+    },
+    {
+      "id": "L2",
+      "material": false,
+      "topic": "Mutable source provenance",
+      "description": "The exact candidate-observed go-tuf and curl source commits are explicitly UNKNOWN. The reviewer’s saved bytes establish only the independently inspected content, not a retroactive candidate commit.",
+      "sources": [
+        "go-tuf-updater",
+        "curl-resume"
+      ]
+    },
+    {
+      "id": "L3",
+      "material": false,
+      "topic": "Integrity error presentation",
+      "description": "The output preserves failure detection and withheld exposure at mechanism level; it does not spell out user-facing error text. UI design is excluded by the assignment, so no additional UI requirement is scored."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "topic": "Candidate native provenance beyond receipt",
+      "status": "UNKNOWN",
+      "detail": "Receipt contains an active/complete native Goal for one thread; backend attestation, complete tool transcript and absence of any other Goal are unavailable without prohibited history inspection."
+    },
+    {
+      "id": "U02",
+      "topic": "Candidate complete action/isolation audit",
+      "status": "UNKNOWN",
+      "detail": "No unauthorized assistance is visible in permitted artifacts; no exhaustive action telemetry was supplied."
+    },
+    {
+      "id": "U03",
+      "topic": "Exact source timestamps and retrieval completeness",
+      "status": "UNKNOWN",
+      "detail": "Candidate marks per-page timestamps UNKNOWN within its recorded window; failures/page count are self-reported."
+    },
+    {
+      "id": "U04",
+      "topic": "Exact mutable implementation versions",
+      "status": "UNKNOWN",
+      "detail": "L2; source byte hashes identify reviewer captures but do not identify candidate commits."
+    },
+    {
+      "id": "U05",
+      "topic": "Service and filesystem behavior",
+      "status": "UNKNOWN",
+      "detail": "No real origin, signed-URL issuer, mirror, streaming scale, filesystem or crash experiment was executed."
+    },
+    {
+      "id": "U06",
+      "topic": "Exact investigation/writing phase occupancy",
+      "status": "UNKNOWN",
+      "detail": "Retrieval window and mtimes are consistent with the limits but do not prove every phase boundary."
+    },
+    {
+      "id": "U07",
+      "topic": "Cost, inference usage, billing or relative speed",
+      "status": "UNKNOWN/NOT_ASSESSED",
+      "detail": "Native tokens/time are receipt fields; no financial or paired-performance inference is made."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "candidate_item": 1,
+      "value": "Persisted validator/offset/content-coding state and explicit full-response restart boundary",
+      "qualifier": "F1 limits cross-locator application."
+    },
+    {
+      "candidate_item": 2,
+      "value": "Trusted whole-file target identity separated from changing locator and delayed exposure",
+      "qualifier": "No resume or filesystem guarantee attributed to TUF."
+    },
+    {
+      "candidate_item": 3,
+      "value": "Piece-granular reusable verification state and precise retries",
+      "qualifier": "Manifest trust and final-piece indexing are explicit."
+    },
+    {
+      "candidate_item": 4,
+      "value": "Parallel scheduling variant with mixed-version and recovery tradeoffs",
+      "qualifier": "No throughput measurement; F1 affects validator-only cross-resource binding."
+    },
+    {
+      "candidate_item": "implementation",
+      "value": "Concrete libcurl offset API and Go updater control-flow leads",
+      "qualifier": "Version/source locator limitations L1/L2."
+    },
+    {
+      "candidate_item": "history",
+      "value": "RFC replacement comparison and curl API version context",
+      "qualifier": "A history lead, not an executed historical comparison."
+    }
+  ],
+  "validation": {
+    "candidate_proposed": [
+      {
+        "id": "V01",
+        "topic": "Identity/locator change and ETag variants",
+        "oracle": "No mixed published bytes; trusted digest mismatch detection"
+      },
+      {
+        "id": "V02",
+        "topic": "Range/status/start/total/coding matrix",
+        "oracle": "Correct bytes or discard/restart"
+      },
+      {
+        "id": "V03",
+        "topic": "Finalization interruption",
+        "oracle": "Only old complete or new verified final artifact; separate file/directory durability"
+      }
+    ],
+    "candidate_executed_behavioral_checks": [],
+    "candidate_executed_research": "Recorded primary-source retrieval and inspection only; no behavioral validation claimed.",
+    "reviewer_executed": "Independent HTTPS retrieval, source-text/control-flow inspection, word counting, frozen-byte hash comparison and report JSON/reference validation.",
+    "reviewer_not_executed": [
+      "Downloaded implementation execution",
+      "HTTP origin behavior",
+      "Signed-URL or mirror deployment tests",
+      "Filesystem/crash tests"
+    ],
+    "analytical_witnesses": [
+      "F1; source-supported, not executed validation"
+    ]
+  },
+  "native": {
+    "judgment": "RECEIPT_SUPPORTS_ACTUAL_ACTIVATION_AND_COMPLETION; OTHER_PROVENANCE_UNKNOWN",
+    "candidate_native_receipt_path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/native-goal-receipt.json",
+    "candidate_activation": {
+      "threadId": "01a123f3-1a90-7ee3-a3e8-85fe4a669122",
+      "status": "active",
+      "tokensUsed_on_create": 0,
+      "timeUsedSeconds_on_create": 0,
+      "createdAt": 1791604524,
+      "updatedAt_on_create": 1791604524,
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "get_goal_observation": {
+        "status": "active",
+        "tokensUsed": 2068,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791604524,
+        "updatedAt": 1791604524
+      }
+    },
+    "candidate_completion": {
+      "threadId": "01a123f3-1a90-7ee3-a3e8-85fe4a669122",
+      "objective": "ER12 B-DISC-M-01/control: execute ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "status": "complete",
+      "tokensUsed": 101462,
+      "timeUsedSeconds": 550,
+      "createdAt": 1791604524,
+      "updatedAt": 1791605074,
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    "scientific_outputs_mtime_before_native_completion": true,
+    "reviewer_goal": {
+      "threadId": "01a123fe-6486-70c0-8559-f4a3fa7cd796",
+      "createdAt": 1791605248,
+      "status_at_full_review_save": "active",
+      "completion_is_after_full_review_save": true,
+      "post_completion_receipt": "reviewer-native-completion.json"
+    }
+  },
+  "protocol": {
+    "judgment": "CONSISTENT_PERMITTED_ARTIFACTS; COMPLETE_AUDIT_UNKNOWN",
+    "reported_primary_page_count": 6,
+    "candidate_page_cap": 8,
+    "independently_checked_original_primary_sources": 6,
+    "organizations_or_projects": [
+      "IETF/RFC Editor",
+      "The Update Framework",
+      "curl"
+    ],
+    "unauthorized_assistance_observed": false,
+    "no_unauthorized_assistance_claim_is_exhaustive": false,
+    "reviewer_delegation": false,
+    "other_arms_or_evaluations_or_history_read": false,
+    "candidate_feedback_or_fixes": false,
+    "accounts_Git_GitHub_canon_main_WorkNodes_changes": false,
+    "reviewer_writes": "assessment/B-DISC-M-01/control-v1 only",
+    "incidental_repository_index_read": {
+      "path": "ER12_RUNTIME/repository/Plans/00-plans-index.md",
+      "reason": "Supplied AGENTS.md first-read rule; tool display truncated; unrelated index content was not used as assessment evidence."
+    }
+  },
+  "time": {
+    "whole_deadline_utc": "2026-10-10T04:09:50.548172+00:00",
+    "requested_at_utc": "2026-10-10T03:54:50.548172+00:00",
+    "native_activation_utc": "2026-10-10T03:55:24+00:00",
+    "native_completion_utc": "2026-10-10T04:04:34+00:00",
+    "candidate_native_elapsed_seconds_reported": 550,
+    "request_to_native_completion_seconds": 583.451828,
+    "terminal_freeze_utc": "2026-10-10T04:06:19.993393+00:00",
+    "request_to_terminal_freeze_upper_bound_seconds": 689.445221,
+    "T3_exact_terminal_time": "UNKNOWN; known complete by freeze",
+    "candidate_source_window_utc": {
+      "start": "2026-10-10T03:55:15Z",
+      "end": "2026-10-10T03:59:58Z"
+    },
+    "reviewer_goal_activation_utc": "2026-10-10T04:07:28Z",
+    "reviewer_limit_seconds": 1500,
+    "phase_partition": "UNKNOWN; available times are consistent with early completion",
+    "speed_or_billing_comparison": "NOT_ASSESSED"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "bytes": 2834,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda",
+      "bytes": 1040,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md",
+      "sha256": "c86d210c2c2752cbe7dfdd196a81e8680e02f44ec16cda14a863b849fd435f47",
+      "bytes": 1798,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/dispatch.json",
+      "sha256": "5ae7f811b61010dffec2565d94b02382079205da8e0610ebb1b650b90bcc44a5",
+      "bytes": 4067,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/native-goal-receipt.json",
+      "sha256": "c23452e670b263c6ef036d12d2b80771ea60f53c48335dbcec460fb15c944b33",
+      "bytes": 1704,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/freeze.json",
+      "sha256": "0c5d33212b08ed4aa967623ef0e0dbcfe4b038049109a8be34a2e399046d3ceb",
+      "bytes": 1331,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/request.json",
+      "sha256": "95b4a51ebefbeba0a93086102ff234c0fc6cd5d44f52db3f52ba39b581590e2c",
+      "bytes": 813,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/discovery.md",
+      "sha256": "3f98d499112c307978eb25f44d7662b8a2a56898ea41405cb9efb414d9d50c92",
+      "bytes": 6113,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "sha256": "0ac9933e363e0e6a13cb90c2fa88d635e4db198ddf25d5e8f8107340e9235e85",
+      "bytes": 509,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/status.json",
+      "sha256": "500fdd0857fb345f7ca28146a2b026c4dba7b9e7b9cde7d57f91a153d78d8b98",
+      "bytes": 3507,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/source-map.json",
+      "sha256": "4110a2fdc525002ed43495a725f151998baf146fd73846a8fc5ec7567f455dc8",
+      "bytes": 7136,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/sources/evidence.md",
+      "sha256": "9c3f34e6088a72a913566da8b1b65075c351e1c9c1c124b94ec51d982829cc9c",
+      "bytes": 4146,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/terminal-science-freeze.json",
+      "sha256": "315577683fc03e1b4081b3c21a03a71d1c8630eb1a90871edab4e3097331a3a7",
+      "bytes": 2895,
+      "inspection": "complete text/JSON read",
+      "purpose": "rubric/input/output/protocol evidence"
+    }
+  ],
+  "primary_evidence": [
+    {
+      "id": "http-rfc9110",
+      "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+      "retrieved_at_utc": "2026-10-10T04:09:01.372683+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.219885+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc9110.txt",
+      "bytes": 502941,
+      "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "status": "retrieved",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 9110, June 2022",
+      "navigable_url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+      "locators": [
+        "§8.8.1; capture lines 3403–3422",
+        "§13.1.5; capture lines 6126–6175",
+        "§14.1.2; capture lines 6396–6400",
+        "§14.2–14.4; capture lines 6476–6649",
+        "§15.3.7.3; capture lines 7191–7200",
+        "front matter: RFC 7233 obsoleted"
+      ],
+      "claim_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C10",
+        "C15"
+      ],
+      "finding_ids": [
+        "F1"
+      ],
+      "scope": "HTTP selected representations and range requests; not deployment evidence"
+    },
+    {
+      "id": "metalink-rfc5854",
+      "url": "https://www.rfc-editor.org/rfc/rfc5854.txt",
+      "final_url": "https://www.rfc-editor.org/rfc/rfc5854.txt",
+      "retrieved_at_utc": "2026-10-10T04:09:01.464854+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.376229+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc5854.txt",
+      "bytes": 72641,
+      "sha256": "b8de15dc3304762cf732b15d77450ba092652f83518945695542b3e3b0860469",
+      "status": "retrieved",
+      "organization": "IETF / RFC Editor",
+      "version": "RFC 5854, June 2010",
+      "navigable_url": "https://www.rfc-editor.org/rfc/rfc5854.html",
+      "locators": [
+        "§1",
+        "§4.1.3; capture lines 623–656",
+        "§4.2.4",
+        "§4.2.13 and §4.2.16",
+        "§7.1; capture lines 1398–1414",
+        "§7.4; capture lines 1469–1495"
+      ],
+      "claim_ids": [
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "finding_ids": [],
+      "scope": "Manifest format and verification precedent; service support and manifest trust not established"
+    },
+    {
+      "id": "tuf-spec-v1.0.36",
+      "url": "https://theupdateframework.github.io/specification/v1.0.36/",
+      "final_url": "https://theupdateframework.github.io/specification/v1.0.36/",
+      "retrieved_at_utc": "2026-10-10T04:09:01.554373+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.465509+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/tuf-v1.0.36.html",
+      "bytes": 248581,
+      "sha256": "df63310e70e76aff548b062eb0b6b5b18e2f59844312bffe70d3c97253a8eb6a",
+      "status": "retrieved",
+      "organization": "The Update Framework",
+      "version": "v1.0.36",
+      "navigable_url": "https://theupdateframework.github.io/specification/v1.0.36/",
+      "locators": [
+        "§2, Fetching",
+        "§4.5, LENGTH/HASHES",
+        "§5.7, Fetch target",
+        "§6.2, Consistent snapshots"
+      ],
+      "claim_ids": [
+        "C01",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "finding_ids": [],
+      "scope": "Trusted target metadata and retrieval workflow; not resumable transport or filesystem durability"
+    },
+    {
+      "id": "curl-resume-large",
+      "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+      "final_url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+      "retrieved_at_utc": "2026-10-10T04:09:01.688401+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.556159+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-resume-large.html",
+      "bytes": 8519,
+      "sha256": "65bc526b6f32756f3d944b4d8ccd1a7db6483fb18b92b94e6a2fe5d14e2b7694",
+      "status": "retrieved",
+      "organization": "curl project",
+      "version": "Current API page; option added in 7.11.0",
+      "navigable_url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+      "locators": [
+        "Synopsis",
+        "Description",
+        "Availability"
+      ],
+      "claim_ids": [
+        "C12"
+      ],
+      "finding_ids": [],
+      "scope": "Download byte-offset API; upload-specific restrictions not applied to this GET-download brief"
+    },
+    {
+      "id": "curl-resume",
+      "url": "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+      "final_url": "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+      "retrieved_at_utc": "2026-10-10T04:09:01.810529+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.688562+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-resume.md",
+      "bytes": 2095,
+      "sha256": "7867237725086dfffc7dcb6f690576a9b3c1a1124c738b07bbcfef701a5788d7",
+      "status": "retrieved",
+      "organization": "curl project",
+      "version": "master at reviewer retrieval; exact commit UNKNOWN; documented Added-in 7.1",
+      "navigable_url": "https://github.com/curl/curl/blob/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+      "locators": [
+        "capture lines 13, 25, 30–45"
+      ],
+      "claim_ids": [
+        "C13"
+      ],
+      "finding_ids": [],
+      "scope": "Supplementary legacy API context only"
+    },
+    {
+      "id": "go-tuf-updater",
+      "url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/updater/updater.go",
+      "final_url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/updater/updater.go",
+      "retrieved_at_utc": "2026-10-10T04:09:01.932547+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.810642+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-updater.go",
+      "bytes": 27081,
+      "sha256": "46716cfff8ed19fa4f6ac19e914166f344b1c7cef7bedb35deb910b4a81d4276",
+      "status": "retrieved",
+      "organization": "The Update Framework / go-tuf",
+      "version": "master at reviewer retrieval; exact commit UNKNOWN",
+      "navigable_url": "https://github.com/theupdateframework/go-tuf/blob/master/metadata/updater/updater.go#L214",
+      "locators": [
+        "Updater.DownloadTarget; capture lines 213–266"
+      ],
+      "claim_ids": [
+        "C14"
+      ],
+      "finding_ids": [],
+      "limitation_ids": [
+        "L1",
+        "L2"
+      ],
+      "scope": "Inspected control flow; no execution, scale, streaming, durability or candidate-commit proof"
+    },
+    {
+      "id": "go-tuf-length-hashes",
+      "url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/metadata.go",
+      "final_url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/metadata.go",
+      "retrieved_at_utc": "2026-10-10T04:09:02.063619+00:00",
+      "started_at_utc": "2026-10-10T04:09:01.932813+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-metadata.go",
+      "bytes": 32001,
+      "sha256": "d1933093aa75e31b83b0e35b939e169378df69710ca202d8c2218d3934300c0e",
+      "status": "retrieved",
+      "organization": "The Update Framework / go-tuf",
+      "version": "master at reviewer retrieval; exact commit UNKNOWN",
+      "navigable_url": "https://github.com/theupdateframework/go-tuf/blob/master/metadata/metadata.go#L486",
+      "locators": [
+        "TargetFiles.VerifyLengthHashes; capture lines 484–499",
+        "verifyLength/verifyHashes; capture lines 900–928"
+      ],
+      "claim_ids": [
+        "C14"
+      ],
+      "finding_ids": [],
+      "scope": "Independent inspection of the verification body, rather than reliance on the method name"
+    },
+    {
+      "id": "curl-http-implementation",
+      "url": "https://raw.githubusercontent.com/curl/curl/master/lib/http.c",
+      "final_url": "https://raw.githubusercontent.com/curl/curl/master/lib/http.c",
+      "retrieved_at_utc": "2026-10-10T04:09:02.214071+00:00",
+      "started_at_utc": "2026-10-10T04:09:02.063917+00:00",
+      "operation": "Python urllib HTTPS GET; read as research data; never executed",
+      "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-http.c",
+      "bytes": 157704,
+      "sha256": "40d0c67f9c8ba34431e19a3722f6af96a1d0f53c6debbea77bcbae7a44909ba1",
+      "status": "retrieved",
+      "organization": "curl project",
+      "version": "master at reviewer retrieval; exact commit UNKNOWN",
+      "navigable_url": "https://github.com/curl/curl/blob/master/lib/http.c#L2745",
+      "locators": [
+        "capture lines 2745–2765",
+        "Content-Range parsing; capture lines 3384–3411"
+      ],
+      "claim_ids": [
+        "C12"
+      ],
+      "finding_ids": [],
+      "scope": "Additional reviewer inspection of resume handling; not candidate-authored discovery or behavioral validation"
+    }
+  ],
+  "full_pipeline_qualification": "NOT_ASSIGNED; ROLE_ONLY",
+  "paired_conclusions": "LEFT_TO_ROOT; NO_OTHER_ARM_INSPECTED",
+  "review_preservation": "Original v1 assessment; any later dispute disposition belongs in a separate artifact."
+}

@@ -1,0 +1,661 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "review_id": "B-FINAL-G-01/control-v1",
+  "run_id": "B-FINAL-G-01",
+  "arm": "control",
+  "track": "B",
+  "assigned_role": "Criticism adjudication and complete bounded finalization",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "semantic_grade_scope": "Bounded FINAL role only; not full-pipeline qualification",
+  "material_error_or_omission_found": false,
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR_WORDING",
+      "material": false,
+      "candidate_locator": "final-section.md:5; source-map.json /sources/0/conditions_and_exceptions/2; sources/S1-primary-evidence.md Applicability and inference",
+      "candidate_quote": "Do not add a later include or risk rule that defeats protection.",
+      "finding": "The temporal word later is imprecise: an active earlier matching ordinary exclude is not overturned by a later matching include/risk rule. First matching applicable rule governs; an earlier risk/include or list-clearing change is the relevant threat to priority.",
+      "primary_locators": [
+        "first_match",
+        "implementation_first_match"
+      ],
+      "why_not_material": "The specified anchored ordinary exclude with delete-excluded omitted is valid; the final requires effective-root/filter-order validation, absence of note deletions in an approved preview, and a protected-note check. It does not supply or execute a conflicting rule list. This wording does not cause a supported remaining consequential wrong decision."
+    },
+    {
+      "id": "L2",
+      "severity": "EVIDENCE_BOUNDARY",
+      "material": false,
+      "candidate_locator": "final-section.md:11,22; source-map.json /sources/0/version",
+      "finding": "Candidate citations are live/unpinned and do not themselves demonstrate installed 3.2.7 peers. Independent review retrieved relevant upstream v3.2.7 source passages and found the substantive option claims applicable. Endpoint/path/lifecycle behavior remains unobserved and is correctly left as prospective evidence.",
+      "primary_locators": [
+        "release_context",
+        "usage",
+        "delete",
+        "delete_excluded",
+        "delay_updates"
+      ],
+      "why_not_material": "This is honest deployment/implementation uncertainty in a specification-only role, not a missing requirement to run a nonexistent application."
+    }
+  ],
+  "axis_coverage": [
+    {
+      "axis": "exact_section_obligations",
+      "status": "PASS",
+      "coverage": "O1-O6 and output contract, full",
+      "evidence": "All six obligations above; 549 section words, 728 total words, six numbered reasoned/cited dispositions and remaining uncertainty."
+    },
+    {
+      "axis": "factual_applicability_and_consequential_conditions",
+      "status": "PASS_WITH_MINOR_WORDING_LIMITATION",
+      "coverage": "All consequential option/filter/path/version/exception claims inspected",
+      "evidence": "P1-P5; claims remain scoped to recursive whole-directory contents into a stage. Sender/receiver operations, ordinary versus explicitly qualified filters, root anchoring, triple-star domain, dry-run caveats and per-file updates distinguished. L1 is minor. No numeric science/unit conversion claim to audit."
+    },
+    {
+      "axis": "all_critique_dispositions",
+      "status": "PASS",
+      "coverage": "Critique 1-6, full",
+      "evidence": "Accept 1/3/5; reject 2/4/6. Each result independently supported; no automatic acceptance or incorrect rejection."
+    },
+    {
+      "axis": "supported_scope_preservation",
+      "status": "PASS",
+      "coverage": "Complete supplied draft and critiques against O1-O6",
+      "evidence": "Keeps target versions/paths/content depth/obsolete removal/local notes/preview/cancel diagnostics/three future checks. Replaces only unsupported delete-excluded protection, optional preview, automatic publish and tree-atomicity claims. No upstream discovery authorizes dropping product controls."
+    },
+    {
+      "axis": "proposed_vs_executed_checks_and_oracle_applicability",
+      "status": "PASS",
+      "coverage": "Three proposed checks plus outstanding evidence, full",
+      "evidence": "Tree manifests/depth, stale asset plus note sentinel/deletion preview, and lifecycle status/event logs discriminate required behavior. None is represented as executed. Dry-run cannot validate publication/cancellation or performance. Actual execution absence is candidate-reported, not reconstructed from inaccessible provider history."
+    },
+    {
+      "axis": "useful_alternatives_implementation_history_within_role",
+      "status": "SUFFICIENT_FOR_FINAL_ROLE",
+      "coverage": "Bounded finalization; no full discovery/application pipeline claim",
+      "evidence": "Valid ordinary exclude instead of delete-excluded; receiver protect is a valid alternative where needed; explicit application publish rather than delayed per-file tree claim; source-removal distinction. FAQ/extra history are not independently mandated deliverables. Reviewer inspected first-match implementation and 3.2.7 release context; these are reviewer discoveries, not credited as candidate retrievals."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "O1",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:1,3",
+      "assessment": "Exact Staged asset mirror title, both peers 3.2.7 and direct-child staging contents are specified. Installed-peer verification is explicitly future evidence.",
+      "primary_locators": [
+        "usage",
+        "recursion"
+      ]
+    },
+    {
+      "id": "O2",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:3",
+      "assessment": "All three exact tokens are intact in code elements; neither source correction nor critique changes product controls.",
+      "exact_tokens": [
+        "protected_dir=local-notes",
+        "publish_mode=explicit",
+        "preview_required=true"
+      ],
+      "primary_locators": [],
+      "authority": "common assignment O2"
+    },
+    {
+      "id": "O3",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:5,11",
+      "assessment": "Receiver-side obsolete removal confined to whole-directory recursive synchronization; root local-notes and descendants protected by an ordinary anchored exclude, delete-excluded omitted, effective-root and filter-order checks required.",
+      "primary_locators": [
+        "delete",
+        "delete_excluded",
+        "filter_types_and_patterns",
+        "transfer_root",
+        "first_match"
+      ]
+    },
+    {
+      "id": "O4",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:7,11",
+      "assessment": "Saved inspectable dry-run/itemized deletion preview precedes approval/destructive run with bound peers/paths/options; changed inputs require a new preview. It explicitly does not execute a transfer in this task.",
+      "primary_locators": [
+        "dry_run",
+        "itemized_oracle",
+        "delete"
+      ]
+    },
+    {
+      "id": "O5",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:9,11",
+      "assessment": "Transfer success leaves stage unpublished; a separate explicit publish action is required. Successive delayed renames are not promoted into whole-tree atomicity or rollback.",
+      "primary_locators": [
+        "delay_updates"
+      ],
+      "authority": "common assignment O5 and publish_mode=explicit"
+    },
+    {
+      "id": "O6",
+      "status": "PASS",
+      "candidate_locator": "final-section.md:9,11,22",
+      "assessment": "Cancellation/interruption/nonzero exit retains diagnostics/records, marks incomplete, blocks publish, requires retry/cleanup choice; three discriminating proposed checks and remaining evidence are present.",
+      "primary_locators": [
+        "exit_values",
+        "dry_run",
+        "delete",
+        "delay_updates"
+      ]
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "id": 1,
+      "candidate_disposition": "Accept",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:15",
+      "reason": "Ordinary excludes lose receiver protection under delete-excluded. Candidate limits the assertion to ordinary rules and allows effective exclude/protect, preserving explicitly qualified receiver-rule exception.",
+      "primary_locators": [
+        "delete_excluded",
+        "two_sided_filters"
+      ]
+    },
+    {
+      "id": 2,
+      "candidate_disposition": "Reject",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:16",
+      "reason": "Original O4 requires an inspectable preview; memory restoration cannot waive it. Upstream supports preview usefulness.",
+      "primary_locators": [
+        "delete",
+        "dry_run"
+      ],
+      "authority": "common assignment O4"
+    },
+    {
+      "id": 3,
+      "candidate_disposition": "Accept",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:17",
+      "reason": "Corrects explicit-publication violation and unsupported whole-tree atomicity; publish rule comes from assignment, per-file semantics from primary source.",
+      "primary_locators": [
+        "delay_updates"
+      ],
+      "authority": "common assignment O5"
+    },
+    {
+      "id": 4,
+      "candidate_disposition": "Reject",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:18",
+      "reason": "For the selected source directory, slash affects nesting. Host/module default-root syntax exception does not make the received always-identical claim true.",
+      "primary_locators": [
+        "usage"
+      ]
+    },
+    {
+      "id": 5,
+      "candidate_disposition": "Accept",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:19",
+      "reason": "Preview is not a snapshot lock. Preserves external-change/failure caveats and bound/recheck/re-preview requirement without claiming implemented race exclusion.",
+      "primary_locators": [
+        "dry_run"
+      ],
+      "additional_primary": "Live P2 --dry-run, web line 914 explicitly names external source/destination changes; P1 1739-1741 uses older caveat wording."
+    },
+    {
+      "id": 6,
+      "candidate_disposition": "Reject",
+      "review": "CORRECT",
+      "candidate_locator": "final-section.md:20",
+      "reason": "delete concerns extraneous receiver files; remove-source-files is a separate sending-side non-directory successful-transfer operation, named here only as contrast.",
+      "primary_locators": [
+        "delete",
+        "sender_removal"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "attribution": "candidate supported finalization",
+      "discovery": "Root-anchored triple-star ordinary exclude preserves local-notes and descendants while delete-excluded is omitted.",
+      "locators": [
+        "filter_types_and_patterns",
+        "transfer_root",
+        "delete_excluded"
+      ]
+    },
+    {
+      "id": "D2",
+      "attribution": "candidate supported finalization",
+      "discovery": "Deletion scope is receiving-side synchronized whole directories, not sender cleanup or shell-expanded parent scope.",
+      "locators": [
+        "delete",
+        "sender_removal"
+      ]
+    },
+    {
+      "id": "D3",
+      "attribution": "candidate supported finalization",
+      "discovery": "Dry-run itemized preview is a prospective deletion oracle, with input-change/failure caveats; application publish is independent.",
+      "locators": [
+        "dry_run",
+        "itemized_oracle",
+        "delay_updates"
+      ]
+    },
+    {
+      "id": "D4",
+      "attribution": "reviewer only",
+      "discovery": "Pinning upstream v3.2.7 confirms applicability despite the candidate live citations. Historical dry-run wording differs, without changing the race limitation.",
+      "locators": [
+        "dry_run",
+        "release_context"
+      ]
+    },
+    {
+      "id": "D5",
+      "attribution": "reviewer only",
+      "discovery": "First-match semantics directly confirmed in upstream exclude.c; receiver-only protect is a useful alternative if a future policy requires different sender visibility.",
+      "locators": [
+        "implementation_first_match",
+        "filter_types_and_patterns"
+      ]
+    },
+    {
+      "id": "D6",
+      "attribution": "reviewer only, optional future operational lead",
+      "discovery": "Both 3.2.7 peers default to delete-during, so failed/cancelled stages can already contain deletions. delay-updates has full-list and extra-disk costs if adopted. FAQ clean-shell diagnosis applies to remote-shell transport, with a direct-daemon exception. These do not introduce extra final-role requirements.",
+      "locators": [
+        "delete",
+        "delay_updates",
+        "faq_shell"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U1",
+      "subject": "candidate native Goal activation/completion/exactly-one lifecycle/save-before-native-completion",
+      "status": "UNKNOWN",
+      "basis": "Existing freeze says UNKNOWN until directly observed; dispatch is initial T3 running receipt, not provider Goal telemetry. No candidate native receipt was present in the permitted artifacts."
+    },
+    {
+      "id": "U2",
+      "subject": "candidate effective backend model/reasoning/service tier and billing/tokens/cost/inference time",
+      "status": "UNKNOWN",
+      "basis": "Requested route and initial T3 model label identify request/route only. No actual effective-model or billing receipt."
+    },
+    {
+      "id": "U3",
+      "subject": "candidate terminal timing and absolute 900-second/writing-reserve compliance",
+      "status": "UNKNOWN",
+      "basis": "Deadline/start contract visible, but no terminal timestamp or per-phase telemetry. File presence/mtime is not a complete phase or completion receipt."
+    },
+    {
+      "id": "U4",
+      "subject": "terminal science freeze match",
+      "status": "UNKNOWN_NO_TERMINAL_MANIFEST_FOUND",
+      "basis": "Only predispatch freeze.json found inside this exact control arm. Its eight input entries match; it contains no final science terminal hashes. Current inspected science hashes and end-of-review stability are recorded, not invented terminal receipts."
+    },
+    {
+      "id": "U5",
+      "subject": "actual endpoint rsync versions, app path/filter behavior, cancellation/publish/race implementation",
+      "status": "UNOBSERVED_PROSPECTIVE",
+      "basis": "Candidate explicitly leaves these open; assigned role prohibits execution and does not supply a deployed app."
+    },
+    {
+      "id": "U6",
+      "subject": "candidate full tool/protocol compliance",
+      "status": "UNKNOWN_BEYOND_VISIBLE_ARTIFACTS",
+      "basis": "No independent full provider trace was authorized/read. No evidence in assigned artifacts establishes unauthorized assistance; no fabricated full compliance or violation finding."
+    }
+  ],
+  "delivery": {
+    "status": "COMPLETE_AUTHORED_ARTIFACT_PRESENT",
+    "required_final": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/final-section.md",
+    "complete_standalone_replacement": true,
+    "title_matches": true,
+    "section_words_whitespace": 549,
+    "section_requirement": [
+      400,
+      650
+    ],
+    "total_words_whitespace": 728,
+    "total_must_be_less_than": 1100,
+    "count_method": "Whitespace split, both raw Markdown and rendered-link/HTML-tag-normalized text return the same counts; includes headings/citation labels.",
+    "dispositions_present": 6,
+    "candidate_sources_members_read": 1,
+    "remaining_uncertainty_present": true
+  },
+  "source": {
+    "status": "PASS_WITH_LIMITATIONS",
+    "independent_primary_retrieval": true,
+    "primary_source_count": 5,
+    "candidate_endpoint_observations": "NONE_REPORTED; not independently reconstructed",
+    "no_material_unsupported_consequential_decision": true
+  },
+  "coverage": {
+    "assigned_axes_assessed": 6,
+    "original_obligations_assessed": 6,
+    "critique_items_assessed": 6,
+    "full_pipeline_qualification": false,
+    "no_other_arm_or_ER11_assessment": true
+  },
+  "native": {
+    "candidate_status": "UNKNOWN",
+    "candidate_evidence": "U1; initial T3 dispatch does not observe native Goal",
+    "reviewer_status_at_judgment_save": "ACTIVE_OBSERVED_ACTUAL_NATIVE_GOAL",
+    "reviewer_evidence": "reviewer-native-active.json; completion receipt will be separate after saved judgment"
+  },
+  "effective_and_billing": {
+    "requested_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requested_model": "gpt-6-luna",
+    "requested_reasoning_effort": "max",
+    "requested_service_tier": "priority",
+    "initial_T3_dispatch_model_label": "gpt-6-luna",
+    "effective_model": "UNKNOWN",
+    "effective_reasoning_effort": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "inference_savings": "NOT_INFERRED"
+  },
+  "protocol": {
+    "reviewer_independent": true,
+    "reviewer_no_delegation_candidate_feedback_repair_accounts_git_other_arms_history": true,
+    "candidate_full_compliance": "UNKNOWN",
+    "unauthorized_assistance_evidence_found": false,
+    "T3_terminal_status": "ROOT_REPORTED_COMPLETED_NO_PENDING",
+    "T3_terminal_basis": "Explicit current reviewer assignment/root-review-request.json; not a native Goal receipt or independent terminal timestamp",
+    "input_freeze_matches": true,
+    "input_freeze_verified_entries": [
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/assignment.md",
+        "expected_sha256": "d71292b8a2cffb6f3c805000fc8bce66124457b4718126402b160f3f33957dfa",
+        "observed_sha256": "d71292b8a2cffb6f3c805000fc8bce66124457b4718126402b160f3f33957dfa",
+        "expected_bytes": 1802,
+        "observed_bytes": 1802,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/input-map.json",
+        "expected_sha256": "fb51e8054a47fa1afe6165042b742a5881c831befc6d6acbd7026cac4ecb80fa",
+        "observed_sha256": "fb51e8054a47fa1afe6165042b742a5881c831befc6d6acbd7026cac4ecb80fa",
+        "expected_bytes": 624,
+        "observed_bytes": 624,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+        "expected_sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+        "observed_sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+        "expected_bytes": 1652,
+        "observed_bytes": 1652,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+        "expected_sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+        "observed_sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+        "expected_bytes": 624,
+        "observed_bytes": 624,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+        "expected_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+        "observed_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+        "expected_bytes": 5043,
+        "observed_bytes": 5043,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+        "expected_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+        "observed_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+        "expected_bytes": 944,
+        "observed_bytes": 944,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+        "expected_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+        "observed_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+        "expected_bytes": 795,
+        "observed_bytes": 795,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+        "expected_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+        "observed_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+        "expected_bytes": 1281,
+        "observed_bytes": 1281,
+        "matches": true
+      }
+    ],
+    "terminal_freeze_status": "NOT_FOUND_IN_EXACT_CONTROL_ARM_AT_INSPECTION; predispatch freeze only",
+    "semantic_judgment_not_derived_from_hashes": true
+  },
+  "time": {
+    "candidate_prepared_at_utc": "2026-10-10T04:02:11.000000+00:00",
+    "candidate_deadline_utc": "2026-10-10T04:17:11.000000+00:00",
+    "candidate_writing_start_contract_utc": "2026-10-10T04:12:11.000000+00:00",
+    "candidate_terminal_utc": "UNKNOWN",
+    "candidate_timeliness": "UNKNOWN",
+    "reviewer_goal_activation_utc": "2026-10-10T04:17:04Z",
+    "reviewer_deadline_utc": "2026-10-10T04:42:04Z",
+    "judgment_saved_at_utc": "2026-10-10T04:22:08.145765+00:00",
+    "reviewer_within_25_minutes": true,
+    "no_latency_or_cost_comparison": true
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspected_at_utc": "2026-10-10T04:18:48.320416+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "sha256": "fb51e8054a47fa1afe6165042b742a5881c831befc6d6acbd7026cac4ecb80fa",
+      "bytes": 624,
+      "inspected_at_utc": "2026-10-10T04:18:48.320532+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/assignment.md",
+      "sha256": "d71292b8a2cffb6f3c805000fc8bce66124457b4718126402b160f3f33957dfa",
+      "bytes": 1802,
+      "inspected_at_utc": "2026-10-10T04:18:48.320626+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/freeze.json",
+      "sha256": "661c6c0f83d241e3672039ab04942460dc65d267eea74c95cf2d0cb592e64d1d",
+      "bytes": 2838,
+      "inspected_at_utc": "2026-10-10T04:18:48.320722+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "bytes": 5043,
+      "inspected_at_utc": "2026-10-10T04:18:48.320829+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "bytes": 1652,
+      "inspected_at_utc": "2026-10-10T04:18:48.320904+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "bytes": 624,
+      "inspected_at_utc": "2026-10-10T04:18:48.320966+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "bytes": 944,
+      "inspected_at_utc": "2026-10-10T04:18:48.321015+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "bytes": 795,
+      "inspected_at_utc": "2026-10-10T04:18:48.321119+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "bytes": 1281,
+      "inspected_at_utc": "2026-10-10T04:18:48.321204+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/final-section.md",
+      "sha256": "307c3f6fd16963857e86505d84ff3ba7011d87b3fd7f19e075c52dc7d3950c56",
+      "bytes": 6248,
+      "inspected_at_utc": "2026-10-10T04:18:48.321331+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/source-map.json",
+      "sha256": "ad79b8b60d802f18f11ba0b5d917f9f2a1b47dc490477c2cb898dbd62d34009f",
+      "bytes": 5760,
+      "inspected_at_utc": "2026-10-10T04:18:48.321437+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/sources/S1-primary-evidence.md",
+      "sha256": "b35c190453f8f628a14f9a8bae5f0bd0f95d505d27d7972afcd4c2fd6e2ebbb1",
+      "bytes": 3247,
+      "inspected_at_utc": "2026-10-10T04:18:48.321504+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/dispatch.json",
+      "sha256": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "bytes": 4140,
+      "inspected_at_utc": "2026-10-10T04:18:48.321603+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/raw-dispatch.json",
+      "sha256": "0c8a346d4e62cd4419f13c19fc35099ff48307c2eb8389df74c4bd738fe0abff",
+      "bytes": 1963,
+      "inspected_at_utc": "2026-10-10T04:18:48.321678+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/records/dispatch-20261010T040213849653-6028f9f9fc164d18aa04b6a2e8328eb0.json",
+      "sha256": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "bytes": 4140,
+      "inspected_at_utc": "2026-10-10T04:18:48.321749+00:00",
+      "read_scope": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/root-review-request.json",
+      "sha256": "b9c8910a8255b71412b5c6f10791d7c446d1b0ae1cb9a0356fc31ba00a9b16ba",
+      "bytes": 2446,
+      "read_scope": "FULL",
+      "purpose": "Exact reviewer assignment/request provenance; not candidate outcome evidence"
+    }
+  ],
+  "source_urls_versions": [
+    {
+      "source_id": "P1",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/rsync.1.md",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/rsync.1.md",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.156764+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.260862+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"7d7ae98cd84ded65ea57d2ec15409175e1d19e025981c4d05560268f784feb4e\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-manual.md",
+      "sha256": "efe2b3f3164feae41308d8ac2bd12c802e4eb0ef54682124d310962181b8a9ee",
+      "bytes": 238280,
+      "version": "Upstream v3.2.7 tag"
+    },
+    {
+      "source_id": "P2",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "effective_url": "https://download.samba.org/pub/rsync/rsync.1",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.158132+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.919635+00:00",
+      "http_status": 200,
+      "content_type": null,
+      "etag": null,
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-manual.html",
+      "sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "bytes": 304411,
+      "version": "Live unpinned"
+    },
+    {
+      "source_id": "P3",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "effective_url": "https://rsync.samba.org/FAQ.html",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.159176+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.503801+00:00",
+      "http_status": 200,
+      "content_type": null,
+      "etag": null,
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-faq.html",
+      "sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "bytes": 13720,
+      "version": "Live unpinned"
+    },
+    {
+      "source_id": "P4",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/exclude.c",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/exclude.c",
+      "operation": "independent HTTPS GET, Python urllib; read only, no execution",
+      "retrieval_started_utc": "2026-10-10T04:18:48.164373+00:00",
+      "retrieved_at_utc": "2026-10-10T04:18:48.290812+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"bb396d3af0c2b1f43293ca25403fe8a66b2fd932be9ab490745c14ab97086728\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-exclude.c",
+      "sha256": "619fac1e03234d8d8c173e29abe80c3670fd755488e8cce3eb71862d74b1cb92",
+      "bytes": 49158,
+      "version": "Upstream v3.2.7 tag"
+    },
+    {
+      "source_id": "P5",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/NEWS.md",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/NEWS.md",
+      "operation": "independent HTTPS GET, Python urllib; read only, no execution",
+      "retrieval_started_utc": "2026-10-10T04:18:48.165628+00:00",
+      "retrieved_at_utc": "2026-10-10T04:18:48.317740+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"5049e94664d2406cb2b011bf830712ac01fe1506345431439cca620ecd240472\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-news.md",
+      "sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529",
+      "bytes": 208035,
+      "version": "Upstream v3.2.7 tag"
+    }
+  ],
+  "source_map": "source-map.json",
+  "evidence_index": "primary-evidence/index.md",
+  "hash_inventory": "inspected-hashes.json",
+  "save_order": "Complete assessment artifacts saved before tools.update_goal(status=complete).",
+  "candidate_stability_check": "See review-verification.json recorded after artifact save."
+}

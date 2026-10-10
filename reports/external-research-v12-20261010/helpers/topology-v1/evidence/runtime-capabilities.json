@@ -1,0 +1,95 @@
+{
+  "observed_at_utc": "2026-10-10T03:55:16.022Z",
+  "features": {
+    "appOwnedSubagents": true,
+    "asyncPolling": true,
+    "cancellation": true,
+    "batchThreadCreation": true,
+    "threadManagement": true,
+    "incrementalThreadRead": true,
+    "scheduledTasks": true,
+    "maxBatchThreads": 20
+  },
+  "parentThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-topology-engineering-v1",
+  "route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "driverKind": "codex",
+    "model": {
+      "id": "gpt-6-luna",
+      "label": "GPT-6-Luna",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "label": "Reasoning",
+          "type": "select",
+          "options": [
+            {
+              "id": "low",
+              "label": "Low"
+            },
+            {
+              "id": "medium",
+              "label": "Medium",
+              "isDefault": true
+            },
+            {
+              "id": "high",
+              "label": "High"
+            },
+            {
+              "id": "xhigh",
+              "label": "Extra High"
+            },
+            {
+              "id": "max",
+              "label": "Max"
+            }
+          ],
+          "currentValue": "medium"
+        },
+        {
+          "id": "serviceTier",
+          "label": "Service Tier",
+          "type": "select",
+          "options": [
+            {
+              "id": "default",
+              "label": "Standard",
+              "isDefault": true
+            },
+            {
+              "id": "priority",
+              "label": "Fast",
+              "description": "1.5x speed"
+            }
+          ],
+          "currentValue": "default"
+        }
+      ]
+    }
+  },
+  "native_goal_wait_exposed": false,
+  "available_wait_tools": [
+    {
+      "name": "mcp__codex_apps__t3_ubuntu_t3_thread_wait",
+      "description": "Tools for working with T3 Ubuntu.\n\nWait (up to timeoutSeconds, max 60) until the thread's latest run is no longer active, or reaches untilStatus. Returns the observed run status. Read-only.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__codex_apps__t3_ubuntu_t3_thread_wait(args: {\n  // T3 environment id from t3_instances_list. May be omitted only when exactly one T3 instance is approved; never guessed.\n  environmentId?: string;\n  // Exact thread id (from t3_threads_list / t3_thread_ge"
+    },
+    {
+      "name": "mcp__t3_code__preview_wait_for",
+      "description": "Wait in the tab selected by tabId, or this agent session's current tab when omitted, until all supplied locator, selector, text, and URL conditions match.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__t3_code__preview_wait_for(args: {\n  // Playwright selector that must match an element, for example role=button[name='Send'].\n  locator?: string | null;\n  // Legacy CSS selector that must match an element. Prefer locator.\n  selector?: string | null;\n  // Exact collaborative browser tab t"
+    },
+    {
+      "name": "mcp__t3_code__t3_thread_wait",
+      "description": "Wait for a T3 thread run to reach a terminal durable state. Without runId, the latest run at call time is selected; an idle thread returns immediately. Timeout does not interrupt work, so call again or use t3_thread_read/list after timedOut=true. Waiting reports status only and does not acknowledge a delegated result.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__t3_code__t3_thread_wait(args: { runId?: string | null; threadId: string; timeoutMs?: number | \"Infinity\" | \"-Infinity\" | \""
+    }
+  ],
+  "precise_notification": {
+    "name": "mcp__t3_code__t3_thread_send",
+    "description": "Send a message to any T3 thread in this environment. The target cannot have broader permission modes than the caller. Do not use a delegated task's childThreadId to start another review round here; use delegate_task with the full review context and a new clientRequestId for that round. Thread messages do not create a new delegated task or reopen a completed task. mode='auto' starts an idle thread, steers a fully active turn, or queues behind a turn that is not yet steerable. Use queue for a separate follow-up turn, steer for an in-flight update, or restart to interrupt-and-restart the active turn. clientRequestId makes retries idempotent.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__t3_code__t3_thread_send(args: { clientRequestId?: string | null; message: string; mode?: \"auto\" | \"queue\" | \"steer\" | \"restart\" | null; threadId: string; [key: string]: unknown; }): Promise<CallToolResult<{ delivery: \"started\" | \"queued\" | \"steered\" | \"restarted\"; messageId: string; runId: string; status: \"preparing\" | \"queued\" | \"starting\" | \"running\" | \"waiting\" | \"completed\" | \"interrupted\" | \"failed\" | \"cancelled\" | \"rolled_back\"; threadId: string; [key: string]: unknown; }>>; };\n```"
+  },
+  "limitations": [
+    "No native Goal wait in this runtime catalog.",
+    "T3 thread wait observes terminal run state; cannot itself suspend same-Goal retained author.",
+    "Root steering can be attempted only while original task/run/Goal remains active. Live support is unproven; no diagnostic launched by implementation worker."
+  ]
+}

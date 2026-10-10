@@ -1,0 +1,881 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "slot_id": "B-APPL-M-01",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "role": "Applicability/exception verification",
+  "counts_as_full_pipeline": false,
+  "source_judgment": "FAIL",
+  "source_result_summary": "All six claim disposition bodies are supported; one material unsupported acceptance oracle remains (F1).",
+  "saved_judgment_at_utc": "2026-10-10T04:17:34.275515+00:00",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "delivery": {
+    "status": "DELIVERED",
+    "parent_t3_status": "Parent reports actual T3 task completed with no pending runs; independent reviewer did not inspect T3/history",
+    "required_science_present": true,
+    "verification_words": 695,
+    "limit_words": 900,
+    "candidate_science_files": 7,
+    "all_candidate_sources_read": true,
+    "native_terminal_inference": "NONE"
+  },
+  "source": {
+    "judgment": "FAIL",
+    "material_finding_ids": [
+      "F1"
+    ],
+    "claim_body_dispositions_supported": 6,
+    "primary_pages_independently_retrieved": 6,
+    "failures_retrieving_primary": []
+  },
+  "coverage": {
+    "status": "COMPLETE_ASSIGNED_ROLE",
+    "axes": [
+      {
+        "axis": "original obligations and negative constraints",
+        "coverage": "COMPLETE",
+        "judgment": "695 whitespace words, all six numbered claims, stated version/local/multi-process/VFS context, uncertainty and two numbered prospective acceptance checks. No replacement deployment silently substituted. Format and delivery met; acceptance validity has F1."
+      },
+      {
+        "axis": "consequential source claims: subject/operation/version/default/unit/type/domain/exceptions",
+        "coverage": "COMPLETE for six claims and consequential side statements",
+        "judgment": "Six disposition bodies supported; exact conditions and exceptions recorded claim-by-claim. F1 is a consequential validation overstatement."
+      },
+      {
+        "axis": "useful unfamiliar discovery, meaningful alternatives, implementation/history/opportunity coverage",
+        "coverage": "ROLE_APPROPRIATE_COMPLETE",
+        "judgment": "Candidate finds read-only WAL history and immutable risks, checkpoint mode/lock/output details, independent WAL-growth causes and bounded remote alternatives. No brief-discovery/full-pipeline expansion required. Reviewer independently checked target release and WAL-reset fix; absence from candidate is not a material omission because 3.51.3 already fixes it."
+      },
+      {
+        "axis": "wrong corrections/rejections and exact plan dispositions",
+        "coverage": "COMPLETE for the six supplied claims; critique/plan-unit dispositions NOT_APPLICABLE",
+        "judgment": "No wrong claim disposition or architecture-plan rejection found. F1 concerns test oracle. No critique or PlanUnit packet was supplied."
+      },
+      {
+        "axis": "supported discovery/draft/critique/final meaning preserved",
+        "coverage": "COMPLETE within role; draft/critique/final pipeline NOT_APPLICABLE",
+        "judgment": "Local deployment, conditional read-only support, documentation-versus-service uncertainty and continued-write growth condition are preserved in the body. Acceptance check 1 loses the continued-write/end-mark condition."
+      },
+      {
+        "axis": "meaningful proposed versus actually executed validation and oracle applicability",
+        "coverage": "COMPLETE",
+        "judgment": "Candidate honestly proposes and does not execute service probes. Writer contention and successful TRUNCATE expectations are supported; F1 invalidates unconditional incomplete-PASSIVE expectation. Read-only routes, refusal of unchanged multi-host NFS and catalog benchmark are appropriate prospective checks, with L2 wording limitation."
+      },
+      {
+        "axis": "Track B applicability: every enumerated claim, exact subject/operation/version/exceptions, bounded correction, uncertainty and service checks",
+        "coverage": "COMPLETE",
+        "judgment": "All six independently adjudicated. Source FAIL due only to material F1; no material remaining error alleged in the six disposition bodies."
+      },
+      {
+        "axis": "Track B finalization: exact section obligations, all fallible critique dispositions, supported-scope preservation and final proposed/executed checks",
+        "coverage": "NOT_APPLICABLE",
+        "judgment": "Assigned role is applicability verification; no final-section or critique packet supplied. No finalization obligations invented."
+      }
+    ],
+    "claims": [
+      {
+        "number": 1,
+        "subject_operation": "Concurrent transaction writers appending to one SQLite database WAL",
+        "candidate_disposition": "FALSE",
+        "semantic_disposition": "SUPPORTED",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "7-14",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "WAL since SQLite 3.7.0; target 3.51.3, normal shared-memory-capable VFS, multiple processes, one local database",
+        "default_type_unit_domain": "One writer per database/WAL; concurrency of readers with a writer is a different operation",
+        "exceptions_checked": "No supplied condition permits concurrent writers to the same WAL. Separate databases, proxy deployment and unsupported experimental branches do not change this case. Ordinary writer contention can wait or return BUSY according to busy handling.",
+        "corrected_bounded_meaning": "Writers serialize; readers may coexist with the current writer.",
+        "primary": [
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#concurrency",
+            "section": "2.2 Concurrency",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "155-159",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "subject_operation": "Long-lived read snapshot versus checkpoint backfill, reset and ongoing WAL growth",
+        "candidate_disposition": "TRUE, bounded",
+        "semantic_disposition": "BODY_SUPPORTED; ACCEPTANCE_ORACLE_MATERIAL_ERROR_F1",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "16-27; 74-77",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "Target 3.51.3, ordinary WAL; nominal automatic checkpoint threshold 1000 pages absent overrides",
+        "default_type_unit_domain": "1000 is pages, not bytes. WAL growth requires continued writes; full backfill and WAL reset are distinct. Both compile-time and run-time checkpoint settings can change defaults.",
+        "exceptions_checked": "Reader snapshot end mark determines backfill boundary; current-snapshot readers need not make backfill incomplete. Disabled checkpoints and large write transactions are independent growth causes. RESTART/TRUNCATE can wait for readers and return BUSY.",
+        "corrected_bounded_meaning": "An old read snapshot can prevent completion/reset while later committed frames accumulate. The body preserves continued writes; acceptance check 1 drops that necessary setup.",
+        "primary": [
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#concurrency",
+            "section": "2.2 Concurrency: fixed reader end marks, backfill boundary, writer rewind",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "133-177",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          },
+          {
+            "source_id": "P2-checkpoint-v2",
+            "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+            "section": "PASSIVE, FULL, RESTART and TRUNCATE definitions",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+            "text_lines": "33-58",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+            "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "subject_operation": "Moving the unchanged multi-process/multi-host WAL design to a shared NFS file",
+        "candidate_disposition": "FALSE",
+        "semantic_disposition": "SUPPORTED",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "29-38",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "Target 3.51.3 and ordinary shared-memory-capable VFS; no custom VFS or replacement deployment supplied",
+        "default_type_unit_domain": "SQLite embedded execution is distinct from cross-host shared-memory and file-lock support",
+        "exceptions_checked": "The no-shared-memory EXCLUSIVE/single-process path is inapplicable to the stated multi-process/multi-host design. A local DB host plus network proxy and client/server database are different deployments. Rollback mode is no assurance of NFS lock/sync reliability.",
+        "corrected_bounded_meaning": "The unchanged multi-host NFS WAL proposal is unsupported; local use remains within scope.",
+        "primary": [
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#overview",
+            "section": "Overview; 2.2; 8 Use of WAL Without Shared-Memory",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "55-59; 145-154; 428-455",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          },
+          {
+            "source_id": "P4-useovernet",
+            "url": "https://www.sqlite.org/useovernet.html",
+            "section": "Channel Reliability; Recommendations",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+            "text_lines": "117-130; 150-186",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+            "raw_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "subject_operation": "Opening a read-only WAL-mode snapshot under sidecar or immutable prerequisites",
+        "candidate_disposition": "TRUE, conditional",
+        "semantic_disposition": "SUPPORTED",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "40-50; 78-80",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "Read-only WAL relaxation since 3.22.0; target 3.51.3",
+        "default_type_unit_domain": "Conditions are alternatives: readable -wal AND -shm; directory permitting their creation; or an immutable connection. immutable is a boolean URI parameter, not a locking flag for a mutable live DB.",
+        "exceptions_checked": "URI processing must be enabled; this prerequisite is preserved in candidate A1 source evidence and source-map, though abbreviated in verification.md. Immutable files must remain unmodifiable; otherwise incorrect results/CORRUPT are possible. The WAL is persistent state when present. DELETE conversion before read-only publication is a recommendation, not a compulsory redesign.",
+        "corrected_bounded_meaning": "Some valid read-only WAL snapshots can open if a documented route is satisfied; the actual package and open flags are not supplied.",
+        "primary": [
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#readonly",
+            "section": "4 The WAL File; 5 Read-Only Databases",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "299-338",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          },
+          {
+            "source_id": "P3-uri",
+            "url": "https://www.sqlite.org/uri.html#uriimmutable",
+            "section": "2 Backwards Compatibility; 3.3 immutable=1",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+            "text_lines": "33-54; 152-162",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+            "raw_sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7"
+          }
+        ]
+      },
+      {
+        "number": 5,
+        "subject_operation": "Successful PASSIVE sqlite3_wal_checkpoint_v2 invocation versus zero-byte WAL guarantee",
+        "candidate_disposition": "FALSE",
+        "semantic_disposition": "SUPPORTED",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "52-61",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "Target 3.51.3, database actually in WAL mode, selected checkpoint mode",
+        "default_type_unit_domain": "pnLog/pnCkpt are integer frame counts, not byte lengths. PASSIVE does not invoke the busy handler; TRUNCATE adds zero-byte truncation before successful return.",
+        "exceptions_checked": "Checkpoint-lock contention returns BUSY without a handler; FULL/RESTART/TRUNCATE may fall back to PASSIVE-like progress with BUSY if the handler gives up. NULL/empty database selector leaves aggregate frame outputs undefined. A non-WAL DB is a successful no-op with -1 outputs. journal_size_limit can affect retained file size but does not turn every PASSIVE success into a truncation guarantee. A concurrent later write can grow a WAL after the operation returns.",
+        "corrected_bounded_meaning": "PASSIVE is best effort and does not guarantee a zero-byte file. In this WAL checkpoint interface, successful TRUNCATE supplies that operation-specific guarantee.",
+        "primary": [
+          {
+            "source_id": "P2-checkpoint-v2",
+            "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+            "section": "signature; mode descriptions; output parameters; lock, busy and return conditions",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+            "text_lines": "22-100",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+            "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+          },
+          {
+            "source_id": "P5-checkpoint-modes",
+            "url": "https://www.sqlite.org/c3ref/c_checkpoint_full.html",
+            "section": "Checkpoint Mode Values",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.txt",
+            "text_lines": "22-30",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.html",
+            "raw_sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc"
+          },
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#bigwal",
+            "section": "6 Avoiding Excessively Large WAL Files",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "339-349",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          }
+        ]
+      },
+      {
+        "number": 6,
+        "subject_operation": "Documentation proving a workload-specific at least 40 percent reduction in catalog p95 lookup latency",
+        "candidate_disposition": "UNSUPPORTED",
+        "semantic_disposition": "SUPPORTED; ACCEPTANCE_WORDING_LIMITATION_L2",
+        "candidate_locator": {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "63-70; 80-81",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        "version_configuration": "Target 3.51.3, no workload, configuration, baseline or measurements supplied",
+        "default_type_unit_domain": "Qualitative performance statements and checkpoint/read/write tradeoffs do not establish a percentile-latency percentage for this service",
+        "exceptions_checked": "Mostly-read workloads can be slower; retained WAL size and checkpoint configuration affect read performance. Source proof and workload measurement are distinct.",
+        "corrected_bounded_meaning": "No quantified p95 gain follows from these documents; matched catalog benchmarks are needed to assess an observed gain.",
+        "primary": [
+          {
+            "source_id": "P1-wal",
+            "url": "https://www.sqlite.org/wal.html#performance_considerations",
+            "section": "Overview; 2.3 Performance Considerations",
+            "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+            "text_lines": "48-51; 77-79; 178-241",
+            "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+            "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+          }
+        ]
+      }
+    ],
+    "full_pipeline_qualification": "NOT_ASSESSED_NOT_ASSIGNED",
+    "ER11": "NOT_RESCORED"
+  },
+  "native": {
+    "candidate_activation": "UNKNOWN independently; self-reported activation in authored source-map",
+    "candidate_terminal_completion": "UNKNOWN",
+    "candidate_transport": "UNKNOWN",
+    "effective_provider_model_effort": "UNKNOWN",
+    "billing_usage": "UNKNOWN",
+    "requested_route_only": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "muse-spark-1.3-contributor",
+      "reasoningEffort": "max"
+    },
+    "reviewer_goal": {
+      "actual_tool": "functions.exec tools.create_goal",
+      "thread_id": "01a12402-7f3c-7120-82ab-e99eac7b3efd",
+      "activation_observed_at_utc": "2026-10-10T04:12:01Z",
+      "created_at_epoch_seconds": 1791605521,
+      "objective_references_assignment": true,
+      "objective_under_4000_chars": true,
+      "goal_count": 1,
+      "status_at_judgment_save": "active",
+      "completion_policy": "Complete only after assessment/source judgment is saved; actual completion receipt to be retained separately."
+    }
+  },
+  "protocol": {
+    "reviewer_status": "COMPLIANT",
+    "unique_mailbox": "codex-er12-eval-bapplm01-20261010",
+    "mailbox_registered": true,
+    "waiter_armed": true,
+    "no_delegation": true,
+    "no_candidate_feedback_or_repair": true,
+    "no_account_or_git_or_publication_actions": true,
+    "no_other_arms_results_or_history_read": true,
+    "only_assigned_assessment_root_written": true,
+    "candidate_status": "No violation observed in inspected science; execution-wide absence not independently established",
+    "candidate_additional_pages_reported": 3,
+    "candidate_additional_limit": 8,
+    "terminal_science_freeze_preserved": {
+      "checked_at_utc": "2026-10-10T04:14:51.122133+00:00",
+      "original_freeze_path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "original_freeze_sha256": "ed7f92d9e96dc38e9ea08da1213b686a2ba9204ce861751dc582fbc9ec68100e",
+      "original_freeze_preserved": true,
+      "science_comparison": [
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+          "frozen_sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+          "inspected_sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A1-uri-immutable-excerpts.md",
+          "frozen_sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+          "inspected_sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+          "frozen_sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+          "inspected_sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A3-checkpoint-modes-excerpts.md",
+          "frozen_sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+          "inspected_sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S1-wal-excerpts.md",
+          "frozen_sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+          "inspected_sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+          "frozen_sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+          "inspected_sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+          "matches": true
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "frozen_sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+          "inspected_sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+          "matches": true
+        }
+      ]
+    },
+    "frozen_input_hashes_match": true
+  },
+  "time": {
+    "candidate_whole_seconds_contract": 900,
+    "candidate_investigation_seconds_max": 600,
+    "candidate_writing_reserve_seconds": 300,
+    "candidate_deadline_utc": "2026-10-10T04:17:08+00:00",
+    "candidate_science_hash_observed_at_utc": "2026-10-10T04:13:04.552393+00:00",
+    "candidate_science_present_before_deadline": true,
+    "candidate_exact_terminal_and_occupancy": "UNKNOWN",
+    "candidate_native_ordering": "UNKNOWN",
+    "reviewer_started_at_utc": "2026-10-10T04:12:01+00:00",
+    "reviewer_deadline_utc": "2026-10-10T04:37:01+00:00",
+    "reviewer_judgment_saved_at_utc": "2026-10-10T04:17:34.275515+00:00",
+    "reviewer_elapsed_to_judgment_seconds": 333.275515,
+    "latency_billing_speed_inference": "NONE; no paired comparison made"
+  },
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "material",
+      "axis": "consequential validation / oracle applicability",
+      "title": "Reader-only setup is not sufficient for the promised incomplete PASSIVE checkpoint",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+        "lines": "74-77",
+        "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+      },
+      "candidate_text": "Hold a long read, run PASSIVE \u2014 expect incomplete checkpoint, no reset",
+      "independent_primary_locators": [
+        {
+          "source_id": "P1-wal",
+          "url": "https://www.sqlite.org/wal.html#concurrency",
+          "section": "2.2 Concurrency: snapshot end mark and checkpoint boundary",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+          "text_lines": "133-140; 160-177",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+          "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+        },
+        {
+          "source_id": "P2-checkpoint-v2",
+          "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+          "section": "PASSIVE completion can occur; FULL permits current-snapshot readers; RESTART adds reader clearance",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+          "text_lines": "33-58; 63-71",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+          "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+        }
+      ],
+      "source_statement": "Readers keep a fixed snapshot end mark; checkpoint backfill stops at frames beyond that mark. PASSIVE may leave a checkpoint unfinished, but it can backfill all available frames. FULL can copy all frames while readers see the latest snapshot; RESTART adds a distinct wait so the WAL may restart.",
+      "reviewer_inference": "A reader seeing the newest commit, with no later commits, can coexist with complete backfill. An empty/fully backfilled WAL is also a permitted state. Merely holding a reader therefore does not imply pnCkpt < pnLog. Lack of reset is distinct from incomplete backfill.",
+      "consequence": "The first required acceptance check can reject a conforming target deployment or fail to exercise checkpoint starvation. Its deterministic incomplete-checkpoint oracle does not follow from its specified setup. This is a missing causal precondition, not a demand for execution or a detailed test harness.",
+      "bounded_diagnostic": "Pin an actual reader snapshot, commit frames beyond its end mark from another connection, verify an incomplete PASSIVE backfill using the selected WAL database and frame outputs, then release the reader and check a successful TRUNCATE with other transactions quiescent.",
+      "countervailing_candidate_support": "The claim-2 body at lines 23-24 correctly says continued writes. This finding preserves that supported body and concerns the acceptance criterion that omits the necessary write-after-snapshot setup.",
+      "actual_execution": "No candidate local probe was executed; candidate source-map explicitly marks this as prospective. Reviewer also did not execute a target-version service probe."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+        "lines": "9-10; 18-22; 31-34; 42-46; 54-57; 65-70",
+        "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+      },
+      "description": "Main-file citations use source IDs/sections; companion source-map supplies URLs and evidence files. Per-fetch timestamps are honestly windows, not exact seconds. Original complete fetch responses are not retained in the candidate source tree; independent full raw retrievals are retained here."
+    },
+    {
+      "id": "L2",
+      "severity": "minor ambiguity",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+        "lines": "80-81",
+        "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+      },
+      "description": "The instruction to reject claim 6 unless a 40% gain is measured could blur a measured service result with documentary proof. The claim-6 body unambiguously rejects the documentation guarantee, so this is not scored as a second material erroneous disposition. A service benchmark can establish an observed scoped gain; it cannot make the documents alone establish it."
+    }
+  ],
+  "unknowns": [
+    "Candidate actual native Goal activation and terminal completion are not independently verified. The source-map reports one activation and pending completion at save; T3 completion is a separate parent-observed fact.",
+    "Effective provider/model/effort, transport behavior, billing and inference usage are UNKNOWN; requested route in freeze is not effective telemetry.",
+    "Exact original retrieval seconds and original full raw web responses are not available in the authored candidate evidence.",
+    "Candidate exact terminal timestamp, investigation/occupancy duration and save-before-native-completion ordering remain UNKNOWN. Host mtimes and post-terminal freeze are not native receipts.",
+    "No actual catalog workload, SQLite build/open flags, snapshot package, NFS deployment or before/after p95 results were supplied or executed here. These do not justify rejecting the honest conditional claim dispositions."
+  ],
+  "useful_discoveries": [
+    {
+      "origin": "candidate",
+      "discovery": "Read-only WAL support starts at 3.22.0; immutable is a read-only, lock/change-detection bypass with a real immutability condition.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "40-50",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        {
+          "source_id": "P3-uri",
+          "url": "https://www.sqlite.org/uri.html#uriimmutable",
+          "section": "immutable=1",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+          "text_lines": "152-162",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+          "raw_sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7"
+        }
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "Checkpoint return/output/locking modes distinguish best effort, full backfill, restart and truncation; aggregate database selector makes frame outputs undefined.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "52-61",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        {
+          "source_id": "P2-checkpoint-v2",
+          "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+          "section": "modes, outputs, locks and return conditions",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+          "text_lines": "33-100",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+          "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+        }
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "Network proxy and client/server engine are bounded alternatives, explicitly different deployments; rollback does not establish reliability.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "35-38",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        },
+        {
+          "source_id": "P4-useovernet",
+          "url": "https://www.sqlite.org/useovernet.html",
+          "section": "Recommendations",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+          "text_lines": "150-186",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+          "raw_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1"
+        }
+      ]
+    },
+    {
+      "origin": "reviewer independent",
+      "discovery": "3.51.3 fixes the WAL-reset corruption race affecting earlier multi-connection WAL versions; NOOP is available from 3.51.0. Neither changes the six dispositions or imposes an additional required deployment.",
+      "locators": [
+        {
+          "source_id": "P6-release-3-51-3",
+          "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+          "section": "3.51.0 prior changes and 3.51.3 patch changes",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.txt",
+          "text_lines": "58-59; 89-93",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.html",
+          "raw_sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+        },
+        {
+          "source_id": "P1-wal",
+          "url": "https://www.sqlite.org/wal.html#walresetbug",
+          "section": "11 The WAL-Reset Bug",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+          "text_lines": "507-527",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+          "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+        }
+      ]
+    },
+    {
+      "origin": "reviewer independent",
+      "discovery": "Completed frame backfill and reader-safe WAL reset are separate; a current reader does not force an incomplete PASSIVE result. This determines whether the proposed oracle is applicable.",
+      "locators": [
+        {
+          "source_id": "P2-checkpoint-v2",
+          "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+          "section": "PASSIVE/FULL/RESTART/TRUNCATE",
+          "text_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+          "text_lines": "33-58",
+          "raw_file": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+          "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+          "lines": "74-77",
+          "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3"
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "candidate_executed": "Primary-document retrieval and authored applicability analysis only; no local/service probe executed according to source-map",
+    "candidate_proposed": "Two numbered multi-part acceptance checks",
+    "reviewer_executed": "Full mapped input/candidate inspection; six fresh official HTTPS GETs; complete extracted-text reading; exact hash and freeze consistency checks",
+    "reviewer_did_not_execute": "No target-version SQLite/catalog deployment, NFS move, snapshot open or p95 benchmark",
+    "not_execution_requirement": "FAIL is due to the proposed test oracle, not missing deployment or probe execution"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552312+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "bytes": 602,
+      "sha256": "9f403bb96750f3ee065b289fde4d3535a6e7ff8ff14b480b33016d1569ea423a",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552393+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/assignment.md",
+      "bytes": 1806,
+      "sha256": "6ee9bdd9ebc205bc1147df8a28e20f2860232e15b96b691f9082b6f5491e1aa8",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552444+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/freeze.json",
+      "bytes": 2812,
+      "sha256": "14c4528a9aa96d4035ced8bec47d59f685a86449f13243f9f71421d0a8d754fc",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552487+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "bytes": 2972,
+      "sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552526+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "bytes": 1621,
+      "sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552558+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "bytes": 993,
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552587+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "bytes": 989,
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552608+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "bytes": 1337,
+      "sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552632+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+      "bytes": 4752,
+      "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552683+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "bytes": 7911,
+      "sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552750+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A1-uri-immutable-excerpts.md",
+      "bytes": 1100,
+      "sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552775+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+      "bytes": 1583,
+      "sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552799+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A3-checkpoint-modes-excerpts.md",
+      "bytes": 836,
+      "sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552821+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S1-wal-excerpts.md",
+      "bytes": 3848,
+      "sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552852+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+      "bytes": 1797,
+      "sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:04.552876+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/root-review-request.json",
+      "bytes": 2841,
+      "sha256": "ff1397829a2856d32eb689646f711b208bdd28cde8960d9c13a255b160003acd",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.843456+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.843692+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.retrieval.json",
+      "bytes": 889,
+      "sha256": "ca680e27d23e885dc3622282f3f7109aa8cd459721531c8a81e5bc7dc6114d60",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.843768+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+      "bytes": 31423,
+      "sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.843945+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+      "bytes": 9619,
+      "sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844062+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.retrieval.json",
+      "bytes": 947,
+      "sha256": "91d0f53fbc1b20df3baca53f7730e2875fe057f7097edfafa2f969fb93727cad",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844128+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+      "bytes": 5337,
+      "sha256": "1632c1114efe669256c68de4c179655ae6a37645374b754e0cded7cd1a39cad5",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844196+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+      "bytes": 15559,
+      "sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844297+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.retrieval.json",
+      "bytes": 889,
+      "sha256": "4b33ef75657fb1d7a4a7280f3fe3fa9be205f7e1b52f00aa5aaaffaf84dc3faf",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844350+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+      "bytes": 9089,
+      "sha256": "72ea3a5b51562f4e98d325ec5e44274dc84d62a8c8e55597b78f5abbef26ba43",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844440+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+      "bytes": 15812,
+      "sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844556+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.retrieval.json",
+      "bytes": 917,
+      "sha256": "abb92189cbd913c2a7e48768f0b139f53c30ed07b6a19024ae17a996c43e5429",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844613+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+      "bytes": 9129,
+      "sha256": "5a1ef4929dd8910033872dde728d8d97a604464d0245f43bdf48b2609d54f208",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844699+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.html",
+      "bytes": 4755,
+      "sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844760+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.retrieval.json",
+      "bytes": 953,
+      "sha256": "a79c0003aedacf46342f5589e3de8586b5cdd821445d0b3e432a14f98e7f903f",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844810+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.txt",
+      "bytes": 928,
+      "sha256": "43680a9417bef199497c48c29202d1dacdf12207024d0fdff2fe1166d71f3dab",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844861+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.html",
+      "bytes": 9857,
+      "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8",
+      "inspection": "raw independently retrieved primary HTML retained and complete extracted text read",
+      "hash_observed_utc": "2026-10-10T04:13:56.844948+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.retrieval.json",
+      "bytes": 937,
+      "sha256": "644e0447e984c39db79972e9d7c6666ef5a72a2f423cb1529798955d40ee205b",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.845008+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.txt",
+      "bytes": 4353,
+      "sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.845100+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/retrieval-index.json",
+      "bytes": 5793,
+      "sha256": "93279e1153c0031c6a13e088d6dde38d2de3635360dda2c3d92b4f551adbc5d2",
+      "inspection": "complete content read",
+      "hash_observed_utc": "2026-10-10T04:13:56.845176+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/terminal-science-freeze.json",
+      "bytes": 13613,
+      "sha256": "ed7f92d9e96dc38e9ea08da1213b686a2ba9204ce861751dc582fbc9ec68100e",
+      "inspection": "complete assigned-arm host terminal-science-freeze read; original preserved unchanged",
+      "hash_observed_utc": "2026-10-10T04:14:51.120870+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/candidate-terminal-science-freeze.json",
+      "bytes": 13613,
+      "sha256": "ed7f92d9e96dc38e9ea08da1213b686a2ba9204ce861751dc582fbc9ec68100e",
+      "inspection": "byte-identical preserved copy of assigned-arm host terminal-science-freeze",
+      "hash_observed_utc": "2026-10-10T04:14:51.121016+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/manifest.json",
+      "bytes": 624,
+      "sha256": "84cd63d46d485855d0ae4f9a4c51c16f36c9e00dfba833b3ed106aea321dd535",
+      "inspection": "complete frozen input manifest read at exact path supplied by freeze.json",
+      "hash_observed_utc": "2026-10-10T04:15:12.285620+00:00"
+    }
+  ],
+  "urls_versions": [
+    {
+      "url": "https://www.sqlite.org/wal.html",
+      "version_scope": "Author footer 2026-08-25 19:42:39Z; live manual, target 3.51.3",
+      "retrieval_utc": "2026-10-10T04:12:45.544310+00:00",
+      "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+      "version_scope": "Live unversioned C API reference; checked against target 3.51.3 release history",
+      "retrieval_utc": "2026-10-10T04:12:45.528254+00:00",
+      "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+    },
+    {
+      "url": "https://www.sqlite.org/uri.html",
+      "version_scope": "Live unversioned URI reference; URI support since 3.7.7 and parameter list as of 3.15.0",
+      "retrieval_utc": "2026-10-10T04:12:45.548424+00:00",
+      "raw_sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7"
+    },
+    {
+      "url": "https://www.sqlite.org/useovernet.html",
+      "version_scope": "Author footer 2022-06-22 21:14:29Z; corroboration of network design constraint",
+      "retrieval_utc": "2026-10-10T04:12:45.548586+00:00",
+      "raw_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1"
+    },
+    {
+      "url": "https://www.sqlite.org/c3ref/c_checkpoint_full.html",
+      "version_scope": "Live unversioned mode constants; NOOP added in 3.51.0, present in target 3.51.3",
+      "retrieval_utc": "2026-10-10T04:12:45.528715+00:00",
+      "raw_sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc"
+    },
+    {
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version_scope": "Version-specific SQLite release 3.51.3, 2026-03-13; SOURCE_ID 2026-03-13 10:38:09 737ae4a34738ffa0c3ff7f9bb18df914dd1cad163f28fd6b6e114a344fe6d618",
+      "retrieval_utc": "2026-10-10T04:12:45.524790+00:00",
+      "raw_sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+    }
+  ],
+  "independent_source_map": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/source-map.json",
+  "inspected_hash_manifest": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/inspected-hashes.json"
+}

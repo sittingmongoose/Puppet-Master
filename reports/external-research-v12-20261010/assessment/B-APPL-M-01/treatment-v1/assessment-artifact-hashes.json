@@ -1,0 +1,141 @@
+{
+  "observed_at_utc": "2026-10-10T04:18:14.733028+00:00",
+  "scope": "All retained assessment artifacts before native Goal completion; this manifest is excluded to avoid self-reference. A later separate native completion receipt will be additional. Original assessment judgment is not rewritten.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/assessment.json",
+      "bytes": 54413,
+      "sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/assessment.md",
+      "bytes": 8673,
+      "sha256": "b4ce043aa953aa98dbf569860a070cab502818502965cd91f15f2f1c9a8edcdc"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+      "bytes": 42143,
+      "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.retrieval.json",
+      "bytes": 889,
+      "sha256": "ca680e27d23e885dc3622282f3f7109aa8cd459721531c8a81e5bc7dc6114d60"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+      "bytes": 31423,
+      "sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+      "bytes": 9619,
+      "sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.retrieval.json",
+      "bytes": 947,
+      "sha256": "91d0f53fbc1b20df3baca53f7730e2875fe057f7097edfafa2f969fb93727cad"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+      "bytes": 5337,
+      "sha256": "1632c1114efe669256c68de4c179655ae6a37645374b754e0cded7cd1a39cad5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+      "bytes": 15559,
+      "sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.retrieval.json",
+      "bytes": 889,
+      "sha256": "4b33ef75657fb1d7a4a7280f3fe3fa9be205f7e1b52f00aa5aaaffaf84dc3faf"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+      "bytes": 9089,
+      "sha256": "72ea3a5b51562f4e98d325ec5e44274dc84d62a8c8e55597b78f5abbef26ba43"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+      "bytes": 15812,
+      "sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.retrieval.json",
+      "bytes": 917,
+      "sha256": "abb92189cbd913c2a7e48768f0b139f53c30ed07b6a19024ae17a996c43e5429"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+      "bytes": 9129,
+      "sha256": "5a1ef4929dd8910033872dde728d8d97a604464d0245f43bdf48b2609d54f208"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.html",
+      "bytes": 4755,
+      "sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.retrieval.json",
+      "bytes": 953,
+      "sha256": "a79c0003aedacf46342f5589e3de8586b5cdd821445d0b3e432a14f98e7f903f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.txt",
+      "bytes": 928,
+      "sha256": "43680a9417bef199497c48c29202d1dacdf12207024d0fdff2fe1166d71f3dab"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.html",
+      "bytes": 9857,
+      "sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.retrieval.json",
+      "bytes": 937,
+      "sha256": "644e0447e984c39db79972e9d7c6666ef5a72a2f423cb1529798955d40ee205b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.txt",
+      "bytes": 4353,
+      "sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/candidate-terminal-science-freeze.json",
+      "bytes": 13613,
+      "sha256": "ed7f92d9e96dc38e9ea08da1213b686a2ba9204ce861751dc582fbc9ec68100e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/index.md",
+      "bytes": 3276,
+      "sha256": "1b3c307e06ed2d1db48a5ee7252c6ec39b5da2f10bf2c36a6142215f454ea3be"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/retrieval-index.json",
+      "bytes": 5793,
+      "sha256": "93279e1153c0031c6a13e088d6dde38d2de3635360dda2c3d92b4f551adbc5d2"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/terminal-freeze-comparison.json",
+      "bytes": 2866,
+      "sha256": "faa37185a9967ef9c941263a1ca967e7581cdaae48b15563ed73a083fd4daf4c"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/inspected-hashes.json",
+      "bytes": 13786,
+      "sha256": "b5d8328098a706142b0a048acb61555a6910ddad1e6456bc61531470fbba7ab4"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/root-review-request.json",
+      "bytes": 2841,
+      "sha256": "ff1397829a2856d32eb689646f711b208bdd28cde8960d9c13a255b160003acd"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "bytes": 41016,
+      "sha256": "f5bfd69abf3a9930048b41053a0b5fa71547a7b13ee89b6d1de64d99850ca2c6"
+    }
+  ]
+}

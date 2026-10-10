@@ -1,0 +1,86 @@
+{
+  "prepared_at_utc": "2026-10-10T04:24:29.254Z",
+  "stage": "reviser",
+  "stage_deadline_utc": "2026-10-10T04:42:29.254Z",
+  "whole_deadline_utc": "2026-10-10T04:57:17.174Z",
+  "stage_budget_s": 1080,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-investigator-v1",
+      "statusPath": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/status.json"
+    },
+    {
+      "stage": "critic",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-critic-v1",
+      "statusPath": "ER12_RUNTIME/runs/A6-01/control/stages/critic/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+      "bytes": 3323
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/assignment.md",
+      "sha256": "32aebb4ea2f66960a5ac89819f8422cc147e6261a8288b474cd70ea7d6020f96",
+      "bytes": 3286
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/input-map.json",
+      "sha256": "328df8c6b5b979343c418f890179af27b7d1a3cc95c42280beeca3f3eb7da10f",
+      "bytes": 1701
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4",
+      "bytes": 16039
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b",
+      "bytes": 23006
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "sha256": "f24cd24a3e59d50022a32ac0827d20460029ba6f114c70a034c248f1172e955e",
+      "bytes": 20291
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "bytes": 5984
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "sha256": "8a2196ac8d0b966f15b3c4e458a50e4ae449b7476d74000f1da5f8721c0acd5d",
+      "bytes": 427
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+      "sha256": "51c973c39dbefe617915a75a894c585aa819b9504b4d8c21ec52c2e532274783",
+      "bytes": 11419
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/source-map.json",
+      "sha256": "fe7636a876ff6b98fdd4f669463332a76b2da043c245a702857498bdaba485ef",
+      "bytes": 26000
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 reviser stage, run A6-01-control: execute ER12_RUNTIME/runs/A6-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1080.0
+}

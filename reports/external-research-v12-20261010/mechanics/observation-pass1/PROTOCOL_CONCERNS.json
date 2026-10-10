@@ -1,0 +1,44 @@
+[
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A1-02/control",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A1-02/treatment",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A4-01/control",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A4-01/treatment",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A6-01/control",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "checkpoint_queue_projection_difference",
+    "arm_id": "A6-01/treatment",
+    "detail": "Checkpoint contains started IDs while durable queue snapshot has no task_id. Snapshots may differ in time; no correction performed."
+  },
+  {
+    "kind": "observation_infrastructure",
+    "detail": "All 14 supported thread projections returned upstream_unavailable: Subscription ended: upstream connection dropped. Resubscribe to continue.; reason ping-timeout. Daily usage returned MCP -32603 Internal error. No retry, resubscription, service change or alternate query."
+  },
+  {
+    "kind": "schema_discovery_deviation",
+    "detail": "Initial tool metadata filter was too broad and truncated; narrower filters printed overlapping schemas again. Read-tool-schemas-once instruction was not met strictly. No private internals read."
+  },
+  {
+    "kind": "commentary_count_correction",
+    "detail": "An interim update said 12 candidate arms; exact checkpoint candidateTasks count is 14 and all 14 IDs received exactly one projection attempt."
+  }
+]

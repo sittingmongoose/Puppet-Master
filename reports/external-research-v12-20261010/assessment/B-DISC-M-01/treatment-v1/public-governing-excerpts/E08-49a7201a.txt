@@ -1,0 +1,20 @@
+URL: https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html
+Original locator: ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt
+Original SHA256: 49a7201a5d980e4489005c60247d3053fe8051b0c568ec6dc37f5ef80bd3f5bd
+Original numbered lines; gaps omitted. Not full response.
+
+24: The rename() function shall change the name of a file. The old argument points to the pathname of the file to be
+25: renamed. The new argument points to the new pathname of the file. [CX]
+26: If the new argument does not resolve to an
+27: existing directory entry for a file of type directory and the new argument contains at least one non-<slash> character
+28: and ends with one or more trailing <slash> characters after all symbolic links have been processed, rename() shall
+29: fail.
+30: If either the old or new argument names a symbolic link, rename() shall operate on the symbolic link
+31: itself, and shall not resolve the last component of the argument. If the old argument and the new argument resolve to
+32: either the same existing directory entry or different directory entries for the same existing file, rename() shall return
+33: successfully and perform no other action.
+34: If the old argument names a file that is not a directory and the new argument names a directory, or old
+35: names a directory and new names a file that is not a directory, or new names a directory that is not empty,
+36: rename() shall fail. Otherwise, if the directory entry named by new exists, it shall be removed and old
+37: renamed to new. In this case, a directory entry named new shall remain visible to other threads throughout the
+38: renaming operation and refer either to the file referred to by new or old before the operation began.

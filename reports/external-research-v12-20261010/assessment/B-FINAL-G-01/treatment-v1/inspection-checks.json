@@ -1,0 +1,191 @@
+{
+  "checked_at_utc": "2026-10-10T04:15:57.717553+00:00",
+  "candidate_science_unchanged": true,
+  "candidate_science_checks": [
+    {
+      "id": "A001",
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256_at_review": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "sha256_at_recheck": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged": true
+    },
+    {
+      "id": "A002",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "sha256_at_review": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "sha256_at_recheck": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "unchanged": true
+    },
+    {
+      "id": "A003",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+      "sha256_at_review": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "sha256_at_recheck": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "unchanged": true
+    },
+    {
+      "id": "A004",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/freeze.json",
+      "sha256_at_review": "5c7d4746092117fb093b71b607035003739d33385c52519c143714700b4d6824",
+      "sha256_at_recheck": "5c7d4746092117fb093b71b607035003739d33385c52519c143714700b4d6824",
+      "unchanged": true
+    },
+    {
+      "id": "A005",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "sha256_at_review": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "sha256_at_recheck": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "unchanged": true
+    },
+    {
+      "id": "A006",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "sha256_at_review": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "sha256_at_recheck": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "unchanged": true
+    },
+    {
+      "id": "A007",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "sha256_at_review": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "sha256_at_recheck": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "unchanged": true
+    },
+    {
+      "id": "A008",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "sha256_at_review": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "sha256_at_recheck": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "unchanged": true
+    },
+    {
+      "id": "A009",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "sha256_at_review": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "sha256_at_recheck": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "unchanged": true
+    },
+    {
+      "id": "A010",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "sha256_at_review": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "sha256_at_recheck": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "unchanged": true
+    },
+    {
+      "id": "A011",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "sha256_at_review": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "sha256_at_recheck": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "unchanged": true
+    },
+    {
+      "id": "A012",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+      "sha256_at_review": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "sha256_at_recheck": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "unchanged": true
+    },
+    {
+      "id": "A013",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/goal-record.md",
+      "sha256_at_review": "cfce03efbe99bd8311411fddc38a83912e20f4a8bcd2f9cb470a1bc205167a83",
+      "sha256_at_recheck": "cfce03efbe99bd8311411fddc38a83912e20f4a8bcd2f9cb470a1bc205167a83",
+      "unchanged": true
+    },
+    {
+      "id": "A014",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "sha256_at_review": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "sha256_at_recheck": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "unchanged": true
+    },
+    {
+      "id": "A015",
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/terminal-science-freeze.json",
+      "sha256_at_review": "fc57667cbea26e7c81fe50d89ebbc364439bd4787b6d24f71f6f2e8401a4cf48",
+      "sha256_at_recheck": "fc57667cbea26e7c81fe50d89ebbc364439bd4787b6d24f71f6f2e8401a4cf48",
+      "unchanged": true
+    }
+  ],
+  "frozen_input_expected_hash_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+      "expected_sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "actual_sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "expected_sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "actual_sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "expected_sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "actual_sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "expected_sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "actual_sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "expected_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "actual_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "expected_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "actual_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "expected_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "actual_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "expected_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "actual_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "matches": true
+    }
+  ],
+  "existing_terminal_science_freezes": [
+    "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/terminal-science-freeze.json"
+  ],
+  "terminal_freeze_search_scope": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment",
+  "terminal_freeze_handling": "Actual host terminal-science-freeze found on recheck, read fully, and preserved byte-for-byte; no synthetic host freeze made",
+  "word_counts": {
+    "method": "Whitespace-delimited tokens; replacement section excludes heading and dispositions",
+    "replacement_section": 546,
+    "whole_deliverable": 1016
+  },
+  "terminal_science_hash_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "expected_sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "actual_sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+      "expected_sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "actual_sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "expected_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "actual_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "matches": true
+    }
+  ]
+}

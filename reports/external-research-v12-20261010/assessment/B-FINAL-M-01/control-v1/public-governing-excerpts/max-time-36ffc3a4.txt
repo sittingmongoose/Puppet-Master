@@ -1,0 +1,12 @@
+URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27
+Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md
+Original SHA256: 36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b
+Original numbered lines; gaps omitted. Not full response.
+
+21: Set maximum time in seconds that you allow each transfer to take. Prevents
+22: your batch jobs from hanging for hours due to slow networks or links going
+23: down. This option accepts decimal values (added in 7.32.0).
+24: 
+25: If you enable retrying the transfer (--retry) then the maximum time counter is
+26: reset each time the transfer is retried. You can use --retry-max-time to limit
+27: the retry time.

@@ -1,0 +1,97 @@
+{
+  "schema": "er12-role-source-map-v1",
+  "case_id": "ER12-B-FINAL-G-01-FRESH",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "arm": "treatment",
+  "written_at_utc": "2026-10-10T04:07:30Z",
+  "sources": [
+    {
+      "source_id": "S1-snapshot",
+      "title": "rsync manual (corpus snapshot)",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "version": "Live upstream man page snapshot supplied in the frozen corpus; target rsync 3.2.7 both peers",
+      "retrieved_at_utc": "2026-10-10T03:54:10Z",
+      "retrieved_by": "setup-worker (supplied in corpus, not re-retrieved by this arm)",
+      "operation": "corpus input; verbatim excerpt: \"This tells rsync to delete extraneous files from the receiving side\"; locator: --delete section",
+      "used_for": "confirmation that --delete is receiver-side (critique 6)"
+    },
+    {
+      "source_id": "S2-snapshot",
+      "title": "rsync project FAQ (corpus snapshot)",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "version": "Live upstream FAQ snapshot supplied in the frozen corpus; target rsync 3.2.7",
+      "retrieved_at_utc": "2026-10-10T03:54:10Z",
+      "retrieved_by": "setup-worker (supplied in corpus, not re-retrieved by this arm)",
+      "operation": "corpus input; excerpt: \"rsync FAQ\"; navigation: protocol-startup troubleshooting",
+      "used_for": "supplemental context only; not load-bearing in any disposition"
+    },
+    {
+      "source_id": "M1",
+      "title": "rsync 3.2.7 manual (rsync.1), pinned primary retrieval",
+      "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+      "locator_in_url": "member rsync-3.2.7/rsync.1",
+      "version": "Header: .TH \"rsync\" \"1\" \"20 Oct 2022\" \"rsync 3.2.7\" — exact target version",
+      "retrieved_at_utc": "2026-10-10T04:04:00Z (HTTPS GET); extracted 04:05:10Z",
+      "operation": "curl -sS HTTPS GET, HTTP 200, 1149787 bytes; tar -xzOf member extraction to sources/rsync-3.2.7-man.txt (text extraction only; no downloaded code executed)",
+      "conditions": "Official upstream source release of the exact target version; supersedes the unpinned live man page for version-sensitive semantics",
+      "exceptions": "Live man page (S1 URL) not separately fetched; the pinned tarball copy was preferred. Local probe confined to the arm's output directory.",
+      "saved_as": "sources/rsync-3.2.7-man.txt"
+    }
+  ],
+  "verbatim_passages_used": [
+    {
+      "passage": "This tells rsync to delete extraneous files from the receiving side (ones that aren't on the sending side), but only for the directories that are being synchronized.",
+      "source_id": "M1",
+      "locator": "--delete section"
+    },
+    {
+      "passage": "Files that are excluded from the transfer are also excluded from being deleted unless you use the --delete-excluded option",
+      "source_id": "M1",
+      "locator": "--delete section"
+    },
+    {
+      "passage": "This option turns any unqualified exclude/include rules into server-side rules that do not affect the receiver's deletions.",
+      "source_id": "M1",
+      "locator": "--delete-excluded section"
+    },
+    {
+      "passage": "A trailing slash on the source changes this behavior to avoid creating an additional directory level at the destination. You can think of a trailing / on a source as meaning \"copy the contents of this directory\" as opposed to \"copy the directory by name\"",
+      "source_id": "M1",
+      "locator": "USAGE section"
+    },
+    {
+      "passage": "perform a trial run with no changes made",
+      "source_id": "M1",
+      "locator": "OPTIONS SUMMARY line for --dry-run"
+    },
+    {
+      "passage": "This option puts the temporary file from each updated file into a holding directory until the end of the transfer, at which time all the files are renamed into place in rapid succession. This attempts to make the updating of the files a little more atomic.",
+      "source_id": "M1",
+      "locator": "--delay-updates section"
+    },
+    {
+      "passage": "all further deletions are skipped through the end of the transfer ... rsync outputs a warning (including a count of the skipped deletions) and exits with an error code of 25",
+      "source_id": "M1",
+      "locator": "--max-delete section"
+    },
+    {
+      "passage": "you may specify --max-delete=0 to be warned about any extraneous files in the destination without removing any of them",
+      "source_id": "M1",
+      "locator": "--max-delete section"
+    }
+  ],
+  "claim_map": {
+    "critique_1_accept": {"sources": ["M1"], "locators": ["--delete", "--delete-excluded"], "kind": "source"},
+    "critique_2_reject": {"sources": ["M1"], "locators": ["OPTIONS SUMMARY --dry-run", "--max-delete"], "kind": "source + product-constraint inference (O2/O4, preview_required=true)"},
+    "critique_3_accept": {"sources": ["M1"], "locators": ["--delay-updates"], "kind": "source + product-constraint inference (O5, publish_mode=explicit)"},
+    "critique_4_reject": {"sources": ["M1"], "locators": ["USAGE trailing-slash", "--delete whole-directory requirement"], "kind": "source"},
+    "critique_5_accept_qualified": {"sources": ["M1"], "locators": ["--dry-run", "absence of locking semantics"], "kind": "source (absence) + tool-design inference (re-preview binding pass)"},
+    "critique_6_reject": {"sources": ["M1", "S1-snapshot"], "locators": ["--delete"], "kind": "source"}
+  },
+  "retrieval_failures": [],
+  "limitations": [
+    "Native Goal tool: not available in this harness (see goal-record.md); limitation recorded, no simulation, no fabricated receipts.",
+    "Pinned 3.2.7 manual verified on paper only; no fixture run was performed (task forbids executing the destructive command; prospective checks remain unexecuted).",
+    "Behavior when local-notes/ exists on both peers and interruption ordering of --delay-updates with --delete remain unobserved."
+  ]
+}

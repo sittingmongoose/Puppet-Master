@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:28:14.324084+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "bytes": 9743,
+      "sha256": "b3d9b95c88682e058b7431f1315e30f2ab04904d8810e95d040fa242a00232b4",
+      "mtime_ns": 1791605773644957213
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "bytes": 14463,
+      "sha256": "0b351b209aad8010f9a8ade144dc6485bcc84013b2ed093a2223d7a55948e2b8",
+      "mtime_ns": 1791605919056931565
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2697,
+      "sha256": "bfa5089c109ebe139997f34dcd519d2b2dca3a2b291e05c3af3f9fbfe3456cea",
+      "mtime_ns": 1791605773648957243
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "bytes": 7948,
+      "sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316",
+      "mtime_ns": 1791604649051407753
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "bytes": 23899,
+      "sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f",
+      "mtime_ns": 1791605011893910062
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2670,
+      "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "mtime_ns": 1791604676121566860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "bytes": 10060,
+      "sha256": "386b0c661e61d732e3223978a206c05aeed35436a910c4be0630ae36a9498357",
+      "mtime_ns": 1791605020606612075
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 2076,
+      "sha256": "5dac4044e63465fce0977e22c5cf7a237fa8b4133e2fbc35cafb268397dbaf58",
+      "mtime_ns": 1791604671070551755
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+      "bytes": 30224,
+      "sha256": "8f49f36c41ce0bd7ce36ee9263233744ea1523379b147715c3f3c5104e9751ff",
+      "mtime_ns": 1791606300915720446
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json",
+      "bytes": 18375,
+      "sha256": "911478f639cec9ac4dfd2c686446fee732e8c82339acd7cad4d85d7ff0aedcfe",
+      "mtime_ns": 1791606443947267105
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2919,
+      "sha256": "7c819a4ab7b695de4ded96996ef093f69eb76d68b46bf5ca2635b98441ba7835",
+      "mtime_ns": 1791606307864752178
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A1-01",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The native Goal is **complete** (`01a12409-d444-7460-8bef-bb883ed31d29`).\n\n- [final.md](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md)\n\nThe revision accepts and addresses C1 and C2: it distinguishes AWS multipart checksum types and encryption conditions, and blocks retries or completion when a part request may still be in flight. [AWS multipart guidance](https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html) The Tus recommendation remains conditional on the gateway supporting the needed durable state and extensions. [Tus protocol](https://tus.io/protocols/resumable-upload)\n\nNo implementation or transfer validation was run. The source map records Goal provenance and timestamps that were unavailable as `UNKNOWN`.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7a1b0398-fe4e-47e4-a07d-90cddf1e3b09",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The native Goal is **complete** (`01a12409-d444-7460-8bef-bb883ed31d29`).\n\n- [final.md](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/sources/index.md)\n\nThe revision accepts and addresses C1 and C2: it distinguishes AWS multipart checksum types and encryption conditions, and blocks retries or completion when a part request may still be in flight. [AWS multipart guidance](https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html) The Tus recommendation remains conditional on the gateway supporting the needed durable state and extensions. [Tus protocol](https://tus.io/protocols/resumable-upload)\n\nNo implementation or transfer validation was run. The source map records Goal provenance and timestamps that were unavailable as `UNKNOWN`.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7a1b0398-fe4e-47e4-a07d-90cddf1e3b09",
+    "waitTimedOut": false
+  }
+}

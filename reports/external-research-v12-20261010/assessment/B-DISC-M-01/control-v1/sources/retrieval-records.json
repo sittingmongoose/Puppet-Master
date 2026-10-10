@@ -1,0 +1,98 @@
+[
+  {
+    "id": "http-rfc9110",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+    "final_url": "https://www.rfc-editor.org/rfc/rfc9110.txt",
+    "retrieved_at_utc": "2026-10-10T04:09:01.372683+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.219885+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc9110.txt",
+    "bytes": 502941,
+    "sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+    "status": "retrieved"
+  },
+  {
+    "id": "metalink-rfc5854",
+    "url": "https://www.rfc-editor.org/rfc/rfc5854.txt",
+    "final_url": "https://www.rfc-editor.org/rfc/rfc5854.txt",
+    "retrieved_at_utc": "2026-10-10T04:09:01.464854+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.376229+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc5854.txt",
+    "bytes": 72641,
+    "sha256": "b8de15dc3304762cf732b15d77450ba092652f83518945695542b3e3b0860469",
+    "status": "retrieved"
+  },
+  {
+    "id": "tuf-spec-v1.0.36",
+    "url": "https://theupdateframework.github.io/specification/v1.0.36/",
+    "final_url": "https://theupdateframework.github.io/specification/v1.0.36/",
+    "retrieved_at_utc": "2026-10-10T04:09:01.554373+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.465509+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/tuf-v1.0.36.html",
+    "bytes": 248581,
+    "sha256": "df63310e70e76aff548b062eb0b6b5b18e2f59844312bffe70d3c97253a8eb6a",
+    "status": "retrieved"
+  },
+  {
+    "id": "curl-resume-large",
+    "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+    "final_url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
+    "retrieved_at_utc": "2026-10-10T04:09:01.688401+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.556159+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-resume-large.html",
+    "bytes": 8519,
+    "sha256": "65bc526b6f32756f3d944b4d8ccd1a7db6483fb18b92b94e6a2fe5d14e2b7694",
+    "status": "retrieved"
+  },
+  {
+    "id": "curl-resume",
+    "url": "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+    "final_url": "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+    "retrieved_at_utc": "2026-10-10T04:09:01.810529+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.688562+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-resume.md",
+    "bytes": 2095,
+    "sha256": "7867237725086dfffc7dcb6f690576a9b3c1a1124c738b07bbcfef701a5788d7",
+    "status": "retrieved"
+  },
+  {
+    "id": "go-tuf-updater",
+    "url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/updater/updater.go",
+    "final_url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/updater/updater.go",
+    "retrieved_at_utc": "2026-10-10T04:09:01.932547+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.810642+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-updater.go",
+    "bytes": 27081,
+    "sha256": "46716cfff8ed19fa4f6ac19e914166f344b1c7cef7bedb35deb910b4a81d4276",
+    "status": "retrieved"
+  },
+  {
+    "id": "go-tuf-length-hashes",
+    "url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/metadata.go",
+    "final_url": "https://raw.githubusercontent.com/theupdateframework/go-tuf/master/metadata/metadata.go",
+    "retrieved_at_utc": "2026-10-10T04:09:02.063619+00:00",
+    "started_at_utc": "2026-10-10T04:09:01.932813+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-metadata.go",
+    "bytes": 32001,
+    "sha256": "d1933093aa75e31b83b0e35b939e169378df69710ca202d8c2218d3934300c0e",
+    "status": "retrieved"
+  },
+  {
+    "id": "curl-http-implementation",
+    "url": "https://raw.githubusercontent.com/curl/curl/master/lib/http.c",
+    "final_url": "https://raw.githubusercontent.com/curl/curl/master/lib/http.c",
+    "retrieved_at_utc": "2026-10-10T04:09:02.214071+00:00",
+    "started_at_utc": "2026-10-10T04:09:02.063917+00:00",
+    "operation": "Python urllib HTTPS GET; read as research data; never executed",
+    "capture_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-http.c",
+    "bytes": 157704,
+    "sha256": "40d0c67f9c8ba34431e19a3722f6af96a1d0f53c6debbea77bcbae7a44909ba1",
+    "status": "retrieved"
+  }
+]

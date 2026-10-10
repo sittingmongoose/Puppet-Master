@@ -1,0 +1,37 @@
+URL: https://www.rfc-editor.org/rfc/rfc7233.html
+Original locator: ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt
+Original SHA256: 37a4a3c88174f84bf7095697e054bde50ff755d3e94ec1aabddb9d7de85bfdf6
+Original numbered lines; gaps omitted. Not full response.
+
+289: support Range requests.
+290: A client MUST NOT generate an If-Range header field containing an
+291: entity-tag that is marked as weak.  A client MUST NOT generate an
+292: If-Range header field containing an HTTP-date unless the client has
+293: no entity-tag for the corresponding representation and the date is a
+294: strong validator in the sense defined by Section 2.2.2 of [RFC7232].
+295: A server that evaluates an If-Range precondition MUST use the strong
+296: comparison function when comparing entity-tags (Section 2.3.2 of
+297: [RFC7232]) and MUST evaluate the condition as false if an HTTP-date
+298: Fielding, et al.             Standards Track                    [Page 9]
+299: RFC 7233                 HTTP/1.1 Range Requests               June 2014
+300: validator is provided that is not a strong validator in the sense
+301: defined by Section 2.2.2 of [RFC7232].  A valid entity-tag can be
+302: distinguished from a valid HTTP-date by examining the first two
+303: characters for a DQUOTE.
+304: If the validator given in the If-Range header field matches the
+305: current validator for the selected representation of the target
+306: resource, then the server SHOULD process the Range header field as
+307: requested.  If the validator does not match, the server MUST ignore
+308: the Range header field.  Note that this comparison by exact match,
+309: including when the validator is an HTTP-date, differs from the
+310: "earlier than or equal to" comparison used when evaluating an
+311: If-Unmodified-Since conditional.
+713: Appendix B.  Changes from RFC 2616
+714: Servers are given more leeway in how they respond to a range request,
+715: in order to mitigate abuse by malicious (or just greedy) clients.
+716: (Section 3.1)
+717: A weak validator cannot be used in a 206 response.  (Section 4.1)
+718: The Content-Range header field only has meaning when the status code
+719: explicitly defines its use.  (Section 4.2)
+720: This specification introduces a Range Unit Registry.  (Section 5.1)
+721: multipart/byteranges can consist of a single part.  (Appendix A)

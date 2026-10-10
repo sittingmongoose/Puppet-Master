@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-eval-B-APPL-M-01-treatment-v1",
+  "title": "ER12 independent B-APPL-M-01 treatment",
+  "role": "review",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "priority"
+    }
+  },
+  "task": "Independent bounded ER12 Track B semantic review only. Create one actual native Goal <4000chars referring to this assignment and complete after saved judgment. Register pm-mail with unique codex-er12-eval name. No delegation, candidate feedback/repair, account changes, Git/publication or reading other arms/results/history. Read ER12_RUNTIME/assessment/RUBRIC-v1.md and the FULL input-map.json, assignment.md, freeze.json in ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role; follow input-map to read the exact FULL shared assignment, fixture and corpus, with no assumed path. Read the complete authored verification.md (APPL) or final-section.md (FINAL), source-map.json and every sources member. Parent verified actual T3 task completed with no pending runs. Candidate native Goal/transport/effective/billing may still be UNKNOWN; do not infer native success from T3 completion. Hash all inspected input/output science, preserve actual existing terminal-science-freeze if present. Independently retrieve governing primary evidence; for applicability assess every enumerated claim, exact subject/operation/version/default/type/domain/exceptions, corrected wording and consequential validation; for finalization assess every exact section obligation, all fallible-critique dispositions, source conditions, supported-scope preservation and proposed-versus-executed checks. Honest necessary uncertainty can pass; remaining material error/omission/unsupported consequential decision means FAIL backed by findings. PASS_WITH_LIMITATIONS only for no material remaining issue. Do not demand nonexistent deployments or invent obligations. Record delivery/source/coverage/native/protocol/time separately. Review must finish within25minutes including saving; finish earlier if substantive checks complete. Write assessment.md, assessment.json and navigable independent source-map/evidence only under ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1; include full assigned axes, material findings with exact candidate locators and independently read primary source locators, unknowns, useful discoveries, checked scope/claim correction and all inspected hashes. Retain raw source retrieval evidence and timestamp/hash. Do not rescore ER11. Save source judgment before native completion; report brief source result plus paths."
+}

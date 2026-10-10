@@ -1,0 +1,562 @@
+{
+  "run_id": "A3-01-control",
+  "stage": "reviser",
+  "created_at_utc": "2026-10-10T04:31:17.504685Z",
+  "assignment_path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md",
+  "input_map_path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/input-map.json",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+      "bytes": 2897
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md",
+      "sha256": "8d55ebb9d46de7128b1a8a025fe33e087566f975d3068152d5379a9e2e1eed55",
+      "bytes": 3286
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/input-map.json",
+      "sha256": "dc319ab7145f0a59b5d5904e22b835c75bf51f2338edc6e99fade0141017e8d8",
+      "bytes": 1701
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "sha256": "21699f340e71b5bb93439ca32aadd2f330d321ff0c64f70fbbb5b6369a107ad0",
+      "bytes": 11441
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "sha256": "002c140b7c4635163eecc30b1541953133ebe319b684ecb78c68c54a4b9b9cab",
+      "bytes": 22644
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5",
+      "bytes": 12418
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "bytes": 2623
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "sha256": "94f6e6bef4fdd669a7440d7c6d5987c9331a94eff02697181017e6704c226b4c",
+      "bytes": 427
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+      "sha256": "31330b7b4c5196bfcdfbcabe6e8daf73a3932fc10492e533f2939ca6b492434c",
+      "bytes": 12092
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "sha256": "533a4d78c4df2eae9e4053f04126233c22d64bc633117938cc8165dc71490cbb",
+      "bytes": 28947
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "native_goal_objective": "ER12 reviser stage, run A3-01-control: execute ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_observation": {
+    "tool": "create_goal",
+    "objective": "ER12 reviser stage, run A3-01-control: execute ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "creation_response": {
+      "threadId": "01a1240a-cd8d-7c20-8d40-59149469ea70",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791606089,
+      "updatedAt": 1791606089,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "latest_observed_before_output_save": {
+      "threadId": "01a1240a-cd8d-7c20-8d40-59149469ea70",
+      "objective": "ER12 reviser stage, run A3-01-control: execute ER12_RUNTIME/runs/A3-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 202091,
+      "timeUsedSeconds": 568,
+      "createdAt": 1791606089,
+      "updatedAt": 1791606657,
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "terminal_status": "UNKNOWN at required-output save time; no terminal action had yet occurred.",
+    "unavailable_goal_provenance_or_timestamps": "UNKNOWN for any provenance or timestamps not directly returned by the native Goal tool."
+  },
+  "predecessor_source_records": {
+    "investigator": {
+      "source_map_path": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "source_map_sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5",
+      "records": [
+        {
+          "source_id": "S01",
+          "component": "SQLite FTS5",
+          "url": "https://www.sqlite.org/fts5.html",
+          "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; SQLite dependency/version in the target app is not selected.",
+          "locator": "§2.1, §3–3.7, §4.3.1, §4.4.2–4.4.4, §5.1–5.2, §6.3, §6.7, §6.12–6.13",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened the official FTS5 manual and reviewed its query grammar, Unicode61 configuration, build options, external-content trigger examples/pitfalls, ranking/snippet functions, integrity-check, rebuild, and secure-delete commands.",
+          "governing_condition_default_exception": "FTS5 is a virtual-table module; same-table query syntax accepts an FTS query string. Default tokenizer is unicode61 (Unicode 6.1), case-independent, with remove_diacritics default 1; value 2 fixes its uncommon multi-diacritic Latin case. External-content indexes must be kept synchronized by the application; trigger creation does not backfill existing content; rank=1 requests external-content comparison for integrity-check; rebuild regenerates from the content table. BM25's better score is numerically lower; absent ORDER BY result order is arbitrary. FTS5 highlight/snippet insert caller-selected markup. secure-delete is off by default and can affect compatibility with older FTS5 formats.",
+          "applicability": "Direct candidate evidence for FTS5 search syntax, tokenizer, same-database derived index, explicit maintenance/rebuild, relevance and excerpt risks. App SQLite version, schema, binary configuration and SQL wrapper remain unselected."
+        },
+        {
+          "source_id": "S02",
+          "component": "SQLite build configuration",
+          "url": "https://www.sqlite.org/compile.html",
+          "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; target SQLite build unknown.",
+          "locator": "§7, SQLITE_ENABLE_FTS5 entry (official page lines 448–450 in retrieved version)",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened compile-time options documentation; inspected the FTS5 option description.",
+          "governing_condition_default_exception": "When SQLITE_ENABLE_FTS5 is defined in the SQLite amalgamation, FTS5 is added to that build. This does not establish that an arbitrary system or bundled SQLite enables it; official FTS5 build instructions also describe source-tree --enable-fts5 and a loadable extension.",
+          "applicability": "A target build check is mandatory before selecting FTS5. Record actual SQLite version/source ID and compile options on Linux and Windows."
+        },
+        {
+          "source_id": "S03",
+          "component": "SQLite transaction model",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; target SQLite version unknown.",
+          "locator": "§2, Transactions; §2.1, read versus write transactions; §3, transaction error response",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened official transaction documentation and reviewed implicit/explicit transaction, one-writer, and error rollback descriptions.",
+          "governing_condition_default_exception": "Statements are automatically transactional unless a transaction already exists; explicit BEGIN persists until COMMIT/ROLLBACK; a write transaction permits reads and writes; SQLite allows only one simultaneous writer; certain full/I/O/interrupt/memory errors may cause automatic rollback.",
+          "applicability": "Supports keeping note mutation and same-file FTS trigger changes in one source transaction. The implementation must still handle errors and selected VFS/storage behavior."
+        },
+        {
+          "source_id": "S04",
+          "component": "SQLite crash atomicity",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "released_version_or_commit": "Living, unversioned official technical article accessed 2026-10-10; rollback-mode description; target journal mode unknown.",
+          "locator": "§1, §3.11, §4, §9.1–9.3",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened atomic-commit article; reviewed commit/recovery description and stated filesystem/VFS caveats.",
+          "governing_condition_default_exception": "The article's detailed algorithm applies to rollback mode, not WAL. It describes either-all-or-none transaction behavior under stated storage assumptions and automatic hot-journal recovery; it also warns that broken filesystem locking, partial file deletion, or hostile storage behavior can defeat assumptions.",
+          "applicability": "Do not overclaim FTS5 crash behavior beyond a same-database transaction on the selected local, supported configuration. Validate the chosen mode on target OSes."
+        },
+        {
+          "source_id": "S05",
+          "component": "SQLite release history",
+          "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+          "released_version_or_commit": "SQLite 3.43.0, released 2023-08-24 (official release page)",
+          "locator": "Release item 1",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened the official 3.43.0 release log.",
+          "governing_condition_default_exception": "This release added support for contentless-delete FTS5 indexes. The FTS5 manual says these contentless-delete tables are available as of 3.43.0; they allow deletion and replacement with specific restrictions.",
+          "applicability": "Concrete version-history fact. Proposed architecture uses external content, not this table type; do not impose 3.43.0 solely from this unrelated option."
+        },
+        {
+          "source_id": "S06",
+          "component": "Tantivy tokenizer APIs",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+          "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+          "locator": "Module tokenizer lines 31–92, 123–152",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened version-pinned API docs for default/custom tokenizer pipelines and available filters.",
+          "governing_condition_default_exception": "Each text field names its tokenizer. The default tokenizer splits on punctuation/whitespace, lowercases, and removes tokens longer than 40 chars. Explicit pipelines are registrable. AsciiFoldingFilter maps Unicode alphabetic/numeric/symbolic characters to Basic Latin where an equivalent exists. Phrase search needs positional indexing; a field schema must select that option.",
+          "applicability": "Candidate comparison only; explicit analyzer must be frozen in the index schema and applied to queries. It is not equivalent by definition to FTS5 unicode61 remove_diacritics=2."
+        },
+        {
+          "source_id": "S07",
+          "component": "Tantivy structured queries",
+          "url": "https://docs.rs/tantivy/latest/tantivy/query/struct.BooleanQuery.html",
+          "released_version_or_commit": "docs.rs latest documentation displayed tantivy 0.26.2 at retrieval; direct version-pinned page open was unavailable to the browser tool",
+          "locator": "BooleanQuery description/examples; companion PhraseQuery page https://docs.rs/tantivy/latest/tantivy/query/struct.PhraseQuery.html",
+          "access_utc": "2026-10-10T03:59:33Z",
+          "observed_operation": "Queried version-pinned API documentation for BooleanQuery and PhraseQuery; direct page-open returned an internal tool error for these two URLs, so recorded claims come from the returned docs.rs search-result content, not a successful direct open.",
+          "governing_condition_default_exception": "BooleanQuery combines Must/Should/MustNot clauses; PhraseQuery requires one field and positions; slop 0 means adjacent terms. Typed query nodes can represent the bounded adapter grammar without exposing Tantivy's raw query parser.",
+          "applicability": "Candidate support for conjunctive terms, field alternatives, exact collection filters and phrases. Query layer needs the same tokenizer as indexed fields."
+        },
+        {
+          "source_id": "S08",
+          "component": "Tantivy writer and commit lifecycle",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+          "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+          "locator": "IndexWriter::add_document, ::delete_term, ::commit, ::commit_opstamp",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened version-pinned IndexWriter docs and reviewed operation visibility and commit behavior.",
+          "governing_condition_default_exception": "Adds/deletes are visible to readers only after commit. A successful commit blocks until pending documents are published and persisted; it returns the opstamp of the last committed document. Delete-by-term affects prior committed docs and earlier operations in the same commit.",
+          "applicability": "Tantivy commit lifecycle is separate from SQLite source transaction; application outbox/replay coordination is required to bridge the boundary."
+        },
+        {
+          "source_id": "S09",
+          "component": "Tantivy excerpt generation",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+          "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+          "locator": "SnippetGenerator::create, ::set_max_num_chars, ::snippet_from_doc; example",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened version-pinned SnippetGenerator API docs and reviewed default bound and HTML example.",
+          "governing_condition_default_exception": "Default maximum snippet size is 150 characters and can be configured. Example converts the Snippet to HTML with highlight markup; documentation does not make that generated HTML the authoritative note content.",
+          "applicability": "Do not blindly insert the result into UI HTML; render escaped source text/structured spans, using SQLite as source of truth."
+        },
+        {
+          "source_id": "S10",
+          "component": "Tantivy release history",
+          "url": "https://docs.rs/crate/tantivy/0.26.2/source/CHANGELOG.md",
+          "released_version_or_commit": "Version-pinned Tantivy crate changelog 0.26.2; history item Tantivy 0.20.1",
+          "locator": "Tantivy 0.20.1 entry: fix building on Windows with mmap (#2070); current 0.26.2 section identifies its own bug fixes",
+          "access_utc": "2026-10-10T03:59:15Z",
+          "observed_operation": "Opened the version-pinned crate changelog and inspected release history including 0.20.1 and 0.26.2.",
+          "governing_condition_default_exception": "A historical Windows mmap build issue was fixed in 0.20.1; this is neither a current failure claim nor proof of support for the target's unknown compiler, features, and operating systems.",
+          "applicability": "Use as a reason to verify the eventual pinned Tantivy build/open/reopen behavior on Windows and Linux; do not infer a current defect."
+        },
+        {
+          "source_id": "S11",
+          "component": "Tantivy score collector ordering",
+          "url": "https://docs.rs/tantivy/latest/tantivy/collector/struct.TopDocs.html",
+          "released_version_or_commit": "docs.rs latest documentation displayed tantivy 0.26.2 at retrieval",
+          "locator": "TopDocs description and order_by_score example; default score direction and score-tie DocAddress tie-break",
+          "access_utc": "2026-10-10T04:05:28Z",
+          "observed_operation": "Queried docs.rs for version-rendered TopDocs scoring/order semantics; result identified 0.26.2 and stated score sorting plus DocAddress tie-breaking.",
+          "governing_condition_default_exception": "TopDocs keeps top K documents sorted by score; order_by_score is decreasing BM25 similarity. Its documented stable tie-break is ascending DocAddress, not the application's public note ID.",
+          "applicability": "The adapter must apply note-ID tie-breaking itself before pagination, or implement a collector using that key. DocAddress order is an index-location tie policy, not a durable public-identity contract."
+        }
+      ]
+    },
+    "critic": {
+      "source_map_path": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "source_map_sha256": "533a4d78c4df2eae9e4053f04126233c22d64bc633117938cc8165dc71490cbb",
+      "records": [
+        {
+          "source_id": "C01",
+          "related_investigator_source_ids": [
+            "S01"
+          ],
+          "component": "SQLite FTS5",
+          "url": "https://www.sqlite.org/fts5.html",
+          "released_version_or_commit": "Living, unversioned official manual; retrieved 2026-10-10",
+          "locator": "§2.1; §3.1–3.7; §4.3.1; §4.4.1–4.4.4; §5.1; §6.3, §6.7, §6.12–6.13",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened official manual; checked grammar, Unicode61, external-content triggers/backfill, contentless deletion, ranking, integrity, rebuild, snippets, secure-delete.",
+          "governing_condition_default_exception": "External-content reads from a same-database content table but must be maintained by app; trigger creation does not backfill. Unicode61 defaults to L*, N*, Co; remove_diacritics=2 fixes multi-diacritic Latin cases missed by 1. External integrity comparison needs rank=1; rebuild reads source table; BM25 better scores lower; snippets add markup; secure-delete off by default.",
+          "applicability": "Direct candidate evidence for S1–S4 and plan corrections, not evidence of deployed SQLite configuration."
+        },
+        {
+          "source_id": "C02",
+          "related_investigator_source_ids": [
+            "S02"
+          ],
+          "component": "SQLite build configuration",
+          "url": "https://www.sqlite.org/compile.html",
+          "released_version_or_commit": "Living, unversioned official manual; retrieved 2026-10-10",
+          "locator": "§7, SQLITE_ENABLE_FTS5",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened official compile-options manual and checked the FTS5 option.",
+          "governing_condition_default_exception": "Defining SQLITE_ENABLE_FTS5 for amalgamation includes FTS5; a loadable extension is also possible; arbitrary binary support is not implied.",
+          "applicability": "Supports conditional FTS5 and need to inspect shipped Linux/Windows builds."
+        },
+        {
+          "source_id": "C03",
+          "related_investigator_source_ids": [
+            "S03"
+          ],
+          "component": "SQLite transactions",
+          "url": "https://www.sqlite.org/lang_transaction.html",
+          "released_version_or_commit": "Living, unversioned official manual; retrieved 2026-10-10",
+          "locator": "§2–2.1; §3",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened official transaction documentation and checked transaction lifecycle and writer concurrency.",
+          "governing_condition_default_exception": "Commands run in transactions; explicit transactions persist to commit/rollback; SQLite permits multiple readers but one simultaneous writer.",
+          "applicability": "Supports same-database note/FTS transactions; exact app/VFS behavior remains untested."
+        },
+        {
+          "source_id": "C04",
+          "related_investigator_source_ids": [
+            "S04"
+          ],
+          "component": "SQLite crash atomicity",
+          "url": "https://www.sqlite.org/atomiccommit.html",
+          "released_version_or_commit": "Living, unversioned official article; retrieved 2026-10-10",
+          "locator": "§1–4; §9.1–9.3",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened article and checked mode scope and storage/locking assumptions.",
+          "governing_condition_default_exception": "Detailed algorithm is rollback-mode only; WAL uses a different mechanism. Filesystem and hardware assumptions apply; broken locking/storage can defeat them.",
+          "applicability": "Supports the draft's qualifications, not any selected journal mode."
+        },
+        {
+          "source_id": "C05",
+          "related_investigator_source_ids": [
+            "S05"
+          ],
+          "component": "SQLite release history",
+          "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+          "released_version_or_commit": "SQLite 3.43.0, released 2023-08-24",
+          "locator": "Release item 1",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened official 3.43.0 release log.",
+          "governing_condition_default_exception": "3.43.0 added contentless-delete FTS5 indexes, which omit content and allow deletion.",
+          "applicability": "Supports qualified correction; external-content proposal does not require 3.43.0."
+        },
+        {
+          "source_id": "C06",
+          "related_investigator_source_ids": [
+            "S06"
+          ],
+          "component": "Tantivy tokenizer APIs",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+          "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs",
+          "locator": "Tokenizer overview; field configuration; AsciiFoldingFilter",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened pinned API docs and checked per-field tokenizer requirement and folding description.",
+          "governing_condition_default_exception": "AsciiFoldingFilter maps non-Basic-Latin alphabetic/numeric/symbolic chars to ASCII equivalents if available; not equivalent by definition to FTS5 Latin diacritic folding.",
+          "applicability": "Supports separate analyzer policy and parity testing, not universal language claims."
+        },
+        {
+          "source_id": "C07",
+          "related_investigator_source_ids": [
+            "S07"
+          ],
+          "component": "Tantivy BooleanQuery source",
+          "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/boolean_query/boolean_query.rs",
+          "released_version_or_commit": "Tantivy source tag 0.26.2",
+          "locator": "boolean_query.rs#L3-L20, #L208-L217 (Must/Should and intersection/union)",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened tagged upstream source; checked Must/Should composition and typed query examples.",
+          "governing_condition_default_exception": "Must clauses intersect; typed BooleanQuery composes TermQuery/PhraseQuery; behavior depends on clause occurrence.",
+          "applicability": "Independently verifies bounded query construction claim after original docs.rs page-open trouble."
+        },
+        {
+          "source_id": "C08",
+          "related_investigator_source_ids": [
+            "S07"
+          ],
+          "component": "Tantivy PhraseQuery source",
+          "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/phrase_query/phrase_query.rs",
+          "released_version_or_commit": "Tantivy source tag 0.26.2",
+          "locator": "phrase_query.rs#L4-L19, #L60-L74, #L97-L109 (phrase, slop, positions)",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened tagged source; checked adjacency and position requirement.",
+          "governing_condition_default_exception": "Zero slop requires adjacent terms; positions must be indexed; query targets a field.",
+          "applicability": "Supports exact-phrase contract only with suitable schema."
+        },
+        {
+          "source_id": "C09",
+          "related_investigator_source_ids": [
+            "S08"
+          ],
+          "component": "Tantivy IndexWriter",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+          "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs",
+          "locator": "delete_term, add_document, commit, commit_opstamp",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened pinned docs and checked commit visibility, persistence and opstamp behavior.",
+          "governing_condition_default_exception": "Adds/deletes become visible after commit; commit blocks until pending documents are published and persisted; it is separate from SQLite commit.",
+          "applicability": "Supports outbox/replay rationale, not a cross-store atomicity guarantee."
+        },
+        {
+          "source_id": "C10",
+          "related_investigator_source_ids": [
+            "S09"
+          ],
+          "component": "Tantivy snippets",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+          "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs",
+          "locator": "Example, set_max_num_chars, snippet_from_doc, to_html",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened pinned docs and checked configured bound and HTML example.",
+          "governing_condition_default_exception": "HTML is generated presentation output, not authoritative note content; API permits a character limit.",
+          "applicability": "Supports fetching current SQLite text and safe rendering."
+        },
+        {
+          "source_id": "C11",
+          "related_investigator_source_ids": [
+            "S10"
+          ],
+          "component": "Tantivy release history",
+          "url": "https://docs.rs/crate/tantivy/0.26.2/source/CHANGELOG.md",
+          "released_version_or_commit": "Tantivy 0.26.2 pinned changelog; history item 0.20.1",
+          "locator": "0.20.1 Windows mmap build-fix entry",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened pinned changelog and checked historical item and release context.",
+          "governing_condition_default_exception": "0.20.1 records a Windows mmap build fix; it does not show 0.26.2 is broken or universally supported.",
+          "applicability": "Supports historical implementation detail and platform validation."
+        },
+        {
+          "source_id": "C12",
+          "related_investigator_source_ids": [
+            "S11"
+          ],
+          "component": "Tantivy TopDocs API",
+          "url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+          "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs",
+          "locator": "TopDocs::order_by_score, docs.rs lines 203-206; method result carries DocAddress",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened pinned collector docs; checked decreasing BM25 direction and DocAddress results.",
+          "governing_condition_default_exception": "order_by_score sorts by decreasing BM25 similarity; DocAddress is an index location, not app identity.",
+          "applicability": "Supports explicit app note-ID ordering."
+        },
+        {
+          "source_id": "C13",
+          "related_investigator_source_ids": [
+            "S11"
+          ],
+          "component": "Tantivy TopDocs tie-break source",
+          "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/collector/top_score_collector.rs",
+          "released_version_or_commit": "Tantivy source tag 0.26.2",
+          "locator": "top_score_collector.rs#L23-L25 and #L484-L490 (stable equal-score ordering and comparator)",
+          "access_utc": "2026-10-10T04:15:35Z",
+          "access_timestamp_note": "Grouped direct retrieval completed immediately before this clock sample; exact per-page request instants unavailable.",
+          "observed_operation": "Opened tagged source and checked stable ordering.",
+          "governing_condition_default_exception": "Equal score/sort keys are ordered by ascending DocAddress; this is not durable app note identity.",
+          "applicability": "Directly verifies S11 with pinned primary source; original S11 binding remains unchanged."
+        }
+      ]
+    }
+  },
+  "reviser_direct_rechecks": [
+    {
+      "source_id": "V01",
+      "component": "SQLite transaction control",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "released_version_or_commit": "Living official manual; last updated 2026-02-18; retrieved 2026-10-10. Target version unknown.",
+      "locator": "§2, §2.1, §2.2; lines 32–51.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened official transaction manual; checked transaction lifetime, one-writer limit, and BEGIN IMMEDIATE behavior.",
+      "governing_condition_default_exception": "SQLite permits multiple readers but only one simultaneous write transaction. BEGIN IMMEDIATE starts a write transaction immediately and may return SQLITE_BUSY when another writer is active. This can fence writes in the same database; queue/retry behavior is application-owned.",
+      "applicability": "Independent primary-source support for R1's cutover fence. The race is an architectural inference, not a documented SQLite defect."
+    },
+    {
+      "source_id": "V02",
+      "component": "SQLite FTS5",
+      "url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Living, unversioned official manual; retrieved 2026-10-10. Target version/build unknown.",
+      "locator": "§2.1; §3.1–3.2; §4.3.1; §4.4.2–4.4.4; §6.7; §6.12–6.13; §7.1; lines 455–482, 579–676, 985–995, 1037–1052, 1093–1227.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened official FTS5 manual and located Unicode61 categories, phrase tokenization, tokenizer lookup/tokenization API, external-content behavior, trigger/backfill rules, rank=1 integrity checking, rebuild, and contentless-delete conditions.",
+      "governing_condition_default_exception": "Unicode61 defaults to Unicode 6.1 letter/number/private-use token categories; punctuation and combining marks outside those categories are separators. xFindTokenizer/xTokenize expose configured tokenization, but arguments must match the FTS table. External-content rows read a same-database source table and remain the app's consistency responsibility; triggers do not backfill. External integrity comparison needs rank=1; rebuild reads the content table. Contentless-delete is version-qualified (3.43.0+) with distinct update/delete constraints.",
+      "applicability": "Independent support for R3 and FTS5 query/lifecycle corrections; docs do not prove deployed binary capability."
+    },
+    {
+      "source_id": "V03",
+      "component": "Tantivy IndexWriter",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs.",
+      "locator": "add_document/delete_term/commit; commit lines 178–186 and reader-visibility note.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened pinned IndexWriter docs and checked add/delete visibility and commit publication/persistence.",
+      "governing_condition_default_exception": "Pending additions/deletions become reader-visible after commit. Successful commit waits until pending documents are published and persisted and returns the last opstamp. It is not atomic with an app's SQLite transaction or outbox acknowledgment.",
+      "applicability": "Independent support for R1 generation watermarks and R2 replay; cross-store coordination remains application architecture."
+    },
+    {
+      "source_id": "V04",
+      "component": "Tantivy tokenizer and analyzer",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "released_version_or_commit": "Tantivy crate 0.26.2, version-pinned docs.rs.",
+      "locator": "Tokenizer overview/custom analyzers; TextAnalyzer; SimpleTokenizer; LowerCaser; AsciiFoldingFilter; positional field schema.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened and searched pinned tokenizer docs for analyzer registration, token stream, boundaries, folding, and positional schema.",
+      "governing_condition_default_exception": "TextAnalyzer tokenizes and modifies token streams. SimpleTokenizer splits on whitespace and punctuation; LowerCaser lowercases; AsciiFoldingFilter maps some alphabetic/numeric/symbolic Unicode characters to Basic Latin. Phrase fields need positions. This does not establish parity with SQLite Unicode61.",
+      "applicability": "Independent support for R3's Tantivy analyzer/query construction; parity remains a proposed test."
+    },
+    {
+      "source_id": "V05",
+      "component": "Tantivy PhraseQuery implementation",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/phrase_query/phrase_query.rs",
+      "released_version_or_commit": "Tantivy upstream source tag 0.26.2.",
+      "locator": "new_with_offset_and_slop lines 42–58; slop lines 60–74; position requirement lines 97–109.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened tagged source and searched phrase, position, and slop implementation.",
+      "governing_condition_default_exception": "Phrase terms target one field; zero slop means adjacent terms; the field must index positions or phrase query construction returns a schema error.",
+      "applicability": "Independent support for R3's same-field, adjacent phrase proposal."
+    },
+    {
+      "source_id": "V06",
+      "component": "Tantivy BooleanQuery implementation",
+      "url": "https://raw.githubusercontent.com/quickwit-oss/tantivy/0.26.2/src/query/boolean_query/boolean_query.rs",
+      "released_version_or_commit": "Tantivy upstream source tag 0.26.2.",
+      "locator": "Typed TermQuery/PhraseQuery examples lines 62–110; intersection/union lines 208–218.",
+      "access_utc": "2026-10-10T04:22:09Z–2026-10-10T04:25:06Z",
+      "access_timestamp_note": "Grouped direct retrieval window; exact per-page request times were not exposed. Window begins at the UTC clock sample immediately before the first open and ends at the sample after the final relevant source read.",
+      "observed_operation": "Opened tagged source and checked Must/Should typed-query composition and intersection/union helpers.",
+      "governing_condition_default_exception": "Must clauses implement intersection and Should clauses union subject to minimum-required-clause rules; typed query objects support adapter-owned query structure.",
+      "applicability": "Independent support for R2's typed query design and R3's bounded Boolean contract."
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "criticism_id": "R1",
+      "disposition": "accept",
+      "summary": "Fence writes with SQLite BEGIN IMMEDIATE, drain/commit/verify candidate through final outbox watermark H, then commit the active-generation marker before release. Readers check completeness watermark. Race analysis is an architectural inference."
+    },
+    {
+      "criticism_id": "R2",
+      "disposition": "accept conditionally and adopt",
+      "summary": "If Tantivy indexes collection keys, include every membership/key mutation in the transactional change stream and reindex affected notes from SQLite. A source-side filter must gather enough ranked candidates. Schema remains unknown."
+    },
+    {
+      "criticism_id": "R3",
+      "disposition": "accept and resolve at proposal level; retain analyzer parity uncertainty",
+      "summary": "Specify Unicode-scalar syntax parsing, matching configured FTS5/Tantivy analyzers for query tokenization, required term clauses, and same-field zero-slop phrases. Test composed/decomposed accents, punctuation, and non-Latin scripts."
+    },
+    {
+      "criticism_id": "R4",
+      "disposition": "amend",
+      "summary": "Correct evidence range to S01–S11 and preserve C12/C13 separately; do not rebind S11."
+    }
+  ],
+  "source_identity_policy": "S01-S11 and C01-C13 are copied from original maps without ID changes or rebinding. V01-V06 are new direct primary-source rechecks.",
+  "source_record_field_audit": {
+    "required_fields": [
+      "source_id",
+      "component",
+      "url",
+      "released_version_or_commit",
+      "locator",
+      "access_utc",
+      "observed_operation",
+      "governing_condition_default_exception",
+      "applicability"
+    ],
+    "missing_fields": [],
+    "record_counts": {
+      "S": 11,
+      "C": 13,
+      "V": 6
+    }
+  },
+  "validation_status": {
+    "application_or_test_checks_run": false,
+    "documentation_review_run": true,
+    "matrix_items": "proposed, not executed"
+  },
+  "required_outputs": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md"
+  ],
+  "saved_before_native_goal_terminal": true,
+  "deliverable_manifest_before_goal_terminal": {
+    "final.md": {
+      "bytes": 32715,
+      "sha256": "e8c7dd3e5da59cd11b5cc6fbc3962f533d343ad7f7511661800443f4ef78a0e4"
+    },
+    "sources/index.md": {
+      "bytes": 29243,
+      "sha256": "b82d83c13ab6ff18e30c6c10f31349f3dc400b29affcd9cafdbe8614d0cc4e23"
+    }
+  }
+}

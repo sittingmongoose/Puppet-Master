@@ -1,0 +1,19 @@
+URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31
+Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md
+Original SHA256: d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2
+Original numbered lines; gaps omitted. Not full response.
+
+18: If a transient error is returned when curl tries to perform a transfer, it
+19: retries this number of times before giving up. Setting the number to 0
+20: makes curl do no retries (which is the default). Transient error means either:
+21: a timeout, an FTP 4xx response code or an HTTP 408, 429, 500, 502, 503 or 504
+22: response code.
+23: 
+24: When curl is about to retry a transfer, it first waits one second and then for
+25: all forthcoming retries it doubles the waiting time until it reaches 10
+26: minutes which then remains delay between the rest of the retries. By using
+27: --retry-delay you disable this exponential backoff algorithm. See also
+28: --retry-max-time to limit the total time allowed for retries.
+29: 
+30: curl complies with the Retry-After: response header if one was present to know
+31: when to issue the next retry (added in 7.66.0).

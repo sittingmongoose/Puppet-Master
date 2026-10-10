@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "curl command manual",
+      "url": "https://curl.se/docs/manpage.html",
+      "version": "Observed online manual curl 8.23.0; target CLI curl 8.10.1; verify option-history differences",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "--retry; --retry-all-errors; --retry-max-time; --max-time; --fail-with-body",
+      "file": "corpus/S1.md",
+      "sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "verbatim_word_count": 4
+    },
+    {
+      "source_id": "S2",
+      "title": "curl option introduction history",
+      "url": "https://curl.se/docs/optionsall.html",
+      "version": "Live introduction table retrieved for target curl 8.10.1",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "retry; retry-all-errors; fail-with-body; max-time; retry-max-time",
+      "file": "corpus/S2.md",
+      "sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "verbatim_word_count": 6
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

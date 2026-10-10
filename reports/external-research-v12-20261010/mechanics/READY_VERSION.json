@@ -95,7 +95,7 @@
   "exact_diff": "mechanics/ER12_V1.diff",
   "limitations": [
     "Role-mode 15-minute requests are not supported by this helper.",
-    "Muse/zcode requests are not accepted by the unchanged Luna-only route validation.",
+    "Muse/AUTHORIZED_PROVIDER_INSTANCE requests are not accepted by the unchanged Luna-only route validation.",
     "Operational configs, requests and full diff require route sanitization before publication."
   ]
 }

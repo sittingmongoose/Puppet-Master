@@ -1,0 +1,15 @@
+{
+  "schema": "er12.preserved-parse-exceptions.v1",
+  "observed_at_utc": "2026-10-10T04:50:34.368841+00:00",
+  "exceptions": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error": "Expecting value: line 1 column 1 (char 0)",
+      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
+      "native_goal_proof": false
+    }
+  ],
+  "unexpected_exceptions": []
+}

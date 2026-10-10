@@ -1,0 +1,39 @@
+URL: https://developers.cloudflare.com/r2/objects/upload-objects/
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-01.txt
+Original SHA256: 3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa
+Original numbered lines; gaps omitted. Not full response.
+
+112: OverviewChoose an upload methodUpload via dashboard Create a folderUpload via Workers API Single upload Multipart upload Presigned URLs (Workers)Upload via S3 API Single upload Multipart upload Presigned URLs (S3 API)Upload via CLI Rclone WranglerMultipart upload details Part size limits Incomplete upload lifecycles ETagsRelated resources
+114: Choose an upload method
+115: |
+116: | Single upload (PUT)
+117: | Multipart upload
+118: | Best for
+119: | Small to medium files (under ~100 MB)
+120: | Large files, or when you need parallelism and resumability
+121: | Maximum object size
+122: | 5 GiB
+123: | 5 TiB (up to 10,000 parts)
+124: | Part size
+125: | N/A
+126: | 5 MiB – 5 GiB per part
+127: | Resumable
+128: | No — must restart the entire upload
+129: | Yes — only failed parts need to be retried
+130: | Parallel upload
+131: | No
+830: Multipart upload details
+831: Part size limits
+832: Minimum part size: 5 MiB (except for the last part)
+833: Maximum part size: 5 GiB
+834: Maximum number of parts: 10,000
+835: All parts except the last must be the same size
+836: Incomplete upload lifecycles
+837: Incomplete multipart uploads are automatically aborted after 7 days by default. You can change this by configuring a custom lifecycle policy.
+838: ETags
+839: ETags for objects uploaded via multipart differ from those uploaded with a single PUT. The ETag of each part is the MD5 hash of that part's contents. The ETag of the completed multipart object is the hash of the concatenated binary MD5 sums of all parts, followed by a hyphen and the number of parts.
+840: For example, if a two-part upload has part ETags bce6bf66aeb76c7040fdd5f4eccb78e6 and 8165449fc15bbf43d3b674595cbcc406, the completed object's ETag will be f77dc0eecdebcd774a2a22cb393ad2ff-2.
+841: Related resources
+842: Workers API reference
+843: Full reference for the R2 Workers API including put(), createMultipartUpload(), and more.
+856: Choose an upload method

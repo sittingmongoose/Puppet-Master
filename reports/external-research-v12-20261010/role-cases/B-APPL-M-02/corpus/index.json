@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "Python pathlib",
+      "url": "https://docs.python.org/3.13/library/pathlib.html",
+      "version": "Python 3.13.16 documentation; target CPython 3.13",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Path.glob; Path.rglob; Comparison to the glob module; version-change notes",
+      "file": "corpus/S1.md",
+      "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "verbatim_word_count": 8
+    },
+    {
+      "source_id": "S2",
+      "title": "Python glob module",
+      "url": "https://docs.python.org/3.13/library/glob.html",
+      "version": "Python 3.13.16 documentation; target CPython 3.13",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Module introduction; glob.glob; recursive and include_hidden; notes",
+      "file": "corpus/S2.md",
+      "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "verbatim_word_count": 5
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

@@ -1,0 +1,85 @@
+[
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P1-pathlib-3.13.html",
+    "url": "https://docs.python.org/3.13/library/pathlib.html",
+    "final_url": "https://docs.python.org/3.13/library/pathlib.html",
+    "retrieval_started_utc": "2026-10-10T04:22:58.583867+00:00",
+    "retrieved_utc": "2026-10-10T04:22:58.774793+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 244770,
+    "sha256": "90048ef5d8c01a3519e4d3c0f0fcfce68de2740b8da2563f2a3212d042286f8f"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P2-glob-3.13.html",
+    "url": "https://docs.python.org/3.13/library/glob.html",
+    "final_url": "https://docs.python.org/3.13/library/glob.html",
+    "retrieval_started_utc": "2026-10-10T04:22:58.585946+00:00",
+    "retrieved_utc": "2026-10-10T04:22:58.668378+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 39769,
+    "sha256": "12ed291efccfecb08f58ec1644131c8ec720660d744c87f43aaef1bf22abe0e6"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P3-os-path-3.13.html",
+    "url": "https://docs.python.org/3.13/library/os.path.html",
+    "final_url": "https://docs.python.org/3.13/library/os.path.html",
+    "retrieval_started_utc": "2026-10-10T04:22:58.587276+00:00",
+    "retrieved_utc": "2026-10-10T04:22:58.799291+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 86750,
+    "sha256": "7c55db68f3bebc494160fac2a88da7d9b43f50be714e91266f4856172ce9c05b"
+  },
+  {
+    "file": "P4-pathlib-v3.13.0.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib.py",
+    "retrieval_started_utc": "2026-10-10T04:22:58.593096+00:00",
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P5-glob-v3.13.0.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+    "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+    "retrieval_started_utc": "2026-10-10T04:22:58.594108+00:00",
+    "retrieved_utc": "2026-10-10T04:22:58.728594+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 19720,
+    "sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P4-pathlib-v3.13.0.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+    "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+    "retrieval_started_utc": "2026-10-10T04:23:12.392017+00:00",
+    "retrieved_utc": "2026-10-10T04:23:12.517800+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 296,
+    "sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P6-pathlib-local-v3.13.0.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+    "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+    "retrieval_started_utc": "2026-10-10T04:23:51.236804+00:00",
+    "retrieved_utc": "2026-10-10T04:23:51.385290+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 31468,
+    "sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf"
+  },
+  {
+    "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P7-pathlib-abc-v3.13.0.txt",
+    "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_abc.py",
+    "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_abc.py",
+    "retrieval_started_utc": "2026-10-10T04:24:29.732919+00:00",
+    "retrieved_utc": "2026-10-10T04:24:29.874180+00:00",
+    "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+    "http_status": 200,
+    "bytes": 33565,
+    "sha256": "75e6bc728013d11446126d535f92b8907fb6dae7404df3d0268ac7b6865a2090"
+  }
+]

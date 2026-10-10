@@ -1,0 +1,12 @@
+{
+  "status": "READY_MECHANICAL_NOT_DISPATCHED",
+  "checks_passed": true,
+  "checks": "ER12_RUNTIME/helpers/role-v2/CHECKS.json",
+  "checks_sha256": "d6f4061cfd50bc0311f8ce2ec39e946fbdecb9c61b185bdb9b093a74cc7f1c10",
+  "version": "ER12_RUNTIME/helpers/role-v2/VERSION.json",
+  "version_sha256": "2967635fd4217ec4fd6dd64bda5270ccdce8143f0063ecaa03765994d9df518e",
+  "runtime_prepared": false,
+  "deadlines_created": false,
+  "inference_performed": false,
+  "native_leaf_route_availability": "UNKNOWN until actual activation"
+}

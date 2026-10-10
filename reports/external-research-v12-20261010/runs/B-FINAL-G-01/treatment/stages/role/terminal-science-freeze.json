@@ -1,0 +1,182 @@
+{
+  "schema": "er12-host-terminal-science-freeze-v1",
+  "slot": "B-FINAL-G-01",
+  "arm": "treatment",
+  "frozen_at_utc": "2026-10-10T04:13:02.625852+00:00",
+  "host_observer": "codex-er12-evidence2",
+  "original_science_altered": false,
+  "primary_science": "final-section.md",
+  "science_files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "relative_path": "final-section.md",
+      "bytes": 7111,
+      "sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "mtime_ns": 1791605332502848257,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/final-section.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+      "relative_path": "source-map.json",
+      "bytes": 5911,
+      "sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "mtime_ns": 1791605332755863223,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/source-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "relative_path": "sources/rsync-3.2.7-man.txt",
+      "bytes": 233638,
+      "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "mtime_ns": 1791605102608373928,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/sources/rsync-3.2.7-man.txt"
+    }
+  ],
+  "authored_output_and_source_tree": {
+    "sha256": "7d6659bcd427da363ee9e1dd73b132a414ee871593e448f9f268de01d99f8573",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 3,
+    "bytes": 246660
+  },
+  "source_tree": {
+    "sha256": "b86d6978abf65e95db5f38d15bb1bc4d4ffb5edbf3ab5e4ab483931f01453542",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 1,
+    "bytes": 233638
+  },
+  "all_original_role_files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+      "relative_path": "assignment.md",
+      "bytes": 1810,
+      "sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "mtime_ns": 1791604931517144214,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/assignment.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/dispatch.json",
+      "relative_path": "dispatch.json",
+      "bytes": 4243,
+      "sha256": "e87f39c660c07b842e7d560010274fdc25e46dfc0f37814ae03856c3bcceab80",
+      "mtime_ns": 1791604932633786448,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/dispatch.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "relative_path": "final-section.md",
+      "bytes": 7111,
+      "sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "mtime_ns": 1791605332502848257,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/final-section.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/freeze.json",
+      "relative_path": "freeze.json",
+      "bytes": 2849,
+      "sha256": "5c7d4746092117fb093b71b607035003739d33385c52519c143714700b4d6824",
+      "mtime_ns": 1791604931517964242,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/freeze.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/goal-record.md",
+      "relative_path": "goal-record.md",
+      "bytes": 1929,
+      "sha256": "cfce03efbe99bd8311411fddc38a83912e20f4a8bcd2f9cb470a1bc205167a83",
+      "mtime_ns": 1791605332950874758,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/goal-record.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "relative_path": "input-map.json",
+      "bytes": 626,
+      "sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "mtime_ns": 1791604931516989646,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/input-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/raw-dispatch.json",
+      "relative_path": "raw-dispatch.json",
+      "bytes": 2025,
+      "sha256": "b218968cd85e926e3bdc1d8c87d06eb59fb77cbab69555ee654dbd1a18583cbd",
+      "mtime_ns": 1791604932434538909,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/raw-dispatch.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/records/dispatch-20261010T040212633177-8ac5c50f030947d5a7a0f6ac506fb24d.json",
+      "relative_path": "records/dispatch-20261010T040212633177-8ac5c50f030947d5a7a0f6ac506fb24d.json",
+      "bytes": 4243,
+      "sha256": "e87f39c660c07b842e7d560010274fdc25e46dfc0f37814ae03856c3bcceab80",
+      "mtime_ns": 1791604932633445225,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/records/dispatch-20261010T040212633177-8ac5c50f030947d5a7a0f6ac506fb24d.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/request.json",
+      "relative_path": "request.json",
+      "bytes": 885,
+      "sha256": "d4174092084a75a6ab13ffdf2bc244a93c84813d7f09acc328f2b3e8d99fcebc",
+      "mtime_ns": 1791604931517345421,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/request.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+      "relative_path": "source-map.json",
+      "bytes": 5911,
+      "sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+      "mtime_ns": 1791605332755863223,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/source-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "relative_path": "sources/rsync-3.2.7-man.txt",
+      "bytes": 233638,
+      "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "mtime_ns": 1791605102608373928,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-FINAL-G-01/sources/rsync-3.2.7-man.txt"
+    }
+  ],
+  "original_role_tree": {
+    "sha256": "4a7e38b1ef0ea4174cf149dda7a9adbda7a4298ce3dd87252fd4aea349c2a581",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 11,
+    "bytes": 265270
+  },
+  "exact_input_map_targets_read_and_hashed": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "relative_path": "assignment.md",
+      "bytes": 5043,
+      "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "mtime_ns": 1791604931515522712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "relative_path": "fixture.json",
+      "bytes": 1652,
+      "sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "mtime_ns": 1791604931516071202
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "relative_path": "corpus/S1.md",
+      "bytes": 944,
+      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "mtime_ns": 1791604931515733314
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "relative_path": "corpus/S2.md",
+      "bytes": 795,
+      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "mtime_ns": 1791604931515846579
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "relative_path": "corpus/index.json",
+      "bytes": 1281,
+      "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "mtime_ns": 1791604931515951863
+    }
+  ],
+  "provider_receipt_file": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-FINAL-G-01-provider-native-evidence.json",
+  "timestamp_semantics": "Host post-terminal byte observation; not native activation, terminal time, provider receipt, or original author save timestamp."
+}

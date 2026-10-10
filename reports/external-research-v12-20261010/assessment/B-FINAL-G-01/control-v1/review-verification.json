@@ -1,0 +1,160 @@
+{
+  "checked_at_utc": "2026-10-10T04:22:34.176691+00:00",
+  "checks": {
+    "all_inspected_artifacts_stable": true,
+    "input_freeze_all_eight_match": true,
+    "bounded_final_role_not_full_pipeline": true,
+    "six_obligations_and_six_critiques": true,
+    "no_material_findings": true,
+    "all_exact_tokens_in_candidate": true,
+    "word_limits": true,
+    "required_report_artifacts_present": true,
+    "reviewer_native_activation_observed": true,
+    "all_primary_local_locators_resolve": true,
+    "all_retrieved_primary_hashes_match": true
+  },
+  "all_checks_pass": true,
+  "inspected_artifact_stability": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256_at_inspection": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "sha256_now": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "sha256_at_inspection": "fb51e8054a47fa1afe6165042b742a5881c831befc6d6acbd7026cac4ecb80fa",
+      "sha256_now": "fb51e8054a47fa1afe6165042b742a5881c831befc6d6acbd7026cac4ecb80fa",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/assignment.md",
+      "sha256_at_inspection": "d71292b8a2cffb6f3c805000fc8bce66124457b4718126402b160f3f33957dfa",
+      "sha256_now": "d71292b8a2cffb6f3c805000fc8bce66124457b4718126402b160f3f33957dfa",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/freeze.json",
+      "sha256_at_inspection": "661c6c0f83d241e3672039ab04942460dc65d267eea74c95cf2d0cb592e64d1d",
+      "sha256_now": "661c6c0f83d241e3672039ab04942460dc65d267eea74c95cf2d0cb592e64d1d",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "sha256_at_inspection": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "sha256_now": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "sha256_at_inspection": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "sha256_now": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "sha256_at_inspection": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "sha256_now": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "sha256_at_inspection": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "sha256_now": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "sha256_at_inspection": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "sha256_now": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "sha256_at_inspection": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "sha256_now": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/final-section.md",
+      "sha256_at_inspection": "307c3f6fd16963857e86505d84ff3ba7011d87b3fd7f19e075c52dc7d3950c56",
+      "sha256_now": "307c3f6fd16963857e86505d84ff3ba7011d87b3fd7f19e075c52dc7d3950c56",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/source-map.json",
+      "sha256_at_inspection": "ad79b8b60d802f18f11ba0b5d917f9f2a1b47dc490477c2cb898dbd62d34009f",
+      "sha256_now": "ad79b8b60d802f18f11ba0b5d917f9f2a1b47dc490477c2cb898dbd62d34009f",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/sources/S1-primary-evidence.md",
+      "sha256_at_inspection": "b35c190453f8f628a14f9a8bae5f0bd0f95d505d27d7972afcd4c2fd6e2ebbb1",
+      "sha256_now": "b35c190453f8f628a14f9a8bae5f0bd0f95d505d27d7972afcd4c2fd6e2ebbb1",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/dispatch.json",
+      "sha256_at_inspection": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "sha256_now": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/raw-dispatch.json",
+      "sha256_at_inspection": "0c8a346d4e62cd4419f13c19fc35099ff48307c2eb8389df74c4bd738fe0abff",
+      "sha256_now": "0c8a346d4e62cd4419f13c19fc35099ff48307c2eb8389df74c4bd738fe0abff",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/records/dispatch-20261010T040213849653-6028f9f9fc164d18aa04b6a2e8328eb0.json",
+      "sha256_at_inspection": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "sha256_now": "2d384943b01b7924c14789019b5d4e90096056e2d1df23ba4c79bd1893e9d5ce",
+      "stable": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/root-review-request.json",
+      "sha256_at_inspection": "b9c8910a8255b71412b5c6f10791d7c446d1b0ae1cb9a0356fc31ba00a9b16ba",
+      "sha256_now": "b9c8910a8255b71412b5c6f10791d7c446d1b0ae1cb9a0356fc31ba00a9b16ba",
+      "stable": true
+    }
+  ],
+  "terminal_freeze_candidate_paths_in_exact_control_arm": [
+    "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/freeze.json"
+  ],
+  "no_terminal_science_freeze_observed": true,
+  "missing_primary_locators": [],
+  "judgment_already_saved_before_this_check": true,
+  "native_completion_not_yet_requested": true,
+  "assessment_artifact_hashes": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/assessment.md",
+      "sha256": "dcd19fdf1df55c5154018d90c19c913afab2ec3bcde20d0121ca35e6b7a4609e",
+      "bytes": 14989
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/assessment.json",
+      "sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f",
+      "bytes": 31484
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/source-map.json",
+      "sha256": "403da99fc85a253078235d2dbfa800df3496caa0ac2bc568197de8da4aece12e",
+      "bytes": 13348
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/inspected-hashes.json",
+      "sha256": "97239177ba435bff141be8f33f44d1e5e1de0fc0c4a4a55795ab1783e0307a0d",
+      "bytes": 5346
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/index.md",
+      "sha256": "3b0356820543a82765674054b35704e74293f0bec4a3f8e3952d6d2a9045d8ab",
+      "bytes": 7953
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/reviewer-native-active.json",
+      "sha256": "bb0d63b5480bc6b2d4e43d9d0a3bade8947a864861001ebb78b9c4e637edeca3",
+      "bytes": 1577
+    }
+  ]
+}

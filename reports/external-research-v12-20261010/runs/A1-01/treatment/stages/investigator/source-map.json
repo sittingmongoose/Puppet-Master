@@ -1,0 +1,148 @@
+{
+  "schema": "er12-source-map-v1",
+  "run_id": "A1-01-treatment",
+  "stage": "investigator",
+  "brief": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+  "discovery_state": "saved and frozen before reveal; do not edit discovery; revealed plan read only from released copy",
+  "sources_index": "sources/index.md",
+  "source_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Resumable upload protocol 1.0.x",
+      "publisher": "tus.io",
+      "exact_url": "https://tus.io/protocols/resumable-upload",
+      "released_version_or_commit": "Tus protocol 1.0.0, dated 2016-03-25",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Core Protocol and Headers; OPTIONS and Protocol Extensions; Creation; Expiration; Checksum; Termination",
+      "observed_operation": "Read the normative protocol text and examples for HEAD/PATCH continuation, creation, extension advertisement, expiry, checksum, and delete termination.",
+      "governing_condition_default_exception": "Core is mandatory; extensions are optional and must be announced in Tus-Extension. HEAD provides current offset; offset mismatch requires 409 without mutation; successful PATCH returns new offset. Expiry is optional and communicated by Upload-Expires; checksum applies per PATCH; termination is optional and DELETE should free resources.",
+      "applicability": "Direct protocol basis for a gateway-facing resumable HTTP option. Auth, URL shape, persistence backend, and idempotent creation are implementation-defined; do not infer vendor storage behavior from Tus."
+    },
+    {
+      "id": "S2",
+      "title": "Uploading and copying objects using multipart upload in Amazon S3",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic release/version shown (accessed 2026-10-10)",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Multipart upload process, lines 23-41; multipart listings and checksums, lines 51-69; cleanup note, lines 33-36",
+      "observed_operation": "Read the AWS-described initiate/upload/complete flow, part bookkeeping, listing, checksum validation, completion, and abort race/cost notes.",
+      "governing_condition_default_exception": "AWS uses an upload ID and part number; completion requires the client's part number/ETag list. ETag is not necessarily a whole-object MD5. A supplied full-object checksum is validated server-side; mismatch fails BadDigest. In-flight part calls can still finish around abort; parts incur storage charges until complete/abort.",
+      "applicability": "Normative evidence only for Amazon S3. The brief's vendor is unspecified and merely S3-compatible, so all API, checksum, cost, and abort claims require exact-provider conformance testing."
+    },
+    {
+      "id": "S3",
+      "title": "Amazon S3 multipart upload limits",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic release/version shown (accessed 2026-10-10)",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Core specifications table, lines 4-13",
+      "observed_operation": "Read maximum object, part count, part-number, part-size, last-part exception, and ListParts page-size limits.",
+      "governing_condition_default_exception": "AWS limits part size to 5 MiB–5 GiB, except the final part may be smaller; maximum 10,000 parts; ListParts returns at most 1,000 per request.",
+      "applicability": "AWS S3 limits only. A proposed 16 MiB sizing plan fits the AWS values for 20 MiB–6 GiB; confirm target-service limits before adoption."
+    },
+    {
+      "id": "S4",
+      "title": "Aborting a multipart upload",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic release/version shown (accessed 2026-10-10)",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Opening paragraphs and cleanup guidance, lines 3-9; abort ID behavior, lines 73-84",
+      "observed_operation": "Read multipart object visibility, storage charges, explicit abort, and lifecycle cleanup behavior.",
+      "governing_condition_default_exception": "No completed object exists until CompleteMultipartUpload succeeds; incomplete part storage remains billable until completed or aborted; bucket lifecycle can clean incomplete MPUs. Abort by upload ID/key makes that upload ID unusable.",
+      "applicability": "AWS S3 only. Equivalent expiry/abort/lifecycle semantics for the unnamed compatible vendor are unknown."
+    },
+    {
+      "id": "S5",
+      "title": "Announcement: S3 default integrity change, aws-sdk-rust issue 1240",
+      "publisher": "AWS SDK for Rust maintainers (awslabs/aws-sdk-rust)",
+      "exact_url": "https://github.com/awslabs/aws-sdk-rust/issues/1240",
+      "released_version_or_commit": "AWS SDK for Rust S3 client v1.69.0; maintainer announcement posted 2025-01-16. Issue does not specify a commit.",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Issue description, paragraphs 1-3; page showed issue Open at access",
+      "observed_operation": "Read maintainer release/default announcement and compatibility caveat.",
+      "governing_condition_default_exception": "From v1.69.0 the Rust SDK defaults to an additional checksum on Put calls and validation on Get calls. Maintainers warn AWS SDKs target AWS and third-party services may not yet support newly enabled defaults; configuration can set request_checksum_calculation/response_checksum_validation to WHEN_REQUIRED.",
+      "applicability": "Relevant if the gateway or a future Rust component uses this SDK against a compatible service. It supports a pinned, endpoint-specific adapter and test boundary, not disabling integrity by default; exact gateway SDK/provider are unknown."
+    },
+    {
+      "id": "S6",
+      "title": "Encounter InternalServerError and InvalidPartOrder when uploading to S3 storage, tusd issue 1315",
+      "publisher": "tus project (tus/tusd issue tracker)",
+      "exact_url": "https://github.com/tus/tusd/issues/1315",
+      "released_version_or_commit": "Issue opened 2025-09-03; reporter used mutable image tag tusproject/tusd:latest, so exact version/commit is unknown. Issue showed Open at access.",
+      "access_utc": "2026-10-10T03:56:45Z",
+      "locator": "Issue description and reproduction, paragraphs 1-7; logs around CompleteMultipartUpload",
+      "observed_operation": "Read one reported multipart completion failure and its stated environment/log evidence.",
+      "governing_condition_default_exception": "Reporter said larger uploads failed at completion with InvalidPartOrder; reproduction cites AWS S3 and tusd latest. The posted evidence does not establish root cause or whether all configurations/versions are affected; no fix is established by this page.",
+      "applicability": "A bounded implementation-history signal that completion order deserves a regression test. It is not proof of a general tusd or AWS S3 defect, and it does not resolve behavior for the brief's unknown compatible service."
+    }
+  ],
+  "research_execution": {
+    "pages_inspected": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6"
+    ],
+    "uploads_performed": false,
+    "production_access": false,
+    "validation_run": false,
+    "product_or_test_code_executed": false,
+    "workflow_helper_invoked": "prescribed reveal.py command exactly once after discovery was saved"
+  },
+  "workflow_execution": {
+    "native_goal": {
+      "tool": "create_goal",
+      "threadId": "01a123f2-82b9-7a61-8920-b97650d6fcf4",
+      "objective": "ER12 investigator stage, run A1-01-treatment: execute ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791604492,
+      "updatedAt": 1791604492,
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "separate_native_goal_id": "UNKNOWN; create_goal exposed goal.threadId only",
+      "activation_receipt_field": "UNKNOWN; no separate receipt field was exposed",
+      "created_at_iso_utc": "UNKNOWN; native output exposed raw createdAt integer 1791604492",
+      "updated_at_iso_utc": "UNKNOWN; native output exposed raw updatedAt integer 1791604492"
+    },
+    "plan_release": {
+      "helper_command": "python3 ER12_RUNTIME/helpers/er12-screen-v1/reveal.py --config ER12_RUNTIME/configs/A1-01-treatment.json",
+      "invocations": 1,
+      "result": "success",
+      "revealed_at_utc": "2026-10-10T03:57:56.121Z",
+      "discovery_sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316",
+      "discovery_bytes": 7948,
+      "plan_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "plan_bytes": 2670,
+      "released_copy_read": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "frozen_input_plan_source_not_opened": true
+    },
+    "required_outputs": [
+      "discovery.md",
+      "source-map.json",
+      "draft.md"
+    ],
+    "native_terminal_status": "UNKNOWN until directly returned by update_goal",
+    "artifact_sanity_checks": {
+      "discovery_sha256_matched_reveal": true,
+      "discovery_bytes_matched_reveal": true,
+      "source_map_json_parse": "passed",
+      "freeze_json_parse": "passed",
+      "transfer_behavior_tests": "not run"
+    }
+  }
+}

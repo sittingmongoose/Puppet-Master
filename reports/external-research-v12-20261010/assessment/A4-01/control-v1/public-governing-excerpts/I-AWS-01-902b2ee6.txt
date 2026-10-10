@@ -1,0 +1,32 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-01.txt
+Original SHA256: 902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b
+Original numbered lines; gaps omitted. Not full response.
+
+12: S3 bucket. The maximum size of a file that you can upload by using the Amazon S3 console is 160 GB.
+13: To upload a file larger than 160 GB, use the AWS Command Line Interface (AWS CLI), AWS SDKs, or Amazon S3 REST
+14: API.
+15: If you upload an object with a key name that already exists in a versioning-enabled bucket,
+16: Amazon S3 creates another version of the object instead of replacing the existing object. For more
+17: information about enabling versioning, see Enabling versioning on buckets.
+18: Depending on the size of the data that you're uploading, Amazon S3 offers the following options:
+19: Upload an object in a single operation by using the AWS SDKs,
+20: REST API, or AWS CLI – With a single PUT operation, you can
+21: upload a single object up to 5 GB in size.
+22: Upload a single object by using the Amazon S3 console – With the Amazon S3 console, you can upload a single object up
+23: to 160 GB in size.
+24: Upload an object in parts by using the AWS SDKs, REST API, or
+25: AWS CLI – Using the multipart upload API
+26: operation, you can upload a single large object, up to 50 TB in size.
+27: The multipart upload API operation is designed to improve the upload experience for
+28: larger objects. You can upload an object in parts. These object parts can be uploaded
+29: independently, in any order, and in parallel. You can use a multipart upload for objects
+30: from 5 MB to 50 TB in size. For more information, see Uploading and copying objects using multipart upload in Amazon S3.
+31: To upload files greater than 5 TB, use the S3 Transfer Manager in the Java v1/v2, Python, or
+32: AWS CLI SDKs. For the best performance, use the latest AWS Common Runtime (CRT) with these SDKs,
+33: which has been optimized for better resource utilization.
+34: When uploading large objects from memory stream, CRT buffers each part up to 5 GB in memory,
+35: limiting overall throughput by allocated memory. You can adjust the CRT memory limit using
+36: configuration options such as maxNativeMemoryLimitInBytes for Java SDK. For uploads
+37: from disk, CRT automatically switches to direct disk streaming instead of intermediate part
+38: buffering, improving memory usage. This behavior is automatically enabled for large objects, but

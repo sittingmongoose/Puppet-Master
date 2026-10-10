@@ -1,0 +1,950 @@
+{
+  "schema": "er12-independent-assessment-v1",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "slot_id": "B-APPL-G-01",
+  "arm": "treatment",
+  "role": "Applicability/exception verification",
+  "assessment_version": "treatment-v1",
+  "source_judgment": "FAIL",
+  "judgment_basis": "Two remaining material defects: claim 4 corrected GT direction and the consequential KEEPTTL acceptance oracle. Correct original dispositions, necessary p99 uncertainty, and missing native telemetry do not remove or create these semantic findings.",
+  "delivery": {
+    "status": "DELIVERED",
+    "authored_output": "verification.md",
+    "complete_full_read": true,
+    "word_count_whitespace": 900,
+    "maximum_words": 900,
+    "source_map_present": true,
+    "every_sources_member_full_read": true,
+    "source_members": 5,
+    "t3_task_completion": "COMPLETED_NO_PENDING_RUNS, supplied by parent; not native/effective/billing evidence"
+  },
+  "coverage": {
+    "status": "ALL_SIX_ASSIGNED_CLAIMS_AND_ALL_RUBRIC_AXES_REVIEWED",
+    "claim_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "full_pipeline_qualification": false,
+    "axes": [
+      {
+        "axis": "1. Original obligations and negative constraints",
+        "status": "COVERED with semantic defects",
+        "assessment": "Full exact assignment, fixture, corpus, all authored science read. Six separate dispositions, citations, corrected wording, uncertainty and two final service checks present; 900 whitespace-delimited words. No new architecture or operational benchmark inference. F1/F2 affect substantive fulfillment, not delivery."
+      },
+      {
+        "axis": "2. Consequential source claims / applicability",
+        "status": "COMPLETE_ASSIGNED_CLAIM_COVERAGE; F1 MATERIAL",
+        "assessment": "All six claims checked for exact subject, operation, version, default, type/domain and exceptions using official documentation and Redis 7.2.0 code/config. Original six dispositions are sound; required claim 4 correction is wrong."
+      },
+      {
+        "axis": "3. Useful unfamiliar discovery, alternatives, implementation/history and opportunity",
+        "status": "COVERED_TO_ROLE_SCOPE",
+        "assessment": "Candidate finds in-place versus replacement expiry, KEEPTTL, NX alternative, infinite persistent TTL, event categories, timer-versus-cleanup distinction and active/passive expiry. Histories exclude 8.4-only SET options. Redis architecture alternatives or broad discovery were not assigned. Reviewer additionally located exact 7.2 rounding, absolute-expiry oracle, notification masks and replica logical-versus-physical expiration."
+      },
+      {
+        "axis": "4. Wrong corrections/rejections and exact plan dispositions",
+        "status": "COVERED; F1 MATERIAL",
+        "assessment": "All six claim dispositions reviewed independently. Refutations of claims 2, 4 and 5 and withholding proof for claim 6 are justified; the GT tightening correction is not. No PlanUnit disposition or finalization critique packet exists in this APPL assignment; those portions are NOT_APPLICABLE."
+      },
+      {
+        "axis": "5. Supported scope and meaning preserved",
+        "status": "COVERED_TO_ROLE_SCOPE",
+        "assessment": "Existing hash, string replacement, conditional timeout and notification meanings are preserved overall; candidate separates source statements from inference and does not turn p99 uncertainty into a contrary result. F1 corrupts the finite-timeout corrective meaning. No discovery/draft/critique/final pipeline was supplied; this is not a full-pipeline qualification."
+      },
+      {
+        "axis": "6. Proposed versus executed validation and oracle applicability",
+        "status": "COVERED; F2 MATERIAL",
+        "assessment": "Candidate documents primary-page retrieval and proposes two service checks; there is no service-execution result. Plain SET and persistent GT/NX checks are sound; KEEPTTL strict TTL decrease is invalid. Notification check can discriminate event type under the stated prospective configuration, not establish lossless delivery or p99 failover cleanup."
+      }
+    ],
+    "finalization_section_obligations_and_critique_dispositions": "NOT_APPLICABLE: APPL role, no finalization packet or fallible critique assigned"
+  },
+  "claims": [
+    {
+      "claim": 1,
+      "candidate_disposition": "SUPPORTED",
+      "independent_disposition": "SUPPORTED within stated existing-hash scope",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:7",
+      "subject": "Existing sess:42 hash and its key-level expiry",
+      "operation": "Successful HSET field update",
+      "version": "HSET since 2.0.0; behavior confirmed in Redis 7.2.0 implementation",
+      "default_configuration": "No expiry-changing option or special notification configuration required",
+      "type_domain": "Hash only; a non-hash yields WRONGTYPE rather than this successful update",
+      "exceptions": "Missing or logically expired key may be created afresh, with no prior expiry to preserve; no field-level expiration assumption is needed. It preserves the absolute key deadline, not the remaining integer TTL value.",
+      "corrected_wording_assessment": "Correct bounded wording for key-level TTL; later-field-expiry uncertainty is outside the stated operation and does not invalidate it.",
+      "sources": [
+        "P1-expire:172-179",
+        "P3-hset:140-154",
+        "P8-v720-t-hash-c:443-451,606-633"
+      ],
+      "validation": "Documentation and tagged-source inspection; no HSET acceptance run claimed."
+    },
+    {
+      "claim": 2,
+      "candidate_disposition": "REFUTED",
+      "independent_disposition": "REFUTED",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:11",
+      "subject": "Existing session key of either prior type",
+      "operation": "Successful plain SET replacement, no expiry option",
+      "version": "Redis 7.2.0 confirmed; option history in live SET reference",
+      "default_configuration": "Default plain SET does not retain TTL",
+      "type_domain": "SET creates a string and overwrites prior hash or string; successful SET with GET has a separate old-type constraint",
+      "exceptions": "An unmet NX/XX condition is not a successful replacement and returns before modifying the key. Explicit EX/PX and EXAT/PXAT set a deadline in their respective units; KEEPTTL retains an existing one.",
+      "corrected_wording_assessment": "Correct for a successful plain replacement; no durability or retry guarantee implied.",
+      "sources": [
+        "P2-set:186-219,1099-1104",
+        "P7-v720-t-string-c:84-129,153-188",
+        "P10-v720-db-c:282-315"
+      ],
+      "validation": "The proposed plain-SET assertion TTL==-1 is sound for a successfully replaced, isolated, existing test key."
+    },
+    {
+      "claim": 3,
+      "candidate_disposition": "SUPPORTED",
+      "independent_disposition": "SUPPORTED",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:15",
+      "subject": "Existing string session key with an expiry",
+      "operation": "Successful SET new-value KEEPTTL",
+      "version": "KEEPTTL since 6.0.0; confirmed in Redis 7.2.0",
+      "default_configuration": "Retention requires the explicit KEEPTTL option; not plain SET default",
+      "type_domain": "Replaces value with a string; expiry options are mutually exclusive. Absent/persistent keys have no retained deadline.",
+      "exceptions": "Retains absolute expiry, rather than refreshing the timeout. Conditional SET must actually succeed; after logical expiry, an ordinary lookup can remove the old key first.",
+      "corrected_wording_assessment": "Command wording is correct. Its acceptance oracle is defective as recorded in F2.",
+      "sources": [
+        "P2-set:186-219,1099-1104",
+        "P7-v720-t-string-c:97-125,232-287",
+        "P10-v720-db-c:282-315,1649-1677"
+      ],
+      "validation": "Candidate service check is proposed only; F2 prevents treating it as a valid preservation oracle."
+    },
+    {
+      "claim": 4,
+      "candidate_disposition": "REFUTED",
+      "independent_disposition": "REFUTED, with material error in correction F1",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:19",
+      "subject": "Persistent session key, either string or hash",
+      "operation": "EXPIRE key positive-finite-seconds GT",
+      "version": "GT/NX/XX/LT since 7.0.0, available in 7.2; tagged source inspected",
+      "default_configuration": "Persistent is treated as infinite for GT; no finite extension can exceed it",
+      "type_domain": "Type-independent key expiry; integer seconds; representable expiry required. EXPIRE accepts non-positive durations too, but that is not the finite-positive premise here.",
+      "exceptions": "Missing key returns 0; GT on an already volatile key compares requested absolute deadline with current deadline and rejects earlier/equal values. NX requires an existing key lacking expiry.",
+      "corrected_wording_assessment": "Persistent-key rejection and NX alternative are correct; saying GT tightens a finite expiry reverses its direction (F1).",
+      "sources": [
+        "P1-expire:197-206,3795-3796",
+        "P6-v720-expire-c:549-625"
+      ],
+      "validation": "Proposed GT-on-persistent=0 and NX=1 assertions are sound, but do not exercise the erroneous finite-TTL direction."
+    },
+    {
+      "claim": 5,
+      "candidate_disposition": "REFUTED",
+      "independent_disposition": "REFUTED",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:23",
+      "subject": "Existing live session key on the primary",
+      "operation": "Successful unconditional EXPIRE key 0 versus ordinary deadline expiration",
+      "version": "Redis 7.2.0 event-generating branches and configuration checked",
+      "default_configuration": "Notifications disabled by default; E plus generic/expired classes needed to observe both keyevent streams; KEA includes the necessary 7.2 classes",
+      "type_domain": "EXPIRE is type-independent; seconds=0 causes immediate deletion on the primary under normal command execution",
+      "exceptions": "A conditional skip or missing key causes no successful deletion event. Pub/Sub disconnections lose messages. Ordinary expired events follow actual deletion, not an exact theoretical deadline.",
+      "corrected_wording_assessment": "Correctly distinguishes del from expired, including zero through EXPIRE rather than extrapolating solely from the notification page negative-timeout wording.",
+      "sources": [
+        "P1-expire:188-191",
+        "P5-notifications:9-11,32-68,117,122,134-140",
+        "P6-v720-expire-c:477-483,629-660",
+        "P9-v720-redis-conf:1869-1919",
+        "P10-v720-db-c:1679-1688"
+      ],
+      "validation": "Second proposed check is a valid bounded event-type check for sess:42 on a selected DB0 primary with a ready connected subscriber and payload filtering; it is not a lossless-delivery or latency proof."
+    },
+    {
+      "claim": 6,
+      "candidate_disposition": "UNSUPPORTED (unproven)",
+      "independent_disposition": "UNSUPPORTED, not disproven",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:27",
+      "subject": "This session service and replica failover",
+      "operation": "p99 elapsed cleanup latency below 25 ms",
+      "version": "No Redis reference version establishes a service-specific percentile",
+      "default_configuration": "Durability, retries, load, failover timing and cleanup endpoint are unspecified",
+      "type_domain": "Timer accuracy, logical invisibility, key deletion, memory reclamation and subscriber processing are different observables",
+      "exceptions": "Default replicas normally defer physical deletion to primary propagation while read lookups can already regard a key as expired; writable replicas have an implementation exception. No supplied trace or benchmark removes the uncertainty.",
+      "corrected_wording_assessment": "Correctly rejects proof from command references without asserting the service is slower than 25 ms. Histograms from a defined cleanup metric under a representative failover drill are an appropriate prospective resolution.",
+      "sources": [
+        "P1-expire:3738-3773",
+        "P5-notifications:134-140",
+        "P6-v720-expire-c:140-159,195-275",
+        "P10-v720-db-c:88-109,1679-1817"
+      ],
+      "validation": "No deployed benchmark/drill was required, supplied or executed. Service-specific latency remains honestly UNKNOWN."
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "F1",
+      "severity": "material",
+      "axis": "corrected wording / operation applicability",
+      "title": "Claim 4 corrected wording reverses the action of EXPIRE GT",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:19",
+      "candidate_section": "Claim 4; corrected wording",
+      "candidate_text": "GT only tightens keys that already have a finite TTL.",
+      "independent_sources": [
+        "P1-expire:197-206",
+        "P6-v720-expire-c:605-625"
+      ],
+      "primary_locators": [
+        "https://redis.io/docs/latest/commands/expire/#optional-arguments",
+        "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L605"
+      ],
+      "judgment": "The refusal to attach a finite expiry to a persistent key is correct, but tightening an existing timeout means shortening its deadline; GT only accepts a strictly later deadline and therefore extends it. LT is the shortening condition. The candidate includes the correct greater-than definition earlier, leaving its required final correction internally inconsistent.",
+      "consequence": "Documentation using this correction can choose GT to shorten a session lifetime and get 0 instead; an extension can succeed when the author expects a tightening-only rule.",
+      "checked_bounded_wording": "On an existing persistent key EXPIRE key seconds GT returns 0. On an existing volatile key it changes the deadline only if the requested absolute deadline is strictly later; it extends rather than shortens that deadline. NX can set expiry on an existing persistent key; a missing key still returns 0.",
+      "materiality_basis": "The assignment expressly requires corrected bounded wording and exact operation applicability for every claim. This is a direction error in that correction, rather than a locator defect.",
+      "validation_status": "Independent documentation and tagged source inspection; no Redis service execution."
+    },
+    {
+      "id": "F2",
+      "severity": "material",
+      "axis": "consequential acceptance-check oracle",
+      "title": "The KEEPTTL acceptance check requires an unsupported strict drop in integer TTL",
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:37",
+      "candidate_section": "Acceptance checks for the service, check 1",
+      "candidate_text": "TTL sess:42 > 0 (smaller than before the KEEPTTL write)",
+      "independent_sources": [
+        "P4-ttl:67-74",
+        "P6-v720-expire-c:687-727",
+        "P7-v720-t-string-c:97-117",
+        "P10-v720-db-c:282-315"
+      ],
+      "primary_locators": [
+        "https://redis.io/docs/latest/commands/ttl/",
+        "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687",
+        "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L97",
+        "https://github.com/redis/redis/blob/7.2.0/src/db.c#L282"
+      ],
+      "judgment": "KEEPTTL preserves the deadline, while TTL reports rounded integer seconds in Redis 7.2.0. A correct fast write can leave the two reported values equal; elapsed time need not cross a seconds rounding boundary. The listed sequence also supplies no explicit before measurement. Positivity alone does not show the original deadline was retained rather than reset.",
+      "counterexample": {
+        "remaining_ms_before": 60000,
+        "remaining_ms_after": 59995,
+        "ttl_before": 60,
+        "ttl_after": 60,
+        "method": "Static arithmetic from the independently inspected tagged implementation: (remaining_ms+500)//1000; not a deployed-service measurement."
+      },
+      "consequence": "Using the smaller-than condition as the acceptance oracle can fail a compliant service. Using only positivity can pass a service that incorrectly replaces the original expiration.",
+      "checked_bounded_validation": "A prospective deadline-preservation check can compare PEXPIRETIME before and after the successful KEEPTTL write while also checking the new value, isolating the key from competing writers and using an expiry safely in the future. Redis 7.2.0 implements PEXPIRETIME through the absolute-millisecond branch. This is an assessment of an appropriate oracle, not a repair or executed check.",
+      "materiality_basis": "Two concrete service acceptance checks are required; this check supplies a false rejection condition for its central KEEPTTL behavior.",
+      "validation_status": "Tagged-source reasoning and a static arithmetic counterexample only; service check proposed, not executed."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "material": false,
+      "candidate_locators": [
+        "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/source-map.json:1",
+        "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:31"
+      ],
+      "assessment": "Candidate source retrieval UTCs are approximate, source evidence consists of selected excerpts, and exact later-feature/version uncertainty remains. These do not alone make its bounded key-level claims incorrect; independent raw retrievals and 7.2.0 evidence are retained here."
+    },
+    {
+      "id": "L2",
+      "material": false,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md:27",
+      "assessment": "The broad replica sentence is suitable for primary-replicated physical deletion by default, but should not imply that an expired key remains readable on a replica or encompass writes to configured writable replicas. Tagged db.c exposes these distinctions. No latency guarantee or design decision is derived from this simplification."
+    },
+    {
+      "id": "L3",
+      "material": false,
+      "candidate_locator": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/source-map.json:1",
+      "assessment": "The executed field refers to document verification rather than completed service checks. Candidate provides no service transcript or fabricated benchmark; service checks are recorded as prospective in this review. A more explicit label would improve delivery clarity."
+    }
+  ],
+  "unknowns": [
+    {
+      "item": "Candidate native Goal activation/completion",
+      "status": "UNKNOWN / NOT_OBSERVED",
+      "reason": "Candidate goal_receipt.json reports unavailable and goal_created=false. goal_activation.err supports one model-creation failure; empty stdout is not a native activation/completion receipt. The broader CLI attempt account remains authored testimony."
+    },
+    {
+      "item": "Candidate effective provider/model, underlying source transport and billing",
+      "status": "UNKNOWN",
+      "reason": "Requested route in freeze is not execution provenance. No authenticated effective/billing receipt was assigned or inspected; no savings claim is made."
+    },
+    {
+      "item": "Exact candidate terminal completion time and save-before-terminal provenance",
+      "status": "UNKNOWN",
+      "reason": "Parent reports actual T3 task completed with no pending runs. No terminal-science-freeze or direct terminal timestamp was found in the assigned treatment subtree or assessment destination. Authored timestamps do not authenticate completion order."
+    },
+    {
+      "item": "Service p99 expired-session cleanup under failover",
+      "status": "UNKNOWN",
+      "reason": "No deployed data, definition of cleanup, durability configuration, client retry trace or benchmark was supplied. Necessary external uncertainty is accepted and not a FAIL basis."
+    },
+    {
+      "item": "Specific deployed 7.2 patch level, notification config and replica writability",
+      "status": "UNKNOWN",
+      "reason": "Scenario supplies the 7.2 series and primary+replicas only. Tagged 7.2.0 evidence establishes the evaluated command semantics, not the service configuration."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "source_ids": [
+        "P6-v720-expire-c"
+      ],
+      "discovery": "Redis 7.2.0 TTL converts milliseconds with integer rounding (remaining+500)/1000; correctly retained deadlines can produce equal successive TTL seconds.",
+      "relevance": "Independently establishes F2 without a nonexistent service deployment."
+    },
+    {
+      "source_ids": [
+        "P6-v720-expire-c",
+        "P7-v720-t-string-c",
+        "P10-v720-db-c"
+      ],
+      "discovery": "Redis 7.2.0 already implements PEXPIRETIME as an absolute-millisecond expiry query, allowing an oracle that directly tests retention instead of elapsed integer seconds.",
+      "relevance": "Discriminating prospective validation; no candidate repair or execution."
+    },
+    {
+      "source_ids": [
+        "P9-v720-redis-conf",
+        "P6-v720-expire-c",
+        "P10-v720-db-c"
+      ],
+      "discovery": "The exact 7.2.0 default notification gate and KEA classes include generic del and expired events, while zero-timeout and ordinary expiration reach different notification branches.",
+      "relevance": "Resolves the candidate uncertainty about event classes needed by this test, within target version."
+    },
+    {
+      "source_ids": [
+        "P10-v720-db-c",
+        "P9-v720-redis-conf"
+      ],
+      "discovery": "Default read-only replica reads can recognize logical expiry before primary-propagated physical deletion; writable-replica writes are an exception to the broad no-independent-delete description.",
+      "relevance": "Keeps claim 6 interpretation bounded without inventing a latency guarantee."
+    },
+    {
+      "source_ids": [
+        "P1-expire",
+        "P6-v720-expire-c"
+      ],
+      "discovery": "The live EXPIRE reference globally calls condition options mutually exclusive, but the 7.2.0 parser rejects NX combinations and GT+LT while permitting XX with GT or LT.",
+      "relevance": "Primary documentation versus implementation distinction. Candidate uses only single options here; no material finding is charged for its faithfully captured live quote."
+    }
+  ],
+  "native": {
+    "candidate_goal": "UNKNOWN / activation and completion NOT_OBSERVED",
+    "candidate_authored_status": "NATIVE_GOAL_UNAVAILABLE; goal_created=false",
+    "direct_diagnostic": "Model creation failed; stdout empty",
+    "candidate_transport_effective_billing": "UNKNOWN",
+    "reviewer_goal_created": "CONFIRMED_ACTUAL_NATIVE",
+    "reviewer_thread_id": "01a12402-813e-76d3-ace6-c52ebda2b4c5",
+    "reviewer_objective_length": 1365,
+    "reviewer_activation_receipt": "reviewer-native-activation.json",
+    "reviewer_completion": "Must follow this saved judgment; completion receipt will be saved separately"
+  },
+  "protocol": {
+    "candidate": "NO_UNAUTHORIZED_ASSISTANCE_ESTABLISHED_FROM_ASSIGNED_ARTIFACTS; NATIVE_QUALIFICATION_NOT_ESTABLISHED",
+    "candidate_basis": "Five reported primary pages within eight-additional-page allowance; fallback 404 reported; no service run or downloaded-code execution claimed. No execution history inspected, so unobserved actions are UNKNOWN. Native-support fallback was explicitly permitted by the stage assignment; unavailable Goal is kept separate from semantic grade.",
+    "reviewer": "INDEPENDENT_BOUNDED_REVIEW_WITH_DISCLOSED_COORDINATION_METADATA",
+    "reviewer_actions": "One actual native Goal; unique pm-mail registration/inbox/waiter. No delegation, candidate messages/feedback/repair, account changes, Git/publication, ER11 rescoring, other-arm science files or execution histories. Writes confined to treatment-v1 assessment destination.",
+    "coordination_metadata_disclosure": "pm-mail who returned the global agent registry with task/status metadata while checking for file collisions. No other-arm scientific artifact was opened, no judgment or help was solicited, and registry content was not used as evidence. This incidental registry read limits a claim of absolute metadata blindness.",
+    "retrievals": "10 unique primary pages: supplied EXPIRE/SET URLs plus eight additional official pages/files. HTTPS responses were retained as inert research data; no install, login or downloaded execution.",
+    "local_execution": "Only artifact reading, hashing, standard-library HTML extraction and static arithmetic. An optional bs4 import failed; no software was installed. No Redis/service/replica/failover execution occurred."
+  },
+  "time": {
+    "review_started_utc": "2026-10-10T04:12:03Z",
+    "review_deadline_utc": "2026-10-10T04:37:03Z",
+    "semantic_judgment_saved_utc": "2026-10-10T04:17:03.673373+00:00",
+    "elapsed_seconds_to_judgment_save": 300.673373,
+    "candidate_prepared_utc": "2026-10-10T03:54:50.551496+00:00",
+    "candidate_deadline_utc": "2026-10-10T04:09:50.551496+00:00",
+    "candidate_observed_terminal_time": "UNKNOWN",
+    "latency_or_billing_savings_inference": false
+  },
+  "terminal_science_freeze": {
+    "searched_roots": [
+      "ER12_RUNTIME/runs/B-APPL-G-01/treatment",
+      "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1"
+    ],
+    "search_name_pattern": "*terminal*science*freeze*",
+    "found": [],
+    "preservation": "No existing terminal-science-freeze found; none created or replaced. Candidate originals remained read-only.",
+    "checked_at_utc": "2026-10-10T04:17:03.673373+00:00"
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "bytes": 608,
+      "sha256": "aa8d9730b741a31b0e474ae5e1dc2f0d2fab1a4fb6c9365366f5c63c9e9cab33",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md",
+      "bytes": 1806,
+      "sha256": "8f18c6f76f0788ad1dbfe7e817859d81d1cf0be0abeb84cefbf016a158eb130f",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/freeze.json",
+      "bytes": 2018,
+      "sha256": "745db2e12cfcd327a324033bf12aad92fbf98e8a609afeadbda6878422a720d9",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md",
+      "bytes": 5918,
+      "sha256": "0877ec905c20c11957faafbdf561aec949b71c239417d4806df88cdd4ed74b58",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/source-map.json",
+      "bytes": 7469,
+      "sha256": "b11cd8f2f12bd6e44dff988bb7a2ea65411b6603f818e824fba05d910a07b6a7",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_receipt.json",
+      "bytes": 1976,
+      "sha256": "a7e5dcb689c008a68a719a077d61cb6987d98a7248b73f57aab4fd1f41ce7b49",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_activation.err",
+      "bytes": 77,
+      "sha256": "47a1456b8656ffe2f3b004626fc43b7ebeb778f09951d4a673d6c0b039349f14",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "bytes": 3108,
+      "sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "bytes": 1664,
+      "sha256": "3769783a77959a4303e88ce4f120a94850484d97827327d7bd097a08b823d6b9",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "bytes": 1065,
+      "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "bytes": 963,
+      "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "bytes": 1305,
+      "sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R1-expire.md",
+      "bytes": 3603,
+      "sha256": "60a0e0960d811bb0550de5778d5232dbcdf22743cffc126f5ebe6c0d7adb9968",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R2-set.md",
+      "bytes": 1249,
+      "sha256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R3-hset.md",
+      "bytes": 1028,
+      "sha256": "f9c9ff5fe800d6113d3d8740d336078f551ae40312bfbcf1766ce9023a8d2fba",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R4-ttl.md",
+      "bytes": 893,
+      "sha256": "1ef2de5de3ff8e9982919b25230702ab8185df4e082bdc42ce37098a5e63f5df",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R5-keyspace-notifications.md",
+      "bytes": 2439,
+      "sha256": "65bd7c1d4a31e00882a3079efc5f16e8e358d02da1081c6b71abf67042c038a7",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/root-review-request.json",
+      "bytes": 2841,
+      "sha256": "6297302e3fb4f5f648f11076998f8f5037490a3d38058311c8e39376ad8455eb",
+      "fully_inspected": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.html",
+      "bytes": 1468674,
+      "sha256": "92cf8b506f8c6c40062f488e05924eabd11a91b1ce984022488316b315b34f8b",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 172,
+          "end_line": 179,
+          "section": "Description: in-place HSET changes",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:172",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 188,
+          "end_line": 191,
+          "section": "Description: non-positive timeout event",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:188",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 197,
+          "end_line": 206,
+          "section": "Optional arguments: NX/XX/GT/LT",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:197",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 3738,
+          "end_line": 3773,
+          "section": "Appendix: accuracy, timestamps, expiration, replication",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:3738",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        },
+        {
+          "start_line": 3786,
+          "end_line": 3796,
+          "section": "Return information and history",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt:3786",
+          "primary_locator": "https://redis.io/docs/latest/commands/expire/"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.html",
+      "bytes": 631663,
+      "sha256": "7b75af37422a19ec020d047b51e7425a781ecdfb526776e9c3ffd6ad4c0971b7",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 186,
+          "end_line": 219,
+          "section": "Description and optional arguments",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt:186",
+          "primary_locator": "https://redis.io/docs/latest/commands/set/"
+        },
+        {
+          "start_line": 1099,
+          "end_line": 1104,
+          "section": "History: KEEPTTL 6.0, EXAT/PXAT 6.2, comparison additions 8.4",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt:1099",
+          "primary_locator": "https://redis.io/docs/latest/commands/set/"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.html",
+      "bytes": 1377176,
+      "sha256": "2d522748307439110904f335f3c30560c25587b20403ca938df77e3978c0da0a",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 154,
+          "section": "Since 2.0.0; fields overwritten; absent hash created",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt:140",
+          "primary_locator": "https://redis.io/docs/latest/commands/hset/"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.html",
+      "bytes": 1346868,
+      "sha256": "a2d3748fb5de8db65976f305e3b0d670337f9b89448e596af2f35899de0da2d4",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 67,
+          "end_line": 74,
+          "section": "Description: seconds resolution; -1 persistent, -2 missing",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.readable.txt:67",
+          "primary_locator": "https://redis.io/docs/latest/commands/ttl/"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.html",
+      "bytes": 130039,
+      "sha256": "eac5aa9353b6386e05acdc84695180f40863dbd7c91798b78d89c5718fe715a6",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 9,
+          "end_line": 11,
+          "section": "Pub/Sub disconnected delivery loss",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:9",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 32,
+          "end_line": 62,
+          "section": "Configuration defaults and event masks",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:32",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 67,
+          "end_line": 68,
+          "section": "DEL and EXPIRE events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:67",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 117,
+          "end_line": 117,
+          "section": "Ordinary expiration event",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:117",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 122,
+          "end_line": 122,
+          "section": "Events require actual modification",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:122",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        },
+        {
+          "start_line": 134,
+          "end_line": 140,
+          "section": "Event timing and no TTL-zero delivery guarantee",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt:134",
+          "primary_locator": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt",
+      "bytes": 30411,
+      "sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 140,
+          "end_line": 159,
+          "section": "activeExpireCycle: configured effort",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:140",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L140"
+        },
+        {
+          "start_line": 195,
+          "end_line": 275,
+          "section": "activeExpireCycle: time budget and incremental dictionary scanning",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:195",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L195"
+        },
+        {
+          "start_line": 477,
+          "end_line": 483,
+          "section": "checkAlreadyExpired: primary/loading conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:477",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L477"
+        },
+        {
+          "start_line": 491,
+          "end_line": 532,
+          "section": "parseExtendedExpireArgumentsOrReply",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:491",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L491"
+        },
+        {
+          "start_line": 549,
+          "end_line": 664,
+          "section": "expireGenericCommand: seconds, domain, conditions, del/expire events",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:549",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L549"
+        },
+        {
+          "start_line": 687,
+          "end_line": 727,
+          "section": "ttlGenericCommand: rounding; TTL/PTTL/EXPIRETIME/PEXPIRETIME",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt:687",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/expire.c#L687"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt",
+      "bytes": 34470,
+      "sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 84,
+          "end_line": 129,
+          "section": "setGenericCommand: conditional abort, KEEPTTL, explicit deadline",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:84",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L84"
+        },
+        {
+          "start_line": 153,
+          "end_line": 188,
+          "section": "getExpireMillisecondsOrReply: units and domain",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:153",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L153"
+        },
+        {
+          "start_line": 209,
+          "end_line": 287,
+          "section": "parseExtendedStringArgumentsOrReply: options and mutual exclusions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:209",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L209"
+        },
+        {
+          "start_line": 293,
+          "end_line": 305,
+          "section": "SET command",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt:293",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_string.c#L293"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt",
+      "bytes": 39709,
+      "sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 443,
+          "end_line": 451,
+          "section": "hashTypeLookupWriteOrCreate: type and create conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt:443",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L443"
+        },
+        {
+          "start_line": 606,
+          "end_line": 633,
+          "section": "hsetCommand: existing object mutated, expiry not removed",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt:606",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/t_hash.c#L606"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt",
+      "bytes": 107512,
+      "sha256": "319286fcdc3d98e9c248d9730f28c3e5bae106a58173f64302039e15507dca14",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 583,
+          "end_line": 583,
+          "section": "Default replica-read-only yes",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:583",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L583"
+        },
+        {
+          "start_line": 1259,
+          "end_line": 1259,
+          "section": "Default lazyfree-lazy-expire no",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:1259",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L1259"
+        },
+        {
+          "start_line": 1869,
+          "end_line": 1919,
+          "section": "Keyspace events, masks, KEA classes, default disabled",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt:1869",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/redis.conf#L1869"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt",
+      "bytes": 94016,
+      "sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed",
+      "locators": [
+        {
+          "start_line": 88,
+          "end_line": 109,
+          "section": "lookupKey: read-only replica and force-delete conditions",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:88",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L88"
+        },
+        {
+          "start_line": 282,
+          "end_line": 315,
+          "section": "setKey: TTL removed unless KEEPTTL flag",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:282",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L282"
+        },
+        {
+          "start_line": 1649,
+          "end_line": 1677,
+          "section": "setExpire/getExpire: absolute milliseconds",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1649",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1649"
+        },
+        {
+          "start_line": 1679,
+          "end_line": 1726,
+          "section": "deleteExpiredKeyAndPropagate/propagateDeletion",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1679",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1679"
+        },
+        {
+          "start_line": 1746,
+          "end_line": 1817,
+          "section": "expireIfNeeded: logical expiration versus physical deletion; writable-replica exception",
+          "local_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt:1746",
+          "primary_locator": "https://github.com/redis/redis/blob/7.2.0/src/db.c#L1746"
+        }
+      ]
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt",
+      "bytes": 108207,
+      "sha256": "5702b0c3ae19d2e76d0639f85570e51886cb024e820aaa067403b0ee5be9dfa9",
+      "kind": "deterministic readable extraction",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt",
+      "bytes": 27972,
+      "sha256": "1c8ca703670680612e6b17d75a67dc4961437f180d6c036e27e9511203d87053",
+      "kind": "deterministic readable extraction",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt",
+      "bytes": 91476,
+      "sha256": "b8b19f8fec4cf6139f4945f69095af548b5b705e6625303326eca8601a58078c",
+      "kind": "deterministic readable extraction",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.readable.txt",
+      "bytes": 88835,
+      "sha256": "242e0af15c5f281ffc978e33aa1506c16274c238680ab4a6e2094ab1a8a5abe5",
+      "kind": "deterministic readable extraction",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt",
+      "bytes": 11899,
+      "sha256": "47a7be7a7d82534be35d32be146ad44101860d8868a572ecb17823e74ce30eed",
+      "kind": "deterministic readable extraction",
+      "inspection_scope": "All governing passages identified by the following line locators; not a claim that all unrelated examples or implementation functions were semantically reviewed"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/retrievals.json",
+      "bytes": 18719,
+      "sha256": "48e02118a89c3bc49288f1cbc0a7ed20c22a43fa3005d967049ea8f4fcb4bef6",
+      "kind": "review evidence/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/reviewer-native-activation.json",
+      "bytes": 1765,
+      "sha256": "32193395e3cd32e337f1f5e2c3e08b6a21f57a347edda2d76fe99c7bafc1afd8",
+      "kind": "review evidence/provenance"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/terminal-freeze-status.json",
+      "bytes": 463,
+      "sha256": "166842e6b76dc8ffb020df5eaecda6bc3516c4e15287c956a83345ee1654b829",
+      "kind": "review evidence/provenance"
+    }
+  ],
+  "sources_urls_versions": [
+    {
+      "source_id": "P1-expire",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "retrieval_completed_utc": "2026-10-10T04:12:51.042229+00:00",
+      "raw_sha256": "92cf8b506f8c6c40062f488e05924eabd11a91b1ce984022488316b315b34f8b"
+    },
+    {
+      "source_id": "P2-set",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.851242+00:00",
+      "raw_sha256": "7b75af37422a19ec020d047b51e7425a781ecdfb526776e9c3ffd6ad4c0971b7"
+    },
+    {
+      "source_id": "P3-hset",
+      "url": "https://redis.io/docs/latest/commands/hset/",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "retrieval_completed_utc": "2026-10-10T04:12:51.155009+00:00",
+      "raw_sha256": "2d522748307439110904f335f3c30560c25587b20403ca938df77e3978c0da0a"
+    },
+    {
+      "source_id": "P4-ttl",
+      "url": "https://redis.io/docs/latest/commands/ttl/",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.949772+00:00",
+      "raw_sha256": "a2d3748fb5de8db65976f305e3b0d670337f9b89448e596af2f35899de0da2d4"
+    },
+    {
+      "source_id": "P5-notifications",
+      "url": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/",
+      "version": "Live official Redis documentation independently retrieved 2026-10-10; option history checked against target 7.2",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.834031+00:00",
+      "raw_sha256": "eac5aa9353b6386e05acdc84695180f40863dbd7c91798b78d89c5718fe715a6"
+    },
+    {
+      "source_id": "P6-v720-expire-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/expire.c",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.916371+00:00",
+      "raw_sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65"
+    },
+    {
+      "source_id": "P7-v720-t-string-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_string.c",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.923917+00:00",
+      "raw_sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f"
+    },
+    {
+      "source_id": "P8-v720-t-hash-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/t_hash.c",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "retrieval_completed_utc": "2026-10-10T04:12:50.991229+00:00",
+      "raw_sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6"
+    },
+    {
+      "source_id": "P9-v720-redis-conf",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/redis.conf",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "retrieval_completed_utc": "2026-10-10T04:12:51.004319+00:00",
+      "raw_sha256": "319286fcdc3d98e9c248d9730f28c3e5bae106a58173f64302039e15507dca14"
+    },
+    {
+      "source_id": "P10-v720-db-c",
+      "url": "https://raw.githubusercontent.com/redis/redis/7.2.0/src/db.c",
+      "version": "Redis Open Source 7.2.0 tagged upstream implementation/configuration",
+      "retrieval_completed_utc": "2026-10-10T04:12:51.050085+00:00",
+      "raw_sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6"
+    }
+  ],
+  "output_hash_manifest": "artifact-hashes.json; final output hashes kept externally to avoid self-hash cycles; manifest excludes itself",
+  "source_map": "source-map.json",
+  "saved_before_reviewer_native_completion": true,
+  "no_candidate_science_modified": true
+}

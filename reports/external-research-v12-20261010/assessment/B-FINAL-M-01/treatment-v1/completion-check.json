@@ -1,0 +1,55 @@
+{
+  "checked_at_utc": "2026-10-10T04:31:05.068253+00:00",
+  "result": "PASS_ARTIFACT_INTEGRITY",
+  "source_semantic_judgment": "FAIL",
+  "checks": [
+    "All 27 inspected input/science/protocol files stable",
+    "All ten independently retrieved primary response hashes stable",
+    "Candidate findings verified at exact assigned lines",
+    "All primary evidence line ranges valid in saved original bytes",
+    "Assessment and source-map judgments agree",
+    "Six obligations and six critiques covered; delivery word limits satisfied",
+    "Native/effective/billing unknowns retained"
+  ],
+  "artifact_hashes": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/assessment.md",
+      "bytes": 15589,
+      "sha256": "1e30fe5ed9b471e24ca1ba969a3c5f3a99d22e2d7ae81160f9aa89244c888246"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+      "bytes": 61113,
+      "sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "bytes": 35165,
+      "sha256": "3a4515d594dab53171560b0b4954349a7aece950ae9e48b39371a9153b74b41b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/inspected-hashes.json",
+      "bytes": 14402,
+      "sha256": "05f5d68e3822f70ab599822416f57b61e80df9bae8ee03d464f1051c61870181"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/retrievals.json",
+      "bytes": 20312,
+      "sha256": "411bdf5bf58173ada1fbd158005c6f2c47d80763cb892c9eb240a8483fb70d6e"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/lifecycle-observations.json",
+      "bytes": 3100,
+      "sha256": "cc29a564f905ebd89bd558808674fdfcaee10e2e30d49a2b836cbe90fc4a070a"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/index.md",
+      "bytes": 3634,
+      "sha256": "4527cdc1173cf745d1b177f687cdb8f07f62d604fef70f904f4737197dbcae23"
+    }
+  ],
+  "review_elapsed_seconds": 378.068289,
+  "review_budget_seconds": 1500,
+  "native_completion_order": "Judgment and this integrity record saved before reviewer Goal completion.",
+  "qa_adjustment": "Corrected one primary locator end line from 32 to 31; source content and semantic judgment unchanged."
+}

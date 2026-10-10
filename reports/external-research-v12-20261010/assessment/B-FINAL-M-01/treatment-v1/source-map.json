@@ -1,0 +1,722 @@
+{
+  "schema": "er12-independent-review-source-map-v1",
+  "case_id": "ER12-B-FINAL-M-01-FRESH",
+  "slot_id": "B-FINAL-M-01",
+  "arm": "treatment",
+  "judgment": "FAIL",
+  "retrieved_at_utc": "2026-10-10T04:29:11.165801+00:00",
+  "governing_subject": "curl CLI 8.10.1; one read-only HTTPS catalog GET",
+  "authority_rule": "Tag-exact implementation resolves ambiguous documentation wording. Live manual and option table supply context/history, not target semantics.",
+  "sources": [
+    {
+      "id": "P1",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.600241+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md",
+      "bytes": 1088,
+      "sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "1088",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"52d22c2d25832e50e4c35eea4ceefb45197d99a0983343938e63d87ae7ab9d31\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "97D6:1CCA:1389D9:2C0621:6AC9BD25",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740067-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.657430,VS0,VE63",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "874398bfe3d8c729dc815f7f03b6321f01213285",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P2",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.602285+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md",
+      "bytes": 1763,
+      "sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "1763",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"f1eea10a46876a87ba58f664ac74e0b3110e259f4c38acb055fc3c93b6529092\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "3ED4:2B940B:99503:15BFA5:6AC9BD24",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740040-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.657931,VS0,VE36",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "6f52f417d6bf2d460811e0f2ac523be46b4d5065",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P3",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.603493+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail-with-body.md",
+      "bytes": 771,
+      "sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "771",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"b19b54bc1c64f2322445ec1e7db2cb4d3dd7b6e30d181c2416fbf869eff21098\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "EEE4:2D1C9A:1A91DA:3AD1A6:6AC9BD26",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740065-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.649645,VS0,VE46",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "afe75272caff451e598373eb5343cd9f9e89fb78",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P4",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.604687+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail.md",
+      "bytes": 1082,
+      "sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "1082",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"a60c1627570b7efb0feff060c8a4bf841d035800542fe77a94556097500537aa\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "D5EC:1D20:19CC6D:37E62E:6AC9BD25",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740060-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.671708,VS0,VE39",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "7ba2f418ff797608d8a97dae96d1db8f586dce6e",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P5",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.606851+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/max-time.md",
+      "bytes": 884,
+      "sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "884",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"df34507930d44905a01531ae239e5410b769bec19c15db24c83650233a0a213f\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "2518:1D57:54A51:C6D53:6AC9BD25",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740060-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.659919,VS0,VE45",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "948c073c218ac08ef280ebb78d116978fc9f223e",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P6",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.608246+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-max-time.md",
+      "bytes": 715,
+      "sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "715",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9a77cfc6724439595c3774745d2f7687fc24ce7b126c13f580dbdf6c48059062\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "FB94:156513:1BD53E:3BADD1:6AC9BD22",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740042-EWR",
+        "X-Cache": "HIT",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.664881,VS0,VE41",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "e8d6c84d84b73aa1c66bf4878189a4ed8d71fa7e",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P7",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.699964+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/tool_operate.c",
+      "bytes": 107334,
+      "sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "107334",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"f894b2ad9ea3a4b7ebd1c2930d7368673fa93100beb3c788f588c7fe74a58314\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "5108:269DB7:19C0EA:39D08C:6AC9BE61",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740052-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.733136,VS0,VE50",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "fc217d2e24a9a18b72a7bbc74712c33fa1c7c31d",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "P8",
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md",
+      "effective_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.701666+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md",
+      "bytes": 1529,
+      "sha256": "9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363",
+      "version": "curl-8_10_1 tag",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "1529",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"323beb2a90bc317815fca916e2f3bc38040bd3ef423b3bdcc68dfae08411b863\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "308E:F9BF6:98B75:15EDB6:6AC9BE60",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740070-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606370.732768,VS0,VE69",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "c2f0ed4088ddf4d1b6a6f32e9dad433c25e108fa",
+        "Expires": "Sat, 10 Oct 2026 04:31:09 GMT",
+        "Source-Age": "0"
+      }
+    },
+    {
+      "id": "S1-live",
+      "url": "https://curl.se/docs/manpage.html",
+      "effective_url": "https://curl.se/docs/manpage.html",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.712922+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/manpage.html",
+      "bytes": 465220,
+      "sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "version": "live; not target-version authority",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "465220",
+        "Server": "nginx/1.31.3",
+        "Content-Type": "text/html",
+        "Last-Modified": "Mon, 05 Oct 2026 18:05:03 GMT",
+        "ETag": "\"71944-65d1bb8a9d43c\"",
+        "Cache-Control": "max-age=60",
+        "Expires": "Fri, 09 Oct 2026 20:21:13 GMT",
+        "Content-Security-Policy": "upgrade-insecure-requests; default-src 'none'; base-uri 'none'; img-src 'self'; style-src 'unsafe-inline' 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script';",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Resource-Policy": "same-origin",
+        "Permissions-Policy": "accelerometer=(), ambient-light-sensor=(), aria-notify=(), autoplay=(), bluetooth=(), camera=(), captured-surface-control=(), ch-ua-high-entropy-values=(), compute-pressure=(), cross-origin-isolated=(), deferred-fetch=(), deferred-fetch-minimal=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), language-detector=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), on-device-speech-recognition=(), otp-credentials=(), payment=(), picture-in-picture=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-create=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), storage-access=(), summarizer=(), translator=(), usb=(), web-share=(), window-management=(), xr-spatial-tracking=()",
+        "Referrer-Policy": "strict-origin",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Age": "39",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "X-Served-By": "cache-bma-essb1270022-BMA, cache-ewr-kewr1740040-EWR",
+        "X-Cache": "HIT, MISS",
+        "X-Cache-Hits": "74, 0",
+        "X-Timer": "S1791606370.738968,VS0,VE115",
+        "Vary": "Accept-Encoding",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400"
+      }
+    },
+    {
+      "id": "S2-live",
+      "url": "https://curl.se/docs/optionsall.html",
+      "effective_url": "https://curl.se/docs/optionsall.html",
+      "operation": "HTTPS GET; stored as research data; never executed",
+      "retrieved_at_utc": "2026-10-10T04:26:09.713473+00:00",
+      "http_status": 200,
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/optionsall.html",
+      "bytes": 37181,
+      "sha256": "93039371c310ab7f52be750004b3a2a5aeaa0a04973d93c15204d2cbc02968d1",
+      "version": "live; not target-version authority",
+      "http_headers": {
+        "Connection": "close",
+        "Content-Length": "37181",
+        "Server": "nginx/1.31.3",
+        "Content-Type": "text/html",
+        "Last-Modified": "Tue, 04 Aug 2026 08:57:25 GMT",
+        "ETag": "\"913d-65834d7fad45c\"",
+        "Cache-Control": "max-age=60",
+        "Expires": "Sat, 10 Oct 2026 03:57:49 GMT",
+        "Content-Security-Policy": "upgrade-insecure-requests; default-src 'none'; base-uri 'none'; img-src 'self'; style-src 'unsafe-inline' 'self'; form-action 'self'; frame-ancestors 'none'; require-trusted-types-for 'script';",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Resource-Policy": "same-origin",
+        "Permissions-Policy": "accelerometer=(), ambient-light-sensor=(), aria-notify=(), autoplay=(), bluetooth=(), camera=(), captured-surface-control=(), ch-ua-high-entropy-values=(), compute-pressure=(), cross-origin-isolated=(), deferred-fetch=(), deferred-fetch-minimal=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), language-detector=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), on-device-speech-recognition=(), otp-credentials=(), payment=(), picture-in-picture=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-create=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), storage-access=(), summarizer=(), translator=(), usb=(), web-share=(), window-management=(), xr-spatial-tracking=()",
+        "Referrer-Policy": "strict-origin",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "Strict-Transport-Security": "max-age=31536000",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Age": "0",
+        "Date": "Sat, 10 Oct 2026 04:26:09 GMT",
+        "X-Served-By": "cache-bma-essb1270031-BMA, cache-ewr-kewr1740064-EWR",
+        "X-Cache": "MISS, HIT",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1791606370.741824,VS0,VE109",
+        "Vary": "Accept-Encoding",
+        "alt-svc": "h3=\":443\";ma=86400,h3-29=\":443\";ma=86400,h3-27=\":443\";ma=86400"
+      }
+    }
+  ],
+  "finding_map": [
+    {
+      "id": "F1",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/final-section.md",
+        "line": 7,
+        "exact_text": "The server's `Retry-After:` response header, honored since curl 7.66.0 and present in 8.10.1, overrides the computed delay for the next retry."
+      },
+      "primary": [
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L634-L655",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/tool_operate.c",
+          "line_start": 634,
+          "line_end": 655,
+          "sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2"
+        },
+        {
+          "source_id": "P8",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md",
+          "line_start": 27,
+          "line_end": 37,
+          "sha256": "9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363"
+        },
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L31",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md",
+          "line_start": 18,
+          "line_end": 31,
+          "sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2"
+        }
+      ],
+      "supported_finding": "In the target CLI implementation, a parsed positive Retry-After is used only for an already eligible transient HTTP retry, and changes the sleep only when its seconds converted to milliseconds exceed the existing computed sleep. It cannot shorten exponential backoff. When elapsed retry time plus Retry-After exceeds retry-max-time, the CLI exits the retry path instead of scheduling the promised next retry. The candidate describes unconditional override and carries it into the proposed timing evidence.",
+      "proposed_vs_executed": "Static source interpretation; no runtime test executed."
+    },
+    {
+      "id": "F2",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/final-section.md",
+        "line": 9,
+        "exact_text": "Combined with `--retry`, failure semantics extend retries to HTTP error statuses; without this option the draft's claim that every unsuccessful status already fails is wrong."
+      },
+      "primary": [
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L491-L501",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/tool_operate.c",
+          "line_start": 491,
+          "line_end": 501,
+          "sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L568-L620",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/tool_operate.c",
+          "line_start": 568,
+          "line_end": 620,
+          "sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2"
+        },
+        {
+          "source_id": "P2",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L31-L39",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md",
+          "line_start": 31,
+          "line_end": 39,
+          "sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916"
+        },
+        {
+          "source_id": "P3",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L18-L26",
+          "raw_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+          "version": "curl-8_10_1 tag",
+          "saved_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail-with-body.md",
+          "line_start": 18,
+          "line_end": 26,
+          "sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488"
+        }
+      ],
+      "supported_finding": "In curl 8.10.1, --fail-with-body converts a fully received HTTP 400+ response into exit error 22. It does not extend the transient HTTP retry set. Both successful-transfer results without a failure option and error-22 results with a failure option enter the same response-status switch, which allows only 408, 429, 500, 502, 503 and 504. Retrying other error statuses requires the separate retry-all-errors fallback, which the candidate explicitly disables.",
+      "proposed_vs_executed": "Static source interpretation; no runtime test executed."
+    }
+  ],
+  "obligation_map": [
+    {
+      "id": "O1",
+      "status": "SATISFIED",
+      "candidate_lines": [
+        1,
+        3
+      ],
+      "assessment": "Complete standalone Catalog GET retry policy, one read-only HTTPS GET, target curl 8.10.1."
+    },
+    {
+      "id": "O2",
+      "status": "SATISFIED",
+      "candidate_lines": [
+        3,
+        5,
+        11
+      ],
+      "assessment": "All three exact tokens preserved; --retry 3 arithmetic supports at most four attempts."
+    },
+    {
+      "id": "O3",
+      "status": "MATERIAL_ERRORS",
+      "candidate_lines": [
+        5,
+        7,
+        9
+      ],
+      "finding_ids": [
+        "F1",
+        "F2"
+      ],
+      "assessment": "Transient HTTP status set, default exponential backoff and no mutation expansion are preserved; exact Retry-After scheduling and retry/failure interaction remain wrong."
+    },
+    {
+      "id": "O4",
+      "status": "SATISFIED",
+      "candidate_lines": [
+        11,
+        20
+      ],
+      "assessment": "Separates per-attempt max-time, retry scheduling and process-level supervisor deadline; no strict timing claim from flags alone."
+    },
+    {
+      "id": "O5",
+      "status": "SATISFIED",
+      "candidate_lines": [
+        3,
+        13,
+        15
+      ],
+      "assessment": "Cancellation, credential-free failed-run diagnostic and three prospective checks retained. Four-attempt exhaustion check is meaningful for a fast scripted stub with no long Retry-After, within the absolute deadline."
+    },
+    {
+      "id": "O6",
+      "status": "SATISFIED",
+      "candidate_lines": [
+        15,
+        28
+      ],
+      "assessment": "Pending implementation and no executed runtime tests are explicit; timing, exit-status, Retry-After and supervisor latency evidence remains prospective."
+    }
+  ],
+  "critique_map": [
+    {
+      "item": 1,
+      "candidate_disposition": "ACCEPT",
+      "judgment": "CORRECT",
+      "candidate_line": 19,
+      "reason": "Retry count is additional retries, so three permits four attempts.",
+      "source_ids": [
+        "P1"
+      ]
+    },
+    {
+      "item": 2,
+      "candidate_disposition": "ACCEPT",
+      "judgment": "CORRECT",
+      "candidate_line": 20,
+      "reason": "Per-transfer counter resets; retry-max-time does not stop a transfer already in progress. A product supervisor deadline addresses the separate process bound.",
+      "source_ids": [
+        "P5",
+        "P6"
+      ]
+    },
+    {
+      "item": 3,
+      "candidate_disposition": "REJECT",
+      "judgment": "CORRECT",
+      "candidate_line": 21,
+      "reason": "Original O5 is the governing primary product obligation. Library-document silence cannot remove cancellation. No invented curl requirement is needed.",
+      "source_ids": [
+        "ASSIGNMENT-O5"
+      ]
+    },
+    {
+      "item": 4,
+      "candidate_disposition": "REJECT",
+      "judgment": "CORRECT",
+      "candidate_line": 22,
+      "reason": "Mutating endpoints violate O3 and retry_scope=read_only_get; all-error retry duplicates are documented.",
+      "source_ids": [
+        "P2",
+        "ASSIGNMENT-O3"
+      ]
+    },
+    {
+      "item": 5,
+      "candidate_disposition": "ACCEPT",
+      "judgment": "CORRECT_DISPOSITION_WITH_UNSUPPORTED_FINAL_EXTENSION",
+      "candidate_line": 23,
+      "reason": "Default received HTTP error pages need explicit failure handling. The chosen fail-with-body is available and preserves the body. Final line 9 adds the separate incorrect retry-extension claim F2.",
+      "source_ids": [
+        "P2",
+        "P3",
+        "P4",
+        "P7"
+      ],
+      "finding_ids": [
+        "F2"
+      ]
+    },
+    {
+      "item": 6,
+      "candidate_disposition": "REJECT",
+      "judgment": "CORRECT_DISPOSITION_WITH_INCORRECT_SCHEDULING_DETAIL",
+      "candidate_line": 24,
+      "reason": "Retry-After support since 7.66.0 is in the 8.10.1 source. Correct preservation of support does not verify unconditional delay override F1.",
+      "source_ids": [
+        "P1",
+        "P7",
+        "P8"
+      ],
+      "finding_ids": [
+        "F1"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "origin": "candidate",
+      "discovery": "Version-exact transient HTTP set excludes modern 522/524 additions.",
+      "primary_ids": [
+        "P1",
+        "P7",
+        "S1-live"
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "Retry-After predates 8.10.1; introduction availability is separate from later option semantics.",
+      "primary_ids": [
+        "P1",
+        "P8",
+        "S2-live"
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "fail-with-body preserves an HTTP error body whereas fail suppresses it; both cannot be enabled together.",
+      "primary_ids": [
+        "P3",
+        "P4"
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "retry-delay is a fixed-delay alternative; leaving it unset preserves exponential backoff.",
+      "primary_ids": [
+        "P1"
+      ]
+    },
+    {
+      "origin": "candidate",
+      "discovery": "A process supervisor is the appropriate separate mechanism for the absolute product deadline.",
+      "primary_ids": [
+        "P5",
+        "P6"
+      ],
+      "kind": "product inference from documented flag limits"
+    },
+    {
+      "origin": "reviewer",
+      "discovery": "Retry-After lengthens but cannot shorten the existing backoff and may terminate retries when its requested delay exceeds retry-max-time.",
+      "primary_ids": [
+        "P7",
+        "P8"
+      ],
+      "finding_ids": [
+        "F1"
+      ]
+    },
+    {
+      "origin": "reviewer",
+      "discovery": "HTTP failure reporting and HTTP retry eligibility are distinct branches; --fail-with-body does not add status cases.",
+      "primary_ids": [
+        "P7"
+      ],
+      "finding_ids": [
+        "F2"
+      ]
+    },
+    {
+      "origin": "reviewer",
+      "discovery": "The implementation also retries host/proxy resolution errors, although the short retry manual lists timeouts and response codes. Connection-refused retry is a separate opt-in. This is an implementation lead, not a demand to expand the product policy or a third failure finding.",
+      "primary_ids": [
+        "P7"
+      ]
+    }
+  ],
+  "primary_index": "primary/index.md",
+  "inspected_hashes": "inspected-hashes.json",
+  "unknowns": [
+    "Candidate native Goal completion, completion ordering and provider-host verification of the saved activation response: UNKNOWN; no terminal native receipt was available in the assigned files.",
+    "Candidate effective inference model/reasoning, billing, token charges and inference savings: UNKNOWN. Dispatch specifies a requested route, not actual provider/billing proof.",
+    "Terminal output-freeze manifest: NOT_LOCATED in the inspected assigned-arm/case scopes. Existing freeze.json freezes inputs only; all eight listed hashes match.",
+    "Exact T3 completed-at timestamp and occupancy: UNKNOWN in the status-only observation. Completed run is directly observed; no pending child work is root-attested in the review request.",
+    "Candidate runtime behavior, attempt timing, header parsing, supervisor cancellation and deadline kill latency: unmeasured; candidate explicitly says no runtime tests ran.",
+    "Full candidate tool history, unauthorized-assistance absence and preactivation read/inference chronology: not independently audited because history and other-arm reads are prohibited."
+  ]
+}

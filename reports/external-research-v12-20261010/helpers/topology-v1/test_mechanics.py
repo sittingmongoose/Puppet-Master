@@ -24,7 +24,7 @@ class Mechanics(unittest.TestCase):
         self.c = {"run_id": "SYNTHETIC-NOT-EXPERIMENT", "runtime_root": str(self.root),
                   "topology": topology, "dispatch_owner": "root", "brief_path": str(self.top / "brief.md"),
                   "plan_path": str(self.top / "plan.md"), "whole_deadline_utc": (dt.datetime.now(dt.timezone.utc) + dt.timedelta(seconds=3500)).isoformat(),
-                  "provider": {"providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}},
+                  "provider": {"providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}},
                   "phase_budgets_s": [1800, 1800], "stage_budgets_s": {"investigator": 1800, "critic": 720, "retained-final": 1080} if topology == "A2" else {"investigator": 1800, "critic-finalizer": 1800}}
         self.cp.write_text(json.dumps(self.c))
         self.run_helper("prepare")

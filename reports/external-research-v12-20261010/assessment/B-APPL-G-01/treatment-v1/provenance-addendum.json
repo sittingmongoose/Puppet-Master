@@ -1,0 +1,115 @@
+{
+  "schema": "er12-provenance-addendum-v1",
+  "observed_at_utc": "2026-10-10T04:18:35.817180+00:00",
+  "scope": "Terminal-freeze and assigned-row native/accounting metadata only; original source judgment and findings unchanged",
+  "original_assessment_preserved": [
+    "assessment.initial-saved.md",
+    "assessment.initial-saved.json",
+    "source-map.initial-saved.json",
+    "terminal-freeze-status.initial-saved.json",
+    "inspected-input-hashes.initial-saved.json",
+    "input-integrity-check.initial-saved.json"
+  ],
+  "source_judgment": "FAIL",
+  "source_judgment_changed": false,
+  "material_findings_unchanged": [
+    "F1",
+    "F2"
+  ],
+  "terminal_freeze": {
+    "searched_roots": [
+      "ER12_RUNTIME/runs/B-APPL-G-01/treatment",
+      "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1"
+    ],
+    "first_search_utc": "2026-10-10T04:12:50Z approximate; before initial hash inventory",
+    "initial_search_found": [],
+    "later_observed_utc": "2026-10-10T04:18:35.817180+00:00",
+    "found": [
+      "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/terminal-science-freeze.json"
+    ],
+    "original_sha256": "050a08cf28b3a8c143f83b5de063688e1e4c74427bacb829698cdb50dbe63ede",
+    "preserved_copy": "evidence/terminal-science-freeze.preserved.json",
+    "preserved_copy_sha256": "050a08cf28b3a8c143f83b5de063688e1e4c74427bacb829698cdb50dbe63ede",
+    "host_frozen_at_utc": "2026-10-10T04:13:02.641665+00:00",
+    "original_freeze_modified": false,
+    "science_files_matches": [
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/source-map.json",
+        "host_sha256": "b11cd8f2f12bd6e44dff988bb7a2ea65411b6603f818e824fba05d910a07b6a7",
+        "independently_current_sha256": "b11cd8f2f12bd6e44dff988bb7a2ea65411b6603f818e824fba05d910a07b6a7",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R1-expire.md",
+        "host_sha256": "60a0e0960d811bb0550de5778d5232dbcdf22743cffc126f5ebe6c0d7adb9968",
+        "independently_current_sha256": "60a0e0960d811bb0550de5778d5232dbcdf22743cffc126f5ebe6c0d7adb9968",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R2-set.md",
+        "host_sha256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+        "independently_current_sha256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R3-hset.md",
+        "host_sha256": "f9c9ff5fe800d6113d3d8740d336078f551ae40312bfbcf1766ce9023a8d2fba",
+        "independently_current_sha256": "f9c9ff5fe800d6113d3d8740d336078f551ae40312bfbcf1766ce9023a8d2fba",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R4-ttl.md",
+        "host_sha256": "1ef2de5de3ff8e9982919b25230702ab8185df4e082bdc42ce37098a5e63f5df",
+        "independently_current_sha256": "1ef2de5de3ff8e9982919b25230702ab8185df4e082bdc42ce37098a5e63f5df",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/sources/R5-keyspace-notifications.md",
+        "host_sha256": "65bd7c1d4a31e00882a3079efc5f16e8e358d02da1081c6b71abf67042c038a7",
+        "independently_current_sha256": "65bd7c1d4a31e00882a3079efc5f16e8e358d02da1081c6b71abf67042c038a7",
+        "match": true,
+        "bytes_match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md",
+        "host_sha256": "0877ec905c20c11957faafbdf561aec949b71c239417d4806df88cdd4ed74b58",
+        "independently_current_sha256": "0877ec905c20c11957faafbdf561aec949b71c239417d4806df88cdd4ed74b58",
+        "match": true,
+        "bytes_match": true
+      }
+    ],
+    "timestamp_semantics": "Host post-terminal byte observation; not native activation, terminal time, provider receipt, or original author save timestamp.",
+    "host_provenance_original": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-G-01-provider-native-evidence.json",
+    "host_provenance_sha256": "93601a34b19f2f3232e9702f0b57bc2e401a28f29acd33e6b76159e9ec446ac9",
+    "host_provenance_preserved_copy": "evidence/assigned-row-provider-native-evidence.preserved.json"
+  },
+  "native_metadata": {
+    "host_evidence_status": "FAILED_ACTIVATION_ATTEMPTS_NO_ACTUAL_GOAL_RECEIPT",
+    "activation": "UNKNOWN",
+    "terminal": "UNKNOWN",
+    "actual_native_receipt": false,
+    "effective_options": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "cumulative_meter_semantics": "UNKNOWN",
+    "exposed_thread_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "t3_recent_run_metadata": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "requestedAt": "2026-10-10T03:54:59.243Z",
+        "startedAt": "2026-10-10T03:55:05.656Z",
+        "completedAt": "2026-10-10T04:09:36.116Z"
+      }
+    ],
+    "semantics": "Assigned-row host evidence was independently read; not an authenticated native provider receipt or direct T3 tool reinspection. T3 completion is corroborated, native success is not."
+  },
+  "not_followed": "No actual_diagnostic_items, run transcripts, other-arm metadata or preserved copies outside this assessment were opened."
+}

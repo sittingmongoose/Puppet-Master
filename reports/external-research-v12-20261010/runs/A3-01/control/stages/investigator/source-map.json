@@ -1,0 +1,130 @@
+{
+  "run_id": "A3-01-control",
+  "stage": "investigator",
+  "brief_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+  "discovery_file": "discovery.md",
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "source_id": "S01",
+      "component": "SQLite FTS5",
+      "url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; SQLite dependency/version in the target app is not selected.",
+      "locator": "§2.1, §3–3.7, §4.3.1, §4.4.2–4.4.4, §5.1–5.2, §6.3, §6.7, §6.12–6.13",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened the official FTS5 manual and reviewed its query grammar, Unicode61 configuration, build options, external-content trigger examples/pitfalls, ranking/snippet functions, integrity-check, rebuild, and secure-delete commands.",
+      "governing_condition_default_exception": "FTS5 is a virtual-table module; same-table query syntax accepts an FTS query string. Default tokenizer is unicode61 (Unicode 6.1), case-independent, with remove_diacritics default 1; value 2 fixes its uncommon multi-diacritic Latin case. External-content indexes must be kept synchronized by the application; trigger creation does not backfill existing content; rank=1 requests external-content comparison for integrity-check; rebuild regenerates from the content table. BM25's better score is numerically lower; absent ORDER BY result order is arbitrary. FTS5 highlight/snippet insert caller-selected markup. secure-delete is off by default and can affect compatibility with older FTS5 formats.",
+      "applicability": "Direct candidate evidence for FTS5 search syntax, tokenizer, same-database derived index, explicit maintenance/rebuild, relevance and excerpt risks. App SQLite version, schema, binary configuration and SQL wrapper remain unselected."
+    },
+    {
+      "source_id": "S02",
+      "component": "SQLite build configuration",
+      "url": "https://www.sqlite.org/compile.html",
+      "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; target SQLite build unknown.",
+      "locator": "§7, SQLITE_ENABLE_FTS5 entry (official page lines 448–450 in retrieved version)",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened compile-time options documentation; inspected the FTS5 option description.",
+      "governing_condition_default_exception": "When SQLITE_ENABLE_FTS5 is defined in the SQLite amalgamation, FTS5 is added to that build. This does not establish that an arbitrary system or bundled SQLite enables it; official FTS5 build instructions also describe source-tree --enable-fts5 and a loadable extension.",
+      "applicability": "A target build check is mandatory before selecting FTS5. Record actual SQLite version/source ID and compile options on Linux and Windows."
+    },
+    {
+      "source_id": "S03",
+      "component": "SQLite transaction model",
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "released_version_or_commit": "Living, unversioned official manual accessed 2026-10-10; target SQLite version unknown.",
+      "locator": "§2, Transactions; §2.1, read versus write transactions; §3, transaction error response",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened official transaction documentation and reviewed implicit/explicit transaction, one-writer, and error rollback descriptions.",
+      "governing_condition_default_exception": "Statements are automatically transactional unless a transaction already exists; explicit BEGIN persists until COMMIT/ROLLBACK; a write transaction permits reads and writes; SQLite allows only one simultaneous writer; certain full/I/O/interrupt/memory errors may cause automatic rollback.",
+      "applicability": "Supports keeping note mutation and same-file FTS trigger changes in one source transaction. The implementation must still handle errors and selected VFS/storage behavior."
+    },
+    {
+      "source_id": "S04",
+      "component": "SQLite crash atomicity",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "released_version_or_commit": "Living, unversioned official technical article accessed 2026-10-10; rollback-mode description; target journal mode unknown.",
+      "locator": "§1, §3.11, §4, §9.1–9.3",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened atomic-commit article; reviewed commit/recovery description and stated filesystem/VFS caveats.",
+      "governing_condition_default_exception": "The article's detailed algorithm applies to rollback mode, not WAL. It describes either-all-or-none transaction behavior under stated storage assumptions and automatic hot-journal recovery; it also warns that broken filesystem locking, partial file deletion, or hostile storage behavior can defeat assumptions.",
+      "applicability": "Do not overclaim FTS5 crash behavior beyond a same-database transaction on the selected local, supported configuration. Validate the chosen mode on target OSes."
+    },
+    {
+      "source_id": "S05",
+      "component": "SQLite release history",
+      "url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "released_version_or_commit": "SQLite 3.43.0, released 2023-08-24 (official release page)",
+      "locator": "Release item 1",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened the official 3.43.0 release log.",
+      "governing_condition_default_exception": "This release added support for contentless-delete FTS5 indexes. The FTS5 manual says these contentless-delete tables are available as of 3.43.0; they allow deletion and replacement with specific restrictions.",
+      "applicability": "Concrete version-history fact. Proposed architecture uses external content, not this table type; do not impose 3.43.0 solely from this unrelated option."
+    },
+    {
+      "source_id": "S06",
+      "component": "Tantivy tokenizer APIs",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+      "locator": "Module tokenizer lines 31–92, 123–152",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened version-pinned API docs for default/custom tokenizer pipelines and available filters.",
+      "governing_condition_default_exception": "Each text field names its tokenizer. The default tokenizer splits on punctuation/whitespace, lowercases, and removes tokens longer than 40 chars. Explicit pipelines are registrable. AsciiFoldingFilter maps Unicode alphabetic/numeric/symbolic characters to Basic Latin where an equivalent exists. Phrase search needs positional indexing; a field schema must select that option.",
+      "applicability": "Candidate comparison only; explicit analyzer must be frozen in the index schema and applied to queries. It is not equivalent by definition to FTS5 unicode61 remove_diacritics=2."
+    },
+    {
+      "source_id": "S07",
+      "component": "Tantivy structured queries",
+      "url": "https://docs.rs/tantivy/latest/tantivy/query/struct.BooleanQuery.html",
+      "released_version_or_commit": "docs.rs latest documentation displayed tantivy 0.26.2 at retrieval; direct version-pinned page open was unavailable to the browser tool",
+      "locator": "BooleanQuery description/examples; companion PhraseQuery page https://docs.rs/tantivy/latest/tantivy/query/struct.PhraseQuery.html",
+      "access_utc": "2026-10-10T03:59:33Z",
+      "observed_operation": "Queried version-pinned API documentation for BooleanQuery and PhraseQuery; direct page-open returned an internal tool error for these two URLs, so recorded claims come from the returned docs.rs search-result content, not a successful direct open.",
+      "governing_condition_default_exception": "BooleanQuery combines Must/Should/MustNot clauses; PhraseQuery requires one field and positions; slop 0 means adjacent terms. Typed query nodes can represent the bounded adapter grammar without exposing Tantivy's raw query parser.",
+      "applicability": "Candidate support for conjunctive terms, field alternatives, exact collection filters and phrases. Query layer needs the same tokenizer as indexed fields."
+    },
+    {
+      "source_id": "S08",
+      "component": "Tantivy writer and commit lifecycle",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+      "locator": "IndexWriter::add_document, ::delete_term, ::commit, ::commit_opstamp",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened version-pinned IndexWriter docs and reviewed operation visibility and commit behavior.",
+      "governing_condition_default_exception": "Adds/deletes are visible to readers only after commit. A successful commit blocks until pending documents are published and persisted; it returns the opstamp of the last committed document. Delete-by-term affects prior committed docs and earlier operations in the same commit.",
+      "applicability": "Tantivy commit lifecycle is separate from SQLite source transaction; application outbox/replay coordination is required to bridge the boundary."
+    },
+    {
+      "source_id": "S09",
+      "component": "Tantivy excerpt generation",
+      "url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.SnippetGenerator.html",
+      "released_version_or_commit": "tantivy crate 0.26.2 (version-pinned docs.rs page)",
+      "locator": "SnippetGenerator::create, ::set_max_num_chars, ::snippet_from_doc; example",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened version-pinned SnippetGenerator API docs and reviewed default bound and HTML example.",
+      "governing_condition_default_exception": "Default maximum snippet size is 150 characters and can be configured. Example converts the Snippet to HTML with highlight markup; documentation does not make that generated HTML the authoritative note content.",
+      "applicability": "Do not blindly insert the result into UI HTML; render escaped source text/structured spans, using SQLite as source of truth."
+    },
+    {
+      "source_id": "S10",
+      "component": "Tantivy release history",
+      "url": "https://docs.rs/crate/tantivy/0.26.2/source/CHANGELOG.md",
+      "released_version_or_commit": "Version-pinned Tantivy crate changelog 0.26.2; history item Tantivy 0.20.1",
+      "locator": "Tantivy 0.20.1 entry: fix building on Windows with mmap (#2070); current 0.26.2 section identifies its own bug fixes",
+      "access_utc": "2026-10-10T03:59:15Z",
+      "observed_operation": "Opened the version-pinned crate changelog and inspected release history including 0.20.1 and 0.26.2.",
+      "governing_condition_default_exception": "A historical Windows mmap build issue was fixed in 0.20.1; this is neither a current failure claim nor proof of support for the target's unknown compiler, features, and operating systems.",
+      "applicability": "Use as a reason to verify the eventual pinned Tantivy build/open/reopen behavior on Windows and Linux; do not infer a current defect."
+    },
+    {
+      "source_id": "S11",
+      "component": "Tantivy score collector ordering",
+      "url": "https://docs.rs/tantivy/latest/tantivy/collector/struct.TopDocs.html",
+      "released_version_or_commit": "docs.rs latest documentation displayed tantivy 0.26.2 at retrieval",
+      "locator": "TopDocs description and order_by_score example; default score direction and score-tie DocAddress tie-break",
+      "access_utc": "2026-10-10T04:05:28Z",
+      "observed_operation": "Queried docs.rs for version-rendered TopDocs scoring/order semantics; result identified 0.26.2 and stated score sorting plus DocAddress tie-breaking.",
+      "governing_condition_default_exception": "TopDocs keeps top K documents sorted by score; order_by_score is decreasing BM25 similarity. Its documented stable tie-break is ascending DocAddress, not the application's public note ID.",
+      "applicability": "The adapter must apply note-ID tie-breaking itself before pagination, or implement a collector using that key. DocAddress order is an index-location tie policy, not a durable public-identity contract."
+    }
+  ]
+}

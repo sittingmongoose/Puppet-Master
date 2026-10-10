@@ -1,0 +1,1413 @@
+{
+  "excluded_private_full_sources_and_tool_records": [
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "reason": "Prior oversized generated full-text excerpt replaced by compact projection; old public bytes preserved privately"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "original_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "bytes": 233638,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/helpers/er12-v1/__pycache__/prepare.cpython-314.pyc",
+      "original_sha256": "901a11db0aefabbce9e1b9f6da0c1f2d677a6b387613d1d5f962d2f75c6216de",
+      "bytes": 33689,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/helpers/er12-v1/__pycache__/reveal.cpython-314.pyc",
+      "original_sha256": "9175d8586fc531e57a664a680586c9ac52736d41bbc5627e34b2f3be5c80383f",
+      "bytes": 4934,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/helpers/er12-screen-v1/__pycache__/prepare.cpython-314.pyc",
+      "original_sha256": "056bf0bfeb3de1e077398db5e45398501f9c745b9a92ef607d87b5d48b094730",
+      "bytes": 33696,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-01.html",
+      "original_sha256": "7f357e85a92522406db6217e92d21d43ae5a1bd492f2c58c5a5e788746740b4e",
+      "bytes": 31817,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-01.txt",
+      "original_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+      "bytes": 13749,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-02.html",
+      "original_sha256": "387c24248a3e09a9e067c15cd7d4f5786ff739db309b5306a987d884caee34f9",
+      "bytes": 13796,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-02.txt",
+      "original_sha256": "74fe8418cc073dea89edda46ce6ef373293c32326f87f1e984f352ca681fff51",
+      "bytes": 2055,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-03.html",
+      "original_sha256": "69c3cbba7a976efc7d37f933d113a2f48eff409ff27800614db1c4b08aee95b4",
+      "bytes": 53219,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-03.txt",
+      "original_sha256": "0aa90a752cbeeff252a7abc72939e5075e2451d095b6469776260b93ff4bb3bd",
+      "bytes": 24112,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-04.html",
+      "original_sha256": "6dc12f8432219a7b2ba51ce177a14d5fc5a16f1e79cd9da7a6a51d6891ae5c07",
+      "bytes": 16055,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-04.txt",
+      "original_sha256": "5183578aadbb61cd248f53bd565b1c0c20da769f7793802d8836e112f0e96794",
+      "bytes": 3339,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-05.html",
+      "original_sha256": "8333d943dbbd7455a65791449d7e83816e62a3c4a9d006292ca59aa7602f394e",
+      "bytes": 36281,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-05.txt",
+      "original_sha256": "602b8ec47ba645632d1769314f40a503913d12ed3f89fc87c7ce727fe5721dc9",
+      "bytes": 11999,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-06.html",
+      "original_sha256": "fd56ee422d9ceb4a947d9606130d2ffd286c889e9f5e88d0b8ca90a28ff7639f",
+      "bytes": 24584,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-06.txt",
+      "original_sha256": "4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1",
+      "bytes": 6626,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-01.html",
+      "original_sha256": "967c700f84fb1a9bc76bb9cb7bfd82ac8ff75bd8e4f3f86cc0d121796f3ce64d",
+      "bytes": 392657,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-01.txt",
+      "original_sha256": "1f5437e7e121a75661d1585a173a0c2553c8bd3259059529f19e58cb10b19bd7",
+      "bytes": 8495,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-02.html",
+      "original_sha256": "aba1cb559251feabfd3f652d0c9ce91dff0e0d83f8a8f29cbcf2636e2f1c17d4",
+      "bytes": 425431,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-02.txt",
+      "original_sha256": "534f796a986f21e7e91ec53ae1f9c541270965da90534d336dc8047f6d61e28c",
+      "bytes": 13085,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-03.html",
+      "original_sha256": "1243c41cdbeb7823e42bb9c58533fb886c101b1f1bcab24565485776b8da937b",
+      "bytes": 208063,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-03.txt",
+      "original_sha256": "3a2e5c45ef11bd92a84d500711e024682fcc7389e2ad8035af1cac67120293bf",
+      "bytes": 4636,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-04.html",
+      "original_sha256": "8cb9a745849d0368acb30448a7378e3e7f8b770a452d5ba1b48e45abd7a23092",
+      "bytes": 406487,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-04.txt",
+      "original_sha256": "0521c5539c5d08453d0d7424c16cb2351a8aecda7e3bdaf413606014ce0fd2fa",
+      "bytes": 12110,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-FIX.txt",
+      "original_sha256": "31468573681b4ae94d1c7c15497d0e9977da7f2a1d63c9c864851e5c93cccbd3",
+      "bytes": 3956,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-RELEASE-API.txt",
+      "original_sha256": "96f60320ada1b7bc61eec5be3d977464027e0ca196a1175c7166d03e9f187a5f",
+      "bytes": 120796,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-01.html",
+      "original_sha256": "b9b8e57f4231e5dc0b9849158de746c81cc870c354972a8eeb1dec5506c0cada",
+      "bytes": 285179,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-01.txt",
+      "original_sha256": "3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa",
+      "bytes": 27794,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-02.html",
+      "original_sha256": "12cf5e49fc3806f02dea38f63072a792457b15383f1b2f82e828a53131b2aac1",
+      "bytes": 154923,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-02.txt",
+      "original_sha256": "c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099",
+      "bytes": 20514,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-03.html",
+      "original_sha256": "e079d6217d57c44f76253de523af751f398880a7f3e81ab2e5dd47060bff4b4e",
+      "bytes": 133715,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-03.txt",
+      "original_sha256": "d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a",
+      "bytes": 12160,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-RCLONE-01.html",
+      "original_sha256": "b7977659d8af107abcb17ccf016f8635c0441e5f7666f48b1409342dba8eddc8",
+      "bytes": 701152,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-RCLONE-01.txt",
+      "original_sha256": "23dd6bb93c2a1ef28e7f759e6cfe21737c31a038783de254c0bdb270eee7c076",
+      "bytes": 276503,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUS-01.html",
+      "original_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUS-01.txt",
+      "original_sha256": "10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386",
+      "bytes": 23740,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-01.html",
+      "original_sha256": "32f6d12f1cd1aec4a3cd38c968b0c494c3ebc9135d5bc3473aba32c2c97cf48c",
+      "bytes": 209890,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-01.txt",
+      "original_sha256": "8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826",
+      "bytes": 3904,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-02-RAW.txt",
+      "original_sha256": "4c7f40f4e8f1501842d3f7cbb6398017da363710c1ea9a87fabcc841db56a806",
+      "bytes": 6891,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03-RAW.txt",
+      "original_sha256": "5ea530d16e1bc5030e8a4ea0caa3a70691ff6d2be14ed6dad54526b4839e11a0",
+      "bytes": 42731,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03.html",
+      "original_sha256": "72584544ef276af33c1d6f86311d7b27a0dc19be8eec5ee501ef3613f20b250c",
+      "bytes": 834708,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03.txt",
+      "original_sha256": "d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721",
+      "bytes": 39602,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-RELEASE-API.txt",
+      "original_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+      "bytes": 31448,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-UPPY-01.html",
+      "original_sha256": "1d055ddbb232b231c0424233f6fa63be8d5ab7dd6f24a6dff9fdd12a8e77baf1",
+      "bytes": 125157,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-UPPY-01.txt",
+      "original_sha256": "b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5",
+      "bytes": 17597,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/web-aws-initial.json",
+      "original_sha256": "d8cf43abb66d30a674a3866d578291dac4ed16e04b24913acce822f2a74405a9",
+      "bytes": 36535,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/web-checksums-r2-tusd.json",
+      "original_sha256": "8e2b936102ec7d8f35470c1037de02dae1c38908cc9cde465667a243d8519213",
+      "bytes": 34536,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/web-routes-conditions.json",
+      "original_sha256": "9e078f479822b8fbf4f05f4cf6fa1706590ffef86e9fe235cec6b6f7058e68f1",
+      "bytes": 31903,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/web-tus-rclone-minio.json",
+      "original_sha256": "47575b08c47d0fa25a619fb9407c50a3c557f2f95a1029f517f31469feb2728e",
+      "bytes": 15147,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.html",
+      "original_sha256": "92cf8b506f8c6c40062f488e05924eabd11a91b1ce984022488316b315b34f8b",
+      "bytes": 1468674,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P1-expire.readable.txt",
+      "original_sha256": "5702b0c3ae19d2e76d0639f85570e51886cb024e820aaa067403b0ee5be9dfa9",
+      "bytes": 108207,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P10-v720-db-c.txt",
+      "original_sha256": "f20c593e10b02fbc79b1af2ec199ae2d7cb48515ec4c623f682b33b4657720f6",
+      "bytes": 94016,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.html",
+      "original_sha256": "7b75af37422a19ec020d047b51e7425a781ecdfb526776e9c3ffd6ad4c0971b7",
+      "bytes": 631663,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P2-set.readable.txt",
+      "original_sha256": "1c8ca703670680612e6b17d75a67dc4961437f180d6c036e27e9511203d87053",
+      "bytes": 27972,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.html",
+      "original_sha256": "2d522748307439110904f335f3c30560c25587b20403ca938df77e3978c0da0a",
+      "bytes": 1377176,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P3-hset.readable.txt",
+      "original_sha256": "b8b19f8fec4cf6139f4945f69095af548b5b705e6625303326eca8601a58078c",
+      "bytes": 91476,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.html",
+      "original_sha256": "a2d3748fb5de8db65976f305e3b0d670337f9b89448e596af2f35899de0da2d4",
+      "bytes": 1346868,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P4-ttl.readable.txt",
+      "original_sha256": "242e0af15c5f281ffc978e33aa1506c16274c238680ab4a6e2094ab1a8a5abe5",
+      "bytes": 88835,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.html",
+      "original_sha256": "eac5aa9353b6386e05acdc84695180f40863dbd7c91798b78d89c5718fe715a6",
+      "bytes": 130039,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P5-notifications.readable.txt",
+      "original_sha256": "47a7be7a7d82534be35d32be146ad44101860d8868a572ecb17823e74ce30eed",
+      "bytes": 11899,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P6-v720-expire-c.txt",
+      "original_sha256": "b3c7bb30c6bbc2cd99307fb81a917a9c3499d8749b27fdf7060e0da186d53d65",
+      "bytes": 30411,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P7-v720-t-string-c.txt",
+      "original_sha256": "9fae89d4f0c7355612fe2e5daa8fa859d4df2d8f419fffa78719b07daac60b9f",
+      "bytes": 34470,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P8-v720-t-hash-c.txt",
+      "original_sha256": "e506d6f1ce57ea8fa7aa13406865fe1b5c0816357b22ffe97e8b969abe4d24f6",
+      "bytes": 39709,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/evidence/P9-v720-redis-conf.txt",
+      "original_sha256": "319286fcdc3d98e9c248d9730f28c3e5bae106a58173f64302039e15507dca14",
+      "bytes": 107512,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+      "original_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "bytes": 42143,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+      "original_sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211",
+      "bytes": 31423,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+      "original_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f",
+      "bytes": 9619,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+      "original_sha256": "1632c1114efe669256c68de4c179655ae6a37645374b754e0cded7cd1a39cad5",
+      "bytes": 5337,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+      "original_sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7",
+      "bytes": 15559,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+      "original_sha256": "72ea3a5b51562f4e98d325ec5e44274dc84d62a8c8e55597b78f5abbef26ba43",
+      "bytes": 9089,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+      "original_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1",
+      "bytes": 15812,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+      "original_sha256": "5a1ef4929dd8910033872dde728d8d97a604464d0245f43bdf48b2609d54f208",
+      "bytes": 9129,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.html",
+      "original_sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc",
+      "bytes": 4755,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.txt",
+      "original_sha256": "43680a9417bef199497c48c29202d1dacdf12207024d0fdff2fe1166d71f3dab",
+      "bytes": 928,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.html",
+      "original_sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8",
+      "bytes": 9857,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.txt",
+      "original_sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7",
+      "bytes": 4353,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P1-pathlib-3.13-text.txt",
+      "original_sha256": "27e2ad5d834cc32b250cb693d2b52c3ab2fb5a495473dd81760e0b66ce8dce79",
+      "bytes": 56015,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P1-pathlib-3.13.html",
+      "original_sha256": "90048ef5d8c01a3519e4d3c0f0fcfce68de2740b8da2563f2a3212d042286f8f",
+      "bytes": 244770,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P2-glob-3.13-text.txt",
+      "original_sha256": "84f344ab1f0cd75fac5b1a9e3a0d5e787a1438870dd257af63ae62ce1e59b4e5",
+      "bytes": 9814,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P2-glob-3.13.html",
+      "original_sha256": "12ed291efccfecb08f58ec1644131c8ec720660d744c87f43aaef1bf22abe0e6",
+      "bytes": 39769,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P3-os-path-3.13-text.txt",
+      "original_sha256": "daf9e2d2fa30afcf1f0f45606a48e88d2d6c49e248f0423352fd9c6c4c649a03",
+      "bytes": 23281,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P3-os-path-3.13.html",
+      "original_sha256": "7c55db68f3bebc494160fac2a88da7d9b43f50be714e91266f4856172ce9c05b",
+      "bytes": 86750,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P4-pathlib-v3.13.0.txt",
+      "original_sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "bytes": 296,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P5-glob-v3.13.0.txt",
+      "original_sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8",
+      "bytes": 19720,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P6-pathlib-local-v3.13.0.txt",
+      "original_sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf",
+      "bytes": 31468,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P7-pathlib-abc-v3.13.0.txt",
+      "original_sha256": "75e6bc728013d11446126d535f92b8907fb6dae7404df3d0268ac7b6865a2090",
+      "bytes": 33565,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1-lines.html",
+      "original_sha256": "4f51a935b5adc756ed09913dcc55dfe0328ae1ff0e8f5e26924c87a9064ff502",
+      "bytes": 150096,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1-text.txt",
+      "original_sha256": "52cfb1be83fd6deb615f7cef6cac0cbacd308ce0c6d6ba6b9df936ab9ffc9db0",
+      "bytes": 53011,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1.html",
+      "original_sha256": "90048ef5d8c01a3519e4d3c0f0fcfce68de2740b8da2563f2a3212d042286f8f",
+      "bytes": 244770,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2-lines.html",
+      "original_sha256": "96e578a17cf6de602188bb407562e83412b8227c01d90e98f09cbe797ce7441a",
+      "bytes": 21700,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2-text.txt",
+      "original_sha256": "f87fa6080826b3461be370b1f0163c2fccdb04f10b2972db6281b0b666131090",
+      "bytes": 7652,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2.html",
+      "original_sha256": "12ed291efccfecb08f58ec1644131c8ec720660d744c87f43aaef1bf22abe0e6",
+      "bytes": 39769,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P3b-lines.html",
+      "original_sha256": "b7fadaffa6fcd86ceb0ab68287d887f5fa7a58e1258d5d0df150d970edbf7198",
+      "bytes": 1708,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P3b.txt",
+      "original_sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "bytes": 296,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P4-lines.html",
+      "original_sha256": "972fc35a16664ab8a5dd5a57fece1091fe11adce381592c88c557c722e060c21",
+      "bytes": 60762,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P4.txt",
+      "original_sha256": "e6693972d5999ae0be42f49f6192e1c3d24f3f1e6eeca1f95dfa0b5dae74fe07",
+      "bytes": 20928,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P5-lines.html",
+      "original_sha256": "bc9a0ae41e92417a736054073c6ff6fcc3e1a0b893fac4e27c5d3bb615378d5d",
+      "bytes": 57758,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P5.txt",
+      "original_sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8",
+      "bytes": 19720,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P6-lines.html",
+      "original_sha256": "59691b8c80df03841ee7fd862c4e1a0a89119b38132b3bac256e0b9c4381a28e",
+      "bytes": 1709,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P6.txt",
+      "original_sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "bytes": 296,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P7-lines.html",
+      "original_sha256": "c2be99b8a0592dbd7b9e0ed70b87f4823a3c97415830192417f861d62d6019c7",
+      "bytes": 92310,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P7.txt",
+      "original_sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf",
+      "bytes": 31468,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-http.c",
+      "original_sha256": "40d0c67f9c8ba34431e19a3722f6af96a1d0f53c6debbea77bcbae7a44909ba1",
+      "bytes": 157704,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/curl-resume-large.html",
+      "original_sha256": "65bc526b6f32756f3d944b4d8ccd1a7db6483fb18b92b94e6a2fe5d14e2b7694",
+      "bytes": 8519,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-metadata.go",
+      "original_sha256": "d1933093aa75e31b83b0e35b939e169378df69710ca202d8c2218d3934300c0e",
+      "bytes": 32001,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/go-tuf-updater.go",
+      "original_sha256": "46716cfff8ed19fa4f6ac19e914166f344b1c7cef7bedb35deb910b4a81d4276",
+      "bytes": 27081,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc5854.txt",
+      "original_sha256": "b8de15dc3304762cf732b15d77450ba092652f83518945695542b3e3b0860469",
+      "bytes": 72641,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/rfc9110.txt",
+      "original_sha256": "21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a",
+      "bytes": 502941,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/sources/tuf-v1.0.36.html",
+      "original_sha256": "df63310e70e76aff548b062eb0b6b5b18e2f59844312bffe70d3c97253a8eb6a",
+      "bytes": 248581,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.html",
+      "original_sha256": "d431760660ea44e130f6e919dab216df2d0b3a490567a98089267523368fe1e5",
+      "bytes": 1187554,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "original_sha256": "8a25f00a28bb5857d445a0cd4c412710e27ddf6ef0a4918a00320a6bde2e4616",
+      "bytes": 449689,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.html",
+      "original_sha256": "abb5c7efc7be66748e70aa7aad7762ca7b53a42d12920bc8d37dbd0b1b1c6d6e",
+      "bytes": 168984,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "original_sha256": "a53590af063f496cd387b854703f534cade379dcf8c8005e20efc309a82dc8b4",
+      "bytes": 58720,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.html",
+      "original_sha256": "2cfb8c616b4c14af04f1ff8d3823aac8d0459c48921b76fc925a58e022b6415b",
+      "bytes": 93484,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03.txt",
+      "original_sha256": "e5c439f17d61b4bb5999ae88bf177a46ed10de4d7ed4c3bf9980c95277bde82e",
+      "bytes": 64952,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.html",
+      "original_sha256": "33b7985caf44116e4cc5180dc6ada3c21af85668c2e579d9d6f3f086e739f250",
+      "bytes": 8410,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt",
+      "original_sha256": "9f67478ca2288b72a3328adda61ab22e66cec4b28d6e8b2937e638ee55b1b414",
+      "bytes": 2541,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.html",
+      "original_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "bytes": 210884,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt",
+      "original_sha256": "b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505",
+      "bytes": 23741,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.html",
+      "original_sha256": "4f0c8f1b9ba11d872f066fc89506f468056c3bae0958f907ade4e8f99e6ba070",
+      "bytes": 483289,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06.txt",
+      "original_sha256": "091a71c4f89f0496aab292f0dd90cd793b3d5e159d33a128bc85d8abcb544e9d",
+      "bytes": 134308,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.html",
+      "original_sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07.txt",
+      "original_sha256": "f5b96b60ac343f00852f1fa5ad39c375ac1806ff62e801dac0f32e0ab184d197",
+      "bytes": 263857,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.html",
+      "original_sha256": "06671610134b0a52cdf4dcdaf382f72fef85ef51088b8a52b8679c7f03829318",
+      "bytes": 26407,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08.txt",
+      "original_sha256": "49a7201a5d980e4489005c60247d3053fe8051b0c568ec6dc37f5ef80bd3f5bd",
+      "bytes": 14277,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.html",
+      "original_sha256": "036a32ef20444ee068aad423e66b01c1163cc6c783a87594066e98b4380df2a4",
+      "bytes": 59403,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09.txt",
+      "original_sha256": "37a4a3c88174f84bf7095697e054bde50ff755d3e94ec1aabddb9d7de85bfdf6",
+      "bytes": 43191,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.html",
+      "original_sha256": "820d9510516c174d88b556b74c33bbb45686c87a1b8416afd77dd7b865c549db",
+      "bytes": 513448,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10.txt",
+      "original_sha256": "db828f1633b1aa1647b8dd2d357c0173720e94b6c76eee6aa64ab5244203cf21",
+      "bytes": 390764,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.html",
+      "original_sha256": "65bc526b6f32756f3d944b4d8ccd1a7db6483fb18b92b94e6a2fe5d14e2b7694",
+      "bytes": 8519,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11.txt",
+      "original_sha256": "e3293cfb9d3b62e886e1b59176cf5493f0e57631229bcffc963acc634ef1a94f",
+      "bytes": 2617,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.html",
+      "original_sha256": "f0a986d21500222ecb69580fc7a910f346c6b1ff1005ca515501fb05bb5d91f5",
+      "bytes": 15152,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12.txt",
+      "original_sha256": "e545705607e2758c83034865d51da1c7a02f342650b9f3443991101151dad35c",
+      "bytes": 6034,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.html",
+      "original_sha256": "6e7b85972b581b80857a3f94067a1865869ad142d5324521b7a03e225b449dcb",
+      "bytes": 57558,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "original_sha256": "ee302b08868c047c70d4136bf86743a3646d930a14fc5ca7c68d51b887b9a1e9",
+      "bytes": 13508,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-faq.html",
+      "original_sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "bytes": 13720,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-manual.html",
+      "original_sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "bytes": 304411,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-exclude.c",
+      "original_sha256": "619fac1e03234d8d8c173e29abe80c3670fd755488e8cce3eb71862d74b1cb92",
+      "bytes": 49158,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-exclude.c.html",
+      "original_sha256": "ca4e77075d3342911d03c36eda77768ebdccc12a1493703446fdf5ea76429c23",
+      "bytes": 151309,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-manual.md",
+      "original_sha256": "efe2b3f3164feae41308d8ac2bd12c802e4eb0ef54682124d310962181b8a9ee",
+      "bytes": 238280,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-manual.md.html",
+      "original_sha256": "802266e5ca4f855557e91dfb1a637186f2964773ae28b855f8025abc15e8a677",
+      "bytes": 527741,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-news.md",
+      "original_sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529",
+      "bytes": 208035,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-news.md.html",
+      "original_sha256": "c4d0259fa1940c8644665186a6c52345386b48a3ae3c5960f5e08897df29d133",
+      "bytes": 488976,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/NEWS.md.txt",
+      "original_sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529",
+      "bytes": 208035,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/cleanup.c.txt",
+      "original_sha256": "07b982f666c9c78dfe1eacc88a666adf65410ec5402378f3a6860f11c0b43c2d",
+      "bytes": 7798,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/generator.c.txt",
+      "original_sha256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79",
+      "bytes": 68293,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/live-rsync-man.html",
+      "original_sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "bytes": 304411,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/live-rsync-man.txt",
+      "original_sha256": "7a18c2df70c8fac8063312e14606d2019b797dd9af2ace4e8ce5e43574e7f69d",
+      "bytes": 233055,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/options.c.txt",
+      "original_sha256": "465892bdaefdeaafe1cfd2889aa1943fb5d34c9019ba3f5411af4004ffeb9029",
+      "bytes": 96256,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/receiver.c.txt",
+      "original_sha256": "1f0747cbcc0e9475e89d324bd15873a1431172cd39801dc041291c620e70c373",
+      "bytes": 28254,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/rsync-3.2.7.tar.gz",
+      "original_sha256": "4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb",
+      "reason": "binary original private only"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/rsync-FAQ.html",
+      "original_sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "bytes": 13720,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/rsync-FAQ.txt",
+      "original_sha256": "da6068a0c4f8783dc8b236a7df14ee6f83555aae5df3c7bb9fe2139b6cc6e332",
+      "bytes": 10315,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/independent/rsync.1.txt",
+      "original_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "bytes": 233638,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/evidence/inspected-science/014-rsync-3.2.7-man.txt",
+      "original_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "bytes": 233638,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "bytes": 771,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md",
+      "original_sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "bytes": 1082,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "bytes": 884,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "bytes": 1763,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-max-time.md",
+      "original_sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "bytes": 715,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+      "original_sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "bytes": 1088,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+      "original_sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2",
+      "bytes": 107334,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+      "original_sha256": "a4d0d66f6aab752518bd805e3bb8a74e4794e10c39813af81a62ec49fff2c6ef",
+      "bytes": 11151,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md",
+      "original_sha256": "9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363",
+      "bytes": 1529,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail-with-body.md",
+      "original_sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "bytes": 771,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail.md",
+      "original_sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "bytes": 1082,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/manpage.html",
+      "original_sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "bytes": 465220,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "bytes": 884,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/optionsall.html",
+      "original_sha256": "93039371c310ab7f52be750004b3a2a5aeaa0a04973d93c15204d2cbc02968d1",
+      "bytes": 37181,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-all-errors.md",
+      "original_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "bytes": 1763,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-max-time.md",
+      "original_sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "bytes": 715,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry.md",
+      "original_sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "bytes": 1088,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    },
+    {
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/tool_operate.c",
+      "original_sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2",
+      "bytes": 107334,
+      "reason": "full fetched source/corpus/tool transcript private only; authored source map retained"
+    }
+  ],
+  "missing_captured_sources_or_governing_excerpts": [
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-APPL-M-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-APPL-M-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-APPL-M-02",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-APPL-M-02",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-FINAL-G-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-FINAL-G-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-FINAL-M-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "locator": "ER12_RUNTIME/frozen-inputs/B-FINAL-M-01",
+      "reason": "selected input directory absent"
+    },
+    {
+      "source_map": "assessment/A4-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-02-RAW.txt",
+      "original_sha256": "4c7f40f4e8f1501842d3f7cbb6398017da363710c1ea9a87fabcc841db56a806",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/A4-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03-RAW.txt",
+      "original_sha256": "5ea530d16e1bc5030e8a4ea0caa3a70691ff6d2be14ed6dad54526b4839e11a0",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/A4-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-RELEASE-API.txt",
+      "original_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/A4-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-FIX.txt",
+      "original_sha256": "31468573681b4ae94d1c7c15497d0e9977da7f2a1d63c9c864851e5c93cccbd3",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/A4-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-RELEASE-API.txt",
+      "original_sha256": "96f60320ada1b7bc61eec5be3d977464027e0ca196a1175c7166d03e9f187a5f",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.txt",
+      "original_sha256": "b26f7a935eaf42713229e38a40754b5c3bf67d36253e1a5b0e776596e5cd5211",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.txt",
+      "original_sha256": "1632c1114efe669256c68de4c179655ae6a37645374b754e0cded7cd1a39cad5",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.txt",
+      "original_sha256": "72ea3a5b51562f4e98d325ec5e44274dc84d62a8c8e55597b78f5abbef26ba43",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.txt",
+      "original_sha256": "5a1ef4929dd8910033872dde728d8d97a604464d0245f43bdf48b2609d54f208",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.txt",
+      "original_sha256": "43680a9417bef199497c48c29202d1dacdf12207024d0fdff2fe1166d71f3dab",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.txt",
+      "original_sha256": "100d66daeba4c6bf11ca912cec79f15765f09ce68bf41a965900fdf1028a20b7",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1-text.txt",
+      "original_sha256": "52cfb1be83fd6deb615f7cef6cac0cbacd308ce0c6d6ba6b9df936ab9ffc9db0",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2-text.txt",
+      "original_sha256": "f87fa6080826b3461be370b1f0163c2fccdb04f10b2972db6281b0b666131090",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P4.txt",
+      "original_sha256": "e6693972d5999ae0be42f49f6192e1c3d24f3f1e6eeca1f95dfa0b5dae74fe07",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P3b.txt",
+      "original_sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P5.txt",
+      "original_sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P6.txt",
+      "original_sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P7.txt",
+      "original_sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01.txt",
+      "reason": "governing locator exceeds compact250-line bound; full source private; exact authored locator retained"
+    },
+    {
+      "source_map": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E02.txt",
+      "original_sha256": "a53590af063f496cd387b854703f534cade379dcf8c8005e20efc309a82dc8b4",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-DISC-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13.txt",
+      "original_sha256": "ee302b08868c047c70d4136bf86743a3646d930a14fc5ca7c68d51b887b9a1e9",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-G-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-manual.md",
+      "reason": "governing locator exceeds compact250-line bound; full source private; exact authored locator retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-G-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-manual.html",
+      "original_sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-G-01/control-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-faq.html",
+      "original_sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-G-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+      "original_sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/fail.md",
+      "original_sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/max-time.md",
+      "original_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/retry-max-time.md",
+      "original_sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/manpage.html",
+      "original_sha256": "0ef77bad12997946fd2663bb2222b4201ab5cf3b2d724595cb099ca2ef58283d",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "assessment/B-FINAL-M-01/treatment-v1/source-map.json",
+      "original_locator": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/optionsall.html",
+      "original_sha256": "93039371c310ab7f52be750004b3a2a5aeaa0a04973d93c15204d2cbc02968d1",
+      "reason": "full source retained private; no exact governing line/anchor locator recoverable mechanically; authored source notes/maps retained"
+    },
+    {
+      "source_map": "runs/B-FINAL-M-01/control/stages/role/source-map.json",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json and S1.md, S2.md",
+      "reason": "captured referenced text unavailable"
+    }
+  ],
+  "source_pending_finals": [
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "snapshot_task": {
+        "key": "er12-eval-A1-01-control-full-v1",
+        "slot": "A1-01",
+        "arm": "control",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-01-control-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "snapshot_task": {
+        "key": "er12-eval-A1-01-treatment-full-v1",
+        "slot": "A1-01",
+        "arm": "treatment",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-01-treatment-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "snapshot_task": {
+        "key": "er12-eval-A1-02-control-full-v1",
+        "slot": "A1-02",
+        "arm": "control",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-02-control-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "snapshot_task": {
+        "key": "er12-eval-A3-01-control-full-v1",
+        "slot": "A3-01",
+        "arm": "control",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A3-01-control-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "snapshot_task": {
+        "key": "er12-eval-A3-01-treatment-full-v1",
+        "slot": "A3-01",
+        "arm": "treatment",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-treatment-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-treatment-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A3-01-treatment-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "snapshot_task": {
+        "key": "er12-eval-A6-01-control-full-v1",
+        "slot": "A6-01",
+        "arm": "control",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-control-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-control-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A6-01-control-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "snapshot_task": {
+        "key": "er12-eval-A6-01-treatment-full-v1",
+        "slot": "A6-01",
+        "arm": "treatment",
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-treatment-full-v1",
+        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-treatment-full-v1",
+        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A6-01-treatment-full-v1:ordinal:1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol",
+        "latestTerminalStatus": null,
+        "latestTerminalRunId": null
+      },
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "included_files": []
+    }
+  ],
+  "no_fabricated_retrievals": true,
+  "authored_capsule_restorations": "provenance/RESTORED_AUTHORED_INPUTS.json"
+}

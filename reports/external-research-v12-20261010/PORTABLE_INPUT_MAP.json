@@ -1,30 +1,31 @@
 {
-  "ER12_RUNTIME": "Caller-owned runtime directory. ER12_RUNTIME/repository identifies portable repository context; no original machine path is published.",
-  "AUTHORIZED_CODEX_PROVIDER_ID": "Private authorized Codex route supplied locally by root; this public placeholder is not callable. No account lookup or switch performed.",
-  "notation": "Literal ER12_RUNTIME/... in sanitized JSON/code/prose is a portable locator, not automatic environment interpolation. Materialize locally in caller-owned copies and record all new bytes/hashes.",
-  "inputs": [
-    {
-      "slot": "B-DISC-M-01",
-      "common_assignment": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
-      "fixture": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
-      "stage": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role",
-      "request": "runs/B-DISC-M-01/treatment/stages/role/request.json"
-    },
-    {
-      "slot": "B-APPL-G-01",
-      "common_assignment": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
-      "fixture": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
-      "stage": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
-      "request": "runs/B-APPL-G-01/control/stages/role/request.json"
-    }
+  "ER12_RUNTIME": "Caller-selected local runtime directory outside canon. Literal portable locator, not automatic interpolation.",
+  "AUTHORIZED_PROVIDER_INSTANCE": "Private root-authorized provider instance supplied locally. Not callable as published.",
+  "materialization": "Restore selected authored input paths using SELECTED_INPUT_DEPENDENCIES. ER12_RUNTIME/provider substitutions require new materialized hashes; original embedded hashes retain original-byte meaning. Raw fetched evidence mirrors are excluded and full historical stage replay remains unavailable.",
+  "selected_paths": [
+    "runs/A1-01/control",
+    "runs/A1-01/treatment",
+    "runs/A1-02/control",
+    "runs/A3-01/control",
+    "runs/A3-01/treatment",
+    "runs/A4-01/control",
+    "runs/A6-01/control",
+    "runs/A6-01/treatment",
+    "runs/B-APPL-G-01/control",
+    "runs/B-APPL-G-01/treatment",
+    "runs/B-APPL-M-01/control",
+    "runs/B-APPL-M-01/treatment",
+    "runs/B-APPL-M-02/control",
+    "runs/B-APPL-M-02/treatment",
+    "runs/B-DISC-M-01/control",
+    "runs/B-DISC-M-01/treatment",
+    "runs/B-FINAL-G-01/control",
+    "runs/B-FINAL-G-01/treatment",
+    "runs/B-FINAL-M-01/control",
+    "runs/B-FINAL-M-01/treatment"
   ],
-  "unbundled_dependencies": [
-    "role-v1 references the B-DISC-M-01/control original wrapper and freeze by original hash. Those other-arm records are outside this bundle. Do not bypass its exact-hash guard or infer that the sanitized helper is standalone runnable.",
-    "Other A/C/D fresh cases and mutable operational configs are not included. Baseline example configs are frozen examples, not executed configurations."
-  ],
-  "frozen_methods": [
-    "methods/A8/freeze.json",
-    "methods/SELECTION-v1.md",
-    "methods/SELECTION_FREEZE.json"
-  ]
+  "original_bytes": "Untouched original scientific bytes and raw tool transcripts preserved privately; public sanitized/excerpt files have separate mappings.",
+  "closed_dependency_replay": false,
+  "selected_authored_input_dependency_closure": true,
+  "dependency_table": "provenance/SELECTED_INPUT_DEPENDENCIES.json"
 }

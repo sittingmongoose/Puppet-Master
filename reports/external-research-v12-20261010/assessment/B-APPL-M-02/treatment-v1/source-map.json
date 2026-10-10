@@ -1,0 +1,306 @@
+{
+  "schema": "er12-independent-primary-source-map-v1",
+  "case_id": "ER12-B-APPL-M-02-FRESH",
+  "arm": "treatment",
+  "role": "Applicability/exception verification",
+  "retrievals": [
+    {
+      "source_id": "P1",
+      "url": "https://docs.python.org/3.13/library/pathlib.html",
+      "final_url": "https://docs.python.org/3.13/library/pathlib.html",
+      "retrieved_at_utc": "2026-10-10T04:23:23.654827+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; research data only; not executed",
+      "http_status": 200,
+      "bytes": 244770,
+      "sha256": "90048ef5d8c01a3519e4d3c0f0fcfce68de2740b8da2563f2a3212d042286f8f",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1.html",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "244770",
+        "server": "nginx",
+        "content-type": "text/html",
+        "last-modified": "Thu, 01 Oct 2026 13:23:19 GMT",
+        "etag": "\"6abe5ec7-3bc22\"",
+        "x-clacks-overhead": "GNU Terry Pratchett",
+        "strict-transport-security": "max-age=315360000; includeSubDomains; preload",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Age": "1595",
+        "Date": "Sat, 10 Oct 2026 04:23:23 GMT",
+        "X-Served-By": "cache-lga-kjfk8660054-LGA, cache-nyc-kteb1890076-NYC",
+        "X-Cache": "MISS, HIT",
+        "X-Cache-Hits": "0, 0",
+        "X-Timer": "S1791606204.700540,VS0,VE1",
+        "Vary": "Accept-Encoding"
+      },
+      "text_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1-text.txt",
+      "text_sha256": "52cfb1be83fd6deb615f7cef6cac0cbacd308ce0c6d6ba6b9df936ab9ffc9db0",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P1-lines.html",
+      "navigable_lines_sha256": "4f51a935b5adc756ed09913dcc55dfe0328ae1ff0e8f5e26924c87a9064ff502",
+      "inspected_sections": {
+        "Path.iterdir": [
+          846,
+          860
+        ],
+        "Path.glob": [
+          861,
+          896
+        ],
+        "Path.rglob": [
+          897,
+          912
+        ],
+        "Path.walk on_error": [
+          913,
+          960
+        ],
+        "Pattern language": [
+          1114,
+          1152
+        ],
+        "Comparison to glob": [
+          1153,
+          1172
+        ]
+      },
+      "version": "Python 3.13.16 documentation (page title and footer)"
+    },
+    {
+      "source_id": "P2",
+      "url": "https://docs.python.org/3.13/library/glob.html",
+      "final_url": "https://docs.python.org/3.13/library/glob.html",
+      "retrieved_at_utc": "2026-10-10T04:23:23.812419+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; research data only; not executed",
+      "http_status": 200,
+      "bytes": 39769,
+      "sha256": "12ed291efccfecb08f58ec1644131c8ec720660d744c87f43aaef1bf22abe0e6",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2.html",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "39769",
+        "server": "nginx",
+        "content-type": "text/html",
+        "last-modified": "Thu, 01 Oct 2026 13:23:18 GMT",
+        "etag": "\"6abe5ec6-9b59\"",
+        "x-clacks-overhead": "GNU Terry Pratchett",
+        "strict-transport-security": "max-age=315360000; includeSubDomains; preload",
+        "Via": "1.1 varnish, 1.1 varnish",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:23:23 GMT",
+        "Age": "1595",
+        "X-Served-By": "cache-lga-kjfk8660024-LGA, cache-nyc-kteb1890037-NYC",
+        "X-Cache": "MISS, HIT",
+        "X-Cache-Hits": "0, 1",
+        "X-Timer": "S1791606204.840771,VS0,VE1",
+        "Vary": "Accept-Encoding"
+      },
+      "text_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2-text.txt",
+      "text_sha256": "f87fa6080826b3461be370b1f0163c2fccdb04f10b2972db6281b0b666131090",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P2-lines.html",
+      "navigable_lines_sha256": "96e578a17cf6de602188bb407562e83412b8227c01d90e98f09cbe797ce7441a",
+      "inspected_sections": {
+        "Module introduction": [
+          32,
+          49
+        ],
+        "glob.glob": [
+          51,
+          86
+        ],
+        "glob.iglob": [
+          87,
+          101
+        ]
+      },
+      "version": "Python 3.13.16 documentation (page title and footer)"
+    },
+    {
+      "source_id": "P3",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/pathlib.py",
+      "retrieved_at_utc": "2026-10-10T04:23:23.876360+00:00",
+      "error": "<HTTPError 404: 'Not Found'>"
+    },
+    {
+      "source_id": "P4",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/glob.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/glob.py",
+      "retrieved_at_utc": "2026-10-10T04:23:23.967215+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; research data only; not executed",
+      "http_status": 200,
+      "bytes": 20928,
+      "sha256": "e6693972d5999ae0be42f49f6192e1c3d24f3f1e6eeca1f95dfa0b5dae74fe07",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P4.txt",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "20928",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"55eaace3f635714931c40082f77274b9a4d3473042b079dc4abab4a8655e9d37\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "417C:33FA4:196591:26DF94:6AC9BDBB",
+        "x-github-edge-region": "iad",
+        "Accept-Ranges": "bytes",
+        "Date": "Sat, 10 Oct 2026 04:23:24 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-ewr-kewr1740048-EWR",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791606204.996508,VS0,VE66",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "d51436818c6b9c6bb441b5e32e216f709f828095",
+        "Expires": "Sat, 10 Oct 2026 04:28:24 GMT",
+        "Source-Age": "0"
+      },
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P4-lines.html",
+      "navigable_lines_sha256": "972fc35a16664ab8a5dd5a57fece1091fe11adce381592c88c557c722e060c21",
+      "inspected_sections": {
+        "glob signature and defaults": [
+          16,
+          45
+        ],
+        "_glob1 dotfile filtering": [
+          135,
+          139
+        ],
+        "scan error suppression": [
+          179,
+          215
+        ],
+        "wildcard_selector": [
+          441,
+          473
+        ],
+        "recursive_selector": [
+          475,
+          537
+        ]
+      },
+      "version": "CPython 3.13 branch at retrieval; mutable branch, saved bytes hashed"
+    },
+    {
+      "source_id": "P3b",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/pathlib/__init__.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/pathlib/__init__.py",
+      "retrieved_at_utc": "2026-10-10T04:23:36.562402+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; source viewed as data; not executed",
+      "http_status": 200,
+      "bytes": 296,
+      "sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P3b.txt",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P3b-lines.html",
+      "navigable_lines_sha256": "b7fadaffa6fcd86ceb0ab68287d887f5fa7a58e1258d5d0df150d970edbf7198",
+      "inspected_sections": {
+        "reexports": [
+          1,
+          12
+        ]
+      },
+      "version": "CPython 3.13 branch at retrieval; mutable branch, saved bytes hashed"
+    },
+    {
+      "source_id": "P5",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+      "retrieved_at_utc": "2026-10-10T04:23:36.707547+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; source viewed as data; not executed",
+      "http_status": 200,
+      "bytes": 19720,
+      "sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P5.txt",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P5-lines.html",
+      "navigable_lines_sha256": "bc9a0ae41e92417a736054073c6ff6fcc3e1a0b893fac4e27c5d3bb615378d5d",
+      "inspected_sections": {
+        "glob defaults": [
+          16,
+          32
+        ],
+        "scan error suppression": [
+          152,
+          188
+        ],
+        "pathlib pattern compilation": [
+          322,
+          328
+        ],
+        "wildcard_selector": [
+          414,
+          446
+        ],
+        "recursive_selector": [
+          448,
+          510
+        ]
+      },
+      "version": "CPython immutable release tag v3.13.0; supplementary implementation/history corroboration, not execution or 3.13.16 runtime evidence"
+    },
+    {
+      "source_id": "P6",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+      "retrieved_at_utc": "2026-10-10T04:23:36.744497+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; source viewed as data; not executed",
+      "http_status": 200,
+      "bytes": 296,
+      "sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P6.txt",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P6-lines.html",
+      "navigable_lines_sha256": "59691b8c80df03841ee7fd862c4e1a0a89119b38132b3bac256e0b9c4381a28e",
+      "inspected_sections": {
+        "reexports": [
+          1,
+          12
+        ]
+      },
+      "version": "CPython immutable release tag v3.13.0; supplementary implementation/history corroboration, not execution or 3.13.16 runtime evidence"
+    },
+    {
+      "source_id": "P7",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+      "retrieved_at_utc": "2026-10-10T04:23:56.732684+00:00",
+      "operation": "Python stdlib urllib.request.urlopen HTTPS GET; source viewed as data; not executed",
+      "http_status": 200,
+      "bytes": 31468,
+      "sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf",
+      "saved_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P7.txt",
+      "navigable_lines_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/primary-evidence/P7-lines.html",
+      "navigable_lines_sha256": "c2be99b8a0592dbd7b9e0ed70b87f4823a3c97415830192417f861d62d6019c7",
+      "inspected_sections": {
+        "Path.iterdir": [
+          568,
+          579
+        ],
+        "Path.glob": [
+          581,
+          609
+        ],
+        "Path.rglob": [
+          611,
+          620
+        ]
+      },
+      "version": "CPython immutable release tag v3.13.0; supplementary implementation/history corroboration, not execution or 3.13.16 runtime evidence"
+    }
+  ],
+  "primary_sources": {
+    "P1": "https://docs.python.org/3.13/library/pathlib.html",
+    "P2": "https://docs.python.org/3.13/library/glob.html",
+    "P5": "https://github.com/python/cpython/blob/v3.13.0/Lib/glob.py",
+    "P7": "https://github.com/python/cpython/blob/v3.13.0/Lib/pathlib/_local.py"
+  },
+  "read_policy": "Full candidate input/corpus/artifacts/source members read. Governing surrounding official documentation and implementation sections independently retrieved and inspected. Source snapshots are research data only; no downloaded code execution.",
+  "retrieval_failures": [
+    {
+      "source_id": "P3",
+      "url": "https://raw.githubusercontent.com/python/cpython/3.13/Lib/pathlib.py",
+      "retrieved_at_utc": "2026-10-10T04:23:23.876360+00:00",
+      "error": "<HTTPError 404: 'Not Found'>"
+    }
+  ]
+}

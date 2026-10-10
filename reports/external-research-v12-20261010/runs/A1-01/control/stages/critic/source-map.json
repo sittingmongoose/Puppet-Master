@@ -1,0 +1,106 @@
+{
+  "run_id": "A1-01-control",
+  "stage": "critic",
+  "brief_id": "ER12-A1-01-FRESH",
+  "source_index": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/sources/index.md",
+  "access_batch_utc": "2026-10-10T04:14:14Z",
+  "review_note": "Independent access to all carried source URLs plus S08 for the abort race. S01-S07 preserve the investigator's IDs and referents; S08 is appended. The source index remains the carried bounded index; this JSON is the critic's navigable evidence record.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Resumable upload protocol 1.0.x",
+      "publisher": "tus community",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "version_or_commit": "tus protocol 1.0.0; dated 2016-03-25",
+      "locator": "About this version lines 33-42; core HEAD/PATCH lines 128-145; expiration lines 246-276; checksum lines 277-297; termination lines 327-349",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened the live protocol and read the version header and cited core and extension sections.",
+      "governing_condition_default_exception": "HEAD reports the current offset; PATCH must present that offset, and a mismatch returns 409 without modifying the resource. Checksum, expiration, and termination are optional extensions advertised by the server. A checksum mismatch discards that chunk and leaves the upload and offset unchanged. Expiration/removal behavior applies when the expiration extension is supported.",
+      "applicability": "Normative for a tus implementation only; it does not prescribe authentication, URL structure, or object-store backing. Optional behavior is conditional on the advertised extension."
+    },
+    {
+      "id": "S02",
+      "title": "Uploading and copying objects using multipart upload in Amazon S3",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "version_or_commit": "Current Amazon S3 User Guide page accessed 2026-10-10; no page revision identifier surfaced; API version 2006-03-01 where applicable",
+      "locator": "Multipart process lines 4-41; listing/reconciliation lines 51-57; checksum operations lines 168-176",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened the current AWS guide and read process, completion, listing, checksum, expiry, and abort-race sections.",
+      "governing_condition_default_exception": "Parts upload independently and failed parts may be retransmitted; completion uses ascending part number and a part-number/ETag list. A repeated part number replaces that part. ListParts returns up to 1,000 completed parts per request and omits still-in-progress parts. S3 MPUs have no automatic expiry; parts remain stored/billed until complete or stopped. ETag is not necessarily an object MD5; checksum algorithm and full-object/composite type matter. In-flight parts may still succeed or fail after stopping; stop only after they complete for full cleanup.",
+      "applicability": "Amazon S3 behavior only. Limits, checksum type, list consistency, retention, response behavior, and abort race must be qualified for an unspecified compatible store."
+    },
+    {
+      "id": "S03",
+      "title": "Amazon S3 multipart upload limits",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "version_or_commit": "Current Amazon S3 User Guide page accessed 2026-10-10; no page revision identifier surfaced",
+      "locator": "Multipart upload core specifications table, lines 3-13",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened AWS limits page and read the current specifications table.",
+      "governing_condition_default_exception": "Amazon S3 allows up to 10,000 parts numbered 1-10,000; parts are 5 MiB to 5 GiB except the last part has no minimum; ListParts returns at most 1,000 entries per request.",
+      "applicability": "Amazon S3 only. The 16 MiB and 64 MiB counts in the reviewed package are arithmetic against these limits, not a compatible-vendor guarantee."
+    },
+    {
+      "id": "S04",
+      "title": "Aborting a multipart upload",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html",
+      "version_or_commit": "Current Amazon S3 User Guide page accessed 2026-10-10; no page revision identifier surfaced; API version 2006-03-01 where applicable",
+      "locator": "No-object-before-complete and billing lines 2-13; specific abort and cleanup lines 77-98",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened AWS abort guide and read incomplete-object, billing, explicit abort, and cleanup conditions.",
+      "governing_condition_default_exception": "An incomplete MPU produces no final object until successful completion; uploaded parts are billed until completion/abort. An explicit abort requires bucket, key, and upload ID. A configured lifecycle rule is a separate cleanup mechanism.",
+      "applicability": "Amazon S3 only. The detailed concurrent-part abort race is recorded separately in S08."
+    },
+    {
+      "id": "S05",
+      "title": "Examples of S3 Lifecycle configurations: abort multipart uploads",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
+      "version_or_commit": "Current Amazon S3 User Guide page accessed 2026-10-10; no page revision identifier surfaced",
+      "locator": "Lifecycle configuration to abort multipart uploads, lines 336-356",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened the AWS lifecycle example and read prefix, days-since-initiation, and configuration conditions.",
+      "governing_condition_default_exception": "A configured AbortIncompleteMultipartUpload action can stop incomplete MPUs after a chosen number of days from initiation; the example uses seven days and a key-prefix filter. The rule is not automatic absent configuration and cannot use a tag-based filter.",
+      "applicability": "Amazon S3 only, when the bucket rule is actually configured. Lifecycle is a proposed backstop, not the gateway's session-expiry behavior."
+    },
+    {
+      "id": "S06",
+      "title": "CompleteMultipartUpload API reference",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
+      "version_or_commit": "Amazon S3 API reference, API version 2006-03-01; current page accessed 2026-10-10; no page revision identifier surfaced",
+      "locator": "Completion rules and initial HTTP response lines 5-13; special errors lines 32-55; checksum type/ETag lines 364-428; embedded error example lines 492-529",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened AWS API reference and read request requirements, response behavior, errors, checksum types, ETag, and examples.",
+      "governing_condition_default_exception": "Completion requires a complete ordered list of parts and ETags. Processing may continue after initial HTTP 200 and the body can contain an Error. NoSuchUpload can mean invalid, aborted, or already completed. ETag may or may not be MD5; ChecksumType is COMPOSITE or FULL_OBJECT and some algorithms return a composite checksum.",
+      "applicability": "Amazon S3 API behavior. The exact SDK parser, endpoint semantics, checksum response, and error reconciliation need provider qualification."
+    },
+    {
+      "id": "S07",
+      "title": "MinIO server rejects uploads with aws-chunked encoding when payload >16 MiB (issue #21611)",
+      "publisher": "MinIO GitHub repository; community-labeled issue/report",
+      "url": "https://github.com/minio/minio/issues/21611",
+      "version_or_commit": "Opened 2025-09-28; issue body names MinIO RELEASE.2025-09-07T16-13-09Z and AWS Go SDK service/s3 v1.73.0+ (reproduction pins v1.73.0); repository archived 2026-04-25; issue currently Open on reviewed page",
+      "locator": "Archive and current issue status lines 115-153; report/environment/reproduction lines 157-243; contributor clarification lines 258-289",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened issue body and activity thread; read report, reproduction and version details, current status/archive banner, and maintainer/contributor comments.",
+      "governing_condition_default_exception": "The reporter says HTTPS aws-chunked checksum-trailer requests over 16 MiB fail with a chunk-too-big response for the named MinIO/Go SDK path. The reproduction is PutObject, not an UploadPart. A contributor distinguishes streaming chunks from multipart parts and discusses smaller stream chunks. This is an issue report, not a normative limit, confirmed fix, or Rust SDK result.",
+      "applicability": "One versioned compatibility warning only. It supports testing the actual Rust SDK request encoding and store build; it does not establish that 16 MiB MPU parts solve the reported behavior or generalize to every provider."
+    },
+    {
+      "id": "S08",
+      "title": "AbortMultipartUpload API reference",
+      "publisher": "Amazon Web Services",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html",
+      "version_or_commit": "Amazon S3 API reference, API version 2006-03-01; current page accessed 2026-10-10; no page revision identifier surfaced",
+      "locator": "Abort race and ListParts verification lines 5-8",
+      "access_utc": "2026-10-10T04:14:14Z",
+      "observed_operation": "Opened the linked AWS API reference and read the operation's abort-race and storage verification condition.",
+      "governing_condition_default_exception": "An in-progress part upload may succeed or fail after an abort; repeated abort calls may be needed. The documentation recommends ListParts and an empty result to verify all part storage was freed.",
+      "applicability": "Amazon S3 only. Compatible endpoints may differ, so the proposed cleanup algorithm and its observables must be qualified."
+    }
+  ]
+}

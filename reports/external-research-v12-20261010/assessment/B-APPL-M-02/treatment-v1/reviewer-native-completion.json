@@ -1,0 +1,21 @@
+{
+  "tool": "functions.exec tools.update_goal",
+  "arguments": {
+    "status": "complete"
+  },
+  "response": {
+    "goal": {
+      "threadId": "01a1240c-11d7-7532-9d38-321b360bcf8e",
+      "objective": "Complete this independent bounded ER12 Track B semantic review for B-APPL-M-02 treatment-v1 within 25 minutes. Read the full RUBRIC-v1.md and role input-map.json, assignment.md, freeze.json; follow the map to read the full shared assignment, fixture, every corpus member, authored APPL verification.md, source-map.json and all sources. Independently retrieve governing primary evidence and assess only assigned role axes and exact obligations, consequential source conditions and supported-scope preservation, dispositions, useful alternatives and required implementation/history, and proposed versus executed checks. Verify input hashes and existing terminal freeze. Preserve source, coverage, delivery, native/protocol/time separately; actual evidence is required for native/effective/billing or record UNKNOWN. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history, or ER11 rescore. Save complete assessment.md, assessment.json, source-map and navigable primary evidence only under ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1; complete this Goal only after judgment is saved, then report concise result and paths.",
+      "status": "complete",
+      "tokensUsed": 117279,
+      "timeUsedSeconds": 363,
+      "createdAt": 1791606144,
+      "updatedAt": 1791606508
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "judgment_saved_before_native_completion": true,
+  "judgment_validation_path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/judgment-validation.json"
+}

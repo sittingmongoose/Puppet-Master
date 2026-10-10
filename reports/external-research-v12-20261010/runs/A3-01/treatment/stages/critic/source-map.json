@@ -1,0 +1,153 @@
+{
+  "run_id": "A3-01-treatment",
+  "stage": "critic",
+  "review_access_utc_interval": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+  "scope": {
+    "brief": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+    "released_plan": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+    "investigator_sources": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+    "critic_source_index": "sources/index.md",
+    "note": "C-series IDs are critic-stage observations. Investigator IDs S01-S19 retain their original meanings and are not rebound."
+  },
+  "inherited_source_ids_preserved": {
+    "source_map": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+    "ids": ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19"]
+  },
+  "records": [
+    {
+      "id": "C01",
+      "title": "SQLite FTS5 documentation: build, tokenizers, content modes, triggers, repair, snippets",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live upstream SQLite documentation inspected 2026-10-10; no versioned URL. Investigator's S06 records the 3.53.4 upstream source snapshot, not the app deployment.",
+      "locator": "Sections 2.1, 3 and 3.1, 4.3.1, 4.4.1-4.4.4, 5.1.3, 6.7, 6.12; especially FTS5 build options, unicode61, contentless-delete, external-content trigger examples, REPLACE limitation on the FTS virtual table, rank=1 integrity-check, and rebuild.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Opened and inspected current page sections on build activation, query strings, tokenization, contentless/contentless-delete/external-content table semantics, trigger-based consistency, backfill gaps, integrity-check, rebuild, and snippet limits.",
+      "governing_condition_default_exception": "FTS5 source-tree configure currently requires --enable-fts5 while amalgamation defaults differ and may change. Ordinary contentless tables reject SQL UPDATE/DELETE and return NULL for columns other than rowid; contentless-delete is documented as available since 3.43.0 and permits DELETE, INSERT OR REPLACE, and UPDATE only when all user-defined columns receive values, but not the FTS delete command. External-content tables fetch values from a named same-database content table; consistency remains the application’s responsibility, trigger creation does not index old rows, rank=1 is needed for external-content comparison, and rebuild uses the content table. The FTS5 page says new code should prefer contentless-delete over ordinary contentless; this is not a universal preference over external-content.",
+      "applicability": "Supports conditional FTS5 design claims and correct distinctions among three table modes only. Actual app library, configuration, table schema, and writes are unverified; the current live page is not a deployment-version pin."
+    },
+    {
+      "id": "C02",
+      "title": "SQLite 3.43.0 release record",
+      "exact_url": "https://www.sqlite.org/releaselog/3_43_0.html",
+      "released_version_or_commit": "SQLite 3.43.0, released 2023-08-24; SQLITE_SOURCE_ID 2023-08-24 12:36:59 0f80b798b3f4b81a7bb4233c58294edd0f1156f36b6ecf5ab8e83631d468778c.",
+      "locator": "Release item 1, lines 20-21; source ID lines 38-41.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked the released version history for introduction of contentless-delete FTS5 indexes.",
+      "governing_condition_default_exception": "The release record establishes that this mode shipped in SQLite 3.43.0; it does not prove the application embeds or enables a SQLite build at or above that version.",
+      "applicability": "Version-gates the correction to the user’s contentless assumption. Deployment applicability remains UNKNOWN until each target runtime is probed."
+    },
+    {
+      "id": "C03",
+      "title": "SQLite ON CONFLICT REPLACE semantics",
+      "exact_url": "https://www.sqlite.org/lang_conflict.html",
+      "released_version_or_commit": "Live upstream SQLite documentation; page reports last updated 2025-11-22 13:15:11Z; no versioned release URL.",
+      "locator": "REPLACE subsection, especially lines 42-48.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked behavior of INSERT OR REPLACE when a unique or primary-key conflict deletes a pre-existing row before inserting the replacement.",
+      "governing_condition_default_exception": "SQLite documents that delete triggers caused by REPLACE fire if and only if recursive triggers are enabled. This is specific to rows deleted by the REPLACE conflict strategy; it does not describe ordinary UPDATE or DELETE statements.",
+      "applicability": "Applies to the proposed canonical-note trigger design only if the actual note write path uses REPLACE. No such app operation was observed."
+    },
+    {
+      "id": "C04",
+      "title": "SQLite recursive_triggers pragma",
+      "exact_url": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers",
+      "released_version_or_commit": "Live upstream SQLite pragma documentation inspected 2026-10-10; the page says recursive-trigger support arrived in 3.6.18 and was initially OFF for compatibility, and says the default may change.",
+      "locator": "PRAGMA recursive_triggers section, lines 723-734.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked the connection-scoped setting that governs whether REPLACE-induced deletes fire delete triggers.",
+      "governing_condition_default_exception": "The pragma can be queried or set on a database connection. Historical default was OFF; SQLite permits a future default change, so a design must inspect/configure the exact runtime instead of relying on an assumed default.",
+      "applicability": "Makes the REPLACE trigger caveat testable on each shipped connection; does not establish the application setting."
+    },
+    {
+      "id": "C05",
+      "title": "Tantivy 0.26.2 IndexWriter",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "released_version_or_commit": "Tantivy 0.26.2; release/tag commit 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d.",
+      "locator": "commit, delete_term, commit_opstamp, and add_document methods, lines 178-213.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Read index add/delete/commit visibility and recovery-point contracts relevant to an outbox-driven sidecar.",
+      "governing_condition_default_exception": "Commit blocks and publishes/persists additions since the previous commit; recovery resumes from the last successful commit opstamp. Deletes affect previously committed and earlier same-commit documents and are visible only after commit. The documentation describes index operations, not automatic tracking of external SQLite relations.",
+      "applicability": "Supports the sidecar’s need for explicit change capture, ordering, commit acknowledgement, and replay. Collection membership propagation remains application-owned."
+    },
+    {
+      "id": "C06",
+      "title": "Tantivy 0.26.2 IndexReader",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "released_version_or_commit": "Tantivy 0.26.2; release/tag commit 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d.",
+      "locator": "reload method description, lines 67-82.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked search visibility after commit and reader/searcher refresh policy.",
+      "governing_condition_default_exception": "OnCommitWithDelay is the default, usually reflects a commit rapidly, but may take tens of milliseconds; explicit reload can force deterministic state in tests.",
+      "applicability": "Supports an explicit Tantivy freshness barrier; runtime behavior still requires testing in the selected application."
+    },
+    {
+      "id": "C07",
+      "title": "Tantivy 0.26.2 tokenizer documentation",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "released_version_or_commit": "Tantivy 0.26.2; release/tag commit 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d.",
+      "locator": "default tokenizer lines 59-69; custom pipeline lines 74-86; AsciiFoldingFilter lines 125-126; RemoveLongFilter description lines 143-148.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Inspected the implicit default tokenizer, SimpleTokenizer, RemoveLongFilter, LowerCaser, punctuation splitting, and explicit AsciiFoldingFilter behavior.",
+      "governing_condition_default_exception": "The default splits punctuation/whitespace, lowercases, and drops tokens over 40 characters; RemoveLongFilter documents limits in UTF-8 bytes. The code example orders RemoveLongFilter before LowerCaser. ASCII folding is an explicit filter and maps only characters with ASCII equivalents.",
+      "applicability": "Supports the draft’s explicit analyzer direction while underscoring that folding and byte/character limits must be pinned and tested; it does not establish parity with FTS5."
+    },
+    {
+      "id": "C08",
+      "title": "Tantivy 0.26.2 TopDocs",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "released_version_or_commit": "Tantivy 0.26.2; release/tag commit 72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d.",
+      "locator": "TopDocs description lines 62-65; order_by_score lines 203-205.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked score direction and deterministic equal-score tie key.",
+      "governing_condition_default_exception": "order_by_score sorts by decreasing BM25; equal sort keys use ascending internal DocAddress.",
+      "applicability": "Confirms the draft’s canonical-note-ID tie-break requirement; internal address is not public note identity."
+    },
+    {
+      "id": "C09",
+      "title": "Tantivy issue 3031: malformed query panic report",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "released_version_or_commit": "Issue opened 2026-08-05; observed open on 2026-10-10. Reporter identifies Tantivy 0.22.1 and tantivy-query-grammar 0.22.0. Linked commit 28b2ed185381b59c17530bb37cb9e481921ac1f2 is in a contributor fork, not an upstream release.",
+      "locator": "Issue report/version/input lines 130-172; reproduction and outcomes lines 185-222; activity and linked commit lines 225-236.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Inspected upstream issue status, reported input '- *', stated dependency versions, and provenance of the linked fix-like change.",
+      "governing_condition_default_exception": "The report is bounded to the stated old versions and specific malformed inputs. Neither the fork commit nor the issue page establishes that Tantivy 0.26.2 is affected or fixed.",
+      "applicability": "Supports retaining exact-version malformed-query tests. Current pinned-release outcome is honestly unresolved."
+    },
+    {
+      "id": "C10",
+      "title": "SQLite write-ahead log documentation",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live upstream SQLite documentation inspected 2026-10-10; no versioned URL.",
+      "locator": "Overview and WAL operation/checkpoint sections, lines 61-99.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked WAL commit record semantics, same-host shared memory, multiple-database atomicity limit, companion files, and default 1000-page auto-checkpoint.",
+      "governing_condition_default_exception": "WAL is opt-in; its commit record is appended to the WAL, it relies on shared memory and does not work over a network filesystem, transactions across attached databases are not atomic as a set, and the auto-checkpoint threshold is a configurable default.",
+      "applicability": "Supports the draft’s local-store/WAL caveats and separation of SQLite transaction guarantees from dual-store Tantivy writes. App journal mode is unknown."
+    },
+    {
+      "id": "C11",
+      "title": "SQLite transactional behavior",
+      "exact_url": "https://www.sqlite.org/transactional.html",
+      "released_version_or_commit": "Live upstream SQLite documentation inspected 2026-10-10; no versioned URL.",
+      "locator": "Opening guarantee, lines 20-28.",
+      "accessed_utc": "2026-10-10T04:18:48Z/2026-10-10T04:23:12Z",
+      "observed_operation": "Checked SQLite’s single-transaction crash/power-loss atomicity statement.",
+      "governing_condition_default_exception": "The source describes changes inside one SQLite transaction; it does not make one SQLite transaction atomic with changes to an external Tantivy directory. Journal mode, VFS, and storage conditions remain relevant and are covered by the SQLite journal documentation.",
+      "applicability": "Supports co-transactional canonical note plus FTS trigger mutations when both are in one SQLite database transaction only."
+    }
+  ],
+  "reviewed_source_conflicts": [
+    {
+      "topic": "SQLite contentless mode recommendation",
+      "observation": "The 3.43.0 release record introduced contentless-delete. Current FTS5 docs say to prefer that mode over ordinary contentless, while separately documenting external-content tables with source-table lookup, triggers, integrity-check, and rebuild.",
+      "resolution": "These statements do not conflict with the draft’s conditional external-content preference. The recommendation compares contentless-delete to ordinary contentless, not to external content; source-table retrieval and content-based rebuild are material distinctions for this adapter.",
+      "sources": ["C01", "C02"]
+    },
+    {
+      "topic": "Tantivy malformed query history",
+      "observation": "Upstream issue 3031 remains open for the reported 0.22.1 / grammar 0.22.0 panic, while a fix-like commit is linked from a contributor fork. Tantivy 0.26.2 package metadata in inherited S07 identifies a newer grammar dependency range but does not prove release behavior for the reported input.",
+      "resolution": "Do not infer either persistence or fix in 0.26.2. Preserve exact-version testing and use a bounded typed query interface.",
+      "sources": ["S07", "S15", "C09"]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "prepared_at_utc": "2026-10-10T04:42:49.729Z",
+  "stage": "investigator",
+  "stage_deadline_utc": "2026-10-10T05:12:49.729Z",
+  "whole_deadline_utc": "2026-10-10T05:42:48.166Z",
+  "stage_budget_s": 1800,
+  "predecessors": [],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/inputs/brief.md",
+      "sha256": "64d7c999cf74b0022f481d6e5412866fc4b9b63d05c1726ceef4658a0d8d712e",
+      "bytes": 2869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md",
+      "sha256": "b9ae49a8c0ca3cd91ed09343d8d9a599389d5762f1fea685743d33035fcca831",
+      "bytes": 3712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-02/control/stages/investigator/input-map.json",
+      "sha256": "064d109f68758c9ef3e26da2004941edfe1bc272aa494a54029c386bfce0a1f5",
+      "bytes": 714
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 investigator stage, run A3-02-control: execute ER12_RUNTIME/runs/A3-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_delta": null,
+  "time_contract": "fixed_stage_caps",
+  "available_stage_seconds_at_prepare": 1800.0
+}

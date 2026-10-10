@@ -1,0 +1,28 @@
+{
+  "id": "P2",
+  "url": "https://download.samba.org/pub/rsync/rsync.1",
+  "retrieval_started_utc": "2026-10-10T04:14:05.871307+00:00",
+  "retrieval_completed_utc": "2026-10-10T04:14:06.610114+00:00",
+  "operation": "Independent unauthenticated HTTPS GET, raw content saved as data",
+  "http_status": 200,
+  "final_url": "https://download.samba.org/pub/rsync/rsync.1",
+  "headers": {
+    "date": "Sat, 10 Oct 2026 04:14:06 GMT",
+    "content-location": "rsync.1.html",
+    "vary": "negotiate,Accept-Encoding",
+    "tcn": "choice",
+    "referrer-policy": "strict-origin",
+    "strict-transport-security": "max-age=63072000;includeSubDomains;preload",
+    "x-frame-options": "sameorigin",
+    "connection": "Upgrade",
+    "last-modified": "Mon, 21 Sep 2026 04:00:03 GMT",
+    "accept-ranges": "bytes",
+    "content-length": "304411",
+    "content-type": "text/html",
+    "alt-svc": "h3=\":443\"; ma=999999; persistent=1"
+  },
+  "bytes": 304411,
+  "sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+  "raw_file": "live-rsync-man.html",
+  "scope": "Live unpinned supplemental navigation, not governing 3.2.7 evidence"
+}

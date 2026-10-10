@@ -1,0 +1,2138 @@
+{
+  "checkpoint_original_sha256": "34b9e9645dfa1c1b39236592c09204c823df6b9cfadb9f9153f51745cf30340d",
+  "selected_authored_input_dependency_closure": true,
+  "closed_dependency_replay": false,
+  "closure_scope": "Saved input maps: briefs, assignments, fixtures, predecessor authored outputs and bounded corpus capsules/indexes. Full retrieved evidence mirrors and historical unselected index entries are outside this closure.",
+  "dependencies": [
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/inputs/brief.md",
+      "public_path": "runs/A1-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A1-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "e68d6c1d68956691775885cbf72e4be7b8eda37082027a40c3a39b571f67f672"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A1-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "35fda749b312f05ee1e6f6aba780db1d247233a05827e82cb11cf356585cb070"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A1-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "2d28a35c2cf11960f2ac360fb30e4174c8f9c6414e39caf61f974226a7f8c7a8"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "da4b893e04eddfff790d3fe856ef8bf18669529f5ded50acd1da4f939f251422"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/inputs/brief.md",
+      "public_path": "runs/A1-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/inputs/brief.md",
+      "public_path": "runs/A1-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A1-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "e68d6c1d68956691775885cbf72e4be7b8eda37082027a40c3a39b571f67f672"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A1-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "35fda749b312f05ee1e6f6aba780db1d247233a05827e82cb11cf356585cb070"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A1-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "2d28a35c2cf11960f2ac360fb30e4174c8f9c6414e39caf61f974226a7f8c7a8"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "da4b893e04eddfff790d3fe856ef8bf18669529f5ded50acd1da4f939f251422"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/critic/critique.md",
+      "public_path": "runs/A1-01/control/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "987b70f85f1619e85db0b9d11defd17fed0d29e0a7b442f6a5d9639425e77073"
+    },
+    {
+      "task_input_map": "runs/A1-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/control/stages/critic/source-map.json",
+      "public_path": "runs/A1-01/control/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "3b0bd8bba1bd74988f96f7c32a680b71f83a566acba9ce7782b9656b87f95478"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "public_path": "runs/A1-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A1-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "5429b17b187875fbbebad072f499a594aa5b5e0b83d1197d49076e45b2bbc9fa"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "96ec9e0a17a06d28f8c0c10d6c93506636f01c7fe95920e15054a02af8934151"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "public_path": "runs/A1-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "public_path": "runs/A1-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A1-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "5429b17b187875fbbebad072f499a594aa5b5e0b83d1197d49076e45b2bbc9fa"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "96ec9e0a17a06d28f8c0c10d6c93506636f01c7fe95920e15054a02af8934151"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "public_path": "runs/A1-01/treatment/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "b3d9b95c88682e058b7431f1315e30f2ab04904d8810e95d040fa242a00232b4"
+    },
+    {
+      "task_input_map": "runs/A1-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "public_path": "runs/A1-01/treatment/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "a02278e55778802fa7adaf6a7524c0710a9f620b7d3f473642a74d716883c7e7"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/inputs/brief.md",
+      "public_path": "runs/A1-02/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/discovery.md",
+      "public_path": "runs/A1-02/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "771ce241bfd90a07f0d5e5bcb1c03941ef70ef45447dfbb4e882aea47c74f0bc"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/draft.md",
+      "public_path": "runs/A1-02/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "8ae2427ed06b0a2f1e81a1a7f3b2c7fcf211ec118be47b673cb212316ff7d3f6"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/source-map.json",
+      "public_path": "runs/A1-02/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "88051ad0eb6f4f021289f3d6c88afd5371882431fcfbf19aa205e9358f3360fd"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-02/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "9be12c7649c34e3cfd7b51dc79dd0654fe56b4b8b6ab0fdfed50d8721b4229f5"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/inputs/brief.md",
+      "public_path": "runs/A1-02/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/inputs/brief.md",
+      "public_path": "runs/A1-02/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/discovery.md",
+      "public_path": "runs/A1-02/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "771ce241bfd90a07f0d5e5bcb1c03941ef70ef45447dfbb4e882aea47c74f0bc"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/draft.md",
+      "public_path": "runs/A1-02/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "8ae2427ed06b0a2f1e81a1a7f3b2c7fcf211ec118be47b673cb212316ff7d3f6"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/source-map.json",
+      "public_path": "runs/A1-02/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "88051ad0eb6f4f021289f3d6c88afd5371882431fcfbf19aa205e9358f3360fd"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A1-02/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A1-02/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "9be12c7649c34e3cfd7b51dc79dd0654fe56b4b8b6ab0fdfed50d8721b4229f5"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/critic/critique.md",
+      "public_path": "runs/A1-02/control/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "18dbc8b259afc9fe53d668cfa700742886f96d8730a98bd1587622504f1b5dc3"
+    },
+    {
+      "task_input_map": "runs/A1-02/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A1-02/control/stages/critic/source-map.json",
+      "public_path": "runs/A1-02/control/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "db7779574b2d4c6f668524ca66cd583ea624fe8edc48e83d4f9882dcc42b40fe"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "public_path": "runs/A3-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A3-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "21699f340e71b5bb93439ca32aadd2f330d321ff0c64f70fbbb5b6369a107ad0"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A3-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "002c140b7c4635163eecc30b1541953133ebe319b684ecb78c68c54a4b9b9cab"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A3-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "c9e684db7f6b958b16306b905aced46a24f0cea3730de17ade37f4e69d4b4aae"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "public_path": "runs/A3-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/inputs/brief.md",
+      "public_path": "runs/A3-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A3-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "21699f340e71b5bb93439ca32aadd2f330d321ff0c64f70fbbb5b6369a107ad0"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A3-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "002c140b7c4635163eecc30b1541953133ebe319b684ecb78c68c54a4b9b9cab"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A3-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "16b1a6b88d236fc25da3dad049c43a4d6b14fa86dd71720032b5f5e4351e68d5"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A3-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "c9e684db7f6b958b16306b905aced46a24f0cea3730de17ade37f4e69d4b4aae"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md",
+      "public_path": "runs/A3-01/control/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "31330b7b4c5196bfcdfbcabe6e8daf73a3932fc10492e533f2939ca6b492434c"
+    },
+    {
+      "task_input_map": "runs/A3-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json",
+      "public_path": "runs/A3-01/control/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "270f2bf3cd5b5bc9d6f110376cd14ceaa668738d84dd02663f8659baaae9d74b"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "public_path": "runs/A3-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "2d2f70dfc0b31a2e0843faf7467d8da39e8980cdb7df7b8eb7253bdb96be4479"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "a0f66dfdf3c7ab89d9eb620f558e8a1fa71a200264474aaa8765d79e116a1143"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A3-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "059c5b4a27896885392f701bbaefe4891a3021952fc01053f0e2f71c2e0d1d68"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "1a763c88f51de35e54581271915f3073421ac93ca9b54918a5df2ed5ea0959b7"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "public_path": "runs/A3-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+      "public_path": "runs/A3-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "2d2f70dfc0b31a2e0843faf7467d8da39e8980cdb7df7b8eb7253bdb96be4479"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "a0f66dfdf3c7ab89d9eb620f558e8a1fa71a200264474aaa8765d79e116a1143"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A3-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "059c5b4a27896885392f701bbaefe4891a3021952fc01053f0e2f71c2e0d1d68"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A3-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "1a763c88f51de35e54581271915f3073421ac93ca9b54918a5df2ed5ea0959b7"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+      "public_path": "runs/A3-01/treatment/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "5741893210acb12ee6de222c2ef60d81908023b88c84fff9433ae80bfd00ba9b"
+    },
+    {
+      "task_input_map": "runs/A3-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/source-map.json",
+      "public_path": "runs/A3-01/treatment/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "7f0e35baa784707625acd6ec947731957db489552c4111e5cd635b5146f66510"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/inputs/brief.md",
+      "public_path": "runs/A4-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A4-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "bfc80d811abf90a5066c4805749bcd5066bb8b81abd20b0acdb2d8ae4fb34034"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A4-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "224e287de8b69897012f1b19da4c6615b97ebfd5b71e8e849e53a8b6c21d0635"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A4-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "a4c81d54b7501147dbd9cde43c75172a42e15727ab3af53a30a1c3179f7688a8"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A4-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "fa37cdeebc9d98c3c6478e2bcf8d66f76370b9bbe1097ba04fd3731dde72cd24"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/inputs/brief.md",
+      "public_path": "runs/A4-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/inputs/brief.md",
+      "public_path": "runs/A4-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A4-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "bfc80d811abf90a5066c4805749bcd5066bb8b81abd20b0acdb2d8ae4fb34034"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A4-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "224e287de8b69897012f1b19da4c6615b97ebfd5b71e8e849e53a8b6c21d0635"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A4-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "a4c81d54b7501147dbd9cde43c75172a42e15727ab3af53a30a1c3179f7688a8"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A4-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "fa37cdeebc9d98c3c6478e2bcf8d66f76370b9bbe1097ba04fd3731dde72cd24"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/critic/critique.md",
+      "public_path": "runs/A4-01/control/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "cc044bf6c47d67c0633806d206f7a7ac7f01614cf214167f1620404efe614b79"
+    },
+    {
+      "task_input_map": "runs/A4-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A4-01/control/stages/critic/source-map.json",
+      "public_path": "runs/A4-01/control/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "7c8a1f3303a5663034a72662664c2af2a942952032fe3086c85a626ed4fe2f3c"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "public_path": "runs/A6-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A6-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A6-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A6-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "8f2a2dcd7a18007d050bc370ee4cef1d27d4d3023120a173dbe20fb435fc9b61"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "483ea5bbbe78c18c86cf78b11064c45a085b5fe5acd1d33ef10bbf56de1d2e6e"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "public_path": "runs/A6-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/inputs/brief.md",
+      "public_path": "runs/A6-01/control/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "public_path": "runs/A6-01/control/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "public_path": "runs/A6-01/control/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "public_path": "runs/A6-01/control/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "8f2a2dcd7a18007d050bc370ee4cef1d27d4d3023120a173dbe20fb435fc9b61"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A6-01/control/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "483ea5bbbe78c18c86cf78b11064c45a085b5fe5acd1d33ef10bbf56de1d2e6e"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+      "public_path": "runs/A6-01/control/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "51c973c39dbefe617915a75a894c585aa819b9504b4d8c21ec52c2e532274783"
+    },
+    {
+      "task_input_map": "runs/A6-01/control/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/control/stages/critic/source-map.json",
+      "public_path": "runs/A6-01/control/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "e15ad2d1c01d8b49b736574a6091469a285d0f1cd3ee6e94d06ed77824cd48f2"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "public_path": "runs/A6-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "d5f36d6bc95da49ab23e4ac186eb4ac330e86ff590c881726a35c2be1206fcef"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "21ab4dd676871710cd840aaf6405dc226618a46d117342ef82efbc9102288fa2"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A6-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "ec1cb1fcb9f728c6330bb2d738b9655b7f5eb8fde8f983df7fe29aee78d136e8"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/critic/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "279248ed6f47d5e7b9ee12c83398b1d6be648b280558dc6310e67e0da249cfe7"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/investigator/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "public_path": "runs/A6-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "brief",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/inputs/brief.md",
+      "public_path": "runs/A6-01/treatment/inputs/brief.md",
+      "available": true,
+      "public_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "revealed_plan",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/discovery.md",
+      "available": true,
+      "public_sha256": "d5f36d6bc95da49ab23e4ac186eb4ac330e86ff590c881726a35c2be1206fcef"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/draft.md",
+      "available": true,
+      "public_sha256": "21ab4dd676871710cd840aaf6405dc226618a46d117342ef82efbc9102288fa2"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json",
+      "public_path": "runs/A6-01/treatment/stages/investigator/source-map.json",
+      "available": true,
+      "public_sha256": "ec1cb1fcb9f728c6330bb2d738b9655b7f5eb8fde8f983df7fe29aee78d136e8"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "public_path": "runs/A6-01/treatment/stages/investigator/revealed-plan.md",
+      "available": true,
+      "public_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "public_path": "runs/A6-01/treatment/stages/investigator/plan-reveal.json",
+      "available": true,
+      "public_sha256": "279248ed6f47d5e7b9ee12c83398b1d6be648b280558dc6310e67e0da249cfe7"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/critique.md",
+      "public_path": "runs/A6-01/treatment/stages/critic/critique.md",
+      "available": true,
+      "public_sha256": "4354bc34d541d2650866c9dd62679322e86e67fc731331c24a1ffdeb11cda692"
+    },
+    {
+      "task_input_map": "runs/A6-01/treatment/stages/reviser/input-map.json",
+      "dependency_kind": "predecessor",
+      "original_locator": "ER12_RUNTIME/runs/A6-01/treatment/stages/critic/source-map.json",
+      "public_path": "runs/A6-01/treatment/stages/critic/source-map.json",
+      "available": true,
+      "public_sha256": "bffaaa1f58632db469501fff47dff06eee86ec5aae13beadb5c7e6d1b55608d8"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "available": true,
+      "public_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "public_path": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "available": true,
+      "public_sha256": "6e3e4fcbcef8b56d153a419a147a4c27ac9b33efbe0249cf27554da892529504"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "available": true,
+      "public_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "available": true,
+      "public_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "available": true,
+      "public_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "available": true,
+      "public_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "public_path": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "available": true,
+      "public_sha256": "6e3e4fcbcef8b56d153a419a147a4c27ac9b33efbe0249cf27554da892529504"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "available": true,
+      "public_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "available": true,
+      "public_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d"
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "public_path": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "available": true,
+      "public_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "public_path": "runs/B-APPL-M-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "public_path": "runs/B-APPL-M-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "public_path": "runs/B-APPL-M-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "public_path": "runs/B-APPL-M-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "public_path": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "public_path": "runs/B-APPL-M-02/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "public_path": "runs/B-APPL-M-02/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "public_path": "runs/B-APPL-M-02/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "public_path": "runs/B-APPL-M-02/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b"
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "public_path": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c"
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "public_path": "frozen-inputs/B-DISC-M-01/assignment.md",
+      "available": true,
+      "public_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9"
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "public_path": "frozen-inputs/B-DISC-M-01/fixture.json",
+      "available": true,
+      "public_sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda"
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+      "public_path": "frozen-inputs/B-DISC-M-01/assignment.md",
+      "available": true,
+      "public_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9"
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "public_path": "frozen-inputs/B-DISC-M-01/fixture.json",
+      "available": true,
+      "public_sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "public_path": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "3b19a5bc414d6984777ab93e6f292529fdc5bcd0298c27646afafd7de7d938e0"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "public_path": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "3b19a5bc414d6984777ab93e6f292529fdc5bcd0298c27646afafd7de7d938e0"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "public_path": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "public_path": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "common_assignment",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/assignment.md",
+      "available": true,
+      "public_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "fixture",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "public_path": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "available": true,
+      "public_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "available": true,
+      "public_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "available": true,
+      "public_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162"
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "dependency_kind": "authored corpus capsule/index",
+      "original_locator": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "public_path": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "available": true,
+      "public_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8"
+    }
+  ],
+  "capsule_index_original_hash_checks": [
+    {
+      "index": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "capsule": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "capsule": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-G-01/corpus/index.json",
+      "capsule": "role-cases/B-APPL-G-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-G-01/corpus/index.json",
+      "capsule": "role-cases/B-APPL-G-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-M-01/corpus/index.json",
+      "capsule": "role-cases/B-APPL-M-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-M-01/corpus/index.json",
+      "capsule": "role-cases/B-APPL-M-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "capsule": "runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "capsule": "runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-M-02/corpus/index.json",
+      "capsule": "role-cases/B-APPL-M-02/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-APPL-M-02/corpus/index.json",
+      "capsule": "role-cases/B-APPL-M-02/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases-v2/B-APPL-M-02/corpus/index.json",
+      "capsule": "role-cases-v2/B-APPL-M-02/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases-v2/B-APPL-M-02/corpus/index.json",
+      "capsule": "role-cases-v2/B-APPL-M-02/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "capsule": "runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "capsule": "runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-FINAL-G-01/corpus/index.json",
+      "capsule": "role-cases/B-FINAL-G-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-FINAL-G-01/corpus/index.json",
+      "capsule": "role-cases/B-FINAL-G-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "capsule": "runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "capsule": "runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-FINAL-M-01/corpus/index.json",
+      "capsule": "role-cases/B-FINAL-M-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases/B-FINAL-M-01/corpus/index.json",
+      "capsule": "role-cases/B-FINAL-M-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases-v2/B-FINAL-M-01/corpus/index.json",
+      "capsule": "role-cases-v2/B-FINAL-M-01/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "role-cases-v2/B-FINAL-M-01/corpus/index.json",
+      "capsule": "role-cases-v2/B-FINAL-M-01/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "capsule": "runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    },
+    {
+      "index": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "capsule": "runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "original_hash_matches": true,
+      "public_matches_declared_sanitation": true
+    }
+  ],
+  "selected_fixture_input_checks": [
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "expected_original_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "actual_original_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "public_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "original_bytes": 3108,
+      "public_bytes": 3108,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "expected_original_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "actual_original_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "public_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "original_bytes": 1065,
+      "public_bytes": 1065,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "expected_original_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "actual_original_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "public_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "original_bytes": 963,
+      "public_bytes": 963,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "expected_original_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "actual_original_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "public_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "original_bytes": 1305,
+      "public_bytes": 1305,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/assignment.md",
+      "expected_original_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "actual_original_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "public_sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+      "original_bytes": 3108,
+      "public_bytes": 3108,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "expected_original_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "actual_original_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "public_sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "original_bytes": 1065,
+      "public_bytes": 1065,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "expected_original_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "actual_original_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "public_sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "original_bytes": 963,
+      "public_bytes": 963,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-APPL-G-01/fixture.json",
+      "input_path": "frozen-inputs/B-APPL-G-01/corpus/index.json",
+      "expected_original_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "actual_original_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "public_sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+      "original_bytes": 1305,
+      "public_bytes": 1305,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/assignment.md",
+      "expected_original_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "actual_original_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "public_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "original_bytes": 2972,
+      "public_bytes": 2972,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "actual_original_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "public_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "original_bytes": 993,
+      "public_bytes": 993,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "actual_original_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "public_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "original_bytes": 989,
+      "public_bytes": 989,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "expected_original_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "actual_original_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "public_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "original_bytes": 1337,
+      "public_bytes": 1337,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/assignment.md",
+      "expected_original_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "actual_original_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "public_sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "original_bytes": 2972,
+      "public_bytes": 2972,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "actual_original_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "public_sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "original_bytes": 993,
+      "public_bytes": 993,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "actual_original_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "public_sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "original_bytes": 989,
+      "public_bytes": 989,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-01/inputs/corpus/index.json",
+      "expected_original_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "actual_original_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "public_sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "original_bytes": 1337,
+      "public_bytes": 1337,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/assignment.md",
+      "expected_original_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "actual_original_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "public_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "original_bytes": 3009,
+      "public_bytes": 3009,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "expected_original_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "actual_original_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "public_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "original_bytes": 966,
+      "public_bytes": 966,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "expected_original_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "actual_original_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "public_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "original_bytes": 873,
+      "public_bytes": 873,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "expected_original_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "actual_original_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "public_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "original_bytes": 1251,
+      "public_bytes": 1251,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/assignment.md",
+      "expected_original_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "actual_original_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "public_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "original_bytes": 3009,
+      "public_bytes": 3009,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "expected_original_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "actual_original_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "public_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "original_bytes": 966,
+      "public_bytes": 966,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "expected_original_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "actual_original_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "public_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "original_bytes": 873,
+      "public_bytes": 873,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-APPL-M-02/inputs/fixture.json",
+      "input_path": "runs/B-APPL-M-02/inputs/corpus/index.json",
+      "expected_original_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "actual_original_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "public_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "original_bytes": 1251,
+      "public_bytes": 1251,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-DISC-M-01/fixture.json",
+      "input_path": "frozen-inputs/B-DISC-M-01/assignment.md",
+      "expected_original_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "actual_original_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "public_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "original_bytes": 2834,
+      "public_bytes": 2834,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "fixture": "frozen-inputs/B-DISC-M-01/fixture.json",
+      "input_path": "frozen-inputs/B-DISC-M-01/assignment.md",
+      "expected_original_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "actual_original_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "public_sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+      "original_bytes": 2834,
+      "public_bytes": 2834,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/assignment.md",
+      "expected_original_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "actual_original_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "public_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "original_bytes": 5043,
+      "public_bytes": 5043,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "actual_original_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "public_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "original_bytes": 944,
+      "public_bytes": 944,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "actual_original_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "public_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "original_bytes": 795,
+      "public_bytes": 795,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "expected_original_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "actual_original_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "public_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "original_bytes": 1281,
+      "public_bytes": 1281,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/assignment.md",
+      "expected_original_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "actual_original_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "public_sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "original_bytes": 5043,
+      "public_bytes": 5043,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "actual_original_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "public_sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "original_bytes": 944,
+      "public_bytes": 944,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "actual_original_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "public_sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "original_bytes": 795,
+      "public_bytes": 795,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-G-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "expected_original_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "actual_original_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "public_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "original_bytes": 1281,
+      "public_bytes": 1281,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/assignment.md",
+      "expected_original_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "actual_original_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "public_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "original_bytes": 4944,
+      "public_bytes": 4944,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "actual_original_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "public_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "original_bytes": 905,
+      "public_bytes": 905,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "actual_original_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "public_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "original_bytes": 818,
+      "public_bytes": 818,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "expected_original_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "actual_original_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "public_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "original_bytes": 1294,
+      "public_bytes": 1294,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/assignment.md",
+      "expected_original_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "actual_original_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "public_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "original_bytes": 4944,
+      "public_bytes": 4944,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "expected_original_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "actual_original_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "public_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "original_bytes": 905,
+      "public_bytes": 905,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "expected_original_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "actual_original_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "public_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "original_bytes": 818,
+      "public_bytes": 818,
+      "original_hash_matches": true
+    },
+    {
+      "task_input_map": "runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "fixture": "runs/B-FINAL-M-01/inputs/fixture.json",
+      "input_path": "runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "expected_original_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "actual_original_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "public_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "original_bytes": 1294,
+      "public_bytes": 1294,
+      "original_hash_matches": true
+    }
+  ]
+}

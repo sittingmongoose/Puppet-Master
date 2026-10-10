@@ -32,7 +32,7 @@ Pure preparation for review (does not dispatch):
 python3 -B ER12_RUNTIME/helpers/topology-v1/prepare.py prepare --config ER12_RUNTIME/config.A2.runtime.json --stage investigator
 ```
 
-The prepared request has a stable `er12-A2|A7-<run>-<stage>-topology-v1` clientRequestId. A retry verifies all frozen input hashes and preserves the deadline/key. The root bootstrap verifies the live `AUTHORIZED_CODEX_PROVIDER_ID / gpt-6-luna / max / priority` route and the machine's 6 GiB availability gate before any dispatch. Requested settings are not asserted as effective settings.
+The prepared request has a stable `er12-A2|A7-<run>-<stage>-topology-v1` clientRequestId. A retry verifies all frozen input hashes and preserves the deadline/key. The root bootstrap verifies the live `AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna / max / priority` route and the machine's 6 GiB availability gate before any dispatch. Requested settings are not asserted as effective settings.
 
 ## A2 precise lifecycle
 

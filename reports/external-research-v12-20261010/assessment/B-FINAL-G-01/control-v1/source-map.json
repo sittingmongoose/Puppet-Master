@@ -1,0 +1,272 @@
+{
+  "schema": "er12-independent-source-map-v1",
+  "review_id": "B-FINAL-G-01/control-v1",
+  "retrieved_independently": true,
+  "created_at_utc": "2026-10-10T04:22:08.145765+00:00",
+  "sources": [
+    {
+      "source_id": "P1",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/rsync.1.md",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/rsync.1.md",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.156764+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.260862+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"7d7ae98cd84ded65ea57d2ec15409175e1d19e025981c4d05560268f784feb4e\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-manual.md",
+      "sha256": "efe2b3f3164feae41308d8ac2bd12c802e4eb0ef54682124d310962181b8a9ee",
+      "bytes": 238280
+    },
+    {
+      "source_id": "P2",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "effective_url": "https://download.samba.org/pub/rsync/rsync.1",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.158132+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.919635+00:00",
+      "http_status": 200,
+      "content_type": null,
+      "etag": null,
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-manual.html",
+      "sha256": "9160de49f8f56f4905fbc4b9ee4e0ac347570865092abde0784f8713fad9e771",
+      "bytes": 304411
+    },
+    {
+      "source_id": "P3",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "effective_url": "https://rsync.samba.org/FAQ.html",
+      "operation": "independent HTTPS GET, Python urllib; no execution",
+      "retrieval_started_utc": "2026-10-10T04:17:55.159176+00:00",
+      "retrieved_at_utc": "2026-10-10T04:17:55.503801+00:00",
+      "http_status": 200,
+      "content_type": null,
+      "etag": null,
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-live-faq.html",
+      "sha256": "e4d420bee0f08edeba7eb49d9b90141721778b04827bcea494a1334a8d247e7a",
+      "bytes": 13720
+    },
+    {
+      "source_id": "P4",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/exclude.c",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/exclude.c",
+      "operation": "independent HTTPS GET, Python urllib; read only, no execution",
+      "retrieval_started_utc": "2026-10-10T04:18:48.164373+00:00",
+      "retrieved_at_utc": "2026-10-10T04:18:48.290812+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"bb396d3af0c2b1f43293ca25403fe8a66b2fd932be9ab490745c14ab97086728\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-exclude.c",
+      "sha256": "619fac1e03234d8d8c173e29abe80c3670fd755488e8cce3eb71862d74b1cb92",
+      "bytes": 49158
+    },
+    {
+      "source_id": "P5",
+      "url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/NEWS.md",
+      "effective_url": "https://raw.githubusercontent.com/RsyncProject/rsync/v3.2.7/NEWS.md",
+      "operation": "independent HTTPS GET, Python urllib; read only, no execution",
+      "retrieval_started_utc": "2026-10-10T04:18:48.165628+00:00",
+      "retrieved_at_utc": "2026-10-10T04:18:48.317740+00:00",
+      "http_status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"5049e94664d2406cb2b011bf830712ac01fe1506345431439cca620ecd240472\"",
+      "last_modified": null,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/primary-evidence/rsync-v3.2.7-news.md",
+      "sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529",
+      "bytes": 208035
+    }
+  ],
+  "locators": {
+    "usage": {
+      "source_id": "P1",
+      "lines": [
+        100,
+        154
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L100-L154",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L100",
+      "summary": "Source-directory trailing slash gives contents at the selected destination depth; shell expansion is distinct. Host/module root syntax is an exception to needing a slash."
+    },
+    "recursion": {
+      "source_id": "P1",
+      "lines": [
+        859,
+        910
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L859-L910",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L859",
+      "summary": "Recursive scan; both peers >=3.0.0 normally use incremental recursion, while delay-updates and some deletion modes disable it."
+    },
+    "dry_run": {
+      "source_id": "P1",
+      "lines": [
+        1731,
+        1746
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L1731-L1746",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L1731",
+      "summary": "No-change trial; itemized outputs should agree subject to caveats. v3.2.7 uses an intentional-trickery/system-call caveat; live manual spells out external source/destination changes. No byte-transfer or performance oracle from dry-run statistics."
+    },
+    "delete": {
+      "source_id": "P1",
+      "lines": [
+        1894,
+        1927
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L1894-L1927",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L1894",
+      "summary": "Extraneous receiver files, synchronized directory scope, whole-directory arguments, recursion or dirs condition, sender-only exclusions and delete-excluded exception, sender I/O suppression and ignore-errors exception. For 3.2.7 peers default deletion timing is during transfer."
+    },
+    "delete_excluded": {
+      "source_id": "P1",
+      "lines": [
+        1983,
+        2003
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L1983-L2003",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L1983",
+      "summary": "Unqualified rules lose receiver effects; explicit receiver or both-side qualifiers remain valid. The candidate speaks about ordinary excludes, so does not incorrectly erase this exception."
+    },
+    "sender_removal": {
+      "source_id": "P1",
+      "lines": [
+        1870,
+        1892
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L1870-L1892",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L1870",
+      "summary": "remove-source-files concerns successfully duplicated sending-side non-directories, with quiescence and size/mtime safeguards. Candidate names the distinct operation but does not prescribe it."
+    },
+    "itemized_oracle": {
+      "source_id": "P1",
+      "lines": [
+        3089,
+        3166
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L3089-L3166",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L3089",
+      "summary": "Itemized change format includes a deletion message. At target 3.2.7 the proposed preview can identify deletion paths; dry-run is not evidence that transfer, cancellation, or publication occurred."
+    },
+    "delay_updates": {
+      "source_id": "P1",
+      "lines": [
+        3401,
+        3431
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L3401-L3431",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L3401",
+      "summary": "Held temporary files renamed successively, not a single tree commit. Conflicts with inplace/append; full-list memory and extra destination disk; partial-dir naming/mount conditions. These are relevant if enabling it; candidate does not require enabling it."
+    },
+    "first_match": {
+      "source_id": "P1",
+      "lines": [
+        3930,
+        3962
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L3930-L3962",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L3930",
+      "summary": "First matching rule governs, so a later include cannot overturn an already matching exclude. FILTER debug is a prospective diagnostic, not an executed check here."
+    },
+    "two_sided_filters": {
+      "source_id": "P1",
+      "lines": [
+        4005,
+        4030
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L4005-L4030",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L4005",
+      "summary": "Default sender hide/show and receiver protect/risk, qualified by rule applicability/order."
+    },
+    "filter_types_and_patterns": {
+      "source_id": "P1",
+      "lines": [
+        4037,
+        4190
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L4037-L4190",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L4037",
+      "summary": "Exclude is hide+protect, protect is receiver-only; leading slash anchors; trailing triple-star covers directory and descendants; modifiers affect sides, perishability and domain."
+    },
+    "transfer_root": {
+      "source_id": "P1",
+      "lines": [
+        4334,
+        4387
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L4334-L4387",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L4334",
+      "summary": "Global anchoring uses transfer root; source slash and relative mode alter root/path mapping. Per-directory merge-file anchors differ."
+    },
+    "exit_values": {
+      "source_id": "P1",
+      "lines": [
+        4641,
+        4664
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/rsync.1.md#L4641-L4664",
+      "local": "primary-evidence/rsync-v3.2.7-manual.md.html#L4641",
+      "summary": "Success is zero; interrupt, partial transfer, vanished source and timeout have nonzero exit codes. Blocking publication on any nonzero outcome is a conservative product rule, not an rsync publish feature."
+    },
+    "implementation_first_match": {
+      "source_id": "P4",
+      "lines": [
+        1035,
+        1063
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/exclude.c#L1035-L1063",
+      "local": "primary-evidence/rsync-v3.2.7-exclude.c.html#L1035",
+      "summary": "check_filter walks the ordered list and returns on the first matching applicable entry; inspected as text, not executed."
+    },
+    "implementation_pattern": {
+      "source_id": "P4",
+      "lines": [
+        902,
+        976
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/exclude.c#L902-L976",
+      "local": "primary-evidence/rsync-v3.2.7-exclude.c.html#L902",
+      "summary": "Matcher treats leading slash as anchored and triple-star suffix as also matching a directory."
+    },
+    "release_context": {
+      "source_id": "P5",
+      "lines": [
+        1,
+        65
+      ],
+      "url": "https://github.com/RsyncProject/rsync/blob/v3.2.7/NEWS.md#L1-L65",
+      "local": "primary-evidence/rsync-v3.2.7-news.md.html#L1",
+      "summary": "Upstream release document identifies 3.2.7 and 20 October 2022. It records a filtering-validation fix; that is not proof of deployed binaries or every 2026 platform behavior."
+    },
+    "faq_shell": {
+      "source_id": "P3",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "section": "is your shell clean",
+      "local": "primary-evidence/rsync-live-faq.html",
+      "summary": "Startup output contaminates a remote-shell data stream; direct daemon connections without a remote shell have a different daemon-side diagnostic. Supplemental, not necessary to fix the six critique items."
+    }
+  },
+  "candidate_locators": {
+    "final_section": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/final-section.md",
+    "source_map": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/source-map.json",
+    "evidence": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/sources/S1-primary-evidence.md"
+  },
+  "version_policy": "P1/P4/P5 are retrieved from the upstream v3.2.7 tag with saved-byte SHA-256. P2/P3 are live unpinned and are not evidence of endpoint versions. Source tag/content identity is distinct from installed-peer verification.",
+  "read_scope": "Full assigned input/corpus/candidate/source-map/every candidate source member. Upstream primary files inspected at the mapped relevant sections; do not claim entire 4,842-line manual or historical NEWS was semantically audited.",
+  "executed_operations": [
+    "Read local assigned artifacts",
+    "SHA-256 and byte comparison of frozen inputs",
+    "Read-only HTTPS retrieval",
+    "Word counts and static assessment file validation"
+  ],
+  "not_executed": [
+    "rsync invocation",
+    "fixture/application/service check",
+    "deployment",
+    "downloaded-code execution"
+  ],
+  "retrieval_failures": []
+}

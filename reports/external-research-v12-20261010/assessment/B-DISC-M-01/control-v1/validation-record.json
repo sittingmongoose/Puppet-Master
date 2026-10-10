@@ -1,0 +1,36 @@
+{
+  "validated_at_utc": "2026-10-10T04:14:31.280249+00:00",
+  "result": "PASS",
+  "checks": [
+    "three required full-review outputs present and parseable",
+    "20 exact obligations and 17 grouped substantive claim checks",
+    "source/capture/claim navigation joins consistent",
+    "eight independent source captures present with matching hashes",
+    "all inspected candidate files unchanged",
+    "all ten terminal-frozen bytes still match",
+    "local Markdown evidence links resolve",
+    "one material finding and consistent source judgment",
+    "proposed-versus-executed distinction preserved"
+  ],
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/assessment.md",
+      "bytes": 13661,
+      "sha256": "937165e87fe47b611a0f89ed7ecc02ff56a755a634d606109e058b083d126fb9",
+      "mtime_utc": "2026-10-10T04:13:54.406339+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/assessment.json",
+      "bytes": 39939,
+      "sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac",
+      "mtime_utc": "2026-10-10T04:14:31.272045+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/source-map.json",
+      "bytes": 21189,
+      "sha256": "623174534a5dacdbdbfaa282a62e2f44f1920c0ec27e7f3b6537bebc15572c17",
+      "mtime_utc": "2026-10-10T04:14:31.272974+00:00"
+    }
+  ],
+  "native_completion": "pending; required artifacts saved first"
+}

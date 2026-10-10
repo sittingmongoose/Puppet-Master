@@ -1,0 +1,39 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-04.txt
+Original SHA256: 5183578aadbb61cd248f53bd565b1c0c20da769f7793802d8836e112f0e96794
+Original numbered lines; gaps omitted. Not full response.
+
+6: Amazon S3 provides a range of data protection capabilities throughout an object's storage
+7: lifecycle. With Amazon S3, you can use checksum values to verify the integrity of the data that
+8: you upload or download. In addition, you can request that another checksum value be
+9: calculated for any object that you store in S3.
+10: When uploading, copying, or managing your data, you can choose from several supported
+11: checksum algorithms:
+12: CRC-64/NVME (CRC64NVME)
+13: Note
+14: The CRC64NVME checksum algorithm is the default checksum
+15: algorithm used for checksum calculations.
+16: CRC-32 (CRC32)
+17: CRC-32C (CRC32C)
+18: SHA-1 (SHA1)
+19: SHA-256 (SHA256)
+20: MD5 (MD5)
+21: XXHash64 (XXHASH64)
+22: XXHash3 (XXHASH3)
+23: XXHash128 (XXHASH128)
+24: SHA-512 (SHA512)
+25: Note
+26: You can provide a precalculated MD5 checksum using the
+27: x-amz-checksum-md5 header. AWS SDKs do not automatically calculate
+28: MD5 checksums. For multipart uploads, the Compute checksum operation in S3 Batch Operations
+29: can calculate full object MD5 checksums for objects at rest. The legacy
+30: Content-MD5 header remains available for single part uploads
+31: using SSE-S3 encryption.
+32: When you upload an object to S3, you can specify the usage of any of these checksum
+33: algorithms. For uploads, all AWS-owned clients calculate a checksum of the object and send
+34: it with the upload request. S3 then independently calculates a checksum value of the object
+35: on the server-side, and validates it with the provided value before storing the object and
+36: checksum value. You can also provide precalculated
+37: values for these checksum algorithms when you a perform a single part upload or multipart upload (using the full
+38: object checksum type for multipart uploads). To use precalculated values with multiple objects, use the AWS CLI or
+39: AWS SDKs.

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "A001",
+    "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+    "snapshot": "evidence/inspected-science/001-RUBRIC-v1.md",
+    "bytes": 2790,
+    "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+    "inspected_at_utc": "2026-10-10T04:12:32.906636+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A002",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+    "snapshot": "evidence/inspected-science/002-input-map.json",
+    "bytes": 626,
+    "sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+    "inspected_at_utc": "2026-10-10T04:12:32.906844+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A003",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+    "snapshot": "evidence/inspected-science/003-assignment.md",
+    "bytes": 1810,
+    "sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+    "inspected_at_utc": "2026-10-10T04:12:32.907020+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A004",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/freeze.json",
+    "snapshot": "evidence/inspected-science/004-freeze.json",
+    "bytes": 2849,
+    "sha256": "5c7d4746092117fb093b71b607035003739d33385c52519c143714700b4d6824",
+    "inspected_at_utc": "2026-10-10T04:12:32.907232+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A005",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+    "snapshot": "evidence/inspected-science/005-assignment.md",
+    "bytes": 5043,
+    "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+    "inspected_at_utc": "2026-10-10T04:12:32.907413+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A006",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+    "snapshot": "evidence/inspected-science/006-fixture.json",
+    "bytes": 1652,
+    "sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+    "inspected_at_utc": "2026-10-10T04:12:32.907571+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A007",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+    "snapshot": "evidence/inspected-science/007-manifest.json",
+    "bytes": 624,
+    "sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+    "inspected_at_utc": "2026-10-10T04:12:32.907742+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A008",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+    "snapshot": "evidence/inspected-science/008-S1.md",
+    "bytes": 944,
+    "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+    "inspected_at_utc": "2026-10-10T04:12:32.907903+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A009",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+    "snapshot": "evidence/inspected-science/009-S2.md",
+    "bytes": 795,
+    "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+    "inspected_at_utc": "2026-10-10T04:12:32.908075+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A010",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+    "snapshot": "evidence/inspected-science/010-index.json",
+    "bytes": 1281,
+    "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+    "inspected_at_utc": "2026-10-10T04:12:32.908230+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A011",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+    "snapshot": "evidence/inspected-science/011-final-section.md",
+    "bytes": 7111,
+    "sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+    "inspected_at_utc": "2026-10-10T04:12:32.908411+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A012",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/source-map.json",
+    "snapshot": "evidence/inspected-science/012-source-map.json",
+    "bytes": 5911,
+    "sha256": "b9e63c23ebea762a30693399791d742d0935dfb49679512bdec7f64b135310eb",
+    "inspected_at_utc": "2026-10-10T04:12:32.908594+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A013",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/goal-record.md",
+    "snapshot": "evidence/inspected-science/013-goal-record.md",
+    "bytes": 1929,
+    "sha256": "cfce03efbe99bd8311411fddc38a83912e20f4a8bcd2f9cb470a1bc205167a83",
+    "inspected_at_utc": "2026-10-10T04:12:32.908779+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A014",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/sources/rsync-3.2.7-man.txt",
+    "snapshot": "evidence/inspected-science/014-rsync-3.2.7-man.txt",
+    "bytes": 233638,
+    "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c",
+    "inspected_at_utc": "2026-10-10T04:12:32.910117+00:00",
+    "full_read_status": "complete, full text read in tool outputs; candidate manual lines 1-5051 covered in untruncated chunks"
+  },
+  {
+    "id": "A015",
+    "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/terminal-science-freeze.json",
+    "snapshot": "evidence/inspected-science/015-terminal-science-freeze.json",
+    "bytes": 9867,
+    "sha256": "fc57667cbea26e7c81fe50d89ebbc364439bd4787b6d24f71f6f2e8401a4cf48",
+    "inspected_at_utc": "2026-10-10T04:15:57.715015+00:00",
+    "full_read_status": "complete; actual host terminal-science-freeze read and byte-preserved without alteration"
+  }
+]

@@ -1,0 +1,992 @@
+{
+  "assessment_id": "B-FINAL-M-01/control-v1",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "generated_at_utc": "2026-10-10T04:33:16.521017+00:00",
+  "primary_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.289091+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+      "bytes": 1088,
+      "sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "source_id": "P1",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 18,
+          "end_line": 22,
+          "subject": "retry count and transient criteria",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L22"
+        },
+        {
+          "start_line": 24,
+          "end_line": 28,
+          "subject": "default backoff, retry-delay override",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L24-L28"
+        },
+        {
+          "start_line": 30,
+          "end_line": 31,
+          "subject": "Retry-After and introduction in 7.66.0",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L30-L31"
+        }
+      ],
+      "conditions_exceptions_applicability": "Target CLI tag 8.10.1; retries are additional to initial transfer; HTTP list is 408/429/500/502/503/504, timeout; FTP is outside this HTTPS assignment. Default backoff can be overridden by retry-delay. Retry-After predates target."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.334508+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+      "bytes": 1763,
+      "sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "source_id": "P2",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 17,
+          "end_line": 23,
+          "subject": "explicit all-error expansion, duplicate data warning and external scheduling alternative",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23"
+        },
+        {
+          "start_line": 25,
+          "end_line": 32,
+          "subject": "redirected input/output exception",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L25-L32"
+        },
+        {
+          "start_line": 34,
+          "end_line": 40,
+          "subject": "HTTP status is not an error by default; 404 not default transient",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40"
+        }
+      ],
+      "conditions_exceptions_applicability": "Only with retry; broad errors risk duplicate data, especially redirected input/output; ordinary successful HTTP transport is not equivalent to acceptable HTTP status. Candidate excludes this option and all mutations."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.366252+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/max-time.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+      "bytes": 884,
+      "sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "source_id": "P3",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 21,
+          "end_line": 27,
+          "subject": "seconds per transfer, resetting timer",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27"
+        }
+      ],
+      "conditions_exceptions_applicability": "Seconds, each transfer; resets on retries. Not elapsed lifetime of supervisor or process."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.401846+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-max-time.md",
+      "bytes": 715,
+      "sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "source_id": "P4",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 18,
+          "end_line": 23,
+          "subject": "retry scheduling window, active transfer overrun, zero disables limit",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md#L18-L23"
+        }
+      ],
+      "conditions_exceptions_applicability": "Seconds for retry eligibility; not cancellation of an already-started transfer. Zero means no retry timeout. Candidate separately requires supervisor cutoff."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.432599+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+      "bytes": 771,
+      "sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "source_id": "P5",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 20,
+          "end_line": 27,
+          "subject": "HTTP 400+ error 22 with retained body; fail alternative",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27"
+        }
+      ],
+      "conditions_exceptions_applicability": "Completed HTTP response 400 or above yields error 22 while retaining body; pre-existing transport/output errors may retain their own code. Retained body must not be published as successful catalog."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/write-out.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.468807+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/write-out.md",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+      "bytes": 11151,
+      "sha256": "a4d0d66f6aab752518bd805e3bb8a74e4794e10c39813af81a62ec49fff2c6ef",
+      "source_id": "P6",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 138,
+          "end_line": 140,
+          "subject": "num_retries added 8.9.0",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L138-L140"
+        },
+        {
+          "start_line": 170,
+          "end_line": 172,
+          "subject": "response_code",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L170-L172"
+        },
+        {
+          "start_line": 244,
+          "end_line": 245,
+          "subject": "time_total",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L244-L245"
+        },
+        {
+          "start_line": 20,
+          "end_line": 49,
+          "subject": "completed-transfer output semantics and output failures",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L20-L49"
+        }
+      ],
+      "conditions_exceptions_applicability": "Metadata after transfer, independent of success; num_retries exists since 8.9.0 and is available in 8.10.1. Supervisor cancellation may preclude normal write-out, so supervisor instrumentation remains needed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:29:20.568229+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/src/tool_operate.c",
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+      "bytes": 107334,
+      "sha256": "c93873c49643fbb87211aa0d6c50ab8799a170d3287854c1f0f5a66fdc9af1b2",
+      "source_id": "P7",
+      "inspection_scope": "Inspected relevant post_per_transfer retry/failure branches, lines 470-710; full file captured, not fully semantically reviewed",
+      "locators": [
+        {
+          "start_line": 482,
+          "end_line": 503,
+          "subject": "preserve pre-existing transfer error; post-process fail-with-body",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L482-L503"
+        },
+        {
+          "start_line": 539,
+          "end_line": 593,
+          "subject": "retry window, DNS/timeout defaults, opt-in connection refusal and HTTP statuses",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L539-L593"
+        },
+        {
+          "start_line": 617,
+          "end_line": 654,
+          "subject": "Retry-After uses greater delay and can suppress retry past window",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L617-L654"
+        },
+        {
+          "start_line": 664,
+          "end_line": 670,
+          "subject": "decrement remaining retries and cap exponential delay",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L664-L670"
+        },
+        {
+          "start_line": 703,
+          "end_line": 705,
+          "subject": "retry accounting",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L703-L705"
+        }
+      ],
+      "conditions_exceptions_applicability": "Static target-tag implementation evidence, not an executed test or deployment. Default retries also cover host/proxy resolution failures; connection refusal requires opt-in. Retry-After is evaluated for selected transient HTTP responses, takes the longer of existing/header delay, and may stop retries if beyond retry-max-time."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/curl/curl/curl-8_10_1/docs/cmdline-opts/fail.md",
+      "navigable_url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md",
+      "version": "curl-8_10_1",
+      "retrieved_at_utc": "2026-10-10T04:30:17.641281+00:00",
+      "operation": "Independent HTTPS GET via Python stdlib urllib; response bytes saved without executing code",
+      "http_status": 200,
+      "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md",
+      "bytes": 1082,
+      "sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "source_id": "P8",
+      "inspection_scope": "FULL documentation",
+      "locators": [
+        {
+          "start_line": 21,
+          "end_line": 35,
+          "subject": "fail without body, default HTTP behavior and authentication caveat",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35"
+        }
+      ],
+      "conditions_exceptions_applicability": "Useful alternative if body retention is unwanted; mutually exclusive with fail-with-body. Its authentication caveat cannot be blindly attributed to the distinct CLI post-processing implementation of fail-with-body."
+    }
+  ],
+  "local_input_and_candidate_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "sha256": "e4f86dda933f87a4a221f08ffafbb114f7d09c3924e929907ff622fd9854b165",
+      "bytes": 624,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.833600+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+      "sha256": "fe1b8099ee77eb8a08eb2d5a0fcbf76aa4ab80667bf58a081db31d09ec0657b7",
+      "bytes": 2379,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.833696+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/freeze.json",
+      "sha256": "bfed31af67363ab57a541d578799e265071187f910d66bb826a76d86b003111f",
+      "bytes": 2888,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.834294+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "bytes": 4944,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.832329+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "bytes": 1665,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.832854+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/manifest.json",
+      "sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "bytes": 624,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.833002+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "bytes": 905,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.832527+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "bytes": 818,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.832635+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "bytes": 1294,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.832740+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+      "sha256": "bc7a95e640b1ef950cbe0af54dcbdd61ca1eb90911d2edb7e6db781329e6b4c6",
+      "bytes": 5456,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:20:58.330642+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/source-map.json",
+      "sha256": "06dd947cb5453ecc7c135c0d971ba73b9c68ab0267bed8f41732ee38ba037c08",
+      "bytes": 10236,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:27:33.212391+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/sources/curl-8.10.1-reference-notes.md",
+      "sha256": "4f6bc60d96744c63ac9470a7aa1d9671f9b6b3f556bc7039d132863ef2efc3fe",
+      "bytes": 2968,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:20:58.330777+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-activation-receipt.json",
+      "sha256": "278ead209fab9ab1efe8e47c0edde28c9849d6243f5287a526a08f3a2b52b4b7",
+      "bytes": 462,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:20:58.330420+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-completion-receipt.json",
+      "sha256": "21db9081dde07793260f41b92fbad764d75d17e910d9e709976c8929d20d0ce4",
+      "bytes": 790,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:27:33.211849+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/dispatch.json",
+      "sha256": "fe7fd1f41ad733fa452858a0cf89cc48d79899d83f06e65d7160b9b039ce9917",
+      "bytes": 4364,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:54.536325+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/request.json",
+      "sha256": "bad601aea770d3b24bc922661ac139e348239370f7c9cbbb720d2875fb37d8df",
+      "bytes": 1098,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:17:53.833848+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/root-review-request.json",
+      "sha256": "4c9e5bd89289a807bb6c30771dff129c351aaca19c90fbdfbeb6289e0aee9166",
+      "bytes": 2446,
+      "read_scope": "FULL",
+      "mtime_utc": "2026-10-10T04:28:15.095367+00:00"
+    }
+  ],
+  "source_claim_mapping": [
+    {
+      "id": "C1",
+      "subject": "retry count",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 5,
+        "end_line": 5
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L22",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 18,
+          "end_line": 22,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L664-L670",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 664,
+          "end_line": 670,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "retry 3 means up to initial plus three retries; early success or deadline can yield fewer."
+    },
+    {
+      "id": "C2",
+      "subject": "default transient domain and backoff",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 5,
+        "end_line": 5
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L28",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 18,
+          "end_line": 28,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L555-L593",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 555,
+          "end_line": 593,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Correct target-version HTTP status list and timeout; expressly excludes FTP domain. Wording says include and does not falsely exclude implementation-level DNS retries."
+    },
+    {
+      "id": "C3",
+      "subject": "Retry-After applicability/history",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 5,
+        "end_line": 5
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L30-L31",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 30,
+          "end_line": 31,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L634-L654",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 634,
+          "end_line": 654,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Available before 8.10.1; header can change selected transient HTTP retry delay. It is not an unlimited promise to retry arbitrary statuses or beyond the deadline."
+    },
+    {
+      "id": "C4",
+      "subject": "HTTP status failure and error body",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 7,
+        "end_line": 7
+      },
+      "evidence": [
+        {
+          "source_id": "P5",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+          "start_line": 20,
+          "end_line": 27,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P2",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+          "start_line": 34,
+          "end_line": 40,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L482-L503",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 482,
+          "end_line": 503,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Successful transport of 404 can otherwise return success. Chosen fail-with-body retains completed error body and emits 22; existing transfer failures can emit their own errors. Separate status/schema gate prevents body publication."
+    },
+    {
+      "id": "C5",
+      "subject": "time units/scope",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 9,
+        "end_line": 9
+      },
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+          "start_line": 21,
+          "end_line": 27,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md#L18-L23",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-max-time.md",
+          "start_line": 18,
+          "end_line": 23,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Both 45 arguments are seconds; first is per transfer, second schedules retries. Supervisor absolute deadline is a proposed application requirement, not claimed curl behavior."
+    },
+    {
+      "id": "C6",
+      "subject": "diagnostic metadata",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 7,
+        "end_line": 7
+      },
+      "evidence": [
+        {
+          "source_id": "P6",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L138-L140",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+          "start_line": 138,
+          "end_line": 140,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P6",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L170-L172",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+          "start_line": 170,
+          "end_line": 172,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Both num_retries and response_code exist in target version. Whole-process elapsed time is assigned to supervisor; cancellation/diagnostic instrumentation is not asserted implemented."
+    },
+    {
+      "id": "C7",
+      "subject": "all-error retries and mutation rejection",
+      "judgment": "SUPPORTED",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 3,
+        "end_line": 7
+      },
+      "evidence": [
+        {
+          "source_id": "P2",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L32",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+          "start_line": 17,
+          "end_line": 32,
+          "version": "curl-8_10_1"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+          "start_line": 12,
+          "end_line": 15
+        }
+      ],
+      "reason": "Selective default retries and failure reporting preserve read-only scope; original obligations independently forbid expansion to POST/update."
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "item": 1,
+      "candidate_decision": "ACCEPT",
+      "review": "CORRECT",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 23,
+        "end_line": 23
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L18-L22",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 18,
+          "end_line": 22,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Corrects additional-versus-total attempt error."
+    },
+    {
+      "item": 2,
+      "candidate_decision": "ACCEPT",
+      "review": "CORRECT",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 24,
+        "end_line": 24
+      },
+      "evidence": [
+        {
+          "source_id": "P3",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md#L21-L27",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/max-time.md",
+          "start_line": 21,
+          "end_line": 27,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P4",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md#L18-L23",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-max-time.md",
+          "start_line": 18,
+          "end_line": 23,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Correctly rejects flag-only absolute guarantee."
+    },
+    {
+      "item": 3,
+      "candidate_decision": "REJECT",
+      "review": "CORRECT_WITH_MINOR_CITATION_LIMITATION",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 25,
+        "end_line": 25
+      },
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "reason": "O5 is the governing primary authority for product cancellation. External curl documentation cannot delete it. O5 is named but lacks a navigable link."
+    },
+    {
+      "item": 4,
+      "candidate_decision": "REJECT",
+      "review": "CORRECT",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 26,
+        "end_line": 26
+      },
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+          "start_line": 12,
+          "end_line": 15
+        },
+        {
+          "source_id": "P2",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L17-L23",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+          "start_line": 17,
+          "end_line": 23,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Mandatory read-only scope overrides received critique; duplicate-data caution is relevant supporting context."
+    },
+    {
+      "item": 5,
+      "candidate_decision": "ACCEPT",
+      "review": "CORRECT",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 27,
+        "end_line": 27
+      },
+      "evidence": [
+        {
+          "source_id": "P5",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+          "start_line": 20,
+          "end_line": 27,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P2",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md#L34-L40",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-all-errors.md",
+          "start_line": 34,
+          "end_line": 40,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Explicit failure reporting corrects default HTTP-success misconception."
+    },
+    {
+      "item": 6,
+      "candidate_decision": "REJECT",
+      "review": "CORRECT_WITH_MINOR_LOCATOR_LIMITATION",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 28,
+        "end_line": 28
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L30-L31",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 30,
+          "end_line": 31,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "reason": "Target-tag documentation explicitly dates Retry-After to 7.66.0; candidate anchor misses the actual supporting lines."
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR_LOCATOR",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+          "start_line": 7,
+          "end_line": 7
+        },
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+          "start_line": 28,
+          "end_line": 28
+        }
+      ],
+      "evidence": [
+        {
+          "source_id": "P6",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L138-L140",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+          "start_line": 138,
+          "end_line": 140,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P6",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L170-L172",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+          "start_line": 170,
+          "end_line": 172,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L30-L31",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 30,
+          "end_line": 31,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "finding": "Several GitHub line anchors use rendered-web line positions rather than physical source lines. The Retry-After disposition links L27-L28, but support is L30-L31. The write-out citation links L125-L130, but retries are L138-L140 and response_code L170-L172. Correct target pages remain navigable and independent retrieval confirms all claims; no consequential factual error."
+    },
+    {
+      "id": "L2",
+      "severity": "MINOR_CITATION_FORM",
+      "candidate": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+          "start_line": 25,
+          "end_line": 25
+        }
+      ],
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+          "start_line": 15,
+          "end_line": 15
+        }
+      ],
+      "finding": "Critique item 3 directly invokes O5 but supplies no navigable primary citation. The decision is fully supported by the original assignment, so this is a citation-format limitation, not a material unsupported rejection."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "kind": "SUPPORTED_CANDIDATE_DISCOVERY",
+      "description": "Versioned docs and option history prevent importing newer live manual behavior. Retry-After is present by 7.66.0; num_retries was introduced in 8.9.0, so diagnostic support exists in 8.10.1.",
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 5,
+        "end_line": 7
+      },
+      "evidence": [
+        {
+          "source_id": "P1",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md#L30-L31",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry.md",
+          "start_line": 30,
+          "end_line": 31,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P6",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md#L138-L140",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/write-out.md",
+          "start_line": 138,
+          "end_line": 140,
+          "version": "curl-8_10_1"
+        }
+      ]
+    },
+    {
+      "id": "D2",
+      "kind": "INDEPENDENT_IMPLEMENTATION_DETAIL",
+      "description": "Target implementation also retries host/proxy resolution failures by default and requires opt-in for connection refusal. Candidate says conditions include its listed cases and preserves the default policy, so the non-exhaustive transport summary does not change the consequential policy.",
+      "evidence": [
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L555-L565",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 555,
+          "end_line": 565,
+          "version": "curl-8_10_1"
+        }
+      ]
+    },
+    {
+      "id": "D3",
+      "kind": "INDEPENDENT_ORACLE_CONDITION",
+      "description": "For selected transient HTTP failures, Retry-After can lengthen the existing backoff and can terminate retry scheduling when it would exceed retry-max-time. A success-after-retries acceptance fixture must choose durations/header values that fit the 45-second supervisor budget; an oversized header has a different legitimate terminal oracle. No runtime result is claimed.",
+      "evidence": [
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L634-L654",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 634,
+          "end_line": 654,
+          "version": "curl-8_10_1"
+        }
+      ],
+      "candidate": {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+        "start_line": 15,
+        "end_line": 16
+      }
+    },
+    {
+      "id": "D4",
+      "kind": "USEFUL_ALTERNATIVE",
+      "description": "fail is a body-suppressing alternative to fail-with-body, with its own authentication warning. The chosen fail-with-body is reasonable because it retains diagnostic body data while publication is separately gated. External status checks are another available approach; the assignment does not require enumerating every alternative.",
+      "evidence": [
+        {
+          "source_id": "P8",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md",
+          "start_line": 21,
+          "end_line": 35,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P5",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md#L20-L27",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail-with-body.md",
+          "start_line": 20,
+          "end_line": 27,
+          "version": "curl-8_10_1"
+        },
+        {
+          "source_id": "P7",
+          "url": "https://github.com/curl/curl/blob/curl-8_10_1/src/tool_operate.c#L482-L503",
+          "local_path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/tool_operate.c",
+          "start_line": 482,
+          "end_line": 503,
+          "version": "curl-8_10_1"
+        }
+      ]
+    }
+  ],
+  "freeze_integrity": {
+    "checked_at_utc": "2026-10-10T04:33:16.521017+00:00",
+    "input_freeze_path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/freeze.json",
+    "input_freeze_checks": [
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+        "expected_sha256": "fe1b8099ee77eb8a08eb2d5a0fcbf76aa4ab80667bf58a081db31d09ec0657b7",
+        "actual_sha256": "fe1b8099ee77eb8a08eb2d5a0fcbf76aa4ab80667bf58a081db31d09ec0657b7",
+        "expected_bytes": 2379,
+        "actual_bytes": 2379,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+        "expected_sha256": "e4f86dda933f87a4a221f08ffafbb114f7d09c3924e929907ff622fd9854b165",
+        "actual_sha256": "e4f86dda933f87a4a221f08ffafbb114f7d09c3924e929907ff622fd9854b165",
+        "expected_bytes": 624,
+        "actual_bytes": 624,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+        "expected_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+        "actual_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+        "expected_bytes": 1665,
+        "actual_bytes": 1665,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/manifest.json",
+        "expected_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+        "actual_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+        "expected_bytes": 624,
+        "actual_bytes": 624,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+        "expected_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+        "actual_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+        "expected_bytes": 4944,
+        "actual_bytes": 4944,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+        "expected_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+        "actual_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+        "expected_bytes": 905,
+        "actual_bytes": 905,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+        "expected_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+        "actual_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+        "expected_bytes": 818,
+        "actual_bytes": 818,
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+        "expected_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+        "actual_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+        "expected_bytes": 1294,
+        "actual_bytes": 1294,
+        "matches": true
+      }
+    ],
+    "input_integrity": "PASS",
+    "terminal_output_freeze": "NOT_FOUND_IN_ASSIGNED_CONTROL_TREE",
+    "terminal_output_integrity": "UNKNOWN",
+    "searched_scope": "ER12_RUNTIME/runs/B-FINAL-M-01/control",
+    "assigned_control_file_inventory": [
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/dispatch.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/freeze.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-activation-receipt.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-completion-receipt.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/raw-dispatch.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/records/dispatch-20261010T041754535860-445a3acb441348e981a22315d4c2b78f.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/request.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/source-map.json",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/sources/curl-8.10.1-reference-notes.md"
+    ],
+    "note": "Only the prepared input freeze is present. No terminal output hash manifest was found in the complete assigned control subtree. Current output hashes are recorded without manufacturing a terminal baseline."
+  },
+  "retrieval_failures": [],
+  "note": "Independent official curl source retrievals only; local source text captured as evidence, never executed. Physical file line numbers govern navigable links, rather than collapsed web-render line positions."
+}

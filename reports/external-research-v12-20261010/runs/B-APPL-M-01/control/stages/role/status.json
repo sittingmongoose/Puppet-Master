@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-control-role-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-control-role-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-control-role-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-control-role-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-control-role-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "Completed the bounded verification in [verification.md](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md) (720 words), with the [source map](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json) and [primary-source notes](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md).\n\nThe six dispositions are: false, true with conditions, false, true conditionally, false, and unsupported by the supplied evidence. Both acceptance checks are marked proposed, not executed. No database probe or performance benchmark was run.\n\nThe native Goal is **complete**; elapsed time was 2m 54s.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-control-role-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:593b60db-9f1e-4b93-8bc1-2e3ef955f567",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "Completed the bounded verification in [verification.md](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md) (720 words), with the [source map](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json) and [primary-source notes](ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md).\n\nThe six dispositions are: false, true with conditions, false, true conditionally, false, and unsupported by the supplied evidence. Both acceptance checks are marked proposed, not executed. No database probe or performance benchmark was run.\n\nThe native Goal is **complete**; elapsed time was 2m 54s.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-control-role-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:593b60db-9f1e-4b93-8bc1-2e3ef955f567",
+  "waitTimedOut": false
+}

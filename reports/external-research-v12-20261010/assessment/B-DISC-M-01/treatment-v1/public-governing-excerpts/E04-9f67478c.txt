@@ -1,0 +1,45 @@
+URL: https://curl.se/libcurl/c/CURLOPT_RESUME_FROM.html
+Original locator: ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04.txt
+Original SHA256: 9f67478ca2288b72a3328adda61ab22e66cec4b28d6e8b2937e638ee55b1b414
+Original numbered lines; gaps omitted. Not full response.
+
+40: File a bug about this page
+41: View man page source
+42: Name
+43: CURLOPT_RESUME_FROM - offset to resume transfer from
+44: Synopsis
+45: #include <curl/curl.h>
+46: CURLcode curl_easy_setopt(CURL *handle, CURLOPT_RESUME_FROM, long from);
+47: Description
+48: Pass a long as parameter. It contains the offset in number of bytes that you want the transfer to start from. Set this option to 0 to make the transfer start from the beginning (effectively disabling resume). For FTP, set this option to -1 to make the transfer start from the end of the target file (useful to continue an interrupted upload).
+49: When doing uploads with FTP, the resume position is where in the local/source file libcurl should try to resume the upload from and it then appends the source file to the remote target file.
+50: HTTP uploads using POST or PUT cannot be resumed. curl_easy_perform returns CURLE_BAD_FUNCTION_ARGUMENT when this option is set to a non-zero value for such an upload.
+51: If you need to resume a transfer beyond the 2GB limit, use CURLOPT_RESUME_FROM_LARGE instead.
+52: Default
+53: 0, not used
+54: Protocols
+55: This functionality affects all supported protocols
+56: Example
+57: int main(void)
+58: {
+59: CURL *curl = curl_easy_init();
+60: if(curl) {
+61: CURLcode result;
+62: long size_of_file = 6789;
+63: curl_easy_setopt(curl, CURLOPT_URL, "ftp://example.com");
+64: /* resume upload at byte index 200 */
+65: curl_easy_setopt(curl, CURLOPT_RESUME_FROM, 200L);
+66: /* ask for upload */
+67: curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+68: /* set total data amount to expect */
+69: curl_easy_setopt(curl, CURLOPT_INFILESIZE, size_of_file);
+70: /* Perform the request */
+71: result = curl_easy_perform(curl);
+72: curl_easy_cleanup(curl);
+73: }
+74: }
+75: Availability
+76: Added in curl 7.1
+77: Return value
+78: curl_easy_setopt returns a CURLcode indicating success or error.
+79: CURLE_OK (0) means everything was OK, non-zero means an error occurred, see libcurl-errors.

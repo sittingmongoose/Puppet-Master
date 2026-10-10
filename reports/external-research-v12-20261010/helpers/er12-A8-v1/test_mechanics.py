@@ -18,7 +18,7 @@ class A8(unittest.TestCase):
                  "runtime_root": str(root), "brief_path": str(top / "brief.md"), "plan_path": str(top / "plan.md"),
                  "whole_deadline_utc": (dt.datetime.now(dt.timezone.utc) + dt.timedelta(seconds=3500)).isoformat(),
                  "stage_budgets_s": {"investigator": 1800, "critic": 720, "reviser": 1080},
-                 "provider": {"providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}}}
+                 "provider": {"providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}}}
             cp.write_text(json.dumps(c))
             c = m.load_config(cp)
             for stage in ("investigator", "critic", "reviser"):

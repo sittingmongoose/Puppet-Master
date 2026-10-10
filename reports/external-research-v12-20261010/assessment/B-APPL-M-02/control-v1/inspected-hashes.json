@@ -1,0 +1,185 @@
+{
+  "observed_at_utc": "2026-10-10T04:24:10.117672+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC_FREEZE.json",
+      "sha256": "2236390e2e69fedc21edcc1ac8dd676d4c0b14fd2b75e8cfb5196689e2bc73e3",
+      "bytes": 285,
+      "mtime_utc": "2026-10-10T03:56:48.938508+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "2236390e2e69fedc21edcc1ac8dd676d4c0b14fd2b75e8cfb5196689e2bc73e3",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/root-review-request.json",
+      "sha256": "6585c3f73171af14cbce322cd05764f1eb3a1477b6454c850974d7c763ea5579",
+      "bytes": 2442,
+      "mtime_utc": "2026-10-10T04:21:29.147901+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "6585c3f73171af14cbce322cd05764f1eb3a1477b6454c850974d7c763ea5579",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md",
+      "sha256": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+      "bytes": 2375,
+      "mtime_utc": "2026-10-10T04:17:52.599091+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "sha256": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+      "bytes": 600,
+      "mtime_utc": "2026-10-10T04:17:52.598944+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/freeze.json",
+      "sha256": "9d8b3ddfd2fa8a1da75bdd76f44f7404278da1485bc4b3c820368feadc0670d3",
+      "bytes": 2878,
+      "mtime_utc": "2026-10-10T04:17:52.599715+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "9d8b3ddfd2fa8a1da75bdd76f44f7404278da1485bc4b3c820368feadc0670d3",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/verification.md",
+      "sha256": "022b03ad767dfe1a0c89f4c5731367e736e3e91b3b523ff35ffc938a203556b2",
+      "bytes": 4979,
+      "mtime_utc": "2026-10-10T04:20:38.352489+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "022b03ad767dfe1a0c89f4c5731367e736e3e91b3b523ff35ffc938a203556b2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/source-map.json",
+      "sha256": "5ca06e170c72cf5fcdb2ea3138e817f77371d20358f389dc3974bc8b75abf337",
+      "bytes": 4231,
+      "mtime_utc": "2026-10-10T04:20:52.960354+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "5ca06e170c72cf5fcdb2ea3138e817f77371d20358f389dc3974bc8b75abf337",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/activation-receipt.json",
+      "sha256": "0f62dfcc09061ef01ccf4eb4fddf0cf151ed6f37bb7e01b36a6b3557d134bcf2",
+      "bytes": 460,
+      "mtime_utc": "2026-10-10T04:18:27.972941+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "0f62dfcc09061ef01ccf4eb4fddf0cf151ed6f37bb7e01b36a6b3557d134bcf2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/native-completion-receipt.json",
+      "sha256": "8c17754611b99f6970180ce54e49c29df2c632042e479b7c64ce00e3b39b969a",
+      "bytes": 788,
+      "mtime_utc": "2026-10-10T04:21:02.623620+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "8c17754611b99f6970180ce54e49c29df2c632042e479b7c64ce00e3b39b969a",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/dispatch.json",
+      "sha256": "7f5204ca68a2f3111ef82c1afb5f06ffeef47782fff3f8efcb35e5a9c5c6f57f",
+      "bytes": 4348,
+      "mtime_utc": "2026-10-10T04:17:53.402162+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "7f5204ca68a2f3111ef82c1afb5f06ffeef47782fff3f8efcb35e5a9c5c6f57f",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/task-observations/er12-B-APPL-M-02-control-role-v2.json",
+      "sha256": "ed4f85e0b688c5e1ea0bae93ccf5e61f4c1c81b8b5c58af68dbbbc79b1d2660a",
+      "bytes": 10864,
+      "mtime_utc": "2026-10-10T04:21:29.012762+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ed4f85e0b688c5e1ea0bae93ccf5e61f4c1c81b8b5c58af68dbbbc79b1d2660a",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "bytes": 3009,
+      "mtime_utc": "2026-10-10T04:17:51.615387+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "bytes": 966,
+      "mtime_utc": "2026-10-10T04:17:51.615655+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "bytes": 873,
+      "mtime_utc": "2026-10-10T04:17:51.615862+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "bytes": 1251,
+      "mtime_utc": "2026-10-10T04:17:51.616131+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "bytes": 1590,
+      "mtime_utc": "2026-10-10T04:17:51.616932+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/manifest.json",
+      "sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "bytes": 624,
+      "mtime_utc": "2026-10-10T04:17:51.617234+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/sources/S1-python-pathlib.md",
+      "sha256": "ce8363188eea6cce5c5ccb61715c0cd4775099e86646e01dc7da1882af87a7f0",
+      "bytes": 1449,
+      "mtime_utc": "2026-10-10T04:19:55.097361+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ce8363188eea6cce5c5ccb61715c0cd4775099e86646e01dc7da1882af87a7f0",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/sources/S2-python-glob.md",
+      "sha256": "791d8824cf76a1a3136d41713ccf2cd331096ea87ab8ce2e75de7d066208663f",
+      "bytes": 1130,
+      "mtime_utc": "2026-10-10T04:19:55.103361+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "791d8824cf76a1a3136d41713ccf2cd331096ea87ab8ce2e75de7d066208663f",
+      "unchanged_at_save": true
+    }
+  ]
+}

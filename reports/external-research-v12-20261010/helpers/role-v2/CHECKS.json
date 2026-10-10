@@ -1,0 +1,226 @@
+{
+  "schema": "er12-role-v2-mechanical-checks",
+  "passed": true,
+  "checks": [
+    "Original helper and all eight original fixture trees unchanged; baseline clone byte exact",
+    "All functions except leaf preparation unchanged, including CLI, validation, retry verification and recording; route catalog unchanged",
+    "Preparation core unchanged outside wrapper/task/key/protocol; fixed 900/600/300 and immutable freezing mechanics retained",
+    "All eight pair input identities equal, all original assignments/corpora/filehashes exact, sixteen routes authorized, sixteen unique v2 request keys",
+    "No runtime freezes, requests, deadlines, dispatches or science outputs created"
+  ],
+  "pairs": [
+    {
+      "slot_id": "B-DISC-M-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "c6a3070a35761267f0365da4ca22e3feec8b66fcf434a21c5eb03349f8bb222a",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-DISC-G-01",
+      "common_input_identity_equal": true,
+      "input_sha256": "0bac759e8f04ed28f83bd8b331ae91162f859e0852fc5fd219ca12cc9637f29d",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-DISC-G-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "b700b50ec2374ac4d60e376f20140f6e5a67cf83b5973fa4ccad2ece2b894176",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-APPL-M-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "cc79eb9b4fa282090d02a25fee2838f699fb40eea15cb1c2d4fb3be97ef01b0c",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-APPL-G-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "922bc7b62453aba466f22c5eac9297ac78c3713f0e83d3351aac14f69d73d3fb",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-FINAL-M-01",
+      "common_input_identity_equal": true,
+      "input_sha256": "99a44f4eafc3be1c452f3f7fe21c3d0834c6ed5afc26ae267eaf323e1589fc2e",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-FINAL-M-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "f02f41b1f75f369b0ad8ca185b94b92676690d4974b04eccdd74c26a308e0c09",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    },
+    {
+      "slot_id": "B-FINAL-G-02",
+      "common_input_identity_equal": true,
+      "input_sha256": "2ae750c1166f8ad86477a578929ee583891cc4efa7c4a74b94dcd1c969bfe80e",
+      "individual_hashes_verified": true,
+      "routes": [
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "priority"
+          }
+        },
+        {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        }
+      ],
+      "native_goal_contract": "same shared helper contract for control and treatment"
+    }
+  ],
+  "request_keys": [
+    "er12-B-DISC-M-02-control-role-v2",
+    "er12-B-DISC-M-02-treatment-role-v2",
+    "er12-B-DISC-G-01-control-role-v2",
+    "er12-B-DISC-G-01-treatment-role-v2",
+    "er12-B-DISC-G-02-control-role-v2",
+    "er12-B-DISC-G-02-treatment-role-v2",
+    "er12-B-APPL-M-02-control-role-v2",
+    "er12-B-APPL-M-02-treatment-role-v2",
+    "er12-B-APPL-G-02-control-role-v2",
+    "er12-B-APPL-G-02-treatment-role-v2",
+    "er12-B-FINAL-M-01-control-role-v2",
+    "er12-B-FINAL-M-01-treatment-role-v2",
+    "er12-B-FINAL-M-02-control-role-v2",
+    "er12-B-FINAL-M-02-treatment-role-v2",
+    "er12-B-FINAL-G-02-control-role-v2",
+    "er12-B-FINAL-G-02-treatment-role-v2"
+  ],
+  "verification_kind": "syntax, read-only input validation and AST comparison; no runtime/deadline creation",
+  "inference_performed": false,
+  "dispatch_performed": false
+}

@@ -1,0 +1,119 @@
+URL: https://tus.io/protocols/resumable-upload
+Original locator: ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05.txt
+Original SHA256: b1261162c4ec94b4122124d912dbdf7a9d60195aa9479f45d56a78728106f505
+Original numbered lines; gaps omitted. Not full response.
+
+138: Upload-Offset
+139: The Upload-Offset request and response header indicates a byte offset within a
+140: resource. The value MUST be a non-negative integer.
+141: Upload-Length
+142: The Upload-Length request and response header indicates the size of the entire
+143: upload in bytes. The value MUST be a non-negative integer.
+144: Tus-Version
+145: The Tus-Version response header MUST be a comma-separated list of protocol
+146: versions supported by the Server. The list MUST be sorted by Server’s preference
+147: where the first one is the most preferred one.
+148: Tus-Resumable
+149: The Tus-Resumable header MUST be included in every request and response except
+150: for OPTIONS requests. The value MUST be the version of the protocol used by
+151: the Client or the Server.
+152: If the version specified by the Client is not supported by the Server, it MUST
+153: respond with the 412 Precondition Failed status and MUST include the
+154: Tus-Version header into the response. In addition, the Server MUST NOT process
+155: the request.
+156: Tus-Extension
+157: The Tus-Extension response header MUST be a comma-separated list of the
+158: extensions supported by the Server. If no extensions are supported, the
+159: Tus-Extension header MUST be omitted.
+160: Tus-Max-Size
+161: The Tus-Max-Size response header MUST be a non-negative integer indicating the
+162: maximum allowed size of an entire upload in bytes. The Server SHOULD set this
+163: header if there is a known hard limit.
+164: X-HTTP-Method-Override
+165: The X-HTTP-Method-Override request header MUST be a string which MUST be
+166: interpreted as the request’s method by the Server, if the header is presented.
+167: The actual method of the request MUST be ignored. The Client SHOULD use this
+168: header if its environment does not support the PATCH or DELETE methods.
+169: Requests
+170: HEAD
+171: The Server MUST always include the Upload-Offset header in the response for a
+172: HEAD request, even if the offset is 0, or the upload is already considered
+173: completed. If the size of the upload is known, the Server MUST include the
+174: Upload-Length header in the response. If the resource is not found, the Server
+175: SHOULD return either the 404 Not Found, 410 Gone or 403 Forbidden status
+176: without the Upload-Offset header.
+177: The Server SHOULD acknowledge successful HEAD requests with a 200 OK or
+178: 204 No Content status.
+179: The Server MUST prevent the client and/or proxies from caching the response by
+180: adding the Cache-Control: no-store header to the response.
+181: PATCH
+182: The Server SHOULD accept PATCH requests against any upload URL and apply the
+183: bytes contained in the message at the given offset specified by the
+184: Upload-Offset header. All PATCH requests MUST use
+185: Content-Type: application/offset+octet-stream, otherwise the server SHOULD
+186: return a 415 Unsupported Media Type status.
+187: The Upload-Offset header’s value MUST be equal to the current offset of the
+188: resource. In order to achieve parallel upload the
+189: Concatenation extension MAY be used. If the offsets do not
+190: match, the Server MUST respond with the 409 Conflict status without modifying
+191: the upload resource.
+192: The Client SHOULD send all the remaining bytes of an upload in a single PATCH
+193: request, but MAY also use multiple small requests successively for scenarios
+194: where this is desirable. One example for these situations is when the
+195: Checksum extension is used.
+196: The Server MUST acknowledge successful PATCH requests with the
+197: 204 No Content status. It MUST include the Upload-Offset header containing
+198: the new offset. The new offset MUST be the sum of the offset before the PATCH
+199: request and the number of bytes received and processed or stored during the
+200: current PATCH request.
+201: If the server receives a PATCH request against a non-existent resource it
+202: SHOULD return a 404 Not Found status.
+203: Both Client and Server, SHOULD attempt to detect and handle network errors
+204: predictably. They MAY do so by checking for read/write socket errors, as well as
+360: The Upload-Expires response header indicates the time after which the
+361: unfinished upload expires. A Server MAY wish to remove incomplete uploads after
+362: a given period of time to prevent abandoned uploads from taking up extra
+363: storage. The Client SHOULD use this header to determine if an upload is still
+364: valid before attempting to resume the upload.
+365: This header MUST be included in every PATCH response if the upload is going to
+366: expire. If the expiration is known at the creation, the Upload-Expires header
+367: MUST be included in the response to the initial POST request. Its value MAY
+368: change over time.
+369: If a Client does attempt to resume an upload which has since been removed by the
+370: Server, the Server SHOULD respond with the 404 Not Found or 410 Gone status.
+371: The latter one SHOULD be used if the Server is keeping track of expired uploads.
+372: In both cases the Client SHOULD start a new upload.
+373: The value of the Upload-Expires header MUST be in
+374: RFC 9110
+375: datetime format.
+376: Checksum
+377: The Client and the Server MAY implement and use this extension to verify data
+378: integrity of each PATCH request. If supported, the Server MUST add checksum
+379: to the Tus-Extension header.
+380: A Client MAY include the Upload-Checksum header in a PATCH request. Once the
+381: entire request has been received, the Server MUST verify the uploaded chunk
+382: against the provided checksum using the specified algorithm. Depending on the
+383: result the Server MAY respond with one of the following status code:
+384: 400 Bad Request if the checksum algorithm is not supported by the server,
+385: 460 Checksum Mismatch if the checksums mismatch or
+386: 204 No Content if the checksums match and the processing of the data
+387: succeeded. In the first two cases the uploaded chunk MUST be discarded, and
+388: the upload and its offset MUST NOT be updated.
+389: The Server MUST support at least the SHA1 checksum algorithm identified by
+390: sha1. The names of the checksum algorithms MUST only consist of ASCII
+391: characters with the modification that uppercase characters are excluded.
+392: The Tus-Checksum-Algorithm header MUST be included in the response to an
+393: OPTIONS request.
+394: If the hash cannot be calculated at the beginning of the upload, it MAY be
+395: included as a trailer. If the Server can handle trailers, this behavior MUST be
+396: announced by adding checksum-trailer to the Tus-Extension header. Trailers,
+397: also known as trailing headers, are headers which are sent after the request’s
+398: body has been transmitted already.
+399: Headers
+400: Tus-Checksum-Algorithm
+401: The Tus-Checksum-Algorithm response header MUST be a comma-separated list of
+402: the checksum algorithms supported by the server.
+403: Upload-Checksum
+404: The Upload-Checksum request header contains information about the checksum of
+405: the current body payload. The header MUST consist of the name of the used
+406: checksum algorithm and the Base64 encoded checksum separated by a space.

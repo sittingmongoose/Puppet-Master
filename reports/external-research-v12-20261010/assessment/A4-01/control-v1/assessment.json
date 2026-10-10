@@ -1,0 +1,1932 @@
+{
+  "schema_version": "er12-independent-full-pipeline-assessment-v1",
+  "assignment": "ONE completed ER12 A4-01 control pipeline only",
+  "run_id": "A4-01-control",
+  "arm": "control",
+  "assessment_version": "control-v1",
+  "reviewer": "codex-er12-a401-control-review-10681257",
+  "saved_at_utc": "2026-10-10T04:30:59.160756+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "delivery_judgment": "COMPLETE",
+  "summary": "No remaining material error, omission or unsupported consequential decision found in the ordinary final stages/reviser/final.md. One surviving minor source metadata error (tusd v2.5.0 release year) remains. The material R2 discovery error is preserved as lineage and explicitly corrected. AWS checksum-type narrowing is independently supported. Native/protocol/effective-route/billing proof remains separate and partly UNKNOWN.",
+  "full_scope_completed": true,
+  "capped": false,
+  "unassessed_axes": [],
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "All eight original numbered obligations, pilot size/range, browser preference, optional largest-file CLI, owner authority, cost uncertainty and research-only boundary are accounted for. Every exact plan treatment is adjudicated below. No preselected product is imposed; no implementation or live endpoint is required.",
+      "evidence_ids": [
+        "ORIGINAL-BRIEF",
+        "ORIGINAL-PLAN"
+      ],
+      "candidate_locators": [
+        "discovery entire",
+        "draft §§1–8",
+        "critique obligation table",
+        "final entire, especially §§5,7,8"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims: exact subject, operation, version, default, unit, type, domain and exception",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent primary retrieval supports the operation/provider-bound limits, part/page rules, checksum matrix, CORS/expiry, cleanup, conditional writes, rclone defaults and tus/tusd behavior. The final withdraws the unsupported R2 MPU checksum inference and explicitly distinguishes composite SHA256 from full-object CRC. No material unsupported recommendation remains. L1 is a minor wrong release year in all carried TUSD-01 source records.",
+      "evidence_ids": [
+        "I-AWS-01",
+        "I-AWS-02",
+        "I-AWS-03",
+        "I-AWS-04",
+        "I-AWS-05",
+        "I-AWS-06",
+        "I-R2-01",
+        "I-R2-02",
+        "I-R2-03",
+        "I-UPPY-01",
+        "I-TUS-01",
+        "I-TUSD-01",
+        "I-TUSD-02",
+        "I-TUSD-03",
+        "I-RCLONE-01",
+        "I-MINIO-01",
+        "I-MINIO-02",
+        "I-MINIO-03",
+        "I-MINIO-04",
+        "I-TUSD-02-RAW",
+        "I-TUSD-03-RAW",
+        "I-TUSD-RELEASE-API",
+        "I-MINIO-FIX"
+      ],
+      "candidate_locators": [
+        "final §§1–4",
+        "all stage source-map.json sources",
+        "final critique-dispositions table"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competitors, analogues, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "Substantive brief-first discovery includes Uppy direct signing, rclone CLI resource/checksum behavior, tus offset resumption and tusd disk-backed S3Store, R2 operation differences, and a released MinIO compatibility chain. Competing routes carry discriminators: direct browser avoids proxying large bytes; CLI adds privilege/support/resource conditions; tus adds an operated server/disk for offset recovery. Opportunities include persistent intent, orphan cleanup, separate unverified-object cleanup, conditional no-overwrite and retry-safe receipt state. This is useful bounded discovery rather than an exhaustive catalogue or generic caution.",
+      "evidence_ids": [
+        "I-UPPY-01",
+        "I-RCLONE-01",
+        "I-TUS-01",
+        "I-TUSD-02-RAW",
+        "I-TUSD-03-RAW",
+        "I-R2-01",
+        "I-MINIO-01",
+        "I-MINIO-FIX",
+        "I-MINIO-03"
+      ],
+      "candidate_locators": [
+        "discovery routes, recovery and history",
+        "draft §§2–4,6",
+        "final §§2–4,6"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and every exact plan disposition",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "C1 is source-correct and already corrected by the draft; final preserves that correction. C2 requests a useful algorithm/type narrowing and final makes it explicitly; the draft had not positively asserted AWS full-object SHA256, so this is an applicability clarification rather than an established false SHA256 claim. C3 properly remains owner-specific uncertainty. No criticism acceptance removes supported optional scope or invents a mandatory product capability. Clause 1/3/4 rejections and clause 2/5/6/7/8 preservation are justified; every exact operative plan treatment is reproduced below. Critic agreement does not validate L1, which the independent reviewer found.",
+      "evidence_ids": [
+        "I-R2-02",
+        "I-AWS-03",
+        "I-AWS-04",
+        "I-TUSD-RELEASE-API",
+        "ORIGINAL-PLAN"
+      ],
+      "candidate_locators": [
+        "critique C1–C3",
+        "final critique findings/dispositions",
+        "final §5 two plan tables",
+        "reviser source-map critique_dispositions"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery → draft → critique → final",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "The full final preserves the preferred browser flow, optional largest-file CLI, tus alternative, operation/provider conditions, historical fix, cleanup/duplicates/receipt safeguards, owners/costs and validation status. R2’s false row inference is deliberately removed and disclosed; this is correction, not lost supported scope. The AWS integrity proposal is narrowed to the selected checksum type with conditional whole-file SHA256 readback, avoiding a composite-as-direct-digest error. tusd’s additional buffer/concurrency counts remain in maps while final retains its relevant cap/disk condition; that nonmaterial condensation does not hide or exclude the alternative. A preserved historical lineage error is not a remaining final error.",
+      "evidence_ids": [
+        "I-R2-02",
+        "I-AWS-03",
+        "I-TUSD-03-RAW",
+        "I-RCLONE-01"
+      ],
+      "candidate_locators": [
+        "discovery entire",
+        "draft entire",
+        "critique entire",
+        "final entire",
+        "all maps and indexes"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "Proposal/test status is honest: read-only research and artifact procedure/structure checks are reported, all product checks remain NOT_RUN. Proposed checks discriminate endpoint compatibility, browser CORS/signing/expiry, interruption/recompletion, correct/wrong checksums and independent readback, duplicates/DB failure, abort/lifecycle and authorized CLI process boundaries. Observations have relevant oracles: required headers visible, stored length/digest, checksum rejection, parts removed, duplicate policy and no early receipt. Comparator docs, client ETag/part checks, tus per-PATCH checks and hashes of artifacts are not treated as successful archive operation or cryptographic whole-file identity. No deployment test is invented as an obligation.",
+      "evidence_ids": [
+        "I-UPPY-01",
+        "I-R2-03",
+        "I-AWS-03",
+        "I-AWS-05",
+        "I-AWS-06",
+        "I-RCLONE-01",
+        "I-TUS-01"
+      ],
+      "candidate_locators": [
+        "discovery validation table",
+        "draft §8",
+        "critique Validation status",
+        "final §8 and §3 Verify/Receipt"
+      ]
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "clause": 1,
+      "exact_obligation": "Compare single-request and multipart operations, binding any size, part-count, checksum or completion claim to the exact operation and product/version.",
+      "exact_plan_draft_treatment": "Set a single 5 GB limit on every upload route because this is believed to be the object-store maximum. No operation-specific evidence is supplied.",
+      "judgment": "PASS",
+      "assessment": "Corrected blanket cap; operation-specific AWS/R2 limits and AWS checksum-type distinction are supported. The source’s 50 TB and 48.8 TiB labels are reported independently, not treated as a universal converted cap.",
+      "candidate_locators": "final §1, §5 both clause tables; discovery operation comparison; draft §1; critique C2",
+      "evidence_ids": [
+        "I-AWS-01",
+        "I-AWS-02",
+        "I-AWS-03",
+        "I-AWS-04",
+        "I-R2-01",
+        "I-R2-02"
+      ]
+    },
+    {
+      "clause": 2,
+      "exact_obligation": "Compare two realistic intake routes and one analogous resumable-transfer mechanism; distinguish browser limitations from storage-service limits.",
+      "exact_plan_draft_treatment": "Offer browser upload first. A MinIO client route is a possible fallback but its compatibility has not been checked.",
+      "judgment": "PASS",
+      "assessment": "Browser preference retained; direct Uppy multipart and optional rclone are two realistic intake candidates; tus/tusd is a separate analogous mechanism. CORS/signing/session/file re-selection/resource conditions are separated from service limits. MinIO client was only a lead, not an obligated named selection.",
+      "candidate_locators": "final §2 and §5 clause 2; discovery route list; draft §2; critique obligation 2",
+      "evidence_ids": [
+        "I-UPPY-01",
+        "I-RCLONE-01",
+        "I-TUS-01",
+        "I-TUSD-02",
+        "I-TUSD-03"
+      ]
+    },
+    {
+      "clause": 3,
+      "exact_obligation": "Explain interrupted transfer, abandoned parts, checksum verification, duplicate accession and receipt issuance.",
+      "exact_plan_draft_treatment": "Consider the upload complete when all requests return success; treat an ETag as the content checksum. Abandoned-part cleanup is a later task.",
+      "judgment": "PASS",
+      "assessment": "Request-success and ETag assumptions rejected with evidence. Durable intent/part manifest, interruption recovery, abort/lifecycle, independent verification when needed, application duplicates/idempotency and delayed curator-authorized receipt form a coherent proposal. Cleanup of completed unverified objects is separate.",
+      "candidate_locators": "final §3 and §5 clause 3; discovery recovery/receipt; draft §3; critique obligation 3",
+      "evidence_ids": [
+        "I-AWS-03",
+        "I-AWS-04",
+        "I-AWS-05",
+        "I-AWS-06",
+        "I-R2-01"
+      ]
+    },
+    {
+      "clause": 4,
+      "exact_obligation": "Investigate one relevant released compatibility change or failure/fix chain; avoid treating S3-compatible as identical to every AWS operation.",
+      "exact_plan_draft_treatment": "Pin no provider version and cite no release history. A generic compatibility label is expected to cover browser and CLI paths.",
+      "judgment": "PASS",
+      "assessment": "No-version/generic-compatibility assumption replaced with a specific MinIO issue → code fix → tagged release chain. Issue behavior remains a reported historical observation and does not certify the unknown archive endpoint.",
+      "candidate_locators": "final §4 and §5 clause 4; all predecessor history sections",
+      "evidence_ids": [
+        "I-MINIO-01",
+        "I-MINIO-02",
+        "I-MINIO-FIX",
+        "I-MINIO-03",
+        "I-MINIO-RELEASE-API"
+      ]
+    },
+    {
+      "clause": 5,
+      "exact_obligation": "Preserve and investigate this supported optional scope: a curator-authorized command-line fallback for the largest files. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
+      "exact_plan_draft_treatment": "Retain a curator-authorized command-line fallback for the largest files as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
+      "judgment": "PASS",
+      "assessment": "Authorized largest-file CLI scope survives as optional, conditional on curator authorization, provider/version and access/resource/recovery checks. rclone’s public multipart evidence makes this more than vacuous caution; no restart-resume promise or mandatory feature is invented.",
+      "candidate_locators": "final decision summary, §2 CLI row, §5 clause 5, §7 and §8 CLI validation; corresponding discovery/draft text",
+      "evidence_ids": [
+        "I-RCLONE-01"
+      ]
+    },
+    {
+      "clause": 6,
+      "exact_obligation": "Make owner decisions explicit: The archive storage owner confirms provider capabilities and retention policy; the accession curator owns the point at which a receipt becomes authoritative. Costs are unresolved input, not invented estimates.",
+      "exact_plan_draft_treatment": "Owner authority is reserved as follows: The archive storage owner confirms provider capabilities and retention policy; the accession curator owns the point at which a receipt becomes authoritative. Costs are unresolved input, not invented estimates. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
+      "judgment": "PASS",
+      "assessment": "Exact authority split and unresolved costs remain. Storage owner controls provider/retention and curator controls authoritative receipt point. No local choice is passed off as an owner decision.",
+      "candidate_locators": "final summary, §3 receipt boundary, §5 clause 6, §7; all predecessor owner sections",
+      "evidence_ids": [
+        "ORIGINAL-BRIEF",
+        "ORIGINAL-PLAN"
+      ]
+    },
+    {
+      "clause": 7,
+      "exact_obligation": "Preserve negative constraints: Do not upload real films, create buckets or credentials, assume all S3-compatible services have identical limits, or mark a transfer accepted from a progress bar alone.",
+      "exact_plan_draft_treatment": "Binding exclusions: Do not upload real films, create buckets or credentials, assume all S3-compatible services have identical limits, or mark a transfer accepted from a progress bar alone. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
+      "judgment": "PASS",
+      "assessment": "Negative constraints preserved in the proposal and recorded research status: no films, buckets/credentials, universal S3-compatible limits or acceptance from progress alone. Retained package contains no evidence of prohibited live work, but absence of such work cannot be independently certified without execution traces.",
+      "candidate_locators": "final §5 clause 7 and closing validation paragraph; discovery scope/status; draft §8; critique scope",
+      "evidence_ids": [
+        "ORIGINAL-BRIEF",
+        "ORIGINAL-PLAN",
+        "I-AWS-03",
+        "I-RCLONE-01"
+      ]
+    },
+    {
+      "clause": 8,
+      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_plan_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
+      "judgment": "PASS",
+      "assessment": "Final is a complete research proposal, not a patch list: decisions, comparisons, history, useful discoveries, unresolved owners, corrections, clause dispositions and a validation-status table. Public review/structural checks are distinct from unrun product operation.",
+      "candidate_locators": "final entire artifact, particularly summary and §§1–8; maps/indexes",
+      "evidence_ids": [
+        "ORIGINAL-BRIEF",
+        "ORIGINAL-PLAN",
+        "I-UPPY-01",
+        "I-TUS-01",
+        "I-TUSD-03",
+        "I-RCLONE-01"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "critic_classification": "Material wrong — corrected in draft",
+      "independent_assessment": "VALID; material lineage defect, resolved in draft/final",
+      "disposition_in_final": "ACCEPT",
+      "remaining_material_issue": false,
+      "detail": "Discovery falsely assigns an unsupported checksum header to R2 CompleteMultipartUpload. Independent raw table structure assigns it to CopyObject. Draft §4 discloses and withdraws it; final repeats the correction and makes no MPU checksum-capability conclusion from that marker.",
+      "evidence_ids": [
+        "I-R2-02"
+      ],
+      "stage_locators": [
+        "investigator/discovery.md operation table",
+        "investigator/draft.md §4 correction",
+        "critic/critique.md C1",
+        "reviser/final.md §4 correction and C1 disposition"
+      ]
+    },
+    {
+      "id": "C2",
+      "critic_classification": "Material incomplete",
+      "independent_assessment": "VALID request for algorithm/type precision; do not misdescribe it as an originally asserted full-object SHA256 capability",
+      "disposition_in_final": "ACCEPT AND AMEND",
+      "remaining_material_issue": false,
+      "detail": "The draft’s full-object-checksum discussion was conditional and included readback. Final adds the primary AWS matrix and explicitly says SHA256 is composite for MPU, with cryptographic readback only when required and unsupported at completion. The substantive narrowing is supported; critic severity is not used as proof of an original false claim.",
+      "evidence_ids": [
+        "I-AWS-03",
+        "I-AWS-04"
+      ],
+      "stage_locators": [
+        "investigator/draft.md §§1,3",
+        "critic/critique.md C2",
+        "reviser/final.md §1 matrix, §3 Verify and C2 disposition"
+      ]
+    },
+    {
+      "id": "C3",
+      "critic_classification": "Honestly unresolved external input",
+      "independent_assessment": "VALID",
+      "disposition_in_final": "RETAIN UNCERTAINTY",
+      "remaining_material_issue": false,
+      "detail": "Actual storage provider/release/capabilities, retention, curator receipt and duplicate policy, cost and access authorization require the named owners or later approved endpoint checks. Publicly answerable comparison/history questions were investigated rather than evaded.",
+      "evidence_ids": [
+        "ORIGINAL-BRIEF",
+        "ORIGINAL-PLAN"
+      ],
+      "stage_locators": [
+        "critic/critique.md C3",
+        "reviser/final.md summary, §§5–8 and C3 disposition"
+      ]
+    }
+  ],
+  "material_findings_remaining": [],
+  "lineage_findings": [
+    {
+      "id": "H1",
+      "severity": "MATERIAL_LINEAGE_ERROR",
+      "remaining_in_final": false,
+      "stage": "discovery",
+      "finding": "Unsupported R2 CompleteMultipartUpload checksum-header exclusion due to wrong table-row attribution.",
+      "evidence_ids": [
+        "I-R2-02"
+      ],
+      "resolution": "Explicitly corrected in draft §4 and final §4/C1; original discovery bytes remain unchanged."
+    },
+    {
+      "id": "H2",
+      "severity": "APPLICABILITY_DETAIL_NARROWED",
+      "remaining_in_final": false,
+      "stage": "draft",
+      "finding": "AWS multipart algorithm/type matrix not explicit where checksum-strength discussion appeared; draft itself remained conditional and did not assert full-object SHA256 support.",
+      "evidence_ids": [
+        "I-AWS-03",
+        "I-AWS-04"
+      ],
+      "resolution": "Final §1/§3/C2 states the matrix and preserves a conditional whole-file verification route."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "classification": "MINOR_SOURCE_METADATA_ERROR",
+      "remaining": true,
+      "material": false,
+      "finding": "All stage maps carry TUSD-01 version_or_commit as tusd v2.5.0, c5d5b0a, released 2026-09-10. GitHub’s release API reports published_at 2024-09-10T08:21:15Z (created_at 2024-09-10T08:19:25Z). The yearless release-page display does not establish 2026.",
+      "candidate_locators": [
+        "investigator/source-map.json sources[id=TUSD-01].version_or_commit",
+        "critic/source-map.json sources[id=TUSD-01].version_or_commit and critic_review",
+        "reviser/source-map.json sources[id=TUSD-01].version_or_commit and carried critic_review"
+      ],
+      "evidence_ids": [
+        "I-TUSD-01",
+        "I-TUSD-RELEASE-API"
+      ],
+      "why_nonmaterial": "Exact tag/commit, released source behavior/defaults, 40 GB pilot fit and optional alternative remain supported. Final prose says released v2.5.0 without a false 2026 date or recency-dependent recommendation."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U1",
+      "topic": "Actual archive service/product applicability",
+      "status": "UNKNOWN / OWNER_INPUT",
+      "detail": "Provider/release, live API/header subset, checksum type/retrieval, CORS/presign, permissions/encryption, lifecycle/retention, selected client release and receipt/duplicate/cost choices remain owner-specific. This is allowed planning uncertainty, not a discovered material omission."
+    },
+    {
+      "id": "U2",
+      "topic": "Native Goal telemetry of candidate stages",
+      "status": "UNKNOWN_AS_INDEPENDENT_PROOF",
+      "detail": "Authored draft/critique/final/maps contain reported activation/get_goal fields and terminal summaries assert completion. There is no raw candidate native tool receipt or native terminal ledger in the supplied package. T3 completion is not native proof; save-before-native-complete ordering cannot be independently established."
+    },
+    {
+      "id": "U3",
+      "topic": "Protocol independence/allowed actions",
+      "status": "UNKNOWN_AS_EXHAUSTIVE_AUDIT",
+      "detail": "Assignments, input maps, reveal receipt and freezes support intended bounded separation. No unauthorized assistance/repair is evidenced in these artifacts. Complete tool/history audit was not supplied or requested; hidden early plan access, unlogged outside reads or unrecorded live actions cannot be certified absent."
+    },
+    {
+      "id": "U4",
+      "topic": "Effective provider configuration and billing",
+      "status": "UNKNOWN",
+      "detail": "Requested route is AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max/priority and retained T3 responses label provider/model. Actual applied effort/tier, routing provenance, billed tokens, inference occupancy and billing/cost are unavailable. Reported Goal token counts are not billing telemetry."
+    },
+    {
+      "id": "U5",
+      "topic": "Original external source-body freeze and executed research trace",
+      "status": "UNKNOWN",
+      "detail": "Authored evidence consists of maps and indexes, without retained raw public captures or separate retrieval/check transcripts. Independent primary captures support the assessed meaning now; exact original external bytes and each claimed research action are not retrospectively certified."
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "name": "Uppy per-operation presigned browser multipart",
+      "use": "Keeps large bytes off application data path while app controls identity, authorization and receipt.",
+      "discriminator": "Provider/CORS/header support, durable state and selected release; no complete browser-resource test yet.",
+      "evidence_ids": [
+        "I-UPPY-01"
+      ]
+    },
+    {
+      "name": "Optional rclone multipart CLI",
+      "use": "A realistic curator-authorized largest-file fallback with configurable cutoff/resources and integrity checks.",
+      "discriminator": "Endpoint/release/privileges and restart behavior; not whole-file cryptographic proof by multipart ETag.",
+      "evidence_ids": [
+        "I-RCLONE-01"
+      ]
+    },
+    {
+      "name": "tus/tusd offset upload service",
+      "use": "An analogous resumable mechanism with endpoint/backend isolation if direct upload recovery is insufficient.",
+      "discriminator": "Operated server and temporary part disk, 5 TiB implementation cap and part retransfer; not an S3 API or final-file checksum oracle.",
+      "evidence_ids": [
+        "I-TUS-01",
+        "I-TUSD-02-RAW",
+        "I-TUSD-03-RAW"
+      ]
+    },
+    {
+      "name": "R2 equal non-final parts and default abort",
+      "use": "Demonstrates practical provider variation in sizing/cleanup and need for an operation profile.",
+      "discriminator": "R2-specific rules; archive owner supplies its own capabilities and retention.",
+      "evidence_ids": [
+        "I-R2-01",
+        "I-R2-02"
+      ]
+    },
+    {
+      "name": "MinIO suffix failure/fix/release chain",
+      "use": "Concrete released completion-checksum incompatibility validates version-bound conformance tests.",
+      "discriminator": "Specific server/SDK/operation, fix code and included release; not a universal present MinIO defect.",
+      "evidence_ids": [
+        "I-MINIO-01",
+        "I-MINIO-FIX",
+        "I-MINIO-03"
+      ]
+    },
+    {
+      "name": "Receipt/cleanup/duplicate state opportunities",
+      "use": "Distinct staged/verified/accepted states, immutable attempt keys, orphan versus unverified-object cleanup, idempotent metadata/receipt and conditional storage guard.",
+      "discriminator": "Local planning choices, dependent on curator/owner policy and synthetic failure checks, not executed external behavior.",
+      "evidence_ids": [
+        "I-AWS-03",
+        "I-AWS-05",
+        "I-AWS-06",
+        "ORIGINAL-BRIEF"
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "check": "Public docs/source/history review",
+      "candidate_status": "EXECUTED_RESEARCH_REPORTED",
+      "independent_status": "Governing evidence independently retrieved and reviewed; no original raw action trace.",
+      "oracle": "Correct operation, algorithm/type, version, row boundary and issue/fix/release applicability; not product behavior."
+    },
+    {
+      "check": "Plan reveal/freeze and map structure",
+      "candidate_status": "EXECUTED_PROCEDURE_REPORTED",
+      "independent_status": "Input/freeze bytes verified; reveal receipt read. Structure self-check assertion has no standalone transcript.",
+      "oracle": "Integrity/delivery only; hashes cannot establish semantic correctness."
+    },
+    {
+      "check": "Owner provider/version/retention confirmation",
+      "candidate_status": "NOT_RUN / PROPOSED OWNER_INPUT",
+      "oracle": "Named owner confirms exact endpoint/capability and retention profile before operation."
+    },
+    {
+      "check": "Synthetic browser compatibility",
+      "candidate_status": "NOT_RUN / PROPOSED",
+      "oracle": "PUT and MPU lifecycle, paginated listing, exposed ETags/checksums, allowed methods/headers, expiry and retry behavior on approved configuration."
+    },
+    {
+      "check": "Interruption/integrity/completion",
+      "candidate_status": "NOT_RUN / PROPOSED",
+      "oracle": "Bad part/digest rejected; selected checksum type verified; expected object length; cryptographic readback comparison where required; completion ambiguity reconciled without premature receipt."
+    },
+    {
+      "check": "Duplicate/idempotency/receipt boundary",
+      "candidate_status": "NOT_RUN / PROPOSED",
+      "oracle": "Repeated same-content intent returns permitted existing state; conflicting content blocks pending curator policy; storage-success/DB-failure yields no duplicate/early authoritative receipt."
+    },
+    {
+      "check": "Abort/abandonment retention",
+      "candidate_status": "NOT_RUN / PROPOSED",
+      "oracle": "Stop workers and confirm incomplete parts removed after abort/approved lifecycle; do not infer completed-object deletion."
+    },
+    {
+      "check": "Authorized CLI fallback",
+      "candidate_status": "NOT_RUN / PROPOSED IF AUTHORIZED",
+      "oracle": "Pinned release/endpoint, limited privileges, bounded memory, process/retry behavior and verified object; user instructions tested."
+    },
+    {
+      "check": "tus/tusd alternate product",
+      "candidate_status": "NOT_RUN / COMPARISON_ONLY",
+      "oracle": "No deployed tus service; optional later testing only if its discriminator matters."
+    }
+  ],
+  "protocol_native_time_effective_billing": {
+    "source_judgment_separate": true,
+    "delivery": "COMPLETE",
+    "coverage": "ALL_SIX_AXES_AND_ALL_EIGHT_CLAUSES_ASSESSED",
+    "t3": "Retained root terminal observation at 2026-10-10T04:23:29.555367+00:00 reports reviser completed/result_available/no pending; investigator/critic status files likewise terminal. This is captured T3 delivery evidence, not native telemetry.",
+    "native_candidate": "UNKNOWN as independently verified native activation/completion/order; authored fields and terminal assertions retained as reports only.",
+    "protocol": "No invalidating violation evidenced in inspected package; exhaustive adherence UNKNOWN without action traces.",
+    "timing": {
+      "whole_deadline_utc": "2026-10-10T04:57:17.173Z",
+      "pipeline_initialized_at_utc": "2026-10-10T03:57:19.570Z",
+      "root_terminal_observation_utc": "2026-10-10T04:23:29.555367+00:00",
+      "assessment": "Retained observation is before the whole deadline; required science saves precede each stage deadline by recorded mtimes. This is observed delivery/occupancy timing only; native/inference time and queue partition UNKNOWN.",
+      "speed_or_savings_claim": "NONE; no other arm comparison, survivorship subset or billing inference."
+    },
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "effective_route": "Returned T3 provider/model labels observed in retained dispatch/terminal captures; effective model/effort/tier execution provenance UNKNOWN.",
+    "billing": "UNKNOWN",
+    "missing_optional_telemetry": [
+      "reviser/status.json (root terminal-science-freeze-root.json supplies its retained T3 terminal status)",
+      "raw candidate native activation/get_goal/complete tool receipts",
+      "standalone source-map structural-check transcripts",
+      "candidate action history/retrieval raw bodies"
+    ]
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/READY.json",
+      "bytes": 290,
+      "sha256": "8dae343c4271af5a2ed5709ae558e1420529238365d0dab5824abc44c3f9c025",
+      "mtime_ns": 1791604605951107115,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/brief.md",
+      "bytes": 3375,
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "mtime_ns": 1791604605950445937,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/plan.md",
+      "bytes": 5986,
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "mtime_ns": 1791604605950518545,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/control/run.json",
+      "bytes": 580,
+      "sha256": "8dc0037206955d6a210045d95c2dd23faa4b414ba72a49ac00db3f4446d155fb",
+      "mtime_ns": 1791604639571235031,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/inputs/brief.md",
+      "bytes": 3375,
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "mtime_ns": 1791604639570933794,
+      "inspection": "FULL_CONTENT_OR_JSON_INSPECTED; duplicate mapped brief/revealed plan bytes compared directly to full-read originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/assignment.md",
+      "bytes": 3306,
+      "sha256": "062f85daf5f1bda9d5c201e12cd423c8fc1140ee17dd2e63d62a0173be4641d9",
+      "mtime_ns": 1791605400956236455,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/critique.md",
+      "bytes": 11064,
+      "sha256": "cc044bf6c47d67c0633806d206f7a7ac7f01614cf214167f1620404efe614b79",
+      "mtime_ns": 1791605647715536196,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/dispatch.json",
+      "bytes": 4124,
+      "sha256": "5e79c14417d9adb2ca86886cb8532c49f05243217e619522c3a1ad247c807de5",
+      "mtime_ns": 1791605402177493359,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/freeze.json",
+      "bytes": 3135,
+      "sha256": "eaee8d84d1f213a9eb54cf0652a9dd53fcecd709d296e533c4ad5aa28c7b9840",
+      "mtime_ns": 1791605400956780213,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/input-map.json",
+      "bytes": 1390,
+      "sha256": "3b59206cd5d0c33bd0482b888231ac607dd54c5a7c5df1b938527fe3bb9aa768",
+      "mtime_ns": 1791605400956001043,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/request.json",
+      "bytes": 890,
+      "sha256": "6f35b6a39fdcd0932419ad1008e209839c855b06c13491204f86ae3105107be1",
+      "mtime_ns": 1791605400956888221,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/source-map.json",
+      "bytes": 33143,
+      "sha256": "bbed92ca0cb075ac809d8ffec82fea1b2b2abd9193396b47c564ed3942e1bb8d",
+      "mtime_ns": 1791605647716776458,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/sources/index.md",
+      "bytes": 3167,
+      "sha256": "8104eb7cd3b203cc1ff6fb389800a002c583b238fab0486020c64c280c08f9c0",
+      "mtime_ns": 1791605647716998200,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/critic/status.json",
+      "bytes": 3268,
+      "sha256": "15667e18037dbc109d574902fddee99747ec24f3d9f5ad122de26f9c01aa0003",
+      "mtime_ns": 1791605699246696426,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/assignment.md",
+      "bytes": 3712,
+      "sha256": "1bc5ab490f97512a8e31dde816f207e8c326e1649aa3c64d82f95afab591fd40",
+      "mtime_ns": 1791604639571835697,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/discovery.md",
+      "bytes": 14840,
+      "sha256": "bfc80d811abf90a5066c4805749bcd5066bb8b81abd20b0acdb2d8ae4fb34034",
+      "mtime_ns": 1791604988498627672,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/dispatch.json",
+      "bytes": 4220,
+      "sha256": "9008e466e51a59b5da2f2e204024db0f9bc87c3556001a14b7b9c9369dd89988",
+      "mtime_ns": 1791604640316626358,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/draft.md",
+      "bytes": 25412,
+      "sha256": "2620b3dcb838f976d46ca9259e7271123bc319e9c5bdbcf680d3af257c9f138b",
+      "mtime_ns": 1791605214018692530,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/freeze.json",
+      "bytes": 1654,
+      "sha256": "26bd231bbdde7bb2ee67f262cca262354c24f6d6b70f0678826f9a4bb96817bd",
+      "mtime_ns": 1791604639572129238,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/input-map.json",
+      "bytes": 714,
+      "sha256": "1f68bbce1e51dd8969f0c4c817f0bfef1bcc05781a9ab8b22ab423c6b863ed2b",
+      "mtime_ns": 1791604639571649745,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 427,
+      "sha256": "aaacf68cff13ce4acb34e5174a18d6b413bef8ae7e70d86a2ff2da22c3f6a75e",
+      "mtime_ns": 1791604996554795951,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/request.json",
+      "bytes": 914,
+      "sha256": "c481c18374b1d5ecd5a00309d5e2fb14664bf6c43bf9cc2c55aac6d3bd6494a2",
+      "mtime_ns": 1791604639572246452,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5986,
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "mtime_ns": 1791604996554661463,
+      "inspection": "FULL_CONTENT_OR_JSON_INSPECTED; duplicate mapped brief/revealed plan bytes compared directly to full-read originals"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/source-map.json",
+      "bytes": 18946,
+      "sha256": "a4c81d54b7501147dbd9cde43c75172a42e15727ab3af53a30a1c3179f7688a8",
+      "mtime_ns": 1791605106173007072,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/sources/index.md",
+      "bytes": 3363,
+      "sha256": "36f399b2b385647845d14291c6b548aca9167b1f36f85d4b9aa29d75dab6a671",
+      "mtime_ns": 1791604988499692586,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/investigator/status.json",
+      "bytes": 5438,
+      "sha256": "2c1c940f155dd5692632a17e8c88e3e86ddace5c9e9157299ae08c1c2c5f8de5",
+      "mtime_ns": 1791605376581229464,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/assignment.md",
+      "bytes": 3286,
+      "sha256": "69babbd30f68e356c2d0fd1d1b410d6a09c8a3dbc3f6bbb6a6a06120a86b24e8",
+      "mtime_ns": 1791605699575661256,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/dispatch.json",
+      "bytes": 4140,
+      "sha256": "3ed9716039c49e535f0edc6648e9cf3bc69c2727fd814533ef870e016fa394fa",
+      "mtime_ns": 1791605700160563519,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/final.md",
+      "bytes": 33833,
+      "sha256": "4663ec9377fddfca1fa6f5d764f64bf946307ed9a96ccf90e1bafcc778f52161",
+      "mtime_ns": 1791606147855443852,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/freeze.json",
+      "bytes": 3906,
+      "sha256": "4e226aeb668d90ccecb0d5136618631da0bf45f7e4794d479caef090efc84992",
+      "mtime_ns": 1791605699576404070,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/input-map.json",
+      "bytes": 1701,
+      "sha256": "c72c198c4b36f1e23b1e80326423cfa23f7a736f3ab36ff79458eef6f9ff18b8",
+      "mtime_ns": 1791605699575475589,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/request.json",
+      "bytes": 894,
+      "sha256": "1e78ab18655232e97c84ed7df8201e43d99d56bcabaad461099d42b0b9ca576a",
+      "mtime_ns": 1791605699576584365,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/source-map.json",
+      "bytes": 44476,
+      "sha256": "94ce6932e4f213f56fc6082b03f76ae65e6f6880f988b8daaf1eacd048c1cdf6",
+      "mtime_ns": 1791605986445529063,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/sources/index.md",
+      "bytes": 4917,
+      "sha256": "be3385ec4165162b911b42abbde1f0c4ac655adaf096822030ad70e546008645",
+      "mtime_ns": 1791605986445841855,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A4-01/control/terminal-science-freeze-root.json",
+      "bytes": 7737,
+      "sha256": "370bc29c4392e47ef7b621e1a903204b14f6641f687c2c0143e2020256eb5e7c",
+      "mtime_ns": 1791606209555671497,
+      "inspection": "FULL_AUTHORED_CONTENT_OR_JSON_INSPECTED"
+    }
+  ],
+  "source_urls_versions_and_checks": [
+    {
+      "id": "I-AWS-01",
+      "candidate_source_id": "AWS-01",
+      "title": "Uploading objects — Amazon S3 User Guide",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.405231+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-01.html",
+      "raw_sha256": "7f357e85a92522406db6217e92d21d43ae5a1bd492f2c58c5a5e788746740b4e",
+      "text_path": "evidence/I-AWS-01.txt",
+      "text_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+      "text_lines": 205,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10; no immutable revision.",
+        "locator": "Depending on size / upload choices; local text lines 12–38, single PUT examples later.",
+        "operation": "SDK/REST/CLI single PutObject, console upload, multipart API",
+        "judgment": "Supported: source distinguishes 5 GB single PUT, 160 GB console and 50 TB multipart. These are source labels, not a reviewer unit conversion.",
+        "conditions": "AWS comparator only. 40 GB exceeds its single-operation cap; the archive provider remains unknown. Console capability does not establish a direct-browser API cap."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Depending on the size",
+          "saved_text_lines": [
+            18
+          ]
+        },
+        {
+          "anchor": "single object up to 5 GB",
+          "saved_text_lines": [
+            21
+          ]
+        },
+        {
+          "anchor": "160 GB",
+          "saved_text_lines": [
+            12,
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "saved_text_lines": [
+            26,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-02",
+      "candidate_source_id": "AWS-02",
+      "title": "Amazon S3 multipart upload limits",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.407321+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-02.html",
+      "raw_sha256": "387c24248a3e09a9e067c15cd7d4f5786ff739db309b5306a987d884caee34f9",
+      "text_path": "evidence/I-AWS-02.txt",
+      "text_sha256": "74fe8418cc073dea89edda46ce6ef373293c32326f87f1e984f352ca681fff51",
+      "text_lines": 41,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10.",
+        "locator": "Multipart core specification table, local text lines 12–27.",
+        "operation": "AWS multipart object/part/count/listing limits",
+        "judgment": "Supported: 48.8 TiB object, 10,000 numbered parts, 5 MiB–5 GiB, no minimum final part, 1,000 results per ListParts page; about 100 MB is guidance.",
+        "conditions": "Provider operation limits, distinct from browser memory, client thresholds and the actual unknown endpoint."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Maximum object size",
+          "saved_text_lines": [
+            16
+          ]
+        },
+        {
+          "anchor": "48.8 TiB",
+          "saved_text_lines": [
+            17
+          ]
+        },
+        {
+          "anchor": "5 MiB",
+          "saved_text_lines": [
+            23
+          ]
+        },
+        {
+          "anchor": "1000",
+          "saved_text_lines": [
+            26,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-03",
+      "candidate_source_id": "AWS-03",
+      "title": "Uploading and copying objects using multipart upload in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.408674+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-03.html",
+      "raw_sha256": "69c3cbba7a976efc7d37f933d113a2f48eff409ff27800614db1c4b08aee95b4",
+      "text_path": "evidence/I-AWS-03.txt",
+      "text_sha256": "0aa90a752cbeeff252a7abc72939e5075e2451d095b6469776260b93ff4bb3bd",
+      "text_lines": 435,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10.",
+        "locator": "Initiation, Parts upload, Completion, Listings, Checksums; local text lines 47–139 and algorithm/type table near end.",
+        "operation": "CreateMultipartUpload/UploadPart/ListParts/CompleteMultipartUpload/AbortMultipartUpload",
+        "judgment": "Supported: upload ID and own part/ETag manifest; retry interrupted parts; ETag is not a generic file MD5; listings page and omit in-flight parts; parts persist until complete/abort. The multipart matrix distinguishes full-object CRC types from composite SHA256.",
+        "conditions": "Specify and verify the chosen checksum algorithm/type. Additional-checksum part numbers start at 1 and are consecutive. Stop workers before abort cleanup. Encryption-related permissions can affect available checksums; final requires capability and retrieval confirmation."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Multipart upload initiation",
+          "saved_text_lines": [
+            47
+          ]
+        },
+        {
+          "anchor": "Multipart upload completion",
+          "saved_text_lines": [
+            75
+          ]
+        },
+        {
+          "anchor": "Multipart upload listings",
+          "saved_text_lines": [
+            98
+          ]
+        },
+        {
+          "anchor": "Checksum algorithm",
+          "saved_text_lines": [
+            60,
+            117,
+            120,
+            122,
+            344
+          ]
+        },
+        {
+          "anchor": "Full object",
+          "saved_text_lines": [
+            85,
+            121,
+            126,
+            131,
+            351,
+            364
+          ]
+        },
+        {
+          "anchor": "Composite",
+          "saved_text_lines": [
+            387
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-04",
+      "candidate_source_id": "AWS-04",
+      "title": "Checking object integrity in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.409852+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-04.html",
+      "raw_sha256": "6dc12f8432219a7b2ba51ce177a14d5fc5a16f1e79cd9da7a6a51d6891ae5c07",
+      "text_path": "evidence/I-AWS-04.txt",
+      "text_sha256": "5183578aadbb61cd248f53bd565b1c0c20da769f7793802d8836e112f0e96794",
+      "text_lines": 61,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 integrity guide, independently accessed 2026-10-10.",
+        "locator": "Algorithm catalog and upload server verification; local text lines 6–39.",
+        "operation": "Upload checksum verification; whole-object versus composite meaning",
+        "judgment": "Supported: server-side calculation/validation is distinct from supplied metadata and direct cryptographic file identity. Final does not infer full-object SHA256 MPU support from the algorithm catalog.",
+        "conditions": "Operation/type matrix controls applicability. CRC is transfer-integrity evidence, not cryptographic identity. Final readback proposal is conditional on the curator-required digest and provider capability."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": []
+    },
+    {
+      "id": "I-AWS-05",
+      "candidate_source_id": "AWS-05",
+      "title": "How to prevent object overwrites with conditional writes",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.411397+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-05.html",
+      "raw_sha256": "8333d943dbbd7455a65791449d7e83816e62a3c4a9d006292ca59aa7602f394e",
+      "text_path": "evidence/I-AWS-05.txt",
+      "text_sha256": "602b8ec47ba645632d1769314f40a503913d12ed3f89fc87c7ce727fe5721dc9",
+      "text_lines": 191,
+      "independent_semantic_check": {
+        "version": "Rolling AWS conditional-writes guide, independently accessed 2026-10-10.",
+        "locator": "If-None-Match applicability and Conditional write behavior; local text includes existing/current version, 412 and 409 paragraphs.",
+        "operation": "If-None-Match:* on PutObject and CompleteMultipartUpload",
+        "judgment": "Supported: existing current object yields 412; a concurrent-delete 409 for CompleteMultipartUpload requires a fresh CreateMultipartUpload.",
+        "conditions": "Current version/delete-marker semantics; not in-progress MPU reservation or DB atomicity. Final treats this as an additional conditional guard and leaves accession idempotency in the application."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Conditional write behavior",
+          "saved_text_lines": [
+            5,
+            24,
+            108
+          ]
+        },
+        {
+          "anchor": "412",
+          "saved_text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ]
+        },
+        {
+          "anchor": "409",
+          "saved_text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ]
+        },
+        {
+          "anchor": "delete marker",
+          "saved_text_lines": [
+            117,
+            145
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-06",
+      "candidate_source_id": "AWS-06",
+      "title": "Configuring lifecycle to delete incomplete multipart uploads",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.412523+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-06.html",
+      "raw_sha256": "fd56ee422d9ceb4a947d9606130d2ffd286c889e9f5e88d0b8ca90a28ff7639f",
+      "text_path": "evidence/I-AWS-06.txt",
+      "text_sha256": "4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1",
+      "text_lines": 132,
+      "independent_semantic_check": {
+        "version": "Rolling AWS lifecycle guide, independently accessed 2026-10-10.",
+        "locator": "Introductory AbortIncompleteMultipartUpload and configured day-count example.",
+        "operation": "AbortIncompleteMultipartUpload lifecycle action",
+        "judgment": "Supported: configured age aborts incomplete uploads and removes parts; it does not delete completed objects.",
+        "conditions": "Seven days is an AWS example, not its universal default. Final reserves retention days for the storage owner and separates unverified completed objects."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "doesn",
+          "saved_text_lines": [
+            26,
+            36
+          ]
+        },
+        {
+          "anchor": "completed",
+          "saved_text_lines": [
+            10,
+            11,
+            30,
+            31,
+            34
+          ]
+        },
+        {
+          "anchor": "7",
+          "saved_text_lines": [
+            22,
+            43,
+            45,
+            72,
+            83,
+            103
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-01",
+      "candidate_source_id": "R2-01",
+      "title": "Upload objects — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.594400+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-01.html",
+      "raw_sha256": "b9b8e57f4231e5dc0b9849158de746c81cc870c354972a8eeb1dec5506c0cada",
+      "text_path": "evidence/I-R2-01.txt",
+      "text_sha256": "3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa",
+      "text_lines": 895,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 upload guide, displayed last updated 2026-07-29.",
+        "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843.",
+        "operation": "R2 single PUT, multipart upload, incomplete-upload lifecycle",
+        "judgment": "Supported: 5 GiB single PUT, 5 TiB/10,000-part multipart, 5 MiB–5 GiB parts with final-part exception, equal non-final sizes, default seven-day abort.",
+        "conditions": "R2-specific comparator. Custom lifecycle can change the default. Multipart ETag combines part digests, not a direct file digest."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Choose an upload method",
+          "saved_text_lines": [
+            112,
+            114,
+            856
+          ]
+        },
+        {
+          "anchor": "All parts except",
+          "saved_text_lines": [
+            835
+          ]
+        },
+        {
+          "anchor": "7 days",
+          "saved_text_lines": [
+            837
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-02",
+      "candidate_source_id": "R2-02",
+      "title": "S3 API compatibility — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/api/s3/api/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.595088+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/api/s3/api/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-02.html",
+      "raw_sha256": "12cf5e49fc3806f02dea38f63072a792457b15383f1b2f82e828a53131b2aac1",
+      "text_path": "evidence/I-R2-02.txt",
+      "text_sha256": "c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099",
+      "text_lines": 757,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 S3 API matrix, displayed last updated 2026-07-31.",
+        "locator": "CompleteMultipartUpload local lines 596–600; CopyObject 604–657; UploadPart begins 658. Raw HTML preserves actual table-row structure.",
+        "operation": "R2 CompleteMultipartUpload versus CopyObject feature rows; UploadPart Content-MD5",
+        "judgment": "C1 confirmed: the unsupported x-amz-checksum-algorithm marker is in CopyObject, not CompleteMultipartUpload. The final correctly withdraws the discovery inference.",
+        "conditions": "Operation implementation is not proof of all AWS headers or algorithms. This row cannot establish the complete MPU checksum feature set; no contrary final R2 capability assertion remains."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "CompleteMultipartUpload",
+          "saved_text_lines": [
+            596
+          ]
+        },
+        {
+          "anchor": "CopyObject",
+          "saved_text_lines": [
+            604
+          ]
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "saved_text_lines": [
+            191,
+            197,
+            288,
+            300,
+            310,
+            324,
+            331,
+            342,
+            361,
+            370,
+            377,
+            384,
+            393,
+            414,
+            657
+          ]
+        },
+        {
+          "anchor": "UploadPart",
+          "saved_text_lines": [
+            422,
+            658,
+            671
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-03",
+      "candidate_source_id": "R2-03",
+      "title": "Configure CORS — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/buckets/cors/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.626090+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/buckets/cors/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-03.html",
+      "raw_sha256": "e079d6217d57c44f76253de523af751f398880a7f3e81ab2e5dd47060bff4b4e",
+      "text_path": "evidence/I-R2-03.txt",
+      "text_sha256": "d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a",
+      "text_lines": 257,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 CORS guide, displayed last updated 2026-09-23.",
+        "locator": "Use CORS with a presigned URL; expired URL paragraph.",
+        "operation": "Cross-origin browser access using R2 presigned URLs",
+        "judgment": "Supported: presigning does not bypass CORS; expiry returns a 403 ExpiredRequest without CORS response headers, preventing browser error-body access.",
+        "conditions": "Origin, methods, request headers and exposed response headers matter. This is browser/provider interaction, not a changed storage-size limit."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "presigned URL",
+          "saved_text_lines": [
+            48,
+            112,
+            117,
+            122,
+            126,
+            127,
+            128,
+            129,
+            130,
+            132,
+            133,
+            230
+          ]
+        },
+        {
+          "anchor": "ExpiredRequest",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-UPPY-01",
+      "candidate_source_id": "UPPY-01",
+      "title": "AWS S3 uploader — Uppy documentation",
+      "url": "https://uppy.io/docs/aws-s3/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.659448+00:00",
+      "http_status": 200,
+      "final_url": "https://uppy.io/docs/aws-s3/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-UPPY-01.html",
+      "raw_sha256": "1d055ddbb232b231c0424233f6fa63be8d5ab7dd6f24a6dff9fdd12a8e77baf1",
+      "text_path": "evidence/I-UPPY-01.txt",
+      "text_sha256": "b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5",
+      "text_lines": 439,
+      "independent_semantic_check": {
+        "version": "Rolling Uppy AWS S3 plugin docs; sample includes v5.2.1, explicitly not the final selected/tested dependency.",
+        "locator": "Direct upload/signing modes local lines 28–64; signRequest operation mapping; Bucket and CORS setup 330–375.",
+        "operation": "Browser direct PUT or multipart create/upload/list/complete/abort",
+        "judgment": "Supported: direct-to-store mechanism, per-operation signing option, ETag exposure and ListParts/Abort for recovery/cancel provide a realistic preferred intake candidate.",
+        "conditions": "Modes are mutually exclusive; signing API depends on selected release. Documentation sample is not a compatibility certification. Final requires a later release pin, persistence and browser/provider smoke tests."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "signRequest(request)",
+          "saved_text_lines": [
+            218
+          ]
+        },
+        {
+          "anchor": "ExposeHeaders has to",
+          "saved_text_lines": [
+            361
+          ]
+        },
+        {
+          "anchor": "Request | S3 operation",
+          "saved_text_lines": [
+            241
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-TUS-01",
+      "candidate_source_id": "TUS-01",
+      "title": "Resumable Upload Protocol 1.0.x",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "retrieved_at_utc": "2026-10-10T04:25:10.660419+00:00",
+      "http_status": 200,
+      "final_url": "https://tus.io/protocols/resumable-upload",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUS-01.html",
+      "raw_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "text_path": "evidence/I-TUS-01.txt",
+      "text_sha256": "10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386",
+      "text_lines": 546,
+      "independent_semantic_check": {
+        "version": "tus protocol 1.0.0; protocol page dates this version to 2016-03-25.",
+        "locator": "Core HEAD/PATCH and offsets; Expiration; Checksum extension, local lines 360–410.",
+        "operation": "HEAD obtains byte offset; PATCH continues at that offset; optional checksum",
+        "judgment": "Supported analogous mechanism: offset recovery, optional per-PATCH checksum and server-advertised expiration; no whole-file checksum guarantee follows.",
+        "conditions": "Known upload URL, matching offset and feature negotiation; unsupported version/offset/checksum errors are protocol-specific. No S3 operation identity or actual deployed service is implied."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Core Protocol",
+          "saved_text_lines": [
+            25,
+            101,
+            102,
+            105,
+            253,
+            300
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "saved_text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142,
+            145,
+            149,
+            154,
+            157,
+            159,
+            161,
+            163,
+            165,
+            166,
+            168,
+            170,
+            171,
+            172,
+            174,
+            176,
+            177,
+            180,
+            184,
+            187,
+            197,
+            212,
+            213,
+            214,
+            215,
+            233,
+            237,
+            240,
+            254,
+            256,
+            258,
+            260,
+            267,
+            268,
+            273,
+            276,
+            279,
+            282,
+            284,
+            285,
+            288,
+            291,
+            292,
+            295,
+            298,
+            305,
+            312,
+            313,
+            318,
+            323,
+            341,
+            358,
+            360,
+            363,
+            365,
+            366,
+            373,
+            379,
+            380,
+            392,
+            396,
+            397,
+            399,
+            401,
+            404,
+            405,
+            432,
+            452,
+            454,
+            460,
+            465,
+            468,
+            471,
+            474,
+            478,
+            479,
+            481,
+            483,
+            484,
+            485,
+            486,
+            487,
+            489,
+            491,
+            493,
+            500,
+            528,
+            536
+          ]
+        },
+        {
+          "anchor": "PATCH",
+          "saved_text_lines": [
+            88,
+            124,
+            126,
+            168,
+            181,
+            182,
+            184,
+            192,
+            196,
+            198,
+            200,
+            201,
+            279,
+            287,
+            310,
+            346,
+            365,
+            378,
+            380,
+            418,
+            476,
+            513,
+            515,
+            520
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "saved_text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382,
+            384,
+            385,
+            386,
+            389,
+            390,
+            392,
+            396,
+            400,
+            401,
+            402,
+            403,
+            404,
+            406,
+            415,
+            416,
+            422
+          ]
+        },
+        {
+          "anchor": "Expiration",
+          "saved_text_lines": [
+            29,
+            220,
+            229,
+            338,
+            340,
+            366
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-TUSD-01",
+      "candidate_source_id": "TUSD-01",
+      "title": "tusd v2.5.0 release",
+      "url": "https://github.com/tus/tusd/releases/tag/v2.5.0",
+      "retrieved_at_utc": "2026-10-10T04:25:10.661809+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/tus/tusd/releases/tag/v2.5.0",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUSD-01.html",
+      "raw_sha256": "32f6d12f1cd1aec4a3cd38c968b0c494c3ebc9135d5bc3473aba32c2c97cf48c",
+      "text_path": "evidence/I-TUSD-01.txt",
+      "text_sha256": "8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826",
+      "text_lines": 180,
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0, commit c5d5b0a; GitHub API published_at=2024-09-10T08:21:15Z.",
+        "locator": "Release tag/commit local lines 110–145; independent release API published_at/created_at.",
+        "operation": "Released implementation identity",
+        "judgment": "Tag and commit supported; candidate maps incorrectly say released 2026-09-10. L1 is a surviving minor chronology error; code identity and pilot fit remain supported.",
+        "conditions": "Historical released implementation, not a newly released 2026 version or deployment. Source API year resolves the yearless human display."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "v2.5.0",
+          "saved_text_lines": [
+            1,
+            109,
+            110,
+            128,
+            153
+          ]
+        },
+        {
+          "anchor": "c5d5b0a",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-TUSD-RELEASE-API"
+      ]
+    },
+    {
+      "id": "I-TUSD-02",
+      "candidate_source_id": "TUSD-02",
+      "title": "tusd S3 storage backend docs",
+      "url": "https://github.com/tus/tusd/blob/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "retrieved_at_utc": "2026-10-10T04:25:10.760959+00:00",
+      "retrieval_error": "HTTP Error 503: Service Unavailable",
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0 tagged backend documentation.",
+        "locator": "Raw tagged file: Configuration, Alternative endpoints, Storage format and Considerations; local raw text lines 9–101.",
+        "operation": "S3Store compatible endpoint configuration and PATCH-part temporary disk",
+        "judgment": "Supported: required server configuration, endpoint override, multipart-backed storage and temporary disk per PATCH parts.",
+        "conditions": "Original GitHub blob retrieval returned HTTP 503 for this reviewer; raw tagged primary URL succeeded. Entire-file-on-disk is not required, but part buffering/disk capacity is. No installation or code execution performed."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "corroborating_capture_ids": [
+        "I-TUSD-02-RAW"
+      ]
+    },
+    {
+      "id": "I-TUSD-03",
+      "candidate_source_id": "TUSD-03",
+      "title": "tusd S3Store source",
+      "url": "https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go",
+      "retrieved_at_utc": "2026-10-10T04:25:10.896890+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUSD-03.html",
+      "raw_sha256": "72584544ef276af33c1d6f86311d7b27a0dc19be8eec5ee501ef3613f20b250c",
+      "text_path": "evidence/I-TUSD-03.txt",
+      "text_sha256": "d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721",
+      "text_lines": 2011,
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0 S3Store source at c5d5b0a.",
+        "locator": "Raw source package comments and S3Store fields; New constructor; MaxObjectSize check.",
+        "operation": "S3Store internal multipart sizing, buffering and upload concurrency",
+        "judgment": "Supported: 50 MiB preferred part, 5 TiB object cap, 10,000 parts, 20 additional buffered parts and 10 concurrent S3 part uploads; interrupted large part retransfer is described.",
+        "conditions": "Constructor defaults/configurable implementation cap, not modern AWS service limit. Final retains disk/resource caution and does not claim a tested tus endpoint."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "PreferredPartSize:",
+          "saved_text_lines": [
+            1362
+          ]
+        },
+        {
+          "anchor": "MaxObjectSize:",
+          "saved_text_lines": [
+            1364
+          ]
+        },
+        {
+          "anchor": "MaxBufferedParts:",
+          "saved_text_lines": [
+            1365
+          ]
+        },
+        {
+          "anchor": "SetConcurrentPartUploads(10)",
+          "saved_text_lines": [
+            1372
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-TUSD-03-RAW"
+      ]
+    },
+    {
+      "id": "I-RCLONE-01",
+      "candidate_source_id": "RCLONE-01",
+      "title": "Amazon S3 backend — rclone documentation",
+      "url": "https://rclone.org/s3/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.924609+00:00",
+      "http_status": 200,
+      "final_url": "https://rclone.org/s3/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-RCLONE-01.html",
+      "raw_sha256": "b7977659d8af107abcb17ccf016f8635c0441e5f7666f48b1409342dba8eddc8",
+      "text_path": "evidence/I-RCLONE-01.txt",
+      "text_sha256": "23dd6bb93c2a1ef28e7f759e6cfe21737c31a038783de254c0bdb270eee7c076",
+      "text_lines": 9098,
+      "independent_semantic_check": {
+        "version": "Rolling rclone S3 backend docs, independently accessed 2026-10-10; no chosen pilot release.",
+        "locator": "Data integrity local lines 732–775; Multipart uploads 879–901; upload-cutoff/chunk options 3483–3526.",
+        "operation": "S3 backend single/multipart upload and post-upload verification",
+        "judgment": "Supported optional CLI candidate: cutoff default 200Mi (200 MiB), per-part MD5 and post-upload HEAD/expected multipart ETag; memory is transfers × concurrency × chunk size.",
+        "conditions": "HEAD can be disabled by --s3-no-head; provider semantics and selected release matter. Multipart ETag is not whole-file SHA256. Reviewed page has no process-restart-resume guarantee; final promises none and proposes testing that boundary."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Data integrity",
+          "saved_text_lines": [
+            162,
+            732,
+            3546,
+            3839,
+            3840
+          ]
+        },
+        {
+          "anchor": "200Mi",
+          "saved_text_lines": [
+            3491
+          ]
+        },
+        {
+          "anchor": "transfers ×",
+          "saved_text_lines": [
+            890
+          ]
+        },
+        {
+          "anchor": "--s3-no-head",
+          "saved_text_lines": [
+            706,
+            745,
+            764,
+            780,
+            3737,
+            3762
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-MINIO-01",
+      "candidate_source_id": "MINIO-01",
+      "title": "MinIO issue #19670: multipart checksum with part count",
+      "url": "https://github.com/minio/minio/issues/19670",
+      "retrieved_at_utc": "2026-10-10T04:25:10.942643+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/issues/19670",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-01.html",
+      "raw_sha256": "967c700f84fb1a9bc76bb9cb7bfd82ac8ff75bd8e4f3f86cc0d121796f3ce64d",
+      "text_path": "evidence/I-MINIO-01.txt",
+      "text_sha256": "1f5437e7e121a75661d1585a173a0c2553c8bd3259059529f19e58cb10b19bd7",
+      "text_lines": 310,
+      "independent_semantic_check": {
+        "version": "Issue #19670; tested server RELEASE.2024-05-01T01-11-10Z / 7926401cbd5cceaacd9509f2e50e1f7d636c2eb8; AWS JS client 3.569.0.",
+        "locator": "Issue description/reproduction local lines 123–235; CompleteMultipartUpload checksum variants 222–224.",
+        "operation": "CompleteMultipartUpload SHA256 composite checksum with -partCount suffix",
+        "judgment": "Supported as reported external behavior: the issue reports suffix rejected by tested MinIO, accepted by AWS, and bare checksum accepted by both.",
+        "conditions": "Historical issue reporter result, not a reviewer rerun, universal present MinIO claim or archive-provider test."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "3.569.0",
+          "saved_text_lines": [
+            155
+          ]
+        },
+        {
+          "anchor": "RELEASE.2024-05-01",
+          "saved_text_lines": [
+            141,
+            235
+          ]
+        },
+        {
+          "anchor": "ChecksumSHA256:",
+          "saved_text_lines": [
+            196,
+            219,
+            222,
+            223,
+            224
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-MINIO-02",
+      "candidate_source_id": "MINIO-02",
+      "title": "MinIO PR #19680: Accept multipart checksums with part count",
+      "url": "https://github.com/minio/minio/pull/19680",
+      "retrieved_at_utc": "2026-10-10T04:25:10.955302+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/pull/19680",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-02.html",
+      "raw_sha256": "aba1cb559251feabfd3f652d0c9ce91dff0e0d83f8a8f29cbcf2636e2f1c17d4",
+      "text_path": "evidence/I-MINIO-02.txt",
+      "text_sha256": "534f796a986f21e7e91ec53ae1f9c541270965da90534d336dc8047f6d61e28c",
+      "text_lines": 433,
+      "independent_semantic_check": {
+        "version": "PR #19680 merged 2024-05-08; fix 0b245da7a0d665ab85d35e68b27d7aa0b12f603c.",
+        "locator": "PR merge and issue link; independent commit patch NewChecksumWithType / Matches / CompleteMultipartUpload.",
+        "operation": "MinIO completion checksum parsing and part-count validation",
+        "judgment": "Supported fix chain: patch parses suffix, records requested count and checks it against actual count during completion.",
+        "conditions": "Merged code alone does not prove release or downstream adoption; next source establishes the tagged release."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "May 8, 2024",
+          "saved_text_lines": [
+            114,
+            365,
+            371,
+            376
+          ]
+        },
+        {
+          "anchor": "0b245da",
+          "saved_text_lines": [
+            144
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-MINIO-FIX"
+      ]
+    },
+    {
+      "id": "I-MINIO-03",
+      "candidate_source_id": "MINIO-03",
+      "title": "MinIO RELEASE.2024-05-10T01-41-38Z",
+      "url": "https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z",
+      "retrieved_at_utc": "2026-10-10T04:25:11.017726+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-03.html",
+      "raw_sha256": "1243c41cdbeb7823e42bb9c58533fb886c101b1f1bcab24565485776b8da937b",
+      "text_path": "evidence/I-MINIO-03.txt",
+      "text_sha256": "3a2e5c45ef11bd92a84d500711e024682fcc7389e2ad8035af1cac67120293bf",
+      "text_lines": 187,
+      "independent_semantic_check": {
+        "version": "RELEASE.2024-05-10T01-41-38Z, commit b598402; release API published 2024-05-10.",
+        "locator": "Release tag/commit local lines 125–136 and included #19680 change; API body.",
+        "operation": "Tagged MinIO release including multipart checksum compatibility fix",
+        "judgment": "Supported: release notes list #19680. Together with issue and code patch, the chain satisfies the required released compatibility example.",
+        "conditions": "No claim every deployed MinIO or compatible product has this fix."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "b598402",
+          "saved_text_lines": [
+            134
+          ]
+        },
+        {
+          "anchor": "19680",
+          "saved_text_lines": [
+            150
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-MINIO-RELEASE-API"
+      ]
+    },
+    {
+      "id": "I-MINIO-04",
+      "candidate_source_id": "MINIO-04",
+      "title": "MinIO repository status",
+      "url": "https://github.com/minio/minio",
+      "retrieved_at_utc": "2026-10-10T04:25:11.252767+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-04.html",
+      "raw_sha256": "8cb9a745849d0368acb30448a7378e3e7f8b770a452d5ba1b48e45abd7a23092",
+      "text_path": "evidence/I-MINIO-04.txt",
+      "text_sha256": "0521c5539c5d08453d0d7424c16cb2351a8aecda7e3bdaf413606014ce0fd2fa",
+      "text_lines": 524,
+      "independent_semantic_check": {
+        "version": "Public minio/minio repository banner observed 2026-10-10, archived 2026-04-25.",
+        "locator": "Local text line 96.",
+        "operation": "Repository archival status",
+        "judgment": "Supported historical context; final does not recommend deploying the archived repository.",
+        "conditions": "This says nothing conclusive about all MinIO-branded offerings; final keeps its claim to this repository."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "archived by the owner",
+          "saved_text_lines": [
+            96
+          ]
+        }
+      ]
+    }
+  ],
+  "supplementary_primary_evidence": [
+    {
+      "id": "I-TUSD-02-RAW",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "retrieved_at_utc": "2026-10-10T04:25:51.019911+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-TUSD-02-RAW.txt",
+      "text_sha256": "4c7f40f4e8f1501842d3f7cbb6398017da363710c1ea9a87fabcc841db56a806",
+      "text_lines": 117
+    },
+    {
+      "id": "I-TUSD-03-RAW",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+      "retrieved_at_utc": "2026-10-10T04:25:51.022268+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-TUSD-03-RAW.txt",
+      "text_sha256": "5ea530d16e1bc5030e8a4ea0caa3a70691ff6d2be14ed6dad54526b4839e11a0",
+      "text_lines": 1251
+    },
+    {
+      "id": "I-TUSD-RELEASE-API",
+      "url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+      "retrieved_at_utc": "2026-10-10T04:25:51.023526+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "evidence/I-TUSD-RELEASE-API.txt",
+      "text_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+      "text_lines": 1
+    },
+    {
+      "id": "I-MINIO-FIX",
+      "url": "https://github.com/minio/minio/commit/0b245da.patch",
+      "retrieved_at_utc": "2026-10-10T04:25:51.024826+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/commit/0b245da.patch",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-MINIO-FIX.txt",
+      "text_sha256": "31468573681b4ae94d1c7c15497d0e9977da7f2a1d63c9c864851e5c93cccbd3",
+      "text_lines": 132
+    },
+    {
+      "id": "I-MINIO-RELEASE-API",
+      "url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+      "retrieved_at_utc": "2026-10-10T04:25:51.026110+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "evidence/I-MINIO-RELEASE-API.txt",
+      "text_sha256": "96f60320ada1b7bc61eec5be3d977464027e0ca196a1175c7166d03e9f187a5f",
+      "text_lines": 1
+    }
+  ],
+  "source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "freeze_integrity_check": "evidence/freeze-integrity-check.json",
+  "reviewer_native_goal_at_save": {
+    "goal": {
+      "threadId": "01a1240d-3eac-7bd3-b254-e6cbc7c33835",
+      "objective": "Independently assess the single completed ER12 A4-01 control full pipeline against ER12_RUNTIME/assessment/RUBRIC-v1.md and the original frozen brief/plan. Inspect the full declared stage artifacts, maps, freezes, dispositions, and authored evidence; independently retrieve governing primary evidence for consequential claims. Cover all six axes and every exact plan clause, distinguish corrected lineage defects from remaining final issues, and record unknown protocol/runtime facts only as evidenced. Do not delegate, repair candidates, change accounts, publish or use Git, inspect other arms/history, or rescore ER11. Save complete assessment.md, assessment.json and navigable independent source-map/evidence only in ER12_RUNTIME/assessment/A4-01/control-v1, preserve the original freeze, then complete this Goal. Finish within 45 minutes including saving.",
+      "status": "active",
+      "tokensUsed": 166170,
+      "timeUsedSeconds": 232,
+      "createdAt": 1791606221,
+      "updatedAt": 1791606453
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "review_envelope": {
+    "maximum_seconds": 2700,
+    "start_tool_createdAt_raw": 1791606221,
+    "start_utc_clock_reference": "2026-10-10T04:23:41Z",
+    "finish_early_when_complete": true,
+    "includes_saving": true
+  },
+  "scope_controls": [
+    "No nested delegation",
+    "No candidate feedback or repair",
+    "No account/infrastructure/credential changes",
+    "No Git or publication",
+    "No other arms, unrelated results, campaign history or ER11 rescore",
+    "All assessment/evidence writes confined to this output directory",
+    "Original source freeze preserved"
+  ],
+  "assessment_save_completed_at_utc": "2026-10-10T04:33:12.324219+00:00"
+}

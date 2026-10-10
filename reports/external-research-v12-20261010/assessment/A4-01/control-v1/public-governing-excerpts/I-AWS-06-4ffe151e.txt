@@ -1,0 +1,18 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-06.txt
+Original SHA256: 4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1
+Original numbered lines; gaps omitted. Not full response.
+
+10: uploads that aren't completed within a specified number of days after being initiated. When
+11: a multipart upload isn't completed within the specified time frame, it becomes eligible for
+22: <DaysAfterInitiation>7</DaysAfterInitiation>
+26: In the example, the rule doesn't specify a value for the Prefix element (the
+30: completed within seven days become eligible for an abort operation. The abort action has no
+31: effect on completed multipart uploads.
+34: If the multipart upload is completed within the number of days specified in the rule,
+36: is, Amazon S3 doesn't take any action). Also, this action doesn't apply to objects. No
+43: add a lifecycle rule to delete incomplete multipart uploads after 7 days. For more
+45: To add a lifecycle rule to abort incomplete multipart uploads that are more than 7 days old
+72: example, 7 days).
+83: configuration to abort incomplete multipart uploads that are more than 7 days
+103: "DaysAfterInitiation": 7

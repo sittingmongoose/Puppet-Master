@@ -1,0 +1,62 @@
+{
+  "id": "P1",
+  "url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+  "retrieval_started_utc": "2026-10-10T04:13:02.839875+00:00",
+  "retrieval_completed_utc": "2026-10-10T04:13:03.771651+00:00",
+  "operation": "Independent unauthenticated HTTPS GET; tar member bytes extracted as data, no downloaded code executed",
+  "http_status": 200,
+  "final_url": "https://download.samba.org/pub/rsync/src/rsync-3.2.7.tar.gz",
+  "headers": {
+    "date": "Sat, 10 Oct 2026 04:13:03 GMT",
+    "referrer-policy": "strict-origin",
+    "strict-transport-security": "max-age=63072000;includeSubDomains;preload",
+    "x-frame-options": "sameorigin",
+    "connection": "Upgrade",
+    "last-modified": "Fri, 21 Oct 2022 00:58:48 GMT",
+    "accept-ranges": "bytes",
+    "content-length": "1149787",
+    "content-type": "application/gzip",
+    "alt-svc": "h3=\":443\"; ma=999999; persistent=1"
+  },
+  "bytes": 1149787,
+  "sha256": "4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb",
+  "raw_file": "rsync-3.2.7.tar.gz",
+  "members": [
+    {
+      "archive_member": "rsync-3.2.7/rsync.1",
+      "file": "rsync.1.txt",
+      "bytes": 233638,
+      "sha256": "f2d70e3b57214cb26519a88e2b6118dd2c05386838009f9888f48876a087690c"
+    },
+    {
+      "archive_member": "rsync-3.2.7/receiver.c",
+      "file": "receiver.c.txt",
+      "bytes": 28254,
+      "sha256": "1f0747cbcc0e9475e89d324bd15873a1431172cd39801dc041291c620e70c373"
+    },
+    {
+      "archive_member": "rsync-3.2.7/cleanup.c",
+      "file": "cleanup.c.txt",
+      "bytes": 7798,
+      "sha256": "07b982f666c9c78dfe1eacc88a666adf65410ec5402378f3a6860f11c0b43c2d"
+    },
+    {
+      "archive_member": "rsync-3.2.7/generator.c",
+      "file": "generator.c.txt",
+      "bytes": 68293,
+      "sha256": "ffcb0b5473de8b1630a4866e074f8929428df6c9049b816a89a557e27b0f3c79"
+    },
+    {
+      "archive_member": "rsync-3.2.7/options.c",
+      "file": "options.c.txt",
+      "bytes": 96256,
+      "sha256": "465892bdaefdeaafe1cfd2889aa1943fb5d34c9019ba3f5411af4004ffeb9029"
+    },
+    {
+      "archive_member": "rsync-3.2.7/NEWS.md",
+      "file": "NEWS.md.txt",
+      "bytes": 208035,
+      "sha256": "b69afcd7778c58096d638dce98880587a0de398029fd740c832043ed84510529"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "schema": "er12-role-source-map-v1",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "arm": "treatment",
+  "role_scope": "Applicability/exception verification",
+  "written_at_utc": "2026-10-10T04:06:30Z",
+  "corpus_sources": [
+    {
+      "source_id": "S1",
+      "title": "Redis EXPIRE (frozen corpus excerpt)",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "version_scope": "Live command reference; assessed against Redis Open Source 7.2; later additions require applicability check",
+      "locator": "corpus/index.json navigation: Description; Optional arguments; Refreshing expires; How Redis expires keys; History",
+      "file": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+      "retrieved_at_utc": "2026-10-10T03:53:40Z",
+      "retrieval_operation": "setup-worker web retrieval (frozen; not modified by this arm)",
+      "used_for_claims": ["1", "4", "5", "6"]
+    },
+    {
+      "source_id": "S2",
+      "title": "Redis SET (frozen corpus excerpt)",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "version_scope": "Live command reference; KEEPTTL history since 6.0.0; target Redis Open Source 7.2",
+      "locator": "corpus/index.json navigation: Description; Optional arguments / KEEPTTL; History",
+      "file": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+      "retrieved_at_utc": "2026-10-10T03:53:40Z",
+      "retrieval_operation": "setup-worker web retrieval (frozen; not modified by this arm)",
+      "used_for_claims": ["2", "3"]
+    }
+  ],
+  "additional_primary_pages": [
+    {
+      "source_id": "R1",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "version_scope": "Live command reference at retrieval; target Redis Open Source 7.2; NX/XX/GT/LT condition group since 7.0.0 per page metadata",
+      "locator": "Description (timeout-clearing list incl. HSET); Optional arguments (NX/XX/GT/LT); non-positive-timeout note; Appendix: Redis expires (passive/active, accuracy, absolute timestamps, replication)",
+      "retrieved_at_utc": "2026-10-10T03:57Z (approximate)",
+      "retrieval_operation": "HTTPS GET via harness WebFetch; page read only; no code executed, no login, fixture untouched",
+      "evidence_file": "sources/R1-expire.md",
+      "conditions_exceptions": "GT/LT treat non-volatile keys as infinite TTL; non-positive timeout deletes (del event, not expired); condition options skipped -> integer 0",
+      "applicability": "All quoted behavior present in 7.2-line semantics; condition options since 7.0.0 <= 7.2",
+      "used_for_claims": ["1", "2", "4", "5", "6"]
+    },
+    {
+      "source_id": "R2",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "version_scope": "Live command reference at retrieval; KEEPTTL since 6.0.0; live-only options IFEQ/IFNE/IFDEQ/IFDNE since 8.4.0 excluded from 7.2 applicability",
+      "locator": "Description ('Any previous time to live ... discarded on successful SET operation'); Optional arguments / KEEPTTL; option since metadata",
+      "retrieved_at_utc": "2026-10-10T03:57Z (approximate)",
+      "retrieval_operation": "HTTPS GET via harness WebFetch; page read only",
+      "evidence_file": "sources/R2-set.md",
+      "conditions_exceptions": "TTL discard scoped to successful SET; expiration options mutually exclusive",
+      "applicability": "KEEPTTL (6.0.0) applicable to 7.2; 8.4.0 options not applicable",
+      "used_for_claims": ["2", "3"]
+    },
+    {
+      "source_id": "R3",
+      "url": "https://redis.io/docs/latest/commands/hset/",
+      "version_scope": "Live command reference at retrieval; since 2.0.0",
+      "locator": "Description (fields overwritten; key created if absent)",
+      "retrieved_at_utc": "2026-10-10T03:59Z (approximate)",
+      "retrieval_operation": "HTTPS GET via harness WebFetch; page read only",
+      "evidence_file": "sources/R3-hset.md",
+      "conditions_exceptions": "Page itself makes no TTL statement; TTL preservation is sourced from R1, which names HSET",
+      "applicability": "Applicable to 7.2; field-level expiration features of later versions unverified here",
+      "used_for_claims": ["1"]
+    },
+    {
+      "source_id": "R4",
+      "url": "https://redis.io/docs/latest/commands/ttl/",
+      "version_scope": "Live command reference at retrieval; -1/-2 return convention since 2.8",
+      "locator": "Description; Return information (-1 exists without expire; -2 does not exist)",
+      "retrieved_at_utc": "2026-10-10T03:59Z (approximate)",
+      "retrieval_operation": "HTTPS GET via harness WebFetch; page read only",
+      "evidence_file": "sources/R4-ttl.md",
+      "conditions_exceptions": "Persistent key observable as TTL == -1",
+      "applicability": "Applicable to 7.2",
+      "used_for_claims": ["2", "4"]
+    },
+    {
+      "source_id": "R5",
+      "url": "https://redis.io/docs/latest/develop/pubsub/keyspace-notifications/",
+      "version_scope": "Live development docs at retrieval; captured history rows: >= 6.0 key-miss events; >= 7.0 'new' event",
+      "locator": "Configuration (notify-keyspace-events, disabled by default, KEA); Events generated by different commands (EXPIRE positive vs negative timeout); Timing of expired events",
+      "retrieved_at_utc": "2026-10-10T04:02Z (approximate)",
+      "retrieval_operation": "HTTPS GET via harness WebFetch; page read only",
+      "evidence_file": "sources/R5-keyspace-notifications.md",
+      "conditions_exceptions": "Notifications disabled by default; fire-and-forget Pub/Sub; expired events fire at server-side deletion, possibly with significant delay after logical TTL zero",
+      "applicability": "del-vs-expired event distinction applicable to 7.2; per-event-class 7.2 pinning unresolved",
+      "used_for_claims": ["5", "6"]
+    }
+  ],
+  "retrieval_budget": {
+    "additional_primary_pages_allowed": 8,
+    "additional_pages_retrieved": 5,
+    "failed_retrievals": [
+      {
+        "url": "https://redis.io/docs/latest/develop/use/keyspace-notifications/",
+        "result": "HTTP 404 Not Found",
+        "at_utc": "2026-10-10T03:59Z (approximate)",
+        "resolution": "Fetched the EXPIRE page's linked location (develop/pubsub/keyspace-notifications/) as R5 instead"
+      }
+    ]
+  },
+  "claim_dispositions": {
+    "1": {"disposition": "supported_bounded_key_level_ttl", "sources": ["S1", "R1", "R3"]},
+    "2": {"disposition": "refuted", "sources": ["S1", "R1", "R2", "R4"]},
+    "3": {"disposition": "supported_applicable", "sources": ["S2", "R1", "R2"]},
+    "4": {"disposition": "refuted", "sources": ["S1", "R1", "R4"]},
+    "5": {"disposition": "refuted", "sources": ["S1", "R1", "R5"]},
+    "6": {"disposition": "unsupported_unproven", "sources": ["S1", "R1", "R5"]}
+  },
+  "distinctness_note": "URL/version/locator, retrieval UTC/operation, conditions/exceptions, applicability, and proposed-vs-executed are kept as separate fields per source; source statements ([S]) and inference ([I]) are separated inside verification.md.",
+  "proposed_vs_executed": {
+    "proposed": "Six numbered documentation claims in the common assignment (B-APPL-G-01)",
+    "executed": "All six independently verified against corpus plus five retrieved primary pages; dispositions recorded above; uncertainties and resolution evidence named in verification.md"
+  },
+  "output_files": {
+    "verification": "verification.md",
+    "sources_dir": "sources/",
+    "word_limit": 900
+  }
+}

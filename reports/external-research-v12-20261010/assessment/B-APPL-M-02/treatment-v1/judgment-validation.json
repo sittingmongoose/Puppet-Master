@@ -1,0 +1,39 @@
+{
+  "checked_utc": "2026-10-10T04:28:22.997459+00:00",
+  "judgment_saved": true,
+  "all_18_inspected_input_science_metadata_hashes_unchanged": true,
+  "input_freeze_match_count": 8,
+  "terminal_freeze_recheck_paths": [
+    "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/freeze.json"
+  ],
+  "terminal_output_freeze_found": false,
+  "six_claims_and_six_role_axes_recorded": true,
+  "local_evidence_links_and_anchors_valid": true,
+  "required_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/assessment.md",
+      "sha256": "a93a6f984c2a45769c8d01b2d4904312716ae77eb18bcb232a402e38b1a20e96",
+      "bytes": 14628
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/assessment.json",
+      "sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6",
+      "bytes": 48738
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/source-map.json",
+      "sha256": "375708b332083030d7e337d537918add4d97ed194841dba4722491da051b7075",
+      "bytes": 13428
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/inspected-hashes.json",
+      "sha256": "df7f0d7d596ab294bb12a0c7d897e207d73e32d6cc2c7a27d64e92d531beb9eb",
+      "bytes": 6855
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/reviewer-native-goal.json",
+      "sha256": "dd9e987b0aa783025079bba557546426fe8e4c84a4aeeac6f116118e1eaf2177",
+      "bytes": 3431
+    }
+  ]
+}

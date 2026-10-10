@@ -126,7 +126,7 @@
 -    c["_root"] = root
 -    c["_whole_deadline"] = parse_time(c["whole_deadline_utc"])
 -    provider = c["provider"]
--    expected = {"providerInstanceId": "AUTHORIZED_CODEX_PROVIDER_ID", "model": "gpt-6-luna",
+-    expected = {"providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE", "model": "gpt-6-luna",
 -                "options": {"reasoningEffort": "max", "serviceTier": "priority"}}
 -    if provider != expected:
 -        fail(f"provider must match the authorized current route exactly: {json.dumps(expected)}")

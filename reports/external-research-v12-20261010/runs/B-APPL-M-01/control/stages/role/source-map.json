@@ -1,0 +1,93 @@
+{
+  "schema": "er12-role-source-map-v1",
+  "case_id": "ER12-B-APPL-M-01-FRESH",
+  "role": "Applicability/exception verification",
+  "target_configuration": "SQLite 3.51.3, WAL, ordinary shared-memory-capable VFS, multiple processes on one host, local disk; multi-host NFS is proposed separately",
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "source_version": "Page last updated 2026-08-25 19:42:39Z; product version 3.51.3 is the assignment scenario, not a version label on this page",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
+      "retrieval_operation": "Opened the official URL directly with the web tool; inspected \u00a7\u00a71, 2.2, 2.3, 3.2, 4, 5, 6, and 11",
+      "conditions_and_exceptions": [
+        "WAL requires same-host processes and shared-memory support; it does not work over a network filesystem.",
+        "One writer at a time; readers and a writer may proceed concurrently.",
+        "Reader end marks can stop checkpoint progress; unbounded WAL growth requires checkpoint starvation while writes continue.",
+        "Read-only access from SQLite 3.22.0 has documented sidecar, writable-directory, or immutable conditions.",
+        "The WAL is persistent database state; normal checkpoints generally recycle instead of truncate it.",
+        "The page reports a WAL-reset bug affecting versions through 3.51.2, fixed in 3.51.3; its trigger requires multiple connections and a concurrent write/checkpoint timing window."
+      ],
+      "applicability": "Directly applies to the stated WAL mode and is consistent with target 3.51.3; deployment-specific binary and workload behavior remain unmeasured. The documented WAL-reset bug is fixed in the stated target, but the deployed binary version was not checked."
+    },
+    {
+      "source_id": "S2",
+      "title": "SQLite checkpoint C interface",
+      "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+      "source_version": "Live, unversioned C API reference; consulted for the assignment's 3.51.3 target",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
+      "retrieval_operation": "Opened the official URL directly with the web tool; inspected PASSIVE, TRUNCATE, output parameters, and return conditions",
+      "conditions_and_exceptions": [
+        "PASSIVE never waits for readers or writers and may leave checkpoint work unfinished.",
+        "TRUNCATE truncates the WAL to zero bytes just prior to successful return.",
+        "pnLog and pnCkpt expose total and checkpointed frame counts when provided."
+      ],
+      "applicability": "Defines the checkpoint API semantics relevant to claim 5; the actual caller, mode, return values, and output counts have not been inspected."
+    },
+    {
+      "source_id": "S3",
+      "title": "SQLite URI filenames",
+      "url": "https://www.sqlite.org/uri.html",
+      "source_version": "Live, unversioned URI reference retrieved 2026-10-10",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
+      "retrieval_operation": "Opened the official URL directly with the web tool; inspected \u00a73.3 immutable=1",
+      "conditions_and_exceptions": [
+        "immutable=1 signals that the database cannot change, forces read-only mode, and skips file locking and change detection.",
+        "If an asserted-immutable file changes, incorrect query results or SQLITE_CORRUPT are possible."
+      ],
+      "applicability": "Supports the exception to the read-only WAL condition; whether a proposed snapshot is truly immutable is unknown."
+    }
+  ],
+  "claim_sources": {
+    "1": [
+      "S1 \u00a72.2"
+    ],
+    "2": [
+      "S1 \u00a7\u00a72.2, 6"
+    ],
+    "3": [
+      "S1 \u00a7\u00a71, 2.2"
+    ],
+    "4": [
+      "S1 \u00a7\u00a74\u20135",
+      "S3 \u00a73.3"
+    ],
+    "5": [
+      "S2 PASSIVE/TRUNCATE and output parameters",
+      "S1 \u00a76"
+    ],
+    "6": [
+      "S1 \u00a7\u00a71, 2.3"
+    ]
+  },
+  "checks": [
+    {
+      "check_id": "AC1",
+      "status": "proposed_not_executed",
+      "scope": "Target binary/VFS WAL activation, local multi-process writer/read behavior, long-reader checkpoint progress, and actual read-only snapshot conditions; reject multi-host NFS WAL.",
+      "pass_criteria": "WAL activation succeeds on the stated local path; one-writer semantics and checkpoint progress are observed; checkpoint can continue after reader release; snapshot opens only under a documented sidecar or immutable condition; NFS configuration is rejected."
+    },
+    {
+      "check_id": "AC2",
+      "status": "proposed_not_executed",
+      "scope": "Repeated representative p95 comparison of rollback baseline and WAL under matched target workload and configuration.",
+      "pass_criteria": "Predeclared WAL p95 is at most 60% of baseline p95 across the agreed repeated measurement protocol."
+    }
+  ],
+  "execution_status": "No local database probe, binary test, or workload benchmark was executed; no claim is presented as experimentally verified.",
+  "retrieval_failures": [],
+  "version_note_sources": [
+    "S1 \u00a711"
+  ]
+}

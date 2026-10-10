@@ -1,0 +1,21 @@
+{
+  "requested_at_utc": "2026-10-10T04:02:11.000000+00:00",
+  "clientRequestId": "er12-B-FINAL-G-01-treatment-role-v1",
+  "args": {
+    "clientRequestId": "er12-B-FINAL-G-01-treatment-role-v1",
+    "title": "ER12 B-FINAL-G-01 treatment role",
+    "role": "research",
+    "mode": "async",
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "options": {
+        "mode": "yolo",
+        "thought": "max"
+      }
+    },
+    "task": "Execute exactly ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+  }
+}

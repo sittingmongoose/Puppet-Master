@@ -1,0 +1,626 @@
+{
+  "schema": "er12-independent-bounded-role-assessment-v1",
+  "assessment_id": "ER12-B-APPL-M-01-control-v1",
+  "case_id": "ER12-B-APPL-M-01-FRESH",
+  "slot_id": "B-APPL-M-01",
+  "arm": "control",
+  "role": "Applicability/exception verification",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_correct_within_bounded_role": true,
+  "coverage_judgment": "COMPLETE",
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "axis": "Prospective checkpoint counter-oracle wording",
+      "candidate_locator": "verification.md claim 5 and Acceptance check 1; source-map.json S2 and AC1",
+      "observation": "The candidate mentions pnLog/pnCkpt monitoring without specifying the database-name argument or exceptional counter interpretation. This is a useful prospective observation, rather than a fully specified executable oracle.",
+      "sources": [
+        "R2: output parameter paragraph",
+        "R2: NULL/empty zDb paragraph",
+        "R2: non-WAL return conditions"
+      ],
+      "source_conditions": "NULL/empty zDb makes both counters undefined; -1 can mean error or non-WAL operation. Frame counts alone do not establish physical zero-byte WAL.",
+      "materiality": "Minor: WAL is stipulated, AC1 first verifies WAL activation and also records return code and physical WAL size. Neither a concrete all-database call nor an executed result is asserted; all six substantive dispositions remain supported.",
+      "requires_candidate_repair_for_source_passing": false
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": 1,
+      "subject": "Multiple writers to the same WAL database",
+      "operation": "Simultaneous appending of write transactions",
+      "version_configuration": "SQLite 3.51.3 WAL, stated same-host local multi-process configuration",
+      "candidate_disposition": "False",
+      "review_disposition": "False",
+      "source_judgment": "PASS",
+      "bounded_result": "Writers serialize; WAL supports concurrent readers and one writer.",
+      "exceptions_reviewed": "Permission for concurrency does not guarantee every attempt avoids SQLITE_BUSY; this does not alter the single-writer disposition.",
+      "sources": [
+        "R1: 2.2",
+        "R1: 9"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": []
+    },
+    {
+      "claim_id": 2,
+      "subject": "One long-running read transaction",
+      "operation": "Checkpoint completion and WAL reuse/growth",
+      "version_configuration": "SQLite 3.51.3 WAL with possible continuing writes",
+      "candidate_disposition": "True, with growth condition",
+      "review_disposition": "True, with growth condition",
+      "source_judgment": "PASS",
+      "bounded_result": "A pinned reader can limit checkpoint progress and prevent reset; continuing appends can keep growing the WAL.",
+      "exceptions_reviewed": "Partial checkpoint progress is possible; growth needs writes. Reader release permits later progress, rather than guaranteeing immediate truncation.",
+      "sources": [
+        "R1: 2.2",
+        "R1: 6"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": []
+    },
+    {
+      "claim_id": 3,
+      "subject": "Unchanged multi-process design moved to multi-host NFS",
+      "operation": "WAL coordination across hosts",
+      "version_configuration": "Ordinary shared-memory VFS; proposed multiple hosts and network filesystem",
+      "candidate_disposition": "False",
+      "review_disposition": "False",
+      "source_judgment": "PASS",
+      "bounded_result": "Embedded operation does not validate the proposed unchanged multi-host WAL deployment.",
+      "exceptions_reviewed": "Exclusive single-process WAL without shared memory/custom VFS arrangements change the assigned design. An architecture redesign is not required.",
+      "sources": [
+        "R1: 1",
+        "R1: 2.2",
+        "R1: 8"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": []
+    },
+    {
+      "claim_id": 4,
+      "subject": "Read-only WAL database/snapshot",
+      "operation": "Opening read-only",
+      "version_configuration": "Read-only relaxation since 3.22.0 applies to 3.51.3; URI recognition needed for URI parameters",
+      "candidate_disposition": "True, conditionally",
+      "review_disposition": "True, conditionally",
+      "source_judgment": "PASS",
+      "bounded_result": "Readable existing sidecars, directory permission to create them, or an actually immutable connection can permit opening.",
+      "exceptions_reviewed": "WAL contains committed state; bare .db packaging does not prove adequacy. Immutable disables locking/change detection and cannot truthfully describe mutable files. The real snapshot is unknown.",
+      "sources": [
+        "R1: 4-5",
+        "R3: 2",
+        "R3: 3.3 immutable=1"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": []
+    },
+    {
+      "claim_id": 5,
+      "subject": "PASSIVE checkpoint interface",
+      "operation": "Successful return versus zero-byte physical WAL",
+      "version_configuration": "sqlite3_wal_checkpoint_v2 on stipulated SQLite 3.51.3 WAL database",
+      "candidate_disposition": "False",
+      "review_disposition": "False",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "bounded_result": "Successful PASSIVE does not guarantee completion or physical truncation; TRUNCATE explicitly truncates immediately before successful return in the applicable WAL operation.",
+      "exceptions_reviewed": "Reused physical allocation differs from pending frames. Counters include earlier checkpointed frames, may be -1 and are undefined for NULL/empty zDb. Successful truncation cannot prohibit later concurrent writes.",
+      "sources": [
+        "R2: PASSIVE",
+        "R2: TRUNCATE",
+        "R2: outputs/zDb/returns",
+        "R1: 6"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": [
+        "L1"
+      ]
+    },
+    {
+      "claim_id": 6,
+      "subject": "This catalog p95 lookup latency",
+      "operation": "At least 40 percent reduction from enabling WAL",
+      "version_configuration": "Target 3.51.3 binary/build/workload unmeasured",
+      "candidate_disposition": "Unsupported by supplied evidence",
+      "review_disposition": "Unsupported by supplied evidence",
+      "source_judgment": "PASS",
+      "bounded_result": "Generic SQLite performance guidance cannot establish this catalog-specific quantitative result.",
+      "exceptions_reviewed": "Read-heavy workload and WAL/checkpoint size influence performance. Matched repeated measurements are missing; <=0.60 times baseline correctly expresses 40 percent reduction.",
+      "sources": [
+        "R1: 1",
+        "R1: 2.3"
+      ],
+      "coverage": "Complete claim adjudication",
+      "material_findings": [],
+      "limitations": []
+    }
+  ],
+  "axis_coverage": {
+    "original_obligations_negative_constraints": {
+      "judgment": "PASS",
+      "coverage": "Six separate numbered claims, target/version, citations, bounded corrections, consequential exceptions, uncertainty, two final checks; 720 words <=900; no architecture substitution in authored science."
+    },
+    "consequential_source_claims": {
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "All six claims independently checked for subject, operation, version and material exceptions; minor L1 only."
+    },
+    "corrections_and_rejections": {
+      "judgment": "PASS",
+      "coverage": "Claims 1,3,5 correctly false; 2 and 4 conditional; 6 unsupported. No critique dispositions assigned."
+    },
+    "uncertainty_and_missing_evidence": {
+      "judgment": "PASS",
+      "coverage": "Binary/build/workload not observed; growth and snapshot conditions preserved; matched repeated benchmark identifies missing quantitative evidence."
+    },
+    "validation_and_oracle": {
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "Both checks concrete and explicitly prospective, with minor L1 counter qualification; no executed result invented."
+    },
+    "discovery_mechanisms_alternatives_history": {
+      "judgment": "NOT_APPLICABLE_AS_SEPARATE_ROLE",
+      "coverage": "Discovery breadth not assigned. Relevant read-only history, immutable semantics and WAL-reset fix assessed within applicability scope."
+    },
+    "whole_pipeline_finalization_preservation": {
+      "judgment": "NOT_APPLICABLE",
+      "coverage": "No discovery/draft/critique chain, owner prose or full product qualification assigned."
+    }
+  },
+  "delivery": {
+    "judgment": "PASS",
+    "verification_present": true,
+    "source_map_present": true,
+    "source_evidence_present": true,
+    "terminal_science_freeze_present": true,
+    "candidate_words_whitespace": 720,
+    "candidate_max_words": 900,
+    "frozen_inputs_match": true,
+    "all_11_terminal_manifest_entries_match": true,
+    "integrity_is_semantic_proof": false
+  },
+  "native": {
+    "judgment": "UNKNOWN",
+    "candidate_self_report": "status.json terminal summary says native Goal complete; elapsed 2m54s.",
+    "direct_activation_receipt": null,
+    "direct_completion_receipt": null,
+    "save_before_native_completion": "UNKNOWN",
+    "reason": "Allowed frozen artifacts contain T3 status and self-report, but no direct native Goal tool receipts. freeze.json native_goal_status remains UNKNOWN until directly observed. No transcript/history read was used to fill this gap.",
+    "separate_from_source_judgment": true
+  },
+  "protocol": {
+    "judgment": "NO_OBSERVED_VIOLATION_WITH_UNKNOWN_EXECUTION_DETAILS",
+    "observed": "Authored science remains bounded; source map lists two corpus URLs plus one additional primary page; no local execution claimed; T3 reports no pending child runs.",
+    "unknown": [
+      "Complete candidate prohibited-action exclusion/tool trace",
+      "Exact candidate retrieval timestamps",
+      "Native save/completion ordering",
+      "Investigation/writing accounting"
+    ],
+    "review_method": "One actual reviewer Goal, exact assigned control artifacts and listed inputs, independent official primary retrieval. No other arms/evaluations/history/canon reads, candidate feedback/fixes, delegation, account or GitHub/main/WorkNodes changes.",
+    "assistance_invalidates_method_if_later_observed": true
+  },
+  "time": {
+    "judgment": "HOST_DELIVERY_WITHIN_ABSOLUTE_DEADLINE_NATIVE_TIME_UNKNOWN",
+    "prepared_utc": "2026-10-10T04:02:08+00:00",
+    "deadline_utc": "2026-10-10T04:17:08+00:00",
+    "terminal_freeze_utc": "2026-10-10T04:06:21.179851+00:00",
+    "prepared_to_terminal_freeze_seconds": 253.179851,
+    "verification_mtime_utc": "2026-10-10T04:05:22.076247+00:00",
+    "source_map_mtime_utc": "2026-10-10T04:05:41.194554+00:00",
+    "source_notes_mtime_utc": "2026-10-10T04:05:41.194836+00:00",
+    "mtime_role": "Filesystem custody observations; not proof of native ordering, inference occupancy or billing.",
+    "candidate_native_elapsed_seconds_self_report": 174,
+    "native_elapsed_verified": false,
+    "investigation_and_writing_split": "UNKNOWN; early finish is permitted.",
+    "billing_inference_speed_or_paired_conclusion": "NOT_ASSESSED; no inference made."
+  },
+  "unknowns": [
+    "Actual shipped SQLite version/build options, URI configuration and VFS behavior",
+    "Actual snapshot contents, sidecar availability and genuine immutability",
+    "Actual checkpoint mode, zDb, return codes, counters and workload behavior",
+    "Representative p95 result and measurement uncertainty",
+    "Candidate direct native receipts/provenance/save-before-completion",
+    "Full candidate prohibited-action compliance and time accounting"
+  ],
+  "acceptance_checks": [
+    {
+      "check_id": "AC1",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "scope": "Target binary/version/VFS WAL activation, local two-process writer/long-reader observations, checkpoint progress and physical file size, actual snapshot opening, NFS support boundary",
+      "concreteness": "Concrete observables and reader-release transition are specified; L1 is a minor unresolved counter detail.",
+      "oracle_applicability": "Same-host documented WAL behavior and conditional snapshot opening. NFS rejection is a documentation/design boundary, not an executed NFS experiment.",
+      "result": "No deployment result established",
+      "sources": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "check_id": "AC2",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "scope": "Repeated matched rollback/WAL p95 measurement on representative catalog workload",
+      "concreteness": "Matched data, hardware, durability, concurrency and cache controls plus <=0.60 ratio are specified.",
+      "oracle_applicability": "40 percent conclusion would apply to the representative measured configuration; no measurements are supplied.",
+      "result": "No quantitative benefit established",
+      "sources": [
+        "R1: 1",
+        "R1: 2.3"
+      ]
+    }
+  ],
+  "executed_validation": {
+    "candidate": "No database probe, binary inspection or benchmark reported. Documentation retrieval reported, underlying trace unavailable.",
+    "reviewer": "Executed complete assigned reads, independent primary retrieval on four official pages, frozen integrity checks, word count and semantic claim/check review. No database/service/workload probe."
+  },
+  "primary_urls_versions": [
+    {
+      "source_id": "R1",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Live official page last updated 2026-08-25 19:42:39Z; applied to stipulated SQLite 3.51.3",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open; complete relevant surrounding passages read",
+      "locators": [
+        "1 Overview",
+        "2.2 Concurrency",
+        "2.3 Performance Considerations",
+        "3 Activating And Configuring WAL Mode",
+        "3.2 Application-Initiated Checkpoints",
+        "4 The WAL File",
+        "5 Read-Only Databases",
+        "6 Avoiding Excessively Large WAL Files",
+        "8 Use of WAL Without Shared-Memory",
+        "9 Sometimes Queries Return SQLITE_BUSY In WAL Mode",
+        "11 The WAL-Reset Bug"
+      ],
+      "claims": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        "version_note"
+      ],
+      "evidence_summary": "Single writer; readers constrain checkpoint progress/reset; same-host shared memory; read-only support since 3.22.0 has three conditions; WAL is persistent state; physical reuse differs from truncation; performance is workload-dependent; WAL-reset fix is in 3.51.3.",
+      "applicability": "Ordinary shared-memory-capable VFS, same-host processes, local disk. Single-process exclusive-lock/custom-VFS exceptions change the assigned design."
+    },
+    {
+      "source_id": "R2",
+      "title": "SQLite checkpoint C interface",
+      "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+      "version": "Live unversioned API reference retrieved 2026-10-10; applied to stipulated 3.51.3",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open plus follow-up displaying full API body",
+      "locators": [
+        "sqlite3_wal_checkpoint_v2 signature",
+        "SQLITE_CHECKPOINT_PASSIVE",
+        "SQLITE_CHECKPOINT_TRUNCATE",
+        "pnLog/pnCkpt paragraph",
+        "Checkpoint/writer locks and SQLITE_BUSY",
+        "NULL/empty zDb paragraph",
+        "Non-WAL return conditions"
+      ],
+      "claims": [
+        5
+      ],
+      "evidence_summary": "PASSIVE may be incomplete and does not wait for readers/writers; TRUNCATE truncates immediately before successful return. Counters are frames, can be -1 and are undefined for NULL/empty zDb. A competing checkpoint can return SQLITE_BUSY.",
+      "applicability": "Applicable WAL database checkpoint operations; frame observations require API argument/return qualifications; truncation is not a future guarantee against later writes."
+    },
+    {
+      "source_id": "R3",
+      "title": "SQLite URI filenames",
+      "url": "https://www.sqlite.org/uri.html",
+      "version": "Live unversioned official URI reference retrieved 2026-10-10",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open plus surrounding-section follow-up",
+      "locators": [
+        "2 Backwards Compatibility: URI recognition and SQLITE_OPEN_URI",
+        "3.3 Recognized Query Parameters: immutable=1"
+      ],
+      "claims": [
+        4
+      ],
+      "evidence_summary": "Immutable asserts the file cannot change, forces read-only access and skips locking/change detection. False assertions can cause incorrect results or SQLITE_CORRUPT. URI recognition is configurable.",
+      "applicability": "Connection actually recognizing immutable URI parameter; real snapshot immutability remains unknown."
+    },
+    {
+      "source_id": "R4",
+      "title": "SQLite Release 3.51.3 On 2026-03-13",
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version": "Version-specific 3.51.3 release log dated 2026-03-13",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open of versioned release log",
+      "locators": [
+        "Changes in this specific patch release, version 3.51.3: item 1",
+        "SQLITE_SOURCE_ID"
+      ],
+      "claims": [
+        "version_note"
+      ],
+      "evidence_summary": "The 3.51.3 patch fixes the WAL-reset database corruption bug.",
+      "applicability": "Corroborates version-specific fix; does not identify any deployed binary."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "item": "WAL-reset race fixed in 3.51.3",
+      "usefulness": "Consequential version-specific history for multi-connection writer/checkpoint use; actual binary remains uninspected.",
+      "candidate_included": true,
+      "sources": [
+        "R1: 11",
+        "R4: specific patch changes item 1"
+      ]
+    },
+    {
+      "item": "Read-only support since 3.22.0 and immutable semantics",
+      "usefulness": "Separates conditional opening from unsafe incomplete file packaging or mutable immutable assertions.",
+      "candidate_included": true,
+      "sources": [
+        "R1: 4-5",
+        "R3: 3.3"
+      ]
+    },
+    {
+      "item": "Checkpoint counter parameter applicability",
+      "usefulness": "Reviewer verified named-database/undefined/-1 conditions; minor L1 separates prospective design from executed validation.",
+      "candidate_included": "partially",
+      "sources": [
+        "R2: outputs/zDb/returns"
+      ]
+    }
+  ],
+  "scope_exclusions": [
+    "Other arm/paired conclusion",
+    "Other evaluations/history",
+    "Discovery opportunity grading outside this role",
+    "Whole product/pipeline qualification",
+    "Candidate fixes/feedback",
+    "Accounts, GitHub/canon/main/WorkNodes changes"
+  ],
+  "reviewer_native_goal": {
+    "activation_tool_result": {
+      "goal": {
+        "threadId": "01a123fe-653e-7303-abfe-b4c73da11df8",
+        "objective": "Independently assess the frozen ER12 B-APPL-M-01 control applicability/exception verification role against RUBRIC-v1, retrieve governing primary evidence for every numbered claim and assigned obligation, and save complete assessment.md, assessment.json and source-map.json under assessment/B-APPL-M-01/control-v1 before completing this Goal. No candidate changes, feedback, delegation, accounts, or canon/GitHub/main/WorkNodes changes.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791605251,
+        "updatedAt": 1791605251
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "latest_pre_save_tool_result": {
+      "goal": {
+        "threadId": "01a123fe-653e-7303-abfe-b4c73da11df8",
+        "objective": "Independently assess the frozen ER12 B-APPL-M-01 control applicability/exception verification role against RUBRIC-v1, retrieve governing primary evidence for every numbered claim and assigned obligation, and save complete assessment.md, assessment.json and source-map.json under assessment/B-APPL-M-01/control-v1 before completing this Goal. No candidate changes, feedback, delegation, accounts, or canon/GitHub/main/WorkNodes changes.",
+        "status": "active",
+        "tokensUsed": 38551,
+        "timeUsedSeconds": 90,
+        "createdAt": 1791605251,
+        "updatedAt": 1791605341
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "goal_count_created": 1,
+    "completion_policy": "Complete actual native Goal only after the full review artifacts are saved and checked. The subsequent native tool completion result is the authoritative receipt."
+  },
+  "review_preservation": "Original assessment v1; later dispute dispositions must be separate.",
+  "created_utc": "2026-10-10T04:13:13.849866+00:00",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "bytes": 2972,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb",
+      "bytes": 1621,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "bytes": 1337,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "bytes": 993,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "bytes": 989,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/assignment.md",
+      "sha256": "9a47b8e394ae9cfb03f0c9b795e085bc30634504e96868d362c0d217ca031f97",
+      "bytes": 1798,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "sha256": "ef34c35616e32fb350256c21655300b7b524c3840a02281a53d7a537f08c1d62",
+      "bytes": 600,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md",
+      "sha256": "2fb5c2847aadfe3a848d9e30cb350a4fc737be8353eefba7e98660500545c76c",
+      "bytes": 5338,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json",
+      "sha256": "3eecb95ed15648435c7d2c653f9e7e1fe21c352f89d8d546c458a117b68d07f3",
+      "bytes": 5389,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md",
+      "sha256": "2f55c4f32e68b3a643f71915c2c822b56d3b2e2d071a809778f548d11f8c621c",
+      "bytes": 2889,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/terminal-science-freeze.json",
+      "sha256": "6f7c4b36ee96c040db0b00eb58d8b7786d53516490fcf512c4ad2ea0be7388aa",
+      "bytes": 3237,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/freeze.json",
+      "sha256": "0a63fddc96f1d505af3d79dd907a7c33fe5e53aca8355c1eea245cadb6abb6e9",
+      "bytes": 2828,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/status.json",
+      "sha256": "173108520bbafd49398d07ec50bc8593c4c69040f18ecce7f15960a1b2fa6abc",
+      "bytes": 3201,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/dispatch.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/raw-dispatch.json",
+      "sha256": "49672eef0cdc509806380889c7f9f5e36337ed7808afb2c1ce30f25db618acc1",
+      "bytes": 1955,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/request.json",
+      "sha256": "6b5b4c797b29065ade5ed5016c1cc445f3697fe551636926de5d542200a4d1a5",
+      "bytes": 870,
+      "inspection": "complete JSON"
+    }
+  ],
+  "custody_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/assignment.md",
+      "sha256": "9a47b8e394ae9cfb03f0c9b795e085bc30634504e96868d362c0d217ca031f97",
+      "bytes": 1798,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/dispatch.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/freeze.json",
+      "sha256": "0a63fddc96f1d505af3d79dd907a7c33fe5e53aca8355c1eea245cadb6abb6e9",
+      "bytes": 2828,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/request.json",
+      "sha256": "6b5b4c797b29065ade5ed5016c1cc445f3697fe551636926de5d542200a4d1a5",
+      "bytes": 870,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "sha256": "ef34c35616e32fb350256c21655300b7b524c3840a02281a53d7a537f08c1d62",
+      "bytes": 600,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/status.json",
+      "sha256": "173108520bbafd49398d07ec50bc8593c4c69040f18ecce7f15960a1b2fa6abc",
+      "bytes": 3201,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md",
+      "sha256": "2fb5c2847aadfe3a848d9e30cb350a4fc737be8353eefba7e98660500545c76c",
+      "bytes": 5338,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json",
+      "sha256": "3eecb95ed15648435c7d2c653f9e7e1fe21c352f89d8d546c458a117b68d07f3",
+      "bytes": 5389,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/raw-dispatch.json",
+      "sha256": "49672eef0cdc509806380889c7f9f5e36337ed7808afb2c1ce30f25db618acc1",
+      "bytes": 1955,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md",
+      "sha256": "2f55c4f32e68b3a643f71915c2c822b56d3b2e2d071a809778f548d11f8c621c",
+      "bytes": 2889,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/records/dispatch-20261010T040209259121-21afa8da7b65400f9a2db2c2d22856aa.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": false
+    }
+  ]
+}

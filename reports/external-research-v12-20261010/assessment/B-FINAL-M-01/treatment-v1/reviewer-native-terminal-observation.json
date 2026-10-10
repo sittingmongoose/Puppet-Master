@@ -1,0 +1,17 @@
+{
+  "observation_tool": "functions.get_goal",
+  "observed_after": "assessment.md, assessment.json, source-map.json and completion-check.json saved; functions.update_goal(status=complete) returned",
+  "response": {
+    "goal": {
+      "threadId": "01a1240e-3603-7382-a8a7-715e1e536a5e",
+      "objective": "Complete this exact independent bounded ER12 Track B semantic review for B-FINAL-M-01 treatment FINAL, within 25 minutes including saving. Read FULL ER12_RUNTIME/assessment/RUBRIC-v1.md and treatment/stages/role/{input-map.json,assignment.md,freeze.json}; follow map to read FULL shared assignment, fixture, every corpus member, authored role file, source-map.json and every sources member, without assuming filenames. Verify terminal freeze and hash inspected science/input. Independently retrieve governing primary evidence and assess only assigned role axes/exact obligations, consequential applicability conditions and dispositions, supported scope, useful alternatives/history where required, and proposed versus executed checks. Actual evidence required for native/effective/billing; UNKNOWN otherwise. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history, or ER11 rescore. Save complete assessment.md, assessment.json, source-map and navigable primary evidence exclusively under ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1. Preserve source, coverage, delivery, native, protocol, and time separately. Save judgment before marking this Goal complete; report concise result and paths.",
+      "status": "complete",
+      "tokensUsed": 112388,
+      "timeUsedSeconds": 377,
+      "createdAt": 1791606287,
+      "updatedAt": 1791606665
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

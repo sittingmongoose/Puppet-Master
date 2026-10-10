@@ -1,0 +1,798 @@
+{
+  "schema": "er12-independent-role-assessment-v1",
+  "case_id": "ER12-B-APPL-M-02-FRESH",
+  "slot_id": "B-APPL-M-02",
+  "arm": "control",
+  "assessment_revision": "control-v1",
+  "role_scope": "Applicability/exception verification",
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "semantic_reason": "No material error, material omission or unsupported consequential decision remains. Two minor evidence-navigation/subject-locator limitations are recorded separately from method and telemetry.",
+  "full_pipeline_qualification": false,
+  "assessed_at_utc": "2026-10-10T04:27:27.065261+00:00",
+  "reviewer_identity": "codex-er12-bapplm02-review-0422",
+  "assigned_axes": [
+    {
+      "axis": "Exact obligations and negative constraints",
+      "status": "COVERED",
+      "assessment": "Six independently numbered dispositions; version and POSIX scope; primary citations; corrected bounded language; uncertainty and missing evidence; exactly two concrete acceptance checks; 599 whitespace words <=900. No redesign or substituted deployment. Optional local probes were not required."
+    },
+    {
+      "axis": "Source applicability, conditions, exceptions, versions, operation, type, unit and domain",
+      "status": "COVERED_WITH_MINOR_LOCATOR_LIMITATIONS",
+      "assessment": "Claims 1-6 independently checked against primary documentation and tagged implementation. Iterator/list distinction, recursive **, scanning-only suppression, module comparison, home expansion, snapshot and 100-ms scope are correct. See claims and L1/L2."
+    },
+    {
+      "axis": "Correct dispositions and supported-scope preservation",
+      "status": "COVERED",
+      "assessment": "1 and 3 supported with bounds; 2,4,5 rejected; 6 rejected as a contract guarantee. Positive hidden-match and recursive-no-follow behavior retained rather than over-rejected. Mutation comparisons are not silently converted to rglob contract statements."
+    },
+    {
+      "axis": "Useful discoveries, bounded alternatives and implementation/history",
+      "status": "COVERED_FOR_APPL_ROLE",
+      "assessment": "Useful alternatives are explicit sorting and explicit home expansion; useful discoveries are suppressed-error omissions and exact recursive symlink boundary. Documentation change notes cover required history. No exhaustive discovery or architecture comparison is required for this APPL assignment. Reviewer inspected implementation as corroboration, not credited as candidate discovery."
+    },
+    {
+      "axis": "Validation, oracle applicability and proposed versus executed checks",
+      "status": "COVERED",
+      "assessment": "Check 1 uses target CPython 3.13 and a non-root POSIX denied-directory fixture plus hidden names and external symlink marker. Check 2 defines scope, independent expected inventory and deployment-specific repeated timing with an agreed statistic. It cannot prove concurrent snapshot semantics or universal API latency; candidate explicitly limits its inference. Both are proposed and not executed. Documentation retrieval is evidence inspection, not filesystem/benchmark validation."
+    }
+  ],
+  "claims": [
+    {
+      "claim": 1,
+      "candidate_disposition": "Supported, bounded",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:5",
+      "candidate_exact": "This concerns pattern matching, not a promise that every entry can be read.",
+      "primary_sources": [
+        "P1#comparison-to-the-glob-module",
+        "P2#module-glob",
+        "P2#glob.glob"
+      ],
+      "applicability": "Concrete Path.rglob(\"*\") under CPython 3.13 on POSIX; leading dots are ordinary. The comparison uses glob default include_hidden=False; a leading-dot pattern or include_hidden=True changes glob matching. Matching is separate from directory accessibility.",
+      "corrected_scope_preserved": true
+    },
+    {
+      "claim": 2,
+      "candidate_disposition": "Rejected",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:7",
+      "candidate_exact": "Converting it with `list(...)` preserves that unspecified traversal order.",
+      "primary_sources": [
+        "P1#pathlib.Path.rglob",
+        "P6#L581-L620",
+        "P5#L414-L446"
+      ],
+      "applicability": "Concrete rglob returns an iterator rather than a sorted list. Sorting the observed paths provides order, without fixing membership during mutation. Candidate opening explicitly describes list consumption and then distinguishes API iterator behavior.",
+      "corrected_scope_preserved": true
+    },
+    {
+      "claim": 3,
+      "candidate_disposition": "Supported, with scope",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:9",
+      "candidate_exact": "This does not mean every operation ignores symlinks",
+      "primary_sources": [
+        "P1#pathlib.Path.glob",
+        "P1#pathlib.Path.rglob",
+        "P1#comparison-to-the-glob-module",
+        "P6#L611-L620",
+        "P7#L662-L673",
+        "P5#L448-L510"
+      ],
+      "applicability": "CPython 3.13 concrete Path default recurse_symlinks=False; rglob prepends **/. The no-follow rule governs recursive ** expansion, not every path operation or the visibility of a symlink entry. Explicit recurse_symlinks=True changes traversal. The abstract base default is not the concrete Path default.",
+      "corrected_scope_preserved": true
+    },
+    {
+      "claim": 4,
+      "candidate_disposition": "Rejected",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:11",
+      "candidate_exact": "`Path.rglob` suppresses `OSError` raised while scanning, including `PermissionError`",
+      "primary_sources": [
+        "P1#pathlib.Path.rglob",
+        "P1#pathlib.Path.glob",
+        "P5#L414-L446",
+        "P5#L448-L510"
+      ],
+      "applicability": "3.13 suppresses filesystem scanning OSError, including denied-directory PermissionError. Suppression can omit descendants. This is not a guarantee that any unrelated operation or exception is suppressed. The 3.13 all-scanning-errors historical change note is under Path.glob, which rglob uses.",
+      "corrected_scope_preserved": true
+    },
+    {
+      "claim": 5,
+      "candidate_disposition": "Rejected",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:13",
+      "candidate_exact": "confirm the runtime\u2019s home-directory resolution",
+      "primary_sources": [
+        "P2#module-glob",
+        "P3#os.path.expanduser"
+      ],
+      "applicability": "Literal glob.glob(\"~/project/*\") performs neither shell invocation nor tilde expansion. POSIX expanduser uses HOME or pwd for bare ~; expansion can fail and leave the path unchanged. Candidate avoids promising successful runtime home resolution. A literal directory named ~ remains a literal match possibility.",
+      "corrected_scope_preserved": true
+    },
+    {
+      "claim": 6,
+      "candidate_disposition": "Rejected / unsupported as a combined guarantee",
+      "review": "CORRECT",
+      "candidate_locator": "verification.md:15",
+      "candidate_exact": "These are not an explicit mutation guarantee for `rglob`",
+      "primary_sources": [
+        "P1#pathlib.Path.rglob",
+        "P1#pathlib.Path.iterdir",
+        "P1#pattern-language",
+        "P2#glob.glob",
+        "P6#L581-L620",
+        "P5#L448-L510"
+      ],
+      "applicability": "No rglob snapshot or <100-ms contract. Permission omission and traversal behavior defeat a universal complete snapshot conclusion. iterdir and glob mutation statements retain their original subjects; they are supporting comparisons, not transferred rglob guarantees. A sub-100-ms threshold is 0.1 seconds and needs specified workloads/measurement, not inferred API performance. No actual deployment, tree size, or benchmark is supplied.",
+      "corrected_scope_preserved": true
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "severity": "MINOR_LOCATOR",
+      "material": false,
+      "candidate_locator": "verification.md:11 and verification.md:15",
+      "candidate_exact": "`Path.rglob`; 3.13 change note",
+      "finding": "The historical all-scanning-OSError change note is at Path.glob, and claim 6 labels Path.iterdir and pattern language while linking only the rglob fragment. The same complete primary page contains the correct evidence and the candidate states the facts with correct operation scope.",
+      "primary_locator_urls": [
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.glob",
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.iterdir",
+        "https://docs.python.org/3.13/library/pathlib.html#pattern-language"
+      ],
+      "effect": "Navigation precision only; no wrong disposition or unsupported consequential decision."
+    },
+    {
+      "id": "L2",
+      "severity": "MINOR_SOURCE_MAP_SUBJECT_PRECISION",
+      "material": false,
+      "candidate_locator": "source-map.json sources[0].source_statements[4], read with verification.md:15",
+      "candidate_exact": "dynamic entry inclusion is unspecified",
+      "finding": "This flattened source-map statement does not name Path.iterdir, although the source entry lists that locator and verification.md explicitly preserves the distinction from rglob. The unqualified source-map phrase should not be read as a direct rglob mutation contract.",
+      "primary_locator_urls": [
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.iterdir"
+      ],
+      "effect": "Minor isolated source-map granularity issue, resolved in the governing authored verification; no material unsupported decision."
+    }
+  ],
+  "delivery": {
+    "status": "COMPLETE_ROLE_OUTPUT",
+    "artifact": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/verification.md",
+    "word_count_method": "len(text.split())",
+    "word_count": 599,
+    "limit_words": 900,
+    "source_map_present": true,
+    "all_source_members_read_full": true,
+    "source_members": 2,
+    "t3_terminal_record": "ER12_RUNTIME/mechanics/task-observations/er12-B-APPL-M-02-control-role-v2.json",
+    "root_observed_at_utc": "2026-10-10T04:21:28.872Z",
+    "t3_status": "completed",
+    "work_state": "result_available",
+    "has_pending_child_runs": false,
+    "finalization_section_requirement": "NOT_APPLICABLE_APPL_ROLE; verification.md is present, so this is not MISSING/UNASSESSED"
+  },
+  "coverage": {
+    "all_six_claims": true,
+    "exact_obligations_met": true,
+    "role_only": true,
+    "sources_independently_retrieved": true,
+    "local_candidate_acceptance_checks_executed": false,
+    "reviewer_local_semantic_probes_executed": false,
+    "benchmark_executed": false
+  },
+  "native": {
+    "status": "SAVED_NATIVE_TOOL_RECEIPTS_OBSERVED",
+    "activation_receipt": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/activation-receipt.json",
+    "completion_receipt": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/native-completion-receipt.json",
+    "receipt_goal_thread_id": "01a12408-19f2-7523-a4d0-4dc21b865050",
+    "receipt_activation_status": "active",
+    "receipt_completion_status": "complete",
+    "receipt_objective_matches_freeze": true,
+    "receipt_created_at_epoch": 1791605887,
+    "receipt_updated_at_epoch": 1791606058,
+    "receipt_reported_tokens_used": 72170,
+    "receipt_reported_time_used_seconds": 170,
+    "raw_original_tool_call_trace": "UNKNOWN; only saved receipts available to this reviewer",
+    "effective_model": "UNKNOWN",
+    "effective_reasoning_effort": "UNKNOWN",
+    "effective_service_tier": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "t3_reported_model": "gpt-6-luna",
+    "t3_reported_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "telemetry_interpretation": "Saved native receipt fields are reported as observed. T3 reported model is routing metadata, not proof of backend effective execution. Native tokensUsed is not categorized inference tokens or a billing measure. No cost/speed savings inferred."
+  },
+  "protocol": {
+    "status": "DEVIATION_REPORTED",
+    "deviation": "Input-map metadata opened before native Goal activation, contrary to explicit sequencing instruction. Candidate source-map and terminal response both admit it.",
+    "evidence": [
+      "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/source-map.json#procedural_note",
+      "ER12_RUNTIME/mechanics/task-observations/er12-B-APPL-M-02-control-role-v2.json#actual_response.structuredContent.summary",
+      "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md"
+    ],
+    "science_before_activation": "UNKNOWN independently; candidate states none. No contradictory evidence inspected.",
+    "unauthorized_assistance_evidence": "NONE_OBSERVED; exhaustive absence UNKNOWN",
+    "semantic_judgment_unchanged": true,
+    "candidate_feedback_or_repair_by_reviewer": false,
+    "reviewer_delegation": false,
+    "other_arm_science_or_history_read": false,
+    "accounts_git_publication_actions": false
+  },
+  "freeze_integrity": {
+    "input_freeze": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/freeze.json",
+    "input_comparisons": [
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md",
+        "expected_sha256": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+        "observed_sha256": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+        "expected_bytes": 2375,
+        "observed_bytes": 2375,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/input-map.json",
+        "expected_sha256": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+        "observed_sha256": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+        "expected_bytes": 600,
+        "observed_bytes": 600,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+        "expected_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+        "observed_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+        "expected_bytes": 1590,
+        "observed_bytes": 1590,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/manifest.json",
+        "expected_sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+        "observed_sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+        "expected_bytes": 624,
+        "observed_bytes": 624,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+        "expected_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+        "observed_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+        "expected_bytes": 3009,
+        "observed_bytes": 3009,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+        "expected_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+        "observed_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+        "expected_bytes": 966,
+        "observed_bytes": 966,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+        "expected_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+        "observed_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+        "expected_bytes": 873,
+        "observed_bytes": 873,
+        "match": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+        "expected_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+        "observed_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+        "expected_bytes": 1251,
+        "observed_bytes": 1251,
+        "match": true
+      }
+    ],
+    "all_frozen_input_hashes_match": true,
+    "all_inspected_bytes_unchanged_at_save": true,
+    "terminal_freeze": "UNKNOWN / NO_TERMINAL_OUTPUT_HASH_MANIFEST_LOCATED",
+    "terminal_freeze_search_scope": "Assigned control stage, exact own-case filename search, and own mechanics task-observation. freeze.json is preparation/input freeze; task-observation contains terminal status but no terminal output hashes. No new candidate freeze created.",
+    "reviewer_hash_record": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/inspected-hashes.json",
+    "hashes_not_a_semantic_oracle": true
+  },
+  "validation": {
+    "candidate_proposed": [
+      "CPython 3.13 non-root POSIX hidden-file/symlink/unreadable-subtree acceptance fixture",
+      "Scoped stable representative inventory with independent expected set and repeated latency measurement against an agreed statistic/threshold"
+    ],
+    "candidate_executed_as_claimed": [
+      "Official documentation retrieval and review only"
+    ],
+    "candidate_execution_verified": "UNKNOWN original source-tool trace; no acceptance execution claimed",
+    "reviewer_executed": [
+      "Read complete frozen assigned inputs, candidate verification/source map and every saved sources member",
+      "Independently retrieved primary documentation and read consequential passages; inspected tagged implementation as data",
+      "Compared all 8 input-freeze hashes; hashed all inspected assigned artifacts and reconfirmed unchanged bytes at saving"
+    ],
+    "reviewer_did_not_execute": [
+      "Candidate acceptance checks",
+      "CPython 3.13 behavior probe",
+      "Benchmark",
+      "Downloaded code"
+    ]
+  },
+  "useful_discoveries": [
+    {
+      "discovery": "All filesystem scan OSError suppression is a 3.13 boundary; silent incomplete traversal remains possible.",
+      "candidate_locator": "verification.md:11",
+      "primary_sources": [
+        "P1#pathlib.Path.glob",
+        "P1#pathlib.Path.rglob"
+      ]
+    },
+    {
+      "discovery": "Default symlink exclusion is limited to recursive ** traversal; link visibility and other path operations retain their own semantics.",
+      "candidate_locator": "verification.md:9",
+      "primary_sources": [
+        "P1#pathlib.Path.glob",
+        "P1#comparison-to-the-glob-module"
+      ]
+    },
+    {
+      "discovery": "Ordering and observed-set stability are separate; explicit sort cannot supply a snapshot.",
+      "candidate_locator": "verification.md:7",
+      "primary_sources": [
+        "P1#pathlib.Path.rglob"
+      ]
+    },
+    {
+      "discovery": "Reviewer corroboration: the concrete Path and abstract PathBase have different public default signatures in tagged source. The concrete subject must control this assessment.",
+      "candidate_credit": false,
+      "primary_sources": [
+        "P6#L581-L620",
+        "P7#L662-L673"
+      ]
+    },
+    {
+      "discovery": "Reviewer corroboration: expanduser can return its input unchanged on failure; candidate runtime-resolution caveat is useful.",
+      "candidate_locator": "verification.md:13",
+      "primary_sources": [
+        "P3#os.path.expanduser"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Actual directory contents/permissions at any executed scan; no execution was supplied or required",
+    "Deployment-specific point-in-time completeness and <100-ms performance",
+    "Original native/source tool-call trace authenticity beyond saved receipts",
+    "Effective model, reasoning effort, service tier and provider billing",
+    "Terminal-output frozen hash equality; no terminal hash manifest located",
+    "Exact candidate source-retrieval timestamps beyond minute precision",
+    "Exact candidate scientific-start and investigation-stop timestamps"
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC_FREEZE.json",
+      "sha256": "2236390e2e69fedc21edcc1ac8dd676d4c0b14fd2b75e8cfb5196689e2bc73e3",
+      "bytes": 285,
+      "mtime_utc": "2026-10-10T03:56:48.938508+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "2236390e2e69fedc21edcc1ac8dd676d4c0b14fd2b75e8cfb5196689e2bc73e3",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/root-review-request.json",
+      "sha256": "6585c3f73171af14cbce322cd05764f1eb3a1477b6454c850974d7c763ea5579",
+      "bytes": 2442,
+      "mtime_utc": "2026-10-10T04:21:29.147901+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "6585c3f73171af14cbce322cd05764f1eb3a1477b6454c850974d7c763ea5579",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md",
+      "sha256": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+      "bytes": 2375,
+      "mtime_utc": "2026-10-10T04:17:52.599091+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "sha256": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+      "bytes": 600,
+      "mtime_utc": "2026-10-10T04:17:52.598944+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/freeze.json",
+      "sha256": "9d8b3ddfd2fa8a1da75bdd76f44f7404278da1485bc4b3c820368feadc0670d3",
+      "bytes": 2878,
+      "mtime_utc": "2026-10-10T04:17:52.599715+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "9d8b3ddfd2fa8a1da75bdd76f44f7404278da1485bc4b3c820368feadc0670d3",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/verification.md",
+      "sha256": "022b03ad767dfe1a0c89f4c5731367e736e3e91b3b523ff35ffc938a203556b2",
+      "bytes": 4979,
+      "mtime_utc": "2026-10-10T04:20:38.352489+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "022b03ad767dfe1a0c89f4c5731367e736e3e91b3b523ff35ffc938a203556b2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/source-map.json",
+      "sha256": "5ca06e170c72cf5fcdb2ea3138e817f77371d20358f389dc3974bc8b75abf337",
+      "bytes": 4231,
+      "mtime_utc": "2026-10-10T04:20:52.960354+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "5ca06e170c72cf5fcdb2ea3138e817f77371d20358f389dc3974bc8b75abf337",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/activation-receipt.json",
+      "sha256": "0f62dfcc09061ef01ccf4eb4fddf0cf151ed6f37bb7e01b36a6b3557d134bcf2",
+      "bytes": 460,
+      "mtime_utc": "2026-10-10T04:18:27.972941+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "0f62dfcc09061ef01ccf4eb4fddf0cf151ed6f37bb7e01b36a6b3557d134bcf2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/native-completion-receipt.json",
+      "sha256": "8c17754611b99f6970180ce54e49c29df2c632042e479b7c64ce00e3b39b969a",
+      "bytes": 788,
+      "mtime_utc": "2026-10-10T04:21:02.623620+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "8c17754611b99f6970180ce54e49c29df2c632042e479b7c64ce00e3b39b969a",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/dispatch.json",
+      "sha256": "7f5204ca68a2f3111ef82c1afb5f06ffeef47782fff3f8efcb35e5a9c5c6f57f",
+      "bytes": 4348,
+      "mtime_utc": "2026-10-10T04:17:53.402162+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "7f5204ca68a2f3111ef82c1afb5f06ffeef47782fff3f8efcb35e5a9c5c6f57f",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/task-observations/er12-B-APPL-M-02-control-role-v2.json",
+      "sha256": "ed4f85e0b688c5e1ea0bae93ccf5e61f4c1c81b8b5c58af68dbbbc79b1d2660a",
+      "bytes": 10864,
+      "mtime_utc": "2026-10-10T04:21:29.012762+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ed4f85e0b688c5e1ea0bae93ccf5e61f4c1c81b8b5c58af68dbbbc79b1d2660a",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "bytes": 3009,
+      "mtime_utc": "2026-10-10T04:17:51.615387+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "bytes": 966,
+      "mtime_utc": "2026-10-10T04:17:51.615655+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "bytes": 873,
+      "mtime_utc": "2026-10-10T04:17:51.615862+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "bytes": 1251,
+      "mtime_utc": "2026-10-10T04:17:51.616131+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "bytes": 1590,
+      "mtime_utc": "2026-10-10T04:17:51.616932+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/manifest.json",
+      "sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "bytes": 624,
+      "mtime_utc": "2026-10-10T04:17:51.617234+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/sources/S1-python-pathlib.md",
+      "sha256": "ce8363188eea6cce5c5ccb61715c0cd4775099e86646e01dc7da1882af87a7f0",
+      "bytes": 1449,
+      "mtime_utc": "2026-10-10T04:19:55.097361+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "ce8363188eea6cce5c5ccb61715c0cd4775099e86646e01dc7da1882af87a7f0",
+      "unchanged_at_save": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/sources/S2-python-glob.md",
+      "sha256": "791d8824cf76a1a3136d41713ccf2cd331096ea87ab8ce2e75de7d066208663f",
+      "bytes": 1130,
+      "mtime_utc": "2026-10-10T04:19:55.103361+00:00",
+      "inspection": "FULL",
+      "sha256_at_save": "791d8824cf76a1a3136d41713ccf2cd331096ea87ab8ce2e75de7d066208663f",
+      "unchanged_at_save": true
+    }
+  ],
+  "primary_sources": [
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P1-pathlib-3.13.html",
+      "url": "https://docs.python.org/3.13/library/pathlib.html",
+      "final_url": "https://docs.python.org/3.13/library/pathlib.html",
+      "retrieval_started_utc": "2026-10-10T04:22:58.583867+00:00",
+      "retrieved_utc": "2026-10-10T04:22:58.774793+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 244770,
+      "sha256": "90048ef5d8c01a3519e4d3c0f0fcfce68de2740b8da2563f2a3212d042286f8f",
+      "source_id": "P1",
+      "version": "Python 3.13.16 documentation; CPython 3.13 target",
+      "subject": "Path.glob, Path.rglob, Path.iterdir; pattern language; comparison to glob",
+      "claims": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "locators": [
+        "pathlib.Path.glob",
+        "pathlib.Path.rglob",
+        "pathlib.Path.iterdir",
+        "pattern-language",
+        "comparison-to-the-glob-module"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "local_anchor_links": [
+        "primary-evidence/P1-pathlib-3.13.html#pathlib.Path.glob",
+        "primary-evidence/P1-pathlib-3.13.html#pathlib.Path.rglob",
+        "primary-evidence/P1-pathlib-3.13.html#pathlib.Path.iterdir",
+        "primary-evidence/P1-pathlib-3.13.html#pattern-language",
+        "primary-evidence/P1-pathlib-3.13.html#comparison-to-the-glob-module"
+      ],
+      "primary_locator_urls": [
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.glob",
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.rglob",
+        "https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.iterdir",
+        "https://docs.python.org/3.13/library/pathlib.html#pattern-language",
+        "https://docs.python.org/3.13/library/pathlib.html#comparison-to-the-glob-module"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P2-glob-3.13.html",
+      "url": "https://docs.python.org/3.13/library/glob.html",
+      "final_url": "https://docs.python.org/3.13/library/glob.html",
+      "retrieval_started_utc": "2026-10-10T04:22:58.585946+00:00",
+      "retrieved_utc": "2026-10-10T04:22:58.668378+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 39769,
+      "sha256": "12ed291efccfecb08f58ec1644131c8ec720660d744c87f43aaef1bf22abe0e6",
+      "source_id": "P2",
+      "version": "Python 3.13.16 documentation",
+      "subject": "glob module introduction and glob.glob; include_hidden=False; recursive=False unless specified",
+      "claims": [
+        1,
+        5,
+        6
+      ],
+      "locators": [
+        "module-glob",
+        "glob.glob"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "local_anchor_links": [
+        "primary-evidence/P2-glob-3.13.html#module-glob",
+        "primary-evidence/P2-glob-3.13.html#glob.glob"
+      ],
+      "primary_locator_urls": [
+        "https://docs.python.org/3.13/library/glob.html#module-glob",
+        "https://docs.python.org/3.13/library/glob.html#glob.glob"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P3-os-path-3.13.html",
+      "url": "https://docs.python.org/3.13/library/os.path.html",
+      "final_url": "https://docs.python.org/3.13/library/os.path.html",
+      "retrieval_started_utc": "2026-10-10T04:22:58.587276+00:00",
+      "retrieved_utc": "2026-10-10T04:22:58.799291+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 86750,
+      "sha256": "7c55db68f3bebc494160fac2a88da7d9b43f50be714e91266f4856172ce9c05b",
+      "source_id": "P3",
+      "version": "Python 3.13.16 documentation",
+      "subject": "os.path.expanduser; POSIX home resolution and expansion failure",
+      "claims": [
+        5
+      ],
+      "locators": [
+        "os.path.expanduser"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "local_anchor_links": [
+        "primary-evidence/P3-os-path-3.13.html#os.path.expanduser"
+      ],
+      "primary_locator_urls": [
+        "https://docs.python.org/3.13/library/os.path.html#os.path.expanduser"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P5-glob-v3.13.0.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/glob.py",
+      "retrieval_started_utc": "2026-10-10T04:22:58.594108+00:00",
+      "retrieved_utc": "2026-10-10T04:22:58.728594+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 19720,
+      "sha256": "3399f242a9bfb4e0b2b8bbbcdc0231487e453a861f4a4ca109c2a560e05698e8",
+      "source_id": "P5",
+      "version": "CPython v3.13.0 immutable release tag",
+      "subject": "_Globber wildcard/recursive selectors and _StringGlobber; shared implementation used by concrete Path",
+      "claims": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "locators": [
+        "L414-L446",
+        "L448-L510",
+        "L527-L545"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "primary_locator_urls": [
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/glob.py#L414-L446",
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/glob.py#L448-L510",
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/glob.py#L527-L545"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P4-pathlib-v3.13.0.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/__init__.py",
+      "retrieval_started_utc": "2026-10-10T04:23:12.392017+00:00",
+      "retrieved_utc": "2026-10-10T04:23:12.517800+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 296,
+      "sha256": "07921047886282e3d324acf95f7d9f840faa806664ee7007e7333a7df4cdcaf6",
+      "source_id": "P4",
+      "version": "CPython v3.13.0 immutable release tag",
+      "subject": "pathlib package import surface; implementation lead only",
+      "claims": [],
+      "locators": [],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "primary_locator_urls": [
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/pathlib/__init__.py"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P6-pathlib-local-v3.13.0.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_local.py",
+      "retrieval_started_utc": "2026-10-10T04:23:51.236804+00:00",
+      "retrieved_utc": "2026-10-10T04:23:51.385290+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 31468,
+      "sha256": "cca3cb1978b8ffc85c1a1cb29d84bd40f2bc174472bed1e1f2decf650951c0cf",
+      "source_id": "P6",
+      "version": "CPython v3.13.0 immutable release tag",
+      "subject": "concrete pathlib.Path glob/rglob, distinct from abstract defaults",
+      "claims": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "locators": [
+        "L581-L620"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "primary_locator_urls": [
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/pathlib/_local.py#L581-L620"
+      ]
+    },
+    {
+      "file": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/P7-pathlib-abc-v3.13.0.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_abc.py",
+      "final_url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib/_abc.py",
+      "retrieval_started_utc": "2026-10-10T04:24:29.732919+00:00",
+      "retrieved_utc": "2026-10-10T04:24:29.874180+00:00",
+      "operation": "HTTPS GET via Python stdlib urllib; stored as data, never executed",
+      "http_status": 200,
+      "bytes": 33565,
+      "sha256": "75e6bc728013d11446126d535f92b8907fb6dae7404df3d0268ac7b6865a2090",
+      "source_id": "P7",
+      "version": "CPython v3.13.0 immutable release tag",
+      "subject": "PathBase._glob_selector maps recurse_symlinks flag; abstract public defaults do not define concrete Path defaults",
+      "claims": [
+        3
+      ],
+      "locators": [
+        "L662-L673"
+      ],
+      "evidence_scope": "Retrieved source text inspected at relevant passages; source code was never executed",
+      "primary_locator_urls": [
+        "https://github.com/python/cpython/blob/v3.13.0/Lib/pathlib/_abc.py#L662-L673"
+      ]
+    }
+  ],
+  "retrieval_failures": [
+    {
+      "file": "P4-pathlib-v3.13.0.txt",
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.13.0/Lib/pathlib.py",
+      "retrieval_started_utc": "2026-10-10T04:22:58.593096+00:00",
+      "error": "<HTTPError 404: 'Not Found'>"
+    }
+  ],
+  "time": {
+    "candidate_whole_deadline_utc": "2026-10-10T04:32:52.289000+00:00",
+    "candidate_requested_at_utc": "2026-10-10T04:17:52.289000+00:00",
+    "candidate_native_completion_utc": "2026-10-10T04:20:58+00:00",
+    "candidate_terminal_observed_utc": "2026-10-10T04:21:28.872Z",
+    "candidate_time_contract": "WITHIN_900_SECOND_BOUNDARY_ON_OBSERVED_TIMESTAMPS; early completion allowed",
+    "candidate_output_mtimes_precede_saved_native_completion_epoch": true,
+    "mtime_interpretation": "Corroborating filesystem metadata only, not a signed historical save-order attestation",
+    "review_started_observed_utc": "2026-10-10T04:21:41+00:00",
+    "review_deadline_utc": "2026-10-10T04:46:41+00:00",
+    "assessment_saved_utc": "2026-10-10T04:27:27.065261+00:00",
+    "speed_cost_comparison": "NOT_ASSESSED; no other arm inspected"
+  },
+  "reviewer_native": {
+    "activation_receipt": "review-native-activation.json",
+    "completion_policy": "Judgment saved before native Goal completion; original assessment is not rewritten after completion",
+    "completion_receipt_expected": "review-native-completion.json"
+  },
+  "output_paths": {
+    "assessment_md": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/source-map.json",
+    "primary_evidence_index": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/primary-evidence/index.md",
+    "inspected_hashes": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/inspected-hashes.json"
+  }
+}

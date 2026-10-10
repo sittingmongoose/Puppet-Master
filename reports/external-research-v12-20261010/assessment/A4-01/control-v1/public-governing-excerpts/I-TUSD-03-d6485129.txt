@@ -1,0 +1,9 @@
+URL: https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-03.txt
+Original SHA256: d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721
+Original numbered lines; gaps omitted. Not full response.
+
+1362: PreferredPartSize: 50 * 1024 * 1024,
+1364: MaxObjectSize: 5 * 1024 * 1024 * 1024 * 1024,
+1365: MaxBufferedParts: 20,
+1372: store.SetConcurrentPartUploads(10)

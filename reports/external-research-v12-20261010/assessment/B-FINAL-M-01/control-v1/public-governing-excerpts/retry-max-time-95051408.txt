@@ -1,0 +1,11 @@
+URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md#L18-L23
+Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/retry-max-time.md
+Original SHA256: 9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33
+Original numbered lines; gaps omitted. Not full response.
+
+18: The retry timer is reset before the first transfer attempt. Retries are done
+19: as usual (see --retry) as long as the timer has not reached this given
+20: limit. Notice that if the timer has not reached the limit, the request is
+21: made and while performing, it may take longer than this given time period. To
+22: limit a single request's maximum time, use --max-time. Set this option to zero
+23: to not timeout retries.

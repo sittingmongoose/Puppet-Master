@@ -1,0 +1,421 @@
+{
+  "schema": "er12-independent-review-source-map-v1",
+  "assessment_id": "ER12-B-APPL-M-01-control-v1",
+  "primary_evidence": [
+    {
+      "source_id": "R1",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Live official page last updated 2026-08-25 19:42:39Z; applied to stipulated SQLite 3.51.3",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open; complete relevant surrounding passages read",
+      "locators": [
+        "1 Overview",
+        "2.2 Concurrency",
+        "2.3 Performance Considerations",
+        "3 Activating And Configuring WAL Mode",
+        "3.2 Application-Initiated Checkpoints",
+        "4 The WAL File",
+        "5 Read-Only Databases",
+        "6 Avoiding Excessively Large WAL Files",
+        "8 Use of WAL Without Shared-Memory",
+        "9 Sometimes Queries Return SQLITE_BUSY In WAL Mode",
+        "11 The WAL-Reset Bug"
+      ],
+      "claims": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        "version_note"
+      ],
+      "evidence_summary": "Single writer; readers constrain checkpoint progress/reset; same-host shared memory; read-only support since 3.22.0 has three conditions; WAL is persistent state; physical reuse differs from truncation; performance is workload-dependent; WAL-reset fix is in 3.51.3.",
+      "applicability": "Ordinary shared-memory-capable VFS, same-host processes, local disk. Single-process exclusive-lock/custom-VFS exceptions change the assigned design."
+    },
+    {
+      "source_id": "R2",
+      "title": "SQLite checkpoint C interface",
+      "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+      "version": "Live unversioned API reference retrieved 2026-10-10; applied to stipulated 3.51.3",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open plus follow-up displaying full API body",
+      "locators": [
+        "sqlite3_wal_checkpoint_v2 signature",
+        "SQLITE_CHECKPOINT_PASSIVE",
+        "SQLITE_CHECKPOINT_TRUNCATE",
+        "pnLog/pnCkpt paragraph",
+        "Checkpoint/writer locks and SQLITE_BUSY",
+        "NULL/empty zDb paragraph",
+        "Non-WAL return conditions"
+      ],
+      "claims": [
+        5
+      ],
+      "evidence_summary": "PASSIVE may be incomplete and does not wait for readers/writers; TRUNCATE truncates immediately before successful return. Counters are frames, can be -1 and are undefined for NULL/empty zDb. A competing checkpoint can return SQLITE_BUSY.",
+      "applicability": "Applicable WAL database checkpoint operations; frame observations require API argument/return qualifications; truncation is not a future guarantee against later writes."
+    },
+    {
+      "source_id": "R3",
+      "title": "SQLite URI filenames",
+      "url": "https://www.sqlite.org/uri.html",
+      "version": "Live unversioned official URI reference retrieved 2026-10-10",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open plus surrounding-section follow-up",
+      "locators": [
+        "2 Backwards Compatibility: URI recognition and SQLITE_OPEN_URI",
+        "3.3 Recognized Query Parameters: immutable=1"
+      ],
+      "claims": [
+        4
+      ],
+      "evidence_summary": "Immutable asserts the file cannot change, forces read-only access and skips locking/change detection. False assertions can cause incorrect results or SQLITE_CORRUPT. URI recognition is configurable.",
+      "applicability": "Connection actually recognizing immutable URI parameter; real snapshot immutability remains unknown."
+    },
+    {
+      "source_id": "R4",
+      "title": "SQLite Release 3.51.3 On 2026-03-13",
+      "url": "https://www.sqlite.org/releaselog/3_51_3.html",
+      "version": "Version-specific 3.51.3 release log dated 2026-03-13",
+      "retrieval_utc_window": [
+        "2026-10-10T04:07:31Z",
+        "2026-10-10T04:08:13Z"
+      ],
+      "retrieval_operation": "Independent direct web open of versioned release log",
+      "locators": [
+        "Changes in this specific patch release, version 3.51.3: item 1",
+        "SQLITE_SOURCE_ID"
+      ],
+      "claims": [
+        "version_note"
+      ],
+      "evidence_summary": "The 3.51.3 patch fixes the WAL-reset database corruption bug.",
+      "applicability": "Corroborates version-specific fix; does not identify any deployed binary."
+    }
+  ],
+  "claim_coverage": [
+    {
+      "claim_id": 1,
+      "subject": "Multiple writers to the same WAL database",
+      "operation": "Simultaneous appending of write transactions",
+      "version_configuration": "SQLite 3.51.3 WAL, stated same-host local multi-process configuration",
+      "sources": [
+        "R1: 2.2",
+        "R1: 9"
+      ],
+      "source_judgment": "PASS"
+    },
+    {
+      "claim_id": 2,
+      "subject": "One long-running read transaction",
+      "operation": "Checkpoint completion and WAL reuse/growth",
+      "version_configuration": "SQLite 3.51.3 WAL with possible continuing writes",
+      "sources": [
+        "R1: 2.2",
+        "R1: 6"
+      ],
+      "source_judgment": "PASS"
+    },
+    {
+      "claim_id": 3,
+      "subject": "Unchanged multi-process design moved to multi-host NFS",
+      "operation": "WAL coordination across hosts",
+      "version_configuration": "Ordinary shared-memory VFS; proposed multiple hosts and network filesystem",
+      "sources": [
+        "R1: 1",
+        "R1: 2.2",
+        "R1: 8"
+      ],
+      "source_judgment": "PASS"
+    },
+    {
+      "claim_id": 4,
+      "subject": "Read-only WAL database/snapshot",
+      "operation": "Opening read-only",
+      "version_configuration": "Read-only relaxation since 3.22.0 applies to 3.51.3; URI recognition needed for URI parameters",
+      "sources": [
+        "R1: 4-5",
+        "R3: 2",
+        "R3: 3.3 immutable=1"
+      ],
+      "source_judgment": "PASS"
+    },
+    {
+      "claim_id": 5,
+      "subject": "PASSIVE checkpoint interface",
+      "operation": "Successful return versus zero-byte physical WAL",
+      "version_configuration": "sqlite3_wal_checkpoint_v2 on stipulated SQLite 3.51.3 WAL database",
+      "sources": [
+        "R2: PASSIVE",
+        "R2: TRUNCATE",
+        "R2: outputs/zDb/returns",
+        "R1: 6"
+      ],
+      "source_judgment": "PASS_WITH_LIMITATIONS"
+    },
+    {
+      "claim_id": 6,
+      "subject": "This catalog p95 lookup latency",
+      "operation": "At least 40 percent reduction from enabling WAL",
+      "version_configuration": "Target 3.51.3 binary/build/workload unmeasured",
+      "sources": [
+        "R1: 1",
+        "R1: 2.3"
+      ],
+      "source_judgment": "PASS"
+    }
+  ],
+  "limitation_sources": [
+    {
+      "id": "L1",
+      "severity": "minor",
+      "axis": "Prospective checkpoint counter-oracle wording",
+      "candidate_locator": "verification.md claim 5 and Acceptance check 1; source-map.json S2 and AC1",
+      "observation": "The candidate mentions pnLog/pnCkpt monitoring without specifying the database-name argument or exceptional counter interpretation. This is a useful prospective observation, rather than a fully specified executable oracle.",
+      "sources": [
+        "R2: output parameter paragraph",
+        "R2: NULL/empty zDb paragraph",
+        "R2: non-WAL return conditions"
+      ],
+      "source_conditions": "NULL/empty zDb makes both counters undefined; -1 can mean error or non-WAL operation. Frame counts alone do not establish physical zero-byte WAL.",
+      "materiality": "Minor: WAL is stipulated, AC1 first verifies WAL activation and also records return code and physical WAL size. Neither a concrete all-database call nor an executed result is asserted; all six substantive dispositions remain supported.",
+      "requires_candidate_repair_for_source_passing": false
+    }
+  ],
+  "acceptance_check_sources": [
+    {
+      "check_id": "AC1",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "scope": "Target binary/version/VFS WAL activation, local two-process writer/long-reader observations, checkpoint progress and physical file size, actual snapshot opening, NFS support boundary",
+      "concreteness": "Concrete observables and reader-release transition are specified; L1 is a minor unresolved counter detail.",
+      "oracle_applicability": "Same-host documented WAL behavior and conditional snapshot opening. NFS rejection is a documentation/design boundary, not an executed NFS experiment.",
+      "result": "No deployment result established",
+      "sources": [
+        "R1",
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "check_id": "AC2",
+      "status": "PROPOSED_NOT_EXECUTED",
+      "scope": "Repeated matched rollback/WAL p95 measurement on representative catalog workload",
+      "concreteness": "Matched data, hardware, durability, concurrency and cache controls plus <=0.60 ratio are specified.",
+      "oracle_applicability": "40 percent conclusion would apply to the representative measured configuration; no measurements are supplied.",
+      "result": "No quantitative benefit established",
+      "sources": [
+        "R1: 1",
+        "R1: 2.3"
+      ]
+    }
+  ],
+  "independence": "Primary evidence was independently retrieved; candidate agreement, citations, counts and hashes were not treated as proof.",
+  "retrieval_failures": [],
+  "additional_primary_pages_beyond_listed_corpus": 2,
+  "version_limit": "R1-R3 are live official references with explicit version scope; R4 independently corroborates exact 3.51.3 WAL-reset fix. No actual binary was inspected.",
+  "created_utc": "2026-10-10T04:13:13.849866+00:00",
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "bytes": 2972,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb",
+      "bytes": 1621,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "bytes": 1337,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "bytes": 993,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "bytes": 989,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/assignment.md",
+      "sha256": "9a47b8e394ae9cfb03f0c9b795e085bc30634504e96868d362c0d217ca031f97",
+      "bytes": 1798,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "sha256": "ef34c35616e32fb350256c21655300b7b524c3840a02281a53d7a537f08c1d62",
+      "bytes": 600,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md",
+      "sha256": "2fb5c2847aadfe3a848d9e30cb350a4fc737be8353eefba7e98660500545c76c",
+      "bytes": 5338,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json",
+      "sha256": "3eecb95ed15648435c7d2c653f9e7e1fe21c352f89d8d546c458a117b68d07f3",
+      "bytes": 5389,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md",
+      "sha256": "2f55c4f32e68b3a643f71915c2c822b56d3b2e2d071a809778f548d11f8c621c",
+      "bytes": 2889,
+      "inspection": "complete text"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/terminal-science-freeze.json",
+      "sha256": "6f7c4b36ee96c040db0b00eb58d8b7786d53516490fcf512c4ad2ea0be7388aa",
+      "bytes": 3237,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/freeze.json",
+      "sha256": "0a63fddc96f1d505af3d79dd907a7c33fe5e53aca8355c1eea245cadb6abb6e9",
+      "bytes": 2828,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/status.json",
+      "sha256": "173108520bbafd49398d07ec50bc8593c4c69040f18ecce7f15960a1b2fa6abc",
+      "bytes": 3201,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/dispatch.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/raw-dispatch.json",
+      "sha256": "49672eef0cdc509806380889c7f9f5e36337ed7808afb2c1ce30f25db618acc1",
+      "bytes": 1955,
+      "inspection": "complete JSON"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/request.json",
+      "sha256": "6b5b4c797b29065ade5ed5016c1cc445f3697fe551636926de5d542200a4d1a5",
+      "bytes": 870,
+      "inspection": "complete JSON"
+    }
+  ],
+  "custody_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/assignment.md",
+      "sha256": "9a47b8e394ae9cfb03f0c9b795e085bc30634504e96868d362c0d217ca031f97",
+      "bytes": 1798,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/dispatch.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/freeze.json",
+      "sha256": "0a63fddc96f1d505af3d79dd907a7c33fe5e53aca8355c1eea245cadb6abb6e9",
+      "bytes": 2828,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/request.json",
+      "sha256": "6b5b4c797b29065ade5ed5016c1cc445f3697fe551636926de5d542200a4d1a5",
+      "bytes": 870,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/input-map.json",
+      "sha256": "ef34c35616e32fb350256c21655300b7b524c3840a02281a53d7a537f08c1d62",
+      "bytes": 600,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/status.json",
+      "sha256": "173108520bbafd49398d07ec50bc8593c4c69040f18ecce7f15960a1b2fa6abc",
+      "bytes": 3201,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md",
+      "sha256": "2fb5c2847aadfe3a848d9e30cb350a4fc737be8353eefba7e98660500545c76c",
+      "bytes": 5338,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/source-map.json",
+      "sha256": "3eecb95ed15648435c7d2c653f9e7e1fe21c352f89d8d546c458a117b68d07f3",
+      "bytes": 5389,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/raw-dispatch.json",
+      "sha256": "49672eef0cdc509806380889c7f9f5e36337ed7808afb2c1ce30f25db618acc1",
+      "bytes": 1955,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/sources/primary-evidence.md",
+      "sha256": "2f55c4f32e68b3a643f71915c2c822b56d3b2e2d071a809778f548d11f8c621c",
+      "bytes": 2889,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/records/dispatch-20261010T040209259121-21afa8da7b65400f9a2db2c2d22856aa.json",
+      "sha256": "07ce8913011c793111d6a0d23d34a752404c43e40991c1ec8efe173a78874f5f",
+      "bytes": 4124,
+      "freeze_sha256_match": true,
+      "freeze_bytes_match": true,
+      "contents_read": false
+    }
+  ]
+}

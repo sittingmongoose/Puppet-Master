@@ -1,0 +1,19 @@
+{
+  "run_id": "A3-01-control",
+  "initialized_at_utc": "2026-10-10T03:55:47.139Z",
+  "whole_deadline_utc": "2026-10-10T04:55:46.107Z",
+  "brief_sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+  "brief_bytes": 2897,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_deltas": {}
+}

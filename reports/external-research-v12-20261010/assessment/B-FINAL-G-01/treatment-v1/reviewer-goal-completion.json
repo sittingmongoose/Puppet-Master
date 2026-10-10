@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a12402-83d9-7460-a734-71555424fd3a",
+    "objective": "Complete the independent bounded ER12 Track B semantic review for B-FINAL-G-01 treatment. Read the full assigned rubric, role input map/assignment/freeze and all exact shared and authored science inputs; independently retrieve governing primary evidence; assess every assigned finalization obligation and critique disposition with calibrated uncertainty and exact locators. Save assessment.md, assessment.json and independent navigable source evidence with inspected hashes only under ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1 before completing this native Goal. Do not delegate, repair candidates, inspect other arms/results/history, change accounts, publish, use Git, or rescore ER11. Finish within 25 minutes.",
+    "status": "complete",
+    "tokensUsed": 183403,
+    "timeUsedSeconds": 429,
+    "createdAt": 1791605528,
+    "updatedAt": 1791605958
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

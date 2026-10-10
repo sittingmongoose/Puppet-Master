@@ -1,0 +1,7 @@
+# Provenance addition; semantic judgment unchanged
+
+The existing assigned candidate `terminal-science-freeze.json` was found during the final recheck after the initial search had found none. It is preserved byte-for-byte in [evidence](evidence/terminal-science-freeze.preserved.json), and the original freeze remains unchanged. All seven scientific file hashes match independently reread current bytes. The initially saved assessment and source map are retained as `*.initial-saved.*`; the current assessment adds this provenance without revising FAIL, F1 or F2.
+
+The freeze identifies its timestamp as a host post-terminal byte observation, not native activation, native terminal time, or original save time. Its exact assigned-row provider evidence was also read and [preserved](evidence/assigned-row-provider-native-evidence.preserved.json). That host record reports one T3 run completed at 2026-10-10T04:09:36.116Z, consistent with the parent's completion statement and earlier than the arm deadline. This is a host-reported T3 completion timestamp, not a native Goal completion receipt. Native activation/terminal, effective options, billing and cumulative meter semantics remain UNKNOWN. The exposed thread model is the requested GLM label; the raw cache-read summary is not an exact billable-token measure. No diagnostic transcript items or other runs were followed.
+
+See [complete provenance addition](provenance-addendum.json), [freeze verification](terminal-freeze-status.json) and [current assessment](assessment.md).

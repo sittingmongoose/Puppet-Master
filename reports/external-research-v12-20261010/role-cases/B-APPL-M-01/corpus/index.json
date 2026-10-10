@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "version": "Page last updated 2026-08-25 19:42:39Z; target SQLite 3.51.3",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Overview; 2.2 Concurrency; 3.2 Application-Initiated Checkpoints; 4 The WAL File; 5 Read-Only Databases",
+      "file": "corpus/S1.md",
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "verbatim_word_count": 17
+    },
+    {
+      "source_id": "S2",
+      "title": "SQLite checkpoint C interface",
+      "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+      "version": "Live C API reference retrieved for target SQLite 3.51.3; unversioned URL",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Checkpoint a database; mode descriptions; output parameters; return conditions",
+      "file": "corpus/S2.md",
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "verbatim_word_count": 10
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

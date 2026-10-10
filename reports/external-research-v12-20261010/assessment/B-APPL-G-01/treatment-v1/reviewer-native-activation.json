@@ -1,0 +1,17 @@
+{
+  "recorded_at_utc": "2026-10-10T04:14:06Z",
+  "tool": "get_goal",
+  "receipt": {
+    "goal": {
+      "threadId": "01a12402-813e-76d3-ace6-c52ebda2b4c5",
+      "objective": "Complete the independent bounded ER12 Track B semantic review for B-APPL-G-01 treatment-v1 exactly as assigned by the user. Read RUBRIC-v1.md and the complete role input-map.json, assignment.md, freeze.json, then the exact full shared assignment, fixture, corpus, authored verification.md, source-map.json and all sources members identified by them. Independently retrieve primary governing evidence and assess every applicability claim for subject, operation, version, defaults, type, domain, exceptions, corrected wording and consequential validation. Keep delivery, source judgment, coverage, native status, protocol and timing separate; T3 task completion does not establish candidate native Goal, transport, effective or billing success. Hash inspected scientific inputs/outputs, preserve any existing terminal-science-freeze, and retain timestamped hashed raw source retrievals. Save assessment.md, assessment.json, a navigable independent source-map and evidence only under ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1. No delegation, candidate feedback or repair, account changes, Git/publication, other arms/results/history, or ER11 rescoring. Finish within 25 minutes of starting, earlier if complete. Save the source judgment before marking this actual native Goal complete, and return a brief result plus paths.",
+      "status": "active",
+      "tokensUsed": 84738,
+      "timeUsedSeconds": 122,
+      "createdAt": 1791605524,
+      "updatedAt": 1791605646
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

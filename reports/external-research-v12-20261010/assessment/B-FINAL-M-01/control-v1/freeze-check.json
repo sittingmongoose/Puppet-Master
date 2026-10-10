@@ -1,0 +1,89 @@
+{
+  "checked_at_utc": "2026-10-10T04:33:16.521017+00:00",
+  "input_freeze_path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/freeze.json",
+  "input_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+      "expected_sha256": "fe1b8099ee77eb8a08eb2d5a0fcbf76aa4ab80667bf58a081db31d09ec0657b7",
+      "actual_sha256": "fe1b8099ee77eb8a08eb2d5a0fcbf76aa4ab80667bf58a081db31d09ec0657b7",
+      "expected_bytes": 2379,
+      "actual_bytes": 2379,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+      "expected_sha256": "e4f86dda933f87a4a221f08ffafbb114f7d09c3924e929907ff622fd9854b165",
+      "actual_sha256": "e4f86dda933f87a4a221f08ffafbb114f7d09c3924e929907ff622fd9854b165",
+      "expected_bytes": 624,
+      "actual_bytes": 624,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "expected_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "actual_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "expected_bytes": 1665,
+      "actual_bytes": 1665,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/manifest.json",
+      "expected_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "actual_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "expected_bytes": 624,
+      "actual_bytes": 624,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "expected_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "actual_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "expected_bytes": 4944,
+      "actual_bytes": 4944,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "expected_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "actual_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "expected_bytes": 905,
+      "actual_bytes": 905,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "expected_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "actual_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "expected_bytes": 818,
+      "actual_bytes": 818,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "expected_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "actual_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "expected_bytes": 1294,
+      "actual_bytes": 1294,
+      "matches": true
+    }
+  ],
+  "input_integrity": "PASS",
+  "terminal_output_freeze": "NOT_FOUND_IN_ASSIGNED_CONTROL_TREE",
+  "terminal_output_integrity": "UNKNOWN",
+  "searched_scope": "ER12_RUNTIME/runs/B-FINAL-M-01/control",
+  "assigned_control_file_inventory": [
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/assignment.md",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/dispatch.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/freeze.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-activation-receipt.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/goal-completion-receipt.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/input-map.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/raw-dispatch.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/records/dispatch-20261010T041754535860-445a3acb441348e981a22315d4c2b78f.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/request.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/source-map.json",
+    "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/sources/curl-8.10.1-reference-notes.md"
+  ],
+  "note": "Only the prepared input freeze is present. No terminal output hash manifest was found in the complete assigned control subtree. Current output hashes are recorded without manufacturing a terminal baseline."
+}

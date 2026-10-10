@@ -1,0 +1,20 @@
+{
+  "schema": "er12-role-helper-checks-v1",
+  "started_at_utc": "2026-10-10T04:01:15.174189+00:00",
+  "finished_at_utc": "2026-10-10T04:01:15.244907+00:00",
+  "setup_cost_seconds": 0.07070269999985612,
+  "accounting": "setup-only helper verification; excluded from role science; no live arm started or dispatched",
+  "passed": [
+    "syntax",
+    "all four originals: readonly exact saved request and dispatched receipt",
+    "all four routes and short task exactly equivalent",
+    "assignment wrappers exactly equivalent after allowed substitutions",
+    "shared exact fixture inputs and hash rejection",
+    "uncertain retry preserves request/deadline bytes",
+    "absolute 900 seconds and 300 second writing reserve including setup",
+    "expiry/future origin/missing origin/partial stage refuse reset",
+    "raw uncertain/dispatch/conflicting/status responses retained; exact taskId enforced",
+    "original requests/wrappers/maps/freezes/dispatches unchanged"
+  ],
+  "original_science_outputs_read_or_modified": false
+}

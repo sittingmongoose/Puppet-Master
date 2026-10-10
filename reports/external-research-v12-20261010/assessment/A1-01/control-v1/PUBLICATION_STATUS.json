@@ -1,0 +1,21 @@
+{
+  "slot": "A1-01",
+  "arm": "control",
+  "snapshot_task": {
+    "key": "er12-eval-A1-01-control-full-v1",
+    "slot": "A1-01",
+    "arm": "control",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A1-01-control-full-v1:ordinal:1",
+    "status": "running",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "latestTerminalStatus": null,
+    "latestTerminalRunId": null
+  },
+  "state": "SOURCE_PENDING",
+  "source_judgment": null,
+  "included_files": []
+}

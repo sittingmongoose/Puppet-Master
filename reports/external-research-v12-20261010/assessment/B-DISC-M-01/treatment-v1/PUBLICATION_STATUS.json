@@ -1,12 +1,39 @@
 {
-  "captured_at_utc": "2026-10-10T04:14:48.456106+00:00",
+  "slot": "B-DISC-M-01",
+  "arm": "treatment",
+  "snapshot_task": {
+    "key": "er12-eval-B-DISC-M-01-treatment-v1",
+    "slot": "B-DISC-M-01",
+    "arm": "treatment",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-DISC-M-01-treatment-v1:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-DISC-M-01-treatment-v1:ordinal:1"
+  },
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
   "source_judgment": "FAIL",
-  "T3_status": "completed",
-  "latestTerminalStatus": "completed",
-  "hasPendingChildRuns": false,
-  "authored_judgment": "assessment.md",
-  "root_review_request_present": false,
-  "original_judgment_preserved": true,
-  "native_candidate_status": "UNKNOWN independently; see full judgment",
-  "scope": "independent bounded-role source judgment, not pipeline or campaign qualification"
+  "included_files": [
+    "assessment/B-DISC-M-01/treatment-v1/assessment.json",
+    "assessment/B-DISC-M-01/treatment-v1/assessment.md",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E01-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E03-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E04-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E05-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E06-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E07-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E08-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E09-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E10-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E11-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E12-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/E13-governing-excerpt.txt",
+    "assessment/B-DISC-M-01/treatment-v1/primary-evidence/retrievals.json",
+    "assessment/B-DISC-M-01/treatment-v1/reviewer-goal-receipt.json",
+    "assessment/B-DISC-M-01/treatment-v1/source-map.json"
+  ]
 }

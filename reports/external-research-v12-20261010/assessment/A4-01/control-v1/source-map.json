@@ -1,0 +1,1135 @@
+{
+  "schema_version": "er12-independent-assessment-source-map-v1",
+  "run_id": "A4-01-control",
+  "assessment_version": "control-v1",
+  "independence": "Reviewer retrieved governing primary evidence separately; author counts, hashes and critic agreement are not semantic proof. I-prefixed IDs identify reviewer records and do not rebind author IDs.",
+  "sources": [
+    {
+      "id": "I-AWS-01",
+      "candidate_source_id": "AWS-01",
+      "title": "Uploading objects — Amazon S3 User Guide",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.405231+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-01.html",
+      "raw_sha256": "7f357e85a92522406db6217e92d21d43ae5a1bd492f2c58c5a5e788746740b4e",
+      "text_path": "evidence/I-AWS-01.txt",
+      "text_sha256": "902b2ee6b84a09d4ab1b1da623de15bd19ca074513363ae36ff41e2c6c9a029b",
+      "text_lines": 205,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10; no immutable revision.",
+        "locator": "Depending on size / upload choices; local text lines 12–38, single PUT examples later.",
+        "operation": "SDK/REST/CLI single PutObject, console upload, multipart API",
+        "judgment": "Supported: source distinguishes 5 GB single PUT, 160 GB console and 50 TB multipart. These are source labels, not a reviewer unit conversion.",
+        "conditions": "AWS comparator only. 40 GB exceeds its single-operation cap; the archive provider remains unknown. Console capability does not establish a direct-browser API cap."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Depending on the size",
+          "saved_text_lines": [
+            18
+          ]
+        },
+        {
+          "anchor": "single object up to 5 GB",
+          "saved_text_lines": [
+            21
+          ]
+        },
+        {
+          "anchor": "160 GB",
+          "saved_text_lines": [
+            12,
+            13,
+            23
+          ]
+        },
+        {
+          "anchor": "50 TB",
+          "saved_text_lines": [
+            26,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-02",
+      "candidate_source_id": "AWS-02",
+      "title": "Amazon S3 multipart upload limits",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.407321+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-02.html",
+      "raw_sha256": "387c24248a3e09a9e067c15cd7d4f5786ff739db309b5306a987d884caee34f9",
+      "text_path": "evidence/I-AWS-02.txt",
+      "text_sha256": "74fe8418cc073dea89edda46ce6ef373293c32326f87f1e984f352ca681fff51",
+      "text_lines": 41,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10.",
+        "locator": "Multipart core specification table, local text lines 12–27.",
+        "operation": "AWS multipart object/part/count/listing limits",
+        "judgment": "Supported: 48.8 TiB object, 10,000 numbered parts, 5 MiB–5 GiB, no minimum final part, 1,000 results per ListParts page; about 100 MB is guidance.",
+        "conditions": "Provider operation limits, distinct from browser memory, client thresholds and the actual unknown endpoint."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Maximum object size",
+          "saved_text_lines": [
+            16
+          ]
+        },
+        {
+          "anchor": "48.8 TiB",
+          "saved_text_lines": [
+            17
+          ]
+        },
+        {
+          "anchor": "5 MiB",
+          "saved_text_lines": [
+            23
+          ]
+        },
+        {
+          "anchor": "1000",
+          "saved_text_lines": [
+            26,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-03",
+      "candidate_source_id": "AWS-03",
+      "title": "Uploading and copying objects using multipart upload in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.408674+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-03.html",
+      "raw_sha256": "69c3cbba7a976efc7d37f933d113a2f48eff409ff27800614db1c4b08aee95b4",
+      "text_path": "evidence/I-AWS-03.txt",
+      "text_sha256": "0aa90a752cbeeff252a7abc72939e5075e2451d095b6469776260b93ff4bb3bd",
+      "text_lines": 435,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 User Guide, independently accessed 2026-10-10.",
+        "locator": "Initiation, Parts upload, Completion, Listings, Checksums; local text lines 47–139 and algorithm/type table near end.",
+        "operation": "CreateMultipartUpload/UploadPart/ListParts/CompleteMultipartUpload/AbortMultipartUpload",
+        "judgment": "Supported: upload ID and own part/ETag manifest; retry interrupted parts; ETag is not a generic file MD5; listings page and omit in-flight parts; parts persist until complete/abort. The multipart matrix distinguishes full-object CRC types from composite SHA256.",
+        "conditions": "Specify and verify the chosen checksum algorithm/type. Additional-checksum part numbers start at 1 and are consecutive. Stop workers before abort cleanup. Encryption-related permissions can affect available checksums; final requires capability and retrieval confirmation."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Multipart upload initiation",
+          "saved_text_lines": [
+            47
+          ]
+        },
+        {
+          "anchor": "Multipart upload completion",
+          "saved_text_lines": [
+            75
+          ]
+        },
+        {
+          "anchor": "Multipart upload listings",
+          "saved_text_lines": [
+            98
+          ]
+        },
+        {
+          "anchor": "Checksum algorithm",
+          "saved_text_lines": [
+            60,
+            117,
+            120,
+            122,
+            344
+          ]
+        },
+        {
+          "anchor": "Full object",
+          "saved_text_lines": [
+            85,
+            121,
+            126,
+            131,
+            351,
+            364
+          ]
+        },
+        {
+          "anchor": "Composite",
+          "saved_text_lines": [
+            387
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-04",
+      "candidate_source_id": "AWS-04",
+      "title": "Checking object integrity in Amazon S3",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.409852+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-04.html",
+      "raw_sha256": "6dc12f8432219a7b2ba51ce177a14d5fc5a16f1e79cd9da7a6a51d6891ae5c07",
+      "text_path": "evidence/I-AWS-04.txt",
+      "text_sha256": "5183578aadbb61cd248f53bd565b1c0c20da769f7793802d8836e112f0e96794",
+      "text_lines": 61,
+      "independent_semantic_check": {
+        "version": "Rolling AWS S3 integrity guide, independently accessed 2026-10-10.",
+        "locator": "Algorithm catalog and upload server verification; local text lines 6–39.",
+        "operation": "Upload checksum verification; whole-object versus composite meaning",
+        "judgment": "Supported: server-side calculation/validation is distinct from supplied metadata and direct cryptographic file identity. Final does not infer full-object SHA256 MPU support from the algorithm catalog.",
+        "conditions": "Operation/type matrix controls applicability. CRC is transfer-integrity evidence, not cryptographic identity. Final readback proposal is conditional on the curator-required digest and provider capability."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": []
+    },
+    {
+      "id": "I-AWS-05",
+      "candidate_source_id": "AWS-05",
+      "title": "How to prevent object overwrites with conditional writes",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.411397+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-05.html",
+      "raw_sha256": "8333d943dbbd7455a65791449d7e83816e62a3c4a9d006292ca59aa7602f394e",
+      "text_path": "evidence/I-AWS-05.txt",
+      "text_sha256": "602b8ec47ba645632d1769314f40a503913d12ed3f89fc87c7ce727fe5721dc9",
+      "text_lines": 191,
+      "independent_semantic_check": {
+        "version": "Rolling AWS conditional-writes guide, independently accessed 2026-10-10.",
+        "locator": "If-None-Match applicability and Conditional write behavior; local text includes existing/current version, 412 and 409 paragraphs.",
+        "operation": "If-None-Match:* on PutObject and CompleteMultipartUpload",
+        "judgment": "Supported: existing current object yields 412; a concurrent-delete 409 for CompleteMultipartUpload requires a fresh CreateMultipartUpload.",
+        "conditions": "Current version/delete-marker semantics; not in-progress MPU reservation or DB atomicity. Final treats this as an additional conditional guard and leaves accession idempotency in the application."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Conditional write behavior",
+          "saved_text_lines": [
+            5,
+            24,
+            108
+          ]
+        },
+        {
+          "anchor": "412",
+          "saved_text_lines": [
+            114,
+            119,
+            122,
+            136,
+            157
+          ]
+        },
+        {
+          "anchor": "409",
+          "saved_text_lines": [
+            123,
+            127,
+            130,
+            137,
+            163,
+            168
+          ]
+        },
+        {
+          "anchor": "delete marker",
+          "saved_text_lines": [
+            117,
+            145
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-AWS-06",
+      "candidate_source_id": "AWS-06",
+      "title": "Configuring lifecycle to delete incomplete multipart uploads",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+      "retrieved_at_utc": "2026-10-10T04:25:10.412523+00:00",
+      "http_status": 200,
+      "final_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-AWS-06.html",
+      "raw_sha256": "fd56ee422d9ceb4a947d9606130d2ffd286c889e9f5e88d0b8ca90a28ff7639f",
+      "text_path": "evidence/I-AWS-06.txt",
+      "text_sha256": "4ffe151e71f166ec4a8408a726ac9e5766b5356ddb22e84b2d000bb4ea3e47d1",
+      "text_lines": 132,
+      "independent_semantic_check": {
+        "version": "Rolling AWS lifecycle guide, independently accessed 2026-10-10.",
+        "locator": "Introductory AbortIncompleteMultipartUpload and configured day-count example.",
+        "operation": "AbortIncompleteMultipartUpload lifecycle action",
+        "judgment": "Supported: configured age aborts incomplete uploads and removes parts; it does not delete completed objects.",
+        "conditions": "Seven days is an AWS example, not its universal default. Final reserves retention days for the storage owner and separates unverified completed objects."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "doesn",
+          "saved_text_lines": [
+            26,
+            36
+          ]
+        },
+        {
+          "anchor": "completed",
+          "saved_text_lines": [
+            10,
+            11,
+            30,
+            31,
+            34
+          ]
+        },
+        {
+          "anchor": "7",
+          "saved_text_lines": [
+            22,
+            43,
+            45,
+            72,
+            83,
+            103
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-01",
+      "candidate_source_id": "R2-01",
+      "title": "Upload objects — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.594400+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-01.html",
+      "raw_sha256": "b9b8e57f4231e5dc0b9849158de746c81cc870c354972a8eeb1dec5506c0cada",
+      "text_path": "evidence/I-R2-01.txt",
+      "text_sha256": "3dd323060db8e6c328c331a4ded7ca8f10bc8fbdf502b0cbae8b7ee4ace3d5fa",
+      "text_lines": 895,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 upload guide, displayed last updated 2026-07-29.",
+        "locator": "Choose an upload method local lines 114–131; Multipart details lines 830–843.",
+        "operation": "R2 single PUT, multipart upload, incomplete-upload lifecycle",
+        "judgment": "Supported: 5 GiB single PUT, 5 TiB/10,000-part multipart, 5 MiB–5 GiB parts with final-part exception, equal non-final sizes, default seven-day abort.",
+        "conditions": "R2-specific comparator. Custom lifecycle can change the default. Multipart ETag combines part digests, not a direct file digest."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Choose an upload method",
+          "saved_text_lines": [
+            112,
+            114,
+            856
+          ]
+        },
+        {
+          "anchor": "All parts except",
+          "saved_text_lines": [
+            835
+          ]
+        },
+        {
+          "anchor": "7 days",
+          "saved_text_lines": [
+            837
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-02",
+      "candidate_source_id": "R2-02",
+      "title": "S3 API compatibility — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/api/s3/api/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.595088+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/api/s3/api/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-02.html",
+      "raw_sha256": "12cf5e49fc3806f02dea38f63072a792457b15383f1b2f82e828a53131b2aac1",
+      "text_path": "evidence/I-R2-02.txt",
+      "text_sha256": "c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099",
+      "text_lines": 757,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 S3 API matrix, displayed last updated 2026-07-31.",
+        "locator": "CompleteMultipartUpload local lines 596–600; CopyObject 604–657; UploadPart begins 658. Raw HTML preserves actual table-row structure.",
+        "operation": "R2 CompleteMultipartUpload versus CopyObject feature rows; UploadPart Content-MD5",
+        "judgment": "C1 confirmed: the unsupported x-amz-checksum-algorithm marker is in CopyObject, not CompleteMultipartUpload. The final correctly withdraws the discovery inference.",
+        "conditions": "Operation implementation is not proof of all AWS headers or algorithms. This row cannot establish the complete MPU checksum feature set; no contrary final R2 capability assertion remains."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "CompleteMultipartUpload",
+          "saved_text_lines": [
+            596
+          ]
+        },
+        {
+          "anchor": "CopyObject",
+          "saved_text_lines": [
+            604
+          ]
+        },
+        {
+          "anchor": "x-amz-checksum-algorithm",
+          "saved_text_lines": [
+            191,
+            197,
+            288,
+            300,
+            310,
+            324,
+            331,
+            342,
+            361,
+            370,
+            377,
+            384,
+            393,
+            414,
+            657
+          ]
+        },
+        {
+          "anchor": "UploadPart",
+          "saved_text_lines": [
+            422,
+            658,
+            671
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-R2-03",
+      "candidate_source_id": "R2-03",
+      "title": "Configure CORS — Cloudflare R2",
+      "url": "https://developers.cloudflare.com/r2/buckets/cors/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.626090+00:00",
+      "http_status": 200,
+      "final_url": "https://developers.cloudflare.com/r2/buckets/cors/",
+      "content_type": "text/html",
+      "raw_path": "evidence/I-R2-03.html",
+      "raw_sha256": "e079d6217d57c44f76253de523af751f398880a7f3e81ab2e5dd47060bff4b4e",
+      "text_path": "evidence/I-R2-03.txt",
+      "text_sha256": "d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a",
+      "text_lines": 257,
+      "independent_semantic_check": {
+        "version": "Cloudflare R2 CORS guide, displayed last updated 2026-09-23.",
+        "locator": "Use CORS with a presigned URL; expired URL paragraph.",
+        "operation": "Cross-origin browser access using R2 presigned URLs",
+        "judgment": "Supported: presigning does not bypass CORS; expiry returns a 403 ExpiredRequest without CORS response headers, preventing browser error-body access.",
+        "conditions": "Origin, methods, request headers and exposed response headers matter. This is browser/provider interaction, not a changed storage-size limit."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "presigned URL",
+          "saved_text_lines": [
+            48,
+            112,
+            117,
+            122,
+            126,
+            127,
+            128,
+            129,
+            130,
+            132,
+            133,
+            230
+          ]
+        },
+        {
+          "anchor": "ExpiredRequest",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-UPPY-01",
+      "candidate_source_id": "UPPY-01",
+      "title": "AWS S3 uploader — Uppy documentation",
+      "url": "https://uppy.io/docs/aws-s3/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.659448+00:00",
+      "http_status": 200,
+      "final_url": "https://uppy.io/docs/aws-s3/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-UPPY-01.html",
+      "raw_sha256": "1d055ddbb232b231c0424233f6fa63be8d5ab7dd6f24a6dff9fdd12a8e77baf1",
+      "text_path": "evidence/I-UPPY-01.txt",
+      "text_sha256": "b6b0ab02fc91c3db92c6ec39a80f4fb31ee81b7cf9c3d39cd01e40ed576776d5",
+      "text_lines": 439,
+      "independent_semantic_check": {
+        "version": "Rolling Uppy AWS S3 plugin docs; sample includes v5.2.1, explicitly not the final selected/tested dependency.",
+        "locator": "Direct upload/signing modes local lines 28–64; signRequest operation mapping; Bucket and CORS setup 330–375.",
+        "operation": "Browser direct PUT or multipart create/upload/list/complete/abort",
+        "judgment": "Supported: direct-to-store mechanism, per-operation signing option, ETag exposure and ListParts/Abort for recovery/cancel provide a realistic preferred intake candidate.",
+        "conditions": "Modes are mutually exclusive; signing API depends on selected release. Documentation sample is not a compatibility certification. Final requires a later release pin, persistence and browser/provider smoke tests."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "signRequest(request)",
+          "saved_text_lines": [
+            218
+          ]
+        },
+        {
+          "anchor": "ExposeHeaders has to",
+          "saved_text_lines": [
+            361
+          ]
+        },
+        {
+          "anchor": "Request | S3 operation",
+          "saved_text_lines": [
+            241
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-TUS-01",
+      "candidate_source_id": "TUS-01",
+      "title": "Resumable Upload Protocol 1.0.x",
+      "url": "https://tus.io/protocols/resumable-upload",
+      "retrieved_at_utc": "2026-10-10T04:25:10.660419+00:00",
+      "http_status": 200,
+      "final_url": "https://tus.io/protocols/resumable-upload",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUS-01.html",
+      "raw_sha256": "868947ec6573ff745f31649d730616bfcd7d154af0c22ab39f1af4937f3e3a21",
+      "text_path": "evidence/I-TUS-01.txt",
+      "text_sha256": "10d85535f1bbcd3170f00690abd44a17705966538c4c9b485e23c2ff90cfa386",
+      "text_lines": 546,
+      "independent_semantic_check": {
+        "version": "tus protocol 1.0.0; protocol page dates this version to 2016-03-25.",
+        "locator": "Core HEAD/PATCH and offsets; Expiration; Checksum extension, local lines 360–410.",
+        "operation": "HEAD obtains byte offset; PATCH continues at that offset; optional checksum",
+        "judgment": "Supported analogous mechanism: offset recovery, optional per-PATCH checksum and server-advertised expiration; no whole-file checksum guarantee follows.",
+        "conditions": "Known upload URL, matching offset and feature negotiation; unsupported version/offset/checksum errors are protocol-specific. No S3 operation identity or actual deployed service is implied."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Core Protocol",
+          "saved_text_lines": [
+            25,
+            101,
+            102,
+            105,
+            253,
+            300
+          ]
+        },
+        {
+          "anchor": "HEAD",
+          "saved_text_lines": [
+            90,
+            112,
+            117,
+            137,
+            139,
+            142,
+            145,
+            149,
+            154,
+            157,
+            159,
+            161,
+            163,
+            165,
+            166,
+            168,
+            170,
+            171,
+            172,
+            174,
+            176,
+            177,
+            180,
+            184,
+            187,
+            197,
+            212,
+            213,
+            214,
+            215,
+            233,
+            237,
+            240,
+            254,
+            256,
+            258,
+            260,
+            267,
+            268,
+            273,
+            276,
+            279,
+            282,
+            284,
+            285,
+            288,
+            291,
+            292,
+            295,
+            298,
+            305,
+            312,
+            313,
+            318,
+            323,
+            341,
+            358,
+            360,
+            363,
+            365,
+            366,
+            373,
+            379,
+            380,
+            392,
+            396,
+            397,
+            399,
+            401,
+            404,
+            405,
+            432,
+            452,
+            454,
+            460,
+            465,
+            468,
+            471,
+            474,
+            478,
+            479,
+            481,
+            483,
+            484,
+            485,
+            486,
+            487,
+            489,
+            491,
+            493,
+            500,
+            528,
+            536
+          ]
+        },
+        {
+          "anchor": "PATCH",
+          "saved_text_lines": [
+            88,
+            124,
+            126,
+            168,
+            181,
+            182,
+            184,
+            192,
+            196,
+            198,
+            200,
+            201,
+            279,
+            287,
+            310,
+            346,
+            365,
+            378,
+            380,
+            418,
+            476,
+            513,
+            515,
+            520
+          ]
+        },
+        {
+          "anchor": "Checksum",
+          "saved_text_lines": [
+            30,
+            195,
+            376,
+            378,
+            380,
+            382,
+            384,
+            385,
+            386,
+            389,
+            390,
+            392,
+            396,
+            400,
+            401,
+            402,
+            403,
+            404,
+            406,
+            415,
+            416,
+            422
+          ]
+        },
+        {
+          "anchor": "Expiration",
+          "saved_text_lines": [
+            29,
+            220,
+            229,
+            338,
+            340,
+            366
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-TUSD-01",
+      "candidate_source_id": "TUSD-01",
+      "title": "tusd v2.5.0 release",
+      "url": "https://github.com/tus/tusd/releases/tag/v2.5.0",
+      "retrieved_at_utc": "2026-10-10T04:25:10.661809+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/tus/tusd/releases/tag/v2.5.0",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUSD-01.html",
+      "raw_sha256": "32f6d12f1cd1aec4a3cd38c968b0c494c3ebc9135d5bc3473aba32c2c97cf48c",
+      "text_path": "evidence/I-TUSD-01.txt",
+      "text_sha256": "8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826",
+      "text_lines": 180,
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0, commit c5d5b0a; GitHub API published_at=2024-09-10T08:21:15Z.",
+        "locator": "Release tag/commit local lines 110–145; independent release API published_at/created_at.",
+        "operation": "Released implementation identity",
+        "judgment": "Tag and commit supported; candidate maps incorrectly say released 2026-09-10. L1 is a surviving minor chronology error; code identity and pilot fit remain supported.",
+        "conditions": "Historical released implementation, not a newly released 2026 version or deployment. Source API year resolves the yearless human display."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "v2.5.0",
+          "saved_text_lines": [
+            1,
+            109,
+            110,
+            128,
+            153
+          ]
+        },
+        {
+          "anchor": "c5d5b0a",
+          "saved_text_lines": [
+            129
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-TUSD-RELEASE-API"
+      ]
+    },
+    {
+      "id": "I-TUSD-02",
+      "candidate_source_id": "TUSD-02",
+      "title": "tusd S3 storage backend docs",
+      "url": "https://github.com/tus/tusd/blob/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "retrieved_at_utc": "2026-10-10T04:25:10.760959+00:00",
+      "retrieval_error": "HTTP Error 503: Service Unavailable",
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0 tagged backend documentation.",
+        "locator": "Raw tagged file: Configuration, Alternative endpoints, Storage format and Considerations; local raw text lines 9–101.",
+        "operation": "S3Store compatible endpoint configuration and PATCH-part temporary disk",
+        "judgment": "Supported: required server configuration, endpoint override, multipart-backed storage and temporary disk per PATCH parts.",
+        "conditions": "Original GitHub blob retrieval returned HTTP 503 for this reviewer; raw tagged primary URL succeeded. Entire-file-on-disk is not required, but part buffering/disk capacity is. No installation or code execution performed."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "corroborating_capture_ids": [
+        "I-TUSD-02-RAW"
+      ]
+    },
+    {
+      "id": "I-TUSD-03",
+      "candidate_source_id": "TUSD-03",
+      "title": "tusd S3Store source",
+      "url": "https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go",
+      "retrieved_at_utc": "2026-10-10T04:25:10.896890+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/tus/tusd/blob/v2.5.0/pkg/s3store/s3store.go",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-TUSD-03.html",
+      "raw_sha256": "72584544ef276af33c1d6f86311d7b27a0dc19be8eec5ee501ef3613f20b250c",
+      "text_path": "evidence/I-TUSD-03.txt",
+      "text_sha256": "d6485129f1b1a8bb18cd9297758c6fcc191f04b32255f8c13d10ef110ef0f721",
+      "text_lines": 2011,
+      "independent_semantic_check": {
+        "version": "tusd v2.5.0 S3Store source at c5d5b0a.",
+        "locator": "Raw source package comments and S3Store fields; New constructor; MaxObjectSize check.",
+        "operation": "S3Store internal multipart sizing, buffering and upload concurrency",
+        "judgment": "Supported: 50 MiB preferred part, 5 TiB object cap, 10,000 parts, 20 additional buffered parts and 10 concurrent S3 part uploads; interrupted large part retransfer is described.",
+        "conditions": "Constructor defaults/configurable implementation cap, not modern AWS service limit. Final retains disk/resource caution and does not claim a tested tus endpoint."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "PreferredPartSize:",
+          "saved_text_lines": [
+            1362
+          ]
+        },
+        {
+          "anchor": "MaxObjectSize:",
+          "saved_text_lines": [
+            1364
+          ]
+        },
+        {
+          "anchor": "MaxBufferedParts:",
+          "saved_text_lines": [
+            1365
+          ]
+        },
+        {
+          "anchor": "SetConcurrentPartUploads(10)",
+          "saved_text_lines": [
+            1372
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-TUSD-03-RAW"
+      ]
+    },
+    {
+      "id": "I-RCLONE-01",
+      "candidate_source_id": "RCLONE-01",
+      "title": "Amazon S3 backend — rclone documentation",
+      "url": "https://rclone.org/s3/",
+      "retrieved_at_utc": "2026-10-10T04:25:10.924609+00:00",
+      "http_status": 200,
+      "final_url": "https://rclone.org/s3/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-RCLONE-01.html",
+      "raw_sha256": "b7977659d8af107abcb17ccf016f8635c0441e5f7666f48b1409342dba8eddc8",
+      "text_path": "evidence/I-RCLONE-01.txt",
+      "text_sha256": "23dd6bb93c2a1ef28e7f759e6cfe21737c31a038783de254c0bdb270eee7c076",
+      "text_lines": 9098,
+      "independent_semantic_check": {
+        "version": "Rolling rclone S3 backend docs, independently accessed 2026-10-10; no chosen pilot release.",
+        "locator": "Data integrity local lines 732–775; Multipart uploads 879–901; upload-cutoff/chunk options 3483–3526.",
+        "operation": "S3 backend single/multipart upload and post-upload verification",
+        "judgment": "Supported optional CLI candidate: cutoff default 200Mi (200 MiB), per-part MD5 and post-upload HEAD/expected multipart ETag; memory is transfers × concurrency × chunk size.",
+        "conditions": "HEAD can be disabled by --s3-no-head; provider semantics and selected release matter. Multipart ETag is not whole-file SHA256. Reviewed page has no process-restart-resume guarantee; final promises none and proposes testing that boundary."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "Data integrity",
+          "saved_text_lines": [
+            162,
+            732,
+            3546,
+            3839,
+            3840
+          ]
+        },
+        {
+          "anchor": "200Mi",
+          "saved_text_lines": [
+            3491
+          ]
+        },
+        {
+          "anchor": "transfers ×",
+          "saved_text_lines": [
+            890
+          ]
+        },
+        {
+          "anchor": "--s3-no-head",
+          "saved_text_lines": [
+            706,
+            745,
+            764,
+            780,
+            3737,
+            3762
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-MINIO-01",
+      "candidate_source_id": "MINIO-01",
+      "title": "MinIO issue #19670: multipart checksum with part count",
+      "url": "https://github.com/minio/minio/issues/19670",
+      "retrieved_at_utc": "2026-10-10T04:25:10.942643+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/issues/19670",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-01.html",
+      "raw_sha256": "967c700f84fb1a9bc76bb9cb7bfd82ac8ff75bd8e4f3f86cc0d121796f3ce64d",
+      "text_path": "evidence/I-MINIO-01.txt",
+      "text_sha256": "1f5437e7e121a75661d1585a173a0c2553c8bd3259059529f19e58cb10b19bd7",
+      "text_lines": 310,
+      "independent_semantic_check": {
+        "version": "Issue #19670; tested server RELEASE.2024-05-01T01-11-10Z / 7926401cbd5cceaacd9509f2e50e1f7d636c2eb8; AWS JS client 3.569.0.",
+        "locator": "Issue description/reproduction local lines 123–235; CompleteMultipartUpload checksum variants 222–224.",
+        "operation": "CompleteMultipartUpload SHA256 composite checksum with -partCount suffix",
+        "judgment": "Supported as reported external behavior: the issue reports suffix rejected by tested MinIO, accepted by AWS, and bare checksum accepted by both.",
+        "conditions": "Historical issue reporter result, not a reviewer rerun, universal present MinIO claim or archive-provider test."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "3.569.0",
+          "saved_text_lines": [
+            155
+          ]
+        },
+        {
+          "anchor": "RELEASE.2024-05-01",
+          "saved_text_lines": [
+            141,
+            235
+          ]
+        },
+        {
+          "anchor": "ChecksumSHA256:",
+          "saved_text_lines": [
+            196,
+            219,
+            222,
+            223,
+            224
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I-MINIO-02",
+      "candidate_source_id": "MINIO-02",
+      "title": "MinIO PR #19680: Accept multipart checksums with part count",
+      "url": "https://github.com/minio/minio/pull/19680",
+      "retrieved_at_utc": "2026-10-10T04:25:10.955302+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/pull/19680",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-02.html",
+      "raw_sha256": "aba1cb559251feabfd3f652d0c9ce91dff0e0d83f8a8f29cbcf2636e2f1c17d4",
+      "text_path": "evidence/I-MINIO-02.txt",
+      "text_sha256": "534f796a986f21e7e91ec53ae1f9c541270965da90534d336dc8047f6d61e28c",
+      "text_lines": 433,
+      "independent_semantic_check": {
+        "version": "PR #19680 merged 2024-05-08; fix 0b245da7a0d665ab85d35e68b27d7aa0b12f603c.",
+        "locator": "PR merge and issue link; independent commit patch NewChecksumWithType / Matches / CompleteMultipartUpload.",
+        "operation": "MinIO completion checksum parsing and part-count validation",
+        "judgment": "Supported fix chain: patch parses suffix, records requested count and checks it against actual count during completion.",
+        "conditions": "Merged code alone does not prove release or downstream adoption; next source establishes the tagged release."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "May 8, 2024",
+          "saved_text_lines": [
+            114,
+            365,
+            371,
+            376
+          ]
+        },
+        {
+          "anchor": "0b245da",
+          "saved_text_lines": [
+            144
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-MINIO-FIX"
+      ]
+    },
+    {
+      "id": "I-MINIO-03",
+      "candidate_source_id": "MINIO-03",
+      "title": "MinIO RELEASE.2024-05-10T01-41-38Z",
+      "url": "https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z",
+      "retrieved_at_utc": "2026-10-10T04:25:11.017726+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/releases/tag/RELEASE.2024-05-10T01-41-38Z",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-03.html",
+      "raw_sha256": "1243c41cdbeb7823e42bb9c58533fb886c101b1f1bcab24565485776b8da937b",
+      "text_path": "evidence/I-MINIO-03.txt",
+      "text_sha256": "3a2e5c45ef11bd92a84d500711e024682fcc7389e2ad8035af1cac67120293bf",
+      "text_lines": 187,
+      "independent_semantic_check": {
+        "version": "RELEASE.2024-05-10T01-41-38Z, commit b598402; release API published 2024-05-10.",
+        "locator": "Release tag/commit local lines 125–136 and included #19680 change; API body.",
+        "operation": "Tagged MinIO release including multipart checksum compatibility fix",
+        "judgment": "Supported: release notes list #19680. Together with issue and code patch, the chain satisfies the required released compatibility example.",
+        "conditions": "No claim every deployed MinIO or compatible product has this fix."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "b598402",
+          "saved_text_lines": [
+            134
+          ]
+        },
+        {
+          "anchor": "19680",
+          "saved_text_lines": [
+            150
+          ]
+        }
+      ],
+      "corroborating_capture_ids": [
+        "I-MINIO-RELEASE-API"
+      ]
+    },
+    {
+      "id": "I-MINIO-04",
+      "candidate_source_id": "MINIO-04",
+      "title": "MinIO repository status",
+      "url": "https://github.com/minio/minio",
+      "retrieved_at_utc": "2026-10-10T04:25:11.252767+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "evidence/I-MINIO-04.html",
+      "raw_sha256": "8cb9a745849d0368acb30448a7378e3e7f8b770a452d5ba1b48e45abd7a23092",
+      "text_path": "evidence/I-MINIO-04.txt",
+      "text_sha256": "0521c5539c5d08453d0d7424c16cb2351a8aecda7e3bdaf413606014ce0fd2fa",
+      "text_lines": 524,
+      "independent_semantic_check": {
+        "version": "Public minio/minio repository banner observed 2026-10-10, archived 2026-04-25.",
+        "locator": "Local text line 96.",
+        "operation": "Repository archival status",
+        "judgment": "Supported historical context; final does not recommend deploying the archived repository.",
+        "conditions": "This says nothing conclusive about all MinIO-branded offerings; final keeps its claim to this repository."
+      },
+      "applicability_to_review": "Evidence for the bounded comparator/recommendation or correction; no operational verification of archive service.",
+      "exact_saved_text_anchor_locators": [
+        {
+          "anchor": "archived by the owner",
+          "saved_text_lines": [
+            96
+          ]
+        }
+      ]
+    }
+  ],
+  "supplementary_primary_sources": [
+    {
+      "id": "I-TUSD-02-RAW",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "retrieved_at_utc": "2026-10-10T04:25:51.019911+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-TUSD-02-RAW.txt",
+      "text_sha256": "4c7f40f4e8f1501842d3f7cbb6398017da363710c1ea9a87fabcc841db56a806",
+      "text_lines": 117
+    },
+    {
+      "id": "I-TUSD-03-RAW",
+      "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+      "retrieved_at_utc": "2026-10-10T04:25:51.022268+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-TUSD-03-RAW.txt",
+      "text_sha256": "5ea530d16e1bc5030e8a4ea0caa3a70691ff6d2be14ed6dad54526b4839e11a0",
+      "text_lines": 1251
+    },
+    {
+      "id": "I-TUSD-RELEASE-API",
+      "url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+      "retrieved_at_utc": "2026-10-10T04:25:51.023526+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "evidence/I-TUSD-RELEASE-API.txt",
+      "text_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+      "text_lines": 1
+    },
+    {
+      "id": "I-MINIO-FIX",
+      "url": "https://github.com/minio/minio/commit/0b245da.patch",
+      "retrieved_at_utc": "2026-10-10T04:25:51.024826+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/minio/minio/commit/0b245da.patch",
+      "content_type": "text/plain; charset=utf-8",
+      "text_path": "evidence/I-MINIO-FIX.txt",
+      "text_sha256": "31468573681b4ae94d1c7c15497d0e9977da7f2a1d63c9c864851e5c93cccbd3",
+      "text_lines": 132
+    },
+    {
+      "id": "I-MINIO-RELEASE-API",
+      "url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+      "retrieved_at_utc": "2026-10-10T04:25:51.026110+00:00",
+      "http_status": 200,
+      "final_url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+      "content_type": "application/json; charset=utf-8",
+      "text_path": "evidence/I-MINIO-RELEASE-API.txt",
+      "text_sha256": "96f60320ada1b7bc61eec5be3d977464027e0ca196a1175c7166d03e9f187a5f",
+      "text_lines": 1
+    }
+  ],
+  "web_retrieval_files": [
+    "evidence/web-aws-initial.json",
+    "evidence/web-checksums-r2-tusd.json",
+    "evidence/web-routes-conditions.json",
+    "evidence/web-tus-rclone-minio.json"
+  ],
+  "original_artifact_manifest": "evidence/original-artifact-manifest.json",
+  "freeze_integrity_check": "evidence/freeze-integrity-check.json",
+  "source_navigation": "evidence/index.md",
+  "input_sources": [
+    {
+      "id": "ORIGINAL-BRIEF",
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/brief.md",
+      "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+      "inspection": "Full original authored text read; governing task obligations and negative constraints."
+    },
+    {
+      "id": "ORIGINAL-PLAN",
+      "path": "ER12_RUNTIME/frozen-inputs/A4-01/plan.md",
+      "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+      "inspection": "Full fallible original plan read; all exact clauses adjudicated; not used as scientific authority."
+    }
+  ]
+}

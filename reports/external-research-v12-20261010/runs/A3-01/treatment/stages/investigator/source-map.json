@@ -1,0 +1,230 @@
+{
+  "run_id": "A3-01-treatment",
+  "stage": "investigator",
+  "scope_input": "ER12_RUNTIME/runs/A3-01/treatment/inputs/brief.md",
+  "scope_note": "Independent research from the finalized brief; exact plan was unreleased and unread at this save point.",
+  "access_utc_interval": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+  "records": [
+    {
+      "id": "S01",
+      "title": "SQLite FTS5 Extension: build options and unicode61 tokenizer",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live upstream FTS5 documentation read 2026-10-10; no versioned URL. FTS5 inclusion since SQLite 3.9.0; current observed SQLite release recorded in S06.",
+      "locator": "Sections 2.1 (build configuration) and 4.3.1 (unicode61 tokenization/diacritics), especially lines 226-229 and 454-466.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "FTS5 module build/activation; tokenization of indexed and queried text with the unicode61 tokenizer.",
+      "governing_condition_default_exception": "FTS5 is included in the SQLite amalgamation since 3.9.0. Source-tree configure currently needs --enable-fts5; amalgamation defaults differ and may change. unicode61 is default, based on Unicode 6.1; spaces/punctuation are separators, letter/number/private-use categories are tokens, matching is Unicode 6.1 case-insensitive, Latin diacritics are removed by default. remove_diacritics=2 handles the documented multi-diacritic exception for Latin; normalization is not language-universal.",
+      "applicability": "Supports a runtime/build probe and a deliberate tokenizer policy only. The application SQLite binding, bundled/system library, target build flags, and actual component version are unknown; verify on Linux and Windows before claiming capability."
+    },
+    {
+      "id": "S02",
+      "title": "SQLite FTS5 query syntax and string quoting",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live upstream FTS5 documentation read 2026-10-10; no versioned URL. Validate against the SQLite version actually shipped.",
+      "locator": "Sections 3 and 3.1, especially lines 253-279; query-language summary includes phrase, NEAR, column qualifier, grouping, AND/OR/NOT. Embedded double quotes inside an FTS5 quoted string are doubled.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Parsing the string supplied to MATCH as an FTS5 expression, including phrase quoting and Boolean/column syntax.",
+      "governing_condition_default_exception": "The right-hand MATCH value is itself a query language, not plain literal text. Unquoted syntax characters and operators have engine semantics. Quoted strings use double quotes; an embedded double quote is escaped by doubling it.",
+      "applicability": "Justifies parsing a small product grammar and generating/binding only serialized AST terms or phrases; binding a MATCH string does not restrict FTS5 operators. Do not expose full FTS5 grammar unless explicitly designed."
+    },
+    {
+      "id": "S03",
+      "title": "SQLite FTS5 external-content tables, triggers, consistency, repair",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live upstream FTS5 documentation read 2026-10-10; no versioned URL. Revalidate against the shipped SQLite release.",
+      "locator": "Sections 4.4.1-4.4.4.1 and 6.7/6.12, especially lines 552-686, 985-996, and 1037-1041.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Read contentless and contentless-delete update/delete behavior; external-content value retrieval; trigger maintenance; rank=1 integrity-check; rebuild from content table.",
+      "governing_condition_default_exception": "A standard contentless table does not support UPDATE/DELETE and its delete command needs original text. Since SQLite 3.43.0, contentless_delete=1 supports DELETE and INSERT OR REPLACE and UPDATE only when all user-defined columns are supplied; it does not support the FTS5 delete command. External content stores index entries but fetches column values from its same-database content table; consistency is the application responsibility. Triggers do not backfill old rows. integrity-check compares an external table only with rank=1. rebuild discards and regenerates from a content table but is not available for contentless tables.",
+      "applicability": "Supports the correction that standard contentless is not update/delete-capable while contentless-delete is version-gated. External content avoids a second body copy and can supply snippets from canonical SQLite content; it is the better first fit when simple rebuild and trigger consistency matter. The app version and content-table write operations are unknown; validate both targets."
+    },
+    {
+      "id": "S04",
+      "title": "SQLite FTS5 BM25 and snippet functions",
+      "exact_url": "https://www.sqlite.org/fts5.html",
+      "released_version_or_commit": "Live upstream FTS5 documentation read 2026-10-10; no versioned URL. Revalidate on the selected SQLite release.",
+      "locator": "Sections 5.1.1 and 5.1.3, especially lines 801-810 and 863-870.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "BM25 result scoring/order and extraction of a selected snippet fragment with match and truncation markers.",
+      "governing_condition_default_exception": "FTS5 BM25 returns lower numeric values for better matches. snippet() accepts a column choice, match markers, omission marker, and a positive token limit up to 64. Match markers are inserted into the text fragment and are not an HTML safety mechanism.",
+      "applicability": "Supports a lexical ranking and bounded excerpt option. Add a canonical note-ID tie-break and render excerpts as text or escaped markup; do not imply semantic rank or safe HTML."
+    },
+    {
+      "id": "S05",
+      "title": "SQLite is Transactional",
+      "exact_url": "https://www.sqlite.org/transactional.html",
+      "released_version_or_commit": "Live SQLite documentation read 2026-10-10; no versioned URL. Detailed behavior is configuration/VFS/filesystem dependent; see S16 and S17.",
+      "locator": "Overview lines 20-28, including single-transaction atomicity claims and crash-test harness description.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Atomic application of changes within one SQLite transaction during program/OS crash or power loss.",
+      "governing_condition_default_exception": "Applies to changes in one SQLite transaction, with the storage/VFS and journal conditions described by SQLite. It is not an atomic transaction spanning SQLite plus a separate Tantivy directory.",
+      "applicability": "Supports co-transactional source-row and FTS trigger work when they are in the same SQLite database/transaction; does not provide dual-write atomicity for a sidecar index."
+    },
+    {
+      "id": "S06",
+      "title": "SQLite 3.53.4 release record",
+      "exact_url": "https://sqlite.org/releaselog/3_53_4.html",
+      "released_version_or_commit": "SQLite 3.53.4, released 2026-07-24; SQLITE_SOURCE_ID `2026-07-24 19:02:57 bf7c7f30031888f4e796e429ab3978879485813aaca6f641c7b33e4e09459bcc`.",
+      "locator": "Release header and patch-release/hash section, lines 20-22 and 77-84.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Identify the latest observed SQLite upstream release and immutable source ID at research time.",
+      "governing_condition_default_exception": "This release page identifies upstream source; it does not prove a desktop application uses this release, build configuration, or FTS5 module.",
+      "applicability": "Version snapshot only. The application must record its own runtime version/source ID and FTS5 capability on each platform."
+    },
+    {
+      "id": "S07",
+      "title": "Tantivy 0.26.2 release/tag and package metadata",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/commit/72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d",
+      "released_version_or_commit": "Tantivy 0.26.2; tag commit `72d1ef9a6468aa68bbc69dcc80cdf60aaf64364d`; docs.rs records release date 2026-09-08 and dependency requirement `tantivy-query-grammar` ^0.26.0.",
+      "locator": "GitHub commit/tag header; docs.rs package metadata version/dependencies; 0.26.2 CHANGELOG.md entries at lines 192-203.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Resolve a current release snapshot, exact source commit, date, and query grammar dependency version.",
+      "governing_condition_default_exception": "The tag is an upstream release point; crate and dependency versions are only evidence candidates, not an application lockfile or target-build record. The 0.26.2 changelog lists two aggregation bug fixes and does not identify every open issue as fixed or unfixed.",
+      "applicability": "Use 0.26.2 as a research reference only. If selected, pin it and record Cargo.lock, Rust toolchain/target and runtime schema/tokenizer; verify platform behavior separately.",
+      "supporting_urls": [
+        "https://docs.rs/crate/tantivy/0.26.2"
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "Tantivy 0.26.2 IndexWriter and IndexReader APIs",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/indexer/struct.IndexWriter.html",
+      "released_version_or_commit": "Tantivy 0.26.2, released 2026-09-08; tag commit in S07.",
+      "locator": "`rollback`, `commit`, `delete_term`, `commit_opstamp`, and `add_document` methods; commit/delete text around lines 154-213. Reader reload behavior is https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html, `reload()` description around lines 67-73.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "IndexWriter commit/rollback/add/delete publication and persistence; IndexReader searcher reload after commit.",
+      "governing_condition_default_exception": "Commit blocks and publishes/persists pending document changes; last successful commit opstamp is recovery point. Delete affects prior-committed and earlier-same-commit documents and is visible only after commit. OnCommitWithDelay reader reload policy is the default and may take tens of milliseconds.",
+      "applicability": "Supports ordered update/delete batching and commit/replay design; not an atomic transaction with SQLite. Acknowledge external change records only after successful Tantivy commit, and test replay order/idempotence.",
+      "supporting_urls": [
+        "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html"
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "Tantivy 0.26.2 tokenizer module",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/tokenizer/index.html",
+      "released_version_or_commit": "Tantivy 0.26.2, released 2026-09-08; tag commit in S07.",
+      "locator": "Default/en_stem tokenizer descriptions around lines 59-69; custom TextAnalyzer example around 74-121; AsciiFoldingFilter and SimpleTokenizer descriptions around 122-148.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Token stream construction for indexed and query text, including whitespace/punctuation splitting, lowercasing, long-token filtering, stemming and ASCII folding.",
+      "governing_condition_default_exception": "Default tokenizer splits at punctuation/whitespace, lowercases, and removes over-limit tokens; docs describe the default limit as 40 characters. RemoveLongFilter's API describes its limit in UTF-8 bytes. ASCII folding is an explicit filter and only maps characters with an ASCII equivalent. English stemming is optional and English-oriented.",
+      "applicability": "Select a named explicit analyzer and test its behavior against FTS5 and representative languages. Do not rely on the default silently dropping long terms or claim accent equivalence."
+    },
+    {
+      "id": "S10",
+      "title": "Tantivy 0.26.2 QueryParser API/source",
+      "exact_url": "https://docs.rs/tantivy/latest/src/tantivy/query/query_parser/query_parser.rs.html",
+      "released_version_or_commit": "Tantivy source page showed 0.26.2 at access; exact upstream tag commit in S07. Package metadata declares `tantivy-query-grammar` ^0.26.0.",
+      "locator": "`parse_query` source lines 332-338 return Result; the header showed crate version 0.26.2 at access. Companion error type at https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html lists syntax/unsupported query errors.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Parsing a user query string into Tantivy Query objects and reporting syntax/unsupported-query errors.",
+      "governing_condition_default_exception": "QueryParser is a general query language parser. Its Result return contract does not prove every malformed string returns an error rather than panicking; see the version-bounded issue/history S15.",
+      "applicability": "Use only behind a small validated grammar or construct typed query objects; fuzz malformed strings for the exact dependency version.",
+      "supporting_urls": [
+        "https://docs.rs/tantivy/latest/tantivy/query/enum.QueryParserError.html"
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "Tantivy 0.26.2 TopDocs collector",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/collector/struct.TopDocs.html",
+      "released_version_or_commit": "Tantivy 0.26.2, released 2026-09-08; tag commit in S07.",
+      "locator": "Stable tie ordering at line 65; `order_by_score()` around lines 203-205.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Collect the top K scoring documents and sort by score.",
+      "governing_condition_default_exception": "`order_by_score()` is decreasing BM25. TopDocs documents deterministic ties by ascending `DocAddress`, an internal segment/document address.",
+      "applicability": "The built-in tie-break is not canonical note identity and may change with segment layout/rebuild. Use explicit stable note ID for the public ordering contract."
+    },
+    {
+      "id": "S12",
+      "title": "Tantivy 0.26.2 Snippet API",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/struct.Snippet.html",
+      "released_version_or_commit": "Tantivy 0.26.2, released 2026-09-08; tag commit in S07.",
+      "locator": "`to_html`, `fragment`, and `highlighted` descriptions around lines 79-93.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Generate a document fragment and access its match ranges or HTML form.",
+      "governing_condition_default_exception": "to_html() returns highlighted HTML; fragment() returns source text and highlighted() returns ranges. The API description does not state a safe rendering/escaping contract for note content.",
+      "applicability": "Treat stored user note text as untrusted. Use fragment plus range-safe escaping/text-node rendering or a bounded plain-text excerpt, not unreviewed HTML."
+    },
+    {
+      "id": "S13",
+      "title": "Tantivy issue #2847: Windows ManagedDirectory commit race",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/issues/2847",
+      "released_version_or_commit": "Issue opened 2026-03-04; report names Tantivy 0.25.0 and Windows 10/11 NTFS; open when checked 2026-10-10.",
+      "locator": "Issue status/open lines 140-144; report and version/platform lines 155-184; reproduction lines 185-217.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Rapid consecutive commits while background merge and commit both write `.managed.json` through Windows atomic file replacement.",
+      "governing_condition_default_exception": "Reported for one writer with commit/merge concurrency on Windows 10/11 NTFS, Tantivy 0.25.0; issue describes PermissionDenied on Windows and possible lost registration on Linux. Status is open in the observed issue page. It does not establish 0.26.2 is affected or fixed.",
+      "applicability": "Justifies a focused Windows test and release-history review if Tantivy is selected; do not generalize this report to every version or platform."
+    },
+    {
+      "id": "S14",
+      "title": "Tantivy issue #3079: orphaned files before writer commit",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/issues/3079",
+      "released_version_or_commit": "Issue opened 2026-09-07; no Tantivy version specified in the captured issue body; open when checked 2026-10-10.",
+      "locator": "Issue status/open lines 131-145; question/report lines 152-196.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "User report asks whether uncommitted writer-created/partially spilled segment files can be recovered after a process kill before commit.",
+      "governing_condition_default_exception": "This is an open question with an unverified user interpretation, not a maintainer-confirmed guarantee. The issue reports meta.json with an empty segment list/opstamp zero and orphan files when commit did not complete.",
+      "applicability": "Do not promise recovery of uncommitted Tantivy operations. Treat SQLite as authority and rebuild if sidecar validation fails; retain this issue as a focused follow-up if Tantivy is selected."
+    },
+    {
+      "id": "S15",
+      "title": "Tantivy issue #3031 and linked query grammar fix commit",
+      "exact_url": "https://github.com/quickwit-oss/tantivy/issues/3031",
+      "released_version_or_commit": "Issue opened 2026-08-05; report identifies tantivy 0.22.1 and tantivy-query-grammar 0.22.0; open when checked 2026-10-10. Linked fix-like commit is `28b2ed185381b59c17530bb37cb9e481921ac1f2` in contributor fork `puretechteam/tantivy`, not an upstream released tag.",
+      "locator": "Issue version/input and reproduction lines 152-189; panic result variants lines 193-214; linked commit activity lines 225-236. Fork commit description and tests: https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2, lines 127-143.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Call QueryParser::parse_query on malformed user input `- *`; report says panic rather than Err for several operator/whitespace forms. A linked fork commit gates fieldless Exists forms and adds tests.",
+      "governing_condition_default_exception": "Evidence is version-bounded to tantivy 0.22.1 / grammar 0.22.0 for the reported bug. The linked corrective commit is from a fork and is not evidence that upstream 0.26.2 shipped it. Do not claim the current release is affected or fixed without exact source/release verification.",
+      "applicability": "Supports a restricted query interface and malformed-input regression/fuzz tests against the pinned current release.",
+      "supporting_urls": [
+        "https://github.com/puretechteam/tantivy/commit/28b2ed185381b59c17530bb37cb9e481921ac1f2"
+      ]
+    },
+    {
+      "id": "S16",
+      "title": "SQLite Write-Ahead Logging",
+      "exact_url": "https://www.sqlite.org/wal.html",
+      "released_version_or_commit": "Live upstream WAL documentation read 2026-10-10; no versioned URL. Current observed SQLite release in S06; revalidate selected runtime configuration.",
+      "locator": "Sections 1-4, especially lines 63-85, 91-114, 117-139.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Commit a transaction by appending a commit record to the WAL; checkpoint to the database; open and recover a WAL-mode database.",
+      "governing_condition_default_exception": "Connection default journal_mode is DELETE; WAL is opt-in and persistent. WAL uses a default 1000-page checkpoint threshold, needs same-host shared memory and does not work over network filesystems, permits one writer, and requires keeping `-wal` with the database. `synchronous=FULL` syncs each commit; NORMAL omits that sync and can lose recent commits after power failure/hard reset.",
+      "applicability": "If WAL is used, keep local files together and record journal/synchronous mode. This task's local SQLite DB fits same-host usage; power-loss durability still depends on selected setting and filesystem."
+    },
+    {
+      "id": "S17",
+      "title": "SQLite Atomic Commit in rollback-journal mode",
+      "exact_url": "https://www.sqlite.org/atomiccommit.html",
+      "released_version_or_commit": "Live upstream SQLite documentation read 2026-10-10; no versioned URL. The page explicitly applies to rollback mode, not WAL.",
+      "locator": "Introduction and sections 3-4 and 8-9, including VFS/fsync assumptions, hot-journal recovery, crash tests, and failure cases.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Commit/rollback a single database-file transaction and recover an incomplete transaction after OS crash or power failure.",
+      "governing_condition_default_exception": "The article applies only in rollback mode. It assumes filesystem/file-delete and VFS flush behavior; broken fsync, locking, renamed hot journals, or damaged hardware/filesystems can defeat assumptions. Do not use it as a blanket durability guarantee for every device.",
+      "applicability": "Provides the rollback-mode caveat for crash-recovery design. Test the actual journal mode, VFS and target OS; WAL conditions are in S16."
+    },
+    {
+      "id": "S18",
+      "title": "Tantivy 0.26.2 IndexReader reload behavior",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/struct.IndexReader.html",
+      "released_version_or_commit": "Tantivy 0.26.2, released 2026-09-08; upstream tag commit in S07.",
+      "locator": "`reload()` method documentation around lines 67-73.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Refresh a reader/searcher to expose the state of the last writer commit.",
+      "governing_condition_default_exception": "ReloadPolicy::OnCommitWithDelay is the default; docs say the state should appear rapidly, but this may take tens of milliseconds. Explicit reload can make tests deterministic.",
+      "applicability": "Tantivy commit does not imply an instantaneous search reader view. Define and test the adapter freshness window or force reload at a deliberate boundary."
+    },
+    {
+      "id": "S19",
+      "title": "Tantivy 0.26.2 snippet generator and stored-field example",
+      "exact_url": "https://docs.rs/tantivy/0.26.2/tantivy/snippet/index.html",
+      "released_version_or_commit": "Tantivy 0.26.2 docs, released 2026-09-08; tag commit in S07.",
+      "locator": "Snippet module description/example; `set_max_num_chars` example sets 100 and docs state default 150. The shown schema declares title/body as TEXT | STORED.",
+      "accessed_utc": "2026-10-10T03:56:56Z/2026-10-10T04:14:46Z",
+      "observed_operation": "Generate snippets from a searcher, query, field and document; cap their characters; render highlighted matches.",
+      "governing_condition_default_exception": "The documented example stores text fields in Tantivy and produces highlighted HTML. Schema documentation says stored fields are persisted in the compressed document store; the example demonstrates the storage choice but does not state a universal requirement for every custom snippet implementation.",
+      "applicability": "If using the built-in generator, account for a stored body copy in the disk budget and review HTML safety. To avoid duplication, retrieve canonical SQLite text by stable note ID and generate a bounded plain-text excerpt in the adapter."
+    }
+  ]
+}

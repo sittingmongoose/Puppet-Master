@@ -1,0 +1,57 @@
+[
+  {
+    "id": "I-TUSD-02-RAW",
+    "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+    "retrieved_at_utc": "2026-10-10T04:25:51.019911+00:00",
+    "http_status": 200,
+    "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/docs/_storage-backends/aws-s3.md",
+    "content_type": "text/plain; charset=utf-8",
+    "text_path": "evidence/I-TUSD-02-RAW.txt",
+    "text_sha256": "4c7f40f4e8f1501842d3f7cbb6398017da363710c1ea9a87fabcc841db56a806",
+    "text_lines": 117
+  },
+  {
+    "id": "I-TUSD-03-RAW",
+    "url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+    "retrieved_at_utc": "2026-10-10T04:25:51.022268+00:00",
+    "http_status": 200,
+    "final_url": "https://raw.githubusercontent.com/tus/tusd/v2.5.0/pkg/s3store/s3store.go",
+    "content_type": "text/plain; charset=utf-8",
+    "text_path": "evidence/I-TUSD-03-RAW.txt",
+    "text_sha256": "5ea530d16e1bc5030e8a4ea0caa3a70691ff6d2be14ed6dad54526b4839e11a0",
+    "text_lines": 1251
+  },
+  {
+    "id": "I-TUSD-RELEASE-API",
+    "url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+    "retrieved_at_utc": "2026-10-10T04:25:51.023526+00:00",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/tus/tusd/releases/tags/v2.5.0",
+    "content_type": "application/json; charset=utf-8",
+    "text_path": "evidence/I-TUSD-RELEASE-API.txt",
+    "text_sha256": "ad07245b3716abb75a537d32adc37c8b7d85dbc62f78a01836b785e1d0b1930a",
+    "text_lines": 1
+  },
+  {
+    "id": "I-MINIO-FIX",
+    "url": "https://github.com/minio/minio/commit/0b245da.patch",
+    "retrieved_at_utc": "2026-10-10T04:25:51.024826+00:00",
+    "http_status": 200,
+    "final_url": "https://github.com/minio/minio/commit/0b245da.patch",
+    "content_type": "text/plain; charset=utf-8",
+    "text_path": "evidence/I-MINIO-FIX.txt",
+    "text_sha256": "31468573681b4ae94d1c7c15497d0e9977da7f2a1d63c9c864851e5c93cccbd3",
+    "text_lines": 132
+  },
+  {
+    "id": "I-MINIO-RELEASE-API",
+    "url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+    "retrieved_at_utc": "2026-10-10T04:25:51.026110+00:00",
+    "http_status": 200,
+    "final_url": "https://api.github.com/repos/minio/minio/releases/tags/RELEASE.2024-05-10T01-41-38Z",
+    "content_type": "application/json; charset=utf-8",
+    "text_path": "evidence/I-MINIO-RELEASE-API.txt",
+    "text_sha256": "96f60320ada1b7bc61eec5be3d977464027e0ca196a1175c7166d03e9f187a5f",
+    "text_lines": 1
+  }
+]

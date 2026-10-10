@@ -1,0 +1,50 @@
+{
+  "checked_at_utc": "2026-10-10T04:14:51.122133+00:00",
+  "original_freeze_path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/terminal-science-freeze.json",
+  "original_freeze_sha256": "ed7f92d9e96dc38e9ea08da1213b686a2ba9204ce861751dc582fbc9ec68100e",
+  "original_freeze_preserved": true,
+  "science_comparison": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "frozen_sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+      "inspected_sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A1-uri-immutable-excerpts.md",
+      "frozen_sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+      "inspected_sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+      "frozen_sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+      "inspected_sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A3-checkpoint-modes-excerpts.md",
+      "frozen_sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+      "inspected_sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S1-wal-excerpts.md",
+      "frozen_sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+      "inspected_sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+      "frozen_sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+      "inspected_sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+      "frozen_sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "inspected_sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "matches": true
+    }
+  ]
+}

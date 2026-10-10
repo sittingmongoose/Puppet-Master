@@ -1,0 +1,36 @@
+{
+  "schema": "er12-reviewer-native-goal-receipt-v1",
+  "pre_completion_observation": {
+    "goal": {
+      "threadId": "01a123fe-6486-70c0-8559-f4a3fa7cd796",
+      "objective": "Independently review the completed ER12 B-DISC-M-01/control bounded brief-only discovery role against RUBRIC-v1 and independently retrieved primary evidence; save complete assessment.md, assessment.json and source-map.json under ER12_RUNTIME/assessment/B-DISC-M-01/control-v1 before completing this Goal, without candidate feedback/fixes or out-of-scope reads or changes.",
+      "status": "active",
+      "tokensUsed": 129960,
+      "timeUsedSeconds": 423,
+      "createdAt": 1791605248,
+      "updatedAt": 1791605671
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "completion": {
+    "goal": {
+      "threadId": "01a123fe-6486-70c0-8559-f4a3fa7cd796",
+      "objective": "Independently review the completed ER12 B-DISC-M-01/control bounded brief-only discovery role against RUBRIC-v1 and independently retrieved primary evidence; save complete assessment.md, assessment.json and source-map.json under ER12_RUNTIME/assessment/B-DISC-M-01/control-v1 before completing this Goal, without candidate feedback/fixes or out-of-scope reads or changes.",
+      "status": "complete",
+      "tokensUsed": 129960,
+      "timeUsedSeconds": 443,
+      "createdAt": 1791605248,
+      "updatedAt": 1791605691
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+  },
+  "required_review_saved_before_completion": true,
+  "required_review_artifacts": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json"
+  ],
+  "validation_record": "validation-record.json"
+}

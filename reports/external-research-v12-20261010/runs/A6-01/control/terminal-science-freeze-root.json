@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:37:05.387145+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/critique.md",
+      "bytes": 11419,
+      "sha256": "51c973c39dbefe617915a75a894c585aa819b9504b4d8c21ec52c2e532274783",
+      "mtime_ns": 1791606174441667139
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/source-map.json",
+      "bytes": 26000,
+      "sha256": "fe7636a876ff6b98fdd4f669463332a76b2da043c245a702857498bdaba485ef",
+      "mtime_ns": 1791606113419740590
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/critic/sources/index.md",
+      "bytes": 4987,
+      "sha256": "08a5e63151239f70c6c1c69298d4eec2c183515790bf1179fbaf0143ee71cfc3",
+      "mtime_ns": 1791606136896975837
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/discovery.md",
+      "bytes": 16039,
+      "sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4",
+      "mtime_ns": 1791605131470073418
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/draft.md",
+      "bytes": 23006,
+      "sha256": "ae7bae1e494a90c625c4a6aee55c1ec8490fc8270b964fada87cb4c18385e47b",
+      "mtime_ns": 1791605470186588133
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 5984,
+      "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+      "mtime_ns": 1791605141202332895
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/source-map.json",
+      "bytes": 20291,
+      "sha256": "f24cd24a3e59d50022a32ac0827d20460029ba6f114c70a034c248f1172e955e",
+      "mtime_ns": 1791605313218536146
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/sources/index.md",
+      "bytes": 4864,
+      "sha256": "5f0454d89f43366f4a55ed48792c55909536421299b29487f03682be9fe076e0",
+      "mtime_ns": 1791605313231984444
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+      "bytes": 28212,
+      "sha256": "a660dcf2af9b2aaf1d65bb86b137ad696a29498f1f4ef1fbfd4b3b495c00e270",
+      "mtime_ns": 1791606900936490431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json",
+      "bytes": 38613,
+      "sha256": "cf2550bc5f5c3bea4bf5874bb6e2a25f838a2106462fec3c8086c04589042e76",
+      "mtime_ns": 1791606900937373258
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md",
+      "bytes": 7973,
+      "sha256": "6e0d55204a02b82318ebe57773ca1e12d6b7973bb17ad6f9c674ee61221ea2e7",
+      "mtime_ns": 1791606685203583297
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A6-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight obligations and released-plan clauses, and adjudicates C-01 through C-05 with direct primary-source rechecks. Those rechecks confirm the GTFS frequency and DST conditions, the current trip relationships, the SIRI version distinction, and the narrow OTP tests ([GTFS Schedule](https://gtfs.org/documentation/schedule/reference/), [GTFS-RT](https://gtfs.org/documentation/realtime/reference/), [SIRI repository](https://github.com/TransmodelEcosystem/SIRI), [OTP PR #6262](https://github.com/opentripplanner/OpenTripPlanner/pull/6262), [test commit](https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485)). No ferry product validation was performed; pilot checks remain proposed or NOT_RUN.\n\nThe actual native Goal completed: `01a1240e-2764-7262-9ca9-11666df4d6bf`. Its completion result reported **173,100 tokens** and **446 seconds (7m 26s)**.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d83f2f86-76ef-48b3-8d2a-06853543ad96",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight obligations and released-plan clauses, and adjudicates C-01 through C-05 with direct primary-source rechecks. Those rechecks confirm the GTFS frequency and DST conditions, the current trip relationships, the SIRI version distinction, and the narrow OTP tests ([GTFS Schedule](https://gtfs.org/documentation/schedule/reference/), [GTFS-RT](https://gtfs.org/documentation/realtime/reference/), [SIRI repository](https://github.com/TransmodelEcosystem/SIRI), [OTP PR #6262](https://github.com/opentripplanner/OpenTripPlanner/pull/6262), [test commit](https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485)). No ferry product validation was performed; pilot checks remain proposed or NOT_RUN.\n\nThe actual native Goal completed: `01a1240e-2764-7262-9ca9-11666df4d6bf`. Its completion result reported **173,100 tokens** and **446 seconds (7m 26s)**.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d83f2f86-76ef-48b3-8d2a-06853543ad96",
+    "waitTimedOut": false
+  }
+}

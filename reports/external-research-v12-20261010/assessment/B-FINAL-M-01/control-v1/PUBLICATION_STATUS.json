@@ -1,0 +1,33 @@
+{
+  "slot": "B-FINAL-M-01",
+  "arm": "control",
+  "snapshot_task": {
+    "key": "er12-eval-B-FINAL-M-01-control-v1",
+    "slot": "B-FINAL-M-01",
+    "arm": "control",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-M-01-control-v1:ordinal:1",
+    "status": "completed",
+    "hasPendingChildRuns": false,
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "latestTerminalStatus": "completed",
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-M-01-control-v1:ordinal:1"
+  },
+  "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "included_files": [
+    "assessment/B-FINAL-M-01/control-v1/assessment-verification.json",
+    "assessment/B-FINAL-M-01/control-v1/assessment.json",
+    "assessment/B-FINAL-M-01/control-v1/assessment.md",
+    "assessment/B-FINAL-M-01/control-v1/freeze-check.json",
+    "assessment/B-FINAL-M-01/control-v1/inspected-hashes.json",
+    "assessment/B-FINAL-M-01/control-v1/primary-evidence/index.md",
+    "assessment/B-FINAL-M-01/control-v1/primary-evidence/retrievals.json",
+    "assessment/B-FINAL-M-01/control-v1/reviewer-native-goal-completion.json",
+    "assessment/B-FINAL-M-01/control-v1/reviewer-native-goal-observed.json",
+    "assessment/B-FINAL-M-01/control-v1/root-review-request.json",
+    "assessment/B-FINAL-M-01/control-v1/source-map.json"
+  ]
+}

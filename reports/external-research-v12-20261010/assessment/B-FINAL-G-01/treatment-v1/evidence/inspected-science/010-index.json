@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "rsync manual",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "version": "Live upstream man page, unpinned; target both peers rsync 3.2.7; check relevant option semantics",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "Usage; --delete; --delete-excluded; FILTER RULES; --dry-run; --delay-updates",
+      "file": "corpus/S1.md",
+      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "verbatim_word_count": 11
+    },
+    {
+      "source_id": "S2",
+      "title": "rsync project FAQ",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "version": "Live upstream FAQ, unpinned; target both peers rsync 3.2.7",
+      "retrieved_at": "2026-10-10T03:54:10Z",
+      "navigation": "FAQ questions; protocol-startup troubleshooting; usage links",
+      "file": "corpus/S2.md",
+      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "verbatim_word_count": 2
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

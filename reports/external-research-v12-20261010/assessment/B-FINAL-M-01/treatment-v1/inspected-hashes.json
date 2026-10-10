@@ -1,0 +1,300 @@
+{
+  "observed_at_utc": "2026-10-10T04:27:20.554550+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00",
+      "inspection": "full text inspected",
+      "category": "rubric"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC_FREEZE.json",
+      "bytes": 285,
+      "sha256": "2236390e2e69fedc21edcc1ac8dd676d4c0b14fd2b75e8cfb5196689e2bc73e3",
+      "mtime_utc": "2026-10-10T03:56:48.938508+00:00",
+      "inspection": "full text inspected",
+      "category": "rubric"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/root-review-request.json",
+      "bytes": 2454,
+      "sha256": "40fb9277ecf212d33f8b8fffab0ab7eb1241cf34e366af9267c5bdd2cd5266fd",
+      "mtime_utc": "2026-10-10T04:24:33.238812+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "bytes": 4944,
+      "sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "mtime_utc": "2026-10-10T04:17:53.832329+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "bytes": 905,
+      "sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "mtime_utc": "2026-10-10T04:17:53.832527+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "bytes": 818,
+      "sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "mtime_utc": "2026-10-10T04:17:53.832635+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "bytes": 1294,
+      "sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "mtime_utc": "2026-10-10T04:17:53.832740+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "bytes": 1665,
+      "sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "mtime_utc": "2026-10-10T04:17:53.832854+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/manifest.json",
+      "bytes": 624,
+      "sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "mtime_utc": "2026-10-10T04:17:53.833002+00:00",
+      "inspection": "full text inspected",
+      "category": "input"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md",
+      "bytes": 2387,
+      "sha256": "cdb0c709bdfb869f8109fe0550d86be546a9c571a9f782154775a5d36b06244b",
+      "mtime_utc": "2026-10-10T04:17:54.932162+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/dispatch.json",
+      "bytes": 4397,
+      "sha256": "4b17377022aae72381689ed7f988d3760387e4932eb69316d24c1ace769adc49",
+      "mtime_utc": "2026-10-10T04:17:55.692648+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/final-section.md",
+      "bytes": 5588,
+      "sha256": "a34c9a016a6ac7ffe0fa93e8ab1791d0869e26cbcf054f485e2b1cab79e3e322",
+      "mtime_utc": "2026-10-10T04:22:16.784975+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/freeze.json",
+      "bytes": 2872,
+      "sha256": "f88514c14a2cfd114828e4c5458aee786c997d71f105207b09a251a744e95398",
+      "mtime_utc": "2026-10-10T04:17:54.932731+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/goal-activation-receipt.json",
+      "bytes": 1182,
+      "sha256": "3377de854b7ba7659c53754da87b2077d5d06b2e58573dd6a21c5bd8765360f4",
+      "mtime_utc": "2026-10-10T04:23:23.989278+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "bytes": 626,
+      "sha256": "cdc289f98d0c0633c0e6d852dfd9e3f3f771d2fa53b492944e49fa0aaa77a2d8",
+      "mtime_utc": "2026-10-10T04:17:54.932014+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/raw-dispatch.json",
+      "bytes": 2138,
+      "sha256": "e834a299919af4dcbb4f60782274bde1ec56b8a592e46b5590c26ebf1a7c2d5b",
+      "mtime_utc": "2026-10-10T04:17:55.487672+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/records/dispatch-20261010T041755692132-dae5c51935724d089ee010d9be8e4fc6.json",
+      "bytes": 4397,
+      "sha256": "4b17377022aae72381689ed7f988d3760387e4932eb69316d24c1ace769adc49",
+      "mtime_utc": "2026-10-10T04:17:55.692384+00:00",
+      "inspection": "full authored/input/source text inspected; dispatch record duplicate verified by identical bytes",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/request.json",
+      "bytes": 1080,
+      "sha256": "9e8514a5fcf24e6a5124f8e0cbb6edac68db0bd353a35d1acdd037ee36c6f6b3",
+      "mtime_utc": "2026-10-10T04:17:54.932304+00:00",
+      "inspection": "full text inspected",
+      "category": "protocol_metadata"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/source-map.json",
+      "bytes": 15302,
+      "sha256": "aa24edb3592430f12879c4bc06a92debf5f17e5580bb7f6076e7e7c0259cc592",
+      "mtime_utc": "2026-10-10T04:23:18.503253+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/S1-manpage-excerpts.md",
+      "bytes": 3839,
+      "sha256": "0b6499731eae8d6ec317d28f9c2358bd9b8b42bfe5c8274918d226ab1d8326fd",
+      "mtime_utc": "2026-10-10T04:21:54.160877+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/S2-optionsall-excerpts.md",
+      "bytes": 850,
+      "sha256": "4135656c5bc3831bdf042b20fdc53acce96d96f43ca9a230f19ca275ea0ab65c",
+      "mtime_utc": "2026-10-10T04:21:59.047898+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-fail-with-body.md",
+      "bytes": 771,
+      "sha256": "76754bbc3cf336c31e5826642bb18f8cba261f6878378a1c72e33b4172d09488",
+      "mtime_utc": "2026-10-10T04:21:38.683337+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-fail.md",
+      "bytes": 1082,
+      "sha256": "1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966",
+      "mtime_utc": "2026-10-10T04:21:38.680620+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-max-time.md",
+      "bytes": 884,
+      "sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+      "mtime_utc": "2026-10-10T04:21:38.677627+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry-all-errors.md",
+      "bytes": 1763,
+      "sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+      "mtime_utc": "2026-10-10T04:21:38.670965+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry-max-time.md",
+      "bytes": 715,
+      "sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+      "mtime_utc": "2026-10-10T04:21:38.674649+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry.md",
+      "bytes": 1088,
+      "sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+      "mtime_utc": "2026-10-10T04:21:38.668250+00:00",
+      "inspection": "full text inspected",
+      "category": "candidate_science"
+    }
+  ],
+  "initial_freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md",
+      "expected_sha256": "cdb0c709bdfb869f8109fe0550d86be546a9c571a9f782154775a5d36b06244b",
+      "observed_sha256": "cdb0c709bdfb869f8109fe0550d86be546a9c571a9f782154775a5d36b06244b",
+      "expected_bytes": 2387,
+      "observed_bytes": 2387,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/input-map.json",
+      "expected_sha256": "cdc289f98d0c0633c0e6d852dfd9e3f3f771d2fa53b492944e49fa0aaa77a2d8",
+      "observed_sha256": "cdc289f98d0c0633c0e6d852dfd9e3f3f771d2fa53b492944e49fa0aaa77a2d8",
+      "expected_bytes": 626,
+      "observed_bytes": 626,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/fixture.json",
+      "expected_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "observed_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "expected_bytes": 1665,
+      "observed_bytes": 1665,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/manifest.json",
+      "expected_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "observed_sha256": "7ab07095af367532ea0bf31f67a92896a1d7beb579f8cc1a809ca03a66af5ccc",
+      "expected_bytes": 624,
+      "observed_bytes": 624,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/assignment.md",
+      "expected_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "observed_sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8",
+      "expected_bytes": 4944,
+      "observed_bytes": 4944,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S1.md",
+      "expected_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "observed_sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd",
+      "expected_bytes": 905,
+      "observed_bytes": 905,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/S2.md",
+      "expected_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "observed_sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162",
+      "expected_bytes": 818,
+      "observed_bytes": 818,
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-M-01/inputs/corpus/index.json",
+      "expected_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "observed_sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8",
+      "expected_bytes": 1294,
+      "observed_bytes": 1294,
+      "matches": true
+    }
+  ],
+  "existing_terminal_freeze": {
+    "status": "NOT_LOCATED_IN_ASSIGNED_ARM_OR_CASE",
+    "searched_scopes": [
+      "ER12_RUNTIME",
+      "ER12_RUNTIME/runs/B-FINAL-M-01",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/treatment",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages",
+      "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role",
+      "ER12_RUNTIME/assessment/B-FINAL-M-01",
+      "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1"
+    ],
+    "restriction": "Only immediate root/case metadata and the assigned treatment subtree inspected; no other arms or history. freeze.json is a pre-dispatch input freeze, not a terminal output freeze. No host terminal digest is invented."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "observed_at_utc": "2026-10-10T04:19:49.119744+00:00",
+  "record_type": "descriptive interim independent results, original judgments immutable",
+  "assessments": [
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_path": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/assessment.json"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "judgment": "FAIL",
+      "assessment_path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/assessment.json"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_path": "ER12_RUNTIME/assessment/B-APPL-M-01/control-v1/assessment.json"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "judgment": "FAIL",
+      "assessment_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/assessment.json"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "judgment": "FAIL",
+      "assessment_path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/assessment.json"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "judgment": "FAIL",
+      "assessment_path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "judgment": "FAIL",
+      "assessment_path": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/assessment.json"
+    }
+  ],
+  "qualification": "Current GLM treatment results native-unqualified regardless of semantic diagnosis. No full-pipeline qualification or source-incomparable speed claim."
+}

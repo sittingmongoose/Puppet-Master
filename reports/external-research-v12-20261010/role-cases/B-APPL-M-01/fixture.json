@@ -1,0 +1,54 @@
+{
+  "schema": "er12-role-fixture-v1",
+  "slot_id": "B-APPL-M-01",
+  "case_id": "ER12-B-APPL-M-01-FRESH",
+  "role": "Applicability/exception verification",
+  "title": "SQLite WAL on a local cache",
+  "control": {
+    "provider": "codex_authorized",
+    "model": "Luna Max",
+    "input": "identical frozen role package to challenger"
+  },
+  "treatment": {
+    "provider": "muse_code",
+    "model": "Muse 1.3 Contributor Max",
+    "input": "identical frozen role package to Luna"
+  },
+  "whole_arm_seconds": 900,
+  "investigation_seconds_max": 600,
+  "writing_reserve_seconds": 300,
+  "counts_as_full_pipeline": false,
+  "status": "READY_FROZEN_NOT_DISPATCHED",
+  "frozen_at": "2026-10-10T03:56:03.653629+00:00",
+  "assignment": "assignment.md",
+  "input_files": [
+    {
+      "path": "assignment.md",
+      "sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31"
+    },
+    {
+      "path": "corpus/S1.md",
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9"
+    },
+    {
+      "path": "corpus/S2.md",
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e"
+    },
+    {
+      "path": "corpus/index.json",
+      "sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f"
+    }
+  ],
+  "input_sha256": "cc8eb3f6855f2a37fb2395e0a8b4783c5c43e689ebc08849509222650ffcc3e1",
+  "no_assessor_answers": true,
+  "source_versions": [
+    [
+      "S1",
+      "Page last updated 2026-08-25 19:42:39Z; target SQLite 3.51.3"
+    ],
+    [
+      "S2",
+      "Live C API reference retrieved for target SQLite 3.51.3; unversioned URL"
+    ]
+  ]
+}

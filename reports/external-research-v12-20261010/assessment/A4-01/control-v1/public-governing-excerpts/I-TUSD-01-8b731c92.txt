@@ -1,0 +1,44 @@
+URL: https://github.com/tus/tusd/releases/tag/v2.5.0
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-TUSD-01.txt
+Original SHA256: 8b731c92270c2cb189694b88b5d3dd3960d7ea3fb0e317243422222318e21826
+Original numbered lines; gaps omitted. Not full response.
+
+1: Release v2.5.0 · tus/tusd · GitHub
+109: v2.5.0
+110: v2.5.0
+111: Compare
+112: Choose a tag to compare
+113: Sorry, something went wrong.
+114: Filter
+115: Loading
+116: Sorry, something went wrong.
+117: Uh oh!
+118: There was an error while loading. Please reload this page.
+119: No results found
+120: View all tags
+121: Acconut
+122: released this
+123: 10 Sep 08:21
+124: ·
+125: 148 commits
+126: to main
+127: since this release
+128: v2.5.0
+129: c5d5b0a
+130: This commit was signed with the committer’s verified signature.
+131: Acconut
+132: Marius Kleidl
+133: GPG key ID: 2F8AC5B12D755265
+134: Verified
+135: Learn about vigilant mode.
+136: What's Changed
+137: Features
+138: s3store: Allow + in object IDs by @OwynWang in #1123
+139: filestore: Allow customising the storage path by @Acconut in #1083
+140: filestore: Expose .info path to hooks by @Acconut in #1162
+141: Bug fixes
+142: cli: Adjust logging format from plugin hooks to CLI's format by @amiremohamadi in #1108
+143: filestore: Fix graceful termination when deleting upload by @blmhemu in #1120
+144: gcsstore: Fix error creating new uploads by @emilaleksanteri in #1131
+145: filelocker: Emit 404 if directory for lock does not exist by @Acconut in #1149
+153: Full Changelog: v2.4.0...v2.5.0

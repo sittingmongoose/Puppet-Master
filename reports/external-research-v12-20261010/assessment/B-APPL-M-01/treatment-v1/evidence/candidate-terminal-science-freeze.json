@@ -1,0 +1,238 @@
+{
+  "schema": "er12-host-terminal-science-freeze-v1",
+  "slot": "B-APPL-M-01",
+  "arm": "treatment",
+  "frozen_at_utc": "2026-10-10T04:13:02.611185+00:00",
+  "host_observer": "codex-er12-evidence2",
+  "original_science_altered": false,
+  "primary_science": "verification.md",
+  "science_files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "relative_path": "source-map.json",
+      "bytes": 7911,
+      "sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+      "mtime_ns": 1791605190952099858,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/source-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A1-uri-immutable-excerpts.md",
+      "relative_path": "sources/A1-uri-immutable-excerpts.md",
+      "bytes": 1100,
+      "sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+      "mtime_ns": 1791605106311398145,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A1-uri-immutable-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+      "relative_path": "sources/A2-useovernet-excerpts.md",
+      "bytes": 1583,
+      "sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+      "mtime_ns": 1791605111867434481,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A2-useovernet-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A3-checkpoint-modes-excerpts.md",
+      "relative_path": "sources/A3-checkpoint-modes-excerpts.md",
+      "bytes": 836,
+      "sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+      "mtime_ns": 1791605115205456311,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A3-checkpoint-modes-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S1-wal-excerpts.md",
+      "relative_path": "sources/S1-wal-excerpts.md",
+      "bytes": 3848,
+      "sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+      "mtime_ns": 1791605095546327743,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/S1-wal-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+      "relative_path": "sources/S2-checkpoint-v2-excerpts.md",
+      "bytes": 1797,
+      "sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+      "mtime_ns": 1791605101881369174,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/S2-checkpoint-v2-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+      "relative_path": "verification.md",
+      "bytes": 4752,
+      "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "mtime_ns": 1791605165089087876,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/verification.md"
+    }
+  ],
+  "authored_output_and_source_tree": {
+    "sha256": "c60b97a868060db7a88f8cb9353f3c8024ef567796f46c545b1339427ee991f6",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 7,
+    "bytes": 21827
+  },
+  "source_tree": {
+    "sha256": "64ace2eb8fb03a47cc846eabd772072fd88c57f510a907eff5faa618b4b05925",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 5,
+    "bytes": 9164
+  },
+  "all_original_role_files": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/assignment.md",
+      "relative_path": "assignment.md",
+      "bytes": 1806,
+      "sha256": "6ee9bdd9ebc205bc1147df8a28e20f2860232e15b96b691f9082b6f5491e1aa8",
+      "mtime_ns": 1791604929473890224,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/assignment.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/dispatch.json",
+      "relative_path": "dispatch.json",
+      "bytes": 4157,
+      "sha256": "7ad71713d502063649764673f7df6ad85edcfab2bf088a32154d50ddcb9867f0",
+      "mtime_ns": 1791604931351147951,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/dispatch.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/freeze.json",
+      "relative_path": "freeze.json",
+      "bytes": 2812,
+      "sha256": "14c4528a9aa96d4035ced8bec47d59f685a86449f13243f9f71421d0a8d754fc",
+      "mtime_ns": 1791604929474470498,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/freeze.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/input-map.json",
+      "relative_path": "input-map.json",
+      "bytes": 602,
+      "sha256": "9f403bb96750f3ee065b289fde4d3535a6e7ff8ff14b480b33016d1569ea423a",
+      "mtime_ns": 1791604929473763073,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/input-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/raw-dispatch.json",
+      "relative_path": "raw-dispatch.json",
+      "bytes": 1989,
+      "sha256": "a1e739ddcff6a83e422eba3c1c09795c05f9b4ff49323d67e19c77b786dbca33",
+      "mtime_ns": 1791604931080243557,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/raw-dispatch.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/records/dispatch-20261010T040211350671-dd5822b5e4c94fa0a6bdc34524fecc37.json",
+      "relative_path": "records/dispatch-20261010T040211350671-dd5822b5e4c94fa0a6bdc34524fecc37.json",
+      "bytes": 4157,
+      "sha256": "7ad71713d502063649764673f7df6ad85edcfab2bf088a32154d50ddcb9867f0",
+      "mtime_ns": 1791604931350875473,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/records/dispatch-20261010T040211350671-dd5822b5e4c94fa0a6bdc34524fecc37.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/request.json",
+      "relative_path": "request.json",
+      "bytes": 852,
+      "sha256": "4dab56f4f70434e9a4eed9e9d0b97529d00d7e167e24194c868e44cb79463a25",
+      "mtime_ns": 1791604929474046678,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/request.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "relative_path": "source-map.json",
+      "bytes": 7911,
+      "sha256": "857dc484cff444621d69bfa43c020a9b696eae88e182a51bbb45cfd1a8431f8f",
+      "mtime_ns": 1791605190952099858,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/source-map.json"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A1-uri-immutable-excerpts.md",
+      "relative_path": "sources/A1-uri-immutable-excerpts.md",
+      "bytes": 1100,
+      "sha256": "4faee1eee6fe79b0a1fffbf99e257b2ef0cbe3a5e23ab7c34a2d76cd0aeb40fd",
+      "mtime_ns": 1791605106311398145,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A1-uri-immutable-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+      "relative_path": "sources/A2-useovernet-excerpts.md",
+      "bytes": 1583,
+      "sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+      "mtime_ns": 1791605111867434481,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A2-useovernet-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/A3-checkpoint-modes-excerpts.md",
+      "relative_path": "sources/A3-checkpoint-modes-excerpts.md",
+      "bytes": 836,
+      "sha256": "e61089c339879a844f65b8ec9916a28b6a252e47b213d550eafc08c04b359e1d",
+      "mtime_ns": 1791605115205456311,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/A3-checkpoint-modes-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S1-wal-excerpts.md",
+      "relative_path": "sources/S1-wal-excerpts.md",
+      "bytes": 3848,
+      "sha256": "286bc079aa45d19678fbbf8f199c164cd432e9f7719985c9eda47b1e5d30c903",
+      "mtime_ns": 1791605095546327743,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/S1-wal-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+      "relative_path": "sources/S2-checkpoint-v2-excerpts.md",
+      "bytes": 1797,
+      "sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+      "mtime_ns": 1791605101881369174,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/sources/S2-checkpoint-v2-excerpts.md"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+      "relative_path": "verification.md",
+      "bytes": 4752,
+      "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "mtime_ns": 1791605165089087876,
+      "preserved_copy": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/originals/B-APPL-M-01/verification.md"
+    }
+  ],
+  "original_role_tree": {
+    "sha256": "2fe7841cded88be9015ac02dd0a9ed7d1b8e85a416eb6dfc262ea87173b9763b",
+    "algorithm": "SHA-256 of UTF-8 compact sorted-key JSON list of sorted relative path, bytes, SHA-256 records",
+    "files": 14,
+    "bytes": 38202
+  },
+  "exact_input_map_targets_read_and_hashed": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/assignment.md",
+      "relative_path": "assignment.md",
+      "bytes": 2972,
+      "sha256": "770e662e5dff60770fb243ff2f7ec6f869699883ebb97603ecd173a63924ca31",
+      "mtime_ns": 1791604928392110324
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/fixture.json",
+      "relative_path": "fixture.json",
+      "bytes": 1621,
+      "sha256": "a416075b63b78ed98ef6f8195f16d39747776367d8166d1926c8abd3cb5500cb",
+      "mtime_ns": 1791604928393006318
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S1.md",
+      "relative_path": "corpus/S1.md",
+      "bytes": 993,
+      "sha256": "ab61b829b93a5cda7aeaff87d622305e17295db02fe9b47cff974f771004b6f9",
+      "mtime_ns": 1791604928392400978
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/S2.md",
+      "relative_path": "corpus/S2.md",
+      "bytes": 989,
+      "sha256": "497bd272c1c2b8cf8cf4b734ffd07d96244e0ff9fde6b5de213303fde823281e",
+      "mtime_ns": 1791604928392600556
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-01/inputs/corpus/index.json",
+      "relative_path": "corpus/index.json",
+      "bytes": 1337,
+      "sha256": "651e628df3c940cfe30f4f8aebb2feb421af70c92f65bff0a82161ef9b1a116f",
+      "mtime_ns": 1791604928392823680
+    }
+  ],
+  "provider_receipt_file": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-M-01-provider-native-evidence.json",
+  "timestamp_semantics": "Host post-terminal byte observation; not native activation, terminal time, provider receipt, or original author save timestamp."
+}

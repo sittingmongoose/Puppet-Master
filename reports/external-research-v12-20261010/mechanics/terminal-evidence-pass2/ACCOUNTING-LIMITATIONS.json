@@ -1,0 +1,90 @@
+{
+  "captured_at_utc": "2026-10-10T04:13:02.644816+00:00",
+  "roles": [
+    {
+      "slot": "B-APPL-M-01",
+      "accounting": {
+        "billing": "UNKNOWN",
+        "cumulative_meter_semantics": "UNKNOWN",
+        "exact_billable_tokens": "UNKNOWN",
+        "effective_options": "UNKNOWN",
+        "requested_target": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "options": {
+            "reasoningEffort": "max"
+          }
+        },
+        "exposed_thread_model": "muse-spark-1.3-contributor",
+        "runtimeMode": "full-access",
+        "interactionMode": "default",
+        "raw_usage_summaries": [],
+        "native_goal_tokens_used_activation": 0,
+        "native_goal_tokens_used_terminal": 1358661
+      }
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "accounting": {
+        "billing": "UNKNOWN",
+        "cumulative_meter_semantics": "UNKNOWN",
+        "exact_billable_tokens": "UNKNOWN",
+        "effective_options": "UNKNOWN",
+        "requested_target": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "options": {
+            "mode": "yolo",
+            "thought": "max"
+          }
+        },
+        "exposed_thread_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "runtimeMode": "full-access",
+        "interactionMode": "default",
+        "raw_usage_summaries": [
+          {
+            "itemId": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A47e82a88-08ff-4896-80b3-c6b5c5760cd5%3Aturn%3A1%3Aassistant%3Amessage%3Aturninfo_2fbde4d5-2a06-4b6f-8785-abcd4efbcf1e",
+            "text": "✓ completed · cache 32/33 messages · 72.5k cache-read tokens"
+          }
+        ]
+      }
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "accounting": {
+        "billing": "UNKNOWN",
+        "cumulative_meter_semantics": "UNKNOWN",
+        "exact_billable_tokens": "UNKNOWN",
+        "effective_options": "UNKNOWN",
+        "requested_target": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "options": {
+            "mode": "yolo",
+            "thought": "max"
+          }
+        },
+        "exposed_thread_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "runtimeMode": "full-access",
+        "interactionMode": "default",
+        "raw_usage_summaries": [
+          {
+            "itemId": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A67a9612b-bd6c-418e-8eac-a5517b37c423%3Aturn%3A1%3Aassistant%3Amessage%3Aturninfo_9ec83341-30f1-4fde-becb-7e75d6042296",
+            "text": "✓ completed · cache 56/57 messages · 117.2k cache-read tokens"
+          }
+        ]
+      }
+    }
+  ],
+  "limitations": [
+    "Only the three named role roots and exact input-map targets were read. No other arm/case files were opened.",
+    "Native thread activity is a durable provider projection; receipt evidence is retained verbatim and separate from host filesystem freeze.",
+    "Checkpoint items incidentally listed shared-worktree paths outside scope. These were not followed, paginated, or treated as authorship evidence.",
+    "No full-tree polling, account projection retry, delegation, dispatch, candidate feedback, Git mutation, account/server change or settling was performed.",
+    "task_status is parent-owned and rejected this evidence child for all three tasks. Direct t3_thread_read succeeded; parent completed/no-pending delivery is user-supplied context, not a fabricated task_status receipt.",
+    "No billing data or cumulative token-meter definition was exposed. Rounded cache-read summaries are preserved as raw text, not exact billable totals.",
+    "Effective reasoning/options are UNKNOWN; dispatch options are requested settings only. Runtime mode and model fields are exposed thread/run metadata.",
+    "No descendant inventory is exposed by these thread reads. Absence of delegation in visible activity is not proof of zero descendants.",
+    "Initial oversized evidence-save commands for two activity responses failed locally; chunked save then had Python syntax errors. Corrected chunked saves succeeded and JSON validation verifies complete persisted responses. Original science was untouched."
+  ]
+}

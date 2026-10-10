@@ -1,0 +1,154 @@
+--- role-v1/prepare-role.py
++++ role-v2/prepare-role.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""ER12 role-v1 freezer only. Root reserves capacity and dispatches; no tool calls here."""
++"""ER12 role-v2 freezer only. Root reserves capacity and dispatches; no tool calls here."""
+ from __future__ import annotations
+ import argparse, copy, datetime as dt, hashlib, json, re, sys, uuid
+ from pathlib import Path
+@@ -157,10 +157,17 @@
+         fail('original wrapper version changed; preserve and stop')
+     wrapper = (template_dir / 'assignment.md').read_text()
+     wrapper = wrapper.replace(template_freeze['native_goal_objective'], objective).replace(str(template_dir), str(stage)).replace('B-DISC-M-01/control', f'{slot}/{arm}').replace(template_freeze['deadline_utc'], iso(deadline))
++    # v2 changes only the leaf native-Goal execution contract; shared science stays verbatim.
++    wrapper = wrapper.replace(
++        'Read input-map.json and only its exact common assignment and listed corpus.',
++        'Before reading the common assignment/corpus or making any source/case inference, activate exactly ONE actual exposed native Goal using the objective below and save the exact activation receipt. Only after confirmed activation, read input-map.json and only its exact common assignment and listed corpus.')
++    wrapper = wrapper.replace(
++        'If a native tool is unavailable, record that limitation and preserve the diagnostic authored output; do not simulate a native Goal.',
++        'If an actual exposed native Goal tool is unavailable or activation is unsupported, STOP before scientific inference. Save the exact unmodified unsupported diagnostic and observed tool response (or exact exposed-tool absence), leave missing provenance UNKNOWN, and return diagnostic-only output. Never simulate activation or infer science after failure. Never start a provider CLI, model or session in shell, nested assistance, an account switch or another arm to obtain activation.')
+     put_json(stage / 'input-map.json', im)
+     assignment.write_text(wrapper)
+-    task = f'Execute exactly {assignment} and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history.'
+-    request_id = f'er12-{slot}-{arm}-role-v1'
++    task = f'Execute exactly {assignment} and input-map.json. Before common source/case input or inference, activate exactly ONE actual exposed native Goal referring to this assignment. If unavailable/unsupported, stop scientific inference and save the exact unsupported diagnostic; no simulated Goal. Save deliverables before native completion. Never start provider CLI/model/session in shell, nested assistance, other arms, account changes or parent history.'
++    request_id = f'er12-{slot}-{arm}-role-v2'
+     args = {'clientRequestId': request_id, 'title': f'ER12 {slot} {arm} role', 'role': 'research', 'mode': 'async',
+             'runtimeMode': 'full-access', 'interactionMode': 'default', 'target': target, 'task': task}
+     req = {'requested_at_utc': iso(start), 'clientRequestId': request_id, 'args': args}
+@@ -169,7 +176,7 @@
+     put_json(stage / 'freeze.json', {'native_goal_objective': objective, 'prepared_at_utc': iso(start),
+         'frozen_at_utc': iso(now()), 'deadline_utc': iso(deadline), 'writing_start_utc': iso(deadline - dt.timedelta(seconds=300)),
+         'frozen_inputs': [{'path': str(p), 'sha256': digest(p), 'bytes': p.stat().st_size} for p in frozen_paths],
+-        'request_sha256': digest(stage / 'request.json'), 'requested_route': target, 'protocol': 'role-v1; advisory leaf controls',
++        'request_sha256': digest(stage / 'request.json'), 'requested_route': target, 'protocol': 'role-v2; native Goal activation required before inference; advisory leaf controls',
+         'time_contract': '900 seconds absolute including setup/startup/tools/retries/writing/delivery; final 300 seconds writing',
+         'native_goal_status': 'UNKNOWN until directly observed'})
+     return verify_saved(stage, target) | {'retry': False}
+--- role-cases/B-DISC-G-01/fixture.json
++++ role-cases-v2/B-DISC-G-01/fixture.json
+@@ -10,7 +10,7 @@
+     "input": "identical frozen role package to challenger"
+   },
+   "treatment": {
+-    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "provider": "muse_code",
+     "model": "GLM 5.3 Flash Max",
+     "input": "identical frozen role package to Luna"
+   },
+@@ -29,5 +29,16 @@
+   ],
+   "input_sha256": "0bac759e8f04ed28f83bd8b331ae91162f859e0852fc5fd219ca12cc9637f29d",
+   "no_assessor_answers": true,
+-  "source_versions": []
++  "source_versions": [],
++  "prospective_reallocation": {
++    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
++    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
++    "schema": "er12.prospective_reallocation.v1",
++    "before_inference": true,
++    "slot_id": "B-DISC-G-01",
++    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "replacement_treatment_provider": "muse_code",
++    "original_model_label_preserved": true,
++    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
++  }
+ }
+--- role-cases/B-DISC-G-02/fixture.json
++++ role-cases-v2/B-DISC-G-02/fixture.json
+@@ -10,7 +10,7 @@
+     "input": "identical frozen role package to challenger"
+   },
+   "treatment": {
+-    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "provider": "muse_code",
+     "model": "GLM 5.3 Flash Max",
+     "input": "identical frozen role package to Luna"
+   },
+@@ -29,5 +29,16 @@
+   ],
+   "input_sha256": "b700b50ec2374ac4d60e376f20140f6e5a67cf83b5973fa4ccad2ece2b894176",
+   "no_assessor_answers": true,
+-  "source_versions": []
++  "source_versions": [],
++  "prospective_reallocation": {
++    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
++    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
++    "schema": "er12.prospective_reallocation.v1",
++    "before_inference": true,
++    "slot_id": "B-DISC-G-02",
++    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "replacement_treatment_provider": "muse_code",
++    "original_model_label_preserved": true,
++    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
++  }
+ }
+--- role-cases/B-APPL-G-02/fixture.json
++++ role-cases-v2/B-APPL-G-02/fixture.json
+@@ -10,7 +10,7 @@
+     "input": "identical frozen role package to challenger"
+   },
+   "treatment": {
+-    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "provider": "muse_code",
+     "model": "GLM 5.3 Flash Max",
+     "input": "identical frozen role package to Luna"
+   },
+@@ -50,5 +50,16 @@
+       "S2",
+       "Pinned upstream tag v257; target systemd 257"
+     ]
+-  ]
++  ],
++  "prospective_reallocation": {
++    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
++    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
++    "schema": "er12.prospective_reallocation.v1",
++    "before_inference": true,
++    "slot_id": "B-APPL-G-02",
++    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "replacement_treatment_provider": "muse_code",
++    "original_model_label_preserved": true,
++    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
++  }
+ }
+--- role-cases/B-FINAL-G-02/fixture.json
++++ role-cases-v2/B-FINAL-G-02/fixture.json
+@@ -10,7 +10,7 @@
+     "input": "identical frozen role package to challenger"
+   },
+   "treatment": {
+-    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "provider": "muse_code",
+     "model": "GLM 5.3 Flash Max",
+     "input": "identical frozen role package to Luna"
+   },
+@@ -50,5 +50,16 @@
+       "S2",
+       "Live unpinned clone manual; target Git 2.43; verify option/version applicability"
+     ]
+-  ]
++  ],
++  "prospective_reallocation": {
++    "path": "ER12_RUNTIME/mechanics/REALLOCATIONS-v1.json",
++    "sha256": "c23179d51040c38e05606f43f0ed76df943abdda8e0eafd6fe3359474d07b91d",
++    "schema": "er12.prospective_reallocation.v1",
++    "before_inference": true,
++    "slot_id": "B-FINAL-G-02",
++    "original_treatment_provider": "AUTHORIZED_PROVIDER_INSTANCE",
++    "replacement_treatment_provider": "muse_code",
++    "original_model_label_preserved": true,
++    "requested_route_authority": "helpers/role-v2/prepare-role.py ROUTES[muse_code]"
++  }
+ }

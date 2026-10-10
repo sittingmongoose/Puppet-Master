@@ -1,0 +1,264 @@
+{
+  "schema": "er12-source-map-v1",
+  "run_id": "A1-01-treatment",
+  "stage": "reviser",
+  "assignment": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md",
+  "input_map": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/input-map.json",
+  "brief": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+  "predecessor_paths": [
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+    "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json"
+  ],
+  "frozen_input_identities": [
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/inputs/brief.md",
+      "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+      "bytes": 3091
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md",
+      "sha256": "752b21187a5ac0718ee69cd2c32e0d70076db5b72e3534a3407b4740f053f749",
+      "bytes": 3290
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/input-map.json",
+      "sha256": "5ff13f567f745812a89560d9fc54fba97aa8d66bcf956b7dd742f2a09367c395",
+      "bytes": 1727
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md",
+      "sha256": "827f1c0ddbc4ef8f5fdf68c4b91abc50d2af362e28a1b2f75d1e268fcb175316",
+      "bytes": 7948
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md",
+      "sha256": "de9b6706ba316b2829b4adfa3779fa243743cc4bd26d8d8b7e59aa9293f0118f",
+      "bytes": 23899
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json",
+      "sha256": "386b0c661e61d732e3223978a206c05aeed35436a910c4be0630ae36a9498357",
+      "bytes": 10060
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "bytes": 2670
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "89b0196975f4c41c5e50d2e6caf780aa3d8e4ea4a86d2f47bf3795836e27f692",
+      "bytes": 428
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/critique.md",
+      "sha256": "b3d9b95c88682e058b7431f1315e30f2ab04904d8810e95d040fa242a00232b4",
+      "bytes": 9743
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/treatment/stages/critic/source-map.json",
+      "sha256": "0b351b209aad8010f9a8ade144dc6485bcc84013b2ed093a2223d7a55948e2b8",
+      "bytes": 14463
+    }
+  ],
+  "sources_index": "sources/index.md",
+  "source_id_policy": "Preserve IDs S1-S6 and their original exact URL/topic bindings from the predecessor maps. No ID is silently rebound. Independent source review and C1/C2 adjudication are recorded below.",
+  "source_ids": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Resumable upload protocol 1.0.x",
+      "publisher": "tus.io",
+      "exact_url": "https://tus.io/protocols/resumable-upload",
+      "released_version_or_commit": "Tus protocol 1.0.0, dated 2016-03-25",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Protocol version/date lines 34-39; HEAD/PATCH example lines 57-99; offset mismatch and acknowledgement lines 135-145; OPTIONS and extension advertisement lines 146-172; creation lines 170-218; expiration lines 246-276; checksum lines 277-297; termination lines 327-336; concatenation lines 350-368.",
+      "observed_operation": "Opened the primary protocol page directly and read the normative core and extension sections, including the surrounding rules for offset, optional behavior, expiry, per-request checksums, termination, and concatenation.",
+      "governing_condition_default_exception": "Core protocol requires HEAD to return the current Upload-Offset; PATCH offset mismatch requires 409 without changing the resource; success returns the new offset. Creation, expiration, checksum, termination, and concatenation are extensions discovered through OPTIONS/Tus-Extension. Expiration is optional; expired removed resources may return 404 or 410. Checksum validates a PATCH body, not automatically the assembled object. Termination SHOULD free associated resources.",
+      "applicability": "Direct basis for the Tus-facing option only. URL format, authentication, persistence, idempotent creation, whole-object verification, and backend storage are implementation choices."
+    },
+    {
+      "id": "S2",
+      "title": "Uploading and copying objects using multipart upload in Amazon S3",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/us_en/AmazonS3/latest/userguide/mpuoverview.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic version or publication date displayed; accessed 2026-10-10.",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Multipart flow, same-number replacement, and ETag lines 23-41; ListParts pagination, unfinished-request omission, and completion-manifest warning lines 51-57; checksum types and consecutive-number rule lines 59-70 and 168-176; in-flight part behavior after stop lines 35-36; cleanup/cost lines 83-91; API permissions and KMS/SSE-C checksum conditions lines 144-166.",
+      "observed_operation": "Opened the official AWS multipart overview and independently reopened its surrounding flow, listing, checksum table, encryption permission, and stop/abort sections to adjudicate C1 and C2.",
+      "governing_condition_default_exception": "AWS uses an upload ID and part number; reusing a part number replaces its former part; Complete needs the part-number/ETag list; a completed MPU ETag is not necessarily a whole-object MD5. ListParts returns at most 1,000 parts and excludes unfinished requests; AWS says maintain the specified part-number/ETag list for Complete. AWS full-object checksum types listed are CRC64NVME, CRC32, and CRC32C, while SHA-256 is listed as composite; with multipart checksums, part numbers must be consecutive from 1. KMS checksum use requires relevant KMS permissions, including decrypt; SSE-C Complete must include required headers for a returned checksum. In-flight parts can still succeed or fail after stop. AWS-only.",
+      "applicability": "Evidence only for Amazon S3. The unknown compatible service must be tested for part limits/order, listing and in-flight operation semantics, checksum type and encryption requirements, completion, abort, cleanup, and permissions. Do not treat AWS evidence as a compatibility guarantee."
+    },
+    {
+      "id": "S3",
+      "title": "Amazon S3 multipart upload limits",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic version or publication date displayed; accessed 2026-10-10.",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Multipart specifications table, lines 4-13.",
+      "observed_operation": "Opened the primary AWS limits page directly and read its maximum object, part count, part number, part-size, last-part, and ListParts limits.",
+      "governing_condition_default_exception": "AWS documents a 48.8 TiB maximum object, 10,000 parts, part numbers 1-10,000, parts 5 MiB-5 GiB with no minimum for the last part, and up to 1000 parts in one ListParts response.",
+      "applicability": "AWS limits only. The 16 MiB arithmetic in the proposal fits the stated file sizes under these AWS values; the compatible vendor remains unqualified."
+    },
+    {
+      "id": "S4",
+      "title": "Aborting a multipart upload",
+      "publisher": "Amazon Web Services",
+      "exact_url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/abort-mpu.html",
+      "released_version_or_commit": "Current AWS S3 User Guide page; no semantic version or publication date displayed; accessed 2026-10-10.",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Object visibility before successful completion, incomplete-part billing, and lifecycle note lines 4-9; abort by upload ID and cleanup guidance lines 73-84.",
+      "observed_operation": "Opened the official AWS abort page directly and read its object visibility, incomplete-part cost, lifecycle, and upload-ID abort rules. In-flight request behavior is separately recorded from S2.",
+      "governing_condition_default_exception": "For AWS, an object is created only when CompleteMultipartUpload succeeds; uploaded parts remain billable until complete or abort; lifecycle configuration can stop incomplete uploads; aborting by upload ID prevents further new part uploads using that ID. S2 separately documents that already in-flight calls can still finish after stop, so exact cleanup timing must account for them.",
+      "applicability": "Supports the AWS cleanup comparison only. It does not establish equivalent semantics for the fictional compatible vendor."
+    },
+    {
+      "id": "S5",
+      "title": "Announcement: S3 default integrity change, aws-sdk-rust issue 1240",
+      "publisher": "AWS SDK for Rust maintainers, awslabs/aws-sdk-rust",
+      "exact_url": "https://github.com/awslabs/aws-sdk-rust/issues/1240",
+      "released_version_or_commit": "AWS SDK for Rust S3 client v1.69.0; issue opened 2025-01-16; no issue commit used as release identity.",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Issue Open status and maintainer description, lines 140-162.",
+      "observed_operation": "Opened the AWS SDK for Rust maintainers issue, checked the status and opening date, and read the v1.69.0 default-checksum and third-party compatibility statement.",
+      "governing_condition_default_exception": "The maintainer announcement says S3 clients from AWS SDK for Rust v1.69.0 add checksums by default on Put calls and validate Get calls. It warns that third-party implementations may not yet support newly enabled defaults. WHEN_REQUIRED configuration is mentioned as a way to disable the new behavior, but maintainers say they do not recommend disabling integrity protections.",
+      "applicability": "Relevant only if the gateway or another Rust component uses this AWS SDK against a compatible storage API. Supports exact endpoint/library qualification, not disabling integrity or assuming AWS-compatible semantics."
+    },
+    {
+      "id": "S6",
+      "title": "Encounter InternalServerError and InvalidPartOrder when uploading to S3 storage, tusd issue 1315",
+      "publisher": "tus project, tus/tusd issue tracker",
+      "exact_url": "https://github.com/tus/tusd/issues/1315",
+      "released_version_or_commit": "Issue opened 2025-09-03; reporter used mutable image tag tusproject/tusd:latest; exact image version/commit and root cause unknown.",
+      "access_utc": "2026-10-10T04:24:14Z",
+      "locator": "Issue Open status and opened date lines 140-155; report, mutable tusproject/tusd:latest tag, and configuration lines 161-179; posted completion error/log lines 199-209.",
+      "observed_operation": "Opened the tusd issue, checked its status/date, and read the reporter’s stated setup and posted AWS InvalidPartOrder completion logs.",
+      "governing_condition_default_exception": "One reporter states that larger uploads using AWS S3 and the mutable tusproject/tusd:latest tag produced InvalidPartOrder at completion. Exact tusd image version and root cause are unknown; this does not establish a general defect or behavior for the fictional compatible service.",
+      "applicability": "A bounded reason to include ordered multipart-completion coverage; not a general compatibility finding for the unspecified vendor."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "disposition": "accept_and_amend",
+      "directly_rechecked_primary_sources": [
+        "S2"
+      ],
+      "finding": "The critique is right that “verified” needs an explicit checksum algorithm and encryption/permission conditions. AWS documents CRC64NVME, CRC32, and CRC32C as full-object types and SHA-256 as composite, with KMS and SSE-C conditions for checksum availability. The final uses a matching strong full-object digest or authorized read-back SHA-256; it does not equate CRC or composite checksum with the source SHA-256 byte-match claim.",
+      "remaining_uncertainty": "The target provider and its exact checksum/encryption behavior are unknown."
+    },
+    {
+      "id": "C2",
+      "disposition": "accept_and_amend",
+      "directly_rechecked_primary_sources": [
+        "S2",
+        "S4"
+      ],
+      "finding": "The critique is right that an absent ListParts result does not show an unfinished request failed and same-number reupload can overwrite. AWS documents that in-flight parts may finish after stop. The final blocks retry/completion while the operation is Unknown, waits for resolution or retires the MPU ID, and queues cleanup.",
+      "remaining_uncertainty": "The exact compatible provider may differ; its request-settling, abort, and cleanup behavior must be tested."
+    }
+  ],
+  "research_execution": {
+    "direct_source_review_utc": "2026-10-10T04:24:14Z",
+    "pages_directly_opened": [
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
+      "S6"
+    ],
+    "disputed_claims_rechecked_in_primary_sources": [
+      "C1 via S2",
+      "C2 via S2 and S4"
+    ],
+    "source_review_method": "Opened the exact external URLs in a browser and inspected the cited normative, API, checksum, permission, and issue-history sections; no raw page snapshots copied.",
+    "uploads_performed": false,
+    "production_access": false,
+    "downloaded_code_executed": false,
+    "implementation_or_transfer_test_run": false,
+    "provider_compatibility_check_run": false,
+    "checksum_comparison_run": false,
+    "throughput_measured": false,
+    "parent_history_read": false,
+    "nested_agents_or_threads_created": false
+  },
+  "workflow_execution": {
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "priority"
+      }
+    },
+    "actual_route": "UNKNOWN; no directly observed provider/model provenance field was exposed by create_goal.",
+    "native_goal": {
+      "tool": "create_goal",
+      "threadId": "01a12409-d444-7460-8bef-bb883ed31d29",
+      "objective": "ER12 reviser stage, run A1-01-treatment: execute ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 118165,
+      "timeUsedSeconds": 420,
+      "createdAt": 1791606013,
+      "updatedAt": 1791606433,
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved; no token budget was exposed.",
+      "separate_native_goal_id": "UNKNOWN; create_goal exposed goal.threadId only.",
+      "activation_receipt_field": "UNKNOWN; no separate activation receipt field was exposed.",
+      "created_at_iso_utc": "UNKNOWN; native output exposed raw createdAt integer 1791606013 only.",
+      "updated_at_iso_utc": "UNKNOWN; native output exposed raw updatedAt integer 1791606013 only.",
+      "actual_route": "UNKNOWN; native Goal output exposed no provider/model provenance.",
+      "pre_terminal_verification": {
+        "tool": "get_goal",
+        "threadId": "01a12409-d444-7460-8bef-bb883ed31d29",
+        "objective": "ER12 reviser stage, run A1-01-treatment: execute ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 105133,
+        "timeUsedSeconds": 381,
+        "createdAt": 1791606013,
+        "updatedAt": 1791606395,
+        "remainingTokens": null,
+        "completionBudgetReport": null,
+        "observation_utc": "UNKNOWN; get_goal exposes no observation timestamp."
+      },
+      "terminal_result": {
+        "tool": "update_goal",
+        "threadId": "01a12409-d444-7460-8bef-bb883ed31d29",
+        "objective": "ER12 reviser stage, run A1-01-treatment: execute ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 118165,
+        "timeUsedSeconds": 420,
+        "createdAt": 1791606013,
+        "updatedAt": 1791606433,
+        "remainingTokens": null,
+        "completionBudgetReport": "Goal achieved; no token budget was exposed."
+      }
+    },
+    "required_outputs": [
+      "final.md",
+      "source-map.json",
+      "sources/index.md"
+    ],
+    "pre_terminal_verification": "Pending direct get_goal observation before update_goal.",
+    "pre_terminal_outputs_saved": [
+      "final.md",
+      "source-map.json",
+      "sources/index.md"
+    ],
+    "post_terminal_artifact_update": "Recorded the directly returned update_goal terminal fields after required outputs had already been saved and pre-terminal reviewed."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "native_goal_objective": "ER12 B-APPL-M-02/control: execute ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "prepared_at_utc": "2026-10-10T04:17:52.289000+00:00",
+  "frozen_at_utc": "2026-10-10T04:17:52.599325+00:00",
+  "deadline_utc": "2026-10-10T04:32:52.289000+00:00",
+  "writing_start_utc": "2026-10-10T04:27:52.289000+00:00",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md",
+      "sha256": "63381a2ce350c3e1e7535de8598eefa1f1b4afa8fc1c0575e10f22f0db73c6c1",
+      "bytes": 2375
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/input-map.json",
+      "sha256": "4f3c6712be973e12eda253cb02179e1333aabe569a13d3729bc224bbbc869946",
+      "bytes": 600
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "bytes": 1590
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/manifest.json",
+      "sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "bytes": 624
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "bytes": 3009
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "bytes": 966
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "bytes": 873
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "bytes": 1251
+    }
+  ],
+  "request_sha256": "ec25cd9b29bc1f1a4b8ee5a18b37cf08185a3ef002abd3958a33618f17f365fa",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "protocol": "role-v2; native Goal activation required before inference; advisory leaf controls",
+  "time_contract": "900 seconds absolute including setup/startup/tools/retries/writing/delivery; final 300 seconds writing",
+  "native_goal_status": "UNKNOWN until directly observed"
+}

@@ -1,0 +1,158 @@
+{
+  "checked_at_utc": "2026-10-10T04:24:17.048379+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/root-review-request.json",
+      "sha256": "89d075d46b2a93fbbf704cad8fc2c2558442803e0fc8aed7e9904849482b2377",
+      "bytes": 2450,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/assignment.md",
+      "sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "bytes": 3009,
+      "full_read": true,
+      "expected_freeze_sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/fixture.json",
+      "sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "bytes": 1590,
+      "full_read": true,
+      "expected_freeze_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/manifest.json",
+      "sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "bytes": 624,
+      "full_read": true,
+      "expected_freeze_sha256": "78bbf990f1bdef33476f0a6274b64ae9ca4d84548547212508761d70128faab2",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/index.json",
+      "sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "bytes": 1251,
+      "full_read": true,
+      "expected_freeze_sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S1.md",
+      "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "bytes": 966,
+      "full_read": true,
+      "expected_freeze_sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/inputs/corpus/S2.md",
+      "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "bytes": 873,
+      "full_read": true,
+      "expected_freeze_sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/assignment.md",
+      "sha256": "205eaf693ed253d4ab6d96e9423bed5ca6102c9a6d4ba3a92103537ad090465b",
+      "bytes": 2383,
+      "full_read": true,
+      "expected_freeze_sha256": "205eaf693ed253d4ab6d96e9423bed5ca6102c9a6d4ba3a92103537ad090465b",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/input-map.json",
+      "sha256": "44f1c8356c5451e224d3015dce913868dc217183dc2fd62673a39fbe0f377794",
+      "bytes": 602,
+      "full_read": true,
+      "expected_freeze_sha256": "44f1c8356c5451e224d3015dce913868dc217183dc2fd62673a39fbe0f377794",
+      "freeze_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/freeze.json",
+      "sha256": "997b0b968fd9620d1f249f4193bf15008aeeef021d2052940a1e3c4220e8da9c",
+      "bytes": 2862,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/verification.md",
+      "sha256": "93505aab61675dd852483949e4ecbd51ebb8578deab4cbce3427bc648bdc9620",
+      "bytes": 6497,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/source-map.json",
+      "sha256": "6f4a74bce4e36e0a03f69c9d098a2658f0ba948769e779230e56fa5c7e6180de",
+      "bytes": 2320,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/activation-receipt.json",
+      "sha256": "070c098481111344f3e8a7cb13035f2c279590bf264906b6cfa8e588ad7ef7d4",
+      "bytes": 1014,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/completion-receipt.json",
+      "sha256": "35f64d5046b381220d5b163adb83454299e0df8ec277308d0ae9a215a32a4381",
+      "bytes": 753,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/dispatch.json",
+      "sha256": "0327bc2308f3a772049e59ae1146d260110ce67e8cae3f9fed3584650e896f9c",
+      "bytes": 4381,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/sources/S2-excerpts.md",
+      "sha256": "5b1a3cf43f8d2b135ce0e2e31c160070025afe19692908e827fd8e7258e2e9fb",
+      "bytes": 2054,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/sources/S1-excerpts.md",
+      "sha256": "182803278bb607615910903f66c716c322973070c360ba8fd9723c9abf6b4a86",
+      "bytes": 2030,
+      "full_read": true,
+      "expected_freeze_sha256": null,
+      "freeze_match": null
+    }
+  ],
+  "input_freeze_results": {
+    "expected_count": 8,
+    "matched_count": 8,
+    "mismatches": []
+  },
+  "terminal_freeze_candidates": [
+    "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/freeze.json"
+  ],
+  "note": "Only role/freeze.json found; this records input freeze, not terminal output hashes. Terminal output freeze unavailable at this inspection. No inferred terminal freeze."
+}

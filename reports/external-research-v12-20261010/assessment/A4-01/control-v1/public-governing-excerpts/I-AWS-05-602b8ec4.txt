@@ -1,0 +1,21 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-05.txt
+Original SHA256: 602b8ec47ba645632d1769314f40a503913d12ed3f89fc87c7ce727fe5721dc9
+Original numbered lines; gaps omitted. Not full response.
+
+5: How to prevent object overwrites based on key namesHow to prevent overwrites if the object has changedConditional write behaviorConditional write scenarios
+24: Conditional write behavior
+108: Conditional write behavior
+114: operation fails, resulting in a 412 Precondition Failed
+117: with the same name, or if the current object version is a delete marker, the
+119: with a 412 Precondition Failed response.
+122: 412 Precondition Failed response.
+123: You can also receive a 409 Conflict response in the case of
+127: 409 Conflict error. When using
+130: again after receiving a 409 Conflict error.
+136: 412 Precondition Failed response.
+137: You can also receive a 409 Conflict response in the case of
+145: object version is a delete marker, the operation fails with a 404 Not
+157: This scenario will result in a 412 Precondition Failed response for both If-None-Match and If-Match headers.
+163: returns a 409 Conflict or 404 Not Found response for the
+168: This scenario will result in a 409 Conflict response for an

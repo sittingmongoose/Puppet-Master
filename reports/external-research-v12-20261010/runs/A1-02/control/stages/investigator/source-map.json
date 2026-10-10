@@ -1,0 +1,140 @@
+{
+  "run_id": "A1-02-control",
+  "stage": "investigator",
+  "evidence_accessed_utc": "2026-10-10T04:04:52Z",
+  "source_ids_are_stable": true,
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 5545: Internet Calendaring and Scheduling Core Object Specification (iCalendar)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545.html",
+      "released_version": "RFC 5545, September 2009, Standards Track",
+      "commit": null,
+      "locator": "§§3.2.19 (TZID), 3.3.5 (DATE-TIME), 3.3.10 (RRULE recurrence generation), 3.6.1 (VEVENT), 3.8.4.4 (RECURRENCE-ID), 3.8.4.7 (UID), 3.8.5.1-.3 (EXDATE/RDATE/RRULE), 3.8.8.1-.2 (IANA/X properties); HTML lines 1435-1500, 1771-1807, 2277-2288, 6051-6083, 6264-6282, 6368-6392, 6546-6578, 7505-7555",
+      "observed_operation": "Normative data-model/recurrence and serialization rules; no implementation execution.",
+      "governing_conditions_defaults_exceptions": "DTSTART+RRULE+RDATE define inclusions; EXDATE is subtracted and wins over inclusion dates; duplicate instances coalesce; a DTSTART not synchronized to its RRULE makes the recurrence set undefined; multiple RRULEs make it undefined. UID identifies the component/series; RECURRENCE-ID with UID and SEQUENCE identifies an original instance and remains the original nominal start when that instance moves. TZID local values use the first fold occurrence and pre-gap UTC offset for an explicit nonexistent local DATE-TIME; generated nonexistent recurrence instances are ignored and not counted. A referenced VTIMEZONE must provide valid rules for all recurring instances. Unknown values with unrecognized X-name/IANA value types must be retained without interpretation.",
+      "applicability": "Primary authority for the proposed ICS interchange subset, occurrence identity, local-time behavior, recurrence-set precedence, opaque values, and rejection boundaries. The RFC does not supply provider API behavior or prove a particular Rust implementation."
+    },
+    {
+      "id": "S02",
+      "title": "Google Calendar API: Recurring events guide",
+      "url": "https://developers.google.com/workspace/calendar/api/guides/recurringevents",
+      "released_version": "Google Calendar API v3 guide (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "Access instances and Modify or delete instances sections; web lines 215-230, 237-252, 292-327",
+      "observed_operation": "GET events.instances; update one retrieved instance by PUT to its instance edit URL; cancellation example retrieves an instance, sets status=cancelled, then updates that instance.",
+      "governing_conditions_defaults_exceptions": "recurringEventId links an instance to its parent. originalStartTime is the scheduled start from the parent recurrence data and uniquely identifies an instance even after rescheduling. The guide says retrieve the instance before updating it. The cancellation example uses status=cancelled on that individual event.",
+      "applicability": "Operation-level comparator for identity and exception edits. Authenticated provider state/notifications are unlike editing an offline .ics file and are out of scope."
+    },
+    {
+      "id": "S03",
+      "title": "Google Calendar API v3: Events resource",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/events",
+      "released_version": "Calendar API v3 resource reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "start.timeZone, end.timeZone, originalStartTime, recurrence, recurringEventId, status; web lines 373-375, 430-440, 453-464",
+      "observed_operation": "Read resource field contract for recurrence timezone and instance/cancelled-exception fields.",
+      "governing_conditions_defaults_exceptions": "For recurring events, start/end timeZone is required and specifies the zone used to expand recurrence. originalStartTime is immutable and identifies an instance even if moved. Cancelled exceptions on a still-live series are retained for the series lifetime and only id, recurringEventId, originalStartTime are guaranteed; other cancelled events are different deletion states and may disappear.",
+      "applicability": "Comparator only; illustrates why an occurrence identity must not be replaced by its moved DTSTART and why provider cancellation state differs from plain file deletion."
+    },
+    {
+      "id": "S04",
+      "title": "Google Calendar API v3: Events instances method",
+      "url": "https://developers.google.com/workspace/calendar/api/v3/reference/events/instances",
+      "released_version": "Calendar API v3 method reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "GET /calendar/v3/calendars/{calendarId}/events/{eventId}/instances; query parameters including originalStart and showDeleted; web lines 78-120",
+      "observed_operation": "List occurrences of a recurring event, optionally filtered by originalStart; deleted occurrences are optionally included using showDeleted (default false).",
+      "governing_conditions_defaults_exceptions": "eventId is the recurring event identifier. Result pagination and bounded result size apply. Cancelled instances can be requested with showDeleted; no provider call was made.",
+      "applicability": "Shows operation needed to select an instance in an online API; local adapter instead computes a typed (UID, original slot) key from the file."
+    },
+    {
+      "id": "S05",
+      "title": "Microsoft Graph v1.0: event resource",
+      "url": "https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0",
+      "released_version": "Microsoft Graph v1.0 resource contract (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "type, seriesMasterId, originalStart, cancelledOccurrences, exceptionOccurrences, instances; web lines 82-84, 112-116, 142-152",
+      "observed_operation": "Read event resource identifiers and occurrence/exception/cancellation relationships.",
+      "governing_conditions_defaults_exceptions": "type distinguishes singleInstance, occurrence, exception, seriesMaster. seriesMasterId links an instance. originalStart is UTC for occurrence/exception and is not returned for single instances. cancelledOccurrences is on series master; exceptionOccurrences excludes cancelled occurrences; instances includes normal and modified occurrences but not cancelled ones.",
+      "applicability": "Comparator only. Graph has provider-specific opaque IDs and UTC originalStart; an offline interchange adapter should not copy those as its own key."
+    },
+    {
+      "id": "S06",
+      "title": "Microsoft Graph v1.0: List instances",
+      "url": "https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0",
+      "released_version": "Microsoft Graph v1.0 method reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "GET /me/events/{id}/instances?startDateTime=...&endDateTime=...; Prefer outlook.timezone; web lines 74-101",
+      "observed_operation": "List a series master's occurrences and exceptions inside an explicit time window.",
+      "governing_conditions_defaults_exceptions": "Without Prefer: outlook.timezone, returned start/end values are UTC. The operation is bounded by startDateTime/endDateTime and is authorized; no live call was made.",
+      "applicability": "Useful operation-level comparator for selecting expanded occurrences; differs from parsing one source file."
+    },
+    {
+      "id": "S07",
+      "title": "Microsoft Graph v1.0: Update event",
+      "url": "https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0",
+      "released_version": "Microsoft Graph v1.0 method reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "PATCH /me/events/{id}; occurrence-crossing-boundary note; web lines 110-116 and 130-141",
+      "observed_operation": "PATCH one event object by provider event id to update selected fields.",
+      "governing_conditions_defaults_exceptions": "An occurrence exception can be rejected with ErrorOccurrenceCrossingBoundary if it moves to/before the previous occurrence's day or to/after the following occurrence's day. Master updates can trigger per-instance attendee notifications when separately updated instances exist.",
+      "applicability": "Comparator reveals a provider boundary and notification side effect; neither is an offline file rule. No API call executed."
+    },
+    {
+      "id": "S08",
+      "title": "Microsoft Graph v1.0: Cancel event",
+      "url": "https://learn.microsoft.com/en-us/graph/api/event-cancel?view=graph-rest-1.0",
+      "released_version": "Microsoft Graph v1.0 method reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "POST /me/events/{id}/cancel; web lines 31-38 and 53-81",
+      "observed_operation": "Organizer POSTs cancel for a meeting/occurrence event ID, optionally with a comment.",
+      "governing_conditions_defaults_exceptions": "Organizer-only; attendee call returns HTTP 400. Cancel sends a cancellation message and moves the event to Deleted Items. This differs from Graph Delete.",
+      "applicability": "Operation-level comparator only. Offline .ics export has no account/organizer/attendee messaging operation."
+    },
+    {
+      "id": "S09",
+      "title": "Microsoft Graph v1.0: Delete event",
+      "url": "https://learn.microsoft.com/en-us/graph/api/event-delete?view=graph-rest-1.0",
+      "released_version": "Microsoft Graph v1.0 method reference (live documentation; accessed 2026-10-10)",
+      "commit": null,
+      "locator": "DELETE /me/events/{id}; web lines 32-65",
+      "observed_operation": "DELETE a specified event object from its containing calendar.",
+      "governing_conditions_defaults_exceptions": "Deleting an event on the organizer's calendar sends a cancellation message if it is a meeting; this is distinct from organizer-only Cancel's custom comment/action semantics.",
+      "applicability": "Shows provider operation is not equivalent to deleting an ICS file/component; comparator only."
+    },
+    {
+      "id": "S10",
+      "title": "rrule2 recurrence-rule crate documentation",
+      "url": "https://docs.rs/crate/rrule2/0.15.0",
+      "released_version": "rrule2 0.15.0, released 2026-09-27; API unchanged from rrule 0.14.0; docs.rs package version",
+      "commit": null,
+      "locator": "Behavior notes for unsynchronized DTSTART and daylight saving time; package limitations; web lines 0-39 and 110-139",
+      "observed_operation": "Read the crate's stated RFC recurrence, DTSTART divergence, timezone and iteration-limit behavior; did not execute it.",
+      "governing_conditions_defaults_exceptions": "Crate states that RFC leaves unsynchronized DTSTART/RRULE undefined, its engine does not force-add DTSTART, and Google does; it documents RFC-like gap/fold handling and a bounded `all` iteration interface. Chrono-Tz-supported IANA zones only. These are vendor claims pending reproduction against the selected input profile.",
+      "applicability": "Candidate recurrence engine, not approved dependency. Its explicitly documented Google/RFC divergence is a reason to reject or surface misaligned DTSTART rather than silently emulate a provider."
+    },
+    {
+      "id": "S11",
+      "title": "aimcal-ical Rust crate: ICalendar semantic model",
+      "url": "https://docs.rs/aimcal-ical/0.12.1/aimcal_ical/semantic/struct.ICalendar.html",
+      "released_version": "aimcal-ical 0.12.1, docs.rs release date 2026-07-10",
+      "commit": null,
+      "locator": "ICalendar fields x_properties and retained_properties; lines 2-8, 117-156; crate metadata/dependencies lines 17-24",
+      "observed_operation": "Inspect the typed calendar model for retention of non-standard properties; no parse/export was executed.",
+      "governing_conditions_defaults_exceptions": "The documented calendar-root model carries custom X properties and unrecognized/non-standard properties. The page does not establish byte-identical preservation or prove that every component/property is preserved under mutation.",
+      "applicability": "Alternative Rust model to evaluate for opaque retention. A narrow component-level fixture is required before relying on it."
+    },
+    {
+      "id": "S12",
+      "title": "Peltoche/ical-rs parser repository README",
+      "url": "https://github.com/Peltoche/ical-rs",
+      "released_version": "README describes ical 0.11; GitHub repository archived 2024-08-17",
+      "commit": null,
+      "locator": "Repository archive banner; README parser caveat and component/property tree; web lines 209-245 and 270-299",
+      "observed_operation": "Inspect maintenance status, parser contract and syntax tree description; no dependency fetched or code run.",
+      "governing_conditions_defaults_exceptions": "Maintainer archived the repository; README says the parser parses content and uppercases case-insensitive fields but performs no validity checks. It describes property/component tree output and untouched property values.",
+      "applicability": "Historical compatibility signal: do not select a parser solely because it accepts .ics or retains fields; qualification must include validity, recurrence, unknown-property, and round-trip fixtures."
+    }
+  ]
+}

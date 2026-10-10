@@ -1,0 +1,16 @@
+URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/libcurl/opts/CURLINFO_RETRY_AFTER.md#L27-L37
+Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/primary/CURLINFO_RETRY_AFTER.md
+Original SHA256: 9bbdcddb7a55af12d2d2d49e97201ab2e08ef0a9546d7ac437d24f9f8647e363
+Original numbered lines; gaps omitted. Not full response.
+
+27: ~~~
+28: 
+29: # DESCRIPTION
+30: 
+31: Pass a pointer to a curl_off_t variable to receive the number of seconds the
+32: HTTP server suggests the client should wait until the next request is
+33: issued. The information from the "Retry-After:" header.
+34: 
+35: While the HTTP header might contain a fixed date string, the
+36: CURLINFO_RETRY_AFTER(3) always returns the number of seconds to wait -
+37: or zero if there was no header or the header could not be parsed.

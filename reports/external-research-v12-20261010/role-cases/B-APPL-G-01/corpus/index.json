@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "Redis EXPIRE",
+      "url": "https://redis.io/docs/latest/commands/expire/",
+      "version": "Live command reference; assess Redis Open Source 7.2; later additions require applicability check",
+      "retrieved_at": "2026-10-10T03:53:40Z",
+      "navigation": "Description; Optional arguments; Refreshing expires; How Redis expires keys; History",
+      "file": "corpus/S1.md",
+      "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+      "verbatim_word_count": 5
+    },
+    {
+      "source_id": "S2",
+      "title": "Redis SET",
+      "url": "https://redis.io/docs/latest/commands/set/",
+      "version": "Live command reference; KEEPTTL history since 6.0.0; target Redis Open Source 7.2",
+      "retrieved_at": "2026-10-10T03:53:40Z",
+      "navigation": "Description; Optional arguments / KEEPTTL; History",
+      "file": "corpus/S2.md",
+      "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+      "verbatim_word_count": 9
+    }
+  ],
+  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+}

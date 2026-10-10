@@ -18,7 +18,7 @@ The handoff is self-contained. No ER1–ER11 packets, full chat history, ledger/
 
 There are 56 full-pipeline executions and 24 bounded-role arms in the planned allocation. Failures remain in the denominator. Targets are not completed experiments or scientific success claims.
 
-Use five Muse Code / Contributor Max contexts and three zcode / GLM Flash Max contexts at most, plus useful Luna/Sol concurrency within actual available capacity. Account restrictions, no unauthorized nested delegation, compact monitoring, GitHub verification, and verified cleanup are explicit in the handoff.
+Use five Muse Code / Contributor Max contexts and three AUTHORIZED_PROVIDER_INSTANCE / GLM Flash Max contexts at most, plus useful Luna/Sol concurrency within actual available capacity. Account restrictions, no unauthorized nested delegation, compact monitoring, GitHub verification, and verified cleanup are explicit in the handoff.
 
 ## Files
 

@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "The assigned investigator stage is complete. Native Goal `01a123f5-50ac-78e3-975b-b9e83002d66f` is complete after about 12m 52s.\n\nSaved outputs:\n\n- [draft.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md)\n- [discovery.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/sources/index.md)\n\nThe reveal ran once; `discovery.md` still matches its recorded SHA-256, and the source map parses as JSON. Product and feed validation are documented as not run.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0a022620-4bd5-46f7-8d24-c20bf3e99493",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "The assigned investigator stage is complete. Native Goal `01a123f5-50ac-78e3-975b-b9e83002d66f` is complete after about 12m 52s.\n\nSaved outputs:\n\n- [draft.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/draft.md)\n- [discovery.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/treatment/stages/investigator/sources/index.md)\n\nThe reveal ran once; `discovery.md` still matches its recorded SHA-256, and the source map parses as JSON. Product and feed validation are documented as not run.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:0a022620-4bd5-46f7-8d24-c20bf3e99493",
+  "waitTimedOut": false
+}

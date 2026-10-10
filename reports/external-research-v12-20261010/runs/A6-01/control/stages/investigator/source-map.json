@@ -1,0 +1,216 @@
+{
+  "schema_version": "er12-source-map-v1",
+  "stage": "investigator",
+  "run_id": "A6-01-control",
+  "access_utc": "2026-10-10T04:03:12Z",
+  "source_id_policy": "Each source_id binds to its exact_url, release_or_version, and locator below. New releases or changed page identities require a new source_id; do not silently rebind.",
+  "sources": [
+    {
+      "source_id": "S01-GTFS-SCHEDULE-REF-2026-04-27",
+      "title": "GTFS Schedule Reference",
+      "exact_url": "https://gtfs.org/documentation/schedule/reference/",
+      "release_or_version": "Official living reference; page states revised 2026-04-27. GTFS Schedule has no single protocol-version field on this page.",
+      "locator": "Term Definitions: Dataset and Service day; agency.txt: agency_timezone; trips.txt: trip_id and service_id; stop_times.txt: arrival_time/departure_time; calendar.txt; calendar_dates.txt; feed_info.txt.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "A dataset is a complete versioned set of files; service_id selects an operating-date set; calendar_dates adds/removes service by date; service-day may extend past 24:00; stop_times uses agency_timezone; feed_info may identify feed_version.",
+      "governing_condition_default_exception": "calendar.txt is required unless all operating dates are specified in calendar_dates.txt; calendar_dates modifies the base service when used together; after-midnight times use values above 24:00:00 on the service day.",
+      "applicability": "Resolve the two terminals' trips, operating dates, extended times and timezone from the exact schedule release before display."
+    },
+    {
+      "source_id": "S02-GTFS-RT-REF-2.0",
+      "title": "GTFS Realtime Reference",
+      "exact_url": "https://gtfs.org/documentation/realtime/reference/",
+      "release_or_version": "Official living reference documents GTFS Realtime 2.0; change-history entries through June 2026. FeedHeader.gtfs_realtime_version is protocol version; optional feed_version is schedule version.",
+      "locator": "FeedMessage; FeedHeader; TripDescriptor; StopTimeUpdate and ScheduleRelationship NO_DATA; Alert active_period, communication_period, impact_period and informed_entity.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Realtime entity identifiers resolve relative to an existing GTFS feed. FeedHeader includes a producer timestamp and optional schedule feed_version. NO_DATA conveys no realtime timing. Alert time ranges and entity selectors govern applicability.",
+      "governing_condition_default_exception": "Realtime version 2.0 is distinct from static schedule revision; feed_version is optional. NO_DATA must not be paired with a prediction time. Alert active_period may be absent; the alert then remains shown while present in the feed. June 2026 added optional communication/impact periods.",
+      "applicability": "Use as the primary protocol contract for version alignment, event conditions, and alert/time semantics; confirm which optional elements the regional partner actually supplies."
+    },
+    {
+      "source_id": "S03-GTFS-TRIP-UPDATES",
+      "title": "GTFS Realtime Trip Updates",
+      "exact_url": "https://gtfs.org/documentation/realtime/feed-entities/trip-updates/",
+      "release_or_version": "Official living GTFS Realtime 2.0 documentation; accessed 2026-10-10.",
+      "locator": "Trip Updates overview; TripDescriptor; Systems with repeated trip_ids; Alternative trip matching.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "TripUpdates carry stop-level time changes and may represent cancellation, added trips, unscheduled trips or rerouting; no TripUpdate for a scheduled trip means realtime is unavailable, not that it is on time.",
+      "governing_condition_default_exception": "Frequency-based/repeated trip IDs require trip_id, start_date and start_time; date can disambiguate long/late trips. route_id/direction_id/start_time/start_date is an alternative only if unique. The first-published start_time remains the trip-instance key when later time changes are carried by StopTimeUpdate.",
+      "applicability": "Map an update to one departure instance and display no ETA where the matching prediction is absent."
+    },
+    {
+      "source_id": "S04-GTFS-SERVICE-ALERTS",
+      "title": "GTFS Realtime Service Alerts",
+      "exact_url": "https://gtfs.org/documentation/realtime/feed-entities/service-alerts/",
+      "release_or_version": "Official living GTFS Realtime 2.0 documentation; accessed 2026-10-10.",
+      "locator": "Service Alerts overview; TimeRange; EntitySelector.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Alerts report network/line/stop/trip disruption context, with active periods and selected GTFS entities. Individual trip delays and cancellations should usually use TripUpdates.",
+      "governing_condition_default_exception": "If no active period is supplied, display while the alert remains in the feed; multiple ranges apply independently. Informed entities select affected services.",
+      "applicability": "Display disruptions within matched scope but do not transform alert text into per-trip status or time."
+    },
+    {
+      "source_id": "S05-GTFS-RT-BEST-PRACTICES",
+      "title": "GTFS Realtime Best Practices",
+      "exact_url": "https://gtfs.org/documentation/realtime/realtime-best-practices/",
+      "release_or_version": "Official living best-practice recommendations; accessed 2026-10-10.",
+      "locator": "Feed Publishing & General Practices; FeedHeader recommendations.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Recommends refresh at least every 30 seconds or when relevant content changes, TripUpdates/VehiclePositions data no older than 90 seconds, and Service Alerts no older than 10 minutes.",
+      "governing_condition_default_exception": "These are producer best-practice recommendations, not mandatory limits. Header timestamp may refresh when content is unchanged; consumers must still assess the age of data entities.",
+      "applicability": "Candidate freshness thresholds for pilot owner approval and stale-state design; not evidence that this partner meets them."
+    },
+    {
+      "source_id": "S06-GTFS-SCHEDULE-REALTIME-ALIGNMENT",
+      "title": "GTFS Schedule vs GTFS Realtime",
+      "exact_url": "https://gtfs.org/resources/mobilitydata-recommendations/gtfs-schedule-vs-gtfs-realtime/",
+      "release_or_version": "MobilityData published recommendation page, living; accessed 2026-10-10.",
+      "locator": "Dataset change timelines; guidance to align identifiers/feed_version; short-term disruptions.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Recommends matching identifiers and publishing feed_version in both Schedule and Realtime to bind a realtime feed to the schedule it describes. Describes schedule ingestion and Realtime alerts as distinct update channels.",
+      "governing_condition_default_exception": "Guidance, not a consumer enforcement rule. If a schedule update cannot be released at least seven days before service change, its recommendation is to communicate through Realtime instead.",
+      "applicability": "Supports schedule/realtime release handoff and publisher/partner version decisions."
+    },
+    {
+      "source_id": "S07-GTFS-RT-REVISION-HISTORY",
+      "title": "GTFS Realtime Full Revision History",
+      "exact_url": "https://gtfs.org/documentation/realtime/change-history/revision-history/",
+      "release_or_version": "Official living revision history through June 2026; accessed 2026-10-10.",
+      "locator": "December 2024 FeedHeader.feed_version; May 2025 ADDED deprecation/NEW and REPLACEMENT; June 2026 communication_period and impact_period.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Records dated spec changes for schedule version linkage, trip relationships, and alert time semantics.",
+      "governing_condition_default_exception": "The added schedule feed_version remains optional per current reference. Current producers may use newer NEW/REPLACEMENT relationships; older feeds may use earlier forms.",
+      "applicability": "Pin parser and partner contract to the actual published realtime protocol/message support, not to old examples."
+    },
+    {
+      "source_id": "S08-OTP-GTFS-GRAPHQL",
+      "title": "OpenTripPlanner GTFS GraphQL API",
+      "exact_url": "https://docs.opentripplanner.org/en/latest/apis/GTFS-GraphQL-API/",
+      "release_or_version": "OpenTripPlanner 2 current documentation; current release 2.10.0 dated 2026-09-09 on the linked current changelog.",
+      "locator": "API overview, endpoint and enablement configuration.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Describes GTFS GraphQL as a general-purpose API used by Digitransit and otp-react-redux; a local endpoint serves queries; API is enabled by default.",
+      "governing_condition_default_exception": "Documentation is a moving latest page; deploy a named released build and verify its schema rather than pinning to this moving page.",
+      "applicability": "Credible alternate ingestion/API route, but the two-terminal display still needs its own UI and data-quality rules."
+    },
+    {
+      "source_id": "S09-OTP-GTFS-RT-UPDATERS",
+      "title": "OpenTripPlanner GTFS-RT Configuration",
+      "exact_url": "https://docs.opentripplanner.org/en/latest/GTFS-RT-Config/",
+      "release_or_version": "OpenTripPlanner 2 current documentation; current release 2.10.0 dated 2026-09-09 on the linked current changelog.",
+      "locator": "Alerts; TripUpdates via HTTP(S); MQTT TripUpdates.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "OTP configures Alert and TripUpdate updaters separately; HTTP updaters poll URLs, accept feedId, and have frequency defaults of PT1M; trip updater fuzzy matching defaults false.",
+      "governing_condition_default_exception": "Each updater requires a URL/feedId; frequency may be configured. Alert earlyStartSec defaults to zero. Exact defaults may change between OTP versions.",
+      "applicability": "If OTP is evaluated, pin release and configure the partner feed mapping/cadence intentionally."
+    },
+    {
+      "source_id": "S10-OTP-CHANGELOG-2.10.0",
+      "title": "OpenTripPlanner Changelog",
+      "exact_url": "https://docs.opentripplanner.org/en/latest/Changelog/",
+      "release_or_version": "Release 2.10.0 dated 2026-09-09; current changelog accessed 2026-10-10.",
+      "locator": "2.10.0 release section, including PR #7445 and #7452.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Release notes say OTP exposes GTFS feed version in its GTFS GraphQL API and fix long routes being grouped across service date.",
+      "governing_condition_default_exception": "The changelog lists merged release items; it does not establish quality on a particular operator feed or validate a deployment configuration.",
+      "applicability": "Current release candidate and an opportunity to observe/verify schedule-version metadata through the API."
+    },
+    {
+      "source_id": "S11-OTP-ISSUE-6252",
+      "title": "OpenTripPlanner issue 6252: realtime update lag under load",
+      "exact_url": "https://github.com/opentripplanner/OpenTripPlanner/issues/6252",
+      "release_or_version": "Issue reports OTP 2.7.0-SNAPSHOT; opened 2024-11-14; named data is National Rail GTFS plus GTFS-RT; no static feed_version/zip revision or commit supplied in issue body.",
+      "locator": "Expected/observed behavior; version; data sets; router-config.json; analysis of asynchronous graph update.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Reporter observed realtime lag up to 20 minutes under load. Diagnosis: another poll could start before the prior graph update finished, accumulating older results.",
+      "governing_condition_default_exception": "Affects polling updaters when graph updates are slower than poll intervals; this report does not establish any static timetable revision.",
+      "applicability": "Relevant operational risk for middleware route; only the same operation under a named release and pilot load can be verified."
+    },
+    {
+      "source_id": "S12-OTP-PR-6262",
+      "title": "OpenTripPlanner PR 6262: make polling updaters wait for graph update finish",
+      "exact_url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262",
+      "release_or_version": "Merged into dev-2.x on 2025-01-09; included in OTP 2.7.0 release changelog; 12 commits.",
+      "locator": "PR summary, fixes #6252, merged date, test statement.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "PR summary says all polling updaters wait for graph update completion before returning. The PR conversation's testing summary says no unit tests, while the changed-file list includes PollingGraphUpdaterTest; no performance/load test is documented.",
+      "governing_condition_default_exception": "Merged into dev-2.x on 2025-01-09 and included in OTP 2.7.0. Feature behavior is conditional on WaitForGraphUpdateInPollingUpdaters; inspect the released feature default and deployment override. The issue did not identify a timetable revision.",
+      "applicability": "All polling updater result application, irrespective of schedule version; no particular timetable feed version is named."
+    },
+    {
+      "source_id": "S13-OTP-CHANGELOG-2.7.0",
+      "title": "OpenTripPlanner 2.7.0 Changelog",
+      "exact_url": "https://docs.opentripplanner.org/en/v2.7.0/Changelog/",
+      "release_or_version": "OTP release 2.7.0 dated 2025-03-12.",
+      "locator": "2.7.0 detailed changes; PR #6262 and car ferry functionality.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "Records the polling updater fix #6262 and car ferry functionality as items in release 2.7.0.",
+      "governing_condition_default_exception": "Changelog demonstrates release inclusion, but does not prove the fix for every workload or any specific ferry feed.",
+      "applicability": "Historical release tie for issue/fix chain; current candidate is newer 2.10.0."
+    },
+    {
+      "source_id": "S14-OTP-NETEX-SIRI-TUTORIAL",
+      "title": "OpenTripPlanner NeTEx & SIRI tutorial",
+      "exact_url": "https://docs.opentripplanner.org/en/latest/Netex-Tutorial/",
+      "release_or_version": "OpenTripPlanner 2 current documentation; current release 2.10.0 dated 2026-09-09.",
+      "locator": "Adding SIRI real-time data; SIRI-SX and SIRI-ET updater examples; graph build context.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "In the OTP implementation example, NeTEx carries schedule data; SIRI-ET provides expected journey times and SIRI-SX text situation alerts, configured separately as graph updaters. SIRI references NeTEx through Transmodel vocabulary.",
+      "governing_condition_default_exception": "Example uses Norwegian NeTEx/SIRI/OSM data and a specific Entur endpoint; it is not evidence of a ferry partner's availability or profile.",
+      "applicability": "Analogous schedule-plus-event/update mechanism, conditional on exact partner standards/profile and entity references."
+    },
+    {
+      "source_id": "S15-SIRI-README-V2.2",
+      "title": "TransmodelEcosystem SIRI repository README",
+      "exact_url": "https://github.com/TransmodelEcosystem/SIRI",
+      "release_or_version": "SIRI schema branch v2.2, described by repository search result as latest branch matching CEN documentation and bug-fixes-only; repository says use releases for a schema matching a published CEN document.",
+      "locator": "Overview; supported SIRI services ET, SM, SX; branch table; repository release guidance.",
+      "access_utc": "2026-10-10T04:03:12Z",
+      "observed_operation": "SIRI-ET conveys actual journey progress and expected arrivals/departures; SIRI-SX conveys perturbation situations. Repository contains schemas and examples.",
+      "governing_condition_default_exception": "v2.2 is a stable schema branch; v2.3-wip and v3.0-wip are non-stable/development. National implementations may profile the standard.",
+      "applicability": "Pin any SIRI evaluation to a published schema release and the partner's national profile; do not assume generic compatibility."
+    },
+    {
+      "source_id": "S16-OTP-OTPFEATURE-POLL-WAIT-2.10.0",
+      "title": "OpenTripPlanner 2.10.0 OTPFeature source",
+      "exact_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/application/src/main/java/org/opentripplanner/framework/application/OTPFeature.java",
+      "release_or_version": "OpenTripPlanner exact release tag v2.10.0, released 2026-09-09.",
+      "locator": "OTPFeature enum entry WaitForGraphUpdateInPollingUpdaters and constructor; top-level otp-config feature configuration comment.",
+      "access_utc": "2026-10-10T04:08:00Z",
+      "observed_operation": "The feature entry has defaultEnabled=true and sandbox=false; the enum constructor copies defaultEnabled into enabled. The source describes optional configuration under feature in otp-config.json.",
+      "governing_condition_default_exception": "In this exact released version, waiting is on by default unless explicitly disabled by feature configuration.",
+      "applicability": "For OTP 2.10.0, version-pin and inspect deployed configuration; do not assume the flag remains on if config overrides it."
+    },
+    {
+      "source_id": "S17-OTP-CHANGELOG-TAG-2.10.0",
+      "title": "OpenTripPlanner 2.10.0 release changelog source",
+      "exact_url": "https://github.com/opentripplanner/OpenTripPlanner/blob/v2.10.0/doc/user/Changelog.md",
+      "release_or_version": "OpenTripPlanner exact release tag v2.10.0, dated 2026-09-09.",
+      "locator": "Release 2.10.0, PR #7445 exposing GTFS feed version in the GTFS GraphQL API; PR #7452 long-route service-date grouping.",
+      "access_utc": "2026-10-10T04:08:00Z",
+      "observed_operation": "Release notes include feed-version exposure in GraphQL and a fix to prevent long routes from being grouped across service date.",
+      "governing_condition_default_exception": "These are release contents, not proof of behavior on the ferry's concrete feed or deployment.",
+      "applicability": "Use the versioned release source for the OTP 2.10 candidate and test its schedule version exposure on the exact pilot feed."
+    },
+    {
+      "source_id": "S18-OTP-PR-6262-POLLING-CODE",
+      "title": "OpenTripPlanner PR 6262 polling graph update code",
+      "exact_url": "https://github.com/opentripplanner/OpenTripPlanner/pull/6262/files",
+      "release_or_version": "PR #6262, merged into dev-2.x 2025-01-09; final listed merge commit 74241bd; included in OTP 2.7.0.",
+      "locator": "Files changed: OTPFeature.java and PollingGraphUpdater.java; updateGraph future result handling; PollingGraphUpdaterTest file.",
+      "access_utc": "2026-10-10T04:08:00Z",
+      "observed_operation": "PollingGraphUpdater calls saveResultOnGraph.execute(task), then waits on the returned future when WaitForGraphUpdateInPollingUpdaters is enabled. Its code comments state that disabled mode returns after submitting the graph-update task.",
+      "governing_condition_default_exception": "The wait is controlled by the feature flag; OTPFeature source at v2.10.0 says enabled by default but config can override. The PR changes multiple pollers, including alert, SIRI, trip, vehicle position and parking updaters.",
+      "applicability": "Pin the OTP release and config; test the actual poll interval, update cost and schedule version for the pilot. This operational fix is independent of which timetable revision a feed represents."
+    }
+  ],
+  "plan_release": {
+    "revealed_at_utc": "2026-10-10T04:05:41.202Z",
+    "discovery_sha256": "2528c9e269ab744712570a20287d85abd1214a128a8fce3d720fa7f1f839a1b4",
+    "discovery_bytes": 16039,
+    "released_plan_sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+    "released_plan_bytes": 5984,
+    "released_copy": "ER12_RUNTIME/runs/A6-01/control/stages/investigator/revealed-plan.md",
+    "helper_invocation_count": 1
+  }
+}

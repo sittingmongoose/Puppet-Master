@@ -1,0 +1,18 @@
+{
+  "operation": "tools.create_goal followed by tools.get_goal",
+  "activation_observed_in_this_review": true,
+  "observed_active": {
+    "goal": {
+      "threadId": "01a12407-3265-7c60-8323-22c320075503",
+      "objective": "Act as the independent bounded ER12 Track B semantic review sub-agent for exact run B-FINAL-G-01/control-v1. Read the full RUBRIC-v1.md, role input-map.json, assignment.md, freeze.json, all mapped shared assignment/fixture/corpus inputs, and the full assigned FINAL candidate, source-map, and every sources member. Check terminal freeze and hash inspected inputs/science. Independently retrieve governing primary evidence and assess only assigned semantic axes and exact obligations, including consequential conditions and supported scope, with evidence-based findings and UNKNOWN where native/effective/billing evidence is absent. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history, or ER11 rescore. Within 25 minutes save complete assessment.md, assessment.json, source-map, and navigable primary evidence only under ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1. Save judgment before completing this Goal, then report concise result and paths.",
+      "status": "active",
+      "tokensUsed": 104972,
+      "timeUsedSeconds": 103,
+      "createdAt": 1791605824,
+      "updatedAt": 1791605928
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "billing_interpretation": "UNKNOWN; tool tokensUsed is not a billing receipt; no savings inference"
+}

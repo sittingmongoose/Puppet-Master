@@ -1,0 +1,17 @@
+URL: https://developers.cloudflare.com/r2/buckets/cors/
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-03.txt
+Original SHA256: d56613d9431d6b664b293ee005482e46c344940c08ee31e1965cd087fbc25d2a
+Original numbered lines; gaps omitted. Not full response.
+
+48: Presigned URLs
+112: OverviewPrerequisitesUse CORS with a public bucketUse CORS with a presigned URLUse CORS with a custom domainAdd CORS policies from the dashboardAdd CORS policies via Wrangler CLIResponse headersExampleCommon Issues
+117: Presigned URLs: Allows anyone with access to the unique URL to perform specific actions on your bucket.
+122: (Optional) Access keys. An access key is only required when creating a presigned URL.
+126: Use CORS with a presigned URL
+127: Presigned URLs allow temporary access to perform specific actions on your bucket without exposing your credentials. While presigned URLs handle authentication, you still need to configure CORS when making requests from a browser.
+128: When a browser makes a request to a presigned URL on a different origin, the browser enforces CORS. Without a CORS policy, browser-based uploads and downloads using presigned URLs will fail, even though the presigned URL itself is valid.
+129: Expired presigned URLs return a 403 ExpiredRequest response. R2 does not include CORS response headers on expired presigned URL responses, so browser JavaScript cannot read the error body. Refresh presigned URLs before they expire, or route requests through your application server if the browser needs to handle expiration errors directly.
+130: To enable browser-based access with presigned URLs:
+132: Set AllowedMethods to match the operations your presigned URLs perform, use GET, PUT, HEAD, and/or DELETE.
+133: Set AllowedHeaders to include any headers the client will send when using the presigned URL, such as headers for content type, checksums, caching, or custom metadata.
+230: Use CORS with a presigned URL

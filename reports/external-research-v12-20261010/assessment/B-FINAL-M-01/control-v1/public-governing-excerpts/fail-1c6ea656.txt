@@ -1,0 +1,20 @@
+URL: https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail.md#L21-L35
+Original locator: ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/primary-evidence/fail.md
+Original SHA256: 1c6ea656161a83257ad346aab0bb6e38d476e7a2785656aa3a24df501fcd0966
+Original numbered lines; gaps omitted. Not full response.
+
+21: Fail with error code 22 and with no response body output at all for HTTP
+22: transfers returning HTTP response codes at 400 or greater.
+23: 
+24: In normal cases when an HTTP server fails to deliver a document, it returns a
+25: body of text stating so (which often also describes why and more) and a 4xx
+26: HTTP response code. This command line option prevents curl from outputting
+27: that data and instead returns error 22 early. By default, curl does not
+28: consider HTTP response codes to indicate failure.
+29: 
+30: To get both the error code and also save the content, use --fail-with-body
+31: instead.
+32: 
+33: This method is not fail-safe and there are occasions where non-successful
+34: response codes slip through, especially when authentication is involved
+35: (response codes 401 and 407).

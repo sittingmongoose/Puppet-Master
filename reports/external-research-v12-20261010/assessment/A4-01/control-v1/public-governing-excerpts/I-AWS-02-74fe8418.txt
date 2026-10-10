@@ -1,0 +1,22 @@
+URL: https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-AWS-02.txt
+Original SHA256: 74fe8418cc073dea89edda46ce6ef373293c32326f87f1e984f352ca681fff51
+Original numbered lines; gaps omitted. Not full response.
+
+12: object size, maximum number of parts, maximum part size, and more. There is no minimum size
+13: limit on the last part of your multipart upload.
+14: | Item
+15: | Specification
+16: | Maximum object size
+17: | 48.8 TiB
+18: | Maximum number of parts per upload
+19: | 10,000
+20: | Part numbers
+21: | 1 to 10,000 (inclusive)
+22: | Part size
+23: | 5 MiB to 5 GiB. There is no minimum size limit on the last part of your multipart
+24: upload.
+25: | Maximum number of parts returned for a list parts request
+26: | 1000
+27: | Maximum number of multipart uploads returned in a list multipart uploads
+29: | 1000

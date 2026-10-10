@@ -1,0 +1,59 @@
+URL: https://rclone.org/s3/
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-RCLONE-01.txt
+Original SHA256: 23dd6bb93c2a1ef28e7f759e6cfe21737c31a038783de254c0bdb270eee7c076
+Original numbered lines; gaps omitted. Not full response.
+
+162: Data integrity
+706: You can disable this with the --s3-no-head option - see
+732: Data integrity
+733: Rclone does its best to verify every part of an upload or download to
+734: the s3 provider using various hashes.
+735: Every HTTP transaction to/from the provider has a
+736: X-Amz-Content-Sha256 or a Content-Md5 header to guard against
+737: corruption of the HTTP body. The HTTP Header is protected by the
+738: signature passed in the Authorization header.
+739: All communications with the provider is done over https for encryption
+740: and additional error protection.
+741: Single part uploads
+742: Rclone uploads single part uploads with a Content-Md5 using the
+743: MD5 hash read from the source. The provider checks this is correct
+744: on receipt of the data.
+745: Rclone then does a HEAD request (disable with --s3-no-head) to
+746: read the ETag back which is the MD5 of the file and checks that with
+747: what it sent.
+748: Note that if the source does not have an MD5 then the single part
+749: uploads will not have hash protection. In this case it is recommended
+750: to use --s3-upload-cutoff 0 so all files are uploaded as multipart
+751: uploads.
+752: Multipart uploads
+753: For files above --s3-upload-cutoff rclone splits the file into
+754: multiple parts for upload.
+755: Each part is protected with both an X-Amz-Content-Sha256 and a
+756: Content-Md5
+757: When rclone has finished the upload of all the parts it then completes
+758: the upload by sending:
+759: The MD5 hash of each part
+760: The number of parts
+761: This info is all protected with a X-Amz-Content-Sha256
+762: The provider checks the MD5 for all the parts it has received against
+763: what rclone sends and if it is good it returns OK.
+764: Rclone then does a HEAD request (disable with --s3-no-head) and
+765: checks the ETag is what it expects (in this case it should be the MD5
+766: sum of all the MD5 sums of all the parts with the number of parts on
+767: the end).
+768: If the source has an MD5 sum then rclone will attach the
+769: X-Amz-Meta-Md5chksum with it as the ETag for a multipart upload
+770: can't easily be checked against the file as the chunk size must be
+771: known in order to calculate it.
+772: Downloads
+773: Rclone checks the MD5 hash of the data downloaded against either the
+774: ETag or the X-Amz-Meta-Md5chksum metadata (if present) which rclone
+775: uploads with multipart uploads.
+780: --s3-no-head).
+890: Multipart uploads will use extra memory equal to: --transfers ×
+3491: Default: 200Mi
+3546: for data integrity checking but can cause long delays for large files
+3737: --s3-no-head
+3762: --s3-no-head-object
+3839: If true use AWS S3 data integrity protections.
+3840: See AWS Docs on Data Integrity Protections

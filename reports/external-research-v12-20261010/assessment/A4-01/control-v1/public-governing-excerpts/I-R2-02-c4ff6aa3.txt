@@ -1,0 +1,29 @@
+URL: https://developers.cloudflare.com/r2/api/s3/api/
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-R2-02.txt
+Original SHA256: c4ff6aa372e3b10cd0db523c2927de68b42196f2c8b34d13d788a60ffaf26099
+Original numbered lines; gaps omitted. Not full response.
+
+191: ❌ x-amz-checksum-algorithm
+197: ❌ x-amz-checksum-algorithm
+288: ❌ x-amz-checksum-algorithm
+300: ❌ x-amz-checksum-algorithm
+310: ❌ x-amz-checksum-algorithm
+324: ❌ x-amz-checksum-algorithm
+331: ❌ x-amz-checksum-algorithm
+342: ❌ x-amz-checksum-algorithm
+361: ❌ x-amz-checksum-algorithm
+370: ❌ x-amz-checksum-algorithm
+377: ❌ x-amz-checksum-algorithm
+384: ❌ x-amz-checksum-algorithm
+393: ❌ x-amz-checksum-algorithm
+414: ❌ x-amz-checksum-algorithm
+422: UploadPart: Uploading to the same part number replaces the previous part. If a subsequent upload to the same part fails, the original part is lost and must be re-uploaded.
+596: | ✅ CompleteMultipartUpload ↗︎
+597: | ❌ Bucket Owner:
+598: ❌ x-amz-expected-bucket-owner
+599: ❌ Request Payer:
+600: ❌ x-amz-request-payer
+604: | ✅ CopyObject ↗︎
+657: ❌ x-amz-checksum-algorithm
+658: | ✅ UploadPart ↗︎
+671: | ✅ UploadPartCopy ↗︎

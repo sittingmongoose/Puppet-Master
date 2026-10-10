@@ -1,0 +1,23 @@
+{
+  "run_id": "A6-01-treatment",
+  "initialized_at_utc": "2026-10-10T03:57:21.411Z",
+  "whole_deadline_utc": "2026-10-10T04:57:17.174Z",
+  "brief_sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+  "brief_bytes": 3323,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A6",
+  "stage_prompt_deltas": {
+    "investigator": "Group related verification questions by shared governing source/API/component, read that neighborhood once with exact navigation, then resolve each question with its distinct conditions. Expand beyond the cited passage when needed. Contrast with the competent reference's ordinary sequential review. Keep discovery breadth and all final obligations; reuse source bytes, not unverified conclusions.",
+    "critic": "Group related verification questions by shared governing source/API/component, read that neighborhood once with exact navigation, then resolve each question with its distinct conditions. Expand beyond the cited passage when needed. Contrast with the competent reference's ordinary sequential review. Keep discovery breadth and all final obligations; reuse source bytes, not unverified conclusions.",
+    "reviser": "Group related verification questions by shared governing source/API/component, read that neighborhood once with exact navigation, then resolve each question with its distinct conditions. Expand beyond the cited passage when needed. Contrast with the competent reference's ordinary sequential review. Keep discovery breadth and all final obligations; reuse source bytes, not unverified conclusions."
+  }
+}

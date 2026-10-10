@@ -1,0 +1,27 @@
+{
+  "run_id": "A3-01-treatment",
+  "runtime_root": "ER12_RUNTIME/runs/A3-01/treatment",
+  "brief_path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+  "plan_path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+  "whole_deadline_utc": "2026-10-10T04:55:46.107673+00:00",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "A3",
+  "stage_prompt_deltas": {
+    "critic": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on \u201cnot supported,\u201d \u201call,\u201d \u201conly,\u201d \u201cnever,\u201d or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
+    "reviser": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on \u201cnot supported,\u201d \u201call,\u201d \u201conly,\u201d \u201cnever,\u201d or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review."
+  },
+  "helper_version": "ER12_RUNTIME/helpers/er12-screen-v1/VERSION.json"
+}

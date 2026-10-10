@@ -1,0 +1,55 @@
+{
+  "schema": "er12-role-source-map-v1",
+  "case_id": "ER12-B-APPL-M-02-FRESH",
+  "role_scope": "Applicability/exception verification",
+  "target": "CPython 3.13 on an ordinary POSIX project directory",
+  "native_goal": {
+    "tool": "functions.create_goal",
+    "activation_receipt": "activation-receipt.json",
+    "threadId": "01a12408-19f2-7523-a4d0-4dc21b865050",
+    "objective": "ER12 B-APPL-M-02/control: execute ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "status_at_activation": "active",
+    "createdAt": 1791605887,
+    "updatedAt": 1791605887,
+    "tokensUsed_at_activation": 0,
+    "timeUsedSeconds_at_activation": 0,
+    "remainingTokens": null,
+    "completionBudgetReport": null,
+    "completion_fields": "UNKNOWN until native completion"
+  },
+  "procedural_note": "The initial metadata-read command opened input-map.json before native Goal activation, contrary to the role assignment's prescribed order. It contained paths and run metadata only. No common assignment, fixture, corpus passage, or case-specific source was opened and no scientific inference was made before activation. The common assignment, fixture, and corpus were read after the Goal became active.",
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "Python pathlib",
+      "url": "https://docs.python.org/3.13/library/pathlib.html",
+      "version_scope": "Python 3.13.16 documentation; target CPython 3.13",
+      "retrieved_utc": "2026-10-10T04:19Z",
+      "retrieval_precision": "minute; exact per-call time unavailable",
+      "retrieval_operation": "web.open and web.find on the listed official documentation page",
+      "local_evidence": "sources/S1-python-pathlib.md",
+      "locators": ["Path.iterdir", "Path.glob", "Path.rglob", "Comparison to the glob module", "Pattern language"],
+      "applicable_conditions": ["concrete pathlib Path globbing", "recursive rglob pattern with implicit **", "POSIX-specific case behavior is not material to these claims"],
+      "source_statements": ["dot-prefixed names are not special in pathlib matching", "rglob result order is unspecified", "3.13 suppresses OSError during scanning including permission errors", "default recursive ** expansion does not follow symlinks", "dynamic entry inclusion is unspecified", "large recursive scans may take a long time"],
+      "inferences": ["a suppressed denied-subtree scan may leave descendants out of the returned inventory", "the docs establish no snapshot or latency guarantee"]
+    },
+    {
+      "source_id": "S2",
+      "title": "Python glob module",
+      "url": "https://docs.python.org/3.13/library/glob.html",
+      "version_scope": "Python 3.13.16 documentation; target CPython 3.13",
+      "retrieved_utc": "2026-10-10T04:19Z",
+      "retrieval_precision": "minute; exact per-call time unavailable",
+      "retrieval_operation": "web.open and web.find on the listed official documentation page",
+      "local_evidence": "sources/S2-python-glob.md",
+      "locators": ["Module introduction", "glob.glob"],
+      "applicable_conditions": ["glob.glob literal pathname pattern", "default include_hidden=False", "recursive matching only when recursive=True"],
+      "source_statements": ["glob performs no tilde expansion", "dot-prefixed names are excluded by default unless the matching pattern starts with a dot", "order depends on filesystem", "inclusion of entries added or removed during a call is unspecified", "scan OSError including PermissionError is suppressed", "large recursive scans may take inordinate time"],
+      "inferences": []
+    }
+  ],
+  "checks": {
+    "proposed": ["Acceptance check 1 in verification.md: CPython 3.13 POSIX semantics fixture including hidden file, symlink, and unreadable subtree.", "Acceptance check 2 in verification.md: immutable/quiesced representative fixture, independent inventory comparison, and measured agreed latency threshold."],
+    "executed": ["Retrieved and reviewed the two official Python 3.13 documentation pages using web.open/web.find.", "No local probes, benchmark, or acceptance checks were executed."]
+  }
+}

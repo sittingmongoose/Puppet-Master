@@ -1,0 +1,32 @@
+{
+  "schema": "er12-native-goal-receipt-v1",
+  "case_id": "ER12-B-APPL-G-01-FRESH",
+  "arm": "treatment",
+  "objective_verbatim": "ER12 B-APPL-G-01/treatment: execute ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "goal_created": false,
+  "status": "NATIVE_GOAL_UNAVAILABLE",
+  "attempts": [
+    {
+      "attempt": 1,
+      "command_form": "AUTHORIZED_PROVIDER_INSTANCE --target <objective> (with --prompt)",
+      "result": "rejected before any session or Goal was created",
+      "diagnostic_verbatim": "--target cannot be used with --prompt. Use either --target <objective> or --prompt \"/goal <objective>\"."
+    },
+    {
+      "attempt": 2,
+      "command_form": "AUTHORIZED_PROVIDER_INSTANCE --prompt \"/goal <objective>\" --json (work tools disallowed; cwd = role output dir)",
+      "result": "failed at model creation before any Goal was observable; no goal_created state, no sessionId, no completion receipt",
+      "diagnostic_verbatim": "Error: Model creation failed (traceId: 456d6e87-fce5-417a-a939-ac93b943e043)",
+      "stderr_captured_in": "goal_activation.err",
+      "stdout_captured_in": "goal_activation.json (empty)"
+    }
+  ],
+  "provider_native_goal_support": {
+    "create_goal_update_goal_agent_tools": "not exposed in this harness's tool catalog (probed)",
+    "zcode_cli_native_session_goal": "present (AUTHORIZED_PROVIDER_INSTANCE 0.16.9: --target / --prompt \"/goal ...\"); invocation fails at model creation in this environment",
+    "completion_fields": "UNKNOWN",
+    "activation_fields": "UNKNOWN"
+  },
+  "limitations_recorded": "No native Goal was created, activated, or completed; nothing was simulated or fabricated. Dead-session diagnostics above are verbatim. Science files (verification.md, source-map.json, sources/) were fully saved before these attempts and before this arm's terminal completion.",
+  "written_at_utc": "2026-10-10T04:09:20Z"
+}

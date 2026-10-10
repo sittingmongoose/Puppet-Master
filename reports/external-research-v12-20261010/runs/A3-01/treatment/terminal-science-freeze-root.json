@@ -1,0 +1,94 @@
+{
+  "observed_at_utc": "2026-10-10T04:37:04.508800+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/critique.md",
+      "bytes": 13061,
+      "sha256": "5f4e5005c300c0124b67be56623ee9ea9499dd5ae5f8cebe95e3232ed54c3aec",
+      "mtime_ns": 1791606197324785355
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/source-map.json",
+      "bytes": 14799,
+      "sha256": "9a55a685e1606719539a1daacd5d8f02b2126fbda44e71ac9b85dccca91bc1b7",
+      "mtime_ns": 1791606197325271890
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/critic/sources/index.md",
+      "bytes": 2980,
+      "sha256": "e2263d411487d721011d1bed8595620cf1a893cd14e764d311d46a2de9189a4d",
+      "mtime_ns": 1791606197325570688
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/discovery.md",
+      "bytes": 16544,
+      "sha256": "2d2f70dfc0b31a2e0843faf7467d8da39e8980cdb7df7b8eb7253bdb96be4479",
+      "mtime_ns": 1791605064386179914
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/draft.md",
+      "bytes": 30049,
+      "sha256": "b2f66cf4aef587ddba915c4fca4466758ee8944a59bebd7d22c772c18e6feb5a",
+      "mtime_ns": 1791605803256956033
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 2623,
+      "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+      "mtime_ns": 1791605076847958178
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
+      "bytes": 24002,
+      "sha256": "164aa96b563cf78d9dd77c6a51bf43c8e688ffee37cf7162de5ba2306df3d08f",
+      "mtime_ns": 1791605697064965915
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 4849,
+      "sha256": "e8271556dfaaa33098f130e80d4579af3ad2ff13a5834bb19e2e47169540abcf",
+      "mtime_ns": 1791605697065350385
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+      "bytes": 34830,
+      "sha256": "3efbe2d57a4cad1b12562b7b48adacd5545ecf7222c08de58eb8a25a15a3747d",
+      "mtime_ns": 1791606838441674013
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json",
+      "bytes": 52832,
+      "sha256": "e6e7899b4b9fea80cd379d20759d34bae7c91682cefe7b513a58a022d5d0b86f",
+      "mtime_ns": 1791606838443429910
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 3894,
+      "sha256": "834e729370d901056b007df63734e79990a1b561942f8f2e29c64ade1ad95197",
+      "mtime_ns": 1791606865976458538
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A3-01",
+    "arm": "treatment",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the reviser stage. Saved the full recommendation, source map, and evidence index:\n\n- [final.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md)\n\nThe final maps every S1\u2013S6 clause, dispositions all critic findings, and keeps app-specific behavior unresolved where the schema or deployed build is unknown. Documentation and release-history review was performed; no application tests, build, installation, or benchmark was run.\n\nThe native Goal was created with the frozen objective and is now **complete** (thread `01a1240e-3105-75a0-9bcf-55014555aa35`; 240,181 tokens used; 9m54s elapsed). Actual provider/model provenance and native ISO timestamp fields were unavailable and are marked UNKNOWN in the artifacts.",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:70f618e8-a49c-4cb1-a8ab-686dfe450dd2",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the reviser stage. Saved the full recommendation, source map, and evidence index:\n\n- [final.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md)\n\nThe final maps every S1\u2013S6 clause, dispositions all critic findings, and keeps app-specific behavior unresolved where the schema or deployed build is unknown. Documentation and release-history review was performed; no application tests, build, installation, or benchmark was run.\n\nThe native Goal was created with the frozen objective and is now **complete** (thread `01a1240e-3105-75a0-9bcf-55014555aa35`; 240,181 tokens used; 9m54s elapsed). Actual provider/model provenance and native ISO timestamp fields were unavailable and are marked UNKNOWN in the artifacts.",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:70f618e8-a49c-4cb1-a8ab-686dfe450dd2",
+    "waitTimedOut": false
+  }
+}

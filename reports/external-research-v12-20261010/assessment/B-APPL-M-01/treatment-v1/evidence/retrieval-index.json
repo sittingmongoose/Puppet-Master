@@ -1,0 +1,128 @@
+[
+  {
+    "source_id": "P1-wal",
+    "requested_url": "https://www.sqlite.org/wal.html",
+    "final_url": "https://www.sqlite.org/wal.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.336596+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.544310+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4sa49f\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "42143"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P1-wal.html",
+    "raw_bytes": 42143,
+    "raw_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"
+  },
+  {
+    "source_id": "P2-checkpoint-v2",
+    "requested_url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+    "final_url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.337992+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.528254+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4s2593\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "9619"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P2-checkpoint-v2.html",
+    "raw_bytes": 9619,
+    "raw_sha256": "0b1d1ff100749da95b6db5032ad1f1b9dc93b531c864441b75507b85d91b7a0f"
+  },
+  {
+    "source_id": "P3-uri",
+    "requested_url": "https://www.sqlite.org/uri.html",
+    "final_url": "https://www.sqlite.org/uri.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.339693+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.548424+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4s3cc7\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "15559"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P3-uri.html",
+    "raw_bytes": 15559,
+    "raw_sha256": "9fba2ee18bc6cbf9167ffd02d40a0a38eb84fdde99eb998b0ad4d9543294e5c7"
+  },
+  {
+    "source_id": "P4-useovernet",
+    "requested_url": "https://www.sqlite.org/useovernet.html",
+    "final_url": "https://www.sqlite.org/useovernet.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.340638+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.548586+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4s3dc4\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "15812"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P4-useovernet.html",
+    "raw_bytes": 15812,
+    "raw_sha256": "71794d2eee1e20d3a04b7bae4b3467c33431f674c9fd9b0818a608fbc0eb54b1"
+  },
+  {
+    "source_id": "P5-checkpoint-modes",
+    "requested_url": "https://www.sqlite.org/c3ref/c_checkpoint_full.html",
+    "final_url": "https://www.sqlite.org/c3ref/c_checkpoint_full.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.342065+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.528715+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4s1293\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "4755"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P5-checkpoint-modes.html",
+    "raw_bytes": 4755,
+    "raw_sha256": "2a5ca28b4804dd935efbb090dc971741cf0afe2cf510ed20006a7ae99f89a6cc"
+  },
+  {
+    "source_id": "P6-release-3-51-3",
+    "requested_url": "https://www.sqlite.org/releaselog/3_51_3.html",
+    "final_url": "https://www.sqlite.org/releaselog/3_51_3.html",
+    "operation": "independent HTTPS GET via Python urllib.request; no downloaded code execution",
+    "started_at_utc": "2026-10-10T04:12:45.343278+00:00",
+    "completed_at_utc": "2026-10-10T04:12:45.524790+00:00",
+    "http_status": 200,
+    "headers": {
+      "Connection": "close",
+      "Date": "Sat, 10 Oct 2026 04:12:45 GMT",
+      "Last-Modified": "Fri, 09 Oct 2026 16:36:04 GMT",
+      "Cache-Control": "max-age=120",
+      "ETag": "\"m6ac917f4s2681\"",
+      "Content-type": "text/html; charset=utf-8",
+      "Content-length": "9857"
+    },
+    "raw_path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/evidence/P6-release-3-51-3.html",
+    "raw_bytes": 9857,
+    "raw_sha256": "796996305c91c07d490f797d63b22a6e6e28d4d571a28e8ccaebef685e1beab8"
+  }
+]

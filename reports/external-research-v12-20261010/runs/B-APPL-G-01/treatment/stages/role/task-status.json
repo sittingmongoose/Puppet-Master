@@ -1,0 +1,32 @@
+{
+  "schema": "er12-host-terminal-task-status-v1",
+  "observed_at_utc": "2026-10-10T04:13:02.642647+00:00",
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+  "task_status_native_call": "OWNERSHIP_ERROR",
+  "original_error_file": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-G-01-task-status-native.json",
+  "thread_status_direct_native": "completed",
+  "activeRunId": null,
+  "pendingRequestCount": 0,
+  "recentRuns": [
+    {
+      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1",
+      "ordinal": 1,
+      "status": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+      "requestedAt": "2026-10-10T03:54:59.243Z",
+      "startedAt": "2026-10-10T03:55:05.656Z",
+      "completedAt": "2026-10-10T04:09:36.116Z"
+    }
+  ],
+  "parent_delivery_context": {
+    "source": "user assignment",
+    "status": "completed",
+    "hasPendingChildRuns": false
+  },
+  "descendants": "UNKNOWN: no descendant list exposed in these reads",
+  "native_goal_evidence_status": "FAILED_ACTIVATION_ATTEMPTS_NO_ACTUAL_GOAL_RECEIPT",
+  "delivered_source_output": "PRESENT_AND_HOST_FROZEN",
+  "science_grade": "NOT_ASSESSED"
+}

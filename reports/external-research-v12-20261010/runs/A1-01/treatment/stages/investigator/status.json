@@ -1,0 +1,18 @@
+{
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:ordinal:1",
+  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+  "status": "completed",
+  "workState": "result_available",
+  "hasPendingChildRuns": false,
+  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:ordinal:1",
+  "latestTerminalStatus": "completed",
+  "latestTerminalSummary": "**Investigator stage complete.** The native Goal was created, confirmed active, and then returned as `complete`.\n\nSaved outputs:\n\n- [discovery.md](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json)\n- [draft.md](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md)\n\nThe reveal helper ran once after discovery was saved; its SHA-256 and byte count matched. No transfer, provider, checksum, or throughput tests were run. The draft separates proposed validation from checks actually performed.\n\nThe Goal tool returned thread ID `01a123f2-82b9-7a61-8920-b97650d6fcf4` and raw `createdAt`/`updatedAt` values. A separate Goal ID or receipt and ISO-formatted UTC timestamps were unavailable: **UNKNOWN**. Final Goal usage: **141,755 tokens over 535 seconds**.",
+  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cbb2d360-1a64-4400-a01e-8aaec5c4ef88",
+  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+  "model": "gpt-6-luna",
+  "summary": "**Investigator stage complete.** The native Goal was created, confirmed active, and then returned as `complete`.\n\nSaved outputs:\n\n- [discovery.md](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/source-map.json)\n- [draft.md](ER12_RUNTIME/runs/A1-01/treatment/stages/investigator/draft.md)\n\nThe reveal helper ran once after discovery was saved; its SHA-256 and byte count matched. No transfer, provider, checksum, or throughput tests were run. The draft separates proposed validation from checks actually performed.\n\nThe Goal tool returned thread ID `01a123f2-82b9-7a61-8920-b97650d6fcf4` and raw `createdAt`/`updatedAt` values. A separate Goal ID or receipt and ISO-formatted UTC timestamps were unavailable: **UNKNOWN**. Final Goal usage: **141,755 tokens over 535 seconds**.",
+  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cbb2d360-1a64-4400-a01e-8aaec5c4ef88",
+  "waitTimedOut": false
+}

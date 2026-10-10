@@ -1,0 +1,41 @@
+{
+  "finalized_at_utc": "2026-10-10T04:33:47.015585+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "native_reviewer_goal_status": "complete",
+  "native_reviewer_goal_thread_id": "01a1240d-3eac-7bd3-b254-e6cbc7c33835",
+  "semantic_judgment_saved_before_goal_completion": true,
+  "review_elapsed_seconds_returned": 605,
+  "within_45_minute_envelope": true,
+  "files": [
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/assessment.md",
+      "sha256": "ef4b54704b3902165fb8493a8a604095cd0063cf9eb3c8800ddf0cf1fa2362d9",
+      "bytes": 43874
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/assessment.json",
+      "sha256": "e43ef375bdcc63db1fb6e2b9bcf50cf76c0bae1b54e55859ab7ea571d3a18b2a",
+      "bytes": 89216
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/source-map.json",
+      "sha256": "2db89959550f9e08f3227d66a8f0d52ba6f6839b2828ea78400bb4cfed54efa2",
+      "bytes": 45297
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/index.md",
+      "sha256": "99f7c6fe8578eb80ef0a6245a0f79a2c5c08237cae41548faca3a40aaa0956f4",
+      "bytes": 7398
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/assessment-save-verification.json",
+      "sha256": "408105a0b991bc576b27060c9ef3c3bd8dc24e1042e269b7861aecd31b7588cd",
+      "bytes": 639
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/evidence/reviewer-native-complete.json",
+      "sha256": "21f9fc87ace82673f588acf55b596cf83b335e283f3580a96729f2dfe296196f",
+      "bytes": 1550
+    }
+  ]
+}

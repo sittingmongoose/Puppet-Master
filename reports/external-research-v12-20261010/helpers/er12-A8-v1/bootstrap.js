@@ -21,11 +21,11 @@ const escJson = x => shq(JSON.stringify(x));
 // Initialize/check the live catalog in this T3 turn; no pre-seeded functions.exec store is read.
 const capRaw = await tools.mcp__t3_code__orchestrator_capabilities({});
 const cap = unpack(capRaw);
-const provider = cap.providers?.find(x => x.providerInstanceId === "AUTHORIZED_CODEX_PROVIDER_ID");
+const provider = cap.providers?.find(x => x.providerInstanceId === "AUTHORIZED_PROVIDER_INSTANCE");
 const model = provider?.models?.find(x => x.id === "gpt-6-luna");
 const supported = (id, value) => model?.options?.some(x => x.id === id && x.options?.some(y => y.id === value));
 if (!provider || !model || !supported("reasoningEffort", "max") || !supported("serviceTier", "priority")) {
-  throw new Error("Authorized AUTHORIZED_CODEX_PROVIDER_ID / gpt-6-luna / max / priority route is unavailable; do not silently substitute.");
+  throw new Error("Authorized AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna / max / priority route is unavailable; do not silently substitute.");
 }
 const capSnapshot = {
   observed_at_utc: new Date().toISOString(), providerInstanceId: provider.providerInstanceId,

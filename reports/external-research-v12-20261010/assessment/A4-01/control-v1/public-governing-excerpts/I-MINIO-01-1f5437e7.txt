@@ -1,0 +1,118 @@
+URL: https://github.com/minio/minio/issues/19670
+Original locator: ER12_RUNTIME/assessment/A4-01/control-v1/evidence/I-MINIO-01.txt
+Original SHA256: 1f5437e7e121a75661d1585a173a0c2553c8bd3259059529f19e58cb10b19bd7
+Original numbered lines; gaps omitted. Not full response.
+
+123: opened on May 4, 2024
+124: Issue body actions
+125: Expected Behavior
+126: When completing multipart upload checksum in format {checksum}-{numberOfParts} should be supported.
+127: Current Behavior
+128: When completing multipart upload checksum in format {checksum}-{numberOfParts}, InvalidArgument: Invalid arguments provided for checksum-bug/minio-checksum-bug/2024-05-04T17:52:34.793Z.mp4: (invalid/unknown checksum sent: invalid checksum) error is returned.
+129: Various scenarios:
+130: both s3 and minio allow completing without checksum
+131: both s3 and minio fail on invalid checkum
+132: both s3 and minio allow completing with checksum that does not contain number of parts, eg. ejt070PMd2pF/mFNTgP6LDtAo2px3L+i/l91VTgvRSc=.
+133: only s3 allows completing when checkusm with number of parts as a suffix is provided, eg. ejt070PMd2pF/mFNTgP6LDtAo2px3L+i/l91VTgvRSc=-2.
+134: Possible Solution
+135: Fix somewhere in erasure-multipart.go.
+136: Steps to Reproduce (for bugs)
+137: Create multipart upload with ChecksumAlgorithm: "SHA256" (likely all other algorithms are also impacted)
+138: Upload parts with checksum
+139: Complete multipart upload with checksum combined with number of parts
+140: Sample code (JS)
+141: // tested with node@20.12.2, minio version RELEASE.2024-05-01T01-11-10Z
+142: // save as .mjs file
+143: // set flowing env variables before starting or here:
+144: // process.env.S3_BUCKET_NAME = "";
+145: // process.env.AWS_REGION = ""; // only for s3
+146: // process.env.AWS_ACCESS_KEY_ID = "";
+147: // process.env.AWS_SECRET_ACCESS_KEY = "";
+148: // process.env.AWS_ENDPOINT_URL = ""; // only for minio
+149: import {
+150: CompleteMultipartUploadCommand,
+151: CreateMultipartUploadCommand,
+152: ListPartsCommand,
+153: S3Client,
+154: UploadPartCommand,
+155: } from "@aws-sdk/client-s3"; // tested with version 3.569.0
+156: import crypto from "node:crypto";
+157: function getChecksum(buffer) {
+158: const hash = crypto.createHash("sha256");
+159: hash.update(new Uint8Array(buffer));
+160: return hash.digest();
+161: }
+162: const video = await fetch(
+163: "https://github.com/minio/minio/assets/610941/2653d680-2c87-42ea-98d0-8feab199d3ef"
+164: ).then((response) => response.arrayBuffer());
+165: const s3 = new S3Client({
+166: forcePathStyle: !!process.env.AWS_ENDPOINT_URL,
+167: });
+168: const MB_5 = 5 * 1024 * 1024;
+169: const KEY = `minio-checksum-bug/${new Date().toISOString()}.mp4`;
+170: const PARTS = Math.ceil(video.byteLength / MB_5);
+171: console.log({ KEY, PARTS });
+172: const multipartUpload = await s3.send(
+173: new CreateMultipartUploadCommand({
+174: Bucket: process.env.S3_BUCKET_NAME,
+175: Key: KEY,
+176: ChecksumAlgorithm: "SHA256",
+177: })
+178: );
+179: const uploadId = multipartUpload.UploadId;
+180: const checksums = [];
+181: for (let i = 0; i < PARTS; i++) {
+182: const start = i * MB_5;
+183: const end = Math.min((i + 1) * MB_5, video.byteLength);
+184: const body = video.slice(start, end);
+185: const checksum = getChecksum(body);
+186: const checksumBase64 = checksum.toString("base64");
+187: checksums.push(checksum);
+188: console.log({ i, checksumBase64 });
+189: await s3.send(
+190: new UploadPartCommand({
+191: Bucket: process.env.S3_BUCKET_NAME,
+192: Key: KEY,
+193: UploadId: uploadId,
+194: PartNumber: i + 1,
+195: Body: body,
+196: ChecksumSHA256: checksum.toString("base64"),
+197: })
+198: );
+199: }
+200: const partsList = await s3.send(
+201: new ListPartsCommand({
+202: Bucket: process.env.S3_BUCKET_NAME,
+203: Key: KEY,
+204: UploadId: uploadId,
+205: })
+206: );
+207: const checksumTotal = getChecksum(Buffer.concat(checksums));
+208: const checksumTotalBase64 = checksumTotal.toString("base64");
+209: console.log({ checksumTotalBase64 });
+210: await s3.send(
+211: new CompleteMultipartUploadCommand({
+212: Bucket: process.env.S3_BUCKET_NAME,
+213: Key: KEY,
+214: UploadId: uploadId,
+215: MultipartUpload: {
+216: Parts: partsList.Parts.map((part) => ({
+217: PartNumber: part.PartNumber,
+218: ETag: part.ETag,
+219: ChecksumSHA256: part.ChecksumSHA256,
+220: })),
+221: },
+222: ChecksumSHA256: "a" + checksumTotalBase64, // GOOD does not work in both s3 and minio
+223: ChecksumSHA256: checksumTotalBase64, // GOOD works in both s3 and minio
+224: ChecksumSHA256: `${checksumTotalBase64}-${PARTS}`, // BAD works in s3, does not work in minio
+225: })
+226: );
+227: Test file storage
+228: bbb_sunflower_1080p_30fps_normal_cut_small.mp4
+229: Context
+230: Not a big deal for us at this point, we can remove part numbers from the checksum, but reporting this as a it is compatibility issue.
+231: Regression
+232: Probably not.
+233: Your Environment
+234: Testing locally on Windows WSL, not really relevant for this issue.
+235: minio version RELEASE.2024-05-01T01-11-10Z (commit-id=7926401cbd5cceaacd9509f2e50e1f7d636c2eb8)

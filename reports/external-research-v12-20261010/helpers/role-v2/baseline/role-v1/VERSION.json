@@ -1,0 +1,108 @@
+{
+  "version": "er12-role-freezer-v1",
+  "saved_at_utc": "2026-10-10T04:01:15.365400+00:00",
+  "source_files": [
+    {
+      "path": "ER12_RUNTIME/helpers/er12-screen-v1/prepare.py",
+      "sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da"
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/B-FIRST-REQUESTS.json",
+      "sha256": "f4f0cbfbc8339b9b2dbd121c5b25514c241067eac968a598fe69ef5079e05053"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+      "sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md",
+      "sha256": "c86d210c2c2752cbe7dfdd196a81e8680e02f44ec16cda14a863b849fd435f47"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/input-map.json",
+      "sha256": "0ac9933e363e0e6a13cb90c2fa88d635e4db198ddf25d5e8f8107340e9235e85"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/freeze.json",
+      "sha256": "0c5d33212b08ed4aa967623ef0e0dbcfe4b038049109a8be34a2e399046d3ceb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/request.json",
+      "sha256": "95b4a51ebefbeba0a93086102ff234c0fc6cd5d44f52db3f52ba39b581590e2c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md",
+      "sha256": "7a5dd086b465fd6b9e214d01c2d66fbea2373aa36fe08f7161a4d1731736f36d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/input-map.json",
+      "sha256": "fc2d280f66f527e7bfe267ef1861f6df11d40fecc1e86ea8e4dbdd7dd329679d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/freeze.json",
+      "sha256": "c928e282fdfcebb0733c16a89498f7dda3f8dafe771cdc876695acdd2baee59e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/request.json",
+      "sha256": "da94ad2b10fe000ebeb641da44103608e4a41cf59ef7f2c9e87ab09e4745d2e8"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+      "sha256": "3769783a77959a4303e88ce4f120a94850484d97827327d7bd097a08b823d6b9"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md",
+      "sha256": "a3b1a4181f9665cf693a0bf931121fb512ef04f2915190170b39b38da01b49b4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/input-map.json",
+      "sha256": "8893a4f2a0bf2a06ebba2ac7b7bdfe33ff2313a8dcc316ba0590ef7b74f5f687"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/freeze.json",
+      "sha256": "8e47864f5d5b0f12c59319779b351189e69e24ca4b58a962540ce0f3480a9218"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/request.json",
+      "sha256": "16ff49a3669d478fdbca6230a73078d1ffba5749db815d26a8e5068252a7886b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md",
+      "sha256": "8f18c6f76f0788ad1dbfe7e817859d81d1cf0be0abeb84cefbf016a158eb130f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/input-map.json",
+      "sha256": "aa8d9730b741a31b0e474ae5e1dc2f0d2fab1a4fb6c9365366f5c63c9e9cab33"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/freeze.json",
+      "sha256": "745db2e12cfcd327a324033bf12aad92fbf98e8a609afeadbda6878422a720d9"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/request.json",
+      "sha256": "a5e9680a551aa72d7d31b57427ad7b9cb2007cb995808503242fca5b0a1fab5e"
+    }
+  ],
+  "result_files": [
+    {
+      "path": "ER12_RUNTIME/helpers/role-v1/prepare-role.py",
+      "sha256": "803136c72887240df8d0ff5fd3969cfb752974c4e8e39740be95b7da183ddeb4"
+    },
+    {
+      "path": "ER12_RUNTIME/helpers/role-v1/check-role.py",
+      "sha256": "275c28d529fcf3ca9cd8e57e5fdc8a26722953f3c8b3a00d8b7588eb1ad59729"
+    },
+    {
+      "path": "ER12_RUNTIME/helpers/role-v1/CHECKS.json",
+      "sha256": "d23ae6fd939c7b600827f0deb6af1e86f4259ad24e18edd14756504a253f4bf1"
+    },
+    {
+      "path": "ER12_RUNTIME/helpers/role-v1/VERSION_NOTE.md",
+      "sha256": "f234a7b71865c85946de266a4839752c121395c46946e8807e49533b787d8ad1"
+    }
+  ],
+  "setup_accounting": "Implementation and offline checks are setup-only; no arm science or live dispatch; verification measured separately in CHECKS.json",
+  "implementation_setup_started_at_utc": "2026-10-10T03:58:46+00:00",
+  "implementation_saved_at_utc": "2026-10-10T04:01:29.189989+00:00",
+  "implementation_setup_wall_seconds_to_saved": 163.189989
+}

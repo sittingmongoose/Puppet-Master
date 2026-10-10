@@ -1,0 +1,88 @@
+{
+  "observed_at_utc": "2026-10-10T04:32:18.309459+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/critic/critique.md",
+      "bytes": 10361,
+      "sha256": "47ecbf5d8ccaec04f39e76da30722b5471294a2487dd5a7964db90a6f9cb1c97",
+      "mtime_ns": 1791605870291674793
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/critic/source-map.json",
+      "bytes": 10246,
+      "sha256": "e26c98ea90954f33bf0944d9a518e68192f221b2fef1df4d3644ef81ace04835",
+      "mtime_ns": 1791605870295674822
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/discovery.md",
+      "bytes": 9647,
+      "sha256": "e68d6c1d68956691775885cbf72e4be7b8eda37082027a40c3a39b571f67f672",
+      "mtime_ns": 1791604755749105537
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/draft.md",
+      "bytes": 28295,
+      "sha256": "5f8620e4ee1f524f1c39526e6dfa700141bf9b4d70617072b5798bc0845655ab",
+      "mtime_ns": 1791605074943193002
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 2670,
+      "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+      "mtime_ns": 1791604762636853522
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/source-map.json",
+      "bytes": 8485,
+      "sha256": "2d28a35c2cf11960f2ac360fb30e4174c8f9c6414e39caf61f974226a7f8c7a8",
+      "mtime_ns": 1791604755756105583
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/investigator/sources/index.md",
+      "bytes": 4084,
+      "sha256": "ddac654b73820e3e906739a55fb02d204b755db8a5f7a4f2a2e4a09c470a6aa1",
+      "mtime_ns": 1791605065600457815
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/reviser/final.md",
+      "bytes": 16841,
+      "sha256": "48bebb0ce2a78a16f9846d6f292005e056875262a4bf0227efb6567e483294b1",
+      "mtime_ns": 1791606667650327824
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/reviser/source-map.json",
+      "bytes": 12674,
+      "sha256": "42ce360513c9ec9e5741422b1a87e1221973d5f47eded23323db7986ecbaebfb",
+      "mtime_ns": 1791606641626504328
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A1-01/control/stages/reviser/sources/index.md",
+      "bytes": 2561,
+      "sha256": "b953a6b865f8b7f5d2a5af728627bae3786540e51bc017f42a319c70a1b6b391",
+      "mtime_ns": 1791606641559516636
+    }
+  ],
+  "final_stage_task": {
+    "slot": "A1-01",
+    "arm": "control",
+    "stage": "reviser",
+    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-reviser-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-reviser-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-reviser-v1:ordinal:1",
+    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-reviser-v1",
+    "status": "completed",
+    "workState": "result_available",
+    "hasPendingChildRuns": false,
+    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-reviser-v1:ordinal:1",
+    "latestTerminalStatus": "completed",
+    "latestTerminalSummary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A1-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A1-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses both critique findings: it separates multipart part size from aws-chunked frame size\u2014the MinIO report\u2019s reproduction is `PutObject`, and its linked PR is closed, not merged ([issue](https://github.com/minio/minio/issues/21611), [PR](https://github.com/minio/minio/pull/21626)); and it carries abort-race reconciliation through every cleanup path, using repeated abort and `ListParts` checks ([AWS API](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)). Validation remains proposed; no implementation or tests were run.\n\nThe native Goal returned `complete` (thread `01a12409-0304-7732-85e3-608bc8196d17`; 154,182 tokens; 717 seconds). Its `createdAt` was `1791605973` and `updatedAt` was `1791606690`. Provider/model provenance and a separate completion timestamp were not exposed (`UNKNOWN`).",
+    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8d5589dc-8811-4c23-b36b-780a3bde3f08",
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "summary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A1-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A1-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses both critique findings: it separates multipart part size from aws-chunked frame size\u2014the MinIO report\u2019s reproduction is `PutObject`, and its linked PR is closed, not merged ([issue](https://github.com/minio/minio/issues/21611), [PR](https://github.com/minio/minio/pull/21626)); and it carries abort-race reconciliation through every cleanup path, using repeated abort and `ListParts` checks ([AWS API](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)). Validation remains proposed; no implementation or tests were run.\n\nThe native Goal returned `complete` (thread `01a12409-0304-7732-85e3-608bc8196d17`; 154,182 tokens; 717 seconds). Its `createdAt` was `1791605973` and `updatedAt` was `1791606690`. Provider/model provenance and a separate completion timestamp were not exposed (`UNKNOWN`).",
+    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8d5589dc-8811-4c23-b36b-780a3bde3f08",
+    "waitTimedOut": false
+  }
+}

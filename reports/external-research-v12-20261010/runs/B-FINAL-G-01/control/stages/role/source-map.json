@@ -1,0 +1,171 @@
+{
+  "case_id": "ER12-B-FINAL-G-01-FRESH",
+  "role": "Criticism adjudication and complete bounded finalization",
+  "output_scope": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role",
+  "sources": [
+    {
+      "source_id": "S1",
+      "title": "rsync manual",
+      "url": "https://download.samba.org/pub/rsync/rsync.1",
+      "version": "Live upstream manual, unpinned; target both peers are rsync 3.2.7 per the assignment, but deployed versions are unverified.",
+      "input_snapshot_retrieval_utc": "2026-10-10T03:54:10Z",
+      "role_retrieval_window_utc": "2026-10-10T04:02:41Z/2026-10-10T04:04:30Z",
+      "role_retrieval_operation": "web.open on the exact URL, followed by web.find and web.open on named sections.",
+      "evidence_file": "sources/S1-primary-evidence.md",
+      "locators": [
+        "USAGE: trailing source slash and directory contents",
+        "--delete: receiving-side scope and exclude behavior",
+        "--delete-excluded: effect on default filter rules",
+        "--dry-run: no-change preview and output caveat",
+        "FILTER RULES WHEN DELETING",
+        "FILTER RULES IN DEPTH and PATTERN MATCHING RULES",
+        "--delay-updates: delayed per-file rename behavior"
+      ],
+      "conditions_and_exceptions": [
+        "Deletion is limited to synchronized receiving-side directories and requires recursive or directory transfer.",
+        "Ordinary excludes protect receiver matches unless --delete-excluded or sender-only rule modifiers alter that behavior.",
+        "A root-anchored filter assumes local-notes is at the effective transfer root and no later rule overrides it.",
+        "Dry-run/itemized output may diverge after external source/destination changes or system-call failures.",
+        "The live page is unpinned; exact 3.2.7 behavior and peer versions need endpoint verification.",
+        "Sender-side I/O errors normally disable deletion unless --ignore-errors is enabled; this safeguard is not rollback."
+      ],
+      "application_inference": "The proposed filter, dedicated staging root, path recheck, publish gate, failure state, and validation procedures are application-level design inferences, not source-guaranteed behavior.",
+      "checks": {
+        "proposed": [
+          "Verify both peer versions and source trailing-slash destination layout.",
+          "Verify scoped deletion removes stale assets while preserving local-notes.",
+          "Verify success, cancel, and failure states and explicit publish gating."
+        ],
+        "executed": []
+      }
+    },
+    {
+      "source_id": "S2",
+      "title": "rsync project FAQ",
+      "url": "https://rsync.samba.org/FAQ.html",
+      "version": "Live upstream FAQ, unpinned; assignment targets rsync 3.2.7 on both peers.",
+      "input_snapshot_retrieval_utc": "2026-10-10T03:54:10Z",
+      "role_retrieval_operation": "web.open on the exact listed URL; local corpus index and excerpt were also read.",
+      "role_in_output": "Reviewed as supplemental context; no claim in the replacement section relies on this FAQ because the disputed command semantics are addressed by S1.",
+      "checks": {
+        "proposed": [],
+        "executed": []
+      },
+      "role_retrieval_window_utc": "2026-10-10T04:02:41Z/2026-10-10T04:04:30Z"
+    }
+  ],
+  "execution_status": {
+    "rsync_commands_executed": false,
+    "local_probe_executed": false,
+    "application_checks_executed": false,
+    "source_evidence_is_bounded_paraphrase": true
+  },
+  "claim_mappings": {
+    "O1": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "USAGE"
+      ],
+      "inference": "Trailing-slash layout is sourced; the exact source/stage paths and peer versions remain to be verified."
+    },
+    "O2": {
+      "source_ids": [],
+      "basis": "Exact tokens preserved from the common assignment."
+    },
+    "O3": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete",
+        "--delete-excluded",
+        "FILTER RULES WHEN DELETING",
+        "PATTERN MATCHING RULES"
+      ],
+      "inference": "The root-anchored local-notes rule depends on the application transfer root and filter order."
+    },
+    "O4": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete",
+        "--dry-run"
+      ],
+      "inference": "Human inspection, recording, approval, and path rechecking are proposed application behavior."
+    },
+    "O5": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delay-updates"
+      ],
+      "basis": "Explicit publication comes from the assignment; the manual describes delayed per-file updates only."
+    },
+    "O6": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete",
+        "--dry-run",
+        "--delay-updates"
+      ],
+      "inference": "Failure/cancel handling and all three checks are proposed; no check was executed."
+    },
+    "critique_1": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete-excluded",
+        "FILTER RULES WHEN DELETING"
+      ]
+    },
+    "critique_2": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete",
+        "--dry-run"
+      ]
+    },
+    "critique_3": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delay-updates"
+      ]
+    },
+    "critique_4": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "USAGE"
+      ]
+    },
+    "critique_5": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--dry-run"
+      ]
+    },
+    "critique_6": {
+      "source_ids": [
+        "S1"
+      ],
+      "locators": [
+        "--delete",
+        "--remove-source-files"
+      ]
+    }
+  }
+}

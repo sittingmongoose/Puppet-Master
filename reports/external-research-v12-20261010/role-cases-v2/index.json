@@ -1,0 +1,204 @@
+{
+  "schema": "er12-role-cases-v2-index",
+  "slots": [
+    {
+      "slot_id": "B-DISC-M-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-DISC-M-02/fixture.json",
+      "fixture_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-DISC-M-02/fixture.json",
+      "original_fixture_sha256": "1b10c5fad028e42ff6e2367e5df37e6f550a4d28a27ead680c77c44d1b60c7f5",
+      "input_sha256": "c6a3070a35761267f0365da4ca22e3feec8b66fcf434a21c5eb03349f8bb222a",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "96c86b7591b7a87ba61dac12c4c21a3daa8c20e9fd4b50e09266471d6d11a1db"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": false
+    },
+    {
+      "slot_id": "B-DISC-G-01",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-DISC-G-01/fixture.json",
+      "fixture_sha256": "d9e63ea84e74f37b9e33e8087dcbff1359fed87ebb3401c22435573ec9598d4f",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-DISC-G-01/fixture.json",
+      "original_fixture_sha256": "9a0b31a5f927fe959511f0a084bae38799c8efdbf3e71cace275927199eab5d5",
+      "input_sha256": "0bac759e8f04ed28f83bd8b331ae91162f859e0852fc5fd219ca12cc9637f29d",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "848cd2e8b9ef3078e2333ae05a62a8e04662b2b1628f5c9b3b34b1c6c896a83b"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": true
+    },
+    {
+      "slot_id": "B-DISC-G-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-DISC-G-02/fixture.json",
+      "fixture_sha256": "8bd7bc2d640033063d6db3d4c31343f3e88d9ae0366a231c6f525a355c62d583",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-DISC-G-02/fixture.json",
+      "original_fixture_sha256": "7015086c0b92b73c5cb7588b1f8fbd1e21a49fbd95682f9a6b08ee789fd20d9e",
+      "input_sha256": "b700b50ec2374ac4d60e376f20140f6e5a67cf83b5973fa4ccad2ece2b894176",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "599616a793cbad684a884396d85246ca2ab2a72cd0030379da4abe004f75357c"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": true
+    },
+    {
+      "slot_id": "B-APPL-M-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-APPL-M-02/fixture.json",
+      "fixture_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-APPL-M-02/fixture.json",
+      "original_fixture_sha256": "ec7d4479f43512e029d6dcddecbd543802ebccad9c1bbccca950e758bb2f6d20",
+      "input_sha256": "cc79eb9b4fa282090d02a25fee2838f699fb40eea15cb1c2d4fb3be97ef01b0c",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "b19977dc654c9bcff2fdf806925d74dee8e4404f44ead69680f32989b4cffbcc"
+        },
+        {
+          "path": "corpus/S1.md",
+          "sha256": "ca28260ea6a60d8dec5f6fced168edf49c8dd278d7294e23098e80cdcbdcc130"
+        },
+        {
+          "path": "corpus/S2.md",
+          "sha256": "e9db7c04c3797261b682be7da0349f25723ca79d97020887af97015cebb9638b"
+        },
+        {
+          "path": "corpus/index.json",
+          "sha256": "3bd948cbb31a75cdfbe1f7ccb18fc0701ff4aca22391b80101fe4970a52fe40c"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": false
+    },
+    {
+      "slot_id": "B-APPL-G-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-APPL-G-02/fixture.json",
+      "fixture_sha256": "f6fe897c72b46a759ced5e5f9768a6f560bead0a4ed0b11c0f2a02415dd88727",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-APPL-G-02/fixture.json",
+      "original_fixture_sha256": "984c9960047cc03f087644117b8c71376733052598cea81f4cdff29cd24fea91",
+      "input_sha256": "922bc7b62453aba466f22c5eac9297ac78c3713f0e83d3351aac14f69d73d3fb",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "3c7ab9e1ebcde0612e7e6e85a40f7eb8da73c42bf9d62b00bcc6f525fc447b38"
+        },
+        {
+          "path": "corpus/S1.md",
+          "sha256": "502f95d36e1da301057116c7d443c652463e7fd2b1f934b6b34e8b04334fc32a"
+        },
+        {
+          "path": "corpus/S2.md",
+          "sha256": "e58ec490cbdd3d90ae98b4c45bc8efd670f7d64f29f42a5f4a34a307e30a7409"
+        },
+        {
+          "path": "corpus/index.json",
+          "sha256": "5576572c6b3b0bc92f670f22d22f0256bac41d3a4988b8bd26184b5cf41f8f4f"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": true
+    },
+    {
+      "slot_id": "B-FINAL-M-01",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-FINAL-M-01/fixture.json",
+      "fixture_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-FINAL-M-01/fixture.json",
+      "original_fixture_sha256": "fb2d6fefff9bc6e3569a6e179f2165d1fee88fe8254cc6210e8d9314f811eb95",
+      "input_sha256": "99a44f4eafc3be1c452f3f7fe21c3d0834c6ed5afc26ae267eaf323e1589fc2e",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "396f6d1c6e5eadb70b73198943fd79031100ecf14c0fcf86dde695832e3297e8"
+        },
+        {
+          "path": "corpus/S1.md",
+          "sha256": "a1b7237806d995aa3557f9fba476f362a51dea73ffea3405fd5d7f6428ca3ccd"
+        },
+        {
+          "path": "corpus/S2.md",
+          "sha256": "ab07a29d545ec4fa32a891c7fd4f27b118b44cb4df7b09e8811fb72d65867162"
+        },
+        {
+          "path": "corpus/index.json",
+          "sha256": "a300a3810e47c582c0d9aadf0cfc32d18f57f1744e8d032285e07f3921ed3bf8"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": false
+    },
+    {
+      "slot_id": "B-FINAL-M-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-FINAL-M-02/fixture.json",
+      "fixture_sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-FINAL-M-02/fixture.json",
+      "original_fixture_sha256": "a6cccca9be12f21291c5c5d991e0355f8abaac1e675ae1372e5e7fac717142ca",
+      "input_sha256": "f02f41b1f75f369b0ad8ca185b94b92676690d4974b04eccdd74c26a308e0c09",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "ff2b636fc14365864262cef1330454a807288fe456febf8f0660a142b9521f2f"
+        },
+        {
+          "path": "corpus/S1.md",
+          "sha256": "abe9113df5303a6896c0efcffb0f053cef56cc5a6d0e2f3f8784a1ef5248cd0b"
+        },
+        {
+          "path": "corpus/S2.md",
+          "sha256": "82283c7ceb2bde2011bf62f375f02e452fdc66d7dbe9be299af2d18cb2e72cef"
+        },
+        {
+          "path": "corpus/index.json",
+          "sha256": "ba1dd888161f20c30b39b1019aac62a69750209beb91fbff93131b343d1b61b1"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": false
+    },
+    {
+      "slot_id": "B-FINAL-G-02",
+      "fixture": "ER12_RUNTIME/role-cases-v2/B-FINAL-G-02/fixture.json",
+      "fixture_sha256": "795857ccbb69b5914d9e24112379fc162f5a73deeb94cf17371c75cbc358898a",
+      "original_fixture": "ER12_RUNTIME/role-cases/B-FINAL-G-02/fixture.json",
+      "original_fixture_sha256": "20fad59496457e5065ada265fc48737a3ae3af41d859d806a16b2ae6a59dfa17",
+      "input_sha256": "2ae750c1166f8ad86477a578929ee583891cc4efa7c4a74b94dcd1c969bfe80e",
+      "input_files": [
+        {
+          "path": "assignment.md",
+          "sha256": "39860a2ed8542ef8daaf0d84eff6f5b63fd5f79d5d62b35b62d4ee92eaeb694a"
+        },
+        {
+          "path": "corpus/S1.md",
+          "sha256": "9b511a3588e02c588843e7d0a2d09ed43c7f4b13bc54d7bf2841e08ba8d9cbc0"
+        },
+        {
+          "path": "corpus/S2.md",
+          "sha256": "996efda6f552deb261be72379edac9588a2b96eb8ac1247fb0f083d004a4743c"
+        },
+        {
+          "path": "corpus/index.json",
+          "sha256": "b65e4c7e77821cdd3b43b6dce735662ae62801daa4b67a79a47569b5eebe1652"
+        }
+      ],
+      "control_provider": "codex_authorized",
+      "treatment_provider": "muse_code",
+      "reallocated": true
+    }
+  ],
+  "runtime_prepared": false,
+  "deadlines_created": false,
+  "inference_performed": false
+}
