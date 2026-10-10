@@ -2742,6 +2742,8 @@ canonical_text: >-
   another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with
   the notice; the restore stays quiet (DL-153). Back puts the panels back as they were when the step began;
   Skip and Finish restore the captured v2 layout.
+  Every saved tour position is stamped with its step id and the signature of the step order under which it
+  was saved.
 gui_related: true
 gui_classification_reason: Defines the workspace chapter's steps, copy, owner commands, completion observation, and saved-position and restore rules.
 split_recommended: false
@@ -2755,6 +2757,7 @@ acceptance_criteria:
   - widget_action stays, first shows the Home dashboard tab, and runs cmd.widget.add addressed to a dashboard board.
   - A saved position naming a retired step resumes at the first step of that step's chapter (move_or_dock_chat resumes at workspace_orientation); finished ids of retired steps are dropped; a position saved under another step order resumes at its own step by id; only a position whose chapter is gone starts fresh with the notice; the restore stays quiet (DL-153).
   - Back puts the panels back as they were when the step began, and Skip and Finish restore the captured v2 layout.
+  - "Every saved position carries its step id and step-order signature, and resumes by the saved-id and retired-step rules above."
 validation_surfaces:
   - Plans/guided_tour_contracts.schema.json
   - Plans/guided_tour_contract_fixtures.json
@@ -2771,6 +2774,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - Plans/Decision_Log.md#DL-180
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-52-tour-8571666731.js (SHA-256 433ca7b6d0146c8cb438373c5ebb26df847ad51ef51588d8e80c0484688280c9; concept lineage only)"
 preserved_exact_tokens:
@@ -2790,6 +2794,8 @@ negative_constraints:
   - Do not ask the learner to move or dock the chat.
   - Do not start a saved position fresh while its chapter still exists.
   - Do not keep the demonstrated layout without an explicit Keep selection.
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Stamps saved positions with step id and step-order signature."
 owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/guided_tour_contracts.schema.json
