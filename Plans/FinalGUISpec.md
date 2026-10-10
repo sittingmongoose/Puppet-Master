@@ -11911,9 +11911,8 @@ canonical_text: >-
   Settings > Terminal groups Appearance, layout and Workspaces, Shell and Startup, Interaction,
   and Diagnostics, and keeps terminal shortcut discovery in-product, remappable, and distinct from
   TUI-owned keys and app-level layout actions. Since DL-181 to DL-183 the group names and order are
-  Settings_System's: the terminal rows sit in SSYS-040's Editor & Terminal groups (Terminal, Terminal look, Terminal
-  output & history, Copy & paste, and Terminal: more options), the appearance rows in Terminal look (SSYS-051), and
-  SSYS-051 records how this unit's older group names map onto them. The tunable quadrant layout behaviour retires
+  Settings_System's: the terminal rows sit in SSYS-040's Editor & Terminal groups, SSYS-051 places the appearance
+  rows among them, and SSYS-051 records how this unit's older group names map onto them. The tunable quadrant layout behaviour retires
   with the Quadrant layout (DL-181), and the Explain What Commands Do row retires from Interaction, because
   explaining commands is the Teacher persona's job in the chat (D19). Shortcut discovery also shows the terminal's
   keys and the keys a focused terminal gives back to the host (F3-640).
