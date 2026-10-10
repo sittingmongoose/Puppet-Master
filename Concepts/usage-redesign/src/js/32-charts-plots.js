@@ -206,6 +206,24 @@
     return out;
   }
   function mix(a, b, k) { return !finite(b) ? null : !finite(a) ? b : a + (b - a) * k; }
+  /* where each recorded cost point starts a morph (a Live beat, a range or size change): on the old cost line at the same
+     sample position (the area's own morph is by sample, so the two move together), or at its place when the old line had
+     no value there. The morphing cost line is drawn through the points mixed from these starts (monoD, the curve it rests
+     on) and the dots ride the same mix (charts.ride), so a cost dot is on its line in every frame (item 3; before, a beat
+     that added or dropped a recorded bucket rebuilt the dots at their end places while the sampled line was still morphing,
+     1-5 px off it, and a dot at a steep end sat past the sampled line's last vertex) */
+  function costStarts(pts, geo, from) {
+    var N = geo.N, span = geo.x1 - geo.x0;
+    return pts.map(function (p) {
+      var u = N > 1 && span > 0 ? clamp((p.x - geo.x0) / span * (N - 1), 0, N - 1) : 0;
+      var y = from && from.cs ? rowAt(from.cs, 0, N - 1, u) : null;
+      if (!finite(y)) return { x: p.x, y: p.y };
+      return { x: from.x0 + (from.x1 - from.x0) * (N > 1 ? u / (N - 1) : 0), y: y };
+    });
+  }
+  function costMixD(pts, starts, k) {
+    return pts.length > 1 ? charts.monoD(pts.map(function (p, j) { var s0 = starts[j]; return [s0.x + (p.x - s0.x) * k, s0.y + (p.y - s0.y) * k]; })) : '';
+  }
   /* the y of a sampled row (N samples from x0 to x1, the polyline the plot draws) at plot x; null in a gap. The crosshair's
      dots glide along it between buckets (charts.hover cfg.yAt) */
   function rowAt(row, x0, x1, x) {
@@ -459,17 +477,21 @@
       var from = prev.N === N ? prev : { x0: prev.x0, x1: prev.x1, lv: prev.lv.map(function (row) { return resample(row, N); }), tot: resample(prev.tot, N), base: resample(prev.base, N),
         cs: prev.cs ? resample(prev.cs, N) : null };
       if (live) c._liveAnims++;
+      var cpts = cost && !geo.compact ? costPoints(cost, mids, YB) : null, cst = cpts ? costStarts(cpts, geo, from) : null;
       c._tw = morphTween(live ? 420 : 520, function (k) {
         paintArea(c, {
           x0: from.x0 + (geo.x0 - from.x0) * k, x1: from.x1 + (geo.x1 - from.x1) * k,
           lv: geo.lv.map(function (row, j) { return row.map(function (v, i) { return mix(from.lv[j][i], v, k); }); }),
           tot: geo.tot.map(function (v, i) { return mix(from.tot[i], v, k); }),
           base: geo.base.map(function (v, i) { return mix(from.base[i], v, k); }),
-          cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null
+          cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null,
+          cd: cpts ? costMixD(cpts, cst, k) : null
         }, geo);
       }, function () { c._tw = null; paintArea(c, geo, geo); if (P.cost && cost) { var cp = costPoints(cost, mids, YB); P.cost.setAttribute('d', cp.length > 1 ? charts.monoD(cp.map(function (q) { return [q.x, q.y]; })) : ''); } if (!live) rescan(c); });
-      if (live) liveCostMarks(c, geo, cost, mids, YB);
-      else morphCostMarks(c, geo, from, cost, mids, YB);
+      if (live) liveCostMarks(c, geo, cost, mids, YB, false, cst);
+      else morphCostMarks(c, geo, from, cost, mids, YB, cst);
+      /* until the tween's first frame the cost line stays where its dots start (a rebuild just wrote its end shape) */
+      if (cpts && P.cost) P.cost.setAttribute('d', costMixD(cpts, cst, 0));
     } else { paintArea(c, geo, geo); if (!live || !liveCostMarks(c, geo, cost, mids, YB, true)) paintCostMarks(c, geo, cost, mids, YB); }
     c._geo = geo;
     /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens). A plot of ONE token type (the
@@ -504,7 +526,8 @@
       P.bands[j].setAttribute('d', gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
       P.edges[j].setAttribute('d', gapLine(cur.x0, cur.x1, row));
     });
-    if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
+    if (P.cost && cur.cd != null) P.cost.setAttribute('d', cur.cd);
+    else if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
   }
   /* the NOW / last point of each line: a 3.5 px dot with a static 10 px halo (WOW-SPEC 2.4), HTML over the plot */
   function endDots(c, geo, m, totals, cost, Y, YB, mids, slide) {
@@ -534,7 +557,7 @@
     P.endL.innerHTML = html;
   }
   /* live cost dots: same count -> they slide to their new place in place; otherwise false (the caller rebuilds) */
-  function liveCostMarks(c, geo, cost, mids, YB, still) {
+  function liveCostMarks(c, geo, cost, mids, YB, still, starts) {
     var els = (c._costEls || []).filter(function (el) { return el.isConnected; });
     if (!cost || geo.compact) return false;
     var pts = costPoints(cost, mids, YB), real = els.filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; });
@@ -542,14 +565,18 @@
        buckets or pending markers rebuilds */
     var pend = (c.spec.cost && c.spec.cost.pending) || [], nPend = 0;
     cost.forEach(function (v, i) { if (!finite(v) && pend[i] > 0) nPend++; });
-    if (real.length !== pts.length || els.length - real.length !== nPend) { paintCostMarks(c, geo, cost, mids, YB); return true; }
     var lo = c._live || {}, jobs = [];
+    /* a changed set rebuilds the dots at their end places; mid-morph they still start on the old line (starts) */
+    if (real.length !== pts.length || els.length - real.length !== nPend) {
+      real = (paintCostMarks(c, geo, cost, mids, YB) || []).filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; });
+      if (still || !starts) return true;
+    }
     real.forEach(function (el, j) {
-      var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top);
+      var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top), s0 = starts && starts[j];
       el.style.left = r1(p.x) + 'px'; el.style.top = r1(p.y) + 'px'; el.setAttribute('data-ci', String(p.i));
-      if (!still) jobs.push({ el: el, dx: ox - p.x, dy: oy - p.y });
+      if (!still) jobs.push(s0 ? { el: el, dx: s0.x - r1(p.x), dy: s0.y - r1(p.y) } : { el: el, dx: ox - p.x, dy: oy - p.y });
     });
-    /* the cost dots ride the cost line's morph (the area's tween, charts.ride) */
+    /* the cost dots ride the cost line's morph (the area's tween, charts.ride), from the same starts as the line */
     if (jobs.length) c._liveAnims += rideOrSlide(c._tw, jobs, 420, lo.delay || 0);
     if (still && c.P && c.P.cost) c.P.cost.setAttribute('d', pts.length > 1 ? charts.monoD(pts.map(function (q) { return [q.x, q.y]; })) : '');
     return true;
@@ -557,7 +584,7 @@
   /* a range change (WOW-SPEC 3.4, MOTION-REVIEW-2 item 4): the old cost dots shrink away (160 ms), the new ones ride the
      morphing line from where the old line was at their sample (translate on the compositor, the same ease as the path)
      and grow in from 320 ms; nothing is drawn across a bucket without a recorded value */
-  function morphCostMarks(c, geo, from, cost, mids, YB) {
+  function morphCostMarks(c, geo, from, cost, mids, YB, starts) {
     var old = (c._costEls || []).filter(function (el) { return el.isConnected; });
     old.forEach(function (el) {
       el.classList.remove('pmu-costmark');
@@ -565,9 +592,13 @@
       if (a) a.onfinish = function () { el.remove(); }; else el.remove();
     });
     var els = paintCostMarks(c, geo, cost, mids, YB) || [];
-    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0), jobs = [];
+    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0), jobs = [], ri = 0;
     els.forEach(function (el) {
       var x = parseFloat(el.style.left), y = parseFloat(el.style.top);
+      if (starts && el.getAttribute('data-cost-dot') === '1') {
+        var s0 = starts[ri++];
+        if (s0) { jobs.push({ el: el, dx: s0.x - x, dy: s0.y - y }); Mo.anim(el, [{ scale: '0' }, { scale: '1' }], 200, 320, Mo.EASE.out, 'backwards'); return; }
+      }
       var sIdx = clamp(Math.round((x - geo.x0) / span * (N - 1)), 0, N - 1);
       var ox = from.x0 + (from.x1 - from.x0) * (N > 1 ? sIdx / (N - 1) : 0), oy = from.cs && finite(from.cs[sIdx]) && el.getAttribute('data-cost-dot') === '1' ? from.cs[sIdx] : y;
       jobs.push({ el: el, dx: ox - x, dy: oy - y });
