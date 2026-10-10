@@ -409,8 +409,10 @@ These IDs are required by `Plans/Widget_System.md`.
 | `cmd.widget.remove` | `{ page, instance_id }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.resize` | `{ page, instance_id, col_span, row_span }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.configure` | `{ page, instance_id, config }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
-| `cmd.widget.move` | `{ page, instance_id, col, row }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
+| `cmd.widget.move` | `{ page, instance_id, col, row, arrange? }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
 | `cmd.widget.reset_layout` | `{ page }` | no persisted domain event (UI layout state update) | Dashboard, Usage page, Orchestrator widget tabs |
+
+`arrange` on `cmd.widget.move` is optional and typed. It is absent for an ordinary move. Usage Tidy (`Plans/Widget_System.md#WS-019`) sets it to the closed object `{ mode: "tidy", detail }`, where `mode` has the single value `tidy` and `detail` is the Usage disclosure level whose shown cards go first (`glance`, `detailed` or `diagnostics` for At a glance, Detailed and Diagnostics, the values of the `detail` view family of `Plans/usage-feature.md#UF-095`); `instance_id` then names the card Tidy was chosen from, or the room's first card in reading order when Tidy is chosen from Customize, and `col` and `row` repeat that card's committed place. The owner computes the repack from the room's committed layout, so the request dictates no layout, and a request whose place differs from the committed one is rejected as stale. No other value of `arrange` exists, and no command is added for it.
 
 Widget-hostability scope narrowing: widget-command affected-surface scope is limited to widget-hosted surfaces: Dashboard, Usage page, and Orchestrator widget-tab surfaces that are actually widget-hosted. `cmd.widget.*` rows do not imply that every Orchestrator tab is widget-composed.
 
@@ -8508,7 +8510,7 @@ ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_M
 |------------|-------|-------------|----------------|--------------|
 | `cmd.account.select_profile` | Select Account Profile | Switches the effective account/profile; rows support click and keyboard activation. | `profile_available` | `domain_action` |
 | `cmd.provider.switch_route` | Switch Provider Route | Accepts a provider re-route, preferring an alternate provider/plan until the quota window resets; carries `provider_id` and `retry_after_ms` context. | `alternate_route_available` | `domain_action` |
-| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `usage_projection_loaded` | `domain_action` |
+| `cmd.usage.export` | Export Usage Projection | Exports the current usage projection as JSON with `scope` `snapshot` or `ledger`; ledger scope preserves `usage_event_refs` per row. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules that opens the Snapshot and Ledger export menu (`Plans/usage-feature.md#UF-089`); each menu row dispatches this command with its scope, and behavior is otherwise unchanged. | `usage_projection_loaded` | `domain_action` |
 | `cmd.usage.refresh` | Refresh Usage Projections | Re-reads usage projections from provider routes on demand; background refresh continues independently and the UI never blocks. The Usage page head affordance is an icon-only button carrying `title` and `aria-label` accessible names per the GATE-010 icon-only rules; behavior unchanged. | `provider_routes_configured` | `domain_action` |
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
@@ -11769,16 +11771,27 @@ census, not a new command family.
 | PMConcept7 producer/action | Canonical command/disposition | Required result |
 |---|---|---|
 | Usage widget show/hide/configure | `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.configure` | One settled widget-layout mutation and receipt. |
-| Usage or Dashboard resize release | `cmd.widget.resize` | One command only when committed dimensions changed; preview and cancel are `view_only`. |
-| Usage or Dashboard reorder release | `cmd.widget.move` | One command only when committed order changed; ghost/placeholder preview and cancel are `view_only`. |
+| Usage or Dashboard resize release | `cmd.widget.resize` | One command only when committed dimensions changed; preview and cancel are `view_only`. On Usage that one command settles the whole room, including peers moved by the resolver and by Usage board gravity (`Plans/Widget_System.md#WS-019`). |
+| Usage or Dashboard reorder release | `cmd.widget.move` | One command only when committed order changed; ghost/placeholder preview and cancel are `view_only`. On Usage that one command settles the whole room, including peers moved by the resolver and by Usage board gravity. |
+| Usage board gravity after a move, resize, preset, hide, or show | part of that action's own `cmd.widget.move`, `cmd.widget.resize`, `cmd.widget.remove`, or `cmd.widget.add` | No extra command, receipt, or write; the held preview moves only obstructed peers, and gravity is applied at settle inside the one commit (`Plans/Widget_System.md#WS-019`). |
+| Usage Tidy (card menu or Customize panel) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` (section 2.3) | One settled layout transaction with one receipt: the owner computes the repack from the committed layout, and the settled result carries every card it moved; no per-card move command and no Tidy command; a Tidy that moves nothing dispatches nothing (`Plans/Widget_System.md#WS-019`). |
+| Usage size picker preset | `cmd.widget.resize` with the preset's geometry; the settled record stores its `preset_id` | One command on choice; opening the picker and hovering or focusing a row to preview a size are `view_only` (`Plans/Widget_System.md#WS-017`, `#WS-020`). |
+| Usage chart type and gear options | `cmd.widget.configure` | One settled configuration change per choice; opening the menu is `view_only`. |
 | Usage/Dashboard reset | `cmd.widget.reset_layout` | One reset command to the selected host namespace. |
 | Home surface move/resize/collapse/reset | `cmd.workspace_layout.move_surface`, `cmd.workspace_layout.resize_surface`, `cmd.workspace_layout.set_collapsed`, `cmd.workspace_layout.reset` | One revision-checked settled command. |
 | Home preset-size control | resolve the historical PM7 semantic preset alias through `cmd.workspace_layout.resize_surface` | Resolve `preset_id` to committed size values before dispatch; the alias is documentation-only and is not cataloged. |
 | Usage Refresh | `cmd.usage.refresh` | One explicit refresh request; background refresh remains separately owner-driven. |
 | Usage Ledger attempt drill-through | `cmd.nav.open_usage_subject` | One Usage object route with `route_target.object_kind = usage_attempt`, `route_target.object_id = attempt_id`, top-level `attempt_id`, and `usage_event_ref` correlation; no `OpenSubject`. |
-| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. |
+| Usage provider/account/presentation-panel details | `view_only` local projection | Stable local identity opens the existing local inspector; no UICommand, route receipt, or domain event. On the Accounts room the card body and Details stay local; the three Accounts rows below are the only owner-routed actions on an account card or provider plate. |
+| Usage Accounts card Use this account | `cmd.account.select_profile` | Shown only when the provider's capability `supports_manual_set_active` is true and labelled as an override; asks first when the account is already past its provider's switch point (`Plans/Multi-Account.md#MA-073`), and that question's Use now and Use anyway answers dispatch the same one command; unavailable states show the command's own disabled reason. |
+| Usage Accounts provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` for that provider id | The plate's toggle, the switch-level stepper and menu, and the same controls on the Accounts hero cells and the Overview headroom card: the same Settings value Settings edits, committed once per settled change through the Settings owner, the request's `changes` naming each row; the menu's Shared setting choice sends the change with `inherit` true; no Usage copy, no new command (`Plans/Settings_System.md#SSYS-044`). Opening the menu and hovering are `view_only`. The provider's warning level and rest period are edited in Settings, reached through Open in Settings. |
+| Usage Accounts Open in Settings | `cmd.settings.open` with `target_type` `setting` | Lands on the row inside that provider's section in Settings; the plate's shared-value line opens it too. |
+| Usage head Export menu (Snapshot or Ledger) and the Ledger table's export | `cmd.usage.export` with `scope` `snapshot` or `ledger` | One export per choice; opening the menu is `view_only`; no other export command. |
+| Usage alert Acknowledge and Snooze 1 hour | `cmd.alert.acknowledge`, `cmd.alert.snooze` | The shared alert store owns the lifecycle (`Plans/FinalGUISpec.md#F3-453`); Usage keeps no alert state of its own. |
 | Provider setup or management | `cmd.settings.open` | Open the typed setting target `ai.accounts.provider-connections`; do not alias the rejected provider-management token. |
 | Usage room/scope/range/disclosure/filter/More-menu selection | `view_only` local projection | No command; settled preference persistence remains storage-owned. |
+| Usage Live / Paused (rail head, beside Usage) | `view_only` local projection | No command; holding or applying arriving Usage projection updates is a view choice, and the remembered choice is the storage-owned Usage view preference `live` (`Plans/usage-feature.md#UF-095`). |
+| Usage Play the next hour, Back to now, and the concept feature switches | the lab-only disposition of `Plans/usage-feature.md#UF-107` | No command; UF-107 owns the exclusion. |
 | Context ring popup/hover | `view_only` local projection | No compaction and no detail-open dispatch. |
 | Context ring `Compact Now` | `cmd.chat.compact_context` | Explicit click/choice only; visible result/receipt projection and no fabricated event family. |
 | Context ring `More Details` | `cmd.chat.open_thread_context_details` | Opens or focuses the existing shared thread Context Detail Pane. |
@@ -11810,11 +11823,26 @@ canonical_text: >-
   state dispatch nothing. The concept-only semantic preset alias normalizes to
   cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
   remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
+  The redesigned Usage page (2026-10-09) adds no command. On its Accounts room the card body and
+  Details stay local, Use this account dispatches cmd.account.select_profile, shown only when
+  supports_manual_set_active holds, and each provider's Auto-switch toggle and switch level commit
+  through cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope provider,
+  with Open in Settings on cmd.settings.open, which is also where the provider's warning level and rest
+  period are edited. Usage board gravity commits inside the one cmd.widget.move, cmd.widget.resize,
+  cmd.widget.add or cmd.widget.remove of the action that caused it, and Tidy commits the whole
+  repacked room as one settled layout transaction through exactly one existing cmd.widget.move that
+  carries the optional arrange field { mode: tidy, detail }, with one receipt and the repack computed
+  by the owner, never one move per card. A size-picker preset
+  commits one cmd.widget.resize and stores its preset_id; chart type and gear options use
+  cmd.widget.configure; the head Export menu and the Ledger table export use cmd.usage.export with
+  scope snapshot or ledger; alert Acknowledge and Snooze use cmd.alert.acknowledge and
+  cmd.alert.snooze. Live / Paused is view_only with its remembered choice storage-owned, and the
+  concept's demo controls take the lab-only disposition UF-107 owns.
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs addressed by board_id.
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false
-depends_on: [CS-068, UCC-060, UCC-144, UCC-146, DL-180]
+depends_on: [CS-068, UCC-060, UCC-144, UCC-146, WS-019, DL-180]
 unblocks: [WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate details use stable local identities and dispatch no UICommand.
@@ -11822,6 +11850,9 @@ acceptance_criteria:
   - Compact Now dispatches only after explicit choice; More Details uses cmd.chat.open_thread_context_details and does not route through app-wide Usage.
   - The historical semantic preset alias is not registered as a primary command and normalizes to cmd.workspace_layout.resize_surface.
   - cmd.provider.usage.open_management remains rejected, has no alias, and is absent from production wiring; provider setup or management instead dispatches cmd.settings.open with target_type setting and setting_id ai.accounts.provider-connections.
+  - "Usage Accounts actions: Use this account dispatches one cmd.account.select_profile and is absent when supports_manual_set_active is false; a change of a provider's Auto-switch toggle or switch level dispatches one cmd.settings.transaction.preview and one bound cmd.settings.transaction.apply at scope provider; opening a card's Details dispatches nothing."
+  - "Usage layout: a Tidy that moves cards dispatches exactly one cmd.widget.move carrying arrange { mode: tidy, detail } and one receipt for the whole repacked room, the owner computing the repack, a Tidy that moves nothing dispatches nothing, gravity adds no command beyond the action that caused it, and a size-picker preset dispatches one cmd.widget.resize whose settled record carries the preset_id."
+  - "Live / Paused and the concept demo controls of UF-107 dispatch no command and have no catalog or production wiring row; export, alert acknowledge and alert snooze reuse cmd.usage.export, cmd.alert.acknowledge and cmd.alert.snooze."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -11841,15 +11872,23 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-174
+  - Plans/Decision_Log.md#DL-176
+  - Plans/Decision_Log.md#DL-177
+  - "Concepts/usage-redesign/src/js (Usage redesign producers; source-lineage-only)"
 preserved_exact_tokens:
   - view_only
   - cmd.workspace_layout.resize_surface
   - Compact Now
   - More Details
   - cmd.provider.usage.open_management
+  - Tidy
+  - Live / Paused
 negative_constraints:
   - Do not register commands for popup disclosure, hover, pointer preview, or cancellation.
   - Do not dispatch cmd.nav.open_usage_subject for provider, account, or presentation-panel aggregate details.
+  - Do not mint a command for Tidy, gravity, size presets, Live / Paused, or the lab-only demo controls, and do not commit Tidy as one move per card.
+  - Do not write a provider's auto-switch values from Usage except through the Settings transaction.
   - Do not attach OpenSubject to a Usage object route.
   - Do not create a PM7 command namespace or duplicate primary command row.
   - Do not revive or alias a rejected provider-management command.
@@ -12562,8 +12601,9 @@ These rows serve the six exact Plan strategies, the read-only Plan document, the
 | `cmd.chat.plan.cancel` | Cancel Build | Cancels an admitted or running Plan build; the Build control settles on Canceled and the Plan document is unchanged. | `plan_present && plan_status in {admitted, building}` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanCancelRequest` → `AssistantPlanCancelResult` | `handlers::assistant_plan::plan_cancel` |
 | `cmd.chat.plan.export` | Export Plan | Exports the exact Plan revision through the artifact owner. `content_kind` is `plan_document` (default) or `execution_report`; the existing format discriminator keeps PDF and Markdown. The execution report is a separate versioned artifact and exporting never alters `plan_hash` (PPROG-015..016, CDRY-005). | `plan_present && artifact_export_available` | `domain_action` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanExportRequest` → `ArtifactExportResult` | `handlers::assistant_plan::plan_export` |
 | `cmd.chat.plan.open_details` | Open Plan Details | Navigates to Plan details, hidden ledger or scoped-PlanUnit information, and artifact lineage. | `plan_present` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_details` |
+| `cmd.chat.plan.open_version` | Open Plan Version | Opens the document of one exact Plan version in the editor: the Plan's own tab, deduplicated, while that version is still the Plan's version, otherwise that version's retained read-only document. Every Open plan button raises it with the version its surface names: the Plan card's action row and its Build-started and Plan-revised receipt lines (`plan_card`), a build schedule's row in the Scheduled manager (`schedule_manager`), and a bound Goal's Open exact Plan · Vn with the GoalPlanBinding's `assistant_plan_id`, `plan_version` and `plan_hash` (UCC-176, DL-157). It never opens Plan Details and never substitutes a newer version; a version that cannot be resolved returns a typed error and opens nothing. | `plan_present && exact_plan_version_retained` | `navigation_wrapper` | `Plans/Assistant_Plan_Runtime.md` | `AssistantPlanVersionRoute` → `RouteResult` | `handlers::assistant_plan::plan_open_version` |
 
-Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
+Source surfaces for this family: `artifact_details`, `composer`, `crew_modal`, `goal_activity`, `goal_hover`, `mode_menu`, `natural_language`, `plan_card`, `slash`, `targeted_composer`. `goal_activity` and `goal_hover` raise only `cmd.chat.plan.open_version` and `cmd.chat.plan.request_revision`. Every Open plan button, on `plan_card`, `schedule_manager`, `goal_activity` or `goal_hover`, raises `cmd.chat.plan.open_version` (DL-157); the Plan title, Expand and Details links keep their existing route. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
 ### To-Do Runtime
 
@@ -13632,7 +13672,7 @@ The redesigned Assistant wand popups and their in-chat presence (Crew, Chat Room
 | `bsd_note` | The Back Seat Driver advisor note in the transcript, with its catch-up, failure and safety lines (BSD-030). | `cmd.bsd.finding.open`, `cmd.bsd.assignment.resume`, `cmd.bsd.assignment.retry`, `cmd.chat.open_thread_context_details` |
 | `schedule_sheet` | The Schedule Message sheet. The wand row only opens it; its primary commits. | `cmd.chat.schedule_message` |
 | `scheduled_message_card` | A scheduled message in the transcript (SQR-012). | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.chat.open_thread` |
-| `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread` |
+| `schedule_manager` | The Scheduled and Automations manager. | `cmd.chat.schedule_message.update`, `cmd.chat.schedule_message.cancel`, `cmd.execution_window.update`, `cmd.execution_window.cancel`, `cmd.chat.open_thread`, `cmd.chat.plan.open_version` (a build row's Open plan, DL-157) |
 | `memory_sheet` | The Memory sheet. | `cmd.chat.memory.verify`, `cmd.chat.memory.pin`, `cmd.chat.memory.discard`, `cmd.chat.memory.preview_capsule`, `cmd.chat.memory.toggle_auto_save_unverified`, `cmd.chat.teach.capture` |
 | `message_files_row` | The files row under an assistant message that changed files (ACD-478). It opens the Revert confirm sheet, which is not a command. | none of its own; it leads to `revert_confirm` |
 | `revert_confirm` | The Revert confirm sheet over the turn's change manifest (ACD-478). | `cmd.chat.revert` |
@@ -13987,6 +14027,7 @@ A row may list several controls, and then it gives each its disposition. The Sur
 | Cancel schedule | Command, `cmd.execution_window.cancel` by schedule_id | `plan_card`, `schedule_manager` |
 | Edit a build schedule | Command, `cmd.execution_window.update` | `schedule_manager`, `plan_card` |
 | Plan schedule line; overnight receipt Open | View | `plan_card` |
+| Open plan on a build schedule's row | Command, `cmd.chat.plan.open_version` with the schedule's bound version (DL-157, UCC-176) | `schedule_manager` |
 | Manager tabs, search, status, sort, focused view, all build windows | View | `schedule_manager` |
 | Manager rows | Command, the same as the matching card and Plan card controls | `schedule_manager` |
 | "Pause all automations" switch in Resume & Safety Policy | New, `cmd.runtime.automation_pause.set` with paused true (UCC-174, DL-136). Turning the switch off while paused is the same as Turn back on. | `schedule_manager` |
@@ -14719,7 +14760,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#ACD-484, ContractName:P
 
 ## 5.6 Pro Chat Round Command Census (2026-10-09)
 
-The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616, F3-617 and assistant-chat-design ACD-485) adds no command identity. Every control it adds, moves or retires is a row of this catalog, view state, draft state, a Settings write the Settings owner owns, or a concept demo. Each control's disposition and its surfaces:
+The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616, F3-617 and assistant-chat-design ACD-485) adds no command identity of its own. The one later addition is `cmd.chat.plan.open_version` for a bound Goal's Open exact Plan · Vn, which the owner decided on 2026-10-09 (DL-157, UCC-176). Every control it adds, moves or retires is a row of this catalog, view state, draft state, a Settings write the Settings owner owns, or a concept demo. Each control's disposition and its surfaces:
 
 | Control | Disposition | Surfaces |
 |---|---|---|
@@ -14729,6 +14770,7 @@ The 5.6 Pro chat round (DL-140 to DL-151, FinalGUISpec F3-584 to F3-597, F3-616,
 | Goal Activity Detail: Edit objective; Cancel edit; Objective history | View. Edit swaps in the objective editor; Objective history opens the revision list in place. | Goal Activity Detail |
 | Goal Activity Detail: Save | Command, `cmd.chat.goal.update` (unchanged) | Goal Activity Detail |
 | Goal: Revise Plan on a blocked bound Goal | Command, `cmd.chat.plan.request_revision` (unchanged) | Goal Activity Detail, `goal_hover` |
+| Goal: Open exact Plan · Vn on a bound Goal | Command, `cmd.chat.plan.open_version`, added by the owner's decision DL-157 (UCC-176). It opens that exact version's document and never Plan Details. | Goal Activity Detail (`goal_activity`), `goal_hover` |
 | Goal: View Goal, Details, Ask for a replacement | No producer. DL-147 retires them; `cmd.chat.goal.propose_update` keeps its agent-proposal producer. | — |
 | To-Do row select and expand; Close details | View | To-Dos Activity Detail |
 | To-Do: Open work | Command, `cmd.chat.todos.open_work`, from the selected item's detail only (DL-147) | `todo_activity` |
@@ -14754,12 +14796,14 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
-  The 5.6 Pro chat round adds no command identity. Send and Stop bind cmd.chat.send (delivery_mode queue while busy)
+  The 5.6 Pro chat round adds no command identity of its own; the owner's later decision DL-157 adds
+  cmd.chat.plan.open_version for a bound Goal's Open exact Plan · Vn (UCC-176). Send and Stop bind cmd.chat.send (delivery_mode queue while busy)
   or cmd.chat.stop, exactly one at a time, and a press with nothing to send, or on a full queue, dispatches nothing,
   the full queue showing queue_full. Goal: Pause, Resume and Cancel Goal keep their identities on the preview and the
   panel; the preview's Edit objective is cmd.chat.goal.open_editor from goal_hover only, while Edit, Cancel edit and
   Objective history inside Goal Activity Detail are view state; Save is cmd.chat.goal.update and Revise Plan
-  cmd.chat.plan.request_revision; View Goal, Details and Ask for a replacement have no producer, and
+  cmd.chat.plan.request_revision, and Open exact Plan · Vn on a bound Goal is cmd.chat.plan.open_version from
+  goal_activity and goal_hover, never cmd.chat.plan.open_details; View Goal, Details and Ask for a replacement have no producer, and
   cmd.chat.goal.propose_update keeps its agent-proposal producer. To-Dos: Open work is cmd.chat.todos.open_work from
   the selected detail only, and Start work and Run work have no producer. Every opener of a subagent's read-only live
   transcript (ACD-485) reuses cmd.agents.open_thread (UCC-129) with the child run's thread ref, never a chat-local
@@ -14775,7 +14819,8 @@ split_recommended: false
 depends_on: [UCC-129, UCC-168, UCC-170, ACD-485, F3-587, F3-593, F3-617]
 unblocks: [WM-073, WM-074, WM-075]
 acceptance_criteria:
-  - "No command identity is added for the round, and no chat-local subagent open command or alias exists."
+  - "No command identity is added for the round other than cmd.chat.plan.open_version (DL-157, UCC-176), and no chat-local subagent open command or alias exists."
+  - "A bound Goal's Open exact Plan · Vn dispatches cmd.chat.plan.open_version, never cmd.chat.plan.open_details."
   - "Every subagent opener named by ACD-485 dispatches cmd.agents.open_thread, and no Subagents preview row opens the live transcript."
   - "cmd.chat.goal.open_editor is raised from goal_hover only; Edit inside Goal Activity Detail dispatches nothing."
   - "cmd.chat.todos.open_work is raised from a To-Do's selected detail and never from a row."
@@ -14816,6 +14861,86 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/UI_Command_Catalog.md#UCC-168, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/FinalGUISpec.md#F3-617
+
+## Open Exact Plan Version Command (2026-10-09)
+
+On a Goal bound to a Plan (FinalGUISpec F3-593), Open exact Plan · Vn had no command identity: `cmd.chat.plan.open_details` opens Plan Details, and no row opened a Plan's document. The owner decided on 2026-10-09 that it gets a new command, and on 2026-10-10 that the same command covers every Open plan button (DL-157). The row is in the Assistant Plan Runtime table above; this unit records its contract and its producers.
+
+### UCC-176 - Open Plan And A Bound Goal's Open Exact Plan · Vn Open One Exact Plan Version
+
+```yaml
+plan_unit_id: UCC-176
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  cmd.chat.plan.open_version (Open Plan Version, navigation_wrapper, owner Plans/Assistant_Plan_Runtime.md, request
+  AssistantPlanVersionRoute, result RouteResult, sole future target handlers::assistant_plan::plan_open_version) opens
+  the document of one exact Plan version in the editor. The request carries the assistant_plan_id, plan_version and
+  plan_hash of the Goal's GoalPlanBinding. While that version is still the Plan's version the route opens the Plan's
+  own tab, focusing it when it is already open (APR-014); once a later version exists it opens that version's retained
+  read-only document. It never opens Plan Details, never substitutes a newer version, and changes no Plan, run, Goal,
+  To-Do or artifact state. A version that is not retained, or whose hash no longer matches, returns a typed error and
+  opens nothing. Its producers are exactly a bound Goal's Open exact Plan · Vn in Goal Activity Detail (goal_activity)
+  and in the activity bar's Goal preview (goal_hover), a press from the preview closing the preview, and, by the
+  owner's answer of 2026-10-10, every Open plan button: the Plan card's action row and its Build-started and
+  Plan-revised receipt lines (plan_card), each with the version it names, and a build schedule's row in the
+  Scheduled manager (schedule_manager), with the schedule's bound version. The Plan title, Expand and Details links
+  keep their existing route. Plan Details stays cmd.chat.plan.open_details, which no Goal surface raises. The command
+  emits no event (expected_event_types=[]).
+gui_related: true
+gui_classification_reason: "Gives every Open plan button and the bound Goal's Open exact Plan · Vn their own command, distinct from Plan Details."
+split_recommended: false
+depends_on: [DL-157, F3-593, APR-014]
+unblocks: [CS-088, WM-065, UIW-026]
+acceptance_criteria:
+  - "Open exact Plan · Vn on a bound Goal dispatches cmd.chat.plan.open_version with the binding's plan id, version and hash."
+  - "Every Open plan button (Plan card action row, Build-started and Plan-revised receipts, a build schedule's row) dispatches cmd.chat.plan.open_version with the version its surface names; producers are exactly plan_card, schedule_manager, goal_activity and goal_hover."
+  - "The route opens Vn's document: the Plan's own tab while Vn is current, otherwise Vn's retained read-only document; it never opens Plan Details or a newer version."
+  - "An unretained or hash-mismatched version returns a typed error and opens nothing."
+  - "No Goal surface raises cmd.chat.plan.open_details."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py validate-ui-command-response
+risk_class: chat_command_catalog_gap
+reasoning_tier: high
+context_scope: goal_bound_plan_open_20261009
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+node_compile_hint:
+  mode: chat_composer_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-157"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256 49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only; data-action goal-open-plan-version and pd-open-version)"
+preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
+  - "AssistantPlanVersionRoute"
+  - "handlers::assistant_plan::plan_open_version"
+  - "Open exact Plan · Vn"
+  - "goal_activity"
+  - "goal_hover"
+  - "Open plan"
+negative_constraints:
+  - "Do not bind Open exact Plan · Vn or an Open plan button to cmd.chat.plan.open_details."
+  - "Do not open a newer Plan version in place of the bound one."
+  - "Do not add a chat-local alias for opening a Plan version."
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Assistant_Plan_Runtime.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-157, ContractName:Plans/FinalGUISpec.md#F3-593, ContractName:Plans/Assistant_Plan_Runtime.md#APR-014, ContractName:Plans/Commands_System.md#CS-088, ContractName:Plans/Wiring_Matrix.md#WM-065
+
 
 ## DL-180 to DL-183 — Panel Tabs, Layout, Opening, Terminal Tabs And Duplicate Ids (2026-10-09)
 

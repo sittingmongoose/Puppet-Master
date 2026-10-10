@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2767-L2881
+Source lines: L2767-L2883
 
-Source SHA256: `5813ca0d824299ccb0b877dd8b474068fb8bd33062717a797be4b2d3db660b0c`
+Source SHA256: `474f8f64eab5885dc30c3208079fa79ad09cbe923c81675dc91bee72cb1214c9`
 
 ---
 
@@ -21,9 +21,11 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro chat
-  concept embeds (Inter, Poppins and IBM Plex Mono, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and
-  pmx-system.css) is carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts, whose
-  SOURCE.md lists each file's source and SHA-256. A concept that adds or changes a shared face changes it for
+  concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range script slices, in
+  Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is carried byte for byte by PMConcept7's
+  Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains Mono, src/settings/nier/fonts, where the same files are
+  NieR Mode's PM NieR Mono; src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are
+  generated from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face changes it for
   both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face 5.6 Pro embeds is missing
   from src/fonts byte for byte. Which faces each theme family uses stays F3-430's; this rule only fixes that the
   concepts do not keep two versions of the same face.
@@ -33,7 +35,7 @@ split_recommended: false
 depends_on: [F3-430, DL-161]
 unblocks: []
 acceptance_criteria:
-  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts with the same SHA-256."
+  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts or src/settings/nier/fonts with the same SHA-256."
   - "build.py --check reports a missing or changed shared face as a failure."
 validation_surfaces:
   - python3 Concepts/onboarding/opus-5.5/tools/build.py --check

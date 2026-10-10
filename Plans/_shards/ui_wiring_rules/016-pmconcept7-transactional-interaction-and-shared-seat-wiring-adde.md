@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L771-L891
+Source lines: L771-L899
 
-Source SHA256: `4c1dd01297a065808ec216a3774a89bb2bd9824fdcb1e56f8f5fb9a0247f1e5a`
+Source SHA256: `7305e454af529789b29d5c19b50a0321546bce0b4d090dbdcd8d0699110160c5`
 
 ---
 
@@ -13,7 +13,7 @@ Source SHA256: `4c1dd01297a065808ec216a3774a89bb2bd9824fdcb1e56f8f5fb9a0247f1e5a
 The recovered PMConcept7 direct-manipulation controls use one transactional UI sequence:
 
 1. Snapshot the owner projection and acquire pointer capture or the equivalent keyboard transaction.
-2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen.
+2. Render fixed/portal preview geometry, ghost, placeholder, target, and motion state locally; Usage pointer resize advances its real target footprint and repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize keeps peers frozen; Usage board gravity is not previewed and is applied at settle inside the one commit of step 3 (`Plans/Widget_System.md#WS-019`).
 3. Resolve the final pointer/keyboard coordinate and committed semantic target on release.
 4. Dispatch exactly one existing command only when the semantic result changed.
 5. Reconcile owner result/event/receipt, persist settled state once, then release capture and clear every preview class, portal, placeholder, ghost, pending animation frame, and transient listener.
@@ -27,7 +27,11 @@ actions use the existing catalog rows. Event-primary callers normalize to usage_
 PMConcept7 Ledger attempt row normalizes to usage_attempt/attempt_id without `OpenSubject` and retains
 usage_event_ref plus provider/account/runtime refs as correlation.
 Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
-invented route kind.
+invented route kind. On the redesigned Usage Accounts room the card body and Details stay local; Use this account
+dispatches `cmd.account.select_profile` and each provider's Auto-switch toggle and switch level commit through the Settings
+transaction pair at scope provider (`Plans/UI_Command_Catalog.md#UCC-147`, `Plans/Settings_System.md#SSYS-044`).
+Usage Tidy is one settled layout transaction: steps 3 to 5 run once for the whole repacked room, with exactly one
+existing `cmd.widget.move` and one receipt, never one move per card; a Tidy that changes nothing follows step 6.
 
 Amended 2026-10-09 (DL-180): on Home the chat is a fixed column on the right, from the title bar to the status bar
 (F3-637); it has no saved Home dock and never moves inside the window. Pop out into its own window (desktop
@@ -64,27 +68,31 @@ canonical_text: >-
   cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
   transaction carries every panel and tab gesture of the universal panels (a tab drag, a
   panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
-  own window is its only relocation, and the same node/store serves that window. Usage card body magnetism remains active, but
-  move/resize acquisition uses the controls' measured base-coordinate zones, continuous
-  translation attenuation, and at most one pointer-id/time/bounds-scoped document-capture
-  handoff to the existing controller. Direct and rescued activation clear that lease before
-  pointer capture. Rescue additionally requires the current top hit to remain inside the
-  remembered card, so an intervening overlay owns its pointerdown and clears the stale lease.
-  Concurrent resize/reorder entry is rejected before mutation; unrelated interactives, expired
-  or foreign-pointer leases, cancellation, no-op, and settlement cannot leave a latent activation path.
+  own window is its only relocation, and the same node/store serves that window. Usage
+  plates carry no magnet (F3-465), so move/resize acquisition is direct on the painted
+  controls: a pointerdown on a move or resize control starts the existing controller with
+  pointer capture, with no translation attenuation, no acquisition lease, and no
+  document-capture handoff. A pointerdown that an intervening overlay or an unrelated
+  interactive receives belongs to that target and starts no widget operation. Concurrent
+  resize/reorder entry is rejected before mutation; unrelated interactives, cancellation,
+  no-op, and settlement cannot leave a latent activation path.
   Usage pointer-resize preview uses the shared target-first slot projection to advance the real placeholder
-  footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order,
-  and effect-spy silence. An accepted release retains the exact last-painted topology once; rollback restores
-  the snapshot. Dashboard resize retains frozen peers.
+  footprint and visibly repack only occupied neighbors while retaining peer node identity, paint, DOM order, and
+  effect-spy silence. An accepted release commits once: the last-painted topology with only Usage board gravity
+  applied at settle inside that one commit (WS-019), so the active card settles where the preview showed it; rollback restores the snapshot. Dashboard resize retains frozen peers. Usage Tidy runs
+  the same commit sequence once for the whole repacked room and dispatches exactly one existing cmd.widget.move with
+  one receipt. On the Usage Accounts room the card body and Details stay local, while Use this account and the
+  provider Auto-switch toggle and switch level dispatch their owner commands (UCC-147).
 gui_related: true
 gui_classification_reason: The unit governs direct manipulation, cleanup, cross-page Assistant seating, and visible state continuity.
 split_recommended: false
 depends_on: [UIW-010, UIW-011, CS-068, UCC-147, WM-045]
 unblocks: [DR-039, ACD-448]
 acceptance_criteria:
-  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition preserves body magnetism, neutralizes translation continuously only around measured control zones, uses no synthetic pointerdown or second controller, requires rescued pointerdown top-hit ownership by the remembered card, lets an intervening overlay receive the event while clearing that stale lease, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and clears the short pointer-specific acquisition lease on every direct/rescued activation and terminal path.
+  - Pointer and keyboard preview state remains local; Usage pointer resize advances the target footprint and visibly repacks only obstructed peers, Usage reorder displaces affected peers, and Dashboard resize peers remain frozen. Every preview preserves mounted peer identity, paint, DOM order, and effect-spy silence; Usage move/resize acquisition is direct on the painted controls of plates that carry no magnet (F3-465), with no translation attenuation, acquisition lease, synthetic pointerdown, or second controller; it lets an intervening overlay receive its pointerdown and start no widget operation, excludes unrelated interactive targets, rejects every concurrent operation before mutation, and leaves no latent activation path after any activation or terminal path.
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
+  - "Usage board gravity is not previewed: the held preview moves only the obstructed peers the first criterion names, the accepted release commits that painted layout with gravity applied at settle inside the same single command, shown cards float up into holes in reading order only after release, and no extra command, receipt, or write follows; Usage Tidy dispatches exactly one cmd.widget.move for the whole repacked room."
   - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
   - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock. (Amended 2026-10-09, DL-180 - the saved Home dock is now the fixed chat column, and the same identity holds across Pop out and Dock back.)
   - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
@@ -118,7 +126,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not dispatch or persist pointer-preview frames.
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
-  - Do not let magnet translation move a Usage handle away during acquisition or let an occluded, stale, expired, foreign-pointer, or other-interactive lease start a widget transaction; do not allow two widget-operation controllers to coexist.
+  - Do not give the Usage plates a magnet, an acquisition lease, or a document-capture handoff, or let an occluded pointerdown or one on another interactive start a widget transaction; do not allow two widget-operation controllers to coexist.
   - Do not clone the Assistant node, controller, transcript store, or context store.
   - Do not move, dock or float the chat inside the window; Pop out is its only relocation (DL-180).
   - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.

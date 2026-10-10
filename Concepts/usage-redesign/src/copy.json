@@ -1,0 +1,109 @@
+{
+  "page": {
+    "title": "Usage"
+  },
+  "head": {
+    "panels": "{n} panels",
+    "scope_all": "All current usage",
+    "refresh": "Refresh usage",
+    "export": "Export usage"
+  },
+  "board": {
+    "empty_level": "No panels at {level}. {holder} holds this room's panels.",
+    "empty_none": "No panels are shown in this room. Use Panels to show one again.",
+    "not_built": "{kind} · {w} x {h}",
+    "moved": "Moved to column {x}, row {y}",
+    "resized": "Resized to {name}, {w} by {h}",
+    "picked": "Picked up {name}. Arrows move it, Enter drops it, Escape puts it back.",
+    "resizing": "Resizing {name}. Arrows change the size, Shift steps through the presets, Enter keeps it, Escape cancels.",
+    "cancelled": "{name} is back where it was",
+    "rejected": "The layout change was not accepted, so the panel went back",
+    "more_detail": "shows more",
+    "less_detail": "shows less",
+    "grip": "Move panel (drag, or Enter then arrows)",
+    "size_tool": "Panel size",
+    "gear_tool": "Configure panel",
+    "menu_tool": "Panel options"
+  },
+  "cardmenu": {
+    "size": "Size",
+    "configure": "Configure…",
+    "configure_sub": "Time window, providers and how it draws",
+    "fit": "Fit rows",
+    "fit_sub": "Height that shows every row",
+    "details": "Show details",
+    "details_sub": "Every fact behind this panel",
+    "move": "Move with the keyboard",
+    "move_sub": "Arrows move it, Enter drops it",
+    "resize": "Resize with the keyboard",
+    "resize_sub": "Arrows change the size, Enter keeps it",
+    "tidy": "Tidy this room",
+    "tidy_sub": "Move every panel up into free space",
+    "hide": "Hide panel",
+    "hide_sub": "Show it again from Panels",
+    "current_size": "{name} · {w} x {h}",
+    "custom_size": "{w} x {h}"
+  },
+  "gear": {
+    "title": "Configure",
+    "range": "Time window",
+    "range_follow": "Follow the page",
+    "range_follow_sub": "Uses the range in the head ({range})",
+    "range_fixed_sub": "Always this window",
+    "scope": "Providers",
+    "scope_follow": "Follow the scope",
+    "scope_follow_sub": "Uses the scope in the head ({scope})",
+    "note": "Changes how this panel shows its data. Nothing is sent anywhere."
+  },
+  "customize": {
+    "tidy": "Tidy this room",
+    "tidy_sub": "Move every panel up into free space",
+    "reset_room": "Reset this room",
+    "reset_room_sub": "Restore the curated layout of this room",
+    "reset_all": "Reset every room",
+    "reset_all_sub": "Restore every room's curated layout and panels"
+  },
+  "export": {
+    "snapshot": "Usage snapshot",
+    "snapshot_sub": "puppet-master-usage.json · room, range, scope and attempts",
+    "ledger": "Ledger",
+    "ledger_sub": "puppet-master-usage-ledger.json · attempts in the range"
+  },
+  "toast": {
+    "refreshed": "Usage refreshed just now",
+    "detail": "{level} shows {n} panels",
+    "range": "Range changed to {range}",
+    "scope": "Scope changed to {scope}",
+    "reset": "Usage layout reset",
+    "tidied": "Panels moved up into free space",
+    "hidden": "{name} hidden. Show it again from Panels.",
+    "shown": "{name} shown",
+    "exported": "Saved {file}",
+    "export_failed": "The export could not be saved",
+    "saved_settings": "Saved to Settings > AI > Providers & Accounts"
+  },
+  "inspector": {
+    "close": "Close details",
+    "curated": "Curated",
+    "raw": "Raw",
+    "raw_note": "Every field as recorded. Credential handles are masked."
+  },
+  "live": {
+    "on": "Live",
+    "paused": "Paused",
+    "tag_title": "Live readings",
+    "tag_on": "Demo readings change about every 6 seconds while Usage is open. Click to pause. Demo readings from the concept's demo engine; no real account is read.",
+    "tag_paused": "Live readings are paused. Click to resume. Demo readings from the concept's demo engine; no real account is read.",
+    "menu_title": "Live readings",
+    "menu_on": "Live readings on",
+    "menu_on_sub": "A few readings change about every 6 seconds",
+    "menu_off": "Pause live readings",
+    "menu_off_sub": "Readings stay as they are until you resume",
+    "menu_hour": "Play the next hour at 60x",
+    "menu_hour_sub": "One demo minute per second: resets, a cooldown, an auto-switch",
+    "menu_now": "Back to now",
+    "menu_now_sub": "Return to the current readings",
+    "menu_foot": "Demo readings from the concept's demo engine. No real account is read.",
+    "demo_time": "Demo time {time}"
+  }
+}

@@ -176,6 +176,38 @@ Plans.
   **Custom mix** (`recipe: -1`) so those family picks are not mislabeled as
   PM7 Refined. **Reset all** restores this mix.
 
+## First paint: the stored look from the first frame
+
+The first painted frame is the viewer's stored look, in all ten themes, NieR
+with any parts and under reduced motion (2026-10-09, PMConcept7's first-paint
+pattern against this page's own store). A reader in `<head>`, before the
+stylesheet (written by `build.py`), reads, and never writes, the stored theme
+(`pm56-prefs`, Basic Dark when there is none) and NieR's parts (`pm56-nier`,
+all 29 when there are none). For NieR it writes the `data-o55-nier` and
+`data-o55-nier-parts` attributes on `<html>`, and for every look it adds a
+small sheet that paints the look's ground on `<html>`. The first child of
+`<body>` then writes `body[data-theme]` (Basic in the right mode for a NieR
+theme) and removes that sheet, so from there the stylesheet paints the look,
+Glass's mesh included. Chrome would paint one frame as soon as `<body>` exists,
+before that script runs; a `<link rel="expect" href="#pmRoot"
+blocking="render">` holds rendering until `#pmRoot`, just after it, is parsed,
+and the ground sheet covers a browser that ignores it. It
+stores nothing and keeps no global copy of the theme; `app.js` and `nier.js`
+still own the look and write the same values on their first render. Motion has
+no stored setting here (reduced motion is the system's), so nothing writes
+`data-motion`. Until this change every open painted Chrome's dark default
+(#121212) until the app's first render, 1.3 to 1.7 s in, which flashed the
+whole window for a Light theme.
+
+- The NieR boot log plays as it did: when the page opens in a NieR theme with
+  Boot sequence installed and motion allowed. It arrives in the same frame as
+  the app, so the app never shows before it, and frame 1 is already the log's
+  own ground. The reboot moment never plays on a reload; it belongs to a
+  person's switch into or out of NieR.
+- The pinned history drawer stays in place from the first frame.
+- When the chat is ported into PMConcept7, PMConcept7's head boot script owns
+  first paint, and this reader is dropped.
+
 ## NieR Mode (NieR Light and NieR Dark)
 
 Demo Studio's theme list ends with **NieR Dark** and **NieR Light**, after the
@@ -314,9 +346,20 @@ Basic) never reaches it.
   and More details controls, **scroll-to-bottom**) uses the app **hover card**,
   not a native `title` tooltip. The popup is a **24px selector-style pill**
   (`surface-3`, 1px border, 9px radius, 12px type). Icons themselves stay
-  icon-only; the name appears on hover. Rows inside an open Activity Bar
-  preview keep native titles, because a hover card there would replace the
-  preview under the pointer.
+  icon-only; the name appears on hover.
+- **Previews are the one exception** (Jared, 2026-10-09; Plans DL-157,
+  F3-590, UIW-013). The chat shows one hover surface at a time, so a hover card
+  inside an open Activity Bar preview would replace the preview under the
+  pointer: nothing inside an open preview opens one. The Subagents rows keep
+  the native title "Open <agent>", the Artifacts rows "Open <artifact>", the
+  Changes rows "<path> — <summary>", and the Crew member rows (shown while no
+  Crew run is live) the member's name. The Goal preview's controls (Pause or
+  Resume, Edit — accessible name "Edit objective" — Cancel Goal, Open exact
+  Plan · Vn, Revise Plan, Objective history), the To-Do rows and their
+  more-items and blocked lines, a collaboration kind's run rows, a live Crew
+  run's rows and every preview head have no title and no hover card. Outside
+  an open preview the rule holds: the Goal panel's Edit and a To-Do row in
+  Activity Detail keep their hover cards.
 - Persona / Model / Mode / Permissions always use the hover card too, with a
   short action line (`Persona · …`, `Model · …`, `Mode · …`,
   `Permissions · …`) whether the chip is labeled or icon-only.
@@ -646,15 +689,17 @@ The concept implements it:
 - Sending while the agent is working **enqueues** the draft (FIFO, **max 2**).
   The queue is transient (not restored across reload). When the queue is full,
   the draft stays in the composer and Send refuses a third entry.
-- The queue sits **in flow with the activity bar**, immediately above the
-  composer and **below** an open Plan / questionnaire host. It is not a
-  full-width layout stripe. When the bar is hidden (no live domains on that
-  thread), the queued rows still occupy that same stack. Live order is
-  transcript → **decision (when open)** → activity bar + queue (in-flow
-  pill) → composer. `--chat-dock-h` is the composer height; `--decision-h` is
-  the open decision-host height used to lift scroll-to-bottom above that host.
-  The bar no longer overlays the thread, so the last message does not need extra
-  `--thread-float-h` padding to clear the chrome.
+- The queue sits **with the activity bar** in one stack that floats on the
+  transcript, just above the composer and **above** an open Plan /
+  questionnaire host, which lifts it (2026-10-09: this replaces the older
+  in-flow order, transcript → decision → bar → composer, which the float
+  superseded). It is not a full-width layout stripe. When the bar is hidden
+  (no live domains on that thread), the queued rows still occupy that same
+  stack. Bottom to top: composer → **decision (when open)** → activity bar +
+  queue → transcript. `--chat-dock-h` is the composer height; `--decision-h` is
+  the open decision-host height, which lifts the bar and queue and the
+  scroll-to-bottom control above that host. The transcript keeps
+  `--thread-float-h` of bottom padding so the last message clears the stack.
   Each row has an **Edit** pencil (returns the text to the composer and removes
   the entry) and a **Send now** arrow (steers: sends that entry immediately).
   Otherwise the next entry sends when the current run **completes** (not when
@@ -747,6 +792,13 @@ when the body has no room above it. Under NieR a description on the menu cursor
 is paper, like its label. Short questionnaires look exactly as before. Demo
 Studio → Questions and decisions → **Long answers questionnaire** opens the
 deployment questionnaire written long to see all of this.
+
+The other questionnaire takes in Demo Studio (#1 to #8) fit long answers the
+same way (2026-10-10): each stops at the decision area's height and scrolls its
+body, with its actions in view and clickable. Before, long answers pushed every
+take past that height and its actions were cut off; Anchored Sheet's sat more than
+400px below the visible edge. In a narrow chat column, Evidence Split keeps two
+lines of the question and its actions, and the evidence strip gives way first.
 
 ## Overlay menus
 
@@ -1009,7 +1061,11 @@ on the left and **Cancel Goal**, in danger ink, alone at the far edge (Edit's
 accessible name is "Edit objective", its hover card in the panel says so, and
 it reads **Edit objective** wherever the row is at least 300px wide, as in the
 Activity Bar preview); the bound Plan's **Open exact Plan · Vn** (and **Revise
-Plan** while the Goal is blocked) when the Goal is bound; and an **Objective
+Plan** while the Goal is blocked) when the Goal is bound. Open exact Plan · Vn
+(`goal-open-plan-version`; product command `cmd.chat.plan.open_version`, Plans
+DL-157) opens that exact version: the Plan's own editor tab while Vn is still
+its version, otherwise Vn's retained read-only document. It never opens Plan
+Details or a newer version, and pressed in the preview it closes the preview; and an **Objective
 history** disclosure as its footer, with the revision count, which opens the
 history inline without leaving the compact projection. There is no View Goal
 route, no **Details** button and no Ask for a replacement. Editing the
@@ -1421,6 +1477,15 @@ The Plan is a transcript card because it is a human-readable deliverable. It is
   **Build**, **Revise** (only while the Plan is Ready) and **Open plan**. It
   sits on the card's content edge with the card's own padding below it. There
   is no tinted band and no inset of its own.
+- **Open plan opens the version it names** (`pd-open-version`; product command
+  `cmd.chat.plan.open_version`, Jared 2026-10-10, Plans DL-157). On the card it
+  is the card's version; on a "Build started" or "Plan revised" line, the
+  version in that line; on a build schedule's row in Scheduled, the schedule's
+  bound version. While that version is the Plan's version it opens the Plan's
+  own tab; once a later version exists it opens that version's retained
+  read-only document, so the V1 "Build started" line still shows V1 after a
+  revision. It never opens Plan Details. The Plan title, Expand and Details
+  links still open the Plan's tab (`pd-info`).
 - **One action row everywhere a Plan shows actions.** The transcript card's
   footer, the editor's sticky footer and its More row, the compact
   Completed/Canceled card, a Building plan's attention actions (Resume,
@@ -1639,7 +1704,17 @@ Each module supplies only its own content.
   no uppercase micro-labels, no initials avatars, no emoji.
 - **Fonts.** Every surface uses its theme's own font, as PMConcept7 assigns it:
   Inter in basic and glass, Poppins in friendly, and IBM Plex Mono for
-  everything in retro only. There is no separate display face and no italic
+  everything in retro only. Code text (code blocks, inline code, command lines,
+  logs, hashes and every other `--font-mono` text) is JetBrains Mono in basic,
+  glass and friendly, the code face the home redesign designates; retro's
+  code text stays IBM Plex Mono, like everything else in retro. Every face carries the scripts its
+  family supports, as `unicode-range` slices that are decoded only when a page
+  uses them: Inter and JetBrains Mono add Latin Extended, Vietnamese, Cyrillic
+  and Greek; Poppins adds Latin Extended and Devanagari; IBM Plex Mono adds
+  Latin Extended, Vietnamese and Cyrillic; NieR Mode's faces add theirs the
+  same way. The files are PMConcept7's, byte for byte (DR-050). Scripts no
+  family carries (Arabic, Hebrew, Thai, Chinese, Japanese, Korean) use the
+  computer's fonts. There is no separate display face and no italic
   voice. The "voice" roles (read-backs, result headlines, pull-quotes, run-view
   headings) differ only by size, weight (620; 600 in retro and friendly) and
   colour, and a quote is marked by quotation marks and the muted colour.
@@ -2277,7 +2352,8 @@ and deliberately not in the Multi-Agent Workflows group. It is never a card.
   countdown when the reset is unknown; "**Paused** · …" for a build you
   paused; and "**Schedule ended** · you started this build now, so the
   schedule won’t start a second one." after Build runs the version the
-  schedule was bound to. That last state offers no "Use V…": there is no new
+  schedule was bound to (wording approved by Jared, 2026-10-09; Plans
+  DL-157). That last state offers no "Use V…": there is no new
   version to rebind to, so its link reads Details rather than Review.
 - **Its layout.** The canon token is the first row, in the text colour, with
   **Details** (**Review** when a new version is waiting) beside it. Details

@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L834-L4678
+Source lines: L834-L4684
 
-Source SHA256: `d2a7eb5beb660e11a81cd2336f1430121ced46fcd02ea15970a91be3e4b9391a`
+Source SHA256: `474dbbcfa80086acff88f62eed476ea5d59059858f58dce18df44ea073b13628`
 
 ---
 
@@ -2315,6 +2315,7 @@ compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Priority and stickiness rules align GUI ordering with requested/effective runtime selection.
+- "Refined 2026-10-09 by MA-073 for a provider's threshold auto-switch: the target there is the eligible account of the same provider with the most remaining, and this unit's priority order, then the account id, only breaks ties; MA-073 owns that rule."
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
@@ -3070,7 +3071,10 @@ owner_doc: Plans/Multi-Account.md
 canonical_text: Usage and status surfaces show current effective account/profile, effective auth mode, billing/entity context,
   pressure/cooldown state, source-confidence/stale/estimated labels, and switch/failover reason. Plans/usage-feature.md
   consumes this account/provider owner contract and must not reintroduce stale buckets or flatten direct-provider quota
-  context into one generic account label.
+  context into one generic account label. Usage's Accounts room and its Plans & limits room (consumer note 2026-10-09,
+  Plans/Decision_Log.md#DL-174) show one row per account of each provider, every account signed in to that provider and
+  not only the active one, grouped under the provider in the Settings provider catalog's order, each with its own
+  windows, reading source and freshness; per-provider auto-switch on those rows follows MA-073.
 gui_related: true
 gui_classification_reason: The unit defines user-visible usage/status surface fields and labels.
 split_recommended: false
@@ -3081,6 +3085,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Usage/status surfaces show account, auth, billing/entity, pressure/cooldown, confidence, and switch reason fields.
 - Plans/usage-feature.md remains a consumer and does not flatten provider quota context.
+- Usage's Accounts and Plans & limits rooms list every account of a provider as its own row (for example three ChatGPT / Codex accounts as three rows), never only the active account.
 - Usage rows prefer plain-language statuses or concrete failure reasons over transport-internal terminology.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -3114,6 +3119,7 @@ stale_retired_dispositions:
 - source-confidence, stale, or estimated labels are retained when data is not authoritative.
 owner_boundary_notes:
 - Plans/usage-feature.md consumes the Multi-Account account/provider owner contract.
+- Plans/usage-feature.md#UF-107 consumes the one-row-per-account rule for the Usage Accounts and Plans & limits rooms; Plans/Multi-Account.md#MA-073 owns the per-provider auto-switch those rows show.
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:

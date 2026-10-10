@@ -14,11 +14,11 @@
   position: relative; display: flex !important; align-items: center; gap: var(--d-gap); flex-wrap: nowrap;
   min-height: var(--d-head-h); margin: 0 !important; padding: 0 calc(var(--d-in) + var(--d-pad)) !important;
   border-radius: 0 !important; box-shadow: none !important;
-  background: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
-  transition: background-color var(--d-t1) var(--d-ease);
+  background-color: color-mix(in srgb, var(--cat, var(--accent-blue)) var(--d-shelf-head), transparent) !important;
+  background-image: none !important; transition: background-color var(--d-t1) var(--d-ease);
 }
-§ .sh-shelf > .sh-head[data-collapse] { cursor: pointer; }
-§ .sh-shelf > .sh-head[data-collapse]:hover { background: color-mix(in srgb, var(--cat, var(--accent-blue)) calc(var(--d-shelf-head) + 6%), transparent) !important; }
+/* (the shell's own .sh-head[data-collapse] { cursor: pointer } stays in charge, so NieR's Square pointer part reaches heads) */
+§ .sh-shelf > .sh-head[data-collapse]:hover { background-color: color-mix(in srgb, var(--cat, var(--accent-blue)) calc(var(--d-shelf-head) + 6%), transparent) !important; }
 § .sh-shelf > .sh-head:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -3px; }
 § .sh-head > .sh-accchev { width: 10px; height: 10px; margin: 0 -1px 0 -1px; color: var(--d-text-2); }
 § .sh-head > .sh-hico {
@@ -59,6 +59,16 @@
   transition: grid-template-rows var(--d-t3) var(--d-spring), opacity var(--d-t2) var(--d-ease) !important;
 }
 § [data-acc]:not(.open) > :is(.sh-accb, .sh-wt-b) { transition: grid-template-rows var(--d-t2) var(--d-ease), opacity var(--d-t1) var(--d-ease) !important; }
+/* A view that a click brings in comes in with its boxes already open: no replay of their open animation.
+   - The shell's mouseup listener (remeasureOpenAccordions) pins every open body in the slot to its measured height and
+     lets go on the next frame.
+   - A body in a pane or panel that is still hidden measures 0 px. So when the click that follows showed it, letting go
+     replayed the body's open transition. px to fr does not interpolate, so the body sat at 0 px for half of it, a
+     Retro print measured its box collapsed, and the lines came in bunches.
+   - Only a real mouse sends mouseup: element.click() and the Arrow keys never showed it.
+   For the two frames of a tab click (data-d-fitview, 31-tabs) and of a panel switch (data-d-viewin, 30-motion), the
+   bodies in the slot take their height without a transition. */
+§R #sidePanelSlot:is([data-d-fitview], [data-d-viewin]) .side-panel-view [data-acc] > :is(.sh-accb, .sh-wt-b, .cr-acc-b) { transition: none !important; }
 § .sh-accchev, § .sh-wt-h > .chev, § .fm-cchev, § .fm-chevron {
   transition: transform var(--d-t2) var(--d-spring) !important;
 }
@@ -70,3 +80,10 @@
   border: 0 !important; background: color-mix(in srgb, var(--d-warn) 10%, transparent) !important;
   font: 400 var(--d-fs-meta)/1.4 var(--body-font) !important; color: var(--d-text) !important;
 }
+/* heads that keep their count and actions in a trail (.sh-htrail: count + buttons): stacked, the trail opens up so the
+   count drops under the label and the buttons stay on the first line */
+§ .sh-shelf > .sh-head[data-d-stack] > .sh-htrail { display: contents; }
+§ .sh-head[data-d-stack] > .sh-htrail > .sh-hcount {
+  order: 9; flex: 1 1 100%; margin-left: var(--d-stack-x, 24px) !important; white-space: normal; overflow-wrap: anywhere; text-align: left;
+}
+§ .sh-head[data-d-stack] > .sh-htrail > .sh-hacts { margin-left: auto; }

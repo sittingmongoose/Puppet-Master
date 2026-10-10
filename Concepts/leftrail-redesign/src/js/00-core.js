@@ -2,7 +2,7 @@
    Concept files run in their own wrapper and use only window.PMR; core files share one scope. */
 
 const PMR = window.PMR = window.PMR || {};
-PMR.version = 'concept-round-2026-10-02';
+PMR.version = 'polish-published-2026-10-09';
 
 /* ---------- DOM builder ------------------------------------------------------------------------------------------ */
 /* h('div.pmr-row.is-open', { attrs }, child, [children], 'text')

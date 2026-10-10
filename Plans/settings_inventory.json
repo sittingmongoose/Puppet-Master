@@ -2726,7 +2726,8 @@
    "default": true,
    "scope": [
     "global",
-    "project"
+    "project",
+    "provider"
    ],
    "tier": "simple",
    "recommended": true,
@@ -3144,6 +3145,7 @@
    "scope": [
     "global",
     "project",
+    "provider",
     "account"
    ],
    "tier": "advanced",
@@ -3167,6 +3169,7 @@
    "scope": [
     "global",
     "project",
+    "provider",
     "account"
    ],
    "tier": "advanced",
@@ -3231,6 +3234,9 @@
    "type": "text",
    "default": "provider defaults",
    "scope": [
+    "global",
+    "project",
+    "provider",
     "account"
    ],
    "tier": "advanced",

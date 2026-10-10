@@ -1,18 +1,26 @@
 /* Generic NieR Mode hooks for every concept. Tag elements, don't grow selector lists:
-   .pmr-cur     hover / chosen item becomes the ink bar with paper text (part "cursor"); the square cursor and its tick
-                sound come from the Settings script's cursor list, which the layer extends with .pmr-cur
+   .pmr-cur     hover / chosen item becomes the ink bar with paper text (part "cursor"); the square cursor, its tick
+                sound and the paper text's class come from the Settings script's cursor list, which lists .pmr-cur
+                (opus-5.5 kit.d/19-nier-parts.js CURSOR_SEL, since 2026-10-09)
    .pmr-chosen  places a click chooses (tabs, rows): the brackets lock on
    .pmr-strip   items in a horizontal strip: the square cursor sits under them
    .pmr-head    a section heading: YoRHa capitals with a hairline rule (part "headers")
-   .pmr-title   a panel title band (part "headers") */
+   .pmr-title   a panel title band (part "headers")
+   The cursor follows the app (opus-5.5 styles.d/14-nier-parts.css, kit.d/19-nier-parts.js, 2026-10-08): the item's own
+   ink stays on :hover, which restyles only that element; its paper text follows .o55np-cur-over, the class the Settings
+   script puts on the hovered cursor-list item (pointerover / pointerout, and once from :hover when the part turns on,
+   so a pointer already resting on a row gets its paper text). A :hover followed by a descendant would make Blink
+   restyle the whole subtree of every element whose hover changes. Chosen items keep their own branches. */
 html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; border-color: var(--o55-nier-ink) !important;
   box-shadow: none !important; text-shadow: none !important;
 }
-html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) :where(*) {
+html[data-o55-nier-parts~="cursor"] .pmr-cur.o55np-cur-over:not([aria-disabled="true"]) :where(*),
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(.is-current, [aria-current="true"], [aria-selected="true"]):not([aria-disabled="true"]) :where(*) {
   color: inherit !important; -webkit-text-fill-color: currentColor;
 }
-html[data-o55-nier-parts~="cursor"] .pmr-cur:is(:hover, .is-current, [aria-current="true"], [aria-selected="true"]) :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span) { color: var(--o55-nier-on-ink) !important; }
+html[data-o55-nier-parts~="cursor"] .pmr-cur.o55np-cur-over :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span),
+html[data-o55-nier-parts~="cursor"] .pmr-cur:is(.is-current, [aria-current="true"], [aria-selected="true"]) :is(.pmr-glyph, .pmr-letter, .pmr-status, .pmr-diff span) { color: var(--o55-nier-on-ink) !important; }
 html[data-o55-nier-parts~="headers"] .pmr-head { text-transform: uppercase; letter-spacing: .14em; font-weight: 600; }
 html[data-o55-nier-parts~="headers"] .pmr-title { text-transform: uppercase; letter-spacing: .16em; }
 html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-running: var(--o55-nier-ink); --pmr-st-stopped: rgba(var(--o55-nier-ink-rgb), .55); }

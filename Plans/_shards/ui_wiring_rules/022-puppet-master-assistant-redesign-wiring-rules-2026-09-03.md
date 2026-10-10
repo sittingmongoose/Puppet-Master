@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L1202-L1267
+Source lines: L1211-L1278
 
-Source SHA256: `4c1dd01297a065808ec216a3774a89bb2bd9824fdcb1e56f8f5fb9a0247f1e5a`
+Source SHA256: `7305e454af529789b29d5c19b50a0321546bce0b4d090dbdcd8d0699110160c5`
 
 ---
 
@@ -15,6 +15,8 @@ The Assistant redesign adds fifty-five production-intent wiring rows under the `
 **One producer, one command, one handler.** Every mutating Assistant control names exactly one registered command ID and exactly one sole future target handler. A control that cannot name a registered command renders disabled with `command_not_registered`. A page-local action ID, an alias, a fixture, a client timer, or a toast may never stand in for an unregistered command, and a successful-looking receipt may never be produced by the surface itself.
 
 **View-local intents are declared, not disguised.** Three rows carry a view-local or owner-internal effect rather than a user-facing command: composer text entry updating the `ComposerBuffer`, parent To-Do expansion, and Plan view switching between Rich Text and Markdown. Each is declared explicitly as `(view-local intent)` in its wiring row. A view-local intent must not emit a domain event, must not write a `TodoTransition`, and must not be presented in the catalog as a command.
+
+The redesigned Usage page (2026-10-09) is not an Assistant redesign row, but its view-local controls follow the same declaration: Live / Paused is a view-local intent with no catalog command or production wiring row, as `Plans/UI_Command_Catalog.md#UCC-147` records, and the concept's demo controls take the lab-only disposition `Plans/usage-feature.md#UF-107` owns.
 
 **Availability and disabled reason come from the owner.** Every row reads `state.assistant_redesign.<selector>.availability` and `state.assistant_redesign.<selector>.disabled_reason` from its semantic owner before dispatch. A surface that cannot read the owner projection renders the control disabled rather than optimistic, and it announces the exact owner reason rather than a generic one.
 

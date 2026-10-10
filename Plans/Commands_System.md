@@ -4780,7 +4780,16 @@ canonical_text: >-
   a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
   dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
-  `pm.settings_route_request.v1` target and exact-return identity.
+  `pm.settings_route_request.v1` target and exact-return identity. The one exception (2026-10-09,
+  Plans/Decision_Log.md#DL-174) is a bound Settings control that the redesigned Usage Accounts room hosts in
+  place, which UF-092 carves out and SSYS-044 owns: each provider's Auto-switch toggle and switch level commit
+  through the Settings owner's cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
+  provider, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
+  level and rest period included, still dispatches cmd.settings.open. On the same room an account's Use this
+  account control dispatches the existing account profile selection command, cmd.account.select_profile, as a
+  labelled override; it is an explicit account action, shown only where the provider supports choosing the active
+  account by hand, and never a page-scope pick. Live / Paused is view state like disclosure and range, and adds no
+  command (UF-107).
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -4791,6 +4800,7 @@ acceptance_criteria:
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
   - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
+  - "Every Usage Settings change dispatches cmd.settings.open except a provider's Auto-switch toggle and switch level on the Accounts room, which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply at scope provider and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -4811,9 +4821,12 @@ source_lineage:
   - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (u11 Prism II Usage concept; source-lineage-only)"
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md
+  - Plans/Decision_Log.md#DL-174
 preserved_exact_tokens:
   - cmd.usage.forecast.request
   - cmd.settings.open
+  - cmd.settings.transaction.preview
+  - cmd.settings.transaction.apply
   - pm.settings_route_request.v1
   - none_pending_event_authority
   - missing_event_registration
@@ -4823,6 +4836,7 @@ negative_constraints:
   - Do not present a forecast as a quota run-out date or a countdown.
   - Do not promote a view-local disclosure, scope, range, or filter selection into a command.
   - Do not dispatch the account profile selection command for a read-only view-scope change.
+  - Do not write a Settings-owned value from Usage except through the Settings owner's transaction for a bound control SSYS-044 names.
   - Do not dispatch cmd.nav.open_usage_subject without the stable selector required by its event-primary or attempt-primary branch, attach OpenSubject to either cmd.nav selector branch, or promote a current PMConcept7 aggregate card presentation id into route identity; the pre-existing artifact route/open bridge remains separately owned.
 owner_hints:
   - Plans/Commands_System.md
@@ -4850,6 +4864,10 @@ The canonical dispositions are:
 | Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
 | Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
 | Usage room, scope, range, disclosure, More-menu state, and per-widget filters | local projection (`view_only`) | No command, command receipt, persisted event, or storage mutation is emitted merely for local projection changes. Settled saved preferences remain storage-owned. |
+| Usage Live / Paused (redesigned page, 2026-10-09) | local projection (`view_only`) | Holds or applies arriving Usage projection updates for display only; the remembered choice is the storage-owned view preference `live` (`Plans/usage-feature.md#UF-095`). |
+| Usage Tidy and board gravity (redesigned page) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for Tidy; gravity inside the action's own widget command | One settled layout transaction with one receipt; no per-card move and no new command (`Plans/Widget_System.md#WS-019`). |
+| Usage Accounts room Use this account | `cmd.account.select_profile` | Explicit labelled override, shown only where `supports_manual_set_active` holds; never a page-scope pick. |
+| Usage Accounts room provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | The Settings owner's transaction commits the one Settings value; Usage keeps no copy (`Plans/Settings_System.md#SSYS-044`). |
 | Context-ring popup/hover summary | local projection (`view_only`) | Opening or hovering the menu does not compact context or open a detail surface. |
 | `Compact Now` | `cmd.chat.compact_context` | Dispatches only after explicit selection. While no `context.compaction.*` Event Authority registration exists, production wiring records the command result/receipt and visible projection state rather than fabricating an event family. |
 | `More Details`, focus, and close | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the shared thread Context Detail Pane; it does not create a Usage route or a second chat-local details store. |
@@ -4881,7 +4899,13 @@ canonical_text: >-
   cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
   after preset resolution and never becomes a primary command. No pointer-preview event,
   PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted.
+  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
+  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
+  switch level reuse the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply at
+  scope provider (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
+  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
+  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
+  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
   Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
@@ -4895,6 +4919,7 @@ acceptance_criteria:
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
   - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
   - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -4919,6 +4944,9 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-173
+  - Plans/Decision_Log.md#DL-174
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - cmd.widget.resize
   - cmd.widget.move
@@ -4935,6 +4963,7 @@ negative_constraints:
   - Do not dispatch commands or persist events for pointer-preview frames, hover, popup disclosure, or cancellation.
   - Do not revive cmd.provider.usage.open_management.
   - Do not create a second Assistant command path or store.
+  - Do not mint a command for Usage Tidy, board gravity, size presets, Live / Paused, or the Accounts room's in-place controls, and do not commit Tidy as one move per card.
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
 stale_retired_dispositions:
   - "Amended 2026-10-09 (DL-180): the v1 Home record and the Home rows here are superseded by UCC-200 on the v2 record."
@@ -5937,6 +5966,7 @@ This addendum records the central command-contract registration for the approved
 | `cmd.chat.plan.export` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_export` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanExportRequest` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/ArtifactExportResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.send_to_planning_wizard` | `Plans/Planning_Wizard.md` | `handlers::planning_wizard::assistant_plan_intake` | `Plans/planning_wizard_contracts.schema.json#/$defs/AssistantPlanHandoffRequest` -> `Plans/planning_wizard_contracts.schema.json#/$defs/PlanningWizardIntakeResult` | `handler_unavailable`; owner typed result, receipt and projection only; expected_event_types resolved by the owner event table below |
 | `cmd.chat.plan.open_details` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_details` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
+| `cmd.chat.plan.open_version` | `Plans/Assistant_Plan_Runtime.md` | `handlers::assistant_plan::plan_open_version` | `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/AssistantPlanVersionRoute` -> `Plans/assistant_plan_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.toggle_parent` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_toggle_parent` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewRequest` -> `Plans/todo_runtime_contracts.schema.json#/$defs/TodoViewResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
 | `cmd.chat.todos.open_work` | `Plans/ToDo_Runtime.md` | `handlers::todo_runtime::todos_open_work` | `Plans/todo_runtime_contracts.schema.json#/$defs/TodoWorkRoute` -> `Plans/todo_runtime_contracts.schema.json#/$defs/RouteResult` | `handler_unavailable`; owner typed result, receipt and projection only; `expected_event_types=[]` |
@@ -7467,12 +7497,12 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-174, ContractName:Plan
 
 ## 5.6 Pro Chat Round Controls That Are Not Commands (2026-10-09)
 
-The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity (UI_Command_Catalog UCC-188). This unit records, for this owner, which of its controls are not commands, and the one reuse that replaces a would-be alias, so that no port mints a command for them.
+The 5.6 Pro chat round (DL-140 to DL-151) adds no command identity of its own (UI_Command_Catalog UCC-188); the owner's later decision DL-157 adds `cmd.chat.plan.open_version` for a bound Goal's Open exact Plan · Vn (CS-088). This unit records, for this owner, which of its controls are not commands, and the one reuse that replaces a would-be alias, so that no port mints a command for them.
 
 ### CS-093 - 5.6 Pro Chat Round Non-Command Controls And The Subagent Open Reuse
 
 **View state (`LOCAL_PRESENTATION`): no command, no event, no catalog row.**
-- In Goal Activity Detail: Edit objective, which only swaps in the objective editor, Cancel edit, and the Objective history disclosure. The Goal preview's Edit objective is `cmd.chat.goal.open_editor`.
+- In Goal Activity Detail: Edit objective, which only swaps in the objective editor, Cancel edit, and the Objective history disclosure. The Goal preview's Edit objective is `cmd.chat.goal.open_editor`. A bound Goal's Open exact Plan · Vn is `cmd.chat.plan.open_version` (CS-088), not view state.
 - A To-Do row's selection and expansion, and Close details.
 - Activity Detail's domain tabs, including their icon-only fit (FinalGUISpec F3-616).
 - In a subagent's read-only live transcript: a stretch row's toggle, Expand or Collapse, and More details. Its Copy is `cmd.chat.copy_message`.
@@ -7539,6 +7569,68 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-188, ContractName:Plans/UI_Command_Catalog.md#UCC-129, ContractName:Plans/Commands_System.md#CDRY-021, ContractName:Plans/assistant-chat-design.md#ACD-485
+
+## Open Exact Plan Version Command Record (2026-10-09)
+
+The owner's decision DL-157 gives a bound Goal's Open exact Plan · Vn, and every Open plan button, a command of their own. Its central contract record is in the table of central command contract records above; this unit states its boundary for this owner.
+
+### CS-088 - cmd.chat.plan.open_version Opens One Exact Plan Version's Document
+
+```yaml
+plan_unit_id: CS-088
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.chat.plan.open_version is registered as a navigation_wrapper owned by Plans/Assistant_Plan_Runtime.md, with the
+  sole future handler handlers::assistant_plan::plan_open_version and the typed pair AssistantPlanVersionRoute ->
+  RouteResult in Plans/assistant_plan_runtime_contracts.schema.json, the same pending owner schema as its neighbour
+  cmd.chat.plan.open_details. It keeps handler_unavailable until native evidence exists and expected_event_types=[]:
+  opening a version's document is a route, never a Plan, run, Goal, To-Do or artifact mutation. Its source surfaces
+  are plan_card and schedule_manager, for every Open plan button (the card's action row, its Build-started and
+  Plan-revised receipts, a build schedule's row), and goal_activity and goal_hover, for the bound Goal's Open exact
+  Plan · Vn (UCC-176). It is not an alias of cmd.chat.plan.open_details, which opens Plan Details, and no
+  chat-local or Goal-owned peer command for opening a Plan version exists. The concept's goal-open-plan-version and
+  pd-open-version action names are concept lineage under CS-079, not command identities.
+gui_related: true
+gui_classification_reason: "Registers the bound Goal's exact-Plan opener as its own command record."
+split_recommended: false
+depends_on: [UCC-176, DL-157, CS-079]
+unblocks: [WM-065]
+acceptance_criteria:
+  - "The central contract records hold exactly one row for cmd.chat.plan.open_version, naming handlers::assistant_plan::plan_open_version and AssistantPlanVersionRoute -> RouteResult."
+  - "cmd.chat.plan.open_version keeps handler_unavailable and expected_event_types=[]."
+  - "No alias or peer command opens a Plan version from a Goal surface, and every Open plan button raises cmd.chat.plan.open_version."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-ui-command-response
+risk_class: invented_command_identity
+reasoning_tier: medium
+context_scope: goal_bound_plan_open_20261009
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: static_command_disposition_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-157"
+  - "Plans/UI_Command_Catalog.md#UCC-176"
+preserved_exact_tokens:
+  - "cmd.chat.plan.open_version"
+  - "handlers::assistant_plan::plan_open_version"
+  - "AssistantPlanVersionRoute"
+negative_constraints:
+  - "Do not register cmd.chat.plan.open_version as an alias of cmd.chat.plan.open_details."
+  - "Do not register the concept actions goal-open-plan-version or pd-open-version as command identities."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-176, ContractName:Plans/Decision_Log.md#DL-157, ContractName:Plans/Commands_System.md#CS-079, ContractName:Plans/Assistant_Plan_Runtime.md
+
 
 ## DL-180 to DL-183 — Panel Tab And Layout Families, View State, Aliases And Retired Ids (2026-10-09)
 

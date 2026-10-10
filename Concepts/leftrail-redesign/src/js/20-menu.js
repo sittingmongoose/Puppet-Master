@@ -226,7 +226,9 @@ function openSub(entry, b, it, keyboard) {
   openMenu(sub, b, { side: true, parent: entry, menus: entry.opts.menus, onPick: entry.opts.onPick, keyboard });
 }
 
-/* outside pointer, window resize and scroll outside the menu close every open menu */
+/* outside pointer, window resize and a scroll that moves a menu's trigger close every open menu. Only the page's own
+   scroll or a scroller that holds a trigger moves one: an unrelated scroller (the chat's message stream settles about
+   2 s after load or a theme switch) leaves the menus open, as a scroll inside a menu does. */
 document.addEventListener('pointerdown', ev => {
   if (!MENU_STACK.length) return;
   if (MENU_STACK.some(e => e.el.contains(ev.target))) return;
@@ -236,7 +238,10 @@ document.addEventListener('pointerdown', ev => {
 window.addEventListener('resize', () => { if (MENU_STACK.length) closeAll(); });
 document.addEventListener('scroll', ev => {
   if (!MENU_STACK.length) return;
-  if (ev.target && ev.target.nodeType === 1 && MENU_STACK.some(e => e.el.contains(ev.target))) return;
+  const t = ev.target;
+  if (t && t.nodeType === 1 && MENU_STACK.some(e => e.el.contains(t))) return;
+  const page = !t || t.nodeType !== 1 || t === document.scrollingElement || t === document.documentElement || t === document.body;
+  if (!page && !MENU_STACK.some(e => t.contains(e.anchor) || (e.opts.origin && t.contains(e.opts.origin)))) return;
   closeAll();
 }, true);
 document.addEventListener('keydown', ev => {
@@ -285,6 +290,7 @@ PMR.menu = {
     let pin = document.getElementById('pmr-menu-pin');
     if (!pin) { pin = PMR.h('span#pmr-menu-pin', { 'aria-hidden': 'true' }); document.body.appendChild(pin); }
     pin.style.cssText = `position:fixed;left:${Math.round(x)}px;top:${Math.round(y)}px;width:1px;height:1px;pointer-events:none;`;
-    return openMenu(def, pin, Object.assign({ width: 248 }, opts));
+    /* origin: what was under the point, so a scroll of its list closes the menu as it closes a trigger's */
+    return openMenu(def, pin, Object.assign({ width: 248, origin: document.elementFromPoint(x, y) }, opts));
   },
 };

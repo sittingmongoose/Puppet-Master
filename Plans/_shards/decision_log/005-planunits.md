@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3878-L13192
+Source lines: L4182-L14116
 
-Source SHA256: `2185e72a51de91f409c0806599ad83c0f8a7c428e08fe6ae48e6e032448921ea`
+Source SHA256: `8b00fdd94f8490d03bdbd2ddf54f4fca096477741cd1c9e7d621a8ddab4983db`
 
 ---
 
@@ -8498,9 +8498,14 @@ canonical_text: >-
   Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
   data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
   (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
-  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
-  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
-  beside every text face for those characters only, and form controls take the look's face (F3-430).
+  Orbitron and Rajdhani are not embedded because no text draws in them, and platform font names stay the
+  computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded beside every
+  text face for those characters only, and form controls take the look's face (F3-430). Amended 2026-10-09 by the
+  owner's two follow-ups: every embedded family carries the scripts it supports as unicode-range slices, in both
+  concepts, and scripts no family carries are measured, not embedded; and code text follows the look's designated
+  code face, JetBrains Mono in Basic, Glass and Friendly (the home redesign's D17), embedded under that name with
+  PM NieR Mono's bytes, while Retro's stays IBM Plex Mono (owner, 2026-10-10) and NieR Mode's PM NieR Mono; the home
+  redesign's editor and terminal faces are decided separately in its own Plans record (F3-430, F3-426).
 gui_related: true
 gui_classification_reason: Records an owner request on the concepts' fonts.
 split_recommended: false
@@ -8509,6 +8514,7 @@ unblocks: [DR-050]
 acceptance_criteria:
   - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
   - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "Every script an embedded family carries draws from embedded data in both concepts, and code text in Basic, Glass and Friendly draws in the embedded JetBrains Mono."
   - "The owner's request is recorded in plain words with its source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -8527,13 +8533,19 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md, SHA-256 352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json, SHA-256 47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json, SHA-256 10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188"
 preserved_exact_tokens:
   - "DL-161"
   - "Gelasio"
   - "Georgia"
   - "PM Symbols"
+  - "JetBrains Mono"
+  - "unicode-range"
 negative_constraints:
   - "Do not load a concept font from the network."
+  - "Do not embed a face for a script no theme family carries without the owner's decision."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -8658,8 +8670,8 @@ canonical_text: >-
   even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
   status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
   schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
-  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
-  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  contrast. A schedule that Build or an ended run invalidated, with no newer version, reads Schedule ended and offers
+  no Use V<n> (SQR-015); first the lead's ruling, its wording was approved by the owner on 2026-10-09 (DL-157). No command, action id, wiring, setting or label is added or
   removed. The record states the request in plain words, without quoting him.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
@@ -8750,6 +8762,56 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-159 - The Chat Opens In The Look You Chose, From Its First Frame
+
+```yaml
+plan_unit_id: DL-159
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-159 records the owner request of 2026-10-09. The assistant chat, as a page of its own, paints the viewer's stored
+  look in its first frame, applying F3-468's boot paint: a reader reads the chat's own look store before the first
+  frame, never writes it and keeps no copy of the theme, and the chat's renderer and NieR Mode's engine still own the
+  look (F3-612). NieR Mode's boot log and reboot moment behave as before. One first-paint reader serves a page, and the
+  chat's reader is dropped when the chat is ported into PMConcept7 (DR-054). No command, action id, setting or wiring
+  entry changes.
+gui_related: true
+gui_classification_reason: Records an owner decision on what the assistant chat shows in its first frame.
+split_recommended: false
+depends_on: [DL-144]
+unblocks: [F3-612, DR-054]
+acceptance_criteria:
+  - "The chat's first frame is the stored look, and opening the chat writes no look setting (F3-612)."
+  - "No command, action id, setting or wiring entry is added, changed or retired by this decision."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-159"
+  - "first frame"
+negative_constraints:
+  - "Do not store a new key or a copy of the theme to paint the first frame."
+  - "Do not play the reboot moment on a reload."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-162 - The Left Rail Takes The Polish Design
@@ -8881,6 +8943,564 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
+```
+
+### DL-173 - The Usage Page Is Redesigned And Replaces The Old One
+
+```yaml
+plan_unit_id: DL-173
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-173 records the owner's Usage redesign request of 2026-10-01, his choices of 2026-10-02 and his approval of
+  2026-10-09. PMConcept7's Usage page is the redesigned one: the calm, polished Direction B with the Daylight Atlas
+  readability, the rail of rooms and the overall layout kept, the thirteen rooms, three disclosure levels and widget
+  board unchanged (UF-093, UF-055), no pills, coloured side bars, tinted side boxes or emoji, every chart redrawn and
+  animated, far more data on screen, every fact of the old page kept, NieR Mode fully supported and text fits measured
+  with the app's embedded fonts. The requirements are UF-107, the presentation F3-628 and the presentation grammar's
+  single owner DR-058. The concept's look is not bound by the Slint portability notes, which stay as compatibility
+  notes; the native renderer (DL-139) and every framework version pin are unchanged. On the owner's instruction the
+  review copy Concepts/UsageTestPMConcept7.html is deleted after the port lands, the one exception to the rule that
+  nothing under Concepts/ is deleted; Concepts/usage-redesign/ stays. The record states his requests in plain words,
+  without quoting him.
+gui_related: true
+gui_classification_reason: Records an owner decision on the Usage page's design and its replacement in PMConcept7.
+split_recommended: false
+depends_on: [UF-055, UF-092, UF-093, DL-139]
+unblocks: [UF-107, F3-628, DR-058]
+acceptance_criteria:
+  - "PMConcept7's Usage page is the redesigned page, with the thirteen rooms and three disclosure levels unchanged (UF-093)."
+  - "No fact shown by the earlier Usage page is missing from the redesigned page."
+  - "Concepts/UsageTestPMConcept7.html is the only file deleted under Concepts/ by this decision, and Concepts/usage-redesign/ remains."
+  - "No framework version pin changes through this decision."
+  - "The owner's requests are recorded in plain words, with the sources cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_redesign_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "Concepts/usage-redesign/ (concept lineage only; branch concept/usage-redesign-20261001)"
+preserved_exact_tokens:
+  - "DL-173"
+  - "Direction B"
+  - "Concepts/UsageTestPMConcept7.html"
+negative_constraints:
+  - "Do not delete any other file under Concepts/ on the strength of this decision."
+  - "Do not change a framework version pin through this decision."
+  - "Do not drop a fact the earlier Usage page showed."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-174 - The Accounts Room Acts In Place Auto Switch Per Provider And Every Account Shown
+
+```yaml
+plan_unit_id: DL-174
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-174 records the owner's answer of 2026-10-01 on the Accounts room and his notes of 2026-10-09. Usage's Accounts
+  room acts in place: Use this account dispatches the existing cmd.account.select_profile as a labelled override,
+  shown only when supports_manual_set_active allows it (MA-022), and each provider with two or more accounts carries
+  its own Auto-switch toggle and switch level, which are the same bound Settings values, committed through
+  cmd.settings.transaction.preview and cmd.settings.transaction.apply with scope=provider (SSYS-044, SSYS-009,
+  SSYS-018) and never copied into Usage; an account card's body and Details stay a local inspector (UF-093, UCC-147).
+  ai.accounts.multi-account-switching, ai.accounts.hard-switch-level, ai.accounts.soft-warning-level and
+  ai.accounts.cooldown-policy gain the provider scope and ai.accounts.cooldown-policy also the global and project
+  scopes (F3-441); a provider without its own value follows the shared project or global value, and MA-073 owns the
+  resolution order. The warning level and the
+  rest period are edited in Settings, not on the Usage card. The switch follows the AI Account
+  Center's rules: two or more accounts, a notch at the provider's switch point on each of its meters, only a fresh
+  identity-bound reading decides, the target is the eligible account with the most left, the switch waits for the
+  tool to be idle, paid credit draws a warning, and a manual activation past the switch point asks first without
+  becoming consent for automatic switching. The room reads one roster with Settings, in Settings' names, order,
+  groups and windows, and Plans & limits shows one row per account (MA-049).
+gui_related: true
+gui_classification_reason: Records an owner decision on the Usage Accounts room's actions and the per-provider auto-switch settings.
+split_recommended: false
+depends_on: [MA-022, MA-049, SSYS-009, SSYS-018, F3-441, UF-093, UCC-147]
+unblocks: [MA-073, SSYS-044, UF-107]
+acceptance_criteria:
+  - "Changing a provider's Auto-switch toggle or switch level on the Usage card and in Settings changes one value, committed through the Settings transaction with scope=provider."
+  - "The four auto-switch settings carry the provider scope, each has a global value that is the default, and they resolve as MA-073 sets out."
+  - "Use this account dispatches cmd.account.select_profile and appears only when supports_manual_set_active allows it."
+  - "Plans & limits lists every account of a provider, one row per account."
+  - "No command is added for the Accounts room."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: account_switch_policy_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "/mnt/Cursor/AIAccountCenter/code (per-provider auto-switch reference; lineage only)"
+preserved_exact_tokens:
+  - "DL-174"
+  - "Use this account"
+  - "scope=provider"
+negative_constraints:
+  - "Do not keep a Usage-local copy of an auto-switch setting."
+  - "Do not mint a command for the Accounts room's actions."
+  - "Do not flatten a provider's accounts into one row or label."
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Settings_System.md
+  - Plans/usage-feature.md
+```
+
+### DL-175 - Usage Shows Pace Without Countdowns At Readable Sizes
+
+```yaml
+plan_unit_id: DL-175
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-175 records the owner's answers of 2026-10-01 on pace and density. Usage shows no countdown to running out (no
+  time-to-empty clock, runway in hours or time left before a limit); percentage headroom is allowed, pace is said in
+  one unit everywhere, points ahead of or behind the window's even pace, and month-end spend appears only as a
+  labelled estimate (UF-107; the run-out projection stays rejected, DR-038). Values and body text are 13 to 14 px,
+  chart ticks, legends and small captions at least 11 px, and rows and buttons about 28 to 32 px for a desktop
+  mouse (F3-628). Unknown never reads as zero (UF-092). The single pace unit is a planning ruling, not an owner answer.
+gui_related: true
+gui_classification_reason: Records an owner decision on how Usage states pace and on its text and control sizes.
+split_recommended: false
+depends_on: [DR-038, UF-092]
+unblocks: [UF-107, F3-628]
+acceptance_criteria:
+  - "No Usage surface shows a time until a window runs out."
+  - "Pace is shown only as points against the norm."
+  - "No Usage value or body text is below 13 px and no tick, legend or caption below 11 px."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_honesty_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+preserved_exact_tokens:
+  - "DL-175"
+  - "labelled estimate"
+negative_constraints:
+  - "Do not show a countdown or runway to running out on Usage."
+  - "Do not size Usage rows for touch as the wand does."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-176 - Narrow Usage Widgets Real Move And Resize Previews Size Presets Tidy And Gravity
+
+```yaml
+plan_unit_id: DL-176
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-176 records the owner's requests of 2026-10-01 and his notes of 2026-10-09 on Usage widgets. Widgets are much
+  narrower on a finer grid whose column count grows with the board's width, every kind has narrow widths that show
+  its facts complete (UF-094, UF-096), and horizontal resizing works from either edge and the corners at every
+  width. A move lifts the card under the pointer with a landing placeholder and peers sliding aside; a resize shows a
+  live outline of the snapped size with its name and dimensions; release settles the card and Escape glides it back
+  (WS-019). During a gesture only obstructed peers move; once it settles, cards float up into empty space keeping
+  their order, and Tidy is the explicit full repack. Gravity and Tidy each commit as one settled layout transaction
+  with one receipt, never one move command per card, and no command is added (WS-019, WM-045, UCC-147). Size presets
+  are rethought per kind: every preset shows a complete content tier and the picker previews it (WS-017); a chosen
+  preset commits through cmd.widget.resize with its preset_id (WS-020). A card's hover actions never sit behind its
+  title and always fit (F3-628, F3-514). Gravity and the single-transaction commit are planning rulings, not owner answers.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage widget widths, direct manipulation previews, size presets and repacking.
+split_recommended: false
+depends_on: [WS-017, WS-019, WS-020, UF-094, UF-096, F3-514, WM-045, UCC-147]
+unblocks: []
+acceptance_criteria:
+  - "Every widget kind has narrow widths that show its facts complete, and horizontal resize works from both edges and the corners at every board width."
+  - "Gravity after a gesture and Tidy each produce one settled layout transaction with one receipt and no per-card move commands."
+  - "Every size preset of every kind shows a complete content tier, and the picker previews it."
+  - "No new command is added for Tidy, gravity or the size picker."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: widget_layout_transaction_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/Widget_System.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-176"
+  - "Tidy"
+  - "preset_id"
+negative_constraints:
+  - "Do not commit a Tidy or gravity as one move command per card."
+  - "Do not offer a size preset that shows a partial content tier."
+  - "Do not persist preview geometry."
+owner_hints:
+  - Plans/Widget_System.md
+  - Plans/usage-feature.md
+```
+
+### DL-177 - Live Readings On By Default With A Live Paused Control And A Concept Demo Hour
+
+```yaml
+plan_unit_id: DL-177
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-177 records the owner's answers of 2026-10-02. Live readings are on by default: arriving readings change the
+  page one beat at a time with nothing moving between beats. A Live / Paused control sits in the rail head beside the
+  Usage title, the head staying one line (UF-089); Paused holds arriving updates and Live applies them, and the choice
+  is remembered as the view-only live family, kept by the storage owner, with pm7:usage:live:v1 as the concept's
+  noncanonical prototype key (UF-095). It never changes what is counted and dispatches no command (UCC-147). With Live
+  paused, nothing animates at idle. Play the next hour, Back to now and the concept's feature switches stay concept
+  demonstrations labelled as demo time; on the coordinator's recommendation, not yet the owner's decision, they are
+  treated as lab-only concept controls on the ACD-474 precedent and receive no command, setting, wiring row, persisted
+  key or test gate (UCC-147, UF-092).
+gui_related: true
+gui_classification_reason: Records an owner decision on live Usage readings and the place of the concept's demo hour.
+split_recommended: false
+depends_on: [UF-089, UF-092, UF-095, UCC-147, ACD-474]
+unblocks: [UF-107]
+acceptance_criteria:
+  - "Live is on by default, the Live / Paused control sits in the rail head, and the choice is remembered."
+  - "Live / Paused dispatches no command and changes no counted value."
+  - "Play the next hour, Back to now and the concept's feature switches receive no command, setting, wiring row, persisted key or test gate; a catalog row that only points at UF-107's lab-only disposition is not one of these."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_live_view_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-177"
+  - "Live / Paused"
+  - "pm7:usage:live:v1"
+negative_constraints:
+  - "Do not mint a command or setting for Live / Paused."
+  - "Do not let demo-hour readings reach a product surface or store."
+owner_hints:
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### DL-178 - Usage Rooms Get Heroes Calm Colour And A Soft Key Light And No Fact Is Dropped
+
+```yaml
+plan_unit_id: DL-178
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-178 records the owner's answers of 2026-10-02 and his notes of 2026-10-09. Each Usage room names its hero on a
+  plate of its own; on arrival and room change only the hero's number rolls while supporting values fade in final,
+  with rolls kept for live, range and scope changes. Below the warning line meters and skyline towers shade indigo
+  to cyan to mint by value, and the Settings thresholds take over above it. The room's key light falls on the hero
+  plate as a soft top-left radial, 16 % on dark themes and 9 % on light ones, the one tinted surface allowed. Shared
+  elements fly between rooms, every room entrance is visible from every neighbour and may vary with the origin, and
+  every series' end dot sits on its own last point (F3-628). Facts that do not fit fold behind N more and Details and
+  stay reachable, and facts from the old page's static lists return in their natural widget labelled as concept
+  fixture data (F3-514, UF-107, DR-058). The restoration of those facts is a planning ruling, not an owner answer.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage heroes, colour ramps, light and fact folding.
+split_recommended: false
+depends_on: [F3-514]
+unblocks: [F3-628, DR-058, UF-107]
+acceptance_criteria:
+  - "Only the room's hero number rolls on arrival and room change."
+  - "The hero key light is the only tinted surface on Usage."
+  - "Every room entrance from every neighbouring room is visible."
+  - "Every folded fact is reachable through N more or Details."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_presentation_drift
+reasoning_tier: standard
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+preserved_exact_tokens:
+  - "DL-178"
+  - "N more"
+  - "key light"
+negative_constraints:
+  - "Do not drop a fact because it does not fit; fold it."
+  - "Do not tint any Usage surface other than the hero plate's key light."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-179 - Usage Uses The Chat Menus Official Provider Logos And Family Motion
+
+```yaml
+plan_unit_id: DL-179
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-179 records the owner's choices of 2026-10-01 and 2026-10-02 and his notes of 2026-10-09. Every Usage dropdown,
+  the Export menu included (UF-089, still cmd.usage.export with scope snapshot or ledger), is the chat assistant's
+  menu family with its corner-origin spring and keyboard behaviour. Every provider is marked by its official logo,
+  never recoloured, filtered, tinted, redrawn or set on a plate it is not published on; Free Models and Local model
+  server use neutral icons. Usage motion uses the theme family voices owned by ACD-475 (DR-043), with Friendly and
+  Glass as distinct from Basic as Retro and NieR are, a rule ACD-475 now carries as their owner; no Usage-only voice
+  exists, and the voices' exact values are design tokens, not owner text (DL-113). Without a GPU, Glass uses its solid pane while Usage is open; no step of a
+  room switch exceeds about 50 ms; motion holds 60 frames a second without a GPU; nothing loops at idle; no blur
+  lingers after its effect ends; Reduce Motion is instant (DL-115). F3-628 owns this presentation and DR-058 its
+  reuse. The solid Glass pane and the room-switch limit are planning rulings, not owner answers.
+gui_related: true
+gui_classification_reason: Records an owner decision on Usage menus, provider marks and motion.
+split_recommended: false
+depends_on: [ACD-475, DR-043, DL-113, DL-115, UF-089]
+unblocks: [F3-628, DR-058]
+acceptance_criteria:
+  - "Every Usage dropdown uses the chat assistant's menu family."
+  - "Every provider mark on Usage is the provider's official logo, unaltered."
+  - "Friendly and Glass motion on Usage are distinct from Basic, and come only from the family voices of ACD-475."
+  - "No blur remains on a Usage surface after its effect ends, and Reduce Motion makes every change instant."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_motion_drift
+reasoning_tier: high
+context_scope: usage_pm7_port_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/usage-feature.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md, SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md, SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/menus.css and menus.js (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-179"
+  - "corner-origin spring"
+  - "official logo"
+negative_constraints:
+  - "Do not create a Usage-only motion voice or a per-view motion setting."
+  - "Do not recolour, filter, tint or redraw a provider's official logo."
+  - "Do not fork the chat assistant's menus for Usage."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-171 - One Merged, Quieter Hover Across PMConcept7, With Its Own Forms In Retro And NieR
+
+```yaml
+plan_unit_id: DL-171
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-171 records the owner request of 2026-10-09, items 10 and 11, in his words: "10. Make the hover spotlight effect
+  slight less pronounced and smaller." and "11. The other pages have a magnetism when you hover it moves boxes,
+  widgets around. I think the effect is a little too strong, they move a little too much. There is also a glow that
+  happens inside the boxes and a glow emitted from the boxes. Its a little unrefined and a little too strong. You
+  kinda put some of this in the usage page. I think there should be a middle ground. Can you merge the two ways its
+  done? Then polish the effect significantly. I also think the effect doesn't work well in the retro and nier themes,
+  so can you think of a different way of doing it for those two themes? Then apply this updated look throughout the
+  entire PMConcept7." Decided: PMConcept7's two hover systems, the PM8 magnet and spotlight on every other page and the
+  Usage page's plate lift and pointer sheen, become one, F3-465, owned once by DR-072. It takes Usage's cheap
+  mechanics (pre-painted layers whose opacity changes, translate-only motion, no subtree restyle) and PM8's continuous
+  field and neighbour falloff, at a middle ground: the magnet drops from up to 8 px (7.6 to 12.8 px measured at an
+  edge) to 2 to 2.5 px, the spotlight from PM8's 115 px ring and Usage's 280 px sheen to a soft pool of about 90 to
+  100 px, and the emitted glow to half of PM8's bloom, which no longer leans with the magnet. Retro and NieR get forms
+  of their own with no soft glow, because a glow does not belong to either: Retro's Raise, a hard-cut rise on a hard
+  shadow with a phosphor rule, on the left rail's 33 ms tick, chosen over a phosphor cursor that read as selection;
+  and NieR's Lock-on, its own corner brackets acquiring the card, chosen over a Menu cursor ink bar that would compete
+  with the real Menu cursor and the rail's chosen-tab ink. Every page with the old effect and the Usage page take the
+  new system; tabs, dividers and editor and terminal text are left out by the boundary agreed with the home panels and
+  terminal threads. Why: the owner found the old effect too strong and unrefined and wrong in Retro and NieR, and one
+  system is cheaper to keep right than two (the old field read every box's rect per pointer frame and kept its loop
+  running while the pointer rested).
+gui_related: true
+gui_classification_reason: Records an owner request on PMConcept7's hover magnet, spotlight and glow.
+split_recommended: false
+depends_on: []
+unblocks: [F3-465, F3-446, DR-072]
+acceptance_criteria:
+  - "The owner's items 10 and 11 are recorded in his words with their date, 2026-10-09."
+  - "One hover system serves every PMConcept7 page, the Usage page included (F3-465, DR-072)."
+  - "The magnet, spotlight and emitted glow are smaller than PM8's, and Retro and NieR use their own forms with no soft glow."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: finalgui_drift
+reasoning_tier: high
+context_scope: pm7_hover_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/HOVER-THREAD-BRIEF.md, SHA-256 a06c03129a9580ea0c1f5db411f0ec8ee5a14d6d1be171ead2b007ab69aea704"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/FAMILY-SPEC.md, SHA-256 d66b09a302226c0682a59786d92c74d703cbdf7fc28f9bc63ffb509a07f321e8"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/RETRO-FINAL.md, SHA-256 49546103ce230dc1db08440e01bb7dc21b02d153c74138b7618cc491b4ddba81"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/NIER-FINAL.md, SHA-256 e647d369534c83251d9d8ba904765491db2338154f80a91ca12759a771c8e233"
+preserved_exact_tokens:
+  - "DL-171"
+  - "Raise"
+  - "Lock-on"
+  - "middle ground"
+negative_constraints:
+  - "Do not bring back a second hover system or a soft glow under Retro or NieR."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+```
+
+### DL-157 - The Schedule Ended Wording, A Command To Open The Exact Plan, And Previews As The Hover Tag Exception
+
+```yaml
+plan_unit_id: DL-157
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-157 records three owner decisions of 2026-10-09. First, the Schedule ended wording is approved: after Build on a
+  scheduled Plan the schedule line reads Schedule ended · you started this build now, so the schedule won't start a
+  second one. (SQR-015), which DL-156 had recorded as the lead's ruling. Second, a bound Goal's Open exact Plan · Vn
+  gets a new command, cmd.chat.plan.open_version (navigation_wrapper, owner Assistant_Plan_Runtime, handler
+  handlers::assistant_plan::plan_open_version, AssistantPlanVersionRoute -> RouteResult), raised from goal_activity
+  and goal_hover; it opens Plan Vn's document, the Plan's own tab while Vn is current and Vn's retained read-only
+  document otherwise, and never Plan Details or a newer version (UCC-176, CS-088, WM-065, UIW-026, F3-593); by the
+  owner's answer of 2026-10-10 the same command serves every Open plan button, each with the version its surface
+  names: the Plan card's action row and its Build-started and Plan-revised receipts (plan_card) and a build
+  schedule's row (schedule_manager) (F3-606, APR-014). Third,
+  activity bar domain previews are the one exception to the hover tag rule: no control inside an open preview opens
+  a hover tag, since a tag would replace the preview card, and the controls F3-590 lists keep a native title or none
+  (F3-590, UIW-013). The record states the decisions in plain words, quoting only his short answers.
+gui_related: true
+gui_classification_reason: Records owner decisions on the schedule line's wording, the bound Goal's Plan opener and the preview hover exception.
+split_recommended: false
+depends_on: [DL-145, DL-147]
+unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590]
+acceptance_criteria:
+  - "SQR-015 and DL-156 state the Schedule ended wording as the owner's approved decision of 2026-10-09."
+  - "Open exact Plan · Vn is cmd.chat.plan.open_version in the catalog, Commands_System and the production wiring, and F3-593 binds it; it never opens Plan Details."
+  - "Every Open plan button raises cmd.chat.plan.open_version with the version its surface names (F3-606, APR-014)."
+  - "F3-590 and UIW-013 state the preview exception and list the controls it covers; no other surface is exempted."
+  - "The decisions are recorded with their date, 2026-10-09, and the source is cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: owner_decision_drift
+reasoning_tier: high
+context_scope: c56_owner_decisions_20261009
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/FinalGUISpec.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md, SHA-256 4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256 49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json, SHA-256 c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-157"
+  - "Schedule ended"
+  - "cmd.chat.plan.open_version"
+  - "Previews as exception"
+negative_constraints:
+  - "Do not bind Open exact Plan · Vn or an Open plan button to Plan Details."
+  - "Do not extend the preview exception beyond controls inside an open activity bar domain preview."
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/FinalGUISpec.md
 ```
 
 ### DL-180 - Home Becomes One Universal Panel System And The Chat Stays Fixed On The Right

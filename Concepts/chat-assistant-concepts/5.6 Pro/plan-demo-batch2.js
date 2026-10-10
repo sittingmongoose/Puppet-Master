@@ -33,7 +33,7 @@
   a.busy=true;const pause=()=>new Promise(r=>setTimeout(r,160));
   try{
    const p=plan(),kind=step[2];
-   if(kind==='open')control('pd-info',{id:p.plan_id});
+   if(kind==='open')control('pd-open-version',{id:p.plan_id});
    if(kind==='at'){
     if(!document.querySelector('.polish-plan-more')){control('pd-more-actions',{id:p.plan_id});await pause();}
     control('pd-build-at',{id:p.plan_id});

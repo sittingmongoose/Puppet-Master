@@ -1,4 +1,4 @@
-import hashlib, sys
+import hashlib, json, re, sys
 from pathlib import Path
 root=Path(__file__).resolve().parent
 # Every read and write pins UTF-8 rather than inheriting the locale's
@@ -102,6 +102,63 @@ window.addEventListener('error',function(e){setTimeout(function(){if(window.__PM
 setTimeout(function(){if(!window.__PM56_BOOT_OK){var r=document.getElementById('pmRoot');if(r&&!r.textContent.trim())r.innerHTML='<div style="font:14px system-ui;padding:24px;color:#fff;background:#24131a;height:100vh"><h1>Assistant Concept Lab did not initialize</h1></div>'; }},2500);
 </script>'''
 shell=shell.replace('<script>/*__PM_DATA__*/</script>',boot+'\n  <script>/*__PM_DATA__*/</script>')
+
+# First paint (2026-10-09, PMConcept7's DL-153 / F3-468 pattern against this page's own store). Every script is inline
+# at the end of <body>, so every frame Chrome painted before app.js's first render had no data-theme: the canvas was
+# Chrome's dark default (#121212) for 1.3-1.7 s, then the stored look, a full-window flash for a Light theme.
+# The reader runs in <head>, before the stylesheet. It reads, and never writes, what app.js and nier.js will read
+# (localStorage pm56-prefs .theme, default basic-dark; pm56-nier .parts, all 29 when absent), writes NieR's contract on
+# <html> (data-o55-nier, data-o55-nier-parts), and adds a ground sheet (#pm56-first-paint: the stored look's --canvas
+# and color-scheme on <html>). The first child of <body> writes <body data-theme> (basic-<mode> for NieR), the value
+# the sheet carries, and removes the sheet in the same task, so the stylesheet paints the look from there (Glass's
+# mesh included) and no background on <html> keeps body's from reaching the canvas. Chrome would paint one frame as
+# soon as <body> exists, before that script runs: rel=expect holds rendering until #pmRoot, just after it, is parsed,
+# and the ground sheet covers a browser without rel=expect. Nothing is stored and no global holds the theme; app.js
+# and nier.js still own the look and rewrite the same values. Ids, keys and grounds are read from the sources here, so
+# the reader cannot drift from them. Motion is not stored in this concept (reduced motion is the system's media
+# query), so no data-motion is written. NieR's boot log arrives with the first render (its paint hook's 'init'
+# microtask), so the app never shows before it and no cover is needed; the reboot moment never runs on a load.
+def first_paint_reader():
+    m=re.search(r"const themes = \[(.*?)\];", read('data.js'), re.S)
+    themes=re.findall(r"\{ id:'([a-z]+-(?:dark|light))', name:", m.group(1)) if m else []
+    if len(themes)!=10: raise SystemExit(f'build.py first paint: found {len(themes)} themes in data.js (need 10)')
+    nier=read('nier.js')
+    parts=re.findall(r"\['(?:Look|Motion|Sound & voice|Pointer|World)', '[^']+', '([a-z0-9]+)'\]", nier)
+    if len(parts)!=29: raise SystemExit(f'build.py first paint: found {len(parts)} NieR parts in nier.js (need 29)')
+    if "var STORE = 'pm56-nier';" not in nier: raise SystemExit('build.py first paint: the NieR store key changed')
+    a=read('app.js')
+    if "safeStorage.get('pm56-prefs')" not in a or "theme:'basic-dark', recipe:" not in a:
+        raise SystemExit('build.py first paint: the prefs key or the default theme in app.js changed')
+    ground={}
+    st=read('styles.css'); nc=read('nier.css')
+    for t in themes:
+        if t.startswith('nier-'):
+            g=re.search(r'html\[data-o55-nier="on"\] body\[data-theme="basic-'+t[5:]+r'"\] \{[^}]*?\n  --canvas: (#[0-9a-fA-F]{6});', nc)
+        else:
+            g=re.search(r'^body\[data-theme="'+t+r'"\] \{[^}]*?--canvas:(#[0-9a-fA-F]{6});', st, re.M)
+        if not g: raise SystemExit(f'build.py first paint: no --canvas found for {t}')
+        ground[t]=g.group(1).lower()
+    js=lambda v: json.dumps(v, separators=(',',':'))
+    head=('<script>/* first paint (build.py): the stored look, read only, before the first frame */(function(){'
+          'var d=document.documentElement,t="basic-dark",p=null,n=null;'
+          'try{p=JSON.parse(localStorage.getItem("pm56-prefs")||"null");}catch(e){p=null;}'
+          f'var g={js(ground)};'
+          'if(p&&Object.prototype.hasOwnProperty.call(g,p.theme))t=p.theme;'
+          'var m=/-(light|dark)$/.exec(t),b=t;'
+          'if(/^nier-/.test(t)){try{n=JSON.parse(localStorage.getItem("pm56-nier")||"null");}catch(e){n=null;}'
+          f'var k={js(parts)};'
+          'if(n&&Array.isArray(n.parts))k=k.filter(function(x){return n.parts.indexOf(x)>=0;});'
+          'd.setAttribute("data-o55-nier","on");d.setAttribute("data-o55-nier-parts",k.join(" "));b="basic-"+m[1];}'
+          'var s=document.createElement("style");s.id="pm56-first-paint";s.setAttribute("data-body-theme",b);'
+          's.textContent="html{background:"+g[t]+";color-scheme:"+m[1]+"}";document.head.appendChild(s);})();</script>')
+    head+='\n  <link rel="expect" href="#pmRoot" blocking="render">'
+    body=('<script>(function(){var s=document.getElementById("pm56-first-paint");'
+          'if(s){document.body.setAttribute("data-theme",s.getAttribute("data-body-theme"));s.remove();}})();</script>')
+    return head, body
+FP_HEAD, FP_BODY=first_paint_reader()
+# The head part sits after the <meta> tags (the charset must stay in the first 1024 bytes) and before the stylesheet.
+if shell.count('  <style>/*__PM_STYLES__*/</style>')!=1 or shell.count('<body>\n  <div id="pmRoot"')!=1: raise SystemExit('build.py first paint: shell.html head or body changed')
+shell=shell.replace('  <style>/*__PM_STYLES__*/</style>','  '+FP_HEAD+'\n  <style>/*__PM_STYLES__*/</style>',1).replace('<body>\n','<body>\n  '+FP_BODY+'\n',1)
 app=app.replace('  renderApp(false);','  renderApp(false);\n  window.__PM56_BOOT_OK=true;',1)
 out=shell.replace('/*__PM_STYLES__*/',css).replace('/*__PM_DATA__*/',data).replace('/*__PM_APP__*/',app)
 targets=[root/'index.html', root/'PM_Chat_Assistant_5.6_Pro_Standalone.html']

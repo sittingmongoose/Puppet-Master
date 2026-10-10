@@ -174,7 +174,10 @@
     '.side-link', '.index-link', '.page-index-title', '.workspace-tab', '.manager-tab', '.resource-row', '.pm51-popout-item:not([aria-disabled="true"])',
     '.pm51-menu-item', '.pm7u-navbtn', '.pm7u-poprow', '.orch-tab', '.pm-segtab-item:not(.active)', '.fm-row', '.fm-ctx-item', '.ctx-item', '.menu-item',
     '.chat-dropdown-item', '.pm6-chat-more-item', '.cl-mode-item', '.pm-home-menu-row', '.palette-item', '.search-result-item', '.slash-cmd-item',
-    '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])'].join(',');
+    '.pm6-chat-slash-item', '.pm6-fab-item', '.chat-thread-item', '.pm6-dash-catalog-item', '[role="menuitem"]', '[role="option"]:not([aria-disabled="true"])',
+    /* the left rail (concept D, Polish, Concepts/leftrail-redesign): its rows and every PMR.menu item carry .pmr-cur;
+       their ink bar is the rail package's CSS (src/css/40-nier.css), the square cursor and its tick come from here */
+    '.pmr-cur:not(.active):not([aria-disabled="true"])'].join(',');
   /* tabs and places a click chooses, where the brackets lock on (menu items close with their menu) */
   const CHOSEN_SEL = '.page-tab, .workspace-tab, .manager-tab, .orch-tab, .pm7u-navbtn, .domain-link, .side-link, .index-link, .page-index-title, .pm-segtab-item, .activity-bar .icon, .resource-row';
   /* items in a horizontal strip: the cursor sits under them (a neighbour sits where the left side would be) */
@@ -292,7 +295,23 @@
   function retChoose(e) {
     const t = e.target && e.target.closest ? e.target.closest(CHOSEN_SEL) : null; if (!t) return;
     if (retLock) window.clearTimeout(retLock);
-    retT = t; retPlace(t);
+    retT = t;
+    /* Inside .pmr-lock, a chosen item whose box changes when it is chosen: the left rail's tabs (concept D, Polish,
+       Concepts/leftrail-redesign: src/concepts/d/31-tabs.js tags them; the ink they show is that package's CSS) show
+       their label once chosen. The brackets are placed on the next frame, after the click has landed, and lock on
+       afresh there, so they frame the box the ink fills instead of the tab as it was before the click. In the same
+       frame the menu cursor square, if it points at that item, follows it: re-placed under the new box while the item
+       is still a cursor target; once the chosen item has left the cursor list (a chosen tab) it jumps to the centre of
+       the new box and fades out there, so a tab that widens and one that does not behave the same. Everything else is
+       placed at once, as before. */
+    if (t.closest('.pmr-lock')) window.requestAnimationFrame(() => {
+      if (retT === t && ret) { ret.removeAttribute('data-on'); retPlace(t); }
+      if (curT === t && cur) {
+        if (t.matches(CURSOR_SEL)) curPlace(t);
+        else { cur.setAttribute('data-jump', ''); curPlace(t); curOff(); frames(2).then(() => { if (cur) cur.removeAttribute('data-jump'); }); }
+      }
+    });
+    else retPlace(t);
     retLock = later(() => { retLock = 0; retBlur(); }, 1200);
   }
   function retKey(e) { if (retT && (e.key === 'Tab' || /^Arrow/.test(e.key)) && !retT.isConnected) retOff(); }

@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L6531-L6880
+Source lines: L6559-L6939
 
-Source SHA256: `4beb92e999b9c0c8c361c17bac5e26772a0ba962e012792cf2764c28cd565e76`
+Source SHA256: `f1b1de40aa84794ec9f37bed185aa8e0cceb55d41081c952386c33822f6afc65`
 
 ---
 
@@ -134,10 +134,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Every Usage room starts from a non-empty, room-specific, balanced curated board on the current twelve-track
-  layout. Default rows preserve intentional card widths and alignment; a partial final row does not stretch a
-  lone card to full width, provider-heavy rooms prefer narrower taller cards, and the mixed-size stress/demo
-  arrangement is not a product default. The seven-widget four-column table retained by UF-058 is legacy source
+  Every Usage room starts from a non-empty, room-specific, balanced curated board. The board's track count
+  follows its measured width on a ladder of 12, 20, 24 and 30 tracks (DL-176), which replaces the earlier single
+  twelve-track layout; the narrowest class keeps twelve tracks, and Widget_System owns the class widths. Default
+  boards are curated per width class (the widest class may be projected from the next narrower one) under one
+  default-set version, and a changed default-set version drops saved geometry while keeping the saved view,
+  visibility and configuration. Default boards use many narrow
+  widgets per row, each showing a complete content tier at its width. Default rows preserve intentional card
+  widths and alignment; a partial final row does not stretch a lone card to full width, provider-heavy rooms
+  prefer narrower taller cards, and the mixed-size stress/demo arrangement is not a product default. The seven-widget four-column table retained by UF-058 is legacy source
   lineage and migration compatibility, not the current default-board authority. A saved layout may override
   current defaults only after its schema and default-set version migrate and its widget identities and supported
   geometry validate; otherwise the room falls back to the corrected current default with an explicit migration
@@ -150,7 +155,8 @@ acceptance_criteria:
   - Every room has an intentional non-empty default board and the default catalog is room-specific rather than one stress/demo layout copied everywhere.
   - Partial rows retain curated widths and deliberate alignment; All signals and comparable lone cards do not stretch across the full board.
   - Provider-heavy default boards use narrower taller cards and reveal complete additional rows rather than low-density horizontal space.
-  - The legacy UF-058 seven-widget four-column table is accepted only as migration/source lineage and cannot replace the current twelve-track room defaults.
+  - The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder, each class has a curated or projected default board under one default-set version, and default boards use narrow widgets that each show a complete content tier.
+  - The legacy UF-058 seven-widget four-column table is accepted only as migration/source lineage and cannot replace the current width-class room defaults.
   - Saved layout restore requires a current or successfully migrated schema/default-set version, valid widget identities, and supported geometry; failed validation falls back to the current curated default.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -174,6 +180,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-173; source-lineage-only)"
 preserved_exact_tokens:
   - twelve-track
   - balanced curated board
@@ -183,6 +190,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not use a mixed-size stress or demonstration layout as the product default.
   - Do not let an unversioned or invalid saved layout override corrected defaults.
+  - Do not fix every board to twelve tracks regardless of its width, and do not restore wide default cards that a narrower card shows as well.
 owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
@@ -197,14 +205,22 @@ unit_type: data_contract
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Usage restores the current workspace from eight view/layout state families: active `room`, disclosure
-  `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
-  per-room settled widget `layout`, and per-room widget `order`. The product implementation stores these
-  through the current storage and widget-layout owners, not through the PMConcept7 prototype localStorage
-  keys. The current `pm7:usage:prototype:workspace:v12` envelope is demo-only, noncanonical prototype lineage.
-  It validates and considers the prior v11 envelope once when v12 is absent, while `pm7:usage:v10:*` may be
-  considered only by the bounded legacy import when neither valid current nor prior envelope is admitted; none
-  is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
+  Usage restores the current workspace from nine view/layout state families: active `room`, disclosure
+  `detail` (whose values are `glance`, `detailed` and `diagnostics` for At a glance, Detailed and Diagnostics, the
+  values every Usage consumer of the detail level uses, the Tidy `arrange` field included), date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
+  per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-177), a
+  remembered view-only preference that is Live by default and holds no Settings-owned value. The product
+  implementation stores these through the current storage and widget-layout owners, not through the PMConcept7
+  prototype localStorage keys. The redesigned concept (DL-173) keeps its view and layout in a prototype envelope
+  stored under the product's own key name `widget_layout:v1:usage` (WS-020) with the prototype schema id
+  `pm.usage.widget_layout.v1`, and its Live choice under `pm7:usage:live:v1`. Only that schema id and
+  `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage: the key name is the product's, and the
+  envelope's schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
+  envelope is absent it considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11
+  envelope, carrying room, detail, range, scope, more and hidden and dropping layout and order; a corrupt or
+  unknown envelope is set aside and the defaults apply without a second migration. `pm7:usage:v10:*` may be
+  considered only by the bounded legacy import when no valid current or prior envelope is admitted; neither those
+  prior envelopes nor `pm7:usage:v10:*` is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.
@@ -213,11 +229,11 @@ gui_classification_reason: These fields determine what Usage shows after reload 
 depends_on: [UF-060, UF-093, UF-094, WS-019, WS-020, SP-248]
 unblocks: []
 acceptance_criteria:
-  - Reload restores room, disclosure, date range, scope, expanded-room rail state, per-room visibility, per-room order, and committed size/layout according to the current model.
+  - Reload restores room, disclosure, date range, scope, expanded-room rail state, per-room visibility, per-room order, committed size/layout, and the Live / Paused choice according to the current model; with no stored choice the page is Live.
   - Visibility, order, supported geometry, and semantic size are written only for settled operations through existing widget-layout authorities.
   - No pointer-preview rectangle, ghost, placeholder, animation state, or per-frame draft is persisted.
   - Missing or retired room, widget, scope, or geometry references migrate or evict to a named safe current default.
-  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the v12 envelope remains demo-only and noncanonical, v11 is considered only as its prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
+  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the redesigned concept's pm.usage.widget_layout.v1 envelope and pm7:usage:live:v1 remain demo-only and noncanonical, the v12 envelope (else v11) is considered only as their prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -239,6 +255,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope, its one-time v12 migration, and the remembered Live choice; source-lineage-only)"
 preserved_exact_tokens:
   - room
   - detail
@@ -248,7 +265,10 @@ preserved_exact_tokens:
   - hidden
   - layout
   - order
+  - live
   - widget_layout:v1:usage
+  - pm.usage.widget_layout.v1
+  - pm7:usage:live:v1
   - pm7:usage:prototype:workspace:v12
   - pm7:usage:prototype:workspace:v11
   - pm7:usage:v10:*
@@ -256,6 +276,7 @@ negative_constraints:
   - Do not make a pointer move, held resize preview, ghost, placeholder, or animation frame durable.
   - Do not promote `pm7:usage:v10:*` prototype keys to canonical key names.
   - Do not promote v12, v11, or `pm7:usage:v10:*` prototype lineage to a canonical key or maintain a continuing dual-read path.
+  - Do not promote `pm.usage.widget_layout.v1` or `pm7:usage:live:v1` to a product schema or key, and do not store the Live / Paused choice as a Settings value or as part of a widget layout record.
 owner_hints:
   - Plans/usage-feature.md
   - Plans/storage-plan.md
@@ -277,7 +298,13 @@ canonical_text: >-
   Pricing confidence, Provider charges, Allowance authority, Pressure order, Upcoming resets, Settlement mix,
   Route pressure, Tool details, Current sources, All signals, Cache economics, Routing trace, and Free usage.
   Each named card still follows its kind-specific supported geometry; this list is coverage, not a mandate to
-  force unrelated widgets to one numeric width. Content-tier selection and reorder placeholder footprint follow
+  force unrelated widgets to one numeric width. Since the redesign (DL-176), every widget kind also has narrow
+  widths that show the same information well, adapting its content to the measured width rather than dropping
+  facts. Every size preset a kind offers in the card's size menu shows a complete, sensible content tier for that
+  kind: no preset is so small that it shows a fragment, a truncated fact or a chart without its readable values,
+  and the size menu previews each preset before it is chosen. Facts that a size cannot show fold behind an
+  "N more" control that opens them on hover and in Details, and are never dropped. Widget_System owns each kind's
+  preset list and the geometry of each preset (WS-017); this unit owns the rule that every preset earns its place. Content-tier selection and reorder placeholder footprint follow
   the card body's measured rendered width and height rather than a stale nominal grid-span or breakpoint
   assumption; preview-only physical spans never become settled layout fields. A vertical chart reserves a
   measured in-plot label region and paints exactly one visible value for every painted bar, including zero bars,
@@ -296,6 +323,7 @@ acceptance_criteria:
   - Every named card has a smaller polished minimum/default variant that remains composed without clipped values or avoidable empty width, with content tiers and reorder placeholder footprints chosen from measured rendered geometry rather than nominal spans, while every larger supported variant reveals additional useful content or plot area rather than blank space.
   - Current window retains its separately approved Context default while the other Context widgets use the smaller polished family.
   - The coverage list does not override kind-specific min/max constraints or force all cards to identical numeric spans; preview physical spans do not become settled layout fields.
+  - Every widget kind has a narrow width that shows the same information as its default, every size preset of every kind shows a complete, sensible content tier, the size menu previews each preset, and facts a size cannot show fold behind "N more" with hover and Details rather than being dropped.
   - Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition, and reorder ghosts remain visibly above card/content layers until cleanup.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -320,6 +348,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/42-cards.js and tools/boards.py (the redesigned per-kind size presets and narrow tiers; source-lineage-only)"
 preserved_exact_tokens:
   - "Plans & limits"
   - "Token analytics"
@@ -348,12 +377,14 @@ preserved_exact_tokens:
   - "Cache economics"
   - "Routing trace"
   - "Free usage"
+  - "N more"
 negative_constraints:
   - Do not interpret the coverage set as one universal fixed width for every widget kind.
   - Do not let a larger tier earn its size with empty space alone.
   - Do not drop chart points from accessible text, suppress a painted bar's label, or let an active reorder ghost render under workspace cards.
   - Do not position a value label outside the plot, detach it horizontally from its own bar, permit label overlap, or display attempt-charge cents without exactly two currency decimals.
   - Do not persist preview-only measured physical spans or use stale nominal spans as rendered-width authority.
+  - Do not offer a size preset whose content is a fragment, and do not drop a fact that a size cannot show instead of folding it behind "N more".
 owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md

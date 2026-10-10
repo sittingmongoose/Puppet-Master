@@ -1,5 +1,6 @@
-/* Concept D (Polish): today's rail, polished. A skin concept: the shell's own Files, Source Control and Docker panels
-   (#panel-files, #panel-source, #panel-docker) stay in place and keep every behaviour; d.css restyles them under
+/* Concept D (Polish): today's rail, polished. A skin concept: the shell's own nine rail panels (Files, Search, Source
+   Control, Actions & Pipelines, Docker, Testing, Debug & Run, Agents, Runtime Artifacts) stay in place and keep every
+   behaviour; d.css restyles them under
    html[data-rail-skin="d"], and this script adds what CSS cannot: status glyphs in place of pills, sentence-case
    labels and full words in place of abbreviations, text that stacks instead of shortening, the shell's dropdowns opened
    as the chat-style PMR.menu, and motion. Everything it changes is recorded and undone on destroy, so "Current" and
@@ -9,9 +10,18 @@
    40-bar.js (activity bar tile), 90-register.js. They share this wrapper's scope. */
 
 const D = { on: false, undo: [], observers: [], listeners: [], bar: null };
-const PANEL_IDS = ['panel-files', 'panel-source', 'panel-docker'];
+/* the nine rail panels in activity-bar order; keep in step with PANEL_IDS in tools/build_d_css.py (the § macro) */
+const PANEL_IDS = ['panel-files', 'panel-search', 'panel-source', 'panel-git', 'panel-docker', 'panel-testing', 'panel-run', 'panel-agents', 'panel-artifacts'];
+const PANEL_SEL = PANEL_IDS.map(id => '#' + id).join(', ');
 const panelEls = () => PANEL_IDS.map(id => document.getElementById(id)).filter(Boolean);
-const inPanels = el => !!(el && el.closest && el.closest('#panel-files, #panel-source, #panel-docker'));
+const inPanels = el => !!(el && el.closest && el.closest(PANEL_SEL));
+/* per-panel passes: a panel's own script file calls panelHook('panel-x', { apply(panel, animate), show(panel, info),
+   unmount(panel) }) at load. apply runs after the shared passes on every (re)apply, show when the panel opens,
+   unmount before the undo registry runs. Every DOM change a hook makes still goes through remember()/setAttr()/
+   addClass()/inject() so "Current" is byte-identical after a switch. */
+const PANEL_HOOKS = [];
+function panelHook(id, hook) { PANEL_HOOKS.push(Object.assign({ id }, hook)); }
+const hooksFor = (panel, fn) => PANEL_HOOKS.filter(h => h.id === panel.id && typeof h[fn] === 'function');
 
 /* ---- undo registry: every change the skin makes is reversible ---- */
 function remember(fn) { D.undo.push(fn); }
@@ -69,10 +79,20 @@ const WORDS = {
   'v1.2 -> Unraid': 'v1.2 → Unraid',
   '+ New Worktree': 'New worktree',
   '+ New branch': 'New branch',
+  'Open in Panel': 'Open in panel',
+  'vm not running — start colima · Retry': 'VM not running — start colima · Retry',
 };
-/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value */
+/* ages and elapsed times the shell writes as "4m", "2h", "1d", "12s ago", "up 3h", "1m 48s" are spelled out the way the
+   Jujutsu rows write them ("4 minutes", "2 hours ago", "1 minute 48 seconds"); a decimal measurement keeps its unit
+   symbol ("3.4s", "84.6s"), and a hash that starts with a digit ("3d9be21") is not an age */
+const AGE_UNIT = { s: 'second', m: 'minute', h: 'hour', d: 'day', w: 'week' };
+const AGE_RX = /(^|[\s(·—–])(\d+)([smhdw])(?=$|[\s),;·—–])/g;
+const ageWords = (m, pre, n, u) => pre + n + ' ' + AGE_UNIT[u] + (n === '1' ? '' : 's');
+/* phrases the shell shortens inside longer text: [pattern, replacement] over a text node's whole value (10-skin
+   applyWords; text in code, kbd and pre is left as written) */
 const PHRASES = [
   [/^(\s*)Watching (\d+) · /, '$1Watching $2 folders · '],
+  [AGE_RX, ageWords],
 ];
 const metaWords = s => String(s || '').replace(/\b(\d+) ctr\b/g, (m, n) => n + (n === '1' ? ' container' : ' containers')).replace(/\bctr\b/g, 'containers');
 const OWNER = { All: 'All', Threads: 'Threads', Th: 'Threads', Orch: 'Orchestrator', Agents: 'Agents', Ag: 'Agents', Manual: 'Manual', Man: 'Manual' };

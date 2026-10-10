@@ -6,7 +6,7 @@
 .b19-manifest-table th, .b19-manifest-table td { text-align: left; padding: 3px 8px 3px 0; border-bottom: 1px solid var(--border-subtle); color: var(--text); }
 .b19-manifest-table th { color: var(--muted); font-weight: 600; white-space: nowrap; }
 .b19-receipt { border: 1px solid var(--border-subtle); border-radius: 8px; padding: 6px 8px; margin: 4px 0; background: var(--surface-2); }
-.b19-receipt-id { font-family: ui-monospace, monospace; font-size: 11px; color: var(--muted); }
+.b19-receipt-id { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
 .b19-capture-row { display: flex; gap: 8px; align-items: baseline; padding: 2px 0; font-size: 12px; }
 .b19-capture-row .att-hash { font-size: 11px; }
 .b19-save-row { display: flex; gap: 8px; align-items: center; }

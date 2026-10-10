@@ -362,6 +362,12 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-item:hover, .pm51-popout-item.is-active, .pm51-popout-item:focus-visible { background: color-mix(in srgb, var(--text-primary, #f4f2ff) 8%, transparent); color: var(--text-primary, #f4f2ff); outline: 0; }
 .pm51-popout-item[aria-selected="true"] { background: var(--accent-soft, rgba(124,108,255,.18)); color: var(--text-primary, #f4f2ff); }
 .pm51-popout-item[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+/* a held-back choice that says why (Settings_System section 8: "disabled with the reason"): the reason sits under its name,
+   once for a run of choices held back for the same reason, and stays readable while the choice is dimmed */
+.pm51-popout-item.has-why { flex-wrap: wrap; row-gap: 2px; }
+.pm51-popout-item.has-why[aria-disabled="true"] { opacity: 1; }
+.pm51-popout-item.has-why[aria-disabled="true"] > :is(.pm51-popout-icon, .pm51-popout-label, .pm51-popout-meta) { opacity: .5; }
+.pm51-popout-why { flex: 1 0 100%; font-size: 11px; font-weight: 500; line-height: 1.35; white-space: normal; color: var(--text-muted, #8f8ab0); }
 /* Menus are placed outside the Settings panel, so the panel's icon rule never reaches them: draw their icons here. */
 .pm51-popout .icon { width: 14px; height: 14px; flex: 0 0 auto; display: inline-grid; place-items: center; }
 .pm51-popout .icon svg { display: block; stroke: currentColor; }

@@ -2777,9 +2777,11 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   The concepts' embedded copies of the theme web fonts are one set of files. Every face the 5.6 Pro chat
-  concept embeds (Inter, Poppins and IBM Plex Mono, in Concepts/chat-assistant-concepts/5.6 Pro/styles.css and
-  pmx-system.css) is carried byte for byte by PMConcept7's Concepts/onboarding/opus-5.5/src/fonts, whose
-  SOURCE.md lists each file's source and SHA-256. A concept that adds or changes a shared face changes it for
+  concept embeds (Inter, Poppins, IBM Plex Mono and JetBrains Mono, each with its unicode-range script slices, in
+  Concepts/chat-assistant-concepts/5.6 Pro/styles.css and pmx-system.css) is carried byte for byte by PMConcept7's
+  Concepts/onboarding/opus-5.5/src/fonts or, for JetBrains Mono, src/settings/nier/fonts, where the same files are
+  NieR Mode's PM NieR Mono; src/fonts/SOURCE.md lists each file's source and SHA-256, and 5.6 Pro's NieR faces are
+  generated from those files (amended 2026-10-09, DL-161). A concept that adds or changes a shared face changes it for
   both, and Concepts/onboarding/opus-5.5/tools/build.py --check fails while a face 5.6 Pro embeds is missing
   from src/fonts byte for byte. Which faces each theme family uses stays F3-430's; this rule only fixes that the
   concepts do not keep two versions of the same face.
@@ -2789,7 +2791,7 @@ split_recommended: false
 depends_on: [F3-430, DL-161]
 unblocks: []
 acceptance_criteria:
-  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts with the same SHA-256."
+  - "Each face 5.6 Pro embeds decodes to a file in Concepts/onboarding/opus-5.5/src/fonts or src/settings/nier/fonts with the same SHA-256."
   - "build.py --check reports a missing or changed shared face as a failure."
 validation_surfaces:
   - python3 Concepts/onboarding/opus-5.5/tools/build.py --check
@@ -3129,6 +3131,60 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Settings_System.md#SSYS-010, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-600, ContractName:Plans/Decision_Log.md#DL-152, ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/DRY_Rules.md#DR-043
 
+## First paint single reader per page — 2026-10-09
+
+The assistant chat concept gained a first-paint reader of its own (DL-159, F3-612) on the pattern of PMConcept7's boot paint (F3-468, DL-153). DR-056 already keeps one look store that the first paint only reads; a page with two readers would still let the first frame and the rendered page disagree, so one rule covers both pages and the chat's later port.
+
+### DR-054 - One First-Paint Reader Per Page, Reading The Look Owner's Store
+
+```yaml
+plan_unit_id: DR-054
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  A page paints its stored look before its first frame through exactly one first-paint reader (F3-468). The look's
+  one store and the reader's read-only access are DR-056's; this rule adds only the count. The reader writes nothing
+  but the attributes the look owner's first render writes, so the owner rewrites the same values, and no surface on
+  the page adds a reader of its own. The assistant chat keeps its reader (F3-612) only while it is a page of its own;
+  when it is ported into PMConcept7, PMConcept7's head boot script is the page's one reader and the chat's reader is
+  removed rather than kept beside it.
+gui_related: true
+gui_classification_reason: "Keeps one first-paint reader per page, reading the look owner's store."
+split_recommended: false
+depends_on: [DL-159, F3-468, F3-612, DR-056]
+unblocks: []
+acceptance_criteria:
+  - "A page has one first-paint reader, and it writes no look setting and no copy of the theme."
+  - "The chat ported into PMConcept7 carries no first-paint reader of its own."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-159"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept lineage only)"
+preserved_exact_tokens:
+  - "F3-468"
+  - "F3-612"
+negative_constraints:
+  - "Do not add a second first-paint reader to a page, or a stored or global copy of the theme for one."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-612, ContractName:Plans/Decision_Log.md#DL-159, ContractName:Plans/DRY_Rules.md#DR-056
+
 ## Left rail presentation single owner — 2026-10-09
 
 The left rail's Polish design (DL-162) is a presentation grammar shared by nine panels with nine different owner documents, so it must live in one place.
@@ -3193,6 +3249,151 @@ owner_hints:
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439, ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069
 
+## Usage presentation grammar single owner — 2026-10-09
+
+The redesigned Usage page (DL-173 to DL-179) adds a presentation grammar that must live in one place, beside the chat transcript owners of DR-043 and the wand grammar of DR-044, and it reuses several of their owners rather than copying them.
+
+### DR-058 - Usage Presentation Grammar Single Owner
+
+```yaml
+plan_unit_id: DR-058
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  The Usage page's presentation grammar has exactly one GUI owner, FinalGUISpec F3-628 with F3-514:
+  the chart family (area, line, columns, budget and stacked, with the crosshair readout card, draw-on
+  and morph), meters with the calm spectrum, the threshold tones and the switch-point notch, the hero
+  plate with its key light and roll, folded facts behind N more, the provider mark rule, the Accounts
+  plates and per-account rows, the Live / Paused control, and the look of move and resize previews.
+  Every Usage widget builds these from one shared set of primitives; a room or a widget supplies
+  content only and never forks or restyles a primitive. Numbers, times, costs and percentages come
+  from the app's one shared formatter and one time-zone implementation (DR-044), never a Usage
+  formatter. The grammar reuses its neighbours' owners and never restates them: menus are the chat
+  assistant's menu family (F3-531, portaled per F3-424, opening with F3-461's corner sprout); hover is
+  the shell's one hover system, F3-465 driven through F3-446's single pointer handler; motion voices
+  are ACD-475's per theme family with no per-view override (DR-043), so Usage has no voice of its own;
+  any Usage sound would use the Notifications & Sounds owner's mapping and one player (F3-564, F3-599,
+  DR-043); NieR Mode is SSYS-043's parts with the grammar of F3-589 and F3-598; and fonts are the app's one embedded font set, under its own owner's rules, never a Usage font list.
+  Behaviour stays with its owners: what the page shows and does with usage-feature (UF-107 and the
+  units it amends), auto-switch values and rules with Multi-Account MA-073 through the Settings
+  owner's transaction (SSYS-009, SSYS-018), and the board transaction with Widget_System WS-019.
+  DR-038 and DR-039 stand: Usage admits no shared-runtime role, creates no run-out projection, and
+  keeps one Usage authority, one widget-layout authority and one command language.
+gui_related: true
+gui_classification_reason: "Fixes one owner for the Usage page's presentation grammar and points it at the owners it reuses."
+split_recommended: false
+depends_on: [DR-038, DR-039, DR-043, DR-044, F3-628, F3-514, DL-173, DL-179]
+unblocks: []
+acceptance_criteria:
+  - "No second chart family, meter, hero, mark rule, folded-facts control or formatter exists for a Usage room or widget."
+  - "No Usage-only menu style, hover engine, motion voice, sound registry, NieR grammar or font exists."
+  - "No Usage presentation unit restates the menu, hover, motion-voice, sound, NieR or font owners' rules; each cites its owner."
+  - "No Usage unit keeps a copy of an auto-switch value or of the board transaction."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: usage_redesign_gui
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-173"
+  - "Plans/Decision_Log.md#DL-179"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md (SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/R4-plans-20261009.md section 2 (SHA-256 e485c9b971d498774b7bd9b27e85f7f007790235e323dd8a989c51d44b5edad0)"
+preserved_exact_tokens:
+  - "F3-628"
+  - "DR-043"
+  - "DR-044"
+  - "ACD-475"
+  - "F3-465"
+  - "N more"
+negative_constraints:
+  - "Do not restate the Usage presentation grammar outside F3-628."
+  - "Do not fork the chat menu family, the shell hover system, the motion voices, the sound player, NieR's grammar or the font set for Usage."
+  - "Do not keep a Usage copy of a Settings-owned value or a Usage formatter."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-628, ContractName:Plans/FinalGUISpec.md#F3-514, ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-531, ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/assistant-chat-design.md#ACD-475, ContractName:Plans/Settings_System.md#SSYS-043, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Widget_System.md#WS-019
+
+## PMConcept7 hover grammar single owner — 2026-10-10
+
+DL-171 merges PMConcept7's two hover systems into one, so the hover grammar must live in one place and every surface must take it rather than restate it.
+
+### DR-072 - One Hover Grammar For PMConcept7
+
+```yaml
+plan_unit_id: DR-072
+unit_type: invariant
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: >-
+  PMConcept7's hover grammar has exactly one owner, FinalGUISpec F3-465: the magnet, the pointer light, the emitted
+  glow, the continuous field with its neighbours, the Retro form Raise, the NieR form Lock-on, the Reduced Motion and
+  software-rendered forms, and the boundary. It has one engine, the PMH engine (18-hover.js in the concept), riding
+  the one merged document pointer-move handler F3-446 owns, and one token set (22-hover.css in the concept), with
+  family, kind and family-by-kind rows. There are four kinds, card, row, tile and icon, and every target is one of
+  them. A surface opts in, with its class in the engine's lists or `data-pmh` naming a kind on its markup, and opts
+  out with `data-pmh="off"` or by sitting inside `[data-pm-hover-exempt]`; it never restates the effect: no surface
+  keeps its own hover lift, glow, pointer sheen, magnet, pointer-move listener or animation loop, and a page's own
+  `:hover` lift or ring on a target is cancelled rather than layered under the grammar. A surface that needs a
+  different strength sets a token for its kind and never forks a layer. The boundary is part of the grammar: tab
+  strips, resize dividers and editor and terminal text surfaces are never targets and get at most a static hover tint,
+  and icons get no magnet and keep at most their own quiet tint. Tab silhouettes stay with their tab owners (F3-505,
+  F3-466), and parallax stays with F3-446.
+gui_related: true
+gui_classification_reason: "Fixes one owner for PMConcept7's hover grammar."
+split_recommended: false
+depends_on: [F3-465, F3-446, DL-171]
+unblocks: []
+acceptance_criteria:
+  - "Exactly one hover engine and one hover token set exist in PMConcept7; no surface keeps a second engine, its own pointer-move listener or its own hover animation loop."
+  - "Every hover target is a card, row, tile or icon, opted in by class or `data-pmh` and opted out by `data-pmh=\"off\"` or `[data-pm-hover-exempt]`."
+  - "No surface owner restates the hover lift, glow, pointer light or magnet; a different strength is a kind token, not a forked layer."
+  - "Tab strips, resize dividers and editor and terminal text surfaces are never hover targets and show at most a static tint."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_presentation_authority
+reasoning_tier: high
+context_scope: pm7_hover_grammar
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: exact_key_static_dry_gate_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-171"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-hover-20261009/ENGINE.md, SHA-256 bd3480ac65c053210ebc6d9193480acc3c04c6592276607332817615fd76de5e"
+preserved_exact_tokens:
+  - "F3-465"
+  - "data-pmh"
+  - "data-pm-hover-exempt"
+  - "card, row, tile and icon"
+negative_constraints:
+  - "Do not restate the hover effect in a surface owner or give a surface its own hover lift, glow, pointer sheen, magnet or animation loop."
+  - "Do not make a tab strip, resize divider or editor or terminal text surface a hover target."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#F3-465, ContractName:Plans/FinalGUISpec.md#F3-446, ContractName:Plans/Decision_Log.md#DL-171, ContractName:Plans/FinalGUISpec.md#F3-505, ContractName:Plans/FinalGUISpec.md#F3-466
+
+
 ## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)
 
 Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces Home's four fixed editor panels, singleton dashboard, bottom terminal zone and movable chat with one universal panel system, rebuilds the terminal as one session per tab, and makes the bans on side stripes, emoji and pills one rule for the whole app. Each piece the redesign shares across surfaces lives in one place, and these seven rules say where. They supersede the per-surface owners of the 2026-08-04 Home owner boundary and its U10 sentence (both amended in place above), and they amend the PMConcept7 SSOT table's Home row and DR-039 for several dashboard tabs, the Guided Tour paragraph of the touch-closure addendum, DR-044's run view, DR-047's Plan footer and DR-057's pill clause, which now reads as the left rail's instance of DR-069. The concept builds are lineage only: no concept class, storage key or script global is a product name here.
@@ -3224,7 +3425,7 @@ canonical_text: >-
   (DR-037), a terminal tab one terminal session (SMPFS-180), and a dashboard tab one widget board hosted through
   Widget_System (WS-030), never through a new host service (DR-038). The chat column is outside this grammar: never a
   panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons is the shell's one
-  hover system, a static tint at most (DR-059, F3-465). This rule supersedes the per-surface Home owners of the
+  hover system, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
   2026-08-04 Home owner boundary for panel and tab presentation.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
@@ -3269,7 +3470,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-059, ContractName:Plans/Decision_Log.md#DL-141
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-072, ContractName:Plans/Decision_Log.md#DL-141
 
 ### DR-066 - One Gesture Kit For Panels And The Usage Board
 
@@ -3359,7 +3560,7 @@ canonical_text: >-
   and landing previews open in that root, and no tab kind appends an overlay layer of its own to the page or the
   window. The order is fixed, bottom to top: panel content, then tab strips and dividers, then the overlay root, which
   sits above the status bar and below the Demo Studio's controls (DR-070), the hover tags and the Guided Tour
-  (F3-635). Hover tags belong to the shell's one hover system (DR-059) and the Guided Tour to its own owner; neither
+  (F3-635). Hover tags belong to the shell's one hover system (DR-072) and the Guided Tour to its own owner; neither
   joins the overlay root and neither keeps a second stacking order. When the 5.6 Pro chat is ported (ACD-501, D27),
   its body-portaled popouts (F3-424) and its menus open in the same root and order; the chat keeps no overlay layer
   and no stacking order of its own. A tab body never draws past its own box except through this root, and Escape
@@ -3407,7 +3608,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-424, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-059
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-424, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-072
 
 ### DR-068 - One Terminal Appearance Model
 

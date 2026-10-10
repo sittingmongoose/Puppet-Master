@@ -320,6 +320,9 @@
     ],
     "exhaustion": "next-service"
    },
+   "props": {
+    "ai.accounts.hard-switch-level": 15
+   },
    "diagnostics": [
     "ChatGPT sign-in current"
    ],
