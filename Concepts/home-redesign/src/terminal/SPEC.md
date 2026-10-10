@@ -198,3 +198,33 @@ command record carries `by`; the gutter shows a square mark on agent-typed comma
 it. Shell-integration marks carry a per-terminal secret (`OSC 133;...;pmn=<secret>`, `OSC 6973;<secret>;E;<base64
 command line>`, `OSC 6973;<secret>;W;<who>`): a mark without it is plain output. Agent reads return rendered text with
 a read state (`final` for a finished command), never raw bytes, never images.
+
+## 9. Effects (D16)
+
+Policy: effects are PM-authored. The GPU pass runs only after the grid repainted or while something is still
+animating. Only the focused, visible terminal animates. Ambient motion (noise, flicker) runs at most 30 fps and stops
+10 s after the last output or keystroke. Burn-in and degauss run to their end and stop. Reduced Motion turns off every
+moving part (cursor blink, trail, smooth scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps,
+image animation) and keeps the static looks (scanlines, glow, curvature, parchment grain). Battery saver (where the
+platform reports it: not charging and at most 20 %) does the same for motion. The no-GPU path (no WebGL, a major
+performance caveat, or a software rasterizer) keeps scanlines as a static CSS pattern and glow as a CSS drop-shadow on
+the glyphs, does not draw curvature, burn-in or noise, and the Appearance popover says what it could not draw.
+
+| Effect | Friendly | Glass | Retro | Basic | NieR | Parameters |
+|---|---|---|---|---|---|---|
+| Inactive dimming | on, overlay of the background at 18 % | content at 80 % opacity (more translucent) | on, black at 40 % (brightness to 60 %) | off | on, parchment at 32 % | `inactiveDim` |
+| Focus | 1 px accent ring at 45 % | luminous rim: 1 px white at 30 % plus a top highlight | inverse-video header row | 1 px accent line under the header | ink corner brackets (10 px arms, 2 px) | static |
+| Cursor | block | bar | block | block | block | blink 530 ms phases, stops after 15 s idle; unfocused: hollow block; secret input: padlock |
+| Cursor trail | soft, 120 ms | glow, 160 ms | phosphor, 200 ms | off | trace (thin ink line), 140 ms | fires only on jumps over 2 cells after the cursor rested 60 ms |
+| Smooth scrolling | on | on | off (line steps) | on | on | wheel moves 35 % of the remaining distance per frame |
+| Background | soft vertical gradient from the scheme background | scheme background at 74 % (dark) / 70 % (light) over the shell's one blur; the terminal adds no blur | scheme | scheme | static parchment grain at 55 %, under the text | `background`, `opacity` |
+| Scanlines | off | off | on in Retro dark | off | off | strength 0.30, period 3 device px |
+| Phosphor glow | off | off | on in Retro dark | off | off | strength 0.45, radius 2.5 CSS px; tint = the scheme's glow role |
+| Full CRT (opt-in in every look) | | | | | | curvature 0.08 (barrel map; the pointer maps through it), bezel 14 CSS px, vignette 0.25, burn-in persistence 450 ms, noise 0.035 at most 30 fps |
+| Flicker | off by default in every look | | | | | amount 0.02, hard cap 0.03 relative-luminance modulation. WCAG 2.3.1 counts a 10 % change as a flash, so flicker can never be a flash |
+| Degauss | | | on demand (popover button) | | | 600 ms wobble and colour fringe, easing out |
+| Visual bell | 9 % flash, 400 ms | rim brightens, 420 ms | inverse video, 120 ms | a line under the header | brackets snap in, 240 ms | at most one visual bell per second; Reduced Motion: a static 1 px outline |
+| Progress (OSC 9;4) | 3 px bar | 2 px white bar | 4 px block segments | 2 px bar | ink line with a 6 px square head | the indeterminate state sweeps (1.4 s), static under Reduced Motion |
+
+Phosphor schemes map colours outside the 16 (the 256-colour cube and truecolor) onto the phosphor by brightness, so a
+program's `38;5;196` never paints red on a green tube.
