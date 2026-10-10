@@ -193,7 +193,7 @@
     out.past = !!(a && a.pastSwitch);
     if (!pol.auto) {
       out.state = 'off'; out.warn = out.past;
-      out.words = out.past ? a.nickname + ' is at ' + Math.round(a.binding.pct) + '% used, past the ' + at + '% switch point. Auto-switch is off, so it stays active until you switch' : 'Auto-switch is off for ' + name;
+      out.words = out.past ? a.nickname + ' is at ' + Math.round(a.binding.pct) + '% used, ' + (Math.round(a.binding.pct) <= at ? 'at' : 'past') + ' the ' + at + '% switch point. Auto-switch is off, so it stays active until you switch' : 'Auto-switch is off for ' + name;
       return out;
     }
     if (!a) { out.state = 'unread'; out.words = 'No ' + name + ' account is active'; return out; }
@@ -203,15 +203,17 @@
     var cands = others.filter(function (x) { return !whyNot(x); }).sort(function (x, y) { return (y.binding.left - x.binding.left) || (x.priority - y.priority); });
     out.blocked = others.filter(function (x) { return whyNot(x); }).map(function (x) { return { account: x, why: whyNot(x) }; });
     out.warn = true;
+    /* an account that has run out says so, not that it "reached the 90% switch point" */
+    var reached = a.binding.left <= 0 ? a.nickname + ' has run out' : a.nickname + ' reached the ' + at + '% switch point';
     if (!cands.length) {
       out.state = 'no_candidate'; out.credits = a.binding.left <= 0 && hasCredits(a);
-      out.words = a.nickname + ' reached the ' + at + '% switch point. No other ' + name + ' account has a fresh reading with room' +
+      out.words = reached + '. No other ' + name + ' account has a fresh reading with room' +
         (out.credits ? '. New ' + tool + ' work draws on ' + a.nickname + '’s paid credits' : '');
       return out;
     }
     out.candidate = cands[0];
     if (busyOf(view)) { out.state = 'waiting_idle'; out.words = 'Will switch to ' + out.candidate.nickname + ' when ' + tool + ' goes idle'; }
-    else { out.state = 'due'; out.words = a.nickname + ' reached the ' + at + '% switch point. Switching to ' + out.candidate.nickname + ' on the next check'; }
+    else { out.state = 'due'; out.words = reached + '. Switching to ' + out.candidate.nickname + ' on the next check'; }
     return out;
   }
 
@@ -256,7 +258,11 @@
             fact = Object.assign({}, fact, { pct: Math.max(0, Math.round((fact.pct + dw) * 10) / 10) });
             if (num(fact.used) !== null && num(fact.limit) !== null) fact.used = Math.round(fact.used + dw / 100 * fact.limit);
           }
-          return windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key), apol);
+          var wv = windowView(w.key, w.label, fact, governed, ov('roll:' + key + '/' + w.key), apol);
+          /* a provider with one account does not switch (AAC; its plate says "Off · one account"), so its notch is dim on
+             every meter that reads autoOn (the Plans & limits meters too) */
+          if (accs.length < 2) wv.autoOn = false;
+          return wv;
         });
         var known = wins.filter(function (w) { return w.pct !== null; });
         var binding = known.slice().sort(function (x, y) { return (x.left - y.left) || (WINDOW_ORDER.indexOf(x.key) - WINDOW_ORDER.indexOf(y.key)); })[0] || null;

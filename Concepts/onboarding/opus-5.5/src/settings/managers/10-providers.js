@@ -496,16 +496,24 @@
   const sharedText = id => id === 'ai.accounts.multi-account-switching' ? (isOn(PM51.value(id)) ? 'on' : 'off') : id === 'ai.accounts.cooldown-policy' ? cooldownText(PM51.value(id)) : usedText(PM51.value(id));
   /* a level dropdown: the first choice follows the shared value; a service value off the list keeps its own entry */
   function levelControl(p, id, list, label) {
-    const own = ownPolicy(p, id), shared = PM51.value(id);
-    /* the shared choice says its level once ("Shared · 20% left"; its % used in the line under it), so the closed dropdown
-       never cuts it */
+    const own = ownPolicy(p, id), shared = PM51.value(id), cool = id === 'ai.accounts.cooldown-policy';
+    /* the switch level stays under the warn level, as on the Usage page (one bound value, one rule): a switch choice at or
+       above the service's warn level, or a warn choice at or below its switch level, is shown but cannot be picked, and
+       says why (item 2 review: Settings let Codex switch and warn at the same 90%) */
+    const isSw = id === 'ai.accounts.hard-switch-level', isWarn = id === 'ai.accounts.soft-warning-level';
+    const warnN = pctLeft(policyOf(p, 'ai.accounts.soft-warning-level')), swN = pctLeft(policyOf(p, 'ai.accounts.hard-switch-level'));
+    const block = v => { const n = pctLeft(v); if (n === null) return ''; if (isSw && warnN !== null && n >= warnN) return `At or past ${p.name}'s warn level (${100 - warnN}% used). Lower the warn level first.`; if (isWarn && swN !== null && n <= swN) return `At or before ${p.name}'s switch level (${100 - swN}% used). Raise the switch level first.`; return ''; };
+    /* the shared choice and every level say their level in a few words, so neither the closed dropdown nor the open list
+       cuts them (item 2 review: "Shared · provider def…" in Retro, the notes cut to "M…"); where it comes from is said
+       in the field's About hover */
     const sharedN = pctLeft(shared);
-    const opts = [{ value: '', label: `Shared · ${id === 'ai.accounts.cooldown-policy' ? cooldownText(shared) : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
-      meta: `${id !== 'ai.accounts.cooldown-policy' && sharedN !== null ? `${100 - sharedN}% used · ` : ''}Follows Limits & switching > Moving between accounts` }];
-    if (id === 'ai.accounts.cooldown-policy') COOLDOWNS.forEach(([v, meta]) => opts.push({ value: v, label: cooldownText(v), meta }));
+    const opts = [{ value: '', label: `Shared · ${cool ? (COOLDOWNS.some(x => x[0] === shared) ? cooldownText(shared) : 'default') : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
+      meta: !cool && sharedN !== null ? `${100 - sharedN}% used` : '' }];
+    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); }
+    if (cool) COOLDOWNS.forEach(([v]) => opts.push({ value: v, label: cooldownText(v) }));
     else {
       const vals = list.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
-      vals.forEach(v => opts.push({ value: String(v), label: leftText(v), meta: id === 'ai.accounts.hard-switch-level' ? `Moves to the next account at ${100 - v}% used` : `A heads-up at ${100 - v}% used` }));
+      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why } : {})); });
     }
     if (own !== undefined && !opts.some(o => o.value === String(own))) opts.push({ value: String(own), label: String(own) });
     return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: SVC, setting: id, provider: p.id }, label: `${label} for ${p.name}` });
@@ -513,7 +521,7 @@
   /* a compact field (the account's "When it runs low" layout); "changed" here means the service has its own value */
   function policyField(p, id, label, control) {
     const own = ownPolicy(p, id) !== undefined;
-    return `<div class="o55-field o55-policy-field${own ? ' is-changed is-own' : ''}" data-setting-id="${a(id)}" data-provider="${a(p.id)}"><div class="o55-field-head"><span class="o55-field-label">${h(label)}</span><button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="${a(own ? `${p.name} has its own value. The shared one is ${sharedText(id)}.` : `${p.name} follows the shared value: ${sharedText(id)}.`)}">${icon('help')}</button></div>${control}</div>`;
+    return `<div class="o55-field o55-policy-field${own ? ' is-changed is-own' : ''}" data-setting-id="${a(id)}" data-provider="${a(p.id)}"><div class="o55-field-head"><span class="o55-field-label">${h(label)}</span><button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="${a(own ? `${p.name} has its own value. The shared one is ${sharedText(id)} (Limits & switching › Moving between accounts).` : `${p.name} follows the shared value: ${sharedText(id)}, set under Limits & switching › Moving between accounts.`)}">${icon('help')}</button></div>${control}</div>`;
   }
   function policyHelp(p) {
     const own = ownPolicy(p, 'ai.accounts.multi-account-switching') !== undefined, on = autoOf(p);
@@ -563,6 +571,22 @@
   let policySave = 0;
   const savePolicySoon = () => { if (policySave) return; policySave = window.setTimeout(() => { policySave = 0; saveState(); }, 0); };
   const settingsShown = () => { const panel = document.getElementById('panel-settings'); return !!(panel && panel.classList.contains('active')); };
+  /* A write made while Settings is hidden (from the Usage page) marks the drawn page stale; it is redrawn the moment
+     the Settings panel is shown again, before that frame paints (item 2 review: the top Settings tab showed the old
+     toggle and level until a sub-tab was switched). Without a Settings panel (the standalone page) it redraws at once. */
+  let policyStale = false, policyObs = null;
+  const redrawWhenShown = () => {
+    const panel = document.getElementById('panel-settings');
+    if (!panel || typeof MutationObserver !== 'function') { PM51.refresh(ID, { swap: false }); return; }
+    policyStale = true;
+    if (policyObs) return;
+    policyObs = new MutationObserver(() => {
+      if (!policyStale || !panel.classList.contains('active')) return;
+      policyStale = false;
+      if (root.querySelector(`[data-continuous-workspace-body="${cssEscape(ID)}"]`)) PM51.refresh(ID, { swap: false });
+    });
+    policyObs.observe(panel, { attributes: true, attributeFilter: ['class'] });
+  };
   PM51.providerPolicy = {
     ids: POLICY_IDS.slice(),
     /* {value, own, shared}: the value the service uses, whether it is the service's own, and the shared value */
@@ -574,7 +598,7 @@
     set: (pid, id, value) => {
       const p = find(pid); if (!setPolicy(p, id, value)) return false;
       savePolicySoon();
-      if (settingsShown()) PM51.refresh(ID, { swap: false });
+      if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
       return true;
     }
   };

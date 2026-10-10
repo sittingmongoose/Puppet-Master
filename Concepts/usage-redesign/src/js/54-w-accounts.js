@@ -45,9 +45,9 @@
   function meterOpts(a, p, size, w, narrow, noReset) {
     var m = C.meterSpec(w, { size: size, effective: a.effective, prov: p.id, stale: a.fresh.stale, age: a.ageText, hoverName: p.name + ' · ' + a.nickname });
     /* item 2: every meter's notch sits at its own provider's switch point (this account's own, where it has one) and dims
-       with that provider's toggle; C.meterSpec reads the shared policy */
+       with that provider's toggle, and on a provider with one account (it does not switch: w.autoOn false) */
     var pol = a.policy || polOf(p);
-    if (m.notch) m.notch = { at: 100 - pol.switchLeft, faint: !a.effective, off: !pol.auto };
+    if (m.notch) m.notch = { at: 100 - pol.switchLeft, faint: !a.effective, off: !pol.auto || w.autoOn === false };
     m.thresholds = { warn: 100 - pol.warnLeft, switch: 100 - pol.switchLeft };
     if (noReset && w.pct !== null) { m.hover = { label: p.name + ' · ' + a.nickname + ' · ' + w.label, detail: C.fmt(w.pct, 'pct') + ' used · ' + C.fmt(100 - w.pct, 'pct') + ' left · ' + m.resetText + (w.amount ? ' · ' + w.amount : '') + ' · ' + m.source }; m.resetText = ''; }
     if (narrow && w.pct === null) m.vsWord = { not_exposed: 'Not exposed', unknown: 'Unknown', disabled: 'Disabled' }[m.vs] || m.vsWord;
@@ -56,7 +56,9 @@
   function fallbackSentence(p) {
     var ex = p.exhausted[0];
     if (!ex) return '';
-    var others = p.accounts.filter(function (a) { return a !== ex && (a.state === 'active' || a.state === 'standby') && a.binding && a.binding.left > 0; });
+    /* only an account that could take over (signed in, a fresh trusted reading with room: the auto-switch rule) counts, so
+       this line never promises another account while the policy band says none has room */
+    var others = p.accounts.filter(function (a) { return a !== ex && (a.state === 'active' || a.state === 'standby') && a.binding && a.binding.left > 0 && !(PMU.roster.whyNot && PMU.roster.whyNot(a)); });
     return others.length ? t('accounts.exhausted_fallback', { name: ex.nickname }) : ex.nickname + ': Usage exhausted. No other eligible account has room until a reset.';
   }
   function mostRoom(p) {
@@ -79,7 +81,9 @@
      instead. The same controls appear on the provider's plate (the policy band), in the Auto-switch hero (one cell per
      provider) and in the Overview's headroom card (a switch on each provider row). */
   function polOf(p) { return (p && p.policy) || PMU.roster.thresholds(p ? p.id : null); }
-  function switchable(p) { return !!p && p.accounts.length > 1; }
+  /* the same test Settings uses to draw the provider's choices (two or more accounts, of a kind that has accounts to
+     switch between), so Usage never shows a band Settings has no rows for */
+  function switchable(p) { if (!p || p.accounts.length < 2) return false; var m = PMU.settings.providerMulti ? PMU.settings.providerMulti(p.id) : null; return m !== false; }
   function ownAny(pol) { var o = (pol && pol.own) || {}; return !!(o.auto || o.switchLeft || o.warnLeft || o.cooldown); }
   function polAt(p) { return 100 - polOf(p).switchLeft; }
   /* the words of a provider's policy for its hover tags and Details */
@@ -377,18 +381,25 @@
     /* the word's measure plus its padding; a state word keeps 8 px (Mac film: "Active · override" wrapped at +2) */
     var wOf = function (x) { return x.t ? tw(x.t, 12.5, x.btn ? 600 : 640) * 1.04 + (x.btn ? 22 : 8) : 0; };
     var actW = Math.ceil(Math.max(48, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, false).map(wOf)); }))));
-    var fullAct = n && bw >= 150 + n * 112 + 176 + GAP * (n + 1);
-    if (fullAct) actW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, true).map(wOf)); }))));
+    /* the identity column keeps every name's longest word whole: the state glyph (16 px) and its gap (8) beside it, 4 px
+       spare, in the theme's face at the effective row's weight (item 2 review: "sittingmongoo / se" at 1440 in Glass and
+       Retro, where the full action words took 220 px of a 514 px plate) */
+    var NAMECOL = Math.ceil(Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, String(a.nickname || '').split(/\s+/).map(function (x) { return tw(x, 13.5, 680) * 1.04; })); }).concat([0]))) + 28;
+    var fullActW = Math.ceil(Math.max(actW, Math.max.apply(null, p.accounts.map(function (a) { return Math.max.apply(null, canWords(a, true).map(wOf)); }))));
+    /* the full action words ("Use this account · override") only where the identity column keeps 150 px and its names
+       beside them and every window keeps 112 px (the row's own padding, 28 px, counted) */
+    var fullAct = n && bw - 28 >= Math.max(150, NAMECOL) + n * 112 + fullActW + GAP * (n + 1);
+    if (fullAct) actW = fullActW;
     /* a window column keeps "78% used" and "resets in 1h 41m" on one line each from about 104 px */
-    var IDENT = 112, WIN = 104;
+    var IDENT = Math.max(112, NAMECOL), WIN = 104, IDENT_B = Math.max(100, NAMECOL);
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
        word ("Sign in") keeps its 5-hour and weekly columns at 1920 instead of falling back to the binding window */
-    if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) IDENT = 100;
-    var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= 100 + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
+    if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) IDENT = IDENT_B;
+    var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= IDENT_B + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
     var winTmpl = mode === 'full' ? p.windows.map(function () { return 'minmax(' + WIN + 'px,1fr)'; }).join(' ') : mode === 'binding' ? 'minmax(' + WIN + 'px,1fr)' : '';
     var tmpl = mode === 'none' ? 'minmax(0,1.3fr) minmax(0,1fr) ' + actW + 'px'
       : mode === 'narrow' ? 'minmax(0,1fr) ' + actW + 'px'
-      : 'minmax(' + (mode === 'full' ? IDENT : 100) + 'px,1.5fr) ' + winTmpl + ' ' + actW + 'px';
+      : 'minmax(' + (mode === 'full' ? IDENT : IDENT_B) + 'px,1.5fr) ' + winTmpl + ' ' + actW + 'px';
     var band = !n || mode === 'narrow' ? '' : '<div class="pmu-colhead pmu-accband" style="grid-template-columns:' + tmpl + '"><span class="pmu-cap">ACCOUNT</span>' +
       (mode === 'binding' ? '<span class="pmu-cap">BINDING WINDOW</span>' : p.windows.map(function (w) { return '<span class="pmu-cap">' + esc(w.label.replace(/ window$/i, '').toUpperCase()) + '</span>'; }).join('')) +
       '<span></span></div>';
@@ -399,7 +410,7 @@
     var rowsN = p.accounts.length;
     /* the grid's own share of the width (fr columns above their minimums), for the wrap-aware row heights */
     var free = bw - actW - GAP * ((mode === 'full' ? n : mode === 'narrow' ? 0 : 1) + 1);
-    var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(100, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
+    var identW = mode === 'narrow' ? bw - actW - GAP : mode === 'none' ? free * 1.3 / 2.3 : mode === 'binding' ? Math.max(IDENT_B, free * 1.5 / 2.5) : Math.max(IDENT, free * 1.5 / (1.5 + n));
     var winW = mode === 'full' ? Math.max(WIN, (free - identW) / n) : mode === 'binding' ? Math.max(WIN, free - identW) : mode === 'narrow' ? bw : free - identW;
     if (mode === 'full' && (free - n * WIN) < identW) { identW = Math.max(IDENT, free - n * WIN); winW = WIN; }
     /* the column head takes a second line where a window's name does not fit its column ("PREMIUM / REQUESTS": 40 px, not
@@ -1088,14 +1099,15 @@
      notches of the providers that changed ripple down the board; the toast names the provider. */
   var POL_WORD = { 'ai.accounts.multi-account-switching': 'auto-switch', 'ai.accounts.hard-switch-level': 'switch level', 'ai.accounts.soft-warning-level': 'warn level', 'ai.accounts.cooldown-policy': 'rest after a rate limit' };
   function writePolicy(pid, id, value, step) {
-    var cap = rippleCapture(), ok, p = pid ? PMU.roster.provider(pid) : null;
-    if (pid) { var r = PMU.settings.setProvider(pid, id, value, 'usage.accounts'); ok = !!(r && r.ok); }
+    var cap = rippleCapture(), ok, p = pid ? PMU.roster.provider(pid) : null, r = null, ids = Array.isArray(id) ? id : [id];
+    if (pid) { r = PMU.settings.setProviderMany(pid, ids.map(function (x) { return { id: x, value: value }; }), 'usage.accounts'); ok = !!(r && r.ok); }
     else ok = PMU.settings.set(id, value);
-    if (!ok) { PMU.shell.toast('Not saved: Settings is not available'); return false; }
+    if (!ok) { PMU.shell.toast('Not saved: ' + ((r && r.reason) || 'Settings is not available')); return false; }
     refreshAccounts(pid);
-    var pol = PMU.roster.thresholds(pid || null), what = id === 'ai.accounts.multi-account-switching' ? (pol.auto ? 'auto-switch on' : 'auto-switch off')
+    id = ids.length > 1 ? null : ids[0];
+    var pol = PMU.roster.thresholds(pid || null), what = !id ? 'follows the shared settings' : id === 'ai.accounts.multi-account-switching' ? (pol.auto ? 'auto-switch on' : 'auto-switch off')
       : id === 'ai.accounts.hard-switch-level' ? 'switches at ' + (100 - pol.switchLeft) + '% used' : id === 'ai.accounts.soft-warning-level' ? 'warns at ' + (100 - pol.warnLeft) + '% used' : POL_WORD[id] + ' ' + pol.cooldown;
-    PMU.shell.toast(t('toast.saved_settings') + ' · ' + (p ? p.name : 'shared setting') + ': ' + what + (pid && value === null ? ' (shared)' : ''));
+    PMU.shell.toast(t('toast.saved_settings') + ' · ' + (p ? p.name : 'shared setting') + ': ' + what + (pid && id && value === null ? ' (shared)' : ''));
     ripplePlay(cap, step || 30);
     return true;
   }
@@ -1119,8 +1131,8 @@
       var ids = id ? [id] : [IDS().auto, IDS().switchLeft, IDS().warnLeft, IDS().cooldown], own = PMU.roster.thresholds(providerId).own || {};
       var keys = { 'ai.accounts.multi-account-switching': 'auto', 'ai.accounts.hard-switch-level': 'switchLeft', 'ai.accounts.soft-warning-level': 'warnLeft', 'ai.accounts.cooldown-policy': 'cooldown' };
       var todo = ids.filter(function (x) { return own[keys[x]]; }); if (!todo.length) return false;
-      todo.slice(0, -1).forEach(function (x) { PMU.settings.setProvider(providerId, x, null, 'usage.accounts'); });
-      return writePolicy(providerId, todo[todo.length - 1], null, 24);
+      /* one transaction for every value cleared: a host that cancels it leaves all of them as they were */
+      return writePolicy(providerId, todo.length > 1 ? todo : todo[0], null, 24);
     },
     /* "Use this account" on an account already at its provider's switch point asks first (AAC: the inline question before
        activating an account past the switch point); the answer is never consent for auto-switch */
@@ -1129,12 +1141,23 @@
       if (!a.pastSwitch || !a.binding) return PMU.accounts.useAccount(key);
       var p = PMU.roster.provider(a.providerId), pol = a.policy || PMU.roster.thresholds(a.providerId), at = 100 - pol.switchLeft, used = Math.round(a.binding.pct);
       var el = anchor && anchor.isConnected ? anchor : document.querySelector('#pmuBoard .pmu-accrow[data-acct="' + key + '"] .pmu-usebtn');
+      /* from the inspector in a room without this provider's plate there is no row to hang the question from: it opens
+         centred over the board, under a still point (item 2 review: it opened at the menu's top-left fallback) */
+      var pin = null;
+      if (!el) {
+        var host = document.getElementById('pmuScroll') || document.getElementById('panel-usage') || document.body, hr = host.getBoundingClientRect();
+        pin = document.getElementById('pmuAskPin');
+        if (!pin) { pin = document.createElement('span'); pin.id = 'pmuAskPin'; pin.setAttribute('aria-hidden', 'true'); document.body.appendChild(pin); }
+        pin.style.cssText = 'position:fixed;width:1px;height:1px;pointer-events:none;left:' + Math.round(hr.left + hr.width / 2) + 'px;top:' + Math.round(hr.top + Math.max(60, hr.height * 0.28)) + 'px';
+        el = pin;
+      }
       var qTitle = used + '% used, above the ' + at + '% switch point';
       /* the menu is as wide as its question (at 320 px the title was cut: "... switch poi…") */
       PMU.menu.choice(el, { title: qTitle, current: '', width: Math.min(440, Math.max(320, Math.ceil(C.wrapW(qTitle, 14, 700) * 1.12) + 48)),
         foot: (pol.auto ? 'Auto-switch would move off it again on its next check. ' : 'Auto-switch is off for ' + (p ? p.name : 'this provider') + ', so it stays until you switch. ') + t('accounts.not_consent'),
         options: [{ value: 'use', label: 'Use ' + a.nickname + ' anyway', sub: (a.binding.short || 'Binding') + ' window ' + used + '% used · ' + PMU.fmt.resetLine(a.binding).text },
           { value: 'keep', label: p && p.effective ? 'Keep ' + p.effective.nickname : 'Cancel', sub: p && p.effective && p.effective.binding ? Math.round(p.effective.binding.pct) + '% used' : '' }],
+        align: pin ? 'center' : undefined,
         onPick: function (v) { if (v === 'use') PMU.accounts.useAccount(key); } });
       return null;
     },
@@ -1227,15 +1250,23 @@
   C.act('sw-step', function (el) { var pid = el.getAttribute('data-prov') || null, th = PMU.roster.thresholds(pid); PMU.accounts.setSwitchLevel(th.switchLeft + 5 * (+el.getAttribute('data-value') || 0), pid); });
   C.act('sw-pick', function (el) {
     var pid = el.getAttribute('data-prov') || null, th = PMU.roster.thresholds(pid), p = pid ? PMU.roster.provider(pid) : null, g = PMU.roster.thresholds();
-    var own = !p || (th.own && th.own.switchLeft);
-    var levels = LEVELS.map(function (v) { return { value: v, label: (100 - v) + '% used', sub: v + '% left' + (p ? '' : v === 10 ? ' · default' : ''), disabled: v >= th.warnLeft, reason: v >= th.warnLeft ? 'At or above the warn level (' + (100 - th.warnLeft) + '% used)' : '' }; });
-    var spec = { title: p ? 'Switch ' + famShort(p) + ' accounts at' : 'Switch accounts at', value: own ? th.switchLeft : 'shared', current: (100 - th.switchLeft) + '% used' + (p && !own ? ' · shared' : ''),
-      foot: (p ? p.name + ' only. ' : '') + 'Shared with Settings > AI > Providers & Accounts. ' + t('accounts.not_consent'),
+    var own = !p || (th.own && th.own.switchLeft), warnAt = 100 - th.warnLeft;
+    /* one line per level ("85% used", its % left on the right), so the whole list fits the room above a plate at 1440
+       (item 2 review: the 75 % row was cut and the 70 % row hidden behind a scroll); a level at or past the warn level
+       is shown dim, its reason in the section label and its hover tag */
+    var levels = LEVELS.map(function (v) { var off = v >= th.warnLeft; return { value: v, label: (100 - v) + '% used', right: v + '% left' + (p ? '' : v === 10 ? ' · default' : ''), disabled: off, hover: off ? 'At or past the warn level (' + warnAt + '% used)' : '' }; });
+    var anyOff = levels.some(function (o) { return o.disabled; });
+    /* the head is the question alone, in the provider's Settings name where it fits (the "Current · 90% used" meta beside
+       it cut the title to "Switch Claude accounts…" in five looks); the check on the active row says the current level */
+    var MW = 400, title = 'Switch accounts at';
+    if (p) { title = 'Switch ' + p.name + ' accounts at'; if (C.wrapW(title, 13, 650) * (PMU.theme.look().nier ? 1.3 : 1) > MW - 40) title = 'Switch ' + famShort(p) + ' accounts at'; }
+    var spec = { title: title, value: own ? th.switchLeft : 'shared', current: '', width: MW,
+      foot: (p ? p.name + ' only, shared with Settings. ' : 'Shared with Settings > AI > Providers & Accounts. ') + t('accounts.not_consent'),
       onPick: function (v) { if (v === 'shared') PMU.accounts.useShared(pid, IDS().switchLeft); else PMU.accounts.setSwitchLevel(v, pid); } };
     /* a provider's menu leads with the shared setting (what it follows when it has no level of its own) */
     if (p) spec.sections = [{ rows: [{ value: 'shared', label: 'Shared setting · ' + (100 - g.switchLeft) + '% used', sub: 'Follows Settings > Limits & switching', active: !own }] },
-      { label: 'ITS OWN LEVEL', rows: levels.map(function (o) { return Object.assign({ active: own && o.value === th.switchLeft }, o); }) }];
-    else spec.options = levels;
+      { label: 'Its own level' + (anyOff ? ' · under the ' + warnAt + '% warn level' : ''), rows: levels.map(function (o) { return Object.assign({ active: own && o.value === th.switchLeft }, o); }) }];
+    else { spec.options = levels; if (anyOff) spec.foot = 'Under the ' + warnAt + '% warn level. ' + spec.foot; }
     PMU.menu.choice(el, spec);
   });
   /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */

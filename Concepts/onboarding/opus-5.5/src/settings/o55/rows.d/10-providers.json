@@ -70,7 +70,8 @@
    "label": "Rest after a rate limit",
    "per": "account",
    "perWhere": "Open an account under AI & Providers › Providers & Accounts › Services.",
-   "placeholder": "Service default"
+   "placeholder": "Service default",
+   "empty": "the shared value"
   },
   "ai.accounts.retry-budget": {
    "label": "Retries before an account rests",
@@ -527,11 +528,49 @@
   },
   "ai.accounts.soft-warning-level": {
    "label": "Warn when this much is left",
-   "help": "The shared heads-up before an account runs low. A service can have its own."
+   "help": "The shared heads-up before an account runs low. A service can have its own.",
+   "control": "select",
+   "choices": [
+    10,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50
+   ],
+   "options": {
+    "10": "10% left · 90% used",
+    "15": "15% left · 85% used",
+    "20": "20% left · 80% used",
+    "25": "25% left · 75% used",
+    "30": "30% left · 70% used",
+    "40": "40% left · 60% used",
+    "50": "50% left · 50% used"
+   },
+   "empty": "the shared value"
   },
   "ai.accounts.hard-switch-level": {
    "label": "Switch when this much is left",
-   "help": "The shared level: below this, work moves to the next account. A service, or one account, can have its own."
+   "help": "The shared level: below this, work moves to the next account. A service, or one account, can have its own.",
+   "control": "select",
+   "choices": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30
+   ],
+   "options": {
+    "5": "5% left · 95% used",
+    "10": "10% left · 90% used",
+    "15": "15% left · 85% used",
+    "20": "20% left · 80% used",
+    "25": "25% left · 75% used",
+    "30": "30% left · 70% used"
+   },
+   "empty": "the shared value"
   },
   "ai.accounts.default-account": {
    "label": "Which account goes first",

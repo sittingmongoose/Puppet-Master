@@ -7,3 +7,8 @@
    levels line up from row to row */
 #panel-settings .o55-policy-row .o55-policy-ctl { gap: 12px; }
 #panel-settings .o55-policy-row .o55-policy-ctl > .pm51-dd { flex: none; width: 196px; }
+/* a service's own auto-switch fields: where one label takes two lines and its neighbour one (NieR), the dropdowns still
+   line up on their bottom edge; labels and the policy lines break without an orphaned last word */
+#panel-settings .o55-policy-fields .o55-fields { align-items: end; }
+#panel-settings .o55-policy-field .o55-field-label,
+#panel-settings .o55-policy-row .setting-description { text-wrap: pretty; }
