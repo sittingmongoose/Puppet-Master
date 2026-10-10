@@ -874,11 +874,13 @@ def check(built: str) -> list[str]:
 
 def syntax_check(built: str, usage: bool = True) -> list[str]:
     """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
-    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False)."""
+    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False), the
+    head boot script, and pm6-js-globals, which the base-engine PATCHES (the PMH switch-off, nier-next's next-frame
+    readers) rewrite: a broken patch there would otherwise pass the build and fail only in the browser."""
     import subprocess
     import tempfile
     out = []
-    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot'):
+    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot', 'pm6-js-globals'):
         if sid == 'pm6 boot':  # the head boot script (no id), which first_paint_patches() extends
             m = re.search(r'<script>(\s*/\* pm6 boot: .*?)</script>', built, re.S)
         else:
