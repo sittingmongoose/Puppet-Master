@@ -202,6 +202,10 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-mixrow b { font-weight: 600; color: var(--pmu-ink); }
 #panel-usage .pmu-mixpct { font-size: 12px; color: var(--pmu-ink-3); text-align: right; }
 #panel-usage .pmu-rankedhost { min-width: 0; flex: none; }
+/* (lane c-presets) a narrow two-line ranked row: the name on its own line, the bar and the value under it (50-w-common
+   ranked: the longest name did not fit beside the value and its share) */
+#panel-usage .pmu-rankedhost.is-stack .pmu-rk { grid-template-columns: minmax(36px, 1fr) auto; grid-template-areas: "name name" "bar val"; align-items: center; gap: 4px 10px; }
+#panel-usage .pmu-rankedhost.is-stack .pmu-rkt { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-gauge { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; flex: 1 1 auto; }
 #panel-usage .pmu-gauge.is-side { flex-direction: row; align-items: center; gap: 16px; }
 #panel-usage .pmu-gaugering { flex: none; }

@@ -1589,13 +1589,25 @@
         });
         if (nameInl > ctx.tier.bw - 16 - 36 - valInl - 20) { inline = false; rowH = 48; }
       }
+      /* and the two-line form puts the name on a line of its own (the bar and the value under it) when the longest name
+         does not fit beside the value and its share: at 227 px "Qwen Coding Plan" took three lines and pushed the last
+         row past the card */
+      var stack = false;
+      if (!inline) {
+        var kSt = PMU.theme.look().nier || PMU.theme.look().family === 'retro' ? 1.12 : 1, needSt = 0;
+        rows.forEach(function (r) {
+          needSt = Math.max(needSt, C.wrapW(r.name || '', 13, 560) * kSt + (r.mark ? 24 : 0) + 10 + C.wrapW(r.valueText || '', 13, 620) + (isFinite(r.share) ? C.wrapW('100%', 12) + 6 : 0));
+        });
+        /* the row's 10 px padding each side */
+        stack = needSt > ctx.tier.bw - 20;
+      }
       var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
       var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
       /* the rows past the card and a foot that gave way are listed in the "N more" line's hover tag, or the host's (CONTENT-3) */
       var rankFold = rows.slice(shown.length).map(function (r) { return r.name + ' ' + (r.valueText || '') + (r.role ? ' · ' + r.role : ''); });
       var footFold = m.foot && !footOk ? [String(m.foot).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()] : [];
-      body.innerHTML = '<div class="pmu-rankedhost' + (inline ? ' is-inline' : '') + '"' + (rankFold.length ? '' : C.foldHover(footFold)) + '></div>' + C.more(rows.length - shown.length, null, false, rankFold.concat(footFold)) + (footOk ? C.foot(m.foot) : '');
+      body.innerHTML = '<div class="pmu-rankedhost' + (inline ? ' is-inline' : '') + (stack ? ' is-stack' : '') + '"' + (rankFold.length ? '' : C.foldHover(footFold)) + '></div>' + C.more(rows.length - shown.length, null, false, rankFold.concat(footFold)) + (footOk ? C.foot(m.foot) : '');
       var host = body.querySelector('.pmu-rankedhost');
       
       /* a narrow card shows a provider's short word (its full Settings name in the hover) instead of a name on three
