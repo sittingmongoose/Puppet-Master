@@ -44509,7 +44509,7 @@ split_recommended: false
 depends_on: [DL-184, DL-141, F3-585, F3-619]
 unblocks: [DR-069, ATS-075]
 acceptance_criteria:
-  - "The pill detector and the side-border detector find nothing on any surface in any look or NieR Mode, key caps and the structural rails of working activities (APR-034, DR-069) excepted."
+  - "The pill detector finds nothing on any surface in any look or NieR Mode, key caps excepted; the side-border detector exempts the structural rails of working activities (APR-034, DR-069) and otherwise finds nothing."
   - "No emoji appears in Puppet Master's chrome; a terminal program's own output is exempt."
   - "Every retired default listed here carries a dated note in its own unit or section."
   - "Selection everywhere is shown by the element's own surface, never by an edge stripe."
@@ -44542,6 +44542,7 @@ negative_constraints:
   - "Do not put an emoji in Puppet Master's chrome."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L21): The structural-rail carve-out applies to the side-border check only."
   - "Amended 2026-10-10 (lead ruling L21): The side-border check exempts the structural rails of working activities (APR-034, DR-069)."
 owner_hints:
   - Plans/FinalGUISpec.md
