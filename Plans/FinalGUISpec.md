@@ -2871,10 +2871,12 @@ Required behavior summary:
 
 ### 7.18 File Editor
 
+Amended 2026-10-09 (DL-180): the editor is a document tab kind in the universal panels (F3-635, F3-639); its editor groups are panels (F3-630), and the first bullet below is amended in place.
+
 The File Editor is the canonical in-app code and document editing surface.
 
 Required behavior summary:
-- tabbed editor groups with shared buffers, diff view, preview modes, and detach / re-dock support
+- editor tabs in any panel (the panels are the editor groups, F3-630) with shared buffers, diff view, preview modes and preview tabs (amended 2026-10-09, DL-180: detach / re-dock of editor groups is retired; editor tabs move between panels)
 - LSP-backed diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, and go-to-definition
 - SSH remote editing, stale-write disclosure, and recoverable unsaved local buffer persistence
 - embedded rendering for markdown, mermaid, HTML, SVG, and image documents through the shared preview pipeline
@@ -13149,10 +13151,13 @@ canonical_text: >-
   File Editor is the canonical in-app editing surface with shared buffers, tabbed editor groups,
   diff view, preview modes, LSP-backed affordances, remote editing disclosure, recoverable buffers,
   and a shared preview pipeline for document and media types.
+  Amended 2026-10-09 (DL-180): the editor is a document tab kind in the universal panels (F3-635, F3-639); its tabbed
+  editor groups are panels (F3-630), and detach and re-dock of editor groups are retired: editor tabs move between
+  panels.
 gui_related: true
 gui_classification_reason: This unit defines visible File Editor editing, preview, LSP, and tab behavior.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13185,7 +13190,8 @@ preserved_exact_tokens:
 - "/offline/stale-state"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): editor groups as their own layout concept and their detach / re-dock are retired."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -13312,10 +13318,14 @@ canonical_text: >-
   commands through canonical browser/session commands, and treat legacy preview_mode,
   browser_panel, Bottom Panel Browser, generic Browser tab, and bottom-panel-primary labels as
   compatibility aliases only.
+  Amended 2026-10-09 (DL-180): "Browser" is now the canonical label of the browser tab kind in the universal panels
+  (F3-635), the one in-shell browser host; the compatibility aliases listed here (preview_mode, browser_panel, Bottom
+  Panel Browser, bottom-panel-primary) stay retired, and a "Browser tab" means a tab of that kind, never a bottom-panel
+  browser.
 gui_related: true
 gui_classification_reason: This unit constrains visible browser/preview commands, tabs, aliases, and session routing.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -13349,7 +13359,8 @@ negative_constraints:
 - "`Bottom Panel Browser`, generic `Browser tab`, bottom-panel-primary, and normal-browsing wording are not canonical owners for built-in browser or click-to-context flows."
 compatibility_only_notes:
 - "Legacy `preview_mode` and `browser_panel` labels are compatibility aliases only."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the generic \"Browser tab\" alias is superseded by the browser tab kind of F3-635."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -29752,19 +29763,24 @@ canonical_text: >-
   lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of
   0.4 px with pauses) on a non-active tab, while a click-to-select still travels
   through 18 distinct intermediate positions, monotonic and without overshoot.
+  Amended 2026-10-09 (DL-180): the width-aware "+N more" chip and its picker are superseded by F3-633's "+N" list in
+  every strip; per-tab close and its bookkeeping, the pointer-capture reorder and its snap-while-dragging contract now
+  serve every panel and every tab kind (F3-631). Editor panes are panels (F3-630): "all four editor panes" reads as
+  every panel, the pane-close row is the panel menu's Close panel, and closing the last tab follows F3-630's lifecycle
+  (the panel closes unless it is the only or a locked panel, which shows the empty-panel launcher of F3-632).
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
-depends_on: [F3-140, F3-131, F3-132, F3-152]
+depends_on: [F3-140, F3-131, F3-132, F3-152, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Closing a tab updates the open-tab model and activates a neighboring tab; closing the last tab yields the editor empty state or the underlying view."
 - "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
-- "A width-aware +N more overflow chip exposes hidden tabs through a picker with per-item close while the active tab stays visible."
+- "Tabs that do not fit are reached through F3-633's plain-text \"+N\" list with per-item close, and the active tab stays visible (amended 2026-10-09, DL-180)."
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
-- "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
-- "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
-- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Dragging a tab to a new position persists in every panel's strip and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending (amended 2026-10-09, DL-180)."
+- "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
+- "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
 - "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -29793,6 +29809,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
 - "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
 - "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
+- "Amended 2026-10-09 (DL-180): the editor-only \"+N more\" chip and picker, the four-pane scope and the per-pane wording are retired; F3-631 and F3-633 own the strip and its overflow for every panel."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -29825,10 +29842,13 @@ canonical_text: >-
   shrink so floating-footer reserve changes cannot crush embedded cards. Superseded lineage
   (2026-07-16 float repair, kept findable): the initial promotion reserved scrollport space
   under the stream, which rendered an opaque band around the pill.
+  Amended 2026-10-09 (DL-184): the floating footer is no longer a pill: it is a content-sized rectangle with the look's
+  inner radius, never a radius of half its height or more (F3-648); its centring, see-through stream, reserve and
+  jump-to-latest rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible chat footer pill geometry and jump-to-latest placement.
 split_recommended: false
-depends_on: [F3-131, F3-189, F3-420]
+depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
@@ -29836,6 +29856,7 @@ acceptance_criteria:
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -29861,7 +29882,8 @@ negative_constraints:
 - "The footer pill must not use fixed side gutters or full-width footer bars; it is content-sized and centered."
 compatibility_only_notes:
 - "Slint portability: the pill and jump control are anchored overlay surfaces expressed as layout constraints rather than measure-then-write style passes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the footer's pill shape is retired (F3-648)."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns footer content semantics (ACD-435); this unit records geometry and scroll-reserve behavior only."
 owner_hints:
@@ -29884,10 +29906,13 @@ canonical_text: >-
   max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
   open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
   from the shared chat template of the unified component.
+  Amended 2026-10-09 (DL-180): the chat no longer floats inside the window. This width floor now holds only for a
+  popped-out chat in the web client (F3-504); the desktop app's popped-out chat is a native window the user sizes, and
+  the chat column's own width is F3-637's.
 gui_related: true
 gui_classification_reason: This unit defines visible composer, selector row, and floating chat width layout.
 split_recommended: false
-depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437]
+depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls."
@@ -29922,7 +29947,8 @@ negative_constraints:
 - "Send and stop controls are icon-only inline SVG glyphs; no emoji glyphs and no text-labeled send button."
 compatibility_only_notes:
 - "Slint portability: the width floor maps to a min-width constraint on the floating window; toggles and FABs are opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the floating chat floor no longer applies to the chat in the window; F3-637 owns the column's width."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns selector-row behavior semantics (ACD-437); this unit records layout geometry."
 owner_hints:
@@ -31950,10 +31976,13 @@ canonical_text: >-
   beneath it; the mask returns immediately after the picker closes. Amended 2026-10-09 (DL-162): the
   left rail's segmented sub-view strips neither scroll nor truncate a label with an ellipsis; they fit
   as F3-620 says, full labels, then the active tab's label with icons for the rest, then icons only.
+  Amended 2026-10-09 (DL-180): bottom-panel tabs no longer exist. Every home panel's strip, the dashboard's included,
+  follows F3-631 and F3-633 (the width cascade and "+N", never scrolling sideways); this recipe keeps page tabs and the
+  side-panel occupant tabs F3-620 does not cover.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
-depends_on: [F3-421]
+depends_on: [F3-421, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels; when the PMConcept7 title-bar page overflow picker is present, every hidden page remains reachable, the picker stays above and owns hit testing across its full painted rectangle, the ancestor edge-fade mask is disabled only for its opening/open/closing lifecycle, and no click falls through to an underlying page control."
@@ -31984,7 +32013,8 @@ negative_constraints:
 - "Do not leave the title-bar edge-fade mask active over an open in-tree page picker or disable that mask after the picker closes."
 compatibility_only_notes:
 - "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-panel tabs and every home strip leave this recipe for F3-631 and F3-633."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -32622,10 +32652,13 @@ canonical_text: >-
   with the active tab at step-3. Retro and basic keep the legacy underline chrome strip.
   The strip carries bottom margin so the Node Graph pane and other panes do not sit flush
   beneath it.
+  Amended 2026-10-09 (DL-184): Friendly's cozy pill bar and mint pill tabs and Glass's rounded frosted bar become
+  rectangles with the look's inner radius, never capsules (F3-648); the tab set, the active fill and the bottom margin
+  stand.
 gui_related: true
 gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
@@ -32653,7 +32686,8 @@ negative_constraints:
 - "Do not change the Orchestrator tab set, tab order, or tab semantics from this unit; presentation only."
 compatibility_only_notes:
 - "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Orchestrator strip's pill skins are retired (F3-648)."
 owner_boundary_notes:
 - "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
 owner_hints:
@@ -32680,10 +32714,13 @@ canonical_text: >-
   fonts-ready. Under reduced motion the ink snaps and the panel animation is skipped
   entirely. First paint never runs an enter animation; page transitions gate until after
   boot.
+  Amended 2026-10-09 (DL-184): Glass's step-3 frost pill and Friendly's mint-mix pill become ink slabs with the look's
+  inner radius, never capsules (F3-648); the shared spring, the directional page transitions and the reduced-motion
+  rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
-depends_on: [F3-034]
+depends_on: [F3-034, DL-184]
 unblocks: []
 acceptance_criteria:
 - "A single shared ink element animates position and width between page tabs with spring stiffness 500 and damping 35, and the active tab keeps only text color and weight."
@@ -32716,7 +32753,8 @@ negative_constraints:
 - "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
 compatibility_only_notes:
 - "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Glass and Friendly page-tab ink pills are retired (F3-648)."
 owner_boundary_notes:
 - "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
 - "Scope clarified 2026-08-12: this unit covers the title-bar PAGE tabs only. Editor file tabs are owned by F3-505 (contact-aware silhouette) and F3-466 (friendly tab shape); the sliding ink is not applied to editor file tabs."
@@ -32809,10 +32847,12 @@ canonical_text: >-
   On the friendly theme family, editor file tabs render as top-rounded folder tabs with
   radius-md applied to the top corners only and a cozy mint active fill; they do not
   render as full pills on a bordered strip.
+  Amended 2026-10-09 (DL-180): Friendly's editor tabs are F3-631's one strip with the Friendly crown, shoulder and flare
+  (16, 16 and 25 px); the active tab takes its body's own fill and is never a pill.
 gui_related: true
 gui_classification_reason: This unit defines the visible friendly-theme editor file tab shape and active fill.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "Friendly editor file tabs round only their top corners at radius-md and use the cozy mint active fill."
@@ -32838,7 +32878,8 @@ negative_constraints:
 - "Do not render friendly editor file tabs as full pills on a bordered strip."
 compatibility_only_notes:
 - "Slint portability: editor tabs render as opaque precomputed surfaces with per-corner radii; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the Friendly editor tab shape is now F3-631's per-look silhouette."
 owner_boundary_notes:
 - "F3-421 owns editor tab overflow behavior; this unit owns the friendly-theme tab shape and active fill only."
 owner_hints:
@@ -32857,10 +32898,13 @@ canonical_text: >-
   fields and pill controls, carries enough inline padding, roughly half the control height
   and 12-14px at default sizes, that glyphs clear the rounded ends, and overflow stays
   visible so the focus glow is not clipped.
+  Amended 2026-10-09 (DL-184): Friendly's pill controls and pill-shaped fields are retired: they take the look's rounded
+  rectangle, never a radius of half their height or more (F3-648); the inline padding rule (glyphs clear the corners,
+  the focus glow is not clipped) stands.
 gui_related: true
 gui_classification_reason: This unit defines visible friendly-theme pill field padding and focus glow clearance.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "Friendly pill fields and pill controls pad inline by roughly half the control height (12-14px at default sizes) so glyphs clear the rounded ends."
@@ -32886,7 +32930,8 @@ negative_constraints:
 - "Do not clip the focus glow on friendly pill chrome and do not let glyphs enter the rounded ends."
 compatibility_only_notes:
 - "Slint portability: pill fields render as opaque precomputed surfaces with static padding values; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): Friendly's pill field and control skins are retired (F3-648)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -32972,10 +33017,12 @@ canonical_text: >-
   bar and border and per-theme shadows: retro hard offset, glass soft glow, friendly
   cozy. The presentation applies to both the docked and pop-out chat mounts, which share
   the sidebar builder.
+  Amended 2026-10-09 (DL-184): the 3 px inset left accent bar on the selected thread and the left accent bar on active
+  collapsed rows are retired; selection is the tinted fill, the hairline ring and the bolder title (F3-648).
 gui_related: true
 gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The rail label reads Chats at 11.5px in both expanded and collapsed states, and the compact new-thread control is 18x18 and vertically centered."
@@ -33012,6 +33059,7 @@ compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
+- "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:
 - "Chat rail behavior, thread lifecycle, and rail data semantics are owned by Plans/assistant-chat-design.md (ACD-444 chats rail cleanup); this unit owns geometry, thresholds, and presentation."
 owner_hints:
@@ -33860,10 +33908,14 @@ canonical_text: >-
   FinalGUISpec F3-619's glyph and word in place of the rail chip and status dots: initializing as pending, running
   as live, paused as the paused glyph, terminated as the stopped ring and adapter_crashed as failed. Every surface
   still reads the one session store.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" and "bottom-tab chrome" read as the Debug
+  tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed
+  beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
 split_recommended: false
-depends_on: [F3-259]
+depends_on: [F3-259, DL-180]
 unblocks: []
 acceptance_criteria:
 - "All six states (none, initializing, running, paused, terminated, adapter_crashed) and the stated DAP event-to-UI mapping hold on every debug surface."
@@ -33911,7 +33963,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: session state maps to a single observable model with derived bindings per surface; state chips and transport enablement are plain property bindings."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns the session state machine and transport enablement law; F3-259 owns the reliability risk row (timeouts, single auto-restart) it references."
 owner_hints:
@@ -33939,10 +33992,13 @@ canonical_text: >-
   Amended 2026-10-09 (DL-162): in the rail the session picker opens as the chat picker (F3-621) and lists each
   session with its state glyph and word by F3-483's mapping in place of coloured dots and a spinner; a terminated
   session keeps its struck-through label, the focused session is checked, and the per-row close action is unchanged.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" reads as the Debug tab. The Debug tab is
+  a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals
+  by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Multiple concurrent sessions per project run simultaneously, with child sessions nested under parents in the picker."
@@ -33977,7 +34033,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the picker dropdown renders via PopupWindow; status dots are precomputed color glyphs with no runtime color mixing."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns session multiplicity, nesting, picking, and focus; session states themselves are owned by F3-483."
 owner_hints:
@@ -34387,10 +34444,14 @@ canonical_text: >-
   mirrored state chip as F3-619's glyph and word, marks the selected session sub-tab with an ink, shows stream tags
   as coloured lowercase words, and opens its configuration menu as the chat picker (F3-621). In TERMINATED the
   retained console scrollback stays visible under the ended chrome, as this unit already requires.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom-zone Debug tab" and "the bottom zone's debugger
+  occupant" read as the Debug tab; its three states, session chrome, Console and Process panes stand. The Debug tab is a
+  tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals by
+  F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
-depends_on: [F3-483, F3-489]
+depends_on: [F3-483, F3-489, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
@@ -34432,6 +34493,7 @@ compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
+- "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -34459,10 +34521,15 @@ canonical_text: >-
   boundary (referenced) and names the command ids that perform reveals:
   cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal, whose semantics
   are referenced from Plans/Commands_System.md §7.2, not restated.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. Reveal Output reveals the Debug tab wherever it is, expanding
+  its panel if it is collapsed and opening it by F3-634 when none is open; on session start the Debug tab is revealed
+  the same way without taking keyboard focus; and the unread-output badge is the tab's attention mark (F3-631). The
+  Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside
+  the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible focus, reveal, and unread-badge behavior across the rail panel, bottom tab, and editor.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Reveal Output and Show in Run & Debug perform the stated focus moves, including bottom-zone un-collapse."
@@ -34497,7 +34564,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: reveal-without-focus is a visibility/tab-selection change decoupled from focus transfer; the unread badge is a precomputed dot plus count on the tab header."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"un-collapsing the bottom zone\" reads as expanding the Debug tab's panel; the bottom tab is a Debug Console tab in any panel."
 owner_boundary_notes:
 - "This unit extends the F3-044 reveal/focus owner boundary for debug surfaces; F3-044 retains the general run_debug owner boundary; command semantics stay owned by Plans/Commands_System.md."
 owner_hints:
@@ -34522,10 +34590,14 @@ canonical_text: >-
   rail, or bottom zone has focus, and never inside text inputs. On macOS, F-key
   normalization accounts for the fn-layer so the same bindings hold whether the
   hardware row sends function keys or media keys.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom zone has focus" reads as focus in the Debug tab or
+  another tool tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel
+  holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it
+  usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the keyboard-facing debug command bindings and their dispatch scoping.
 split_recommended: false
-depends_on: [F3-483, F3-059]
+depends_on: [F3-483, F3-059, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The six bindings (F5, Ctrl+F5, F10, F11, Shift+F11, Shift+F5) map to the stated cmd.run_debug.* commands, including the F5 start-versus-continue split and the attach-session disconnect swap."
@@ -34568,7 +34640,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: key dispatch scopes map to focused-surface checks in the Rust-side registry; no platform-specific key handling leaks into Slint view code."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-zone focus reads as focus in a tool tab (F3-635)."
 owner_boundary_notes:
 - "F3-059 owns the shortcut tiers and key labels; this unit owns only the debug command bindings; command semantics are owned by Plans/Commands_System.md §7.2."
 owner_hints:
@@ -34726,10 +34799,14 @@ canonical_text: >-
   assistant-investigation scoped (Plans/Commands_System.md §7.1, referenced) and
   the classical debugger family is cmd.run_debug.* (Plans/Commands_System.md §7.2,
   referenced).
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "Debug Console" is no longer a bottom-zone pane: it is the
+  Console pane of the Debug tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in
+  whichever panel holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row
+  is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit fixes the user-visible names and labels that distinguish the four debug-adjacent surfaces.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The four names (\"Debug\" icon, \"Debug & Run\" panel, \"Assistant Debug Mode\", \"Debug Console\") and the `system.advanced.debug-mode` row are used exactly and never collapsed across docs, palettes, labels, and help text."
@@ -34764,7 +34841,8 @@ negative_constraints:
 - "Do not use cmd.debug.* for classical debugger actions or cmd.run_debug.* for assistant-investigation actions."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom-zone REPL pane reads as the Debug tab's Console pane in a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only the terminology boundary; Assistant Debug Mode semantics stay owned by Plans/assistant-chat-design.md and Debug Console pane semantics by Plans/Section15_MVP_Promoted_Features_Spec.md."
 owner_hints:
@@ -34788,10 +34866,14 @@ canonical_text: >-
   store mirrors F3-483's state machine so demo actions (start, stop, select,
   reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
   source-lineage only per Plans/usage-feature.md.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
+  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
+  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
 split_recommended: false
-depends_on: [F3-485, F3-490]
+depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
@@ -34821,7 +34903,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
 owner_hints:
@@ -35322,14 +35405,17 @@ canonical_text: >-
   no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
   context.compaction.failed family is introduced.
   The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
+  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
+  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
+  back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
-depends_on: [F3-513, ACD-448, WM-045, UIW-012]
+depends_on: [F3-513, ACD-448, WM-045, UIW-012, DL-180]
 unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
-  - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
+  - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
   - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
@@ -35360,6 +35446,8 @@ negative_constraints:
   - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
@@ -35392,10 +35480,15 @@ canonical_text: >-
   and must not rewrite global theme tokens, Settings, or the protected Chat design. The title-bar page-overflow
   picker remains above and hit-testable at narrow widths; its ancestor edge-fade mask is disabled only while the
   picker is opening, open, or closing, so clicks cannot fall through to page controls beneath it.
+  Amended 2026-10-09 (DL-180): Home and Dashboard no longer keep distinct tab models: a dashboard is a tab in a panel's
+  one strip (F3-631, F3-638), and the shared Usage grammar for move, options, resize and settled sizing is one gesture
+  kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
+  composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
+  "Home editor and terminal surfaces" read as panel tabs (F3-635).
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516]
+depends_on: [F3-513, F3-514, F3-516, DL-180]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
@@ -35437,6 +35530,8 @@ negative_constraints:
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -35833,21 +35928,25 @@ canonical_text: >-
   closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
   or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
   committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
+  Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner to move or dock the chat, which is a
+  fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel
+  (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip
+  and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
+  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
-  - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
+  - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
   - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
@@ -35903,6 +36002,8 @@ negative_constraints:
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
   - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
 owner_boundary_notes:
   - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]
@@ -37149,6 +37250,8 @@ invariants.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
 
+Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules (F3-634, `Plans/assistant-chat-design.md#ACD-500`). "The left editor tab bar" reads as the panel F3-634 picks; opening a plan that is already open reveals its tab wherever it is; a collapsed panel holding it expands; and the chat column's width is F3-637's, never below 400 px inside the window, so the 360 px minimum below is met by construction (F3-540).
+
 - **Left Editor Plan Tab Navigation (APR-036):** Clicking a plan title, the "Details" link,
   "Expand", or "Open plan" in a transcript Plan card opens or focuses the plan in the left editor
   tab bar. Opening an already open plan focuses the existing tab without tab duplication.
@@ -37545,9 +37648,13 @@ canonical_text: >-
   the left editor tab bar with tab deduplication. The left plan tab provides the full suite of owner-backed
   plan controls equivalent to the transcript Plan card. Activating a plan opens a readable editor pane
   even from a collapsed split, and subsequent divider resizing preserves a minimum functional chat width.
+  Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules
+  (F3-634, ACD-500): "the left editor tab bar" reads as the panel F3-634 picks, opening a plan that is already open
+  reveals its tab wherever it is, a collapsed panel holding it expands, and the chat column's width is F3-637's, never
+  below 400 px inside the window, so the 360 px minimum is met by construction.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive split behavior.
-depends_on: [F3-533, F3-534]
+depends_on: [F3-533, F3-534, DL-180]
 unblocks: []
 acceptance_criteria:
   - Transcript plan actions open or focus the left plan tab without tab duplication.
@@ -37577,6 +37684,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not open duplicate tabs for the same plan.
   - Do not squeeze chat into the resize handle dead zone.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the left editor tab bar and the editor-to-chat divider are retired as placement terms; F3-634 places the plan tab and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -39112,10 +39221,13 @@ canonical_text: >-
   its own line rather than pushing past the edge, a ledger line's title ellipsizes and shows in full
   on hover or focus, text inside cards breaks long unbroken tokens, and the turn spine is paint-only
   (ACD-469). Send and Stop remain reachable at every width (section 16).
+  Amended 2026-10-09 (DL-180): inside the window the chat column never drops below 400 px; in narrow windows it folds to
+  its edge strip instead (F3-637, F3-636). These resilience rules now hold for a popped-out chat window narrower than
+  that.
 gui_related: true
 gui_classification_reason: "Keeps the transcript intact in narrow chat panes."
 split_recommended: false
-depends_on: [ACD-469]
+depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
   - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
@@ -39139,6 +39251,8 @@ preserved_exact_tokens:
   - "234px"
 negative_constraints:
   - "Do not let any transcript item widen the transcript's scrollable area."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the 234 px in-window chat width is retired; it applies only to a popped-out chat window."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -39461,13 +39575,16 @@ canonical_text: >-
   The chat pane beside an open plan or document has a minimum width of 360 px (DL-138;
   Assistant_Plan_Runtime APR-014). The card's S tier measures its own content box after padding and
   remains available below 360 px; it does not lower the chat pane minimum.
+  Amended 2026-10-09 (DL-180): Open Panel opens the run view as a run tab placed by F3-634, "the active editor tab"
+  reads as the run tab being active in its panel, and the chat pane's width is F3-637's: the column never drops below
+  400 px inside the window, which meets the 360 px minimum beside an open plan or document.
 gui_related: true
 gui_classification_reason: "Fixes run card geometry, receipts and the run view hand-off."
 split_recommended: false
-depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149]
+depends_on: [F3-566, ACD-480, DL-111, DL-123, DL-149, DL-180]
 unblocks: []
 acceptance_criteria:
-  - "The editor/chat split preserves a 360 px minimum chat pane while card tiers continue to measure card content width."
+  - "The chat column keeps at least 400 px inside the window (F3-637), which meets the 360 px minimum beside an open plan or document, while card tiers continue to measure card content width (amended 2026-10-09, DL-180)."
   - "A collapsed or sub-520 px card reaches Open Panel, Message and More through Expand; a finished run's Message prints why it is disabled."
   - "The Coordinator's mark never paints the accent."
   - "No run card or run view shows Technical details (DL-149)."
@@ -39507,6 +39624,8 @@ negative_constraints:
   - "Do not grow a card on a tick."
   - "Do not treat the S tier as a minimum chat width."
   - "Do not render a run-changing control in both the card and the run view at once."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"beside the chat\" and the editor/chat split are retired as placement terms; F3-634 places run tabs and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Collaborative_Workflows.md
