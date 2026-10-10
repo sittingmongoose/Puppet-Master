@@ -27426,13 +27426,17 @@ canonical_text: >-
   (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity Detail stays
   inside the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat's inline Shell box is replaced by a compact
   command card (D27). It shows the command, the folder it ran in, its status as a glyph and words (Running, Exit 0,
-  Exit <code>, Failed when a failed command has no exit code, Interrupted, Needs input), so the exit code is part of the status, how long it ran (counting while it
+  Exit <code>, Failed when a failed command has no exit code, Interrupted, Needs input, Ended with the earlier session), so the exit code is part of the status, how long it ran (counting while it
   runs), the last lines of its output as plain text with the number of earlier lines (ACD-126's 5-line collapsed and
   15-line expanded preview; expanded also shows the whole command and folder), and who ran it: You, or the agent by
-  name, from the command record's by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). Its five states
+  name, from the command record's by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). Its states
   read the command card states of ACD-146 and are never a second lifecycle: running for starting, running and
-  restoring; ok for exited with exit code 0; failed for failed, exited with any other code, and disconnected;
-  interrupted for terminated; waiting for attention_required. Its actions are text buttons: Open in Terminal, only
+  restoring while the restore is under way; ok for exited with exit code 0; failed for failed and exited with any
+  other code; interrupted for terminated; waiting for attention_required; ended for disconnected before the command
+  finished and for a restore that did not bring its session back. Ended is honest about what is not known: a command
+  whose session ended while it still ran (the page reloaded, the app restarted or its session disconnected) is
+  neither done nor failed, so the card shows the words Ended with the earlier session, with no exit code, never Running, Exit 0 or Failed, as the
+  terminal's own command mark does (SMPFS-180's indeterminate finalisation, Plans/FinalGUISpec.md#F3-641). Its actions are text buttons: Open in Terminal, only
   while the command has a terminal session, opens or reveals that session's terminal tab through F3-634 (ACD-502);
   Rerun in Terminal once the command has stopped (ACD-108, ACD-502); View output when there is no session (ACD-129).
   View output, and View output log in the card's menu, open the command's retained output as an editor buffer tab:
@@ -27463,6 +27467,7 @@ acceptance_criteria:
   - "History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout record, and only one thread-history list exists after the port."
   - "The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab; Rerun in Terminal and View output follow ACD-108 and ACD-129."
   - "View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the chat (DL-180, F3-641)."
+  - "A command whose session ended while it still ran shows Ended with the earlier session with no exit code, never Running, Exit 0 or Failed (SMPFS-180, F3-641)."
   - "The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat."
   - "Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal."
 validation_surfaces:
@@ -27497,6 +27502,7 @@ preserved_exact_tokens:
   - "Rerun in Terminal"
   - "View output"
   - "View output log"
+  - "Ended with the earlier session"
   - "Needs input"
   - "Keep the chat open in narrow windows"
   - "general.interaction.chat-history-list"
