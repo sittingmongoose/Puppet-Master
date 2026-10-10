@@ -2202,31 +2202,31 @@ status: accepted
 owner_doc: Plans/Glossary.md
 canonical_text: >-
   The words for the home centre's panels and tabs have one meaning each (DL-180, DL-181). A panel is a tab group in
-  the home centre: a leaf of the centre's split tree that can hold tabs of any kind (FinalGUISpec F3-630). A side panel
-  is one of the left rail's panels, such as Files, Search or Source Control (F3-481, F3-618); where a home panel could
-  be meant, say side panel, and the rail and the chat keep the cmd.panel.* vocabulary (UCC-138, UCC-203). A tab, or
-  panel tab where it could be confused, is one tab in a panel's strip: an opaque, stable id whose prefix names its
-  kind, separate from the domain object it shows, in exactly one panel (F3-635). A tab kind is one of the fifteen kinds
-  of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript, context, record, output,
-  problems, ports and debug_console. A tool kind is one of output, problems, ports and debug_console, the runtime views
-  that used to sit in the bottom zone; a tools panel is a panel that holds only tool kinds and terminals, where those
-  kinds land beside the terminals (F3-634). A workspace tab is still a project tab, the tab that switches projects
-  (workspace_tab_id, F3-038); where older text says editor/workspace tab for the place a browser opens, it means a
-  panel tab. A page is still a primary page reached from the activity bar, such as Home or Usage; Home is the page
-  that holds the panels, and the pages inside a browser tab are web pages. The Orchestrator page's tabs and other
-  in-page tabs are that page's own views, not panel tabs. A split is a row or a column of panels, each with its own
-  share of the space (F3-630). A named layout is a saved arrangement of the home centre: the four that ship (Home,
-  Build, Terminals 2x2, Focus) and any the user saves (F3-630). A preview tab is a panel's one tab with an italic label
-  that the next single-clicked file replaces, until a double click, an edit or a drag keeps it (F3-634). A pinned tab
-  is an icon-only tab at the left of its strip that never hides (F3-631). A dashboard tab is a tab of kind dashboard
-  showing one widget board; there may be several (F3-638, WS-030). A terminal tab is a tab of kind terminal that holds
-  exactly one terminal session (F3-640, SMPFS-180, G-010). The "+" menu is the menu the "+" after a panel's last tab
-  opens, whose rows open a kind as a new tab or as a new panel; an empty panel shows the same rows as its launcher
-  (F3-632). The "+N" list is the searchable list of a panel's tabs that do not fit, opened from the plain "+N" at the
-  end of its strip (F3-633). The chat column is neither a panel nor a tab (F3-637). Retired words, kept only in
-  lineage and migration text: terminal section, workgroup, sub-tab, quadrant, terminal pane, the four fixed editor
-  panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place; the default Home layout's
-  bottom row is an ordinary panel row.
+  the home centre: a leaf of the centre's split tree that can hold tabs of any kind (FinalGUISpec F3-630). A side
+  panel is one of the left rail's panels, such as Files, Search or Source Control (F3-481, F3-618); where a home panel
+  could be meant, say side panel, and the rail and the chat keep the cmd.panel.* vocabulary (UCC-138, UCC-203). A tab,
+  or panel tab where it could be confused, is one tab in a panel's strip, with an opaque, stable id whose prefix names
+  its kind; it is separate from the domain object it shows and lives in exactly one panel (F3-635). A tab kind is one
+  of the fifteen kinds of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript,
+  context, record, output, problems, ports and debug_console. A tool kind is one of output, problems, ports and
+  debug_console, the runtime views that used to sit in the bottom zone; a tools panel is a panel that holds only tool
+  kinds and terminals, where those kinds land beside the terminals (F3-634). A workspace tab is still a project tab,
+  the tab that switches projects (workspace_tab_id, F3-038); where older text says editor/workspace tab for the place
+  a browser opens, it means a panel tab. A page is still a primary page reached from the activity bar, such as Home or
+  Usage; Home is the page that holds the panels, and the pages inside a browser tab are web pages. The Orchestrator
+  page's tabs and other in-page tabs are that page's own views, not panel tabs. A split is a row or a column of
+  panels, each with its own share of the space (F3-630). A named layout is a saved arrangement of the home centre: the
+  four that ship (Home, Build, Terminals 2x2, Focus) and any the user saves (F3-630). A preview tab is a panel's one
+  tab with an italic label that the next single-clicked file replaces, until a double click, an edit or a drag keeps
+  it (F3-634). A pinned tab is an icon-only tab at the left of its strip that never hides (F3-631). A dashboard tab is
+  a tab of kind dashboard showing one widget board; there may be several (F3-638, WS-030). A terminal tab is a tab of
+  kind terminal that holds exactly one terminal session (F3-640, SMPFS-180, G-010). The "+" menu is the menu the "+"
+  after a panel's last tab opens, whose rows open a kind as a new tab or as a new panel; an empty panel shows the same
+  rows as its launcher (F3-632). The "+N" list is the searchable list of a panel's tabs that do not fit, opened from
+  the plain "+N" at the end of its strip (F3-633). The chat column is neither a panel nor a tab (F3-637). Retired
+  words, kept only in lineage and migration text: terminal section, workgroup, sub-tab, quadrant, terminal pane, the
+  four fixed editor panels, the singleton Dashboard surface, and the bottom panel or bottom zone as a place; the
+  default Home layout's bottom row is an ordinary panel row.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible words for panels, tabs and the home centre and the words they retire.
 split_recommended: false

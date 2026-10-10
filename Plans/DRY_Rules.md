@@ -2762,7 +2762,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/Executor_Protocol.md#EP-128
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/Executor_Protocol.md#EP-128, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/DRY_Rules.md#DR-071
 
 ## Concept web fonts share one set of files — 2026-10-09
 
@@ -2937,7 +2937,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-044, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/FinalGUISpec.md#F3-606, ContractName:Plans/FinalGUISpec.md#F3-607, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-635
 
 ## 5.6 Pro chat round single owners — 2026-10-09
 
@@ -3191,11 +3191,11 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439
+ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439, ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069
 
 ## DL-180 to DL-185 — One Panel System, One Gesture Kit, One Overlay Root, One Terminal Appearance Model, Shell-Wide Bans, One Demo Studio And One Opening Module (2026-10-09)
 
-Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces Home's four fixed editor panels, singleton dashboard, bottom terminal zone and movable chat with one universal panel system, rebuilds the terminal as one session per tab, and makes the bans on side stripes, emoji and pills one rule for the whole app. Each piece the redesign shares across surfaces lives in one place, and these seven rules say where. They supersede the per-surface owners of the 2026-08-04 Home owner boundary and its U10 sentence (both amended in place above), and they amend the PMConcept7 SSOT table's Home row and DR-039 for several dashboard tabs, the Guided Tour paragraph of the touch-closure addendum, DR-044's run view and DR-047's Plan footer. The concept builds are lineage only: no concept class, storage key or script global is a product name here.
+Jared's home redesign of 2026-10-09 (DL-180 to DL-185) replaces Home's four fixed editor panels, singleton dashboard, bottom terminal zone and movable chat with one universal panel system, rebuilds the terminal as one session per tab, and makes the bans on side stripes, emoji and pills one rule for the whole app. Each piece the redesign shares across surfaces lives in one place, and these seven rules say where. They supersede the per-surface owners of the 2026-08-04 Home owner boundary and its U10 sentence (both amended in place above), and they amend the PMConcept7 SSOT table's Home row and DR-039 for several dashboard tabs, the Guided Tour paragraph of the touch-closure addendum, DR-044's run view, DR-047's Plan footer and DR-057's pill clause, which now reads as the left rail's instance of DR-069. The concept builds are lineage only: no concept class, storage key or script global is a product name here.
 
 ### DR-065 - One Panel And Tab Grammar For Every Panel In The Home Centre
 
@@ -3215,7 +3215,7 @@ canonical_text: >-
   kind's own keys work only inside its body, and a terminal keeps the shell's keys and gives back the host keys
   F3-640 lists. A kind supplies its content, its registration (label, group, icon,
   id prefixes, content minimum, its "+" row, mount, saved state, close check; F3-635) and its marks through the host;
-  every tab mark that names a state comes from the one status set (F3-585, DL-141, DR-051), and every kind icon is a
+  every tab mark that names a state comes from the one status set (F3-585, DL-141), and every kind icon is a
   bundled SVG icon_id (FinalGUISpec section 2.6, F3-417), never an emoji. The dashboard, the terminal and the browser
   are tab kinds of the one panel model (F3-630); none keeps a second panel model, strip, layout record or placement
   rule, so the dashboard's own strip, the terminal's sections, workgroups, sub-tabs and in-tab splits, and the
@@ -3269,7 +3269,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-059
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-631, ContractName:Plans/FinalGUISpec.md#F3-632, ContractName:Plans/FinalGUISpec.md#F3-633, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Widget_System.md#WS-030, ContractName:Plans/DRY_Rules.md#DR-059, ContractName:Plans/Decision_Log.md#DL-141
 
 ### DR-066 - One Gesture Kit For Panels And The Usage Board
 
@@ -3491,21 +3491,20 @@ owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Puppet Master has one rule against side stripes, emoji and pills, for every surface (DL-184, D22; Jared: "Remember,
   no boxes with side colors, no emojis, no pills are to be used."). No box carries a coloured border or stripe on one
-  side, and no inset accent border, inset shadow or pseudo-element stripe stands in for one. No emoji appears in Puppet Master's chrome; a program's
-  own output in the terminal may contain emoji. No pill: no fully rounded capsule used as a tab, tag, badge, button or
-  status chip; keyboard key caps are the one capsule-like shape allowed. Selection is shown by the surface itself: the
-  fused tab silhouette, a filled or tinted row, the NieR square cursor, Retro reverse video, never an edge stripe. A
-  status is a mark and a word from its owner's status set (F3-585 through DR-051; the left rail's F3-619 through
-  DR-057), and a count is a plain number. What APR-034 already keeps (a diff gutter's + and - marks, tree hierarchy
-  connectors, the structural rails of a working activity) is not a side stripe on any surface. How the rule looks,
-  and the list of retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe and F3-039's
-  token, Appendix C's and F3-276's accent left border, F3-469's inset left accent bar, the workgroup pill of section
-  5.1, and the pill skins of F3-422, F3-463, F3-464 and F3-467. The surface statements that came first stay as
-  instances of this one rule and do not narrow it: the chat's and Settings' stripe ban (APR-034, F3-534), Settings'
-  status tokens (Settings_System section 22), the left rail's rules (DL-162, F3-618, F3-619, DR-057), the decision
-  cards' text statuses (DL-036) and the production icon contract with no emoji (FinalGUISpec section 2.6, F3-417);
-  where one of them names only the chat, Settings or the rail, this rule covers every other surface as well. A new
-  surface cites this rule instead of restating it. The checks are F3-648's and the home certification's (ATS-075).
+  side, and no inset accent border, inset shadow or pseudo-element stripe stands in for one. No emoji appears in
+  Puppet Master's chrome; a program's own output in the terminal may contain emoji. No pill: no fully rounded capsule
+  used as a tab, tag, badge, button or status chip; keyboard key caps are the one capsule-like shape allowed.
+  Selection is shown by the surface itself: the fused tab silhouette, a filled or tinted row, the NieR square cursor,
+  Retro reverse video, never an edge stripe. A status is a mark and a word from its owner's status set (F3-585,
+  DL-141; the left rail's F3-619 through DR-057), and a count is a plain number. How the rule looks, and the list of
+  retired defaults it replaces, are F3-648's: section 3.5's 3 px left-edge accent stripe and F3-039's token, Appendix
+  C's and F3-276's accent left border, F3-469's inset left accent bar, the workgroup pill of section 5.1, and the pill
+  skins of F3-422, F3-463, F3-464 and F3-467. The surface statements that came first stay as instances of this one
+  rule and do not narrow it: the chat's and Settings' stripe ban (APR-034, F3-534), Settings' status tokens
+  (Settings_System section 22), the left rail's rules (DL-162, F3-618, F3-619, DR-057), the decision cards' text
+  statuses (DL-036) and the production icon contract with no emoji (FinalGUISpec section 2.6, F3-417); where one of
+  them names only the chat, Settings or the rail, this rule covers every other surface as well. A new surface cites
+  this rule instead of restating it. The checks are F3-648's and the home certification's (ATS-075).
 gui_related: true
 gui_classification_reason: "Fixes one shell-wide rule against side stripes, emoji and pills."
 split_recommended: false
@@ -3546,7 +3545,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-417, ContractName:Plans/FinalGUISpec.md#F3-534, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/DRY_Rules.md#DR-057, ContractName:Plans/Automated_Testing_System.md#ATS-075
+ContractRef: ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/FinalGUISpec.md#F3-648, ContractName:Plans/FinalGUISpec.md#F3-417, ContractName:Plans/FinalGUISpec.md#F3-534, ContractName:Plans/Settings_System.md, ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/Decision_Log.md#DL-036, ContractName:Plans/DRY_Rules.md#DR-057, ContractName:Plans/Automated_Testing_System.md#ATS-075, ContractName:Plans/FinalGUISpec.md#F3-585, ContractName:Plans/Decision_Log.md#DL-141
 
 ### DR-070 - One Demo Studio For PMConcept7
 
