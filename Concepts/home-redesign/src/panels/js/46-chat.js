@@ -59,8 +59,13 @@ chatCol.beginDrag = function (e, handle) {
   var hist = narrow.state.hist || 0;
   // one rule with the ladder: the chat widens only while the centre stays at or above the step where the ladder starts
   // easing the chat (C 960); past it the ladder would ease the width straight back on release
-  var C = state.centre ? state.centre.clientWidth : 0;
-  var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, C - LADDER.chatEase), lo, LADDER.chatMax + hist);
+  // On the Usage page the board keeps its 400 px floor (narrow.usageFloor); another page (the centre is hidden there and
+  // measured 0, which froze the drag) takes the whole range
+  var C = homeIsPage() && state.centre && state.centre.getClientRects().length ? state.centre.clientWidth : 0;
+  var ub = qs('#panel-usage #pmuBoard'), room = Infinity;
+  if (C) room = C - LADDER.chatEase;
+  else if (ub && ub.offsetParent !== null) room = ub.getBoundingClientRect().width - LADDER.usageBoardMin;
+  var lo = LADDER.chatMin + hist, hi = clamp(startW + Math.max(0, room), lo, LADDER.chatMax + hist);
   var last = startW, moved = false;
   try { handle.setPointerCapture(e.pointerId); } catch (_) {}
   handle.classList.add('resizing');

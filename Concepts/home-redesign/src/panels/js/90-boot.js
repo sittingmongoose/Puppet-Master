@@ -30,6 +30,9 @@ function firstLayout() {
 }
 
 function homeShown() { var p = qs('#panel-dashboard'); return !!p && (p.classList.contains('active') || p.classList.contains('pm8-page-out')); }
+/* Home is the page in front: homeShown also counts the page-out animation, and the page leaves pm8-page-out on
+   #panel-dashboard after it, so a page-level rule (the ladder, the notice anchor) asks this instead */
+function homeIsPage() { var p = qs('#panel-dashboard'); return !!p && p.classList.contains('active'); }
 var wasShown = null;
 function onPageChange() {
   var shown = homeShown();

@@ -85,7 +85,7 @@ function visibleIn(root, sel) {
 }
 /* how far below its own place the stage has to start so that a card covers no strip, header row or chat header */
 function noticeDrop(host) {
-  if (!homeShown() || !state.centre) return 0;
+  if (!homeIsPage() || !state.centre) return 0;
   var hr = host.getBoundingClientRect();
   var x = hr.left + hr.width / 2, top = hr.bottom + NOTICE_GAP, want = top;
   var panels = state.centre.querySelectorAll('.pmw-panel');
