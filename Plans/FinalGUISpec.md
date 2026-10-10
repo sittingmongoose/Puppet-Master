@@ -2505,7 +2505,9 @@ Graph and evidence schemas add work-package `/seam/promotion/account/lane` ident
 
 Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
 
-A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+Amended 2026-10-10 (lead ruling L2): Home panel tab routes use primary_view (Contracts CV-163).
+
+A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired; a route to a home panel tab uses `primary_view` (Contracts CV-163) (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
 
 Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
 
