@@ -153897,7 +153897,7 @@ var T = {};
 })();
 /* ---- terminal/js/42-appearance.js ---- */
 /* T.Appearance: one appearance model (D15). Each field resolves through four layers:
-     1. look defaults ("Follow theme"): the per-look scheme, font and effects,
+     1. look defaults ("Follow look"): the per-look scheme, font and effects,
      2. app default  (settings model key 'terminal.<field>', what Settings > Terminal binds later),
      3. project default (same keys under 'terminal.project.<field>'; written only by Settings),
      4. this tab     (the tab's own overrides, saved with the tab).
@@ -153918,7 +153918,7 @@ var T = {};
     'system': { label: 'System monospace', stack: "ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, licence: 'system' }
   };
 
-  /* Follow theme: per-look defaults (light / dark). The scheme pairs are D15's. */
+  /* Follow look: per-look defaults (light / dark). The scheme pairs are D15's. */
   var LOOKS = {
     friendly: { light: 'catppuccin-latte', dark: 'catppuccin-mocha', font: 'jetbrains-mono', cursorShape: 'block', blink: 'eased', trail: 'soft', dim: 0.18, focus: 'ring', bell: 'flash', background: 'soft', opacity: 1 },
     glass: { light: 'tokyo-night-day', dark: 'tokyo-night-storm', font: 'jetbrains-mono', cursorShape: 'bar', blink: 'eased', trail: 'glow', dim: 0.22, focus: 'rim', bell: 'rim', background: 'theme', opacity: 0.74, opacityLight: 0.7 },
@@ -154204,7 +154204,7 @@ var T = {};
 
   /* The Retro look's dark scheme, 'green' or 'amber' (D27). It is not stored anywhere of its own: it is what Retro dark
      resolves to at the All terminals layers (project over app, the 'scheme' and 'schemePair' fields), so choosing
-     PM Phosphor Amber for All terminals is the choice. Follow theme, or any scheme that is not Amber, reads 'green'. */
+     PM Phosphor Amber for All terminals is the choice. Follow look, or any scheme that is not Amber, reads 'green'. */
   function retroPhosphor() {
     var sid = field(null, 'scheme'), s = sid === 'follow' ? null : scheme(sid);
     if (s && field(null, 'schemePair')) s = pairOf(s, 'dark');
@@ -163190,7 +163190,7 @@ var T = {};
         '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import">Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
         '</section>';
       /* font */
-      var fonts = [['follow', 'Follow theme (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
+      var fonts = [['follow', 'Follow look (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
       var sf = scopeFont();
       html += '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', val('font'), fonts)) +
@@ -163205,12 +163205,12 @@ var T = {};
       html += '<section class="pmt-pop-sec" aria-label="Cursor"><h4>Cursor</h4>' +
         row('Shape', seg('cursorShape', val('cursorShape'), [['follow', 'Theme'], ['block', 'Block'], ['bar', 'Bar'], ['underline', 'Underline']])) +
         row('Blink', check('cursorBlink', val('cursorBlink'), 'Blink (stops after 15 s idle)')) +
-        row('Trail', select('cursorTrail', val('cursorTrail'), [['follow', 'Follow theme'], ['off', 'Off'], ['soft', 'Soft'], ['glow', 'Glow'], ['phosphor', 'Phosphor'], ['trace', 'Trace']])) +
+        row('Trail', select('cursorTrail', val('cursorTrail'), [['follow', 'Follow look'], ['off', 'Off'], ['soft', 'Soft'], ['glow', 'Glow'], ['phosphor', 'Phosphor'], ['trace', 'Trace']])) +
         '</section>';
       /* background */
       var bgk = val('background');
       html += '<section class="pmt-pop-sec" aria-label="Background"><h4>Background</h4>' +
-        row('Fill', select('background', bgk, [['follow', 'Follow theme'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Image']]));
+        row('Fill', select('background', bgk, [['follow', 'Follow look'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Image']]));
       if (bgk === 'solid') html += row('Colour', '<input type="color" class="pmt-pop-color" data-key="bgColor" value="' + esc(val('bgColor') || T.color.toHex(R.theme.bg)) + '" aria-label="Background colour">');
       if (bgk === 'gradient') html += row('Gradient', select('bgGradient', val('bgGradient'), [['dusk', 'Dusk'], ['dawn', 'Dawn'], ['deep', 'Deep'], ['paper', 'Paper']]));
       if (bgk === 'image') {
@@ -163249,11 +163249,11 @@ var T = {};
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
     }
-    /* Follow theme: the look's own scheme, swatched as it applies now when this scope follows */
+    /* Follow look: the look's own scheme, swatched as it applies now when this scope follows */
     function follow(sid) {
       var R = ap(), L = A().LOOKS[R.lookKey];
       var name = L ? (A().scheme(L[R.look.mode === 'light' ? 'light' : 'dark']) || {}).name : '';
-      return { label: 'Follow theme', meta: name || '', swatch: sid === 'follow' && R.scheme ? R.scheme : A().scheme(L[R.look.mode]) };
+      return { label: 'Follow look', meta: name || '', swatch: sid === 'follow' && R.scheme ? R.scheme : A().scheme(L[R.look.mode]) };
     }
     function place() {
       /* under the header row, right-aligned; full width in narrow panels; never taller than the body */

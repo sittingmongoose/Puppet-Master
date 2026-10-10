@@ -160,7 +160,7 @@
         '<div class="pmt-pop-row pmt-pop-import"><button type="button" class="pmt-textbtn" data-act="import">Import scheme…</button><span class="pmt-pop-note">iTerm2, Windows Terminal, kitty, Ghostty, Alacritty, base16 or base24, Xresources</span></div>' +
         '</section>';
       /* font */
-      var fonts = [['follow', 'Follow theme (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
+      var fonts = [['follow', 'Follow look (' + A().FONTS[A().LOOKS[look].font].label + ')']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
       var sf = scopeFont();
       html += '<section class="pmt-pop-sec" aria-label="Font"><h4>Font</h4>' +
         row('Face', select('font', val('font'), fonts)) +
@@ -175,12 +175,12 @@
       html += '<section class="pmt-pop-sec" aria-label="Cursor"><h4>Cursor</h4>' +
         row('Shape', seg('cursorShape', val('cursorShape'), [['follow', 'Theme'], ['block', 'Block'], ['bar', 'Bar'], ['underline', 'Underline']])) +
         row('Blink', check('cursorBlink', val('cursorBlink'), 'Blink (stops after 15 s idle)')) +
-        row('Trail', select('cursorTrail', val('cursorTrail'), [['follow', 'Follow theme'], ['off', 'Off'], ['soft', 'Soft'], ['glow', 'Glow'], ['phosphor', 'Phosphor'], ['trace', 'Trace']])) +
+        row('Trail', select('cursorTrail', val('cursorTrail'), [['follow', 'Follow look'], ['off', 'Off'], ['soft', 'Soft'], ['glow', 'Glow'], ['phosphor', 'Phosphor'], ['trace', 'Trace']])) +
         '</section>';
       /* background */
       var bgk = val('background');
       html += '<section class="pmt-pop-sec" aria-label="Background"><h4>Background</h4>' +
-        row('Fill', select('background', bgk, [['follow', 'Follow theme'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Image']]));
+        row('Fill', select('background', bgk, [['follow', 'Follow look'], ['theme', 'Theme surface'], ['solid', 'Solid colour'], ['gradient', 'Gradient'], ['image', 'Image']]));
       if (bgk === 'solid') html += row('Colour', '<input type="color" class="pmt-pop-color" data-key="bgColor" value="' + esc(val('bgColor') || T.color.toHex(R.theme.bg)) + '" aria-label="Background colour">');
       if (bgk === 'gradient') html += row('Gradient', select('bgGradient', val('bgGradient'), [['dusk', 'Dusk'], ['dawn', 'Dawn'], ['deep', 'Deep'], ['paper', 'Paper']]));
       if (bgk === 'image') {
@@ -219,11 +219,11 @@
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
     }
-    /* Follow theme: the look's own scheme, swatched as it applies now when this scope follows */
+    /* Follow look: the look's own scheme, swatched as it applies now when this scope follows */
     function follow(sid) {
       var R = ap(), L = A().LOOKS[R.lookKey];
       var name = L ? (A().scheme(L[R.look.mode === 'light' ? 'light' : 'dark']) || {}).name : '';
-      return { label: 'Follow theme', meta: name || '', swatch: sid === 'follow' && R.scheme ? R.scheme : A().scheme(L[R.look.mode]) };
+      return { label: 'Follow look', meta: name || '', swatch: sid === 'follow' && R.scheme ? R.scheme : A().scheme(L[R.look.mode]) };
     }
     function place() {
       /* under the header row, right-aligned; full width in narrow panels; never taller than the body */

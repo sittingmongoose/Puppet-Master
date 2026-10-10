@@ -1,5 +1,5 @@
 /* T.Appearance: one appearance model (D15). Each field resolves through four layers:
-     1. look defaults ("Follow theme"): the per-look scheme, font and effects,
+     1. look defaults ("Follow look"): the per-look scheme, font and effects,
      2. app default  (settings model key 'terminal.<field>', what Settings > Terminal binds later),
      3. project default (same keys under 'terminal.project.<field>'; written only by Settings),
      4. this tab     (the tab's own overrides, saved with the tab).
@@ -20,7 +20,7 @@
     'system': { label: 'System monospace', stack: "ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace", size: 13, lineHeight: 1.3, licence: 'system' }
   };
 
-  /* Follow theme: per-look defaults (light / dark). The scheme pairs are D15's. */
+  /* Follow look: per-look defaults (light / dark). The scheme pairs are D15's. */
   var LOOKS = {
     friendly: { light: 'catppuccin-latte', dark: 'catppuccin-mocha', font: 'jetbrains-mono', cursorShape: 'block', blink: 'eased', trail: 'soft', dim: 0.18, focus: 'ring', bell: 'flash', background: 'soft', opacity: 1 },
     glass: { light: 'tokyo-night-day', dark: 'tokyo-night-storm', font: 'jetbrains-mono', cursorShape: 'bar', blink: 'eased', trail: 'glow', dim: 0.22, focus: 'rim', bell: 'rim', background: 'theme', opacity: 0.74, opacityLight: 0.7 },
@@ -306,7 +306,7 @@
 
   /* The Retro look's dark scheme, 'green' or 'amber' (D27). It is not stored anywhere of its own: it is what Retro dark
      resolves to at the All terminals layers (project over app, the 'scheme' and 'schemePair' fields), so choosing
-     PM Phosphor Amber for All terminals is the choice. Follow theme, or any scheme that is not Amber, reads 'green'. */
+     PM Phosphor Amber for All terminals is the choice. Follow look, or any scheme that is not Amber, reads 'green'. */
   function retroPhosphor() {
     var sid = field(null, 'scheme'), s = sid === 'follow' ? null : scheme(sid);
     if (s && field(null, 'schemePair')) s = pairOf(s, 'dark');

@@ -264,7 +264,7 @@ attr 3, esc 6, mac 5, link 4, head 4, code 2 (`T.Appearance.EDITOR_FROM_ANSI`). 
   NieR tokens they are built from at runtime are the editor's to read.
 - `retroPhosphor()` -> `'green'|'amber'`: the Retro look's dark scheme. It has no store of its own: it is what Retro
   dark resolves to at the All terminals layers (`terminal.scheme` and `terminal.schemePair`, project over app). Choosing
-  PM Phosphor Amber for All terminals makes it `'amber'`; Follow theme, or any other scheme, reads `'green'`. A tab's own
+  PM Phosphor Amber for All terminals makes it `'amber'`; Follow look, or any other scheme, reads `'green'`. A tab's own
   scheme never changes it. The editor only reads it.
 - `on('retro-phosphor', fn)` -> unsubscribe function; `fn(value)` fires once each time that value changes (checked after
   every write to the app or project layer and every host settings event for `terminal.*`).

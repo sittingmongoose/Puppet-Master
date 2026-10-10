@@ -112,15 +112,14 @@ own terminal port pinned to a commit (`schemes/SOURCES.md` has every URL and SHA
 | GitHub | Light, Dark | MIT |
 | Ayu | Mirage | MIT |
 
-"Follow theme" defaults (light / dark): Friendly Catppuccin Latte / Mocha; Glass Tokyo Night Day / Storm (drawn at
+"Follow look" defaults (light / dark): Friendly Catppuccin Latte / Mocha; Glass Tokyo Night Day / Storm (drawn at
 70 % / 74 % opacity over the shell's existing glass blur: the terminal adds no backdrop blur, F3-431); Retro PM Paper
 Teletype / PM Phosphor Green (Amber is the sibling); Basic One Half Light / Dark; NieR PM YoRHa Parchment / Ink.
 "Switch with light and dark" (default on) swaps a chosen scheme for its family's other appearance.
 
 The code editor uses the same catalog (D27). Each scheme carries 17 editor syntax colours (`schemes/editor-syntax.json`,
 held to 4.5:1 for text and 3:1 for comments against the scheme's background, 7:1 throughout on PM High Contrast); an
-imported scheme takes its from its ANSI 16 by a fixed map. Both surfaces default to following the look (the
-terminal's "Follow theme", the editor's "Follow look"), and the editor's Appearance popover offers only scheme, font
+imported scheme takes its from its ANSI 16 by a fixed map. Both surfaces default to "Follow look", and the editor's Appearance popover offers only scheme, font
 and size. The Retro editor follows the terminal's Retro dark choice (`retroPhosphor`): PM Phosphor Amber chosen for
 All terminals turns it amber, anything else leaves it green.
 
@@ -134,7 +133,7 @@ no evaluation, fixed error messages that never echo the file.
 
 ## 6. Appearance model (D15)
 
-Four layers, resolved field by field: look defaults ("Follow theme") < app (`terminal.<field>`) < project
+Four layers, resolved field by field: look defaults ("Follow look") < app (`terminal.<field>`) < project
 (`terminal.project.<field>`, written only by Settings) < this tab. The popover writes "This terminal" or "All
 terminals". Everything applies live; no field has a restart badge. Fields (settings key `terminal.<name>`):
 

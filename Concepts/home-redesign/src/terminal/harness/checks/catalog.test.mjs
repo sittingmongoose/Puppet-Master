@@ -119,7 +119,7 @@ test('retroPhosphor and its event', () => {
   const view = { state: {}, applyAppearance() {} };
   T.Appearance.set('tab', 'scheme', 'pm-phosphor-green', view);
   assert.equal(A.retroPhosphor(), 'amber');
-  /* back to Follow theme: green, fired once more; then unsubscribed */
+  /* back to Follow look: green, fired once more; then unsubscribed */
   T.Appearance.set('app', 'scheme', 'follow');
   assert.equal(A.retroPhosphor(), 'green');
   assert.deepEqual(seen, ['amber', 'green']);
