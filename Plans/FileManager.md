@@ -19,7 +19,7 @@
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip is lineage (section 2.1).
 
 This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`#F3-630`).
 
@@ -5344,9 +5344,8 @@ canonical_text: >-
   file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
   fields of Plans/Contracts_V0.md#CV-360 beside the file's identity: `mode: preview` for a single click, `mode: keep`
   for a double click or Enter, `where: panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on
-  macOS), which opens the file without taking focus. A file already open anywhere in the workspace is revealed where it
-  is (activated, pulled out of the "+N" list, its collapsed panel expanded), never opened twice and never moved.
-  Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target of an ordinary
+  macOS), which opens the file without taking focus. A file already open anywhere is revealed where it is, as F3-634
+  says. Alt+click opens the file in a new panel by the fit rule (Plans/FinalGUISpec.md#F3-630). The target of an ordinary
   click is the last-focused panel that holds documents, as F3-634 says; this unit does not restate that rule. The
   file row's context menu starts with Open (kept, in that target), Open in new panel (`where: panel`) and Open to the
   side (`where: right`, a new panel to the right of the target panel), then a separator and the existing file-tree

@@ -3163,7 +3163,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines where and how a person sees an opened artifact, its versions and its states in the home panels.
 split_recommended: false
-depends_on: [DL-180, F3-634, F3-635, RAP-007, RAP-019, RAP-026, RAP-037, RAP-052]
+depends_on: [DL-180, F3-634, F3-635, RAP-007, RAP-008, RAP-019, RAP-026, RAP-037, RAP-052, CV-360]
 unblocks: [ATS-075, GRRC-040]
 acceptance_criteria:
   - "Opening an artifact from the Artifacts side panel, a chat artifact card, a Plan card's embedded artifact, a Usage or Ledger drill-through or an agent opens an `artifact` tab through `cmd.nav.open_subject`, and no caller opens a viewer of its own."
