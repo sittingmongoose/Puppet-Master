@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35462-L35918
+Source lines: L35471-L35927
 
-Source SHA256: `0447b088ad9ff94580a742cf8d93648e220ab8bd0f5a472e7f8f8109027721dd`
+Source SHA256: `56f4e7c9c04ce33ec2bb91e300993b0f6adc3b18d185096ce77c18deba52b357`
 
 ---
 
@@ -214,7 +214,7 @@ acceptance_criteria:
   - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
-  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: from the v2 Home record every committed structural change emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
+  - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema. (amended 2026-10-09, DL-180: once Event Authority admits it, every committed structural change of the v2 Home record emits payload 2.0.0 instead, Plans/Contracts_V0.md#CV-361, and the 1.1.0 fields above describe the v1 record only)."
   - "No PM7-only command family, preview-frame event family, second layout store, or registered cmd.workspace_layout.size_surface command is introduced."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"

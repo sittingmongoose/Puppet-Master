@@ -37,18 +37,20 @@
   /* ---------------------------------------------------------------- thresholds and the A1 state colours (4.2)
      Auto-switch is per provider (Jared 2026-10-09 item 2; AAC research R3 section 1). Four Settings rows carry a provider
      scope: ai.accounts.multi-account-switching, hard-switch-level and soft-warning-level (% LEFT; Usage shows % used) and
-     cooldown-policy. One value resolves as: account override (ai.accounts.account-threshold-override, the switch level
-     only) > the provider's own value > project > global; the concept keeps project and global as one value (the Settings
-     value), and that value is the default for every provider without one of its own. The provider values live in the
+     cooldown-policy. Every threshold resolves through one ladder (USG-1, Jared 2026-10-10): global < project < provider <
+     account, the most specific set value winning; an account's own switch level is ai.accounts.hard-switch-level at scope
+     account (its warn level and rest period the same rows at scope account), and the retired
+     ai.accounts.account-threshold-override is carried there by the Settings owner at load, never read here. The concept
+     keeps project and global as one value (the Settings value), and that value is the default for every provider
+     without one of its own; an account without its own value follows its provider. The provider values live in the
      Settings owner (PM51 providers manager, p.props[id], the providers-service scope); Usage reads them through
      PMU.settings and writes them only through the Settings owner (54-w-accounts.js PMU.accounts.setPolicy).
      thresholds() -> the global policy (unchanged contract); thresholds(providerId) -> that provider's resolved policy;
-     thresholds(providerId, accountId) -> the same with the account's own switch level. A legacy provider id ('claude')
+     thresholds(providerId, accountId) -> the same with the account's own values (switch level, warn level, rest period). A legacy provider id ('claude')
      resolves to its Settings id. Fields: auto, switchLeft, warnLeft (% left), cooldown, available, providerId, scope
      ('global' | 'provider' | 'account'), own {auto, switchLeft, warnLeft, cooldown}: true where the provider has its own
      value, shared: the global policy. */
   var POLICY_IDS = { auto: 'ai.accounts.multi-account-switching', switchLeft: 'ai.accounts.hard-switch-level', warnLeft: 'ai.accounts.soft-warning-level', cooldown: 'ai.accounts.cooldown-policy' };
-  var ACCOUNT_SWITCH_ID = 'ai.accounts.account-threshold-override';
   var policyMemo = {}, cooldownEnd = null;
   function autoOn(v) { return v !== false && v !== 'off' && v !== 'false' && v != null; }
   function levelOf(v, dflt) { if (v === '' || v === null || v === undefined) return dflt; var n = Number(v); return isFinite(n) && n > 0 && n < 100 ? n : dflt; }
@@ -69,9 +71,20 @@
       warnLeft: has('warnLeft') ? levelOf(own.warnLeft, g.warnLeft) : g.warnLeft, cooldown: has('cooldown') ? cooldownOf(own.cooldown) : g.cooldown,
       available: g.available && !!(PMU.settings.providerWritable && PMU.settings.providerWritable()), scope: 'provider', providerId: pid,
       own: { auto: has('auto'), switchLeft: has('switchLeft'), warnLeft: has('warnLeft'), cooldown: has('cooldown') }, shared: g };
-    if (accountId) {
-      var ov = PMU.settings.accountValue ? PMU.settings.accountValue(pid, accountId, ACCOUNT_SWITCH_ID) : null, n = levelOf(ov, null);
-      if (n !== null) pol = Object.assign({}, pol, { switchLeft: n, scope: 'account', accountId: accountId, accountOverride: n });
+    if (accountId && PMU.settings.accountValue) {
+      var acc = function (id) { return PMU.settings.accountValue(pid, accountId, id); };
+      var sw = levelOf(acc(POLICY_IDS.switchLeft), null), wn = levelOf(acc(POLICY_IDS.warnLeft), null), cd = acc(POLICY_IDS.cooldown);
+      var cdOwn = cd !== undefined && cd !== null && cd !== '';
+      if (sw !== null || wn !== null || cdOwn) {
+        pol = Object.assign({}, pol, { scope: 'account', accountId: accountId,
+          accountOwn: { switchLeft: sw !== null, warnLeft: wn !== null, cooldown: cdOwn }, provider: pol });
+        if (wn !== null) pol.warnLeft = wn;
+        if (sw !== null) pol.switchLeft = sw;
+        if (cdOwn) pol.cooldown = cooldownOf(cd);
+        /* the switch level stays under the warn level at the account scope too (the owner holds every write; a level that
+           a later provider or shared warn change crossed is read at the highest switch choice below the warn level) */
+        if (pol.switchLeft >= pol.warnLeft) pol.switchLeft = Math.max(5, Math.ceil(pol.warnLeft / 5) * 5 - 5);
+      }
     }
     return (policyMemo[key] = pol);
   }

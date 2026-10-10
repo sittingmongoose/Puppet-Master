@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L23580-L23894
+Source lines: L23580-L23895
 
-Source SHA256: `7782386d415479cfaa22a785b842ce7f1f3aa0606f7ad9f59366d286f6da91e0`
+Source SHA256: `b7bd5779fad4d78c52e369ea8f6cf747ff65d613c699ffab85c40a391e054683`
 
 ---
 
@@ -31,7 +31,7 @@ One id is one tab in the whole workspace. When the id's tab is already open, the
 
 ### The layout event (CV-361)
 
-`workspace.layout_changed` keeps its event type and family and moves to payload 2.0.0, `Plans/event_payloads/workspace_layout_changed_v2.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0`). Every committed structural change of the v2 Home layout appends exactly one, after the record has been written and read back (SP-330). Its `change` field names what happened:
+`workspace.layout_changed` keeps its event type and family and moves to payload 2.0.0, `Plans/event_payloads/workspace_layout_changed_v2.schema.json` (schema id `https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0`). The move takes effect when Event Authority admits it: until Jared approves the Event Authority checkpoint that moves the registered family to 2.0.0 (DL-045), `Plans/event_family_registry.json` keeps it at 1.1.0, the 2.0.0 payload is `requires_central_adjudication` and no 2.0.0 event is appended. Every committed structural change of the v2 Home layout appends exactly one, after the record has been written and read back (SP-330). Its `change` field names what happened:
 
 | `change` | Commands |
 |---|---|
@@ -150,7 +150,8 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   workspace.layout_changed keeps its event type and family and moves to payload 2.0.0
-  (Plans/event_payloads/workspace_layout_changed_v2.schema.json). Every committed structural change of the v2 Home
+  (Plans/event_payloads/workspace_layout_changed_v2.schema.json) when Event Authority admits it: until Jared approves the Event Authority checkpoint that moves the registered family to 2.0.0 (DL-045), Plans/event_family_registry.json keeps it at 1.1.0, the 2.0.0 payload is requires_central_adjudication and no 2.0.0 event is appended.
+  Every committed structural change of the v2 Home
   layout appends exactly one after the record is written and read back (SP-330), with a change discriminator
   (tab_opened, tab_closed, tab_moved, tab_kept, tab_pinned, tab_unpinned, tab_renamed, panel_split, panel_moved,
   panel_resized, panel_collapsed, panel_expanded, panel_closed, panel_locked, panel_unlocked, named_layout_applied,
@@ -164,7 +165,7 @@ canonical_text: >-
   panel's preview tab is one tab_opened naming both tabs, the replaced preview not stacked. A reveal-only open, view state, menus, hover, drags, an unchanged release and a failed write append
   nothing. 1.1.0 events stay readable through the payload's v1
   compatibility reader; a stored event's own payload_schema_id dispatches its validation, so a 1.1.0 event is read
-  by the 1.1.0 schema and every new append carries 2.0.0. terminal.workgroup_moved is withdrawn under SMPFS-170's
+  by the 1.1.0 schema and every new append after admission carries 2.0.0. terminal.workgroup_moved is withdrawn under SMPFS-170's
   rule: no producer, recorded events readable at 1.0.0, a terminal tab's move is a tab_moved that keeps its
   session, and a move unresolved at upgrade is settled under SMPFS-170 and SP-319 before SP-330's conversion reads
   the v1 terminal records, never reminted. panel.undocked and panel.redocked
@@ -176,10 +177,10 @@ split_recommended: false
 depends_on: [DL-180, DL-181, F3-630, SP-330, SMPFS-180, CV-323]
 unblocks: []
 acceptance_criteria:
-  - "Plans/event_family_registry.json points workspace.layout_changed at family revision 2.0.0 and the v2 payload schema."
+  - "Plans/event_family_registry.json points workspace.layout_changed at family revision 2.0.0 and the v2 payload schema only after Event Authority admits it (a DL-045 checkpoint Jared approves); until then the registry keeps 1.1.0 and no 2.0.0 event is appended."
   - "Every committed structural change appends exactly one workspace.layout_changed whose change and command_id agree with the table of this addendum; a reveal-only open, a view-state write and a failed or unchanged commit append none."
   - "The payload names the ids the change touched, both revisions, the actor and persisted=true, and is appended only after the v2 record has been read back."
-  - "A 1.1.0 event validates against the compatibility reader and is never rewritten; a stored event is validated by the schema its own payload_schema_id names, and a new append that is not 2.0.0 is refused."
+  - "A 1.1.0 event validates against the compatibility reader and is never rewritten; a stored event is validated by the schema its own payload_schema_id names, and after admission a new append that is not 2.0.0 is refused."
   - "An open with mode keep of a preview tab appends one tab_kept under the open's command id, and a preview open that replaces a panel's preview tab appends one tab_opened whose affected_tab_ids name both tabs."
   - "No producer writes terminal.workgroup_moved; recorded events stay readable at 1.0.0; a move pending or uncertain at upgrade is settled under SMPFS-170 before SP-330's conversion reads the v1 terminal records and is never reminted."
   - "panel.undocked and panel.redocked are produced only for the chat's pop-out and return, and neither appends a workspace.layout_changed; showing or hiding the chat appends nothing."
