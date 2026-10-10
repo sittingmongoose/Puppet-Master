@@ -31897,16 +31897,18 @@ canonical_text: >-
   drives the glass composition layer and persists at `glass_background_mode:v1`; the glass
   alpha setting drives `--glass-alpha` within the per-theme clamps of F3-429 and persists at
   `glass_alpha:v1`; the reduce-animations setting drives the application reduced-motion
-  state; and the chat layout mode setting drives the chat mount layout. Each binding applies
+  state; and the chat layout mode setting drove the chat mount layout until it retired (amended 2026-10-10,
+  DL-187: general.visual.chat-layout-mode retires with no options; the chat is a fixed column, F3-637, and a stored
+  Overlay or Detached value is ignored and cleared on first read, SSYS-050). Each binding applies
   on change with no reload. The concept's interface-density live-apply hook had no consumer
   and is demo residue excluded from this canonical wiring map.
 gui_related: true
 gui_classification_reason: This unit defines visible live-apply bindings between settings and shell surfaces.
 split_recommended: false
-depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444]
+depends_on: [F3-425, F3-428, F3-429, F3-432, F3-444, DL-187]
 unblocks: []
 acceptance_criteria:
-- "Changing theme, glass background mode, glass alpha, reduce-animations, or chat layout mode applies live to the theme engine, glass composition, --glass-alpha within clamps, reduced-motion state, and chat mount layout respectively, with no reload."
+- "Changing theme, glass background mode, glass alpha or reduce-animations applies live to the theme engine, glass composition, --glass-alpha within clamps and reduced-motion state respectively, with no reload; the retired chat layout mode binds nothing (amended 2026-10-10, DL-187)."
 - "The theme, glass background mode, and glass alpha bindings persist through theme:v1, glass_background_mode:v1, and glass_alpha:v1 respectively."
 - "The interface-density hook is excluded from the wiring map as demo residue and gains no canonical binding."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -31936,6 +31938,7 @@ compatibility_only_notes:
 - "Slint portability: live-apply bindings map to typed state setters; theme switches swap precomputed per-variant token tables and glass alpha updates a single scalar, with no arbitrary-content backdrop blur, no SVG filters, and no runtime color math."
 stale_retired_dispositions:
 - "The concept's interface-density live-apply hook is demo residue with no consumer; it is excluded from the canonical wiring map and retired without replacement."
+- "Amended 2026-10-10 (DL-187, D32): the chat layout mode binding retires with general.visual.chat-layout-mode; the chat is a fixed column (F3-637) and a stored value never pops it out."
 owner_boundary_notes:
 - "Theme engine and token tables are owned by F3-425 and F3-426; glass composition and background modes by F3-427 and F3-428; glass alpha clamps by F3-429; storage-key registration by F3-444."
 owner_hints:
@@ -44054,12 +44057,12 @@ canonical_text: >-
   Every panel has the same tab strip, the dashboard's included (DL-180, D5); no panel and no tab kind draws a strip of
   its own. The strip is 35 px tall in every panel, the change Jared asked for in PMConcept7 revision 19 ("Strips
   shortened: editor 40 -> 35px") applied to every panel, and its tabs are 31 px tall with 8 px between tabs, 2 px in
-  Retro (the 8 px gap approved by Jared on 2026-10-10). The active tab's plate overlaps the body by 1 px and joins it
+  Retro (the 8 px gap approved by Jared on 2026-10-10, D29). The active tab's plate overlaps the body by 1 px and joins it
   through the contact-aware silhouette of F3-505, generalised here from the editor and dashboard strips to every panel
   and every tab kind, so the active tab and its panel read as one shape. That fused shape is the only mark of the active
   tab: no underline, no accent line, no accent crown strip, no pill. In Friendly, Glass and Basic, light and dark, the
   plate takes the body's own fill; no look gives the active tab a separately coloured plate, Glass dark included (Jared,
-  2026-10-10: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
+  2026-10-10, D29: its purple plate is dropped), and Glass keeps only its 1 px glass rim along the plate's crown, part of its
   material and never in an accent colour. Retro fills the fused shape in reverse video and NieR Mode in ink (F3-647).
   Contact is measured to the neighbouring content, its box inset by 8 px, with a 20 px linear morph window on each side.
   Crown, shoulder and flare radii per look: Friendly 16, 16 and 25 px; Glass 16, 16 and 25 px; Basic 9, 14 and 22 px;
@@ -44137,6 +44140,7 @@ source_lineage:
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
   - "Plans/Decision_Log.md#DL-187"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-3.md, SHA-256 ecd18c2f2d8ac8f714f9578170d321584fb871e3d19601a68061898ffd6759a9 (D34)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/DECISIONS-ADDENDUM-2.md, SHA-256 1eecc96b03a1a774f52d06420c913553d5f5d1917e1bd5705e2f6e0bbc11fad6 (D29: the 8 px gap and Glass dark's plate)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/followup/panels-CONTRACT-339203bd76.md, SHA-256 6937e47dd9e63466f9c17653bf54f2a70583efbde7270d8cf9609a1920150165 (section 3, the tab-menu rows a kind adds; concept lineage only)"
 preserved_exact_tokens:
   - "35 px"
@@ -44796,10 +44800,13 @@ canonical_text: >-
   returns at 1210 px going wider, and the chat folds to its strip at 930 px going narrower and unfolds at
   990 px going wider. These are measured outcomes of the C keys above, not window-width keys. The ladder
   uses 48 px hysteresis; these transition pairs and temporary History drops are never saved.
+  Amended 2026-10-10 (DL-187): the ladder acts only while Home is the page shown, since it measures Home's centre; on
+  the Usage page the chat keeps the Usage board at least 400 px wide instead, and on other pages the chat column is the
+  person's width (F3-637).
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
-depends_on: [DL-180, F3-471, F3-630, F3-637]
+depends_on: [DL-180, DL-187, F3-471, F3-630, F3-637]
 unblocks: [SSYS-050, ACD-500, ATS-075]
 acceptance_criteria:
   - "Every narrow step keys on the centre width (window minus rail minus chat), never on the window width."
@@ -44828,6 +44835,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D4)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
+  - "Concepts/home-redesign/src/panels/js/44-narrow.js at 7ad8442ad4 on branch concept/home-panels-20261009 (the ladder only while Home is the page; concept lineage only)"
 preserved_exact_tokens:
   - "960"
   - "760"
@@ -44842,6 +44850,7 @@ negative_constraints:
   - "Do not fold the chat before the rail's side panel."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds History drop and strip fold thresholds with the rail folded, without saving narrow state."
+  - "Amended 2026-10-10 (DL-187): The ladder acts only while Home is the page shown; the Usage page keeps its own 400 px board floor (F3-637)."
 compatibility_only_notes: []
 owner_hints:
   - Plans/FinalGUISpec.md
