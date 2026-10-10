@@ -2463,7 +2463,7 @@ Amended 2026-10-09 (DL-181, DL-183): the terminal's appearance is one live layer
 
 Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.
 
-Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings.
+Terminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and terminal-tab actions stay in the terminal tab rather than Settings (DL-181).
 
 Settings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage: `/theming`, `/remote/session` disclosure, and any future browser or remote terminal transport controls must reference the terminal SSOT rather than creating a new settings owner.
 
@@ -8694,7 +8694,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-063 - Terminal Split Grid And Editor Embeddings
+### F3-063 - Terminal Tabs Side By Side
 
 ```yaml
 plan_unit_id: F3-063
@@ -8746,6 +8746,7 @@ compatibility_only_notes:
 - "Earlier text, lineage only: Terminal split grids use visible gutters/resizers, workgroup accents, no split-parent opacity enter animation, and editor-hosted stacks that reference existing terminal leaf panes rather than creating second terminal sessions."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): the terminal split grid, its workgroup accents and the editor-hosted terminal stack retire; terminals side by side are panels, and no second presentation starts a second session."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Terminal Split Grid And Editor Embeddings' before terminal panes retired."
 owner_boundary_notes:
 - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md"
 owner_hints:
@@ -11887,9 +11888,10 @@ preserved_exact_tokens:
 - "/workspace"
 - "/tab"
 negative_constraints:
-- "Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
+- "Live-session and terminal-tab actions stay in the terminal tab rather than Settings."
 - "Settings keeps no terminal theme or font value outside the one appearance model."
-compatibility_only_notes: []
+compatibility_only_notes:
+- "Before DL-181 the first negative constraint read: Live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-183): terminal appearance is one live layered model; Settings binds its app and project layers, the tab keeps its own override, and pane-local actions are now the terminal tab's actions (DL-181)."
 owner_boundary_notes:
@@ -17588,13 +17590,12 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Startup terminal restore reads `terminal_layout.v1:{project_id}` plus linked terminal
-  session and canonical terminal record families, preserves section/tab/pane identity before
-  liveness verification, prefers prior selected terminal containers, keeps structural restore
-  copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as
-  compatibility input only. Since DL-181 the terminal containers are terminal tabs, which restore with the Home
-  layout record (SP-330), each bound to its session; `terminal_layout.v1` and the section and pane families are read
-  once as migration inputs (SP-332). A restored terminal tab mounts when it is first shown (F3-635). If its session
+  Startup terminal restore brings back terminal tabs with the Home layout record (SP-330), each bound to its
+  session, preserves each terminal tab's identity before liveness verification, prefers the previously selected
+  terminal tab, keeps structural restore copy separate from live PTY proof, and reads
+  `terminal_layout.v1:{project_id}`, the linked terminal session and canonical terminal record families and the
+  section and pane families once as migration inputs (SP-332), with deprecated `terminal_state:v1` as compatibility
+  input only (DL-181). A restored terminal tab mounts when it is first shown (F3-635). If its session
   survived, it shows that live session; if not, it loads its saved scrollback, draws the dim rule, starts a new
   session in the same folder and shell profile and says so in its restored notice (F3-640, F3-645, SMPFS-180), and a
   command that was running comes back ended and indeterminate, never done. That notice is the structural-restore
@@ -17645,6 +17646,7 @@ negative_constraints:
 - "A restored terminal tab must not present itself as its earlier live session, and startup restore must not add terminal tabs that were not saved."
 compatibility_only_notes:
 - "Deprecated `terminal_state:v1` may be ingested only by compatibility readers that rewrite into canonical terminal key families."
+- "Before DL-181 this unit read: Startup terminal restore reads `terminal_layout.v1:{project_id}` plus linked terminal session and canonical terminal record families, preserves section/tab/pane identity before liveness verification, prefers prior selected terminal containers, keeps structural restore copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as compatibility input only."
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): terminal sections and panes retire; terminal tabs restore with the Home layout record, and a tab whose session did not survive restores its saved scrollback above a new session that says so."
 owner_boundary_notes: []
@@ -18685,7 +18687,7 @@ owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
 
-### F3-245 - Four Split Terminal Performance Risk
+### F3-245 - Many Visible Terminal Tabs Performance Risk
 
 ```yaml
 plan_unit_id: F3-245
@@ -18739,6 +18741,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): the four-split risk becomes the risk of many visible terminal tabs, one session and one PTY per tab, with the same mitigations."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Four Split Terminal Performance Risk' before terminal panes retired."
 owner_boundary_notes:
 - "The row remains part of the FinalGUISpec risk/mitigation matrix."
 owner_hints:
@@ -37681,7 +37684,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-546 - Pane Local Advisory Command Progress
+### F3-546 - Tab Local Advisory Command Progress
 
 ```yaml
 plan_unit_id: F3-546
@@ -37731,6 +37734,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): the progress is scoped to the terminal tab that owns the session, since a terminal no longer has panes."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Pane Local Advisory Command Progress' before terminal panes retired."
 ```
 
 ### F3-547 - Safe Command Insertion And Retained Output Editor Actions
@@ -37845,7 +37849,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-549 - Explicit Live Pane Input Protection
+### F3-549 - Explicit Live Terminal Tab Input Protection
 
 ```yaml
 plan_unit_id: F3-549
@@ -37908,6 +37912,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-181): the clause 'No arbitrary pane trees, group or zoom features are introduced' is superseded by one session per tab in the panels' split tree, whose maximize is the panels' own; the input protection rules are kept unchanged."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Explicit Live Pane Input Protection' before terminal panes retired."
 ```
 
 
