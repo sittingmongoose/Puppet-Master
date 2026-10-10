@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42525-L42707
+Source lines: L42544-L42728
 
-Source SHA256: `069e4390ce5eb9f669bc45df980bd05acd04045cbb3f9678b29aaf5e5b550493`
+Source SHA256: `cd565db534a964f90654091d88978a3baf84614c772aee4fc81a7639e14d90f9`
 
 ---
 
@@ -27,7 +27,8 @@ canonical_text: >-
   relabelled, and Git's strip, list and footer are hidden in Jujutsu mode while the Jujutsu view is hidden in Git
   mode. Both strips are the rail's one tab component (F3-618 to F3-621), each with its own tablist name ("Jujutsu
   views" for Jujutsu), tabs that carry their selected state and controlled pane, and Left, Right, Home and End
-  moving between tabs, focus following once the chosen tab has settled. Operation Log's tab icon is a list; the
+  choosing along the strip with focus following, as on every rail strip (F3-621, amended 2026-10-09 after the
+  shared cleanup, DL-163; until then focus waited for the chosen tab to settle). Operation Log's tab icon is a list; the
   undo arrow is kept for the Undo action alone, so no view tab looks like a button that rewrites, and Fetch's
   download icon differs from Refresh's. Selecting a tab of either strip is cmd.source_control.select_tab with that engine's tab set;
   it changes no repository state. Slots 1 to 4 sit in the same positions in both strips (Changes; Worktrees or
@@ -75,6 +76,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-163"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06 (issue 2)"
   - "Concepts/leftrail-redesign/src/concepts/d/15-jj.js and css/71-source.src.css, css/73-jj.src.css (lane commits 8693996260 and 2f77b78710; concept lineage only)"
+  - "Concepts/leftrail-redesign/src/concepts/d/15-jj.js and css/22-tabs.src.css, the Jujutsu strip on the rail's tab engine with Arrow, Home and End choosing (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "Operation Log"
   - "cmd.source_control.select_tab"

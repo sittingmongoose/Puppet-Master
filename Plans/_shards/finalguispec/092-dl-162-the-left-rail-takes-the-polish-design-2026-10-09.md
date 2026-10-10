@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42087-L42523
+Source lines: L42087-L42542
 
-Source SHA256: `069e4390ce5eb9f669bc45df980bd05acd04045cbb3f9678b29aaf5e5b550493`
+Source SHA256: `cd565db534a964f90654091d88978a3baf84614c772aee4fc81a7639e14d90f9`
 
 ---
 
@@ -111,8 +111,10 @@ canonical_text: >-
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
   idle, unknown and immutable the muted text colour, paused --accent-warning, conflict --accent-magenta, orphaned
-  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode done, live,
-  idle and paused draw in the NieR ink. In the light looks and NieR Mode dark the word takes a deeper tone of its
+  and errored --accent-orange, and current --accent-primary, the selection colour; under NieR Mode every state
+  glyph and word draws in the NieR ink, running, stale, warning, orphaned and errored included (amended 2026-10-09
+  after the shared cleanup, DL-162; until then only done, live, idle and paused did), and only the failure colour
+  (failed and blocked) and conflict keep NieR's red, the shape telling the inked states apart. In the light looks and NieR Mode dark the word takes a deeper tone of its
   colour, mixed toward the text colour, so it reads at about 4:1, while the glyph keeps more of the colour. Shape
   and word always carry the state, so it
   never rests on colour alone. Counts are plain numbers in tabular figures, right-aligned in one column across a
@@ -148,6 +150,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-162"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/concepts/d/00-d.js and css/50-status.src.css (concept lineage only, commit c93e341606)"
+  - "Concepts/leftrail-redesign/src/concepts/d/css/10-tokens.src.css, NieR state colours in ink (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "glyph and word"
   - "tabular figures"
@@ -193,7 +196,9 @@ canonical_text: >-
   at the current rail width and redone on a resize, a theme change and a tab change, and a panel shown again at an
   unchanged width is not refitted. This amends F3-480 (3) for the rail, whose fit ladder loses its abbreviated form,
   and replaces F3-445's scroll-and-ellipsis recipe for the rail's segmented strips; the width tiers still gate chrome
-  only (F3-498).
+  only (F3-498). Amended 2026-10-09 after the shared cleanup (DL-162): no abbreviation applies to ages either; ages
+  and durations are spelled out in words ("4 minutes", "2 hours ago", "1 minute 48 seconds"), never cut to unit
+  letters, while a decimal measurement keeps its unit symbol ("3.4s").
 gui_related: true
 gui_classification_reason: Defines how labels, names and tabs fit the narrow left rail.
 split_recommended: false
@@ -224,6 +229,7 @@ source_lineage:
   - "Plans/Decision_Log.md#DL-162"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/concepts/d/20-fit.js (concept lineage only, commit c93e341606)"
+  - "Concepts/leftrail-redesign/src/concepts/d/00-d.js AGE_RX and 10-skin.js applyWords, ages spelled out (shared cleanup lane commit a136797dad; concept lineage only)"
 preserved_exact_tokens:
   - "never abbreviated"
   - "keeps its head and its end"
@@ -277,7 +283,16 @@ canonical_text: >-
   which a chosen tab no longer takes, moves to the new box's centre and fades out. Every rail animation follows
   general.visual.animation-speed, lands at its end state at
   once under reduced motion (general.visual.reduce-animations or the operating system), and none persists on the
-  active view (F3-480 (4)).
+  active view (F3-480 (4)). Amended 2026-10-09 after the shared cleanup (DL-162): Arrow Left and Right, Home and
+  End move along every rail tab strip and choose the tab they reach, focus following it, in Files, Search, Source
+  Control's Git and Jujutsu strips (F3-623), Actions & Pipelines, Docker Manager, Runtime Artifacts, Testing and
+  Debug & Run; under NieR Mode the Target brackets lock onto the tab chosen by a key move exactly as after a click.
+  NieR Mode's entrance wipe never blocks input: a click on a tab strip during a panel's entrance always chooses the
+  tab. When the home layer folds the rail in a narrow window and opens the side panel as an overlay over the
+  centre, the rail draws that overlay in each family's voice, an opaque plate with a hairline edge all round and the
+  family's shadow and entrance, Glass keeping the shell's frosted box and nothing moving under reduced motion, and
+  its fitting follows the overlay's width; when the side panel eases or folds, and Pin, belong to the home layer,
+  and the fold is view-local, never saved, with no command or wiring row.
 gui_related: true
 gui_classification_reason: Defines the left rail's dropdown look and its motion in each theme family.
 split_recommended: false
@@ -288,6 +303,7 @@ acceptance_criteria:
   - "Under reduced motion every rail animation is instant, and Animation speed scales every scripted rail animation."
   - "Under Glass no rail row animates a blur and no rail element adds a backdrop blur."
   - "In Retro, at every frame of a tab change, at most one tab shows the chosen colours; under NieR Mode the target brackets settle on the chosen tab's final box."
+  - "On every rail tab strip Arrow Left and Right, Home and End choose the tab they reach and focus follows; under NieR Mode the brackets settle on a tab chosen by key, and a click during a NieR entrance chooses its tab."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -307,6 +323,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/leftrail-polish-20261009/JARED-REQUEST-20261009.md, SHA-256 4923cfc785f4dc020d5bd3ae86e4bf62946a2155572013ee353182dd9bf46b06"
   - "Concepts/leftrail-redesign/src/js/20-menu.js and src/concepts/d/10-skin.js, 30-motion.js, 40-bar.js (concept lineage only, commit c93e341606)"
   - "Concepts/leftrail-redesign/src/concepts/d/31-tabs.js and css/22-tabs.src.css, tab switches redone per family for the owner's issue 3 of 2026-10-09 (lane commits 9e8e75acab and 95e0259ab1; concept lineage only)"
+  - "Concepts/leftrail-redesign/src/concepts/d/ shared cleanup: keys on every strip and the NieR wipe as a mask (lane commits a136797dad and b56efb00cc), and css/24-fold.src.css with 20-fit.js for the narrow-window overlay (commit 2f3a4ac7df); concept lineage only"
 preserved_exact_tokens:
   - "chat's picker style"
   - "general.visual.animation-speed"
@@ -317,9 +334,11 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept times its motion with the theme tokens it has (about 240, 420, 480 and 200 ms); the product's motion tokens own exact durations and the beats and voices here bind."
   - "The concept reaches NieR Mode's Menu cursor and Target brackets parts through two hooks in the NieR kit (opus-5.5 settings kit, 19-nier-parts.js): .pmr-cur in its cursor selector list, and a .pmr-lock branch in its bracket placement that places the brackets after the click lands; the hooks are concept plumbing, the behaviour above is canon."
+  - "In the concept the home layer writes data-pm-rail-fold, eased or overlay, on #sidePanelSlot and dispatches pm:rail-fold with the mode and width, and the rail styles and refits from them; the attribute and event are concept plumbing agreed with the home redesign thread on 2026-10-09."
 stale_retired_dispositions: []
 owner_boundary_notes:
   - "ACD-439 owns the sprout motion and the chat pickers' look; this unit applies them to the rail and adds only placement and keyboard."
+  - "The home redesign owns the narrow-window behaviour (the side panel eased to 240 px, then below a 760 px centre the rail folded to its icon bar with the side panel as an overlay, Pin restoring docking, never saved); its canon is not on main at this amendment (DL-180 on plans/home-panels-terminal-canon-20261009). This unit owns only how the rail draws and fits in that overlay."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/assistant-chat-design.md
