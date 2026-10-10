@@ -31460,8 +31460,9 @@ Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner 
 at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
 most specific set value winning. The retired row stays in the registry marked superseded, as
 `general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
-`ai.accounts.hard-switch-level` at scope account; no surface draws, reads or writes it after that, and the row count
-stays 916.
+`ai.accounts.hard-switch-level` at scope account; no surface reads or writes it after that, Settings offers no control
+for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
+own switch level, and the row count stays 916.
 
 ### F3-442 - Project Settings Modal Reconciliation
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L30758-L31646
+Source lines: L30758-L31647
 
-Source SHA256: `af98e0bd38c07f485ffa415151aadb91d204d7b5e3eea1427b54fe29a62f3677`
+Source SHA256: `8fac6b4ee9ae7ff85e815939520bcf4acab5620ca9ca45ca9cc6346101f29dac`
 
 ---
 
@@ -713,8 +713,9 @@ Amended 2026-10-10 (owner decision USG-1, `Plans/Decision_Log.md#DL-174`, owner 
 at scope account, so every threshold resolves through one scope ladder, global, project, provider and account, the
 most specific set value winning. The retired row stays in the registry marked superseded, as
 `general.visual.basic-color-scheme` is, only so that a stored value can be read once and carried to
-`ai.accounts.hard-switch-level` at scope account; no surface draws, reads or writes it after that, and the row count
-stays 916.
+`ai.accounts.hard-switch-level` at scope account; no surface reads or writes it after that, Settings offers no control
+for it and lists it, as All Settings lists every registry row, only as an older setting that points to the account's
+own switch level, and the row count stays 916.
 
 ### F3-442 - Project Settings Modal Reconciliation
 
