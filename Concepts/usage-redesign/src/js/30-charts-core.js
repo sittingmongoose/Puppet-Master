@@ -970,6 +970,9 @@
         cardOwner = api;
       }
       if (!cardSize) cardSize = { w: card.offsetWidth, h: card.offsetHeight };
+      /* the fixed layer's own origin: an ancestor with a transform or will-change: transform (the page entrance, which stays
+         on in the no-GPU profile) becomes its containing block, and the card is placed in viewport terms */
+      var lo = card.parentNode && card.parentNode.getBoundingClientRect ? card.parentNode.getBoundingClientRect() : { left: 0, top: 0 };
       /* then the writes */
       if (olds && !charts.noRoll) $$('.pmu-ro-row', card).forEach(function (rw, k) {
         var n = rw.querySelector('span'), b = rw.querySelector('b');
@@ -1018,7 +1021,7 @@
       var y = clamp(sy, 4, Math.max(4, vh - ch - 4));
       card.classList.toggle('is-flip', was !== side && !instant);
       card.style.transformOrigin = side > 0 ? '0 12px' : '100% 12px';
-      card.style.translate = Math.round(left) + 'px ' + Math.round(y) + 'px';
+      card.style.translate = Math.round(left - lo.left) + 'px ' + Math.round(y - lo.top) + 'px';
     }
     function move(e) {
       if (!cfg.n) return;

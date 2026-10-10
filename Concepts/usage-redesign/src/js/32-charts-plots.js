@@ -721,14 +721,15 @@
     put('<text class="pmu-tick is-peak" x="' + r1(x) + '" y="' + r1(y) + '" text-anchor="' + anchor + '">' + esc(label) + '</text>');
   }
   function bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1) {
-    var spec = c.spec, n = mids.length;
+    var spec = c.spec, n = mids.length, costAt = null;
     var cfg = {
       n: n, pad: { t: geo.pad.t, h: geo.ph, l: geo.pad.l, r: geo.pad.r },
       xAt: function (i) { return mids[i]; },
       /* the same rows the plot draws, in the order of dots(i) */
       yAt: function (k, x) {
         var rows = geo.token || geo.stacked ? [geo.tot] : geo.lv.slice();
-        if (cost) rows.push(geo.cs);
+        /* the cost line is drawn as one monotone curve through its recorded points (costMixD), not as the sampled row */
+        if (cost && k === rows.length) { if (!costAt) { var cp = costPoints(cost, mids, YB); costAt = cp.length > 1 ? runsAt(cp.map(function (p) { return p.x; }), cp.map(function (p) { return p.y; })) : function (xx) { return cp.length && Math.abs(xx - cp[0].x) < 0.5 ? cp[0].y : null; }; } return costAt(x); }
         return rowAt(rows[k], geo.x0, geo.x1, x);
       },
       dots: function (i) {
@@ -736,6 +737,10 @@
         if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: geo.totTk } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
         else incSeries.forEach(function (s, j) { var v = (s.values || [])[i]; out.push({ y: finite(v) ? Y(v) : null, key: { idx: s.idx != null ? s.idx : j, vendor: s.vendor }, dk: geo.keys[j] }); });
         if (cost) out.push({ y: finite(cost[i]) ? YB(cost[i]) : null, key: c._ov.key, ink: c._ov.key.idx === 'ink', dk: 'cost' });
+        /* a token or series dot sits on the polyline the plot draws (its 2 px samples), not on the bucket's exact value: on a
+           narrow card a steep bend between samples put the dot up to 0.9 px off its drawn line, and its glide (yAt) rides the
+           same polyline. The cost line's curve passes through its recorded points, so a cost dot keeps its exact value */
+        out.forEach(function (d, k) { if (d.dk !== 'cost' && finite(d.y)) { var yy = cfg.yAt(k, mids[i]); if (finite(yy)) d.y = yy; } });
         return out;
       },
       html: function (i) {
