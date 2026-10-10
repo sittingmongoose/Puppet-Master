@@ -749,7 +749,8 @@ html[data-o55-nier="on"] #panel-usage .pmu-headmore { font-family: var(--pmu-mon
 #panel-usage .pmu-szitem > .pmu-card { position: relative; box-sizing: border-box; pointer-events: none; }
 #panel-usage .pmu-szitem > .pmu-card .pmu-cardtools, #panel-usage .pmu-szitem > .pmu-card .pmu-h,
 #panel-usage .pmu-szmeasure .pmu-cardtools, #panel-usage .pmu-szmeasure .pmu-h { visibility: hidden; }
-#panel-usage .pmu-szcap { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 1px; padding: 7px 2px 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
+/* the caption keeps its two lines' room before the first miniature fills it (the menu is sized once, at its open) */
+#panel-usage .pmu-szcap { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; row-gap: 1px; box-sizing: border-box; min-height: 42px; padding: 7px 2px 0; font-size: 12px; line-height: 16px; color: var(--pmu-ink-3); }
 #panel-usage .pmu-szcap b { color: var(--pmu-ink); font-size: 13px; font-weight: 640; }
 #panel-usage .pmu-szcap .pmu-szdim { font-variant-numeric: tabular-nums; }
 #panel-usage .pmu-szcap .pmu-szwhat { flex-basis: 100%; color: var(--pmu-ink-2); }

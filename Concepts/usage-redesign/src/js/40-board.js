@@ -1495,6 +1495,8 @@
     var g = { id: id, card: card, type: mode === 'resize' ? 'resize' : 'move', edge: 'se', kb: true, started: true };
     card.focus({ preventScroll: true });
     if (!beginGesture(g)) return false;
+    /* the presets' fit heights measure while the page is idle, so a Shift step has them (lane c-presets) */
+    if (g.type === 'resize' && PMU.cards.warmFits) PMU.cards.warmFits(id, function () { return gesture === g && !g.done; });
     g.onBlur = function () { if (!g.done) endGesture(g, 'blur'); };
     g.onFocusOut = function (e) { if (!g.done && (!e.relatedTarget || !card.contains(e.relatedTarget))) endGesture(g, 'blur'); card.removeEventListener('focusout', g.onFocusOut); };
     card.addEventListener('focusout', g.onFocusOut);
@@ -1516,7 +1518,10 @@
       var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks - r.x; });
       var horiz = key === 'ArrowRight' || key === 'ArrowLeft', fwd = key === 'ArrowRight' || key === 'ArrowDown';
       var toward = function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; };
-      var cands = presets.filter(function (p) { return !p.measured || toward(p); });
+      /* by width the direction is known; by height a preset not measured yet is ranked on its known height, and only
+         where none is left in that direction are the rest measured */
+      var cands = presets.filter(toward);
+      if (!horiz && !cands.length) cands = presets.filter(function (p) { return !p.measured; });
       cands.sort(function (p, q) {
         var pa = horiz ? p.w : p.h, qa = horiz ? q.w : q.h;
         if (pa !== qa) return fwd ? pa - qa : qa - pa;

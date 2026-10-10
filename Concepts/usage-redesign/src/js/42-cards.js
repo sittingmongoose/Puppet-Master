@@ -452,6 +452,10 @@
     return word && r.items ? r.items + ' ' + (r.items === 1 ? word[0] : word[1]) + ' · ' + more : more;
   }
   function previewTo(p) {
+    showPreset(p);
+    if (pv && pv.capDirty) { pv.capDirty = false; fitStage(pv.h); }
+  }
+  function showPreset(p) {
     if (!pv || !p || !pv.view || !pv.view.isConnected) return;
     var id = pv.id, cls = clsNow(), h = presetH(id, p), key = p.id + ':' + p.w + 'x' + h;
     pv.p = p;
@@ -482,6 +486,8 @@
       cap.querySelector('.pmu-szname').textContent = p.name;
       cap.querySelector('.pmu-szdim').textContent = p.w + ' x ' + h + ' · ' + pxW + ' x ' + pxH + ' px';
       cap.querySelector('.pmu-szwhat').textContent = shownText(def.kind, shown, p);
+      /* a caption that took a third line gives the stage less room (the rows still all show) */
+      var capH = cap.offsetHeight; if (pv.capH && capH !== pv.capH) pv.capDirty = true; pv.capH = capH;
     }
     var outline = pv.el.querySelector('.pmu-szoutline'), box = { x: left, y: top, w: pxW * k, h: pxH * k };
     var old = pv.item, oldBox = pv.box;
@@ -550,6 +556,25 @@
     /* the miniature on show follows its row's measured height */
     if (pv && pv.h === h && pv.p) { var now = rows.filter(function (r) { return r.preset.id === pv.p.id; })[0]; if (now) previewTo(now.preset); }
   }
+  /* the same idle measure without a picker (the keyboard's resize mode): while alive() holds */
+  function warmFits(id, alive) {
+    var idle = window.requestIdleCallback || function (fn) { return setTimeout(function () { fn({ timeRemaining: function () { return 12; } }); }, 30); };
+    var job = null;
+    var step = function (deadline) {
+      if (!alive()) { if (job) job.cancel(); return; }
+      var t0 = performance.now();
+      do {
+        if (!job || job.done) {
+          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+          if (!next) return;
+          job = fitJob(id, next.w, next.fit);
+        }
+        job.step();
+      } while (performance.now() - t0 < 8 && deadline && deadline.timeRemaining && deadline.timeRemaining() > 20);
+      idle(step, { timeout: 500 });
+    };
+    idle(step, { timeout: 500 });
+  }
   function mountStage(id, h) {
     var slot = h.el.querySelector('.pmu-szslot'); if (!slot) return;
     if (!pv || pv.id !== id || pv.h !== h) {
@@ -593,6 +618,8 @@
     if (!appEl || !a || !pv || !pv.view) return;
     var hostR = appEl.getBoundingClientRect(), capped = parseFloat(h.el.style.maxHeight);
     var room = capped > 0 ? capped : Math.max(hostR.bottom - a.bottom, a.top - hostR.top) - 6 - 8;
+    /* before place has run the menu has no width yet: measured at the width place will give it (its rows wrap there) */
+    if (!(capped > 0) && h.spec && h.spec.width && !h.el.style.width) h.el.style.width = Math.min(h.spec.width, hostR.width - 16) + 'px';
     var was = pv.view.offsetHeight, hold = h.el.style.height;
     pv.view.style.height = '';
     h.el.style.height = '';
@@ -814,7 +841,7 @@
     /* the presets of a panel at the board's class now ([{id, name, desc, w, h, fit, measured}]), a fit preset's measured
        height, and applying one (the keyboard's Shift steps, the API, the probes) */
     presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
-    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null,
+    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null, warmFits: warmFits,
     /* the layout record's presets ({class: {id, w, h, px}}): the preset a panel was set to at each class while its geometry
        there is still that size (40-board writes and reads it) */
     presetsSet: function (id, geo) {
