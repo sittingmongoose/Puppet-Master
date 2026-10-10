@@ -157,10 +157,19 @@
       '<p class="pmg-note">Measured by tools/tune_inks.py on PMConcept7\'s own look tokens (tools/extract_looks.py). Glass fields are composited over the look\'s background; the GPU film measures them over the real wallpaper.</p>';
   }
 
+  /* a status glyph shows in its tone (the chat's STATUS table, or a PMG status in status.json) */
+  function toneOf(name) {
+    var k = Object.keys(STATUS).filter(function (x) { return STATUS[x].glyph === name; })[0];
+    if (k) return STATUS[k].tone;
+    k = Object.keys(EXTRA).filter(function (x) { return EXTRA[x].glyph === name; })[0];
+    return k ? EXTRA[k].tone : '';
+  }
   function tile(g) {
-    var small = [12, 16].map(function (z) { return N.icon(g.name, z, g.role === 'status' ? '' : 'nx-r-' + (g.role || 'concept')); }).join('');
+    var tone = g.role === 'status' ? toneOf(g.name) : '';
+    var cls = tone ? 'nx-r-status nx-t-' + tone : 'nx-r-' + (g.role === 'status' ? 'concept' : g.role || 'concept');
+    var small = [12, 16].map(function (z) { return N.icon(g.name, z, cls); }).join('');
     var meta = g.source === 'pmg' ? '<span class="pmg-origin-new">new</span>' : '<span>chat set</span>';
-    return '<button class="pmg-tile" data-glyph="' + esc(g.name) + '" data-role="' + esc(g.role) + '"><span class="pmg-tile-stage">' + N.icon(g.name, 40, 'nx-r-' + (g.role === 'status' ? 'concept' : g.role || 'concept')) + '</span><span class="pmg-tile-name">' + esc(g.name) + '</span><span class="pmg-tile-meta">' + meta + (g.act && g.act !== 'none' ? '<span>' + esc(g.act) + '</span>' : '') + '<span class="pmg-small">' + small + '</span></span></button>';
+    return '<button class="pmg-tile" data-glyph="' + esc(g.name) + '" data-role="' + esc(g.role) + '"><span class="pmg-tile-stage">' + N.icon(g.name, 40, cls) + '</span><span class="pmg-tile-name">' + esc(g.name) + '</span><span class="pmg-tile-meta">' + meta + (g.act && g.act !== 'none' ? '<span>' + esc(g.act) + '</span>' : '') + '<span class="pmg-small">' + small + '</span></span></button>';
   }
   function renderFamily(el, f) {
     var sec = SECTIONS.filter(function (s) { return s.fam === f; })[0], list = famGlyphs(f);
