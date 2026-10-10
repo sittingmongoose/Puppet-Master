@@ -1216,7 +1216,7 @@
       m.predicted = pred;
     }
     m.flyCards = flightCards(m.room);
-    if (!sp && f !== 'nier' && f !== 'retro') flyers.forEach(function (fl) { preTravel(fl, rec); if (fl.val && fl.pre) preFollow(fl.val, fl.pre); });
+    if (!sp) flyers.forEach(function (fl) { preTravel(fl, rec); if (fl.val && fl.pre) preFollow(fl.val, fl.pre); });
     /* nothing paired after 700 ms (a target body that never came): the flyers leave */
     mtimer(m, 700, function () { if (!F.paired) pairFlights(true); });
     return F;
@@ -1251,6 +1251,15 @@
     var dx = aim.cx - (a.x + a.w / 2), dy = aim.cy - (a.y + a.h / 2);
     var tip = it.kind === 'win' && a.h > a.w * 1.3, rot = tip ? -90 : 0;
     fl.outer.style.transformOrigin = '50% 50%'; fl.inner.style.transformOrigin = '50% 50%';
+    /* Retro and NieR take the early leg too, in their own steps (MOTION-4 RC6: their flyers stood still 300-500 ms) */
+    var fv = fam();
+    if (fv === 'retro' || fv === 'nier') {
+      var SE = 'steps(' + (fv === 'retro' ? 6 : 5) + ',jump-end)', sf = M.curve(SE);
+      fl.pre = { dx: dx, dy: dy, rot: rot, fx: sf, fy: sf, fs: sf, easing: SE,
+        a: anim(fl.outer, [{ transform: 'translateX(0px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }], { dur: PRE.dur, delay: T3.takeoff, easing: SE, fill: 'both' }),
+        b: anim(fl.inner, [{ transform: 'translateY(0px) rotate(0deg)' }, { transform: 'translateY(' + dy.toFixed(2) + 'px) rotate(' + rot + 'deg)' }], { dur: PRE.dur, delay: T3.takeoff, easing: SE, fill: 'both' }) };
+      return;
+    }
     var fx = M.curve(E.slide), fy = M.curve('cubic-bezier(.55,.05,.35,1)'), fs = M.curve(E.roll), ko = [], ki = [];
     for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (dx * fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (dy * fy(o)).toFixed(2) + 'px) rotate(' + (rot * fs(o)).toFixed(2) + 'deg)' }); }
     fl.pre = { dx: dx, dy: dy, rot: rot, fx: fx, fy: fy, fs: fs,
@@ -1259,6 +1268,12 @@
   /* a window's value text keeps beside its meter on the early leg: the same move, no turn */
   function preFollow(v, P) {
     v.outer.style.transformOrigin = '50% 50%'; v.inner.style.transformOrigin = '50% 50%';
+    if (P.easing) {
+      v.pre = { dx: P.dx, dy: P.dy, rot: 0, fx: P.fx, fy: P.fy, fs: P.fs, easing: P.easing,
+        a: anim(v.outer, [{ transform: 'translateX(0px)' }, { transform: 'translateX(' + P.dx.toFixed(2) + 'px)' }], { dur: PRE.dur, delay: T3.takeoff, easing: P.easing, fill: 'both' }),
+        b: anim(v.inner, [{ transform: 'translateY(0px)' }, { transform: 'translateY(' + P.dy.toFixed(2) + 'px)' }], { dur: PRE.dur, delay: T3.takeoff, easing: P.easing, fill: 'both' }) };
+      return;
+    }
     var ko = [], ki = [];
     for (var i = 0; i <= 12; i++) { var o = i / 12; ko.push({ offset: o, transform: 'translateX(' + (P.dx * P.fx(o)).toFixed(2) + 'px)' }); ki.push({ offset: o, transform: 'translateY(' + (P.dy * P.fy(o)).toFixed(2) + 'px)' }); }
     v.pre = { dx: P.dx, dy: P.dy, rot: 0, fx: P.fx, fy: P.fy, fs: P.fs,
@@ -1385,7 +1400,7 @@
     var dx, dy, tf;
     /* a flyer already on its early leg re-aims from where that leg will be when this flight starts (centre to centre,
        about its centre: the leg turned it about its centre), and the rest of its turn and its scale follow (must-fix 4) */
-    var from = fl.pre && !sp && f !== 'retro' && f !== 'nier' ? preAt(fl, delay) : null;
+    var from = fl.pre && !sp ? preAt(fl, delay) : null;
     if (from) {
       var R = tip ? -90 : 0, fsx, fsy;
       if (tip) { fsx = b.h / a.w; fsy = b.w / a.h; }
@@ -1397,6 +1412,21 @@
       var fdur = Math.max(300, Math.round(flightMs(f) * (1 - 0.35 * from.p)));
       /* the body that holds the target is fully in before the landing (the shorter leg starts later if it must) */
       if (pick.bodyIn != null && delay + fdur < pick.bodyIn) { delay = pick.bodyIn - fdur; from = preAt(fl, delay); }
+      if (f === 'retro' || f === 'nier') {
+        /* the rest of a stepped flight from where its stepped early leg is: straight, in steps; NieR leaves afterimages */
+        var SE2 = 'steps(' + (f === 'retro' ? 8 : 6) + ',jump-end)', sdur = Math.max(240, Math.round((f === 'retro' ? 400 : 360) * (1 - 0.35 * from.p)));
+        if (pick.bodyIn != null && delay + sdur < pick.bodyIn) { delay = pick.bodyIn - sdur; from = preAt(fl, delay); }
+        var kx = [{ transform: 'translateX(' + from.x.toFixed(2) + 'px)' }, { transform: 'translateX(' + dx.toFixed(2) + 'px)' }];
+        var ky = [{ transform: 'translateY(' + from.y.toFixed(2) + 'px) rotate(' + from.r.toFixed(2) + 'deg) scale(1,1)' }, { transform: 'translateY(' + dy.toFixed(2) + 'px) rotate(' + R + 'deg) scale(' + fsx.toFixed(4) + ',' + fsy.toFixed(4) + ')' }];
+        anim(fl.outer, kx, { dur: sdur, delay: delay, easing: SE2, fill: 'forwards' });
+        var lastS = anim(fl.inner, ky, { dur: sdur, delay: delay, easing: SE2, fill: 'forwards' });
+        if (fl.takeoff) anim(fl.lift, [{ transform: 'translateY(-3px) scale(1.04)' }, { transform: 'none' }], { dur: sdur, delay: delay, easing: SE2, fill: 'forwards' });
+        if (f === 'nier') afterimagesLeg(fl, kx, ky, sdur, delay, SE2);
+        fl.anim = lastS;
+        if (!lastS) { preCancel(fl); land(fl); return; }
+        lastS.finished.then(function () { preCancel(fl); land(fl); }, function () {});
+        return;
+      }
       var cfy = M.curve('cubic-bezier(.55,.05,.35,1)'), cfs = M.curve(E.roll), kin = [];
       for (var j = 0; j <= 12; j++) { var oo = j / 12, ey = cfy(oo), es = cfs(oo); kin.push({ offset: oo, transform: 'translateY(' + (from.y + (dy - from.y) * ey).toFixed(2) + 'px) rotate(' + (from.r + (R - from.r) * es).toFixed(2) + 'deg) scale(' + (1 + (fsx - 1) * es).toFixed(4) + ',' + (1 + (fsy - 1) * es).toFixed(4) + ')' }); }
       var ok0 = outerPath(from.x, dx, f);
@@ -1476,6 +1506,17 @@
       dot.style.left = cx.toFixed(1) + 'px'; dot.style.top = cy.toFixed(1) + 'px';
       gone(anim(dot, [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { opacity: 0.95, offset: 0.2 },
         { transform: 'translate(calc(-50% + ' + (10 * v[0]) + 'px), calc(-50% + ' + (10 * v[1]) + 'px)) scale(1)', opacity: 0 }], { dur: 360, delay: 20 * i, easing: E.out, fill: 'both' }), dot);
+    });
+  }
+  /* NieR's afterimages on a flight that continues an early leg: copies of the flyer follow 60 and 120 later on the same
+     outer (X) and inner (Y, turn, scale) path, fading */
+  function afterimagesLeg(fl, kx, ky, dur, delay, easing) {
+    [[0.4, 60], [0.2, 120]].forEach(function (p) {
+      var g = fl.outer.cloneNode(true); g.classList.add('pmu-fly-after'); fl.outer.parentNode.insertBefore(g, fl.outer);
+      var gi = g.firstChild;
+      var a1 = anim(g, kx.map(function (k, i) { return { transform: k.transform, opacity: i === 0 ? p[0] : 0 }; }), { dur: dur, delay: delay + p[1], easing: easing, fill: 'both' });
+      if (gi) anim(gi, ky, { dur: dur, delay: delay + p[1], easing: easing, fill: 'both' });
+      gone(a1, g);
     });
   }
   function afterimages(fl, keys, dur, delay) {
