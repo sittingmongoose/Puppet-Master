@@ -304,6 +304,8 @@ The minimum serialized shape is:
 
 ## PMConcept7 Home Workspace OpenFile placement addendum (2026-08-04)
 
+Superseded 2026-10-09 (DL-180): Home has no fixed editor panels any more. `target_editor_panel_id`, `target_editor_group_id` and `target_group` never select a home panel; a file opens through the one opening module with CV-360's placement fields (`where`, `mode`, `by`, `background`). The fields below stay readable on old payloads as lineage and place nothing. The passage is kept for lineage.
+
 Home Workspace consumers use the canonical workspace-file shape
 `OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }`.
 `target_editor_panel_id` selects `editor_panel_1` through `editor_panel_4`;
@@ -1957,6 +1959,8 @@ Behavioral rules:
 - Route payload structure is not restated inside command metadata.
 
 ### 7.3 `route_target`
+Amended 2026-10-09 (DL-180, DL-181): a terminal is a panel tab of kind terminal, one session per tab, and every route whose destination is a tab in the home panels places it through the one opening module with CV-360's placement fields. `terminal_tab_id` is that panel tab's id (`terminal:<terminal_session_id>`); `terminal_section_id`, `terminal_pane_id` and the `terminal_section` and `terminal_pane` object kinds are legacy: old routes that name them resolve, through SP-330's conversion, to the terminal tab of their session, and new producers never emit them. The `bottom_panel` destination class is legacy too: an old route naming it opens or reveals the target's tab where it is, and new producers name a home panel tab with `primary_view`. One id is one tab in the whole workspace, so `OpenFile` reuse is one tab per path, never per group (CV-172). Placement, focus and identity rules below otherwise stand.
+
 `route_target` is the canonical navigation-and-focus contract.
 
 Required fields:
@@ -1986,9 +1990,9 @@ Allowed focus fields:
 - `thread_id`
 - `tab_id`
 - `browser_session_id`
-- `terminal_section_id`
+- `terminal_section_id` (legacy since 2026-10-09, DL-181: read on old routes only)
 - `terminal_tab_id`
-- `terminal_pane_id`
+- `terminal_pane_id` (legacy since 2026-10-09, DL-181: read on old routes only)
 - `terminal_session_id`
 - `dev_session_id`
 - `inspector_target`
@@ -2031,7 +2035,7 @@ Exactly one selector is required:
 `target_kind` is closed to:
 - `primary_view`
 - `side_panel`
-- `bottom_panel`
+- `bottom_panel` (legacy since 2026-10-09, DL-180: read on old routes only)
 - `embedded_surface`
 - `page_tab`
 
@@ -2061,9 +2065,9 @@ Exactly one selector is required:
 - `graph_patch`
 - `graph_generation`
 - `browser_session`
-- `terminal_section`
+- `terminal_section` (legacy since 2026-10-09, DL-181: read on old routes only)
 - `terminal_tab`
-- `terminal_pane`
+- `terminal_pane` (legacy since 2026-10-09, DL-181: read on old routes only)
 - `terminal_session`
 - `dev_session`
 - `source_repository`
@@ -2096,7 +2100,7 @@ Exactly one selector is required:
 - `remote_route`
 - `remote_connector`
 
-Terminal-focused `/open` and reveal contracts use the terminal object kinds above with the matching focus identifiers. A route that targets a terminal section, tab, pane, session, or dev session MUST stay in `route_target` object identity instead of inventing panel-local terminal routing semantics.
+Terminal-focused `/open` and reveal contracts use the terminal object kinds above with the matching focus identifiers. A route that targets a terminal tab, session, or dev session MUST stay in `route_target` object identity instead of inventing panel-local terminal routing semantics; a legacy section or pane target resolves to the terminal tab of its session.
 
 Terminal widgets target runtime/worker identity (`/worker`) and terminal object identity rather than using `tier_id` as the primary selector.
 
@@ -2115,13 +2119,13 @@ Rules:
 - route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
 - route activation may reuse remembered shell state when that state still reveals the requested object cleanly
 - terminal routes prefer exact same-session reveal when `terminal_session_id` is supplied and still resolvable
-- historical terminal routes may reveal a historical pane or receipt view, but they MUST NOT synthesize live PTY continuity
+- historical terminal routes may reveal a historical terminal tab or receipt view, but they MUST NOT synthesize live PTY continuity
 - `resume_url` is serialized transport only and decodes to `route_target`; it is not a stronger parallel primitive
 - `route_target` owns `/focus/destination-surface` selection; docked/floating placement, widths, local panel layout, `/chrome`, `/editor/tree/session`, and other shell-realization details stay outside route identity and restore only as view state.
 - Route activation restores destination surface plus scope-restoration fields such as `project_id`, `focused_run_id`, `thread_id`, selected object, and `inspector_target`; `inspector_target` is reusable detail/subsection focus (`/subsection`) after primary selector identity is established, not a replacement for selector identity.
 - The narrow focus-refinement fields are `tab_id` and `inspector_target`; `inspector_target = lineage` is used for scheduler `/remediation/safe-point/patch` and scheduler `/safe-point/remediation/patch` lineage drill-ins when the object is already selected, while shell `/destination`, docked/floated (`/floated`) panel placement, workspace tab/window hosting, per-project layout, remembered local UI state, source-buffer realization, `line`, and `range` stay outside base route identity.
 - `inspector_target` is useful for reusable detail-pane or subsection focus, not as a universal dumping ground for feature-local anchors. Use `inspector_target = usage` for graph/node/attempt pivots that keep the same object but focus the usage section; domain-local anchors remain object-family-specific and validated outside base route identity.
-- Reuse is one-tab-per-path-per-group for `OpenFile`; opening the same path in another group requires explicit `multi-group` disposition rather than accidental duplication.
+- Reuse is one tab per id in the whole workspace for `OpenFile` (amended 2026-10-09, DL-180): an open of a path that is already open reveals its tab where it is and never opens it twice (CV-360); the `multi-group` disposition is retired.
 - Settings, `/object/navigation`, search/open entry points, chat links, file-tree selections, and wizard/object links normalize to `route_target` plus `OpenFile` or `OpenSubject` as the source realization; they MUST NOT own bespoke open behavior.
 - Do not mint a brand-new routing primitive for generated, `/thread-backed`, `/artifact-backed`, browser-session, terminal-session, or dev-session reveals; use `route_target` for destination/focus and `OpenSubject` only for canonical document/artifact source realization.
 - Forge routes bind the exact `repository_id`, `repository_binding_ref`, optional independent `automation_binding_id`, `binding_generation`, and `currentness_ref`; repository hosting never implies automation authority. `github_actions` is migration input that normalizes to the canonical `repository_automation` destination with an explicit GitHub automation binding and is never dispatched merely because a remote is named `origin`.
@@ -2220,7 +2224,7 @@ Behavioral rules:
 
 Settings-page organization owns durable panel-specific persistence and visibility controls when they affect reusable app or project preferences. Individual panels own live operational affordances, `Plans/storage-plan.md` owns persistence keys and write cadence, and `Plans/FinalGUISpec.md` owns the Settings grouping and visible placement.
 
-Panel-specific controls are placed under the Settings tab for the owning surface when they are durable preferences: Source Control / Branching for worktree and git panel preferences, GitHub Actions for workflow and run visibility defaults, Docker Manager / Kubernetes for runtime and namespace visibility defaults, Terminal for terminal layout and restore behavior, File Manager for file tree and editor behavior, and Models / Providers for provider-backed panels. Cross-cutting visibility, shortcut, security, and health controls stay under General, Shortcuts, Advanced, or Health rather than being duplicated by each panel.
+Panel-specific controls are placed under the Settings tab for the owning surface when they are durable preferences: Source Control / Branching for worktree and git panel preferences, GitHub Actions for workflow and run visibility defaults, Docker Manager / Kubernetes for runtime and namespace visibility defaults, Terminal for the terminal's appearance defaults, shell profiles and restore behavior (amended 2026-10-09, DL-181 and DL-183: the app and project appearance defaults are SSYS-051's rows stored as SP-331 says, a terminal tab's own override is tab state, and where a terminal sits belongs to the panels, F3-630 and SP-330, never to Terminal settings), File Manager for file tree and editor behavior, and Models / Providers for provider-backed panels. Cross-cutting visibility, shortcut, security, and health controls stay under General, Shortcuts, Advanced, or Health rather than being duplicated by each panel.
 
 Live run actions, selected runtime objects, current inspector focus, and transient filter focus stay in the owning panel or `route_target`/`OpenSubject` payloads; they are not promoted into settings-page canon merely because the panel can display them.
 
@@ -3592,6 +3596,8 @@ owner_hints:
 
 ## PMConcept7 Home Workspace event contracts — 2026-08-04
 
+Amended 2026-10-09 (DL-180, DL-181): `workspace.layout_changed` now uses the 2.0.0 payload of CV-361, whose `change` names each committed structural change of the v2 Home layout (SP-330); the 1.1.0 payload described below stays readable through its compatibility reader. `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule: no producer writes it, and moving a terminal tab is a `tab_moved` that keeps its session. `panel.undocked` and `panel.redocked` stay for the chat's pop-out only. Home commands carry panel, tab and split ids where they used surface and workgroup ids. The receipt outcomes below (`applied`, `no_change`, `cancelled`, `failed` with `rolled_back=true`) stand unchanged.
+
 The existing `UICommand` and `EventRecord` envelopes remain canonical. Home
 commands carry `project_id`, `workspace_tab_id` where applicable, a stable
 surface/workgroup identity, expected revision, idempotency key, origin, and
@@ -3634,7 +3640,9 @@ plan_unit_id: CV-323
 unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Contracts_V0.md
-canonical_text: Home leaf actions bind the canonical UICommand envelope to precise applied, no_change, cancelled, disabled-before-dispatch, and failed-rollback outcomes; workspace.layout_changed and terminal.workgroup_moved carry exact identity, revision, host, insertion, correlation, and persistence truth without fabricated command-applied events.
+canonical_text: >-
+  Home leaf actions bind the canonical UICommand envelope to precise applied, no_change, cancelled, disabled-before-dispatch, and failed-rollback outcomes; workspace.layout_changed and terminal.workgroup_moved carry exact identity, revision, host, insertion, correlation, and persistence truth without fabricated command-applied events.
+  Amended 2026-10-09 (DL-180, DL-181): new workspace.layout_changed events use CV-361's 2.0.0 payload, whose change names the structural change and whose id lists name the panels, tabs and splits it touched, in place of the host, slot and insertion fields; terminal.workgroup_moved is withdrawn under SMPFS-170's rule and has no producer; the receipt outcomes stand unchanged.
 gui_related: true
 gui_classification_reason: The contract drives visible Home success, disabled, cancellation, failure, and recovery projections.
 split_recommended: false
@@ -3643,6 +3651,7 @@ unblocks: []
 acceptance_criteria:
 - workspace.layout_changed includes exact changed surface IDs, prior/new revision, source/target host, target slot, target/insertion fields, command/correlation identity, and persisted=true only after readback.
 - terminal.workgroup_moved includes workgroup, source/target section, contained pane/session IDs, section-created state, command/correlation identity, and preserve_session_identity=true.
+- Since 2026-10-09 (DL-180, DL-181) the two criteria above describe 1.1.0 and 1.0.0 events already written; new workspace.layout_changed events follow CV-361 and no producer writes terminal.workgroup_moved.
 - Persistence failure emits a failed rolled-back receipt and no success event; no-change and cancellation never fabricate changed events.
 - Disclosure-only popup/flyout actions remain view-local and do not dispatch.
 validation_surfaces:
@@ -3658,12 +3667,15 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - PMConcept7_Home_Workspace_Audit_Packet_v1/shared/04_COMMAND_EVENT_STORAGE_WIRING.md
+- Plans/Decision_Log.md#DL-180 and #DL-181 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)
 preserved_exact_tokens: [workspace.layout_changed, terminal.workgroup_moved, persisted=true, no_change, rolled_back=true]
 negative_constraints:
 - Do not emit generated or fabricated command-applied events.
 - Do not emit a success event for failed persistence or unchanged/cancelled gestures.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The 1.1.0 workspace.layout_changed payload and terminal.workgroup_moved 1.0.0 stay readable for events already written.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180, DL-181): the payload moves to CV-361's 2.0.0 and terminal.workgroup_moved is withdrawn."
 owner_hints: [Plans/Contracts_V0.md, Plans/UI_Command_Catalog.md, Plans/storage-plan.md]
 ```
 
@@ -5885,6 +5897,10 @@ canonical_text: >-
   OpenSubject(subject_id, open_intent), with doc:<document_id> and
   artifact:<artifact_id> resolving to workspace source, transient
   generated://<artifact_id>, or routed non-editor surfaces.
+  Amended 2026-10-09 (DL-180): both shapes carry CV-360's placement fields
+  (where, mode, by, background) beside their identity when they open into a
+  home panel; OpenFile's target_editor_panel_id, target_editor_group_id and
+  target_group no longer select a home panel and are read on old payloads only.
 gui_related: false
 gui_classification_reason: This unit defines open identity and workspace/source routing semantics.
 split_recommended: true
@@ -5894,6 +5910,7 @@ acceptance_criteria:
   - OpenFile remains the workspace-file open shape.
   - Identity-native opens use OpenSubject with subject_id and open_intent.
   - Document and artifact subjects resolve to workspace source, transient generated transport, or routed non-editor surfaces.
+  - "Home placement travels in CV-360's placement fields, never in target_editor_panel_id, target_editor_group_id or target_group."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5907,6 +5924,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`OpenFile { path... }`"
   - "`OpenSubject`"
@@ -5917,6 +5935,8 @@ preserved_exact_tokens:
   - "`generated://<artifact_id>`"
 negative_constraints:
   - "OpenFile and OpenSubject must not fork into competing identity-native open contracts."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): OpenFile's editor panel and group selectors retire as home placement; CV-360's placement fields replace them."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -11374,7 +11394,9 @@ canonical_text: >-
   route_target is the canonical navigation-and-focus contract requiring
   target_kind, resolver_scope, and required-present project_id, with project_id
   nullable only for explicit non-Project scopes and target_kind remaining a
-  destination class only.
+  destination class only. Amended 2026-10-09 (DL-180): bottom_panel is a legacy
+  destination class read on old routes only; a route to a home panel tab uses
+  primary_view and is placed by CV-360's fields.
 gui_related: false
 gui_classification_reason: This unit defines route_target required fields and destination classes.
 split_recommended: true
@@ -11385,6 +11407,7 @@ acceptance_criteria:
   - "target_kind, resolver_scope, and required-present project_id are required."
   - "project_id is non-null for project/run/thread resolution and null only for the explicit server, application, bootstrap, or global resolver scopes governed by CV-327."
   - "target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab."
+  - "New producers do not emit bottom_panel; a route to a home panel tab uses primary_view."
   - "target_kind is destination class only."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11402,6 +11425,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`route_target`"
   - "`target_kind`"
@@ -11415,6 +11439,8 @@ preserved_exact_tokens:
   - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md"
 negative_constraints:
   - "target_kind must not replace selector identity."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): bottom_panel becomes a legacy destination class; there is no bottom panel."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -11487,15 +11513,19 @@ canonical_text: >-
   Terminal-focused open and reveal contracts use terminal and dev-session
   object kinds with matching focus identifiers inside route_target object
   identity; terminal widgets target runtime/worker identity rather than tier_id.
+  Amended 2026-10-09 (DL-181): a terminal is a panel tab with one session;
+  terminal_tab_id is its panel tab id (terminal:<terminal_session_id>), and
+  terminal_section_id, terminal_pane_id and the terminal_section and
+  terminal_pane kinds are legacy, resolved to the terminal tab of their session.
 gui_related: true
 gui_classification_reason: This unit affects user-visible terminal and dev-session route behavior.
 split_recommended: true
 depends_on: [CV-057, CV-164]
 unblocks: []
 acceptance_criteria:
-  - "Terminal section, tab, pane, session, and dev-session reveals stay in route_target object identity."
+  - "Terminal tab, session, and dev-session reveals stay in route_target object identity; legacy section and pane targets resolve to the terminal tab of their session."
   - "Terminal routes prefer exact same-session reveal when terminal_session_id is supplied and still resolvable."
-  - "Historical terminal routes may reveal a historical pane or receipt view."
+  - "Historical terminal routes may reveal a historical terminal tab or receipt view."
   - "Terminal widgets target runtime/worker identity and terminal object identity rather than tier_id."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11512,6 +11542,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-181 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-181 already depends on this unit through DL-180 and DL-147)"
 preserved_exact_tokens:
   - "`terminal_section_id`"
   - "`terminal_tab_id`"
@@ -11523,9 +11554,12 @@ preserved_exact_tokens:
   - "PTY"
 compatibility_only_notes:
   - "Historical terminal routes may reveal a historical pane or receipt view."
+  - "terminal_section_id and terminal_pane_id are read on old routes only (DL-181)."
 negative_constraints:
   - "Terminal routes must not invent panel-local terminal routing semantics."
   - "Historical terminal routes must not synthesize live PTY continuity."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): terminal sections and panes retire; the terminal tab and its session remain the route identities."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -11855,7 +11889,10 @@ canonical_text: >-
   Route reuse is allowed only when open_disposition permits reuse and the
   destination still reveals the requested object, scope, and inspector target;
   OpenFile reuse is one-tab-per-path-per-group, and producers may not add a
-  generic extra-args bag to bypass validation.
+  generic extra-args bag to bypass validation. Amended 2026-10-09 (DL-180): one
+  id is one tab in the whole workspace, so OpenFile reuse is one tab per path:
+  an open of an open path reveals it where it is (CV-360), and the multi-group
+  disposition is retired.
 gui_related: false
 gui_classification_reason: This unit defines route reuse and field validation constraints.
 split_recommended: true
@@ -11864,8 +11901,8 @@ unblocks: []
 acceptance_criteria:
   - "Route activation may reuse an existing destination only when open_disposition permits reuse."
   - "The existing destination must still reveal the requested object, scope, and inspector target."
-  - "OpenFile reuse is one-tab-per-path-per-group."
-  - "Opening the same path in another group requires explicit multi-group disposition."
+  - "OpenFile reuse is one tab per path in the whole workspace; an open of an open path reveals its tab where it is."
+  - "No producer emits the retired multi-group disposition."
   - "Route producers do not add generic extra-args bags to bypass field validation."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -11882,6 +11919,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`reuse_existing`"
   - "`multi-group`"
@@ -11889,6 +11927,8 @@ preserved_exact_tokens:
   - "generic extra-args bag"
 negative_constraints:
   - "Route producers must not add a generic extra-args bag to bypass field validation."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): one-tab-per-path-per-group and the multi-group disposition retire; one id is one tab in the whole workspace."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
