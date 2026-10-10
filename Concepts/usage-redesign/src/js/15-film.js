@@ -557,8 +557,8 @@
       frame: { y: 1, ms: 520, ease: E.settle, fade: 200 }, wave: [28, 16, 160], body: { y: 6, fade: 200, ms: 280, ease: E.settle } },
     friendly: { ghost: { y: -0.8, sc: 0.96, rot: -1.4, ms: 380, ease: 'cubic-bezier(.3,0,.5,1)' }, fade: 200,
       frame: { y: 0.9, sc: 0.94, tilt: 8, spring: [260, 21], fade: 220 }, wave: [40, 26, 280], body: { y: 10, fade: 220, ms: 320, ease: E.settle } },
-    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 10, ms: 400, ease: E.slide }, fade: 220,
-      frame: { y: 0.35, push: 0.93, pull: 1.07, blur: 10, blurHero: 300, blurMs: 420, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
+    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 8, ms: 400, ease: E.slide }, fade: 220,
+      frame: { y: 0.35, push: 0.93, pull: 1.07, blur: 8, blurHero: 300, blurMs: 420, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
       body: { sc: 0.985, fade: 240, ms: 320, ease: E.depth } },
     retro: { wave: [60, 15, 240] },
     nier: { wave: [45, 30, 240] }
@@ -695,6 +695,8 @@
   function endMoment(m) {
     if (moment !== m) return;
     moment = null; M.track(null);
+    /* a timer of this moment never acts in the next one (a hold release fired into the next room's entrance) */
+    m.timers.forEach(clearTimeout); m.timers = [];
     root.removeAttribute('data-pmu-moment');
     var board = document.getElementById('pmuBoard');
     if (board) later(function () { if (!moment) board.removeAttribute('data-film'); });
@@ -781,7 +783,7 @@
     if (boardMove) anim(o.board, [{ opacity: 0.9, transform: 'translateY(' + (24 * sgn) + 'px)' }, { opacity: 1, transform: 'none' }], { dur: 280, delay: 0, easing: E.out });
     var heroMade = false;
     /* the beat holds its targets at most until 3.2 s (a moment whose beat never comes still shows everything) */
-    if (m && !m.holdT && !reduced()) m.holdT = mtimer(m, 3200, releaseBeatHold);
+    if (m && !m.holdT && !reduced()) m.holdT = mtimer(m, 3200, function () { if (moment === m) releaseBeatHold(); });
     cards.forEach(function (card) {
       if (!inView(card)) return;
       var d = base + (card._pmuEnterDelay || 0), hero = card.hasAttribute('data-hero');
@@ -938,7 +940,7 @@
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
          away about the visible centre (-0.8 P, scale .96, -1.4 deg x dir, 380); Glass passes the lens (push: scale 1.06,
-         pull: .94, -0.35 P, 400) and blurs out on a separate layer-less animation that leaves no filter behind. Its fade
+         pull: .94, -0.35 P, 400) and blurs out (8 px) on a separate animation that leaves no filter behind. Its fade
          starts when the new chrome is in (frames(): fadeGhost), so the board is never empty between the rooms. */
       var CV = camVoice(f), gv = CV.ghost, P = camP(), cy = viewCentre().y + (o.sTop || 0);
       var sc = f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc;

@@ -204,9 +204,10 @@ html[data-theme^="retro"] #panel-usage .pmu-flight > .pmu-film-at, html[data-o55
 #panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-alerttop > svg { opacity: 0; }
 /* Glass: one refraction band crosses the stage in the camera's direction (a wide diagonal specular sheet) */
 #panel-usage .pmu-film-refract { position: absolute; inset: 0; z-index: 6; display: block; overflow: hidden; pointer-events: none; }
-#panel-usage .pmu-film-refract > i { position: absolute; top: -45%; bottom: -45%; left: 0; width: 38%; display: block; will-change: transform, opacity; mix-blend-mode: plus-lighter;
-  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.05) 40%, rgba(255,255,255,.13) 50%, rgba(214,238,255,.05) 60%, rgba(255,255,255,0) 74%, transparent 100%); }
-html[data-theme="glass-light"] #panel-usage .pmu-film-refract > i { mix-blend-mode: normal;
+#panel-usage .pmu-film-refract > i { position: absolute; top: -14%; bottom: -14%; left: 0; width: 38%; display: block; will-change: transform, opacity;
+  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.05) 40%, rgba(255,255,255,.12) 50%, rgba(214,238,255,.05) 60%, rgba(255,255,255,0) 74%, transparent 100%); }
+/* (normal blending: a blend mode on a stage-wide layer would make the GPU draw the whole stage into a render surface) */
+html[data-theme="glass-light"] #panel-usage .pmu-film-refract > i {
   background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.22) 42%, rgba(255,255,255,.46) 50%, rgba(220,236,255,.22) 58%, rgba(255,255,255,0) 74%, transparent 100%); }
 /* Basic: the ink stroke under a first-row head (draws from the left, then dries) */
 #panel-usage .pmu-cardhead > .pmu-film-ink { position: absolute; left: 14px; right: 14px; bottom: 0; height: 1.5px; display: block; pointer-events: none; transform-origin: 0 50%;
