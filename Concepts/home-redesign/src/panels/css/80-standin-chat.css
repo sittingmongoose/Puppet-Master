@@ -1,0 +1,232 @@
+/* The stand-in chat (95-standin-chat.js): one layer inside the page's #chatPanel, above the page's own chat content.
+   Sizes key on the layer itself (container pmw-sc, inline-size), never the window: the column runs 400-760 px (440
+   floating); folded to its 32 px strip the shell hides every child of #chatPanel. No pills (status words are plain
+   text), no coloured side borders (the page's .msg-body 2 px left border is not copied), no emoji (marks are SVG).
+   Looks follow the --pmw-* tokens; per-look rules only where a look needs its own treatment. */
+
+#pmw-chat.pmw-sc {
+  --pmw-sc-code: var(--pm-font-code);
+  --pmw-sc-pad: 16px;
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  container: pmw-sc / inline-size;
+  background: var(--pmw-surface);
+  color: var(--pmw-text);
+  font-family: var(--pm-font-ui);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+}
+#pmw-chat.pmw-sc[hidden], .pmw-sc [hidden] { display: none !important; }
+/* the Guided Tour teaches the page's own chat */
+html[data-o55-tour] #pmw-chat.pmw-sc { display: none !important; }
+.pmw-sc :where(button) { font: inherit; color: inherit; }
+/* the page's own chat content under the layer: hidden while the stand-in shows (the layer sets data-pmw-sc on
+   #chatPanel; nothing is moved or wrapped); the tour needs it, so the tour lifts this */
+html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visibility: hidden !important; }
+.pmw-sc :focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
+
+/* ---- header ---- */
+.pmw-sc-head { flex: none; height: 44px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; padding: 0 8px; border-bottom: 1px solid var(--pmw-line); background: var(--pmw-surface); }
+.pmw-sc-titles { flex: 1 1 auto; min-width: 0; display: flex; align-items: baseline; gap: 10px; padding-left: 4px; }
+.pmw-sc-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 650; }
+.pmw-sc-status { flex: none; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--pmw-accent); font-weight: 550; }
+.pmw-sc-status .pmw-sc-mark { width: 10px; height: 10px; }
+.pmw-sc-ib { flex: none; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; gap: 2px; padding: 0; border: 0; border-radius: calc(var(--pmw-radius) * .6); background: transparent; color: var(--pmw-text-2); cursor: pointer; }
+.pmw-sc-ib:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+.pmw-sc-ib:active { background: var(--pmw-press); }
+.pmw-sc-ib[aria-expanded="true"], .pmw-sc-ib[aria-pressed="true"] { color: var(--pmw-text); background: var(--pmw-press); }
+.pmw-sc-ib svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.pmw-sc-ringbtn { position: relative; width: 32px; }
+.pmw-sc-ring circle { fill: none; stroke-width: 2; }
+.pmw-sc-ring .pmw-sc-ring-bg { stroke: var(--pmw-line-2); }
+.pmw-sc-ring .pmw-sc-ring-fg { stroke: var(--pmw-accent); stroke-linecap: butt; }
+.pmw-sc-ringn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: -.02em; font-weight: 650; font-variant-numeric: tabular-nums; color: var(--pmw-text); }
+
+/* ---- body: history (flyout or pinned column) and the message column ---- */
+.pmw-sc-body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; }
+.pmw-sc-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.pmw-sc-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 16px var(--pmw-sc-pad) 20px; }
+.pmw-sc-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+
+.pmw-sc-hist { position: absolute; z-index: 5; left: 0; top: 0; bottom: 0; width: min(300px, 82cqw); box-sizing: border-box; display: flex; flex-direction: column; background: var(--pmw-pop); border-right: 1px solid var(--pmw-pop-line); box-shadow: var(--pmw-pop-shadow); }
+.pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { position: relative; z-index: 0; flex: none; width: 240px; background: var(--pmw-surface); border-right: 1px solid var(--pmw-line); box-shadow: none; }
+@container pmw-sc (max-width: 539.98px) { .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { width: 200px; } }
+.pmw-sc-hhead { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 8px 4px 12px; }
+.pmw-sc-htitle { flex: 1 1 auto; font-size: 12px; font-weight: 650; color: var(--pmw-text-2); }
+.pmw-sc-hfind { flex: none; display: flex; align-items: center; gap: 6px; margin: 4px 8px 6px; padding: 0 8px; height: 30px; border: 1px solid var(--pmw-line-2); border-radius: calc(var(--pmw-radius) * .7); color: var(--pmw-text-3); }
+.pmw-sc-hfind svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
+.pmw-sc-hsearch { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; }
+.pmw-sc-hsearch::-webkit-search-cancel-button { display: none; }
+.pmw-sc-hlist { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 6px 10px; }
+.pmw-sc-hsec { margin: 10px 6px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); }
+.pmw-sc-hrow { display: flex; flex-direction: column; align-items: stretch; width: 100%; min-height: 40px; box-sizing: border-box; padding: 5px 8px; border: 0; border-radius: var(--pmw-row-radius); background: transparent; text-align: left; cursor: pointer; }
+.pmw-sc-hrow:hover { background: var(--pmw-hover); }
+.pmw-sc-hrow[aria-current="true"] { background: var(--pmw-press); }
+.pmw-sc-hrow-t { font-size: 12.5px; font-weight: 600; line-height: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-sc-hrow-p { font-size: 11.5px; line-height: 16px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-sc-hempty { padding: 10px 8px; }
+
+/* ---- messages ---- */
+.pmw-sc-msg { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.pmw-sc-msg.is-user { align-items: flex-end; }
+.pmw-sc-bubble { max-width: 85%; box-sizing: border-box; padding: 8px 12px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.pmw-sc-when { margin: 0; font-size: 11px; line-height: 16px; color: var(--pmw-text-3); }
+.pmw-sc-agent { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.pmw-sc-p { margin: 0; color: var(--pmw-text); overflow-wrap: anywhere; }
+.pmw-sc-fine { margin: 0; font-size: 12px; line-height: 18px; color: var(--pmw-text-2); }
+.pmw-sc-dim { color: var(--pmw-text-3); }
+.pmw-sc .is-ok { color: var(--pmw-ok); }
+.pmw-sc .is-warn { color: var(--pmw-warn); }
+.pmw-sc .is-bad { color: var(--pmw-bad); }
+.pmw-sc-code { font-family: var(--pmw-sc-code); font-size: 12px; padding: 0 3px; border-radius: 3px; background: var(--pmw-hover); }
+
+/* file references: the code face, underlined on hover, D7 on click */
+.pmw-sc-fref { display: inline; padding: 0 2px; margin: 0; border: 0; border-radius: 3px; background: transparent; font-family: var(--pmw-sc-code) !important; font-size: 12px; color: var(--pmw-accent) !important; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--pmw-accent) 35%, transparent); text-underline-offset: 2px; }
+.pmw-sc-fref:hover { text-decoration-color: currentColor; background: var(--pmw-hover); }
+.pmw-sc-fref.is-ui { font-family: inherit !important; font-size: inherit; }
+
+/* work rows: one button each, the whole row is the target */
+.pmw-sc-work { display: flex; flex-direction: column; gap: 2px; }
+.pmw-sc-work-head { margin: 0 0 2px; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--pmw-text-3); }
+.pmw-sc-work-head svg, .pmw-sc-row-ico svg, .pmw-sc-card-ico svg, .pmw-sc-btn svg, .pmw-sc-lens > svg, .pmw-sc-event > svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.pmw-sc-work-rows, .pmw-sc-rows { display: flex; flex-direction: column; gap: 1px; }
+.pmw-sc-row { display: flex; align-items: center; gap: 8px; width: 100%; min-height: 30px; box-sizing: border-box; padding: 4px 8px; border: 0; border-radius: var(--pmw-row-radius); background: transparent; text-align: left; cursor: pointer; font-size: 12.5px; line-height: 18px; color: var(--pmw-text-2); }
+.pmw-sc-row:hover { background: var(--pmw-hover); color: var(--pmw-text); }
+.pmw-sc-row:active { background: var(--pmw-press); }
+.pmw-sc-row-ico { flex: none; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; color: var(--pmw-text-3); }
+.pmw-sc-row-t { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.pmw-sc-row-t strong { color: var(--pmw-text); font-weight: 600; }
+.pmw-sc-row-m { flex: none; font-size: 11.5px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
+.pmw-sc-path-t { font-family: var(--pmw-sc-code); font-size: 12px; color: var(--pmw-text); overflow-wrap: anywhere; }
+.pmw-sc-path-s { font-size: 11.5px; color: var(--pmw-text-3); }
+
+/* cards: a full 1 px box (never a side stripe) */
+.pmw-sc-card { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); min-width: 0; }
+.pmw-sc-card-head { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.pmw-sc-card-ico { flex: none; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--pmw-line); border-radius: calc(var(--pmw-radius) * .6); color: var(--pmw-text-2); }
+.pmw-sc-card-titles { flex: 1 1 auto; min-width: 0; }
+.pmw-sc-kicker { margin: 0; font-size: 11.5px; line-height: 15px; color: var(--pmw-text-3); }
+.pmw-sc-card-title { margin: 1px 0 0; font-size: 13.5px; line-height: 19px; font-weight: 650; overflow-wrap: anywhere; }
+.pmw-sc-titlelink { display: block; margin: 1px 0 0; padding: 0; border: 0; background: transparent; text-align: left; font-size: 13.5px !important; line-height: 19px; font-weight: 650; cursor: pointer; text-decoration: none; }
+.pmw-sc-titlelink:hover { text-decoration: underline; text-underline-offset: 2px; }
+.pmw-sc-state { flex: none; font-size: 12px; line-height: 19px; color: var(--pmw-text-2); font-weight: 550; }
+.pmw-sc-sub { margin: 6px 0 0; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); }
+.pmw-sc-sum { margin: 0; font-size: 12px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+.pmw-sc-sep { color: var(--pmw-text-3); }
+
+/* document actions: 32 px targets */
+.pmw-sc-acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.pmw-sc-btn { height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2); border-radius: calc(var(--pmw-radius) * .7); background: transparent; color: var(--pmw-text); font-size: 12.5px !important; font-weight: 550; cursor: pointer; white-space: nowrap; }
+.pmw-sc-btn:hover { background: var(--pmw-hover); }
+.pmw-sc-btn:active { background: var(--pmw-press); }
+.pmw-sc-btn.is-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); }
+.pmw-sc-btn.is-primary:hover { background: color-mix(in srgb, var(--pmw-accent) 86%, var(--pmw-text)); }
+.pmw-sc-btn.is-quiet { border-color: transparent; color: var(--pmw-text-2); padding: 0 8px; }
+.pmw-sc-btn.is-quiet:hover { color: var(--pmw-text); }
+.pmw-sc-deciding { margin: 0; min-height: 32px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 550; color: var(--pmw-text); }
+.pmw-sc-card[data-deciding] { border-color: var(--pmw-line-2); }
+
+/* marks (SVG): check, cross, a static square for "running" (never a spinner) */
+.pmw-sc-mark { flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pmw-sc-mark.is-run { fill: currentColor; stroke: none; }
+.pmw-sc-mark.is-ok { color: var(--pmw-ok); }
+.pmw-sc-mark.is-bad { color: var(--pmw-bad); }
+.pmw-sc-deciding .pmw-sc-mark { width: 10px; height: 10px; color: var(--pmw-accent); }
+
+/* the command card (replaces the 5.6 chat's inline Shell box) */
+.pmw-sc-cmd-line { margin: 1px 0 0; font-family: var(--pmw-sc-code); font-size: 13px; line-height: 19px; font-weight: 600; overflow-wrap: anywhere; }
+.pmw-sc-cmd-line code { font: inherit; }
+.pmw-sc-cmd-out { margin: 0; padding: 8px 10px; border: 1px solid var(--pmw-line); border-radius: calc(var(--pmw-radius) * .6); background: var(--pmw-surface); font-family: var(--pmw-sc-code); font-size: 11.5px; line-height: 17px; color: var(--pmw-text-2); white-space: pre; overflow-x: auto; scrollbar-width: thin; }
+.pmw-sc-cmd-exit { margin: 0; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--pmw-text-2); }
+.pmw-sc-cmd-exit.is-ok > span:first-of-type { color: var(--pmw-text); }
+
+/* the artifact preview: plain bars, one colour */
+.pmw-sc-bars { height: 64px; display: flex; align-items: flex-end; gap: 6px; padding: 8px 10px 0; border: 1px solid var(--pmw-line); border-radius: calc(var(--pmw-radius) * .6); background: var(--pmw-surface); }
+.pmw-sc-bar { flex: 1 1 0; min-width: 4px; background: color-mix(in srgb, var(--pmw-accent) 70%, transparent); border-radius: 2px 2px 0 0; }
+
+/* receipts, the lens line and agent events: one plain line each */
+.pmw-sc-receipt { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 2px 0; }
+.pmw-sc-receipt-t { flex: 1 1 200px; min-width: 0; margin: 0; font-size: 12.5px; color: var(--pmw-text-2); }
+.pmw-sc-receipt-t strong { color: var(--pmw-text); font-weight: 600; }
+.pmw-sc-receipt-acts { display: inline-flex; flex-wrap: wrap; gap: 2px; }
+.pmw-sc-lens { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; font-size: 12px; color: var(--pmw-text-3); }
+.pmw-sc-lens .pmw-sc-btn { height: 28px; }
+.pmw-sc-event { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid color-mix(in srgb, var(--pmw-warn) 55%, transparent); border-radius: var(--pmw-radius); font-size: 12.5px; color: var(--pmw-text-2); }
+.pmw-sc-event > svg { color: var(--pmw-warn); }
+.pmw-sc-event-t { flex: 1 1 auto; min-width: 0; }
+
+/* ---- composer ---- */
+.pmw-sc-comp { flex: none; padding: 8px var(--pmw-sc-pad) 12px; }
+.pmw-sc-box { max-width: 720px; margin: 0 auto; box-sizing: border-box; display: flex; flex-direction: column; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); }
+.pmw-sc-box:focus-within { border-color: color-mix(in srgb, var(--pmw-focus) 70%, transparent); }
+.pmw-sc-input { display: block; width: 100%; box-sizing: border-box; min-height: 44px; max-height: 160px; resize: none; padding: 10px 12px 4px; border: 0; outline: 0 !important; background: transparent; color: var(--pmw-text); font: inherit; font-size: 13px; line-height: 20px; }
+.pmw-sc-input::placeholder { color: var(--pmw-text-3); }
+.pmw-sc-comprow { display: flex; align-items: center; gap: 8px; padding: 2px 6px 6px 12px; }
+.pmw-sc-mode { flex: 1 1 auto; min-width: 0; font-size: 11.5px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pmw-sc-send { width: 32px; height: 32px; background: var(--pmw-accent); color: var(--pmw-surface); }
+.pmw-sc-send:hover { background: color-mix(in srgb, var(--pmw-accent) 86%, var(--pmw-text)); color: var(--pmw-surface); }
+
+/* ---- the column's own width (400-760; 440 floating) ---- */
+@container pmw-sc (max-width: 479.98px) {
+  .pmw-sc { --pmw-sc-pad: 12px; }
+  .pmw-sc-status > span { display: none; }
+  .pmw-sc-card { padding: 10px; }
+  .pmw-sc-card-ico { display: none; }
+  .pmw-sc-bubble { max-width: 92%; }
+}
+@container pmw-sc (min-width: 640px) {
+  .pmw-sc { --pmw-sc-pad: 24px; }
+}
+
+/* the page's Friendly and Glass button rules round every button into a capsule; ours keep the look's corner (no pills) */
+#pmw-chat.pmw-sc :is(.pmw-sc-btn, .pmw-sc-ib, .pmw-sc-send) { border-radius: calc(var(--pmw-radius) * .6) !important; }
+#pmw-chat.pmw-sc :is(.pmw-sc-row, .pmw-sc-hrow) { border-radius: var(--pmw-row-radius) !important; }
+#pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 3px !important; }
+
+/* ---- looks ---- */
+/* Glass: legible over the wallpaper; opaque reading surface, no blur layer of our own */
+html[data-theme^="glass"] #pmw-chat.pmw-sc { background: var(--rg-reading, var(--pmw-surface)); }
+html[data-theme^="glass"] .pmw-sc-head { background: transparent; }
+/* the flyout sits over our own messages, so it needs a solid ground under Glass's translucent menu tint */
+html[data-theme="glass-light"] .pmw-sc-hist { background: color-mix(in srgb, var(--rg-menu, var(--pmw-pop)) 35%, #f3f5f9); }
+html[data-theme="glass-dark"] .pmw-sc-hist { background: color-mix(in srgb, var(--rg-menu, var(--pmw-pop)) 35%, #1b1924); }
+html[data-theme^="glass"] .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { background: transparent; }
+
+/* Retro: square, Plex Mono for code (D17a: code matches the interface), reverse video for selection and the primary */
+html[data-theme^="retro"] .pmw-sc { --pmw-sc-code: var(--mono-font, 'IBM Plex Mono', monospace); }
+html[data-theme^="retro"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
+html[data-theme^="retro"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref) { border-radius: 0; }
+html[data-theme^="retro"] .pmw-sc-btn.is-primary, html[data-theme^="retro"] .pmw-sc-send { background: var(--pmw-text); color: var(--pmw-surface); }
+html[data-theme^="retro"] .pmw-sc-hrow[aria-current="true"], html[data-theme^="retro"] .pmw-sc-row:hover, html[data-theme^="retro"] .pmw-sc-hrow:hover { background: var(--pmw-text); color: var(--pmw-surface); }
+html[data-theme^="retro"] .pmw-sc-hrow[aria-current="true"] .pmw-sc-hrow-p, html[data-theme^="retro"] .pmw-sc-hrow:hover .pmw-sc-hrow-p,
+html[data-theme^="retro"] .pmw-sc-row:hover :is(.pmw-sc-row-ico, .pmw-sc-row-m, .pmw-sc-path-t, .pmw-sc-path-s, .pmw-sc-dim, strong) { color: inherit; }
+html[data-theme^="retro"] .pmw-sc ::selection { background: var(--pmw-text); color: var(--pmw-surface); }
+html[data-theme^="retro"] .pmw-sc-bar { background: var(--pmw-accent); }
+html[data-theme^="retro"] .pmw-sc-ring .pmw-sc-ring-fg { stroke-linecap: butt; }
+
+/* NieR: ink and parchment from the tokens; square corners with the square part; YoRHa small caps with the headers part;
+   the ink cursor on history rows with the cursor part; no glow */
+html[data-o55-nier="on"] .pmw-sc { --pmw-sc-code: 'PM NieR Mono', var(--pm-font-code); }
+html[data-o55-nier="on"] .pmw-sc-btn.is-primary, html[data-o55-nier="on"] .pmw-sc-send { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--o55-nier-paper)); }
+html[data-o55-nier="on"] .pmw-sc-bar { background: rgba(var(--o55-nier-ink-rgb), .55); }
+html[data-o55-nier="on"] .pmw-sc-hist { box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc { --pmw-radius: 0px; --pmw-row-radius: 0px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] #pmw-chat.pmw-sc :is(.pmw-sc-fref, .pmw-sc-titlelink) { border-radius: 0 !important; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-sc :is(.pmw-sc-ib, .pmw-sc-btn, .pmw-sc-row, .pmw-sc-hrow, .pmw-sc-card, .pmw-sc-bubble, .pmw-sc-box, .pmw-sc-card-ico, .pmw-sc-cmd-out, .pmw-sc-bars, .pmw-sc-bar, .pmw-sc-hfind, .pmw-sc-event, .pmw-sc-code, .pmw-sc-fref) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-sc :is(.pmw-sc-kicker, .pmw-sc-hsec, .pmw-sc-sub, .pmw-sc-htitle, .pmw-sc-work-head, .pmw-sc-when) { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-sc-head { box-shadow: inset 0 -1px 0 var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-hrow:is(:hover, [aria-current="true"]),
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-row:hover { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink, var(--o55-nier-paper)); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-hrow:is(:hover, [aria-current="true"]) .pmw-sc-hrow-p,
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-sc-row:hover :is(.pmw-sc-row-ico, .pmw-sc-row-m, .pmw-sc-path-t, .pmw-sc-path-s, .pmw-sc-dim, strong) { color: inherit; }
+
+/* Reduced Motion: nothing here animates; smooth scrolling is chosen in script and is off under it */
+html[data-motion="reduced"] .pmw-sc * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+@media (prefers-reduced-motion: reduce) { .pmw-sc * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
