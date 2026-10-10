@@ -2384,9 +2384,9 @@ canonical_text: >-
   no OpenSubject. Only settled owner commands cross the command/persistence boundary. Since DL-180 the
   dashboard host has one namespace per board: each dashboard tab shows one board whose widget layout lives in
   widget_layout:v1:dashboard:<board_id> (WS-030), which replaces the single widget_layout:v1:dashboard namespace
-  (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one Home layout schema is pm.home_workspace_layout.v2,
-  its record home_workspace_layout.v2 (SP-330); the home_workspace_layout.v1 record is a read-only migration input,
-  converted on first read and never reset.
+  (WS-030 says how the existing layout carries over), and no board's widget layout enters the Home record. The one
+  Home layout schema is pm.home_workspace_layout.v2, its record home_workspace_layout.v2 (SP-330); the
+  home_workspace_layout.v1 record is a read-only migration input, converted on first read and never reset.
 gui_related: true
 gui_classification_reason: The DRY boundary prevents visible state divergence across Usage, Home, Dashboard, and the shared Assistant on different pages.
 split_recommended: false
