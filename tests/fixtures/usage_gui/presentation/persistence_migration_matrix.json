@@ -27,7 +27,8 @@
     "more",
     "hidden",
     "layout",
-    "order"
+    "order",
+    "live"
   ],
   "view_preference_families": [
     {
@@ -141,10 +142,6 @@
     "prototype_schema_id_as_product_schema"
   ],
   "token_dispositions": [
-    {
-      "token": "state_families",
-      "disposition": "UF-095 now names nine families; the ninth, live, is listed in view_preference_families because scripts/pm-validate-pm7-gui-fixtures.py pins state_families to the eight layout and view families."
-    },
     {
       "token": "v11_envelope_one_time_import_to_v12",
       "disposition": "Lineage case: the redesigned concept considers the v12 envelope once, else the v11 envelope, only when widget_layout:v1:usage is absent (UF-095)."

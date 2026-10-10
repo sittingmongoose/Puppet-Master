@@ -42,7 +42,6 @@
     "material_disclosure_change",
     "provider_setup_required_exact_state",
     "provider_setup_preserves_operation_and_continuation_identity",
-    "provider_setup_cta:cmd.settings.bloom.open:ai:ai.accounts.provider-connections",
     "scope_filters_timestamped_identity_bound_records",
     "range_filters_timestamped_identity_bound_records",
     "local_projection_only",
@@ -62,11 +61,5 @@
     "provider_setup_silent_cross_route",
     "provider_setup_cta:cmd.settings.bloom.open_dispatched",
     "empty_provider_card"
-  ],
-  "token_dispositions": [
-    {
-      "token": "provider_setup_cta:cmd.settings.bloom.open:ai:ai.accounts.provider-connections",
-      "disposition": "Stale: cmd.settings.bloom.open is retired (Settings_System and Commands_System: do not resurrect it). The current CTA is provider_setup_cta:cmd.settings.open:typed_settings_target (UF-107). The token stays only because scripts/pm-validate-pm7-gui-fixtures.py pins it; drop it when that script is updated."
-    }
   ]
 }
