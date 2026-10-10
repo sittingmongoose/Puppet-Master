@@ -55,7 +55,6 @@
   }
 
   function register(PH) {
-    var PHref = PH;
     PH.registerKind('terminal', {
       label: 'Terminal',
       group: 'Terminals',
@@ -94,13 +93,11 @@
           restoredDead = state.v === 1;
         }
         var view = mountView(host, api, rec, state);
-        /* the look also arrives through the host bus (PM_HOME.on('look')); onLook below de-duplicates */
-        var offLook = PHref && PHref.on ? PHref.on('look', function () { if (rec.view) rec.view.onLook(); }) : null;
         if (restoredDead) {
           view.notice({ id: 'restored', tone: 'info', focus: false, text: 'This terminal was restored. Its earlier session ended when the page reloaded; this is a new session.', actions: [{ label: 'OK' }] });
         }
         return {
-          unmount: function () { if (offLook) offLook(); rec.view.dispose(); rec.session.dispose(); records.delete(rec.session.id); },
+          unmount: function () { rec.view.dispose(); rec.session.dispose(); records.delete(rec.session.id); },
           serialize: function () { var sh = rec.session.shell; return { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: rec.view.tabAppearance || {} }; },
           /* while a divider drag is still moving the body (final === false) the reflow and PTY resize wait,
              at most every 120 ms; the final call lays out at once */
