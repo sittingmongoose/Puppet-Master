@@ -519,6 +519,11 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-run-seat:hover :is(b, s
 
 /* Glass: readable over the blur (solid enough fills for figures), no extra blur layers */
 html[data-theme^="glass"] :is(.pmw-art-fig, .pmw-art-loading, .pmw-run-castwrap, .pmw-run-part, .pmw-run-callout, .pmw-art-cell) { background: color-mix(in srgb, var(--pmw-surface-2) 86%, transparent); }
+/* Glass's dim ink is about half transparent, so edges that share a wrapped diagram's side channel would darken where
+   they overlap: they are drawn solid and the group carries the transparency once */
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-art-edges { opacity: .5; }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-art-edge { stroke: rgb(from var(--pmw-text-3) r g b / 1); }
+html[data-theme^="glass"]:not([data-o55-nier="on"]) .pmw-art-head { fill: rgb(from var(--pmw-text-3) r g b / 1); }
 html[data-theme^="glass"] .pmw-art-target span { background: color-mix(in srgb, var(--pmw-surface) 92%, transparent); }
 
 /* NieR: ink and parchment (the tokens), square, no glow, uppercase small headers, ink charts */

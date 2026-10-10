@@ -656,5 +656,41 @@ function watchActivate() {
   });
 }
 
-function install() { if (!expected) expected = internalBoard(); watchInternal(); watchGrids(); watchActivate(); }
+/* plain words: the page's demo widgets write internal field names into their text (the Budget card's
+   "effective_account: jared@main", the custom metric's "query: planunits_built · refresh 30s", which its live updates
+   write again, and the catalog's Budget donuts "effective_account_id"). Text under #dashboardView is reworded as it
+   appears, so no tab shows a key. */
+var PLAIN = [
+  [/ \u00b7 query: [a-z_]+/g, ''],
+  [/\brefresh (\d+)s\b/g, 'refreshed every $1 s'],
+  [/ cycle \u00b7 effective_account: /g, ' this cycle \u00b7 account '],
+  [/cost attributed to effective_account_id \u00b7 /g, 'cost charged to account ']
+];
+function plainText(t) {
+  var v = t.nodeValue, w = v;
+  if (!w || w.indexOf('_') < 0 && w.indexOf('refresh ') < 0) return;
+  PLAIN.forEach(function (p) { w = w.replace(p[0], p[1]); });
+  if (w !== v) t.nodeValue = w;
+}
+function plainWords(root) {
+  if (!root) return;
+  if (root.nodeType === 3) { plainText(root); return; }
+  if (root.nodeType !== 1) return;
+  var walk = doc.createTreeWalker(root, NodeFilter.SHOW_TEXT), t;
+  while ((t = walk.nextNode())) plainText(t);
+}
+function watchWords() {
+  var n = node();
+  if (!n) return;
+  plainWords(n);
+  if (typeof MutationObserver !== 'function') return;
+  new MutationObserver(function (list) {
+    list.forEach(function (m) {
+      if (m.type === 'characterData') plainText(m.target);
+      else m.addedNodes.forEach(plainWords);
+    });
+  }).observe(n, { childList: true, characterData: true, subtree: true });
+}
+
+function install() { if (!expected) expected = internalBoard(); watchInternal(); watchGrids(); watchActivate(); watchWords(); }
 if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', install); else install();

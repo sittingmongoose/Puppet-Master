@@ -166,6 +166,14 @@ html[data-pmw-home="on"] #pm-home-centre #dashboardView { --fs-2xs: 11px; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra div,
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm7-dash-extra b { font-size: 11px !important; }
 
+/* every card title at the board's size: the page's compact density (a 1x1 card) drops it to 10 px */
+html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-sm); }
+html[data-pmw-home="on"][data-theme^="retro"] #pm-home-centre #dashboardView .pm6-dash-card[data-pm7-density="compact"] .pm6-dash-card-title { font-size: var(--fs-xs); }
+
+/* the lane and quota tracks: no capsules (the page rounds them with --radius-pill), a 1 px radius like the Agents
+   board's bar; Retro keeps its own 2 px, NieR's blocks part its square track */
+html[data-pmw-home="on"]:not([data-theme^="retro"]) #pm-home-centre #dashboardView .pm6-dash-bar { border-radius: 1px; }
+
 /* text-glyph marks drawn instead (D22, no emoji-range glyphs): the remove and close crosses, the lane dots */
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"]) { font-size: 0 !important; }
 html[data-pmw-home="on"] #pm-home-centre #dashboardView .pm6-dash-iconbtn:is([data-pm6-dash="remove"], [data-pm6-dash="catalog-close"])::before {

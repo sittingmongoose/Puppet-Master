@@ -343,14 +343,39 @@ function diagram(g, o) {
   o = o || {};
   var L = layered(g), NH = o.sub ? 52 : 38, VG = 48, HG = 22, PAD = 18;
   g.nodes.forEach(function (n) { n.w = Math.max(96, Math.min(220, Math.max(textW(n.label, 13), n.sub ? textW(n.sub, 12) : 0) + 28)); if (n.shape === 'decision') n.w += 18; });
-  var rowW = L.rows.map(function (r) { return r.reduce(function (a, n) { return a + n.w; }, 0) + HG * (r.length - 1); });
+  function lineW(line) { return line.reduce(function (a, n) { return a + n.w; }, 0) + HG * (line.length - 1); }
   var hasBack = g.edges.some(function (e) { return e.back; });
-  var SIDE = hasBack ? 40 : 0;
-  var W = Math.max.apply(null, rowW) + PAD * 2 + SIDE * 2, H = L.rows.length * NH + (L.rows.length - 1) * VG + PAD * 2;
-  var core = W;
-  L.rows.forEach(function (r, ri) {
-    var x = (core - rowW[ri]) / 2;
-    r.forEach(function (n) { n.x = x; n.y = PAD + ri * (NH + VG); n.h = NH; n.cx = x + n.w / 2; x += n.w + HG; });
+  var SIDE = hasBack ? 40 : 0, CH = 16, EDGE = 8;
+  // Fit (o.maxW, the figure's inner width) wraps a row that is too wide onto more lines, so every node shows at full size;
+  // edges to a later line run down a channel outside the lines above it
+  var lines = L.rows.map(function (r) { return [r]; });
+  if (o.maxW) {
+    var room = o.maxW - (EDGE + CH) * 2 - SIDE * 2;
+    // only when the svg's 92 % floor (below) could not take it in
+    if (L.rows.some(function (r) { return (lineW(r) + PAD * 2 + SIDE * 2) * 0.92 > o.maxW; })) {
+      lines = L.rows.map(function (r) {
+        if (lineW(r) <= room) return [r];
+        var out = [[]];
+        r.forEach(function (n) { var cur = out[out.length - 1]; if (cur.length && lineW(cur.concat([n])) > room) out.push([n]); else cur.push(n); });
+        return out;
+      });
+    }
+  }
+  var wrapped = lines.some(function (ls) { return ls.length > 1; });
+  var maxLine = Math.max.apply(null, [].concat.apply([], lines.map(function (ls) { return ls.map(lineW); })));
+  var nLines = lines.reduce(function (a, ls) { return a + ls.length; }, 0);
+  var W = maxLine + (wrapped ? EDGE + CH : PAD) * 2 + SIDE * 2, H = nLines * NH + (nLines - 1) * VG + PAD * 2;
+  var core = W, li0 = 0;
+  lines.forEach(function (ls, ri) {
+    ls.forEach(function (line, k) {
+      var x = (core - lineW(line)) / 2, y = PAD + li0 * (NH + VG);
+      line.forEach(function (n) { n.x = x; n.y = y; n.h = NH; n.cx = x + n.w / 2; n.line = k; x += n.w + HG; });
+      li0++;
+    });
+    // the row's span, for edges that pass it or reach a later line of it
+    var all = L.rows[ri];
+    ls.span = { left: Math.min.apply(null, all.map(function (n) { return n.x; })), right: Math.max.apply(null, all.map(function (n) { return n.x + n.w; })),
+      top: ls[0][0].y };
   });
   var svg = sv('svg', { class: 'pmw-art-svg', viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, role: 'img', 'aria-label': o.label || 'Diagram' });
   // Fit never shrinks the drawing below 92 %, so its smallest text stays at 11 px; narrower panels scroll sideways
@@ -372,10 +397,22 @@ function diagram(g, o) {
       var block = null;
       for (var li = L.layer[a.id] + 1; li < L.layer[b.id] && !block; li++) {
         var t = (li - L.layer[a.id]) / (L.layer[b.id] - L.layer[a.id]), lx = x1 + (x2 - x1) * t;
-        L.rows[li].forEach(function (n) { if (!block && lx > n.x - 8 && lx < n.x + n.w + 8) block = n; });
+        // a wrapped row in the way is passed outside all of its lines
+        if (lines[li].length > 1) { var sp = lines[li].span, lastL = lines[li][lines[li].length - 1][0]; block = { x: sp.left, w: sp.right - sp.left, y: sp.top, h: lastL.y + lastL.h - sp.top, cx: core / 2 }; }
+        else L.rows[li].forEach(function (n) { if (!block && lx > n.x - 8 && lx < n.x + n.w + 8) block = n; });
+      }
+      // in a wrapped row, an edge leaves an earlier line past the lines below it, on the source's side, and reaches a later
+      // line past the lines above it, on the target's side
+      var side = null, la = lines[L.layer[a.id]], lb = lines[L.layer[b.id]];
+      if (!block && a.line < la.length - 1) {
+        var below = la[a.line + 1][0], last = la[la.length - 1][0];
+        block = { x: la.span.left, w: la.span.right - la.span.left, y: below.y, h: last.y + last.h - below.y }; side = x1 >= core / 2;
+      } else if (!block && b.line) {
+        var above = lb[b.line - 1][0];
+        block = { x: lb.span.left, w: lb.span.right - lb.span.left, y: lb.span.top, h: above.y + above.h - lb.span.top }; side = x2 >= core / 2;
       }
       if (block) {
-        var wx = (x1 + x2) / 2 >= block.cx ? block.x + block.w + 16 : block.x - 16, top2 = block.y - 6, bot2 = block.y + block.h + 6;
+        var wx = (side != null ? side : (x1 + x2) / 2 >= block.cx) ? block.x + block.w + 16 : block.x - 16, top2 = block.y - 6, bot2 = block.y + block.h + 6;
         d = 'M' + x1 + ' ' + yy1 + ' C' + x1 + ' ' + (yy1 + 18) + ' ' + wx + ' ' + (top2 - 18) + ' ' + wx + ' ' + top2 + ' V' + bot2 +
           ' C' + wx + ' ' + (bot2 + 18) + ' ' + x2 + ' ' + (yy2 - 24) + ' ' + x2 + ' ' + (yy2 - 6);
         ex = x2; ey = yy2; cx = x2; cy = yy2 - 24; mx = wx; my = (top2 + bot2) / 2;
@@ -694,8 +731,11 @@ function mountArtifact(host, state, api) {
       g = { nodes: p.nodes.map(function (n) { return { id: n.id, label: n.label, quiet: !!n.quiet, strong: n.id === 'approved' }; }), edges: p.edges.map(function (e) { return { from: e[0], to: e[1] }; }) };
       label = art.title;
     }
-    var svg = diagram(g, { sub: art.kind === 'architecture', label: label + ', a diagram of ' + g.nodes.length + ' steps' });
+    var dOpts = { sub: art.kind === 'architecture', label: label + ', a diagram of ' + g.nodes.length + ' steps' };
+    var svg = diagram(g, dOpts);
     var fig = h('figure', { class: 'pmw-art-fig' + (st.view === 'actual' ? ' is-actual' : '') }, [svg]);
+    // Fit redraws the diagram for the figure's width once it is on the page (fitFigures)
+    if (st.view !== 'actual') fig._fit = function (w) { dOpts.maxW = w; return diagram(g, dOpts); };
     var out = [fig, connections(g)];
     if (art.kind === 'mermaid') out.splice(1, 0, h('p', { class: 'pmw-art-fine', text: 'Drawn from the Mermaid source; Source shows it as written.' }));
     return out;
@@ -960,9 +1000,18 @@ function mountArtifact(host, state, api) {
     if (keep) frame._scroll.scrollTop = keep;
     centreFigures();
   }
-  /* a drawing wider than the panel scrolls sideways; start it centred, where the flow is */
+  /* Fit wraps a diagram's wide rows to the figure's width; a drawing still wider than the panel (Actual size, an image,
+     a single node wider than the panel) scrolls sideways and starts centred, where the flow is */
   function centreFigures() {
     Array.prototype.forEach.call(stage.querySelectorAll('.pmw-art-fig'), function (f) {
+      if (f._fit && f.clientWidth) {
+        var cs = getComputedStyle(f), w = Math.floor(f.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+        if (w > 0 && w !== f._fitW) {
+          f._fitW = w;
+          var next = f._fit(w), cur = f.querySelector('.pmw-art-svg');
+          if (cur && next.getAttribute('viewBox') !== cur.getAttribute('viewBox')) f.replaceChild(next, cur);
+        }
+      }
       if (f.scrollWidth > f.clientWidth + 1) f.scrollLeft = (f.scrollWidth - f.clientWidth) / 2;
     });
   }
@@ -973,6 +1022,7 @@ function mountArtifact(host, state, api) {
       visible = true;
       var s = art && live(art.id);
       if (dirtyWhileHidden || (s && art.status === 'loading' && s.loaded && stage.querySelector('.pmw-art-loading'))) { dirtyWhileHidden = false; render(); }
+      else centreFigures();
     },
     onHide: function () { visible = false; },
     onResize: function (sz) { if (sz.final) centreFigures(); },

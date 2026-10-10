@@ -81,9 +81,10 @@ html[data-theme="friendly-light"] .pmw-ed {
   --pmw-ed-s-var: #cf2c40; --pmw-ed-s-code: #b24297;
 }
 /* Glass: the reading plate under code is kept at least about 82 % opaque over the wallpaper, and nothing here adds a
-   blur (the closed blur budget): the header plate is a denser tint instead */
-html[data-theme^="glass"] .pmw-ed { --pmw-ed-plate: color-mix(in srgb, var(--pmw-ed-gutbg) 90%, transparent); }
+   blur (the closed blur budget): the header plate is the gutter tone made opaque instead, so a line scrolled under
+   the header row never reads through it */
 html[data-theme="glass-dark"] .pmw-ed {
+  --pmw-ed-plate: rgb(16, 12, 28);
   --pmw-ed-bg: rgba(12, 9, 22, .42);
   --pmw-ed-gutbg: rgba(16, 12, 28, .95);
   --pmw-ed-fg: #c0caf5;
@@ -96,6 +97,7 @@ html[data-theme="glass-dark"] .pmw-ed {
   --pmw-ed-s-var: #e0af68; --pmw-ed-s-code: #b4f9f8;
 }
 html[data-theme="glass-light"] .pmw-ed {
+  --pmw-ed-plate: rgb(240, 243, 243);
   --pmw-ed-bg: rgba(238, 242, 242, .70);
   --pmw-ed-gutbg: rgba(240, 243, 243, .96);
   --pmw-ed-fg: #343b58;

@@ -339,6 +339,20 @@ function planById(planId) {
 
 /* ---- blocks, steps and their marks ---- */
 function stepsOf(blocks) { return blocks.filter(function (b) { return b.t === 'step'; }); }
+/* what a person reads for a step: its number in the list ("2", a sub-step "3.1"), never its id */
+function stepNumbers(blocks) {
+  var out = {}, n = 0, kids = {};
+  stepsOf(blocks).forEach(function (s) {
+    if (s.parent && out[s.parent]) { kids[s.parent] = (kids[s.parent] || 0) + 1; out[s.id] = out[s.parent] + '.' + kids[s.parent]; }
+    else out[s.id] = String(++n);
+  });
+  return out;
+}
+function stepTitles(blocks) { var out = {}; stepsOf(blocks).forEach(function (s) { out[s.id] = s.title; }); return out; }
+/* the other steps in the same parallel group */
+function parallelPeers(blocks, b) {
+  return b.parallel ? stepsOf(blocks).filter(function (s) { return s.parallel === b.parallel && s.id !== b.id; }).map(function (s) { return s.id; }) : [];
+}
 function stepStates(blocks, live) {
   var steps = stepsOf(blocks), out = {};
   steps.forEach(function (s, i) {
@@ -361,7 +375,7 @@ function stepMark(state) {
 }
 
 /* the Markdown projection (plans.js mdBlock): status lives in the rail, never in the bytes */
-function md(b) {
+function md(b, blocks) {
   switch (b.t) {
     case 'h': return new Array(b.level + 1).join('#') + ' ' + b.text;
     case 'p': return b.text;
@@ -372,13 +386,16 @@ function md(b) {
     case 'art': return '[' + b.label + '](' + b.kind + ':' + b.id + ')';
     case 'embed': return '![' + b.caption + '](' + b.artifact + '@v' + b.version + ' "' + b.kind + '")\n\n> ' + b.summary;
     case 'callout': return '> **' + (b.tone === 'warning' ? 'Warning' : 'Note') + '** ' + b.text;
-    case 'step': return (b.parent ? '  ' : '') + '- **' + b.title + '** `' + b.id + '`' + (b.after.length ? ' _(after ' + b.after.join(', ') + ')_' : '') +
-      (b.parallel ? ' _(parallel: ' + b.parallel + ')_' : '') + '\n      ' + (b.parent ? '  ' : '') + b.text;
+    case 'step':
+      var no = stepNumbers(blocks || [b]), peers = parallelPeers(blocks || [b], b);
+      var ref = function (id) { return 'step ' + (no[id] || '?'); };
+      return (b.parent ? '  ' : '') + '- **Step ' + no[b.id] + ' · ' + b.title + '**' + (b.after.length ? ' _(after ' + b.after.map(ref).join(', ') + ')_' : '') +
+        (peers.length ? ' _(alongside ' + peers.map(ref).join(', ') + ')_' : '') + '\n  ' + (b.parent ? '  ' : '') + b.text;
   }
   return '';
 }
 function markdownOf(plan, version) {
-  return '# ' + plan.title + '\n\n' + plan.revisions[version].map(md).join('\n\n') + '\n';
+  return '# ' + plan.title + '\n\n' + plan.revisions[version].map(function (b, i, all) { return md(b, all); }).join('\n\n') + '\n';
 }
 
 /* ---- embed previews: small, honest sketches of each renderer (one series, text in text colours) ---- */
@@ -514,7 +531,7 @@ function mountPlan(host, state, api) {
   /* ---- body ---- */
   function blocksNow() { return plan.revisions[viewing]; }
   function richBody(blocks, states) {
-    var out = [], list = null;
+    var out = [], list = null, ctx = { no: stepNumbers(blocks), title: stepTitles(blocks), blocks: blocks };
     blocks.forEach(function (b) {
       if (b.t !== 'step') list = null;
       if (b.t === 'h') { out.push(h(b.level === 3 ? 'h3' : 'h2', { class: b.level === 3 ? 'pmw-plan-h3' : 'pmw-plan-h2', text: b.text })); return; }
@@ -527,7 +544,7 @@ function mountPlan(host, state, api) {
       if (b.t === 'embed') { out.push(embed(b)); return; }
       if (b.t === 'step') {
         if (!list) { list = h('ol', { class: 'pmw-plan-steps' }); out.push(list); }
-        list.appendChild(step(b, states[b.id]));
+        list.appendChild(step(b, states[b.id], ctx));
       }
     });
     return out;
@@ -588,21 +605,19 @@ function mountPlan(host, state, api) {
     fig.appendChild(h('div', { class: 'pmw-plan-embed-acts' }, [open]));
     return fig;
   }
-  function step(b, st) {
+  function step(b, st, ctx) {
     var li = h('li', { class: 'pmw-plan-step is-' + st + (b.parent ? ' is-child' : ''), id: domId('step', b.id), tabindex: '-1' });
     li.appendChild(stepMark(st));
     var body = h('div', { class: 'pmw-plan-step-body' });
     body.appendChild(h('p', { class: 'pmw-plan-step-title', text: b.title }));
     body.appendChild(h('p', { class: 'pmw-plan-step-text', text: b.text }));
-    var meta = h('p', { class: 'pmw-plan-step-meta' }, [h('span', { class: 'pmw-plan-sid', text: b.id })]);
+    var meta = h('p', { class: 'pmw-plan-step-meta' }, [h('span', { class: 'pmw-plan-sid', text: 'Step ' + ctx.no[b.id] })]);
     function sep() { meta.appendChild(h('span', { class: 'pmw-plan-sep', 'aria-hidden': 'true', text: '·' })); }
-    if (b.parent) { sep(); meta.appendChild(h('span', { text: 'part of ' })); meta.appendChild(depLink(b.parent, b.id)); }
-    if (b.after.length) {
-      sep();
-      meta.appendChild(h('span', { text: 'after ' }));
-      b.after.forEach(function (a, i) { if (i) meta.appendChild(D.createTextNode(', ')); meta.appendChild(depLink(a, b.id)); });
-    }
-    if (b.parallel) { sep(); meta.appendChild(h('span', { text: 'parallel with ' + b.parallel })); }
+    function links(ids) { ids.forEach(function (a, i) { if (i) meta.appendChild(D.createTextNode(', ')); meta.appendChild(depLink(a, b.id, ctx)); }); }
+    if (b.parent) { sep(); meta.appendChild(h('span', { text: 'part of ' })); links([b.parent]); }
+    if (b.after.length) { sep(); meta.appendChild(h('span', { text: 'after ' })); links(b.after); }
+    var peers = parallelPeers(ctx.blocks, b);
+    if (peers.length) { sep(); meta.appendChild(h('span', { text: 'alongside ' })); links(peers); }
     if (MARK_WORD[st] && (live.status === 'building' || live.status === 'canceled')) { sep(); meta.appendChild(h('span', { class: 'pmw-plan-sstate is-' + st, text: MARK_WORD[st] })); }
     body.appendChild(meta);
     if (b.files && b.files.length) {
@@ -616,8 +631,9 @@ function mountPlan(host, state, api) {
     return li;
   }
   function domId(kind, id) { return 'pmw-plan-' + kind + '-' + String(tabId).replace(/[^a-z0-9_-]/gi, '_') + '-' + id; }
-  function depLink(id, from) {
-    var b = h('button', { type: 'button', class: 'pmw-plan-dep', 'data-k': 'dep:' + from + ':' + id, 'data-pm-hover-label': 'Go to ' + id, 'data-pmh': 'icon', text: id });
+  function depLink(id, from, ctx) {
+    var word = 'step ' + (ctx.no[id] || '');
+    var b = h('button', { type: 'button', class: 'pmw-plan-dep', 'data-k': 'dep:' + from + ':' + id, 'data-pm-hover-label': 'Go to ' + word, 'data-pm-hover-detail': ctx.title[id] || null, 'data-pmh': 'icon', text: word });
     b.addEventListener('click', function () {
       var t = D.getElementById(domId('step', id));
       if (!t) return;
@@ -635,7 +651,7 @@ function mountPlan(host, state, api) {
       var dot = st === 'done' ? 'is-done' : st === 'working' || st === 'wait' ? 'is-now' : '';
       wrap.appendChild(h('div', { class: 'pmw-plan-mdrow' }, [
         h('span', { class: 'pmw-plan-mdrail' + (dot ? ' ' + dot : ''), 'aria-label': dot ? (st === 'done' ? 'Done' : 'In progress') : null, role: dot ? 'img' : null }),
-        h('pre', { class: 'pmw-plan-mdtext' }, [h('code', { text: md(b) })])
+        h('pre', { class: 'pmw-plan-mdtext' }, [h('code', { text: md(b, blocks) })])
       ]));
     });
     return [wrap];
@@ -957,10 +973,11 @@ function mountDiscovery(host, state, api) {
   }
   function preview() {
     var p = exportPlanFrom(run);
+    var no = stepNumbers(p.revisions[1]);
     var list = h('ol', { class: 'pmw-plan-frozen' }, p.revisions[1].filter(function (b) { return b.t !== 'p'; }).map(function (b) {
       if (b.t === 'h') return h('li', { class: 'is-h', text: b.text });
       if (b.t === 'ul') return h('li', null, [h('ul', { class: 'pmw-plan-ul' }, b.items.map(function (t) { return h('li', { text: t }); }))]);
-      if (b.t === 'step') return h('li', null, [h('span', { class: 'pmw-plan-sid', text: b.id }), ' ' + b.title]);
+      if (b.t === 'step') return h('li', null, [h('span', { class: 'pmw-plan-sid', text: 'Step ' + no[b.id] }), ' ' + b.title]);
       if (b.t === 'callout') return h('li', null, [callout(b.tone, b.text)]);
       return null;
     }).filter(Boolean));

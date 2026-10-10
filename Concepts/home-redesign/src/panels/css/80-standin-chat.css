@@ -62,12 +62,14 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 .pmw-sc[data-pmw-sc-pinned] .pmw-sc-hist { position: relative; z-index: 0; flex: none; width: var(--pmw-sc-hist-w, 240px); background: var(--pmw-surface); border-right: 1px solid var(--pmw-line); box-shadow: none; }
 .pmw-sc-hhead { flex: none; display: flex; align-items: center; gap: 6px; padding: 8px 8px 4px 12px; }
 .pmw-sc-htitle { flex: 1 1 auto; font-size: 12px; font-weight: 650; color: var(--pmw-text-2); }
-.pmw-sc-hfind { flex: none; display: flex; align-items: center; gap: 6px; margin: 4px 8px 6px; padding: 0 8px; height: 30px; border: 1px solid var(--pmw-line-2); border-radius: calc(var(--pmw-radius) * .7); color: var(--pmw-text-3); }
+.pmw-sc-hfind { flex: none; display: flex; align-items: center; gap: 6px; margin: 4px 8px 6px; padding: 0 8px; height: 30px; border: 1px solid var(--pmw-line-2); border-radius: min(calc(var(--pmw-radius) * .7), 8px); color: var(--pmw-text-3); }
 .pmw-sc-hfind svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; }
 .pmw-sc-hsearch { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; }
 .pmw-sc-hsearch::-webkit-search-cancel-button { display: none; }
-/* the find box shows focus on its own frame, not as a second ring inside it */
+/* the find box shows focus on its own frame, not as a second ring inside it: the page's input focus styles (Friendly's
+   14 px capsule glow, Glass's 3 px ring and tinted ground) are lifted from the field itself */
 .pmw-sc .pmw-sc-hsearch:focus-visible { outline: 0; }
+#pmw-chat.pmw-sc .pmw-sc-hsearch, #pmw-chat.pmw-sc .pmw-sc-hsearch:focus { box-shadow: none !important; border: 0 !important; border-radius: 0 !important; background: transparent !important; appearance: none; }
 .pmw-sc-hfind:focus-within { border-color: var(--pmw-focus); box-shadow: 0 0 0 1px var(--pmw-focus); }
 .pmw-sc-hlist { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 6px 10px; }
 .pmw-sc-hsec { margin: 10px 6px 4px; font-size: 11px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); }
@@ -133,6 +135,13 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 .pmw-sc-btn:active { background: var(--pmw-press); }
 .pmw-sc-btn.is-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); }
 .pmw-sc-btn.is-primary:hover { background: color-mix(in srgb, var(--pmw-accent) 86%, var(--pmw-text)); }
+/* the ink on the accent fill is black or white by the fill's luminance, as the frames' .pmw-act.is-primary does
+   (45-frames.css): var(--pmw-surface) is translucent in Glass light (1.8:1) and too light on Friendly light's accent;
+   the hover moves the fill away from the switch point so its contrast only grows. Retro and NieR keep their own ink */
+@supports (color: color(from red srgb-linear r g b)) {
+  .pmw-sc-btn.is-primary, .pmw-sc-send, .pmw-sc-send:hover { color: color(from var(--pmw-accent) srgb-linear clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1) clamp(0, (0.1791 - (0.2126 * r + 0.7152 * g + 0.0722 * b)) * infinity, 1)); }
+  .pmw-sc-btn.is-primary:hover, .pmw-sc-send:hover { background: color(from var(--pmw-accent) srgb-linear calc(r + (1 - r) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - r * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1))) calc(g + (1 - g) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - g * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1))) calc(b + (1 - b) * 0.16 * clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1) - b * 0.16 * (1 - clamp(0, ((0.2126 * r + 0.7152 * g + 0.0722 * b) - 0.1791) * infinity, 1)))); }
+}
 .pmw-sc-btn.is-quiet { border-color: transparent; color: var(--pmw-text-2); padding: 0 8px; }
 .pmw-sc-btn.is-quiet:hover { color: var(--pmw-text); }
 .pmw-sc-deciding { margin: 0; min-height: 32px; display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 550; color: var(--pmw-text); }
@@ -157,10 +166,11 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 .pmw-sc-bar { flex: 1 1 0; min-width: 4px; background: color-mix(in srgb, var(--pmw-accent) 70%, transparent); border-radius: 2px 2px 0 0; }
 
 /* receipts, the lens line and agent events: one plain line each */
-.pmw-sc-receipt { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 2px 0; }
-.pmw-sc-receipt-t { flex: 1 1 200px; min-width: 0; margin: 0; font-size: 12.5px; color: var(--pmw-text-2); }
+.pmw-sc-receipt { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+/* the actions keep one right-hand column at every chat width; the text wraps instead */
+.pmw-sc-receipt-t { flex: 1 1 auto; min-width: 0; margin: 0; font-size: 12.5px; color: var(--pmw-text-2); overflow-wrap: anywhere; }
 .pmw-sc-receipt-t strong { color: var(--pmw-text); font-weight: 600; }
-.pmw-sc-receipt-acts { display: inline-flex; flex-wrap: wrap; gap: 2px; }
+.pmw-sc-receipt-acts { flex: none; display: inline-flex; gap: 2px; }
 .pmw-sc-lens { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; font-size: 12px; color: var(--pmw-text-3); }
 .pmw-sc-lens .pmw-sc-btn { height: 28px; }
 .pmw-sc-event { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid color-mix(in srgb, var(--pmw-warn) 55%, transparent); border-radius: var(--pmw-radius); font-size: 12.5px; color: var(--pmw-text-2); }
@@ -216,8 +226,10 @@ html:not([data-o55-tour]) #chatPanel[data-pmw-sc="on"] > :not(#pmw-chat) { visib
 }
 
 /* ---- the message area's own width (400-760; 440 floating), and the whole layer's for the header ---- */
-@container pmw-sc (max-width: 479.98px) {
-  .pmw-sc-status > span { display: none; }
+/* the status word fits beside the title down to the narrowest chat (399 px: the title ellipsizes first); the word and its
+   mark go together only where even that cannot fit, so a mark is never left on its own */
+@container pmw-sc (max-width: 359.98px) {
+  .pmw-sc-status { display: none; }
 }
 @container pmw-scm (max-width: 479.98px) {
   .pmw-sc-scroll, .pmw-sc-comp { --pmw-sc-pad: 12px; }

@@ -437,6 +437,19 @@
 /* Looks                                                                                                              */
 /* ================================================================================================================== */
 
+/* Friendly: its page rule [data-theme^="friendly"] button { border-radius: 14px } (0,1,1) outranks the one-class rules
+   above and turned the channel picker into a capsule and every full-width row's hover and focus plate into one. These
+   restate each button's own radius at that weight (CONTRACT 13), in Friendly only, so the two-class state rules above
+   still win and NieR's square part keeps its square corners. Rows that span the body stay square, as in every look. */
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-chan, button.pmw-tool-btn, button.pmw-br-pbtn,
+  button.pmw-br-tb-signin, button.pmw-br-tb-cta, button.pmw-br-sso-btn) { border-radius: 6px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-file, button.pmw-tool-prow, button.pmw-br-prow, button.pmw-br-ttw) { border-radius: 0; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) :is(button.pmw-tool-flink, button.pmw-br-back) { border-radius: 2px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-tpick { border-radius: 4px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-cap { border-radius: min(var(--pmw-row-radius, 8px), 8px); }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-dash-chip { border-radius: 4px; }
+:where(html[data-theme^="friendly"]:not([data-o55-nier="on"][data-o55-nier-parts~="square"])) button.pmw-br-dash-retry { border-radius: 5px; }
+
 /* Glass: no blur layers of our own; the prompt bar and dock stay legible over the panel's frost */
 html[data-theme^="glass"] .pmw-br-prompt { background: color-mix(in srgb, var(--pmw-surface) 96%, transparent); }
 html[data-theme^="glass"] .pmw-br-addr { background: color-mix(in srgb, var(--pmw-surface-2) 88%, transparent); }

@@ -454,7 +454,8 @@ PM_HOME.registerKind('problems', {
         any = true;
         var open = !collapsed[f.path];
         var dir = f.path.indexOf('/') >= 0 ? f.path.slice(0, f.path.lastIndexOf('/')) : '';
-        var fb = h('button', { type: 'button', class: 'pmw-tool-file pmw-cur', role: 'treeitem', 'aria-expanded': open ? 'true' : 'false', 'data-key': f.path, 'data-pmh': 'row' }, [
+        var fb = h('button', { type: 'button', class: 'pmw-tool-file pmw-cur', role: 'treeitem', 'aria-expanded': open ? 'true' : 'false', 'data-key': f.path, 'data-pmh': 'row',
+          'data-pm-hover-visual-suppressed': 'true' }, [
           h('span', { class: 'pmw-tool-tw', 'aria-hidden': 'true' }, [ico(open ? 'chevronDown' : 'chevronRight', 12)]),
           PMW.kindIcon('file'),
           h('b', { class: 'pmw-tool-fname', text: f.path.split('/').pop() }),

@@ -595,7 +595,10 @@ function mountBrowser(host, st, api) {
   root.appendChild(banner);
   var main = h('div', { class: 'pmw-br-main' });
   var view = h('div', { class: 'pmw-br-view', 'data-pm-hover-exempt': 'true' });
-  var viewport = h('div', { class: 'pmw-br-page', tabindex: '0', role: 'document' });
+  /* the page surface takes focus on open; the page's tag controller checks the focused element itself (not the exempt
+     view around it), so with no tag of its own it made one up from the page's words ("Save changes", "Add") over the
+     strip and the address field. The page's own links and buttons are exempted when each page is built (render). */
+  var viewport = h('div', { class: 'pmw-br-page', tabindex: '0', role: 'document', 'data-pm-hover-visual-suppressed': 'true' });
   var hl = h('div', { class: 'pmw-br-hl', hidden: true, 'aria-hidden': 'true' }, [h('span', { class: 'pmw-br-hltag' })]);
   var pickBox = h('div', { class: 'pmw-br-hl is-picked', hidden: true, 'aria-hidden': 'true' });
   var region = h('div', { class: 'pmw-br-region', hidden: true }, [h('div', { class: 'pmw-br-rbox', hidden: true }, [h('span', { class: 'pmw-br-rsize' })]),
@@ -643,6 +646,7 @@ function mountBrowser(host, st, api) {
     page = resolvePage(S.url, hint);
     viewport.textContent = '';
     viewport.appendChild(page.build());
+    Array.prototype.forEach.call(viewport.querySelectorAll('a, button, input, select, textarea, [tabindex]'), function (n) { n.setAttribute('data-pm-hover-exempt', 'true'); });
     viewport.scrollTop = 0;
     viewport.setAttribute('aria-label', 'Page: ' + page.title);
     addrIn.value = S.url;
@@ -918,7 +922,7 @@ function mountBrowser(host, st, api) {
       var tw = h('button', { type: 'button', class: 'pmw-br-ttw', tabindex: '-1', 'aria-label': isOpen(i) ? 'Collapse' : 'Expand', 'data-pmh': 'off' }, n.leaf ? null : [ico(isOpen(i) ? 'chevronDown' : 'chevronRight', 12)]);
       if (n.leaf) tw.style.visibility = 'hidden';
       tw.addEventListener('click', function (e) { e.stopPropagation(); expanded[i] = !isOpen(i); renderDock(); });
-      var pick = h('button', { type: 'button', class: 'pmw-br-tpick pmw-cur', 'data-pmh': 'off' }, [lbl]);
+      var pick = h('button', { type: 'button', class: 'pmw-br-tpick pmw-cur', 'data-pmh': 'off', 'data-pm-hover-visual-suppressed': 'true' }, [lbl]);
       pick.addEventListener('mouseenter', function () { outline(hl, n.el, describe(n.el).comp); });
       pick.addEventListener('mouseleave', function () { hl.hidden = true; });
       pick.addEventListener('focus', function () { outline(hl, n.el, describe(n.el).comp); });
@@ -962,7 +966,7 @@ function mountBrowser(host, st, api) {
     var ul = h('ul', { class: 'pmw-br-caps' });
     S.captures.forEach(function (c) {
       var refused = c.kind === 'refused';
-      var b = h('button', { type: 'button', class: 'pmw-br-cap pmw-cur' + (refused ? ' is-refused' : ''), 'data-pmh': 'row' }, [
+      var b = h('button', { type: 'button', class: 'pmw-br-cap pmw-cur' + (refused ? ' is-refused' : ''), 'data-pmh': 'row', 'data-pm-hover-visual-suppressed': 'true' }, [
         refused ? h('span', { class: 'pmw-br-thumb is-refused', 'aria-hidden': 'true' }, [ico('lock', 14)]) : thumb(c),
         h('span', { class: 'pmw-br-capcopy' }, [
           h('b', { text: capLabel(c) }),
