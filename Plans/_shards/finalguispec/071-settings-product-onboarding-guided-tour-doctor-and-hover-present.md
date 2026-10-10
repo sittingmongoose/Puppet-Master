@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35207-L35988
+Source lines: L35807-L36594
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -181,7 +181,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit owns Onboarding's visible composition, copy density, hierarchy, and cinematic motion.
 split_recommended: false
-depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011]
+depends_on: [F3-519, PWIZ-021, PWIZ-022, PWIZ-024, PWIZ-029, RAS-014, SCS-012, FGI-011, DL-180]
 unblocks: [F3-521, F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "Onboarding is a bounded, centered modal window over the visibly preserved live application at every desktop width; narrow and short windows retain an explicit outer margin and modal chrome rather than becoming a full-page route."
@@ -210,7 +210,7 @@ acceptance_criteria:
   - "Server, Storage, Client, source location, local Safe History, online copy, and access choices remain independently editable; selecting an already-owned Server exposes the appropriate discovery and pairing presentation without silently forcing storage or Client placement."
   - "Paid-provider setup offers compact provider tiles and the selected provider's current owner-supported auth path; Free Models follows even after paid-provider Skip, groups underlying-provider setup through existing owners, and offers explicit Skip. Detection is an observation, not authorization or readiness. Close after commit preserves the existing Project, settled phases and exact continuation; resume never recreates it or replays settled setup."
   - "Ready presents one dominant enter action, a phase-safe Back action where reversible, and an optional Guided Tour without trapping the user. Back never undoes/repeats Project commit or returns to a fake uncreated draft; a deferred Project stays deferred. Starting the Tour transfers and clears saved focus ownership and releases inertness before the Tour starts, while an unavailable or throwing Tour start records no successful handoff and restores the saved workspace initiator/fallback."
-  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout`; it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
+  - "The Home dropdown beside the theme selector contains exactly one `Run setup wizard` item directly below `Reset Layout` (amended 2026-10-09, DL-180: that row now reads Restore home layout, formerly Reset Layout, F3-502); it invokes typed local action `ui.onboarding.start` with source surface `home_menu`, reopens the same modal at Welcome, and does not create a second onboarding state machine or domain command."
   - "Every visible sentence and disabled reason is understandable to a person who has never coded or used an IDE; `shell`, internal owner names, command IDs, schema IDs, route IDs, and unexplained implementation vocabulary never appear as product copy."
   - "Help uses one anchored explainer surface at a time: activating a typed SVG `?` opens a plain-language explanation attached to that exact option, replaces or closes any prior explanation, and never expands empty peer sections. The visible shared explainer is the control's actual `aria-controls` target and its active `aria-describedby` target; obsolete hidden per-card copies are absent. Primary and secondary card actions have visibly button-shaped treatment, consistent alignment and spacing, and recommended versus alternate choices differ through hierarchy, shape, iconography, and state rather than copy alone."
   - "All stages use one consistent grid, selection state, action hierarchy, explainer grammar, spacing rhythm, and in-flow footer model; specialized fields may vary by route, but controls do not change alignment or interaction rules from one setup screen to the next."
@@ -335,21 +335,25 @@ canonical_text: >-
   closing note says what was put back (DL-153). Finish restores the temporary arrangement by default
   or keeps it only on explicit selection, removes practice content, and lands on the real Planning Wizard with the
   committed Project selected and no work auto-started. Close/reload resumes a safe checkpoint after owner revalidation.
+  Amended 2026-10-09 (DL-180): the workspace practice no longer asks the learner to move or dock the chat, which is a
+  fixed column (F3-637). It teaches opening a tab from the "+" menu (F3-632), opening a file from the rail into a panel
+  (F3-634), splitting by dragging a tab to a panel's edge (F3-630), and adding a widget to the dashboard (F3-638); Skip
+  and Finish restore the captured v2 Home layout. The steps and their contracts are PWIZ-035's.
 gui_related: true
 gui_classification_reason: This unit owns the directed tour story, focus, overlay, choreography, and accessible presentation.
 split_recommended: false
-depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581]
+depends_on: [F3-520, PWIZ-023, ACD-431, ACD-484, F3-581, DL-180, PWIZ-035]
 unblocks: [F3-524, F3-598, F3-599]
 acceptance_criteria:
   - "The three chapters occur in exact Assistant Chat/Teacher, workspace, Planning Wizard order; the September 3 correction supersedes both predecessor controllers without reviving their old step boundaries. Replay and Back preserve the current story."
   - "Every enabled Back or forward control moves exactly one valid story beat, remains reachable and visibly button-shaped, and preserves the scene's mounted state; a coached beat with a required real target advances only from that target's observed action rather than from unrelated clicks, elapsed time, or a generic forward control."
   - "The brief opening introduces `ui.guided_tour.toggle_eli5` (labelled `ELI5: Off` until turned on) beside Pause and Skip Tour and explains Reduced Motion; it reads `general.visual.reduce-animations` and directs changes to Settings without inventing a separate toggle or detour."
   - "The Tour bar keeps the persistent Look menu (`Change the look`: four families plus Light/Dark, then a NieR Mode checkbox with an Adjust NieR look button whose editor opens as a popup dialog above the Tour) and sound control reachable by keyboard on every step: Look choices apply through the Settings owner (`general.visual.theme`, `general.visual.theme-mode`, and for NieR Mode `general.visual.nier-mode`, `general.visual.nier-parts` and `general.visual.nier-background`) at once with presentation-only effect under the verified current Project binding and the Tour follows its effective theme; Project switching rebinds both controls, while no-Project state permits only ephemeral preview without durable writes. The sound control binds to the Settings-owned `general.interaction.sound-effects` effective pref with an explicit `Sound off — click to turn on` state; both are shared chrome controls with Project-scoped persistence and neither becomes a tour-specific preference toggle beside `ui.guided_tour.toggle_eli5`. Neither is a `ui.guided_tour.*` action: Look choices, the NieR Mode checkbox, live editor edits and the sound control dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply, and Adjust NieR look emits ui.settings.nier_editor.open (DL-153)."
-  - "Workspace practice explains page navigation and panel purpose, asks the learner to move/dock Chat and add, move, resize, or focus a real widget, and makes the destination and persisted owner result readable. The temporary layout is reversible."
+  - "Workspace practice explains page navigation and panel purpose, then has the learner open a tab from the \"+\" menu, open a file from the rail into a panel, split a panel by dragging a tab to its edge and add a widget to the dashboard, and makes each destination and persisted owner result readable; the temporary layout is reversible and the chat is never moved (amended 2026-10-09, DL-180; PWIZ-035)."
   - "Every important action offers visible Try it and Show Me (`ui.guided_tour.show_me`) using the same owner handler and success predicate. Highlighting, narration, elapsed time, look-alike controls, generic Next, or unrelated changes never count as completion. Pre-cue, travel, arrival, and settle remain visible and interruptible."
   - "Planning receives at least half of meaningful action count and meaningful dwell time, measured against a declared step census. The book-club goal becomes next-meeting/current-book/how-to-join outcomes, followed by who-can-edit, why, review, edit consequence, and the no-work-before-approval boundary using the real current Wizard names/modes."
   - "The learner changes an answer rather than an Edit button silently choosing for them; only the dependent shared-access consequence changes, unaffected outcomes retain object identity/position, and an unsure answer stays unresolved."
-  - "Assistant Chat opens first through its real shell action and retains the same conversation when moved; successful Finish lands on the real Planning Wizard, not Chat, without starting work."
+  - "Assistant Chat opens first through its real shell action and keeps the same conversation throughout; successful Finish lands on the real Planning Wizard, not Chat, without starting work (amended 2026-10-09, DL-180: the chat is not moved by the Tour)."
   - "Teacher's built-in example is deterministic and local, presents an ordinary-language question and answer in the real Chat surface, and uses no provider, model, network, token budget, protected browser content, or AI-plan execution."
   - "Teacher normal and ELI5 answers preserve the same facts but are materially different: Normal gives useful adult-beginner detail; ELI5 uses clearer words, shorter structure, and less assumed knowledge without baby talk, forced metaphors, or inaccurate simplification. The already-visible answer never changes; the ELI5 version is one extra reply written by Explain this reply simply (`cmd.chat.eli5.explain_reply`, DL-126)."
   - "Every one of the current 47 supported Teacher topics is discoverable through compact categories, search, or grouped sample questions in the real Chat surface; the initial suggestions stay calm, but the full corpus is not hidden behind knowledge of an exact phrase. Unsupported questions offer relevant categories and examples rather than one tiny hard-coded list or an unrelated fallback answer."
@@ -405,6 +409,8 @@ negative_constraints:
   - "Do not use left-edge accent rails, paint-only theme variants, target-covering callouts when a safe placement exists, or any black/empty transition frame."
   - "Do not silently keep the demonstrated layout, auto-start work, or leave a practice surface over the final real Planning Wizard."
   - "Do not promote mounted browser-concept owner observations or concept effect receipts into production handler, persistence, native Slint, or certification claims."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step and the docked/undocked chat state sharing are retired from the workspace practice (PWIZ-035 owns the new steps)."
 owner_boundary_notes:
   - "Planning Wizard owns tour state and typed local actions; Settings owns `general.visual.reduce-animations`; Assistant Chat, Home/workspace-layout, Usage widget, page-navigation, and Planning owners retain performed action and state authority; Final GUI owns story, focus, overlay, copy presentation, and motion."
 owner_hints: [Plans/FinalGUISpec.md, Plans/Planning_Wizard.md, Plans/assistant-chat-design.md]

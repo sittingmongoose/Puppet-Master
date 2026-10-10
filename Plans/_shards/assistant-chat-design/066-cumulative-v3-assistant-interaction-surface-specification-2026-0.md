@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24846-L25194
+Source lines: L25049-L25418
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -33,6 +33,8 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
 20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
+Amended 2026-10-09 (DL-180): for Home, item 15's left editor/document tab system is the home centre's panels, where a plan or run view opens as its tab through the one opening module, and its Return to chat retires because no tab covers the chat (ACD-455, ACD-480, ACD-500); item 19's editor/chat split and its 360 px chat minimum give way to the fixed chat column of `Plans/FinalGUISpec.md#F3-637` (ACD-458). Amended 2026-10-09 (DL-184): item 1's Activity Bar keeps its floating, pass-through and clearance rules but is no longer a pill in any look (`Plans/DRY_Rules.md#DR-069`, `Plans/FinalGUISpec.md#F3-648`, ACD-452).
+
 ```yaml
 plan_unit_id: ACD-452
 unit_type: gui_requirement
@@ -40,6 +42,9 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow.
+  Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
+  a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648).
 gui_related: true
 gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
 depends_on: [ACD-448]
@@ -87,13 +92,17 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Opening Activity Detail defaults to a pinned left panel. An explicit Unpin action converts the active panel to floating, but clicking any activity-preview item opens its record PINNED by default, superseding earlier unpinned state. Pinned History and pinned Activity Detail share the available width without overlapping gutters. Activity previews are bounded non-scrolling previews; separate Open Activity buttons are removed and clicking a preview item navigates directly to its corresponding detail view.
+  Amended 2026-10-09 (DL-180): History opens as a flyout over the chat by default, and pinning it widens the chat
+  column by the list's own width instead of narrowing the messages (Plans/FinalGUISpec.md#F3-637, ACD-500). The width
+  that pinned History and pinned Activity Detail share is the chat column's, never the window's (ACD-501), and
+  Activity Detail stays inside the chat.
 gui_related: true
 gui_classification_reason: Activity Detail panel docking, preview navigation, and sidebar coexistence.
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180, ACD-500]
 unblocks: [ACD-454]
 acceptance_criteria:
   - Activity Detail opens pinned on the left by default; unpin makes it float; subsequent preview clicks open pinned.
-  - Pinned History and pinned Activity share available width cleanly.
+  - "History is a flyout by default and pinning it widens the chat column by its own width; pinned History and pinned Activity share the column's width cleanly (DL-180)."
   - Hover previews do not scroll internally; clicking preview rows opens corresponding detail.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -120,6 +129,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not persist prior unpinned state over the default pinned navigation rule.
   - Do not keep separate Open Activity buttons in activity previews.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): History is a flyout by default and its pin widens the chat column; the shared width is the column's."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -180,14 +191,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Clicking a plan title, Details, Expand, or Open Plan in transcript navigates to the exact plan in the left editor/document tab system, deduplicating the legacy artifact alias and plan identity into one shared tab. The plan tab exposes rich text/Markdown toggle, Build, Revise, More, Build With Crew, Build At, Export, and Send to Planning Wizard. Under narrow widths (390px-768px), the editor displays full-width with tabs above content and a persistent Return to chat control, temporarily occluding History without altering saved preferences.
+  Amended 2026-10-09 (DL-180): the left editor/document tab system is the home centre's panels: the plan opens as a
+  plan tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per plan, with the legacy alias and the plan id
+  resolving to one tab; in a narrow window it shows through Plans/FinalGUISpec.md#F3-636's panel switcher beside the
+  chat. Return to chat retires for Home, because no tab covers the chat (ACD-500).
 gui_related: true
 gui_classification_reason: Plan document tab navigation, controls, and responsive presentation.
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180, ACD-500]
 unblocks: [ACD-456]
 acceptance_criteria:
-  - Plan navigation opens a single deduplicated left editor tab rather than modal or duplicate tabs.
+  - "Plan navigation opens a single deduplicated plan tab in the home centre through F3-634 rather than modal or duplicate tabs (DL-180)."
   - The plan tab exposes the full suite of owner-backed plan controls.
-  - Narrow viewport shows full-width editor with Return to chat affordance.
+  - "In a narrow window the plan tab shows in the centre's panel switcher beside the chat, and no Return to chat control is needed (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: plan_navigation_and_tab_defect
@@ -210,6 +225,8 @@ preserved_exact_tokens:
   - "Return to chat"
 negative_constraints:
   - Do not treat Plan Details as a modal dialog or open duplicate tabs for plan and artifact alias.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the left editor/document tab system is the home panels and Return to chat retires for Home (ACD-500)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Assistant_Plan_Runtime.md
@@ -316,16 +333,18 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   History threads and components are fully inventoried to reflect current behavior. Ordinary everyday threads predominantly show running, completed, or successful workflows; unfinished work is not marked Needs attention unless an active fault exists. Recovery and failure examples are clearly partitioned into an intentional, labeled recovery minority. Read-only review fixtures demonstrate findings and inspection without source mutation. The responsive editor/chat split enforces min-size rules so chat is never crushed into the resize handle.
+  Amended 2026-10-09 (DL-180): Home has no editor/chat split: the chat is a fixed column whose width and limits are
+  Plans/FinalGUISpec.md#F3-637's, and the centre's panels never take its room (F3-636), so the chat is never crushed.
 gui_related: true
 gui_classification_reason: History thread currentness, normal workflow proportion, and responsive split behavior.
-depends_on: [ACD-452, ACD-457]
+depends_on: [ACD-452, ACD-457, DL-180, F3-637, ACD-500]
 unblocks: []
 acceptance_criteria:
   - Every History thread has an inventoried disposition and before/after component mapping.
   - Ordinary workflows show running/completed/successful work without false Needs attention labels.
   - Failures and recoveries are confined to explicit labeled recovery threads.
   - Read-only review shows findings, not file mutation.
-  - Resizing editor/chat split preserves chat visibility above minimum threshold.
+  - "Resizing the chat column stays within F3-637's limits, so the chat is never crushed (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
 risk_class: misleading_thread_telemetry_and_layout_crush
@@ -351,6 +370,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not mark unfinished work as Needs attention without an actual error or block.
   - Do not squeeze chat into the resize handle track.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the editor/chat split and its 360 px chat minimum give way to the chat column of F3-637."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

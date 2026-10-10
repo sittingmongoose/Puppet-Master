@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3087-L3147
+Source lines: L3132-L3194
 
-Source SHA256: `f74170d53bb0c3e40f22f0036119e31e5ec6ca1471fda28804f777671dd4dc7b`
+Source SHA256: `11109edad77de99e5435ec7d13cd33654af0587b6a16f26eba546597831321c0`
 
 ---
 
@@ -27,14 +27,14 @@ canonical_text: >-
   and the Forge owners, Containers_Registry_and_Unraid, Automated_Testing_System, Runtime_Artifacts_Panel, and the
   Run & Debug and Agents units of FinalGUISpec) supply content, state vocabularies and behaviour only, and never
   restate, fork or restyle that grammar; a chip, pill or badge named by a panel owner is a status or a count drawn
-  through F3-619. Every rail dropdown is the one chat picker primitive with ACD-439's sprout, with no second
+  through F3-619, the rail's instance of the shell-wide rule against side stripes, emoji and pills (DR-069). Every rail dropdown is the one chat picker primitive with ACD-439's sprout, with no second
   dropdown style and no native select. The rail's status glyphs (F3-619) and the assistant chat's 13 status marks
   (F3-585) each have their own owner and neither restates the other; merging them is an open owner question
   recorded in DL-162.
 gui_related: true
 gui_classification_reason: "Fixes one owner for the left rail's presentation grammar."
 split_recommended: false
-depends_on: [DL-162, F3-618, F3-619, F3-620, F3-621, F3-622, F3-625]
+depends_on: [DL-162, F3-618, F3-619, F3-620, F3-621, F3-622, F3-625, DL-184]
 unblocks: []
 acceptance_criteria:
   - "No panel owner document defines its own rail geometry, type size, status capsule, abbreviation rule, dropdown style or motion voice."
@@ -63,9 +63,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not restate the rail grammar in a panel owner document."
   - "Do not add a second dropdown style or a native select to the rail."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-184): the rail's rule that a chip, pill or badge is drawn as a status or a count is now an instance of the shell-wide DR-069; the rail grammar is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439
+ContractRef: ContractName:Plans/Decision_Log.md#DL-162, ContractName:Plans/FinalGUISpec.md#F3-618, ContractName:Plans/FinalGUISpec.md#F3-619, ContractName:Plans/FinalGUISpec.md#F3-620, ContractName:Plans/FinalGUISpec.md#F3-621, ContractName:Plans/FinalGUISpec.md#F3-622, ContractName:Plans/assistant-chat-design.md#ACD-439, ContractName:Plans/Decision_Log.md#DL-184, ContractName:Plans/DRY_Rules.md#DR-069

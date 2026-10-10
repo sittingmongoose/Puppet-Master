@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L10682-L11322
+Source lines: L10882-L11543
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
@@ -14,7 +14,7 @@ DL-035 accepts P3–P10 for planning under the PM-owned terminal direction estab
 
 | Decision | Section15 owner | Runtime contract and held subordinate choices |
 |---|---|---|
-| P3 | SMPFS-158 | Optional negotiated enhanced keyboard profile; exact enhancement extent and pinned host/toolkit feasibility held until evidence supports the affected path. Keyboard support does not admit images. |
+| P3 | SMPFS-158 | Optional negotiated enhanced keyboard profile; exact enhancement extent and pinned host/toolkit feasibility held until evidence supports the affected path. Keyboard support does not admit images. (Amended 2026-10-09: images are admitted by DL-182 and owned by `#SMPFS-181`; keyboard support itself still admits none.) |
 | P4 | SMPFS-159 | Rich continuation/right-prompt/properties in PM's parser; additional environment-reporting intake held. No third-party parser alternative. |
 | P5 | SMPFS-160 | Append/complete-snapshot/rolling-snapshot/final classification; a bounded current snapshot when continuity is unknown, with historical-version retention held and no provider integration selected. |
 | P6 | SMPFS-161 | Explicit host-authorized verified terminfo or disclosed compatible profile; decline preserves ordinary SSH and failure cannot target a local shell. |
@@ -46,6 +46,7 @@ depends_on:
 - SMPFS-070
 - SMPFS-124
 - SMPFS-130
+- DL-182
 unblocks: []
 acceptance_criteria:
 - Use the PM-owned parser and input encoder. Record profile/protocol version, family, active negotiated state, actual
@@ -98,9 +99,13 @@ source_atom_ids:
 - atom-0005
 negative_constraints:
 - Keyboard negotiation does not approve image protocols, image decoding/retention or reference terminal code reuse.
+  Amended 2026-10-09 (DL-182); image protocols are approved by DL-182 itself and owned by SMPFS-181; keyboard
+  negotiation still approves no image work and no reference code reuse by itself.
 - Do not infer crash mode restoration without protocol/reset evidence or treat query as a mode-changing command.
 - PM owns the engine, parser and OS-API process host; no third-party emulator/parser/PTY-abstraction library or
   reference-product code reuse.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): the images-not-approved negative constraint now points at DL-182 and SMPFS-181; the keyboard profile itself is unchanged."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/Settings_System.md
@@ -340,9 +345,11 @@ plan_unit_id: SMPFS-162
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: OSC 9;4 updates pane-local advisory progress under exact session and qualified command attribution.
-  The namespace resolves deterministically to progress once, never a duplicate notification or authoritative work
-  completion.
+canonical_text: >-
+  OSC 9;4 updates pane-local advisory progress under exact session and qualified command attribution. The namespace
+  resolves deterministically to progress once, never a duplicate notification or authoritative work completion.
+  Amended 2026-10-09 (DL-181): the pane is the terminal tab (SMPFS-180), and the tab shows the progress
+  (`Plans/FinalGUISpec.md#F3-641`, `#F3-643`); the bell and the other notification protocols follow SMPFS-183.
 gui_related: true
 gui_classification_reason: Pane-local advisory state is displayed to the user; visual design stays with FinalGUI.
 split_recommended: false
@@ -351,12 +358,13 @@ depends_on:
 - SMPFS-022
 - SMPFS-023
 - SMPFS-124
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Reserve OSC 9;4 for advisory progress. A valid message is handled exactly once by the progress path and never
   also delivered through an overlapping notification interpretation; malformed/out-of-range OSC 9;4 is ignored or
   diagnosed as invalid progress and must not fall through to notifications. Other notification protocols keep their
-  existing policy.
+  existing policy, which SMPFS-183 defines (amended 2026-10-09, DL-181).
 - Project valid determinate/indeterminate/error/clear states only as terminal-supplied advisory data. A percentage
   is determinate only under valid protocol numeric semantics and a defensible reported denominator; it is not independently
   verified task progress.
@@ -404,6 +412,8 @@ negative_constraints:
 - Do not infer authoritative command completion or source trust from terminal-supplied progress.
 - PM owns the engine, parser and OS-API process host; no third-party emulator/parser/PTY-abstraction library or
   reference-product code reuse.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): pane-local progress is terminal-tab progress, and the notification policy it cited is SMPFS-183."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/FinalGUISpec.md
@@ -575,9 +585,13 @@ plan_unit_id: SMPFS-165
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: A live pane has explicit idempotent input-protection enable/disable actions with visible state;
-  user typing/paste and agent input are blocked while output continues, and unlocking retains the same session. Protection
-  persists only for the same verified live session; replacement sessions start unlocked. DL-038 requires an explicit blocked result for agents.
+canonical_text: >-
+  A live pane has explicit idempotent input-protection enable/disable actions with visible state; user typing/paste
+  and agent input are blocked while output continues, and unlocking retains the same session. Protection persists only
+  for the same verified live session; replacement sessions start unlocked. DL-038 requires an explicit blocked result
+  for agents.
+  Amended 2026-10-09 (DL-181): the live pane is the terminal tab (SMPFS-180); protection follows its session through
+  every move between panels, collapse, maximize and restore, and it outranks any agent write grant (SMPFS-182).
 gui_related: true
 gui_classification_reason: Visible explicit protection state and blocked-input feedback for a live pane.
 split_recommended: false
@@ -585,6 +599,7 @@ depends_on:
 - DL-035
 - SMPFS-070
 - DL-037
+- DL-181
 unblocks: []
 acceptance_criteria:
 - cmd.terminal.input_protection.enable and cmd.terminal.input_protection.disable set an explicit state for
@@ -604,6 +619,7 @@ acceptance_criteria:
   never implies live protection. DL-038 blocks both user and agent terminal input through the same owner guard, without implicit unlock or agent bypass. Separate interrupt/terminate controls keep existing authority; blocking terminal input does not block those independent controls or prove runtime readiness.
 - Planning acceptance only; no implementation, WorkNodes, NodeSeeds, executable queues or runtime/visual/security/performance
   pass is produced by this compile.
+- "Amended 2026-10-09 (DL-181): protection holds for the same session when its terminal tab moves to another panel, its panel collapses, maximizes or restores, and a named layout is applied; an agent's write grant never lifts it."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - Plans/Automated_Testing_System.md — DL-035 terminal acceptance fixtures (future execution)
@@ -638,8 +654,13 @@ negative_constraints:
 - No agent input bypass, implicit unlock or pane-wide lock inheritance; historical state cannot prove live protection.
 - No arbitrary pane trees, new group/zoom feature, process suspension or guarantee that historical review-only
   protects a live process.
+  Amended 2026-10-09 (DL-180, DL-181); the pane-tree, group and zoom words apply only inside one terminal tab,
+  which has no panes (SMPFS-180); the universal panels' split tree, tab groups and Maximize
+  (`Plans/FinalGUISpec.md#F3-630`) are outside this guard.
 - PM owns the engine, parser and OS-API process host; no third-party emulator/parser/PTY-abstraction library
   or reference-product code reuse.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180, DL-181): the protected pane is the terminal tab, and the no-pane-trees clause is scoped to the inside of one terminal tab."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/FinalGUISpec.md

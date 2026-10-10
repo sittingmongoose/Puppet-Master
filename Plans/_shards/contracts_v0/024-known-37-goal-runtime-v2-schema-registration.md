@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L3670-L17596
+Source lines: L3682-L17637
 
-Source SHA256: `ad950c7324da0d72952a48627bbafe6ba37541c473ebc6fd9a74c8feb05d99f7`
+Source SHA256: `5282f46ee31d3568ee0b595606144e3c11e0381b256e5082cc48205e637c704e`
 
 ---
 
@@ -2226,6 +2226,10 @@ canonical_text: >-
   OpenSubject(subject_id, open_intent), with doc:<document_id> and
   artifact:<artifact_id> resolving to workspace source, transient
   generated://<artifact_id>, or routed non-editor surfaces.
+  Amended 2026-10-09 (DL-180): both shapes carry CV-360's placement fields
+  (where, mode, by, background) beside their identity when they open into a
+  home panel; OpenFile's target_editor_panel_id, target_editor_group_id and
+  target_group no longer select a home panel and are read on old payloads only.
 gui_related: false
 gui_classification_reason: This unit defines open identity and workspace/source routing semantics.
 split_recommended: true
@@ -2235,6 +2239,7 @@ acceptance_criteria:
   - OpenFile remains the workspace-file open shape.
   - Identity-native opens use OpenSubject with subject_id and open_intent.
   - Document and artifact subjects resolve to workspace source, transient generated transport, or routed non-editor surfaces.
+  - "Home placement travels in CV-360's placement fields, never in target_editor_panel_id, target_editor_group_id or target_group."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -2248,6 +2253,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`OpenFile { path... }`"
   - "`OpenSubject`"
@@ -2258,6 +2264,8 @@ preserved_exact_tokens:
   - "`generated://<artifact_id>`"
 negative_constraints:
   - "OpenFile and OpenSubject must not fork into competing identity-native open contracts."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): OpenFile's editor panel and group selectors retire as home placement; CV-360's placement fields replace them."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -7715,7 +7723,9 @@ canonical_text: >-
   route_target is the canonical navigation-and-focus contract requiring
   target_kind, resolver_scope, and required-present project_id, with project_id
   nullable only for explicit non-Project scopes and target_kind remaining a
-  destination class only.
+  destination class only. Amended 2026-10-09 (DL-180): bottom_panel is a legacy
+  destination class read on old routes only; a route to a home panel tab uses
+  primary_view and is placed by CV-360's fields.
 gui_related: false
 gui_classification_reason: This unit defines route_target required fields and destination classes.
 split_recommended: true
@@ -7726,6 +7736,7 @@ acceptance_criteria:
   - "target_kind, resolver_scope, and required-present project_id are required."
   - "project_id is non-null for project/run/thread resolution and null only for the explicit server, application, bootstrap, or global resolver scopes governed by CV-327."
   - "target_kind closes to primary_view, side_panel, bottom_panel, embedded_surface, and page_tab."
+  - "New producers do not emit bottom_panel; a route to a home panel tab uses primary_view."
   - "target_kind is destination class only."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7743,6 +7754,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`route_target`"
   - "`target_kind`"
@@ -7756,6 +7768,8 @@ preserved_exact_tokens:
   - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md"
 negative_constraints:
   - "target_kind must not replace selector identity."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): bottom_panel becomes a legacy destination class; there is no bottom panel."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -7828,15 +7842,20 @@ canonical_text: >-
   Terminal-focused open and reveal contracts use terminal and dev-session
   object kinds with matching focus identifiers inside route_target object
   identity; terminal widgets target runtime/worker identity rather than tier_id.
+  Amended 2026-10-09 (DL-181): a terminal is a panel tab with one session;
+  terminal_tab_id is its panel tab id (terminal:<session>, minted from the
+  session the tab was first opened with and kept across Restart), and
+  terminal_section_id, terminal_pane_id and the terminal_section and
+  terminal_pane kinds are legacy, resolved to the terminal tab of their session.
 gui_related: true
 gui_classification_reason: This unit affects user-visible terminal and dev-session route behavior.
 split_recommended: true
 depends_on: [CV-057, CV-164]
 unblocks: []
 acceptance_criteria:
-  - "Terminal section, tab, pane, session, and dev-session reveals stay in route_target object identity."
+  - "Terminal tab, session, and dev-session reveals stay in route_target object identity; legacy section and pane targets resolve to the terminal tab of their session."
   - "Terminal routes prefer exact same-session reveal when terminal_session_id is supplied and still resolvable."
-  - "Historical terminal routes may reveal a historical pane or receipt view."
+  - "Historical terminal routes may reveal a historical terminal tab or receipt view."
   - "Terminal widgets target runtime/worker identity and terminal object identity rather than tier_id."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7853,6 +7872,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-181 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-181 already depends on this unit through DL-180 and DL-147)"
 preserved_exact_tokens:
   - "`terminal_section_id`"
   - "`terminal_tab_id`"
@@ -7864,9 +7884,12 @@ preserved_exact_tokens:
   - "PTY"
 compatibility_only_notes:
   - "Historical terminal routes may reveal a historical pane or receipt view."
+  - "terminal_section_id and terminal_pane_id are read on old routes only (DL-181)."
 negative_constraints:
   - "Terminal routes must not invent panel-local terminal routing semantics."
   - "Historical terminal routes must not synthesize live PTY continuity."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): terminal sections and panes retire; the terminal tab and its session remain the route identities."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -8196,7 +8219,10 @@ canonical_text: >-
   Route reuse is allowed only when open_disposition permits reuse and the
   destination still reveals the requested object, scope, and inspector target;
   OpenFile reuse is one-tab-per-path-per-group, and producers may not add a
-  generic extra-args bag to bypass validation.
+  generic extra-args bag to bypass validation. Amended 2026-10-09 (DL-180): one
+  id is one tab in the whole workspace, so OpenFile reuse is one tab per path:
+  an open of an open path reveals it where it is (CV-360), and the multi-group
+  disposition is retired.
 gui_related: false
 gui_classification_reason: This unit defines route reuse and field validation constraints.
 split_recommended: true
@@ -8205,8 +8231,8 @@ unblocks: []
 acceptance_criteria:
   - "Route activation may reuse an existing destination only when open_disposition permits reuse."
   - "The existing destination must still reveal the requested object, scope, and inspector target."
-  - "OpenFile reuse is one-tab-per-path-per-group."
-  - "Opening the same path in another group requires explicit multi-group disposition."
+  - "OpenFile reuse is one tab per path in the whole workspace; an open of an open path reveals its tab where it is."
+  - "No producer emits the retired multi-group disposition."
   - "Route producers do not add generic extra-args bags to bypass field validation."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -8223,6 +8249,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+  - "Plans/Decision_Log.md#DL-180 (amendment of 2026-10-09; cited here rather than in depends_on, because DL-180 already depends on this unit through DL-147)"
 preserved_exact_tokens:
   - "`reuse_existing`"
   - "`multi-group`"
@@ -8230,6 +8257,8 @@ preserved_exact_tokens:
   - "generic extra-args bag"
 negative_constraints:
   - "Route producers must not add a generic extra-args bag to bypass field validation."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): one-tab-per-path-per-group and the multi-group disposition retire; one id is one tab in the whole workspace."
 owner_hints:
   - Plans/Contracts_V0.md
 ```

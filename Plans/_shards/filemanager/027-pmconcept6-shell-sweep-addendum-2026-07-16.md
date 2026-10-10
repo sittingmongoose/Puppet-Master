@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4518-L4567
+Source lines: L4579-L4630
 
-Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
+Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
 
 ---
 
@@ -23,7 +23,7 @@ canonical_text: >-
   The rich file and editor viewer renderer reveals newly opened viewer content with a staggered content reveal, and reduced motion disables the stagger so content renders immediately in final position. Long documents expose a canvas-style minimap with a viewport thumb that tracks the visible region during ordinary scrolling; clicking the minimap navigates to the clicked region, and pointer drag-scrub on the minimap scrolls the document continuously while the thumb follows the pointer until release. The document scroll position remains the single scroll authority: minimap interactions issue scroll intents against the shared editor buffer view rather than owning a second scroll state.
 gui_related: true
 gui_classification_reason: This is visible editor viewer reveal motion, minimap rendering, and scroll interaction behavior.
-depends_on: [F-043]
+depends_on: [F-043, DL-180]
 unblocks: []
 acceptance_criteria:
   - Opening a rich file or editor viewer staggers content reveal, and reduced motion renders content immediately without stagger.
@@ -49,6 +49,8 @@ source_lineage:
   - Plans/FileManager.md:448-450
 source_atom_ids: []
 preserved_exact_tokens: ["staggered content reveal", "reduced motion", "minimap", "viewport thumb", "drag-scrub"]
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the minimap stays the only scrollbar of the editor tab's code pane and is polished there (Plans/FinalGUISpec.md#F3-639); this unit stays its file-side owner."
 negative_constraints:
   - Do not create a second scroll authority; minimap interactions issue scroll intents against the shared editor buffer view.
   - Do not block editing, input, or save authority while the staggered reveal runs.

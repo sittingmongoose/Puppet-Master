@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L1031-L8606
+Source lines: L1051-L8752
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
@@ -715,7 +715,12 @@ plan_unit_id: SMPFS-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The terminal is the canonical interactive shell surface with up to four terminal sections, tab and pane layout families, bottom-default placement, detach/move/resize behavior, labels, and settings vocabulary.
+canonical_text: >-
+  The terminal is the canonical interactive shell surface. Since 2026-10-09 (DL-181) it is shown as terminal tabs of
+  the universal panels with one session per tab (SMPFS-180), with renameable labels and the settings vocabulary of
+  section 1.6; move/resize of a terminal is the move and resize of its tab and panel (`Plans/FinalGUISpec.md#F3-630`).
+  The former model of up to four terminal sections, tabs and panes in layout families, the bottom default placement
+  and section detach is retired; Terminals 2x2 is a named layout of four panels.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -727,11 +732,13 @@ depends_on:
 - SP-001
 - UCC-001
 - RM-025
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-014 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- "Amended 2026-10-09 (DL-181): no active text of this unit describes terminal sections, pane layout families, a bottom default or section detach; SMPFS-180 owns the terminal's container model."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -759,8 +766,10 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The tokens up to four terminal sections, panes, bottom default and detach are retired lineage since 2026-10-09 (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal surface is a panel tab kind with one session per tab; sections, pane layout families, the bottom default and section detach are retired (SMPFS-180)."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -775,7 +784,14 @@ plan_unit_id: SMPFS-015
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal runtime identity preserves terminal_section_id, terminal_tab_id, terminal_pane_id, terminal_session_id, and dev_session_id owner splits; presentation changes must not mint runtime identity and dev_session_id is not a shell-session alias.
+canonical_text: >-
+  Terminal runtime identity preserves the owner split between presentation and runtime: the terminal tab (a panel tab
+  of kind terminal whose id is `terminal:<session>`, SMPFS-180; `terminal_tab_id` holds that tab id where a record
+  still carries one) owns presentation and reveal targets, terminal_session_id owns exact PTY continuity, and
+  dev_session_id owns workflow continuity; presentation changes must not mint runtime identity and dev_session_id is
+  not a shell-session alias. Amended 2026-10-09 (DL-181): terminal_section_id and terminal_pane_id retire with
+  terminal sections and in-tab splits and survive only as read-only migration inputs (`Plans/storage-plan.md#SP-332`);
+  the same session runs in the same tab through every view change.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: true
@@ -786,11 +802,13 @@ depends_on:
 - PNC-001
 - SP-001
 - CV-215
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-015 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+- "Amended 2026-10-09 (DL-181): moving, collapsing, maximizing or hiding a terminal tab and applying a named layout keep its terminal_session_id; only New, Split (a new panel), Restart, Reopen closed tab and a restore whose session did not survive mint a session."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -818,7 +836,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal tab replaces the section, tab and pane presentation split; terminal_section_id and terminal_pane_id are migration inputs only."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -832,7 +851,13 @@ plan_unit_id: SMPFS-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal presentation containers preserve labels, roles, settings precedence, tab/pane motion, reveal/move/rename/pin/close/detach/reattach behavior, and requested/effective disclosure without changing runtime identity.
+canonical_text: >-
+  Terminal presentation is the terminal tab in the universal panels (SMPFS-180): its labels, settings precedence,
+  reveal, move, rename, pin and close, and requested/effective disclosure never change runtime identity. Amended
+  2026-10-09 (DL-181, DL-183): tab and pane motion becomes panel tab motion (`cmd.panel_tab.*` and
+  `cmd.workspace_layout.*`); detach and reattach of terminal sections retire; roles retire with
+  `code.terminal.tab-role`, and shell profiles replace them; appearance resolves field by field through the four
+  layers of `Plans/FinalGUISpec.md#F3-642` (look default, app default, project default, this tab).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: true
@@ -844,6 +869,8 @@ depends_on:
 - SP-001
 - UCC-001
 - ACD-008
+- DL-181
+- DL-183
 unblocks: []
 acceptance_criteria:
 - SMPFS-016 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -879,8 +906,10 @@ negative_constraints:
 - Role hints MUST NOT override terminal_session_id ownership, actual pane runtime status, cwd/profile/runtime context of an already running session, explicit user labels, or explicit user default overrides.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "Role hints and section detach/reattach are retired lineage since 2026-10-09 (DL-181); the role-hint negative constraint stays as lineage."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-183): presentation containers become the terminal's panel tab; section detach/reattach and tab roles retire; appearance uses the four-layer model."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -1368,7 +1397,12 @@ plan_unit_id: SMPFS-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal section, tab, and pane statuses preserve runtime states, attention flags, hidden-output semantics, relaunch/review affordances, and the close/interrupt/terminate/kill ladder.
+canonical_text: >-
+  Terminal tab statuses preserve runtime states, attention flags, hidden-output semantics, relaunch/review
+  affordances, and the close/interrupt/terminate/kill ladder. Amended 2026-10-09 (DL-181): statuses and attention
+  flags belong to the terminal tab and its one session (SMPFS-180); the former section/tab/pane states and the
+  dead-quadrant rule retire with sections and in-tab panes, and a terminal tab the user is not looking at shows its
+  attention as the tab's attention mark (`Plans/FinalGUISpec.md#F3-631`).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1380,6 +1414,7 @@ depends_on:
 - SP-001
 - UCC-001
 - WM-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-025 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -1415,7 +1450,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): statuses are the terminal tab's; section and pane states and dead quadrants retire."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/UI_Command_Catalog.md
@@ -1430,7 +1466,12 @@ plan_unit_id: SMPFS-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal empty-state and first-run language preserves Start Terminal, linked-surface activation, historical banners, runtime-vs-settings boundaries, restored_without_history, and no live-continuity blur.
+canonical_text: >-
+  Terminal empty-state and first-run language preserves linked-surface activation, historical banners,
+  runtime-vs-settings boundaries, restored_without_history, and no live-continuity blur. Amended 2026-10-09 (DL-180,
+  DL-181): Start Terminal is the Terminal row of a panel's "+" menu and of the empty-panel launcher
+  (`Plans/FinalGUISpec.md#F3-632`); the empty terminal section shell retires; a terminal tab always shows a live,
+  ended or restored session (SMPFS-180), and restored_without_history still says plainly that history is unavailable.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1441,6 +1482,7 @@ depends_on:
 - PNC-001
 - SP-001
 - UCC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-026 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -1471,7 +1513,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): Start Terminal moves to the \"+\" menu and empty-panel launcher; empty terminal sections retire."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/FinalGUISpec.md
@@ -1616,7 +1659,13 @@ plan_unit_id: SMPFS-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Section 15 preserves the promoted stable identity catalog from project_id through automation_session_id, with path alone insufficient for project restore semantics and shell/container identities distinct from target_kind route classes.
+canonical_text: >-
+  Section 15 preserves the promoted stable identity catalog from project_id through automation_session_id, with path
+  alone insufficient for project restore semantics and shell/container identities distinct from target_kind route
+  classes.
+  Amended 2026-10-09 (DL-180, DL-181): the catalog adds the panel tab id (`Plans/FinalGUISpec.md#F3-635`; a terminal
+  tab's is `terminal:<session>`, SMPFS-180); terminal_section_id, terminal_pane_id and the never-catalogued
+  terminal_workgroup_id are retired and kept only as read-only migration inputs (`Plans/storage-plan.md#SP-332`).
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -1627,6 +1676,7 @@ depends_on:
 - PNC-001
 - SP-001
 - CV-215
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-029 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -1668,7 +1718,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal tab id joins the catalog; terminal_section_id and terminal_pane_id become migration inputs only."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -1683,7 +1734,14 @@ plan_unit_id: SMPFS-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: 'Terminal and browser reveal behavior preserves presentation continuity, exact PTY continuity, and workflow continuity boundaries: terminal_section_id, terminal_tab_id, and terminal_pane_id own shell presentation/reveal targets, terminal_session_id owns exact PTY continuity, and dev_session_id owns workflow continuity without replacing shell identity.'
+canonical_text: >-
+  Terminal and browser reveal behavior preserves presentation continuity, exact PTY continuity, and workflow
+  continuity boundaries: the terminal tab (terminal_tab_id, a panel tab of kind terminal, SMPFS-180) owns shell
+  presentation and reveal targets, terminal_session_id owns exact PTY continuity, and dev_session_id owns workflow
+  continuity without replacing shell identity. Amended 2026-10-09 (DL-181): terminal_section_id and terminal_pane_id
+  no longer own reveal targets and are migration inputs only; a reveal activates the terminal tab wherever it is,
+  pulls it out of "+N" and expands its collapsed panel (`Plans/FinalGUISpec.md#F3-634`); explicit split now opens a
+  new panel with a new session.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -1697,6 +1755,7 @@ depends_on:
 - UCC-001
 - WM-001
 - ACD-008
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-030 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -1737,8 +1796,10 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The negative constraint about docking or detaching sections and panes is lineage; moving a terminal tab between panels is the current presentation change and still mints no PTY identity."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): reveal targets the terminal tab; section and pane ids retire; explicit split opens a new panel."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -3318,7 +3379,13 @@ plan_unit_id: SMPFS-057
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal, Problems, Output, Debug Console, and Ports are canonical shell-adjacent panes with distinct responsibilities linked by terminal-session and dev-session identity rather than loose textual association.
+canonical_text: >-
+  Terminal, Problems, Output, Debug Console, and Ports are canonical shell-adjacent surfaces with distinct
+  responsibilities linked by terminal-session and dev-session identity rather than loose textual association. Amended
+  2026-10-09 (DL-180, DL-181): they are panel tab kinds (`terminal`, `problems`, `output`, `ports` and
+  `debug_console`, `Plans/FinalGUISpec.md#F3-635`) that can sit in any panel, no longer the shell-adjacent panes of a
+  bottom runtime section; tool kinds land beside the terminals by the opening rules (`Plans/FinalGUISpec.md#F3-634`),
+  and their distinct responsibilities (SMPFS-058) are unchanged.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -3330,6 +3397,7 @@ depends_on:
 - SP-001
 - UCC-001
 - WM-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-057 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -3363,7 +3431,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180, DL-181): the shell-adjacent pane family becomes panel tab kinds in any panel."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -3615,7 +3684,12 @@ plan_unit_id: SMPFS-062
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal restore UI discloses missing transcript backing before transcript-specific review/copy/search and uses exact labels live-restored, /disconnected/review-only, /history/context, and /ephemeral for restored or degraded states.
+canonical_text: >-
+  Terminal restore UI discloses missing transcript backing before transcript-specific review/copy/search and uses exact labels live-restored, /disconnected/review-only, /history/context, and /ephemeral for restored or degraded states.
+  Amended 2026-10-09 (DL-181): in a terminal tab, /disconnected/review-only names the restored scrollback of an
+  earlier session that did not survive, not a state the tab stays in. A new session starts below that scrollback on
+  its own (SMPFS-180), so the tab is live again; Restart and rerun stay the actions for a session that ended while
+  the tab was open. A tab whose saved scrollback did not load says so before it offers review, copy or search of it.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -3626,6 +3700,7 @@ depends_on:
 - PNC-001
 - SP-001
 - UCC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-062 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -3662,7 +3737,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md, ContractName:Plans/assistant-chat-design.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): /disconnected/review-only is the restored scrollback of an earlier session; the terminal tab does not stay review-only, because a new session starts below it (SMPFS-180)."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -3787,7 +3863,12 @@ plan_unit_id: SMPFS-065
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Open in Terminal and Show Terminal are idempotent same-session reveal commands that reveal existing sections, tabs, and panes for the referenced session before considering new containers.
+canonical_text: >-
+  Open in Terminal and Show Terminal are idempotent same-session reveal commands that reveal the existing terminal tab
+  of the referenced session, wherever it is, before considering a new tab. Amended 2026-10-09 (DL-181): the tab is
+  activated in its panel, pulled out of "+N" and its collapsed panel expanded (`Plans/FinalGUISpec.md#F3-634`); the
+  former section, tab and pane containers become the one terminal tab (SMPFS-180), and a reveal never opens a second
+  tab for a session that has one.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -3798,6 +3879,7 @@ depends_on:
 - PNC-001
 - UCC-001
 - SP-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-065 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -3829,7 +3911,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): reveal targets the terminal tab wherever it is; sections and panes retire."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/UI_Command_Catalog.md
@@ -3899,7 +3982,13 @@ plan_unit_id: SMPFS-067
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The cross-platform capability matrix preserves PTY host/process supervision, shell integration metadata, docking/detach support, local and remote/multi-context launches, and deterministic degradation when capabilities are unavailable.
+canonical_text: >-
+  The cross-platform capability matrix preserves PTY host/process supervision, shell integration metadata, local and
+  remote/multi-context launches, and deterministic degradation when capabilities are unavailable. Amended 2026-10-09
+  (DL-181, DL-182): the matrix's docking and detached windows row now means a terminal tab in any panel and whatever
+  window presentation the panel owner offers (`Plans/FinalGUISpec.md#F3-630`); terminal sections no longer dock or
+  detach, and a presentation a platform cannot provide stays a disclosed constraint. Remote (SSH) sessions send images
+  by direct transmission only (SMPFS-181).
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -3910,6 +3999,8 @@ depends_on:
 - PNC-001
 - SP-001
 - PS-001
+- DL-181
+- DL-182
 unblocks: []
 acceptance_criteria:
 - SMPFS-067 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -3947,7 +4038,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
 compatibility_only_notes:
 - Legacy routing shorthand such as /SSH, /WSL/container-or-similar, /render, and /replaces resolves through process-host, renderer, and requested/effective host contracts.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the docking and detached windows row applies to terminal tabs in panels, not terminal sections."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -3961,7 +4053,13 @@ plan_unit_id: SMPFS-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Renderer modes, clipboard, IME, accessibility, text/selection model, TUI capture, terminal shortcuts, and requested/effective renderer disclosure remain first-class acceptance requirements across platforms.
+canonical_text: >-
+  Renderer modes, clipboard, IME, accessibility, text/selection model, TUI capture, terminal shortcuts, and
+  requested/effective renderer disclosure remain first-class acceptance requirements across platforms.
+  Amended 2026-10-09 (DL-183): terminal effects are not a renderer mode; they are the terminal's appearance layer
+  (`Plans/FinalGUISpec.md#F3-642`, `#F3-643`), and the optional /spectacle showcase mode retires in their favour.
+  Effective-state disclosure covers effects too: when the no-GPU path cannot draw an effect the user chose, the
+  terminal says what it could not draw.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -3973,6 +4071,7 @@ depends_on:
 - SP-001
 - PS-001
 - UCC-001
+- DL-183
 unblocks: []
 acceptance_criteria:
 - SMPFS-068 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -4009,8 +4108,10 @@ negative_constraints:
 - Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The /spectacle token is retired lineage since 2026-10-09 (DL-183)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): the /spectacle showcase render mode retires; terminal effects are the appearance layer of F3-643."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -4025,7 +4126,12 @@ plan_unit_id: SMPFS-069
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Platform acceptance covers macOS, Linux, Windows, WSL, Wayland, X11, dock/detach, package/runtime dependencies, and legacy shorthand resolved through process-host, renderer, and requested/effective capability contracts.
+canonical_text: >-
+  Platform acceptance covers macOS, Linux, Windows, WSL, Wayland, X11, dock/detach, package/runtime dependencies, and
+  legacy shorthand resolved through process-host, renderer, and requested/effective capability contracts.
+  Amended 2026-10-09 (DL-181, DL-182): the /dock/detach dimension now covers terminal tabs moving between panels and
+  the panel owner's window presentations (SMPFS-180), not terminal sections; image protocols (SMPFS-181) and the agent
+  rules (SMPFS-182) join the platform acceptance matrix.
 gui_related: false
 gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
 split_recommended: false
@@ -4036,6 +4142,8 @@ depends_on:
 - PNC-001
 - SP-001
 - PS-001
+- DL-181
+- DL-182
 unblocks: []
 acceptance_criteria:
 - SMPFS-069 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -4074,7 +4182,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
 compatibility_only_notes:
 - /SSH, /WSL/container-or-similar, /render, and /replaces are legacy shorthand resolved through canonical host/render contracts.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): platform dock/detach acceptance applies to terminal tabs in panels; images and agent rules join the matrix."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -4277,7 +4386,14 @@ plan_unit_id: SMPFS-073
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal performance requires off-UI-thread PTY and buffer work, diff/dirty-region painting, throttled rendering, bounded memory, stable scroll/selection/focus, and platform performance tests.
+canonical_text: >-
+  Terminal performance requires off-UI-thread PTY and buffer work, diff/dirty-region painting, throttled rendering,
+  bounded memory, stable scroll/selection/focus, and platform performance tests.
+  Amended 2026-10-09 (DL-181, DL-182, DL-183): whole-frame terminal effects (`Plans/FinalGUISpec.md#F3-643`) must not
+  defeat dirty-region painting: they are event-driven, run in the focused terminal only, stop when idle, and degrade
+  with disclosure on the no-GPU path; image stores count toward the bounded memory (SMPFS-181); one session per tab
+  removes the four-split terminal performance case. The native engine's performance targets come with the terminal's
+  next SPEC installment.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -4287,6 +4403,8 @@ depends_on:
 - PDS-005
 - PNC-001
 - SP-001
+- DL-181
+- DL-183
 unblocks: []
 acceptance_criteria:
 - SMPFS-073 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -4322,7 +4440,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-183): effects keep dirty-region painting; images count toward bounded memory; the four-split case retires."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md
@@ -6515,7 +6634,12 @@ plan_unit_id: SMPFS-108
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Terminal section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are guaranteed_durable presentation metadata.
+canonical_text: >-
+  Terminal tab placement, labels, pin state and linked dev-session references are guaranteed_durable presentation
+  metadata. Amended 2026-10-09 (DL-180, DL-181): the terminal tab's place, label and pin state live in the Home layout
+  record (`Plans/storage-plan.md#SP-330`) like every panel tab, and its appearance override in the tab's own
+  serialized state (`Plans/storage-plan.md#SP-331`); the former section, tab, pane, selection-of-active-pane and
+  dock/detach placement records retire and are read once as migration inputs (`Plans/storage-plan.md#SP-332`).
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
 split_recommended: false
@@ -6526,6 +6650,7 @@ depends_on:
 - PNC-001
 - SP-001
 - UCC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - SMPFS-108 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
@@ -6561,7 +6686,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
 - 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180, DL-181): durable terminal presentation is panel tab state in the Home layout record; section, pane and dock records are migration inputs."
 owner_hints:
 - Plans/Section15_MVP_Promoted_Features_Spec.md
 - Plans/storage-plan.md

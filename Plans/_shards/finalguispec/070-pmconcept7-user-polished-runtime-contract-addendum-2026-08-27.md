@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34775-L35205
+Source lines: L35363-L35805
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -256,14 +256,17 @@ canonical_text: >-
   no-op, and every other noncommitted outcome remain event-silent. No context.compaction.started or
   context.compaction.failed family is introduced.
   The full-width status bar participates in layout, never covers content, and contains no notification or bell item.
+  Amended 2026-10-09 (DL-180): Home seats the Assistant in the chat column fixed on the right, as every page does
+  (F3-637); there is no saved Home dock, and the only move is Pop out, which keeps the same Assistant identity and Dock
+  back returns to the column.
 gui_related: true
 gui_classification_reason: This unit governs the visible shared Assistant, Context ring/detail surfaces, and status bar continuity.
 split_recommended: false
-depends_on: [F3-513, ACD-448, WM-045, UIW-012]
+depends_on: [F3-513, ACD-448, WM-045, UIW-012, DL-180]
 unblocks: [F3-517, F3-518, ATS-037, ATS-038, ATS-040]
 acceptance_criteria:
   - "Exactly one Assistant node/controller/store identity exists and is re-seated across pages without transcript, draft, attachment, thread, or context loss."
-  - "A failed or stale re-seat restores the prior host and preserves the saved Home dock rather than creating a second Assistant or blank seat."
+  - "A failed or stale re-seat restores the Assistant in its column rather than creating a second Assistant or a blank seat (amended 2026-10-09, DL-180; the saved Home dock is retired)."
   - "The context ring and detail pane expose current-window percentage, effective context window, loaded tokens, cache hit, source composition, Curated/Raw details, routing/fallback, limits, and compaction history."
   - "Compact Now uses cmd.chat.compact_context result and receipt projection, with exactly one context.compaction.completed only after successful committed compaction under ACD-461 / SP-259 and no event for any noncommitted outcome; More Details reuses the existing Context Detail Pane commands."
   - "The status bar spans the application layout, does not cover content, and has no notifications or bell affordance."
@@ -294,6 +297,8 @@ negative_constraints:
   - "Do not create a second Assistant, transcript store, context store, or Context Detail Pane."
   - "Do not register context compaction lifecycle events merely to mirror a local working animation."
   - "Do not put notifications or a bell in the status bar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home seats that identity in its saved dock\" is retired; the chat column is fixed on the right on Home as on every page (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/assistant-chat-design.md]
 ```
 
@@ -326,10 +331,15 @@ canonical_text: >-
   and must not rewrite global theme tokens, Settings, or the protected Chat design. The title-bar page-overflow
   picker remains above and hit-testable at narrow widths; its ancestor edge-fade mask is disabled only while the
   picker is opening, open, or closing, so clicks cannot fall through to page controls beneath it.
+  Amended 2026-10-09 (DL-180): Home and Dashboard no longer keep distinct tab models: a dashboard is a tab in a panel's
+  one strip (F3-631, F3-638), and the shared Usage grammar for move, options, resize and settled sizing is one gesture
+  kit (DR-066) that moves panels and tabs in the split tree and widgets only inside a dashboard tab. Home's narrow
+  composition is the centre-width ladder of F3-636 (one panel column with a switcher, never a sideways scroll), and
+  "Home editor and terminal surfaces" read as panel tabs (F3-635).
 gui_related: true
 gui_classification_reason: This unit governs visible compatibility across shell, Home, Dashboard, panels, themes, and motion.
 split_recommended: false
-depends_on: [F3-513, F3-514, F3-516]
+depends_on: [F3-513, F3-514, F3-516, DL-180]
 unblocks: [F3-518, ATS-037, ATS-038, ATS-039]
 acceptance_criteria:
   - "Basic, Friendly, Retro, and Glass dark/light variants preserve the recovered font, palette, tab, panel, and inactive-state behavior without changing functional inventory; component-scoped contrast repairs do not mutate global theme tokens, Settings, or protected Chat surfaces."
@@ -371,6 +381,8 @@ negative_constraints:
   - "Do not let the outer presentation grid directly own or mutate Dashboard cards, and do not give pointer and keyboard movement different commit semantics."
   - "Do not accept geometry-only checks as proof that pixels and motion are correct."
   - "Do not use this repair lane to change Settings or Chat GUI bytes or to rewrite global theme tokens."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): \"Home and Dashboard preserve their distinct tab models\" is retired; the acceptance wording on Panel 1, Home editor and terminal surfaces and Home's single-column collapse reads through F3-630, F3-635 and F3-636."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 

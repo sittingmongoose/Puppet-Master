@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4825-L4933
+Source lines: L4833-L4945
 
-Source SHA256: `92a0b6989461936a42d30f23aee6d3dbcd01acd86cffd0d06f7e3345d147b301`
+Source SHA256: `675134f8f3a9b0f190562f18a68e18437407e488fd3b9f0bfad155729112a3b3`
 
 ---
 
@@ -23,6 +23,7 @@ The canonical dispositions are:
 |---|---|---|
 | Usage/Dashboard widget add, remove, configure, resize, move, reset | `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.configure`, `cmd.widget.resize`, `cmd.widget.move`, `cmd.widget.reset_layout` | One settled command updates the owner widget-layout store and records its command receipt; no pointer-preview frame is a domain event. |
 | Home shell surface move, resize, collapse, reset | `cmd.workspace_layout.move_surface`, `cmd.workspace_layout.resize_surface`, `cmd.workspace_layout.set_collapsed`, `cmd.workspace_layout.reset` | One changed release/activation commits `pm.home_workspace_layout.v1`; only that commit may produce the existing `workspace.layout_changed` effect. |
+| Home panel tabs and layout (amended 2026-10-09, DL-180) | `cmd.panel_tab.*` and the extended `cmd.workspace_layout.*` family (UCC-200); view state `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel` (CS-100) | One changed release or activation commits `pm.home_workspace_layout.v2` (SP-330) and emits `workspace.layout_changed`; the v1 row above is lineage. |
 | PM7 semantic Home size preset | Normalize the concept token `cmd.workspace_layout.size_surface` to `cmd.workspace_layout.resize_surface` after resolving `preset_id` to committed dimensions | `cmd.workspace_layout.size_surface` is concept/compatibility lineage only and is not a new primary registry row or handler. |
 | Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
 | Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
@@ -59,10 +60,11 @@ canonical_text: >-
   after preset resolution and never becomes a primary command. No pointer-preview event,
   PM7 command family, second Assistant command path, or rejected provider-management
   command is admitted.
+  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab. and extended cmd.workspace_layout. families of UCC-200 and commit the pm.home_workspace_layout.v2 record (SP-330); each emits workspace.layout_changed; Dashboard widget commits happen inside dashboard tabs addressed by board_id (WS-030); chat visibility stays cmd.panel.switch.
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
-depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250]
+depends_on: [CS-067, WS-019, WS-020, SP-249, SP-250, DL-180]
 unblocks: [UCC-147, WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Usage and Dashboard widget mutations reuse cmd.widget.add, remove, configure, resize, move, and reset_layout; one changed settled action creates one command receipt and no pointer-preview domain event.
@@ -112,6 +114,8 @@ negative_constraints:
   - Do not revive cmd.provider.usage.open_management.
   - Do not create a second Assistant command path or store.
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the v1 Home record and the Home rows here are superseded by UCC-200 on the v2 record."
 owner_hints:
   - Plans/Commands_System.md
   - Plans/UI_Command_Catalog.md

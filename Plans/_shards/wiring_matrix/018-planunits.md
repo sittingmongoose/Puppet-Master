@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L643-L2976
+Source lines: L649-L2986
 
-Source SHA256: `dbdf7e35e022eeec8877a0bb64fbf7fd541113817b17dead9eb010fe0ae1d531`
+Source SHA256: `3c0e5c94343cffc51ae2cd06c8693bdd23d6862e22a03ad99cc4778ba99ec40d`
 
 ---
 
@@ -381,6 +381,7 @@ depends_on:
 - PNC-001
 - WM-004
 - WM-007
+- DL-181
 unblocks: []
 acceptance_criteria:
 - WM-008 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -429,9 +430,11 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes:
+- 'The `detach`, `reattach` and `focus-session` tokens above are kept for lineage only: since DL-181 they name retired or alias ids with no wiring row (`Plans/Commands_System.md#CS-101`).'
 - 'Old work-item ledger `w-20260316-160450` lines 748-941 may be source-lineage evidence only and does not replace generated JSON entries.'
 stale_retired_dispositions:
 - 'Stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.'
+- 'Amended 2026-10-09 (DL-181): terminal coverage is the one-session-per-tab set of WM-091; detach, reattach and focus-session are retired or alias ids with no row (CS-101).'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/UI_Command_Catalog.md'
@@ -1257,7 +1260,7 @@ plan_unit_id: WM-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal reveal/show/rerun/detach/new/split/add/embed/focus/move/rename/pin/close/clear/restart/terminate/kill/reattach commands, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands.'
+canonical_text: 'Terminal, dev, and catalog wiring rows cover terminal open/reveal/show/rerun/focus/clear/restart/terminate/kill commands for one session per tab, dev session start/stop/restart/status commands, and catalog install/remove lifecycle commands. Amended 2026-10-09 (DL-181): the detach/new/split/add/embed/move/rename/pin/close/reattach terminal rows of the sections, workgroups, sub-tabs, panes and editor terminal stack model are retired and stay in the runtime-recovery table as lineage; a terminal tab is opened, moved, renamed, pinned, split and closed by the panel tab rows of WM-090, and the controls inside it are WM-091.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible terminal, dev, and catalog command wiring rows.'
 split_recommended: false
@@ -1267,6 +1270,7 @@ depends_on:
 - PDS-005
 - PNC-001
 - WM-004
+- DL-181
 unblocks: []
 acceptance_criteria:
 - WM-021 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -1322,8 +1326,10 @@ preserved_exact_tokens:
 - 'cmd.catalog.remove_item'
 negative_constraints: []
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- 'The preserved tokens cmd.terminal.detach, new_tab, activate_workgroup, activate_subtab, reorder_workgroup, reorder_subtab, split_pane, add_leaf, embed_in_editor, remove_from_editor, undock_all_from_editor, move_tab_to_section, rename_tab, pin_tab, close_pane, close_tab, detach_section and reattach_section are retired ids kept as lineage; cmd.terminal.restart_session is a retired spelling of cmd.terminal.restart_replace and cmd.terminal.focus_session an alias of cmd.terminal.focus (UCC-201, UCC-202).'
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-181): the terminal rows of the sections and workgroups model retire; one session per tab keeps open, reveal, show, rerun, focus, clear_scrollback, restart_replace, terminate_session and kill_session.'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/Section15_MVP_Promoted_Features_Spec.md'
@@ -1338,7 +1344,7 @@ plan_unit_id: WM-022
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, drag/drop layout concepts, and the rule that split-parent opacity effects must not dim terminal grids.'
+canonical_text: 'Terminal wiring preserves terminal workspace/session identity, distinguishing content-only actions from destructive workspace mutations, preserving `/replacement`, `/close`, `/disconnected/review-only`, `Concepts/PMConcept.html` GUI lineage, and the rule that split-parent opacity effects must not dim terminal grids. Amended 2026-10-09 (DL-181): the drag/drop layout concepts of workgroups, sub-tabs, split-pane trees and editor terminal stacks are retired; a terminal tab is moved, split and resized as a panel tab (WM-090), moving, collapsing, maximizing or hiding it never touches its session (SMPFS-180), and no drag, reorder or split preview dims a terminal''s screen.'
 gui_related: true
 gui_classification_reason: 'The unit preserves user-visible terminal identity, layout, and GUI concept lineage constraints.'
 split_recommended: false
@@ -1348,6 +1354,7 @@ depends_on:
 - PDS-005
 - PNC-001
 - WM-021
+- DL-181
 unblocks: []
 acceptance_criteria:
 - WM-022 remains addressable as a fine-grained Wiring Matrix PlanUnit with source-span coverage.
@@ -1381,15 +1388,10 @@ preserved_exact_tokens:
 - 'clear'
 - '/reset'
 - 'Concepts/PMConcept.html'
-- '/workgroup'
-- '/subtab'
-- 'split-pane tree operations'
-- 'multi-panel terminal stacks'
 - '/drop'
 - '/center/right'
 - '/right'
 - '/resizers'
-- 'accent-led subtab focus'
 - 'command-log removal'
 - 'must not dim terminal grids'
 negative_constraints:
@@ -1397,7 +1399,9 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes:
 - 'Concepts/PMConcept.html is GUI concept lineage only while preserving implied command coverage.'
-stale_retired_dispositions: []
+- 'Retired 2026-10-09 (DL-181), lineage only: /workgroup, /subtab, split-pane tree operations, multi-panel terminal stacks and accent-led subtab focus.'
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-181): the workgroup, sub-tab, split-pane tree and terminal stack layout tokens leave the preserved tokens; the identity rules and the no-dimming rule hold for terminal tabs in panels.'
 owner_hints:
 - 'Plans/Wiring_Matrix.md'
 - 'Plans/Section15_MVP_Promoted_Features_Spec.md'

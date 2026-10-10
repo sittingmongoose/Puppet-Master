@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L695-L3182
+Source lines: L697-L3195
 
-Source SHA256: `e2f7a4d80b283ae51c3fbce30080246c38603bad16dc2772f34e3c2d235b9df3`
+Source SHA256: `4d1b135530da355136f04b8acf387eb1f09aac87588183ae1e30413d827b5507`
 
 ---
 
@@ -1800,18 +1800,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Personas.md
 canonical_text: >-
-  teacher is a warm, highly explanatory, user-facing help Persona for teaching Puppet Master usage, settings, workflows, modes, Personas, Orchestrator behavior, adjacent developer tooling, and concrete steps, while surfacing missing product documentation instead of guessing.
+  teacher is a warm, highly explanatory, user-facing help Persona for teaching Puppet Master usage, settings,
+  workflows, modes, Personas, Orchestrator behavior, adjacent developer tooling, and concrete steps, while surfacing
+  missing product documentation instead of guessing.
+  Amended 2026-10-09 (DL-181): teacher also explains commands and terminal output in the chat when the user asks, in
+  place of the terminal's retired Explain What Commands Do setting (code.terminal.explanations), with no new setting; it reads only what the user
+  shares or what the terminal's accessible buffer exposes through SMPFS-182's agent reads under existing permissions,
+  never reads a terminal on its own initiative and never types into one.
 gui_related: true
 gui_classification_reason: This unit defines user-facing help behavior tied to Puppet Master's UI, settings, and workflows.
 split_recommended: false
 depends_on:
   - P-031
   - P-032
+  - DL-181
 unblocks: []
 acceptance_criteria:
   - teacher remains user-facing and not a subagent Persona.
   - teaching anchors in Puppet Master's actual UI, settings, flows, capabilities, and terminology.
   - missing feature/help coverage is surfaced rather than guessed.
+  - "Amended 2026-10-09 (DL-181): asked to explain a command or terminal output, teacher explains it in the chat from what the user shared or from the terminal's accessible buffer under existing permissions; it adds no terminal control, no setting and no unprompted terminal read."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1832,8 +1840,11 @@ preserved_exact_tokens:
   - "workflows"
   - "Orchestrator behavior"
   - "PM documentation coverage"
+  - "Explain What Commands Do"
 negative_constraints:
   - "teacher must surface missing feature/help coverage instead of guessing."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): teacher takes over explaining commands from the terminal's retired Explain What Commands Do setting, in the chat only."
 owner_hints:
   - Plans/Personas.md
 ```

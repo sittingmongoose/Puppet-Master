@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1204-L1547
+Source lines: L1229-L1575
 
-Source SHA256: `db711baae6304f4c31237a191c2082b2fa1927f0335f365800b690e34697555d`
+Source SHA256: `d9a445154e9671453c54de03c7420c14459c60203eab9d83e0016db3eff19ded`
 
 ---
 
@@ -304,7 +304,10 @@ canonical_text: >-
   and UF-060; filter payloads remain in that configuration record and are not copied into the layout record. Preview
   rectangles, pointers or pointer coordinates, ghosts,
   placeholders, animation state, and drafts or per-frame drafts are forbidden. A widget operation cannot write
-  the Home surface record, and a Home surface operation cannot write a widget-layout record.
+  the Home surface record, and a Home surface operation cannot write a widget-layout record. Amended 2026-10-09
+  (DL-180): Dashboard writes one namespace per board, `widget_layout:v1:dashboard:<board_id>` with `host_id`
+  `dashboard:<board_id>`, Home shell surfaces live in `home_workspace_layout.v2` (Plans/storage-plan.md#SP-330), and
+  `widget_layout:v1:dashboard` and `home_workspace_layout.v1` are read only as migration inputs (WS-030).
 gui_related: true
 gui_classification_reason: The record determines restored widget placement, semantic size, and cross-surface ownership.
 depends_on: [UF-060, WS-004, WS-009, WS-018, WS-019]

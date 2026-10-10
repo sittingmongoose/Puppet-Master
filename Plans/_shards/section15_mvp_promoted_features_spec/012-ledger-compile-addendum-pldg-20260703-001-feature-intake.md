@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8620-L8706
+Source lines: L8766-L8869
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
@@ -20,19 +20,34 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  P0-TERMINAL-PROTOCOL-MATRIX (P0) is compiled as canonical Puppet Master intent for Built-in GUI terminal protocol coverage: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements. The preserved PM gap/delta is: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation. The observed external-repo signal remains source-lineage evidence: Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy
-  fixes.
+  P0-TERMINAL-PROTOCOL-MATRIX (P0) is compiled as canonical Puppet Master intent for Built-in GUI terminal protocol
+  coverage: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol
+  fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only
+  requirements. The preserved PM gap/delta is: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4,
+  OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or
+  terminal-feature negotiation. The observed external-repo signal remains source-lineage evidence: Ghostty/tmux
+  current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling,
+  Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped
+  keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy fixes.
+  Amended 2026-10-09 (DL-181, DL-182): the replay corpus also covers APC kitty graphics commands (chunked, every
+  transmission medium and every delete selector), DCS sixel, OSC 1337 iTerm2 images (single and multipart), the kitty
+  keyboard protocol's CSI u (SMPFS-158), OSC 7, OSC 9, OSC 777, OSC 99, BEL and Puppet Master's secret-carrying
+  shell-integration records, each split at every byte boundary (SMPFS-130), with forged marks that lack the terminal's
+  secret as negative cases (SMPFS-181, SMPFS-183).
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
+- DL-182
 unblocks: []
 acceptance_criteria:
 - VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.
 - Parser output is deterministic across macOS/Linux/Windows/WSL fixtures.
 - Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- "Amended 2026-10-09 (DL-181, DL-182): the corpus replays APC kitty graphics, DCS sixel, OSC 1337, CSI u, OSC 7, OSC 9, OSC 777, OSC 99 and BEL, and forged shell-integration marks without the terminal's secret stay output."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -89,6 +104,8 @@ preserved_exact_tokens:
 - tmux/tmux
 - warpdotdev/warp
 negative_constraints: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-182): image protocols, OSC 7, notifications, BEL and secret-carrying marks join the replay corpus."
 observed_signal: Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy fixes.
 pm_current_coverage: PM Section15 has strong identity/lifecycle/interaction model, shell-integration tiers, cross-platform matrix, and parser-engine gates.
 pm_gap_or_delta: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation.

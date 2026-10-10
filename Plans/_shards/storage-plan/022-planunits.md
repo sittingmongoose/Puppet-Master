@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2375-L15036
+Source lines: L2387-L15090
 
-Source SHA256: `354348a85edc4cc54de98e1b424104cc92418378295ab3f9c786655cc7fdddf2`
+Source SHA256: `168d473174b407835e6656fbd5c861626b4ec1eee31622b63d06b63c0c6f3ca0`
 
 ---
 
@@ -797,7 +797,7 @@ plan_unit_id: SP-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage treats promoted shell/runtime IDs as first-class identities, including workspace, window, browser, preview, terminal section/tab/pane/session, dev session, branch lineage, detached scope, and subordinate command-block identity."
+canonical_text: "Storage treats promoted shell/runtime IDs as first-class identities, including workspace, window, browser, preview, terminal section/tab/pane/session, dev session, branch lineage, detached scope, and subordinate command-block identity. Amended 2026-10-09 (DL-180, DL-181): a terminal is a panel tab of kind terminal whose tab id is terminal:<session> minted from the session it was first opened with and kept when Restart or a restore gives it a new session; terminal_section_id and terminal_pane_id are legacy identities read only by the SP-330 conversion; terminal_session_id, dev_session_id and command-block subordination are unchanged (SP-332)."
 gui_related: true
 gui_classification_reason: "This unit preserves user-visible workspace, browser, terminal, preview, and branch continuity identity."
 split_recommended: false
@@ -808,6 +808,8 @@ depends_on:
 - "PNC-001"
 - "CV-001"
 - "F3-001"
+- "DL-180"
+- "DL-181"
 unblocks: []
 acceptance_criteria:
 - "SP-014 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
@@ -851,7 +853,8 @@ preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md"
 - "ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md"
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal section and pane identities become legacy migration inputs; the terminal tab is a panel tab (SP-330, SP-332)."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/Section15_MVP_Promoted_Features_Spec.md"
@@ -5301,7 +5304,8 @@ plan_unit_id: SP-093
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob.
+canonical_text: >-
+  Terminal and dev-session record families preserve workspace tab, section, tab, pane, leaf-pane, workgroup, panel, session, command-block, and dev-session identity without collapsing terminal restore into one bottom-panel blob. Amended 2026-10-09 (DL-181): the workspace, section, tab, pane, leaf-pane, workgroup and editor-terminal-panel families are read-only migration inputs; terminal placement lives in the v2 Home record (SP-330) and session, command-block and dev-session records stay current (SP-332). The no-single-blob rule stands.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible terminal layout continuity plus dev-session restoration identities.
 split_recommended: true
@@ -5310,6 +5314,8 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
+- SP-332
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
@@ -5344,7 +5350,8 @@ negative_constraints:
 - Terminal restore must not collapse into one bottom-panel blob.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): seven terminal layout families become read-only migration inputs (SP-332)."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -5679,7 +5686,8 @@ plan_unit_id: SP-100
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity.
+canonical_text: >-
+  Canonical field-level minima preserve attempt, terminal workspace/section/tab/pane/workgroup/session/command-block, and dev_session records, including SCM refs, terminal layout/focus/transcript anchors, and dev workflow continuity without replacing exact PTY reuse identity. Amended 2026-10-09 (DL-181): the layout and focus minima of the terminal workspace, section, tab, pane and workgroup records describe migration inputs only; a terminal tab's placement and focus are minima of the v2 Home record (SP-330), and terminal_session_record carries an optional tab_id (SP-332).
 gui_related: true
 gui_classification_reason: This unit preserves terminal GUI layout/focus fields and backend attempt/dev-session minima.
 split_recommended: true
@@ -5688,6 +5696,8 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
+- SP-332
 unblocks: []
 acceptance_criteria:
 - Terminal command-block field minima use the registered v2 value at the unchanged v1 key and the Terminal command-block value migration mapping; observed nullable facts, source evidence, confidence and status-null compatibility semantics remain explicit.
@@ -5731,7 +5741,8 @@ negative_constraints:
 - dev_session_id owns higher-level dev workflow continuity and must not replace terminal_session_id when exact PTY reuse is required.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal layout and focus minima move to the v2 Home record (SP-330, SP-332)."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -6540,7 +6551,8 @@ plan_unit_id: SP-114
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Runtime-linked workspace, terminal, and dev-session identity fields stay explicit for workspace tabs, terminal sections/tabs/panes/leaf panes/workgroups/panels/sessions, and dev sessions.
+canonical_text: >-
+  Runtime-linked workspace, terminal, and dev-session identity fields stay explicit for workspace tabs, terminal sections/tabs/panes/leaf panes/workgroups/panels/sessions, and dev sessions. Amended 2026-10-09 (DL-181): new runtime snapshots carry terminal_tab_id? as the panel tab id of a terminal tab and terminal_session_id?; terminal_section_id?, terminal_pane_id?, terminal_leaf_pane_id?, terminal_workgroup_id? and editor_terminal_panel_id? remain readable on older snapshots and are not written.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal/workspace/developer session identity fields.
 split_recommended: false
@@ -6549,6 +6561,8 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
+- SP-332
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
@@ -6580,7 +6594,8 @@ preserved_exact_tokens:
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): section, pane, leaf-pane, workgroup and editor-terminal-panel ids are read-only on older snapshots."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -6775,7 +6790,8 @@ plan_unit_id: SP-118
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: terminal_state:v1 may remain a GUI-facing projection name, but canonical ownership stays with terminal workspace, section, workgroup, tab, leaf-pane, panel, session, and command-block records, and route restoration resolves through canonical record identity.
+canonical_text: >-
+  terminal_state:v1 may remain a GUI-facing projection name, but canonical ownership stays with terminal workspace, section, workgroup, tab, leaf-pane, panel, session, and command-block records, and route restoration resolves through canonical record identity. Amended 2026-10-09 (DL-180, DL-181): canonical ownership is now the v2 Home layout record (SP-330) for where a terminal tab sits, and terminal_session_record and terminal_command_block for sessions and history; the section, workgroup, pane and panel records are migration inputs (SP-332).
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal projection naming and route restoration behavior.
 split_recommended: false
@@ -6784,6 +6800,9 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
+- DL-181
+- SP-332
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for storage-plan-S0077.
@@ -6819,7 +6838,8 @@ negative_constraints:
 - Route restoration resolves through canonical record identity, not through feature-local ad hoc payloads.
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the ownership list moves from sections and workgroups to the v2 Home record and the session records."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -7009,9 +7029,12 @@ owner_hints:
 ```yaml
 plan_unit_id: SP-122
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: SP-332
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage-plan is the canonical source for decomposed terminal persistence key families from terminal_session.v1 through terminal_color.v1:global, with terminal_state:v1 retained only as a FinalGUISpec subset alias.
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The nine prose-only terminal keys are retired as a decomposition: each maps to a registered family, an owner or a rule in SP-332 (session record, the v2 Home record, command blocks, Settings, the Project's Settings, cwd_ref, saved scrollback and SP-331's appearance layers). The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by SP-332 (DL-181).
+  Storage-plan is the canonical source for decomposed terminal persistence key families from terminal_session.v1 through terminal_color.v1:global, with terminal_state:v1 retained only as a FinalGUISpec subset alias.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal persistence, layout, font, and color state key families.
 split_recommended: false
@@ -7020,6 +7043,7 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
@@ -7056,7 +7080,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md'
 compatibility_only_notes:
 - FinalGUISpec section 15.1 references terminal_state:v1 as a subset alias.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-181): replaced by SP-332's mapping of the nine keys."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -7068,7 +7093,8 @@ plan_unit_id: SP-123
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state.
+canonical_text: >-
+  Terminal project, section, and tab records preserve project settings, restore flags, dock state/zone, detached bounds, tab order, labels, active state, layout_style, and review_only state. Amended 2026-10-09 (DL-181): the terminal_sections and terminal_tabs records, with dock_state, dock_zone, detached_window_bounds and layout_style, are read-only migration inputs (SP-332); a terminal tab's place, order, label and active state live in the v2 Home record (SP-330); the project restore flag and settings reference remain, and review_only becomes part of the terminal tab's serialized state.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal project, section, tab, layout, and detached-window state.
 split_recommended: false
@@ -7077,6 +7103,9 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
+- SP-330
+- SP-332
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
@@ -7116,7 +7145,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): sections, docking, detached bounds and layout style retire with the terminal zone."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -7128,7 +7158,8 @@ plan_unit_id: SP-124
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation.
+canonical_text: >-
+  Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation. Amended 2026-10-09 (DL-181): the identity split is now tab and session: a terminal tab in the v2 Home record (SP-330) shows one session, whose terminal_session_record has an optional tab_id (SP-332); panes and sections are migration inputs; restore still rebuilds placement and bindings before the terminal runtime checks liveness.
 gui_related: true
 gui_classification_reason: This unit preserves visible terminal panes, session bindings, labels, layout style, and restore flow.
 split_recommended: false
@@ -7137,6 +7168,8 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-181
+- SP-332
 unblocks: []
 acceptance_criteria:
 - Historical command-block display consumes the Terminal command-block value migration mapping; qualified completion survives later backing loss, unknown exit does not imply success, and restored running metadata proves no current liveness.
@@ -7176,7 +7209,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the section/tab/pane/session split becomes tab/session."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -7248,7 +7282,8 @@ plan_unit_id: SP-126
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Storage owns durable joins for tab/pane/session and tab/pane/session/dev-session lookups; routing and open selectors persist terminal and optional dev_session_id refs and recover by those refs rather than labels, titles, or legacy cmd.dev.* hidden-gap assumptions.
+canonical_text: >-
+  Storage owns durable joins for tab/pane/session and tab/pane/session/dev-session lookups; routing and open selectors persist terminal and optional dev_session_id refs and recover by those refs rather than labels, titles, or legacy cmd.dev.* hidden-gap assumptions. Amended 2026-10-09 (DL-180, DL-181): the durable joins are tab/session and tab/session/dev-session, where tab is the panel tab id of a terminal tab; terminal_section_id and terminal_pane_id refs in older selectors resolve through the SP-330 conversion to that tab, never by label.
 gui_related: false
 gui_classification_reason: This unit preserves backend terminal route/open identity and lookup semantics.
 split_recommended: false
@@ -7257,6 +7292,9 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-180
+- DL-181
+- SP-330
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
@@ -7294,7 +7332,8 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes:
 - legacy cmd.dev.*-only hidden-gap assumptions are compatibility-only context, not canonical recovery authority.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): /tab/pane/session joins become /tab/session."
 owner_hints:
 - Plans/storage-plan.md
 ```
@@ -7306,7 +7345,7 @@ plan_unit_id: SP-127
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit.'
+canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit. Amended 2026-10-09 (DL-183): terminal appearance is stored as SP-331 says (the app and project defaults as SSYS-051''s Settings rows, one shared value per field until an app-wide store is admitted, and the per-tab override inside the terminal tab''s state); terminal layout and restore placement belong to the panel system (SP-330), not the Terminal settings; a terminal tab is a panel tab of kind terminal.'
 gui_related: true
 gui_classification_reason: This unit preserves visible Terminal GUI settings grouping, theming discoverability, shortcuts, labels, and storage-backed settings.
 split_recommended: false
@@ -7315,6 +7354,8 @@ depends_on:
 - PDS-004
 - PDS-005
 - PNC-001
+- DL-183
+- SP-331
 unblocks: []
 acceptance_criteria:
 - This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
@@ -7358,7 +7399,8 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-183): per-tab overrides, font and colour references become SP-331's layers."
 owner_hints:
 - Plans/storage-plan.md
 ```

@@ -2,15 +2,17 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42061-L42497
+Source lines: L42704-L43142
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 
 This addendum compiles the owner decision DL-162: on 2026-10-09 Jared chose concept D, "Polish", of the left-rail review copy `Concepts/LeftRailPMConcept7.html` for the left rail. Polish keeps the Cozy Shelves structure and its coloured shelf boxes (F3-472, F3-474, F3-497) and polishes them: tighter geometry where horizontal space is short, one readable type ladder, statuses as glyph and word instead of pills, text that fits by layout instead of by abbreviation, the chat's picker for every dropdown, and motion in each theme family's own voice. The units below own the rail's presentation only; behaviour, state vocabularies and commands stay with the panel owners (`Plans/FileManager.md`, `Plans/Source_Control_System.md`, `Plans/Jujutsu_Integration.md`, `Plans/WorktreeGitImprovement.md`, `Plans/GitHub_Integration.md`, `Plans/Containers_Registry_and_Unraid.md`, `Plans/Automated_Testing_System.md`, `Plans/Runtime_Artifacts_Panel.md`, and the Run & Debug and Agents units F3-482 to F3-496, F3-452 and F3-477), and `Plans/DRY_Rules.md#DR-057` keeps this grammar in one place. F3-480 (3) is amended in place for the rail. The concept is source lineage only (`Concepts/leftrail-redesign/src/concepts/d/` at commit c93e341606): its class names, its measured pixel values outside these units and its demo data are not canon. Settled later on 2026-10-09 under the same decision: the Jujutsu view of Source Control has its own five tabs (DL-163, F3-623 and F3-624); the remaining six panels and the bottom Debug tab take this grammar through amendments in their owner units, with no new command, action or wiring row; and the activity bar's More tray is F3-625. Published on 2026-10-09: `Concepts/PMConcept7.html` carries the Polish rail, built into it through the opus-5.5 build from the same concept sources the review copy uses, and the review copy `Concepts/LeftRailPMConcept7.html` keeps concepts A, B and C and "Original", the rail before Polish (still reached as `current`), for comparison. The NieR Mode kit reaches the rail through two hooks it now names, a cursor hook for rail rows and picker items and a brackets hook for chosen tabs whose box changes when chosen (F3-621); both are concept plumbing, not canon.
+
+Amended 2026-10-09 (DL-180): the bottom Debug tab named above is now a tab of the Debug Console tool kind (`debug_console`, F3-635) in whichever panel holds it, placed beside the terminals by F3-634; there is no bottom zone (F3-490 as amended). Nothing else in this addendum changes.
 
 ### F3-618 — The Left Rail's Geometry, Shelves And Type
 

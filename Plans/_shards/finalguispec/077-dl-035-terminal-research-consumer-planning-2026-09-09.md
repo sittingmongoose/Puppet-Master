@@ -2,15 +2,17 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L37447-L37781
+Source lines: L38061-L38414
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
 ## DL-035 terminal research consumer planning - 2026-09-09
 
-DL-035 authorizes P3–P10 planning under the PM-owned terminal engine and host direction. The following consumers use Section15 SMPFS-158 through SMPFS-165; they do not re-own parsing, host selection, output truth, commands or durable storage. Existing native terminal layout, accessible focus/input, selection, output-read and command-palette parity contracts remain in force. No change to the current visual style, pane topology or Settings manager kit is implied. Unknown capabilities and missing native/platform evidence remain explicitly unavailable, degraded or not_run. Accepted planning is not implementation or shipping acceptance.
+Amended 2026-10-09 (DL-181): the terminal's look and topology have changed since these consumers were written. A terminal is one session per tab in the universal panels (F3-640 to F3-646, SMPFS-180) with the appearance of DL-183, and the P3 to P10 behaviours below carry over unchanged into the terminal tab; F3-544's image sentence gives way to DL-182 (SMPFS-181, F3-645), and F3-546 and F3-549 now speak of the terminal tab where they said pane.
+
+DL-035 authorizes P3–P10 planning under the PM-owned terminal engine and host direction. The following consumers use Section15 SMPFS-158 through SMPFS-165; they do not re-own parsing, host selection, output truth, commands or durable storage. Existing native terminal layout, accessible focus/input, selection, output-read and command-palette parity contracts remain in force. No change to the Settings manager kit is implied; the current visual style and pane topology this sentence also kept are changed by DL-181 to DL-183. Unknown capabilities and missing native/platform evidence remain explicitly unavailable, degraded or not_run. Accepted planning is not implementation or shipping acceptance.
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-035, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Automated_Testing_System.md#ATS-047
 
@@ -25,7 +27,7 @@ canonical_text: Terminal, Chat and Output project owner-qualified enhanced keybo
   and provider snapshot continuity truth. Requested keyboard capability is distinct from tested effective capability;
   richer prompt metadata cannot invent authoritative command boundaries. Provider output displays append, complete
   snapshot, rolling/truncated snapshot or final-result semantics consistently, without presenting rewritten previews
-  as an exact transcript.
+  as an exact transcript. Image protocols are not this consumer's to approve; DL-182 decides them (SMPFS-181, F3-645).
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
   is directly specified.
@@ -35,6 +37,7 @@ depends_on:
 - SMPFS-159
 - SMPFS-160
 - F3-360
+- DL-182
 unblocks: []
 acceptance_criteria:
 - P3 shows the requested/effective versioned keyboard profile and an actionable unsupported/degraded reason when
@@ -68,9 +71,12 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0006
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0007
 negative_constraints:
-- No image protocol, provider integration, additional environment collection, multiple-snapshot retention policy
-  or terminal reference-code reuse is approved by this consumer.
+- No provider integration, additional environment collection, multiple-snapshot retention policy or terminal
+  reference-code reuse is approved by this consumer; image protocols are approved by DL-182, not by this consumer
+  (SMPFS-181, F3-645).
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): the earlier constraint read 'No image protocol, provider integration, additional environment collection, multiple-snapshot retention policy or terminal reference-code reuse is approved by this consumer.'; images are no longer excluded, because DL-182 approves kitty graphics, sixel and iTerm2 images (SMPFS-181, F3-645)."
 ```
 
 ### F3-545 - Explicit Remote Terminal Compatibility Setup
@@ -126,14 +132,15 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-546 - Pane Local Advisory Command Progress
+### F3-546 - Tab Local Advisory Command Progress
 
 ```yaml
 plan_unit_id: F3-546
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: OSC 9;4 projects pane-local advisory command progress using the Section15 attribution and deterministic
+canonical_text: OSC 9;4 projects tab-local advisory command progress (pane-local before DL-181; now inside the terminal
+  tab that owns the session, F3-641) using the Section15 attribution and deterministic
   notification-collision rule. The visible and accessible state distinguishes advisory progress from independently
   known command execution outcome; it supplies no command, Goal or work-record completion authority.
 gui_related: true
@@ -143,6 +150,7 @@ split_recommended: false
 depends_on:
 - SMPFS-162
 - SMPFS-023
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Progress is scoped to the exact session and to a command only when authoritative boundaries support that association.
@@ -172,6 +180,9 @@ source_lineage:
 negative_constraints:
 - No taskbar/dock aggregation, new notification semantics or progress-derived lifecycle authority is included.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the progress is scoped to the terminal tab that owns the session, since a terminal no longer has panes."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Pane Local Advisory Command Progress' before terminal panes retired."
 ```
 
 ### F3-547 - Safe Command Insertion And Retained Output Editor Actions
@@ -286,7 +297,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 ```
 
-### F3-549 - Explicit Live Pane Input Protection
+### F3-549 - Explicit Live Terminal Tab Input Protection
 
 ```yaml
 plan_unit_id: F3-549
@@ -297,6 +308,9 @@ canonical_text: A live terminal pane offers explicit idempotent enable/disable i
   accessible protected state while output continues. Protection is distinct from historical review, process suspension
   and session termination; unlock retains the exact live session. Protection is retained for the same verified live
   session across reconnect and PM reopen; a replacement session starts unlocked. DL-038 protection covers user and agent input, with explicit blocked results for agents.
+  Since DL-181 the live terminal pane is the terminal tab, which holds one session in the panels' split tree (F3-640);
+  moving, collapsing, maximizing or hiding the tab keeps the session and its protection, and protection also blocks
+  an agent that holds Allow in this terminal (F3-646).
 gui_related: true
 gui_classification_reason: Visible terminal capability, action, settings, accessibility or projection acceptance
   is directly specified.
@@ -308,6 +322,7 @@ depends_on:
 - UCC-160
 - WM-052
 - UIW-021
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Use cmd.terminal.input_protection.enable and cmd.terminal.input_protection.disable; do not substitute a non-idempotent
@@ -340,6 +355,10 @@ source_lineage:
 - Plans/Decision_Log.md#DL-035
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
-- No arbitrary pane trees, group or zoom features are introduced; protection cannot transfer as a pane preference to a replacement session or imply agent bypass.
+- This unit adds no split, group or zoom of its own (terminal tabs live one session per tab in the panels' split tree,
+  F3-630 and F3-640); protection cannot transfer as a pane preference to a replacement session or imply agent bypass.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the clause 'No arbitrary pane trees, group or zoom features are introduced' is superseded by one session per tab in the panels' split tree, whose maximize is the panels' own; the input protection rules are kept unchanged."
+- "Retitled 2026-10-09 (DL-181): the heading was 'Explicit Live Pane Input Protection' before terminal panes retired."
 ```

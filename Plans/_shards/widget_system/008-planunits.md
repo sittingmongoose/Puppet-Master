@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L132-L1015
+Source lines: L136-L1025
 
-Source SHA256: `db711baae6304f4c31237a191c2082b2fa1927f0335f365800b690e34697555d`
+Source SHA256: `d9a445154e9671453c54de03c7420c14459c60203eab9d83e0016db3eff19ded`
 
 ---
 
@@ -436,7 +436,7 @@ plan_unit_id: WS-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace.'
+canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace. Amended 2026-10-09 (DL-180): each dashboard board writes its own namespace `widget_layout:v1:dashboard:<board_id>`, with the app default and project override applied per board; `widget_layout:v1:dashboard` converts into `widget_layout:v1:dashboard:home` on first read, is never reset, and stays only as a read-only migration input and rollback backup, like `dashboard_layout:v1` (WS-030).'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible layout persistence and migration behavior.'
 split_recommended: false
@@ -447,8 +447,10 @@ depends_on:
 - PNC-001
 - WS-002
 - WS-010
+- DL-180
 unblocks: []
 acceptance_criteria:
+- 'Amended 2026-10-09 (DL-180): every dashboard board restores from and writes to its own `widget_layout:v1:dashboard:<board_id>`, and no write after migration goes to `widget_layout:v1:dashboard` (WS-030).'
 - WS-009 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
@@ -488,6 +490,7 @@ compatibility_only_notes:
 - 'Retired Orchestrator layout namespaces remain compatibility-only import evidence, not live widget layout targets.'
 stale_retired_dispositions:
 - 'Migration from legacy `dashboard_layout:v1` must retire stale orchestration-hostability assumptions rather than preserve them as peer canon.'
+- 'Amended 2026-10-09 (DL-180): the single Dashboard namespace becomes one namespace per dashboard board, and `widget_layout:v1:dashboard` becomes a read-only migration input into the Home board (WS-030).'
 owner_hints:
 - 'Plans/Widget_System.md'
 - 'Plans/storage-plan.md'
@@ -713,7 +716,7 @@ plan_unit_id: WS-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Widget_System.md
-canonical_text: 'Dashboard may host a curated subset of Progress widgets and some Usage widgets, while deep inspection surfaces remain non-hostable native tabs. Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas.'
+canonical_text: 'Dashboard may host a curated subset of Progress widgets and some Usage widgets, while deep inspection surfaces remain non-hostable native tabs. Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas. Amended 2026-10-09 (DL-180): every dashboard tab may host every Usage widget, not only some (`Plans/usage-feature.md#UF-062`, which wins over the four-widget catalogue of `Plans/FinalGUISpec.md#F3-279`); the curated Progress subset stands, and further Orchestrator widgets join after the Orchestrator page has its own redesign (WS-030).'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible cross-surface widget hostability boundaries.'
 split_recommended: false
@@ -724,8 +727,10 @@ depends_on:
 - PNC-001
 - WS-002
 - WS-010
+- DL-180
 unblocks: []
 acceptance_criteria:
+- 'Amended 2026-10-09 (DL-180): the Add widget flow of every dashboard tab offers every Usage widget, and no four-widget limit applies (WS-030).'
 - WS-013 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
@@ -758,7 +763,8 @@ negative_constraints:
 - 'Source Control is a constrained side-panel and `/small` surface, not a broad widget canvas.'
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): "some Usage widgets" now reads every Usage widget, on every dashboard tab (WS-030).'
 owner_hints:
 - 'Plans/Widget_System.md'
 - 'Plans/FinalGUISpec.md'

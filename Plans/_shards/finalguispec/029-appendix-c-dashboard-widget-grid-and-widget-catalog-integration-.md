@@ -2,15 +2,17 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L4086-L4174
+Source lines: L4303-L4393
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
 ## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
 
 This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
+
+Amended 2026-10-09 (DL-180, DL-184): a dashboard is now a tab kind and several boards may be open (F3-638); a dashboard tab can show every Usage widget, Orchestrator widgets after that page's redesign, so C.4's four-entry named catalogue and C.4.1's limit no longer bind dashboard tabs (`Plans/usage-feature.md#UF-062`, `Plans/Widget_System.md#WS-030`); C.1's window-width columns yield to the tab's own width (F3-636, F3-638); and the call-to-action cards' accent-left-border is retired (F3-648). The sentences below that said otherwise are amended in place.
 
 ### C.1 Dashboard Upgrade: Card Grid to Widget Grid
 
@@ -20,12 +22,12 @@ The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (d
 **What changes from section 7.2:**
 - Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.
 - Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).
-- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).
+- Grid system follows the Usage widget board inside the dashboard tab; its column count follows the tab's own width, never the window (amended 2026-10-09, DL-180; F3-638, WS-030; the window-width counts of section 12.3 are lineage).
 - Widget gutters: 8px (MD spacing token) between widgets.
 
 **What stays the same from section 7.2:**
 - All existing Dashboard card types remain as default widgets.
-- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
+- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards (the accent-left-border is retired, amended 2026-10-09, DL-184; F3-648).
 - CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, warning, and `wizard_attention_required` cards function identically (see §7.2 for full specs).
 - Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
 
@@ -60,7 +62,7 @@ Widget_System consumes this named catalog directly; it does not invent new widge
 
 ### C.4.1 Larger Widget Library Compatibility Note
 
-Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable.
+Earlier Appendix C drafts listed a broader `widget.*` library, including Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.) and Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.). That list is compatibility/candidate-library lineage only for Dashboard hosting. It is not the Dashboard named catalog, and it does not authorize Widget_System to invent IDs. A Dashboard widget outside the four named entries in C.4 must be promoted by its owning doc before it becomes selectable. Promoted 2026-10-09 (DL-180): every Usage widget is selectable in a dashboard tab (UF-062, F3-638, WS-030); Orchestrator widgets follow after that page's redesign.
 
 Dashboard customization still uses the explicit **"Add Widget"** control from C.3, including menu, floating action button, or toolbar entrypoints, but the selectable set is the named catalog unless an owner promotes a new dashboard widget.
 

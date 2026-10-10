@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22481-L22793
+Source lines: L22640-L22958
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -19,10 +19,14 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Assistant Chat must expose visible Goal Mode activation and control paths without re-owning Goal Runtime policy. Users can start goals through a button, chip, icon, `/goal`, or natural-language activation. Assistant Chat supports a pre-goal shaping flow where the assistant helps create a goal prompt, acceptance criteria, constraints, and stop conditions before the user switches to Goal Mode. A visible active-goal indicator shows goal state labels including Running, Stopped, Paused, Blocked, and Complete, with Blocked carrying the precise blocker reason when available. Thread controls support pause, resume, stop, clear, edit, and update; stopped_by_user and cleared_from_thread remain distinct runtime states. The active Goal chip/status opens a menu or drawer with View goal, Edit goal, Pause, Resume, Stop, Clear, Show tasks, Show subgoals, and Show evidence/logs. Active-goal updates can be initiated with `/goal again`, asking for an update, or clicking a little icon next to the goal status. The Goal chip is separate from chat mode so Ask, Agent, Debug, Plan, Deep Plan, Agent + Goal, Debug + Goal, Plan + Goal, and Crew + Goal remain compatible presentation concepts. Goal UI reuses PMConcept cues including chat mode dropdown, slash command menu, sticky plan tracker, thread working pulse, context usage, active subagent indicator, files touched, message blocks, and hover/runtime popovers.
+  Amended 2026-10-09 (DL-180): View goal shows the Goal in Activity Detail's Goal panel
+  (Plans/FinalGUISpec.md#F3-593); there is no Goal tab (DL-147, ACD-500).
 gui_related: true
 gui_classification_reason: This unit defines user-visible chat activation paths, chips, indicators, and thread controls.
 depends_on:
   - GRS-002
+  - DL-180
+  - ACD-500
 unblocks: []
 acceptance_criteria:
   - Assistant Chat exposes button/chip/icon, `/goal`, and natural-language activation paths.
@@ -115,6 +119,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not make a running goal indistinguishable from ordinary chat mode.
   - Do not let Assistant Chat invent a lifecycle that diverges from Goal Runtime state.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): View goal shows the Goal panel of Activity Detail; the chat's Goal tab is gone (DL-147)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Goal_Runtime_System.md

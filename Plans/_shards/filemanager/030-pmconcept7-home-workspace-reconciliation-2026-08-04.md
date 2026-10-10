@@ -2,13 +2,20 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4894-L4978
+Source lines: L4957-L5052
 
-Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
+Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
 
 ---
 
 ## PMConcept7 Home Workspace reconciliation — 2026-08-04
+
+Superseded 2026-10-09 (DL-180): Home is one universal panel system (`Plans/FinalGUISpec.md#F3-630`). The four stable
+editor panel identities, the Open in Panel submenu with Panel 1 to Panel 4, `target_editor_panel_id` routing and the
+floating editor panels below are retired; the file tree opens files by F-090 through the opening module of
+`#F3-634`. F-080 is superseded by F-090. What survives: an open from the tree renders the file in the tab it opens or
+reveals, never a placeholder, and closing a panel or a tab never silently discards a shared buffer, its dirty state,
+undo history or save authority: a dirty editor tab asks first (`#F3-635`).
 
 Amended 2026-08-12 — `Open in Panel` must open the file, in every panel. A leaf routes
 through the canonical open path so the buffer is added to the panel's open-tab model, the
@@ -57,13 +64,16 @@ it is not a limit on the Home workspace implementation.
 ```yaml
 plan_unit_id: F-080
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/FileManager.md
-canonical_text: File Manager and editor routing use four stable editor panel identities; a compact body-portaled Open in Panel submenu dispatches cmd.file.open to the requested panel and its active or explicit editor group, while Browser routing reuses one Browser session in any panel without an agent.
+superseded_by: F-090
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four stable editor panels and the Open in Panel submenu with Panel 1 to Panel 4 are retired: Home is one universal panel system, the file tree opens files through the one opening module, and its context menu offers Open, Open in new panel and Open to the side. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by F-090 (DL-180).
+  File Manager and editor routing use four stable editor panel identities; a compact body-portaled Open in Panel submenu dispatches cmd.file.open to the requested panel and its active or explicit editor group, while Browser routing reuses one Browser session in any panel without an agent.
 gui_related: true
 gui_classification_reason: This unit owns the user-visible file/editor target routing and non-destructive close/reopen behavior.
 split_recommended: false
-depends_on: [F-079, F3-501, UCC-144, CV-323]
+depends_on: [F-079, F3-501, UCC-144, CV-323, DL-180]
 unblocks: []
 acceptance_criteria:
 - The File Manager context menu contains one Open in Panel submenu with exactly Panel 1 through Panel 4 leaf actions.
@@ -91,5 +101,6 @@ compatibility_only_notes:
 - target_group remains a migration alias of target_editor_group_id.
 stale_retired_dispositions:
 - The one-floating-editor limit is retired.
+- 'Superseded 2026-10-09 (DL-180): the four stable editor panel identities, the Open in Panel submenu and target_editor_panel_id routing retire; the file tree opens files by F-090 and the opening module of F3-634.'
 owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
 ```

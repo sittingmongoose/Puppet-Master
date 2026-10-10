@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3634-L12504
+Source lines: L3878-L13192
 
-Source SHA256: `07c9e45a17cbf53fc94e9d79d4f2326b200c9be7d0dbdf526c7dfede2eb9e584`
+Source SHA256: `7f4e2ea8893dd53c1abd9e6f97d6a75789ee51c90601be92b4995af5d659b74b`
 
 ---
 
@@ -1863,6 +1863,9 @@ canonical_text: >-
   component package with verified provenance and disclosed OS fallback;
   P3 through P10 are accepted for planning; P11 is accepted for evaluation only
   with selection held until PM Server ownership compatibility is resolved.
+  Amended 2026-10-09: image protocols, left out of these decisions, are decided
+  by DL-182, and an image decoder is not a terminal emulator, parser or
+  PTY-abstraction library under P1.
 gui_related: true
 gui_classification_reason: P7 through P10 add visible terminal surfaces and actions; the engine and host choices are non-GUI.
 split_recommended: false
@@ -8878,4 +8881,445 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Jujutsu_Integration.md
   - Plans/Source_Control_System.md
+```
+
+### DL-180 - Home Becomes One Universal Panel System And The Chat Stays Fixed On The Right
+
+```yaml
+plan_unit_id: DL-180
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-180 records Jared's decisions of 2026-10-09 on the home page, the first Decision Log entry about the home layout.
+  The middle of the window becomes one universal panel system: an n-ary split tree of panels with sizes as
+  proportions, each panel a tab group that holds any tab kind, maximize a flag outside the tree, a panel dragged below
+  half its minimum folding to its tab strip, a full-width bottom row in the default layout that is an ordinary panel
+  row, and four named layouts (Home, Build, Terminals 2x2, Focus) (F3-630). One tab strip serves every panel, the
+  dashboard's included, with the contact-aware silhouette as the only active-tab marker and the active tab one surface
+  with its panel in every look, Glass dark included, on a 35 px strip of 31 px tabs 8 px apart (Retro 2 px) (F3-631); a "+" after the last
+  tab opens a menu of kinds as a new tab or a new panel (F3-632); a plain-text "+N" lists the tabs that do not fit
+  (F3-633). Every file reference a person clicks opens by one rule set: a single click opens the panel's preview tab,
+  a double click or an edit keeps it, an open file is revealed where it is, Alt+click opens a new panel, and files go
+  to the last-focused panel that holds documents; what the user clicks in the chat opens and takes focus, and what an
+  agent opens lands as a background tab with a hollow square in the last-focused panel holding that kind (F3-634,
+  DR-071, CV-360). The tab kinds are listed once (F3-635); the narrow ladder keys on the centre's width (F3-636); the
+  chat is a fixed right column from the title bar to the status bar, never a tab and never moved inside the window,
+  with Pop out its only way to move (F3-637); dashboard tabs can show every Usage widget, several at once, each with its own layout (F3-638, WS-030);
+  the Guided Tour stops asking the learner to move the chat and goes from 18 to 20 steps, a saved position at a retired
+  step resuming at the start of its chapter (PWIZ-035); Output is one tab, id output, whose channel is view state,
+  with a channel split off by Open in new tab as output:<channel> (F3-635, UCC-200; Jared, 2026-10-10). The old Home model of four fixed editor
+  panels, one dashboard, terminal sections in a bottom zone and a movable chat came from an audit packet, not from an
+  owner decision, and is superseded; an existing layout is converted, never reset (SP-330). Lead rulings recorded
+  under the decisions: Output, Problems, Ports and Debug Console are dedicated tool kinds that land beside the
+  terminals; activating a tab and maximizing are view state; every committed change emits the existing
+  workspace.layout_changed.
+gui_related: true
+gui_classification_reason: Records the owner decision that replaces the home page's panel model, tabs, opening rules and chat position.
+split_recommended: false
+depends_on: []
+unblocks: [F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, DR-065, DR-066, DR-067, DR-071, UCC-200, UCC-202, UCC-203, CS-100, CS-101, WM-090, WM-092, UIW-040, UIW-041, SSYS-050, SP-330, CV-360, CV-361, ACD-500, PWIZ-035, WS-030, F-090, RAP-065, ATS-075, GRRC-040, G-030]
+acceptance_criteria:
+  - "Output is one tab with the id output whose channel is view state; a channel split off by Open in new tab is output:<channel>; the tour has 20 steps with move_or_dock_chat retired, and a saved position at a retired step resumes at the start of its chapter (F3-635, UCC-200, PWIZ-035)."
+  - "Canon describes one panel model for the home centre: a split tree whose panels each hold any tab kind, with the bottom row an ordinary panel row, and no fixed editor panels, singleton dashboard, terminal sections or bottom runtime zone remain active (F3-630)."
+  - "One tab strip, one \"+\" menu and one \"+N\" list serve every panel, the dashboard's included (F3-631, F3-632, F3-633, DR-065)."
+  - "Every caller that opens something goes through one opening module with one placement rule and one placement field set (F3-634, DR-071, CV-360)."
+  - "The chat is a fixed right column whose only way to move is Pop out, with the width rule and History flyout of F3-637, and no unit still describes chat docking or floating inside the window as active."
+  - "An existing Home layout is converted to the v2 record on first read and never reset (SP-330)."
+  - "The Guided Tour's workspace chapter teaches the four new steps and no longer asks the learner to move or dock the chat (PWIZ-035)."
+  - "Jared's words are quoted verbatim, the planning thread's accepted recommendations and the lead's rulings are labelled as such, and the source is cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/home_workspace_layout_v2.schema.json
+  - Plans/assistant-chat-design.md
+  - Plans/Planning_Wizard.md
+  - Plans/guided_tour_contracts.schema.json
+  - Plans/Widget_System.md
+  - Plans/FileManager.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Automated_Testing_System.md
+  - Plans/GUI_Rebuild_Requirements_Checklist.md
+  - Plans/Glossary.md
+  - Plans/00-plans-index.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-147 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-161 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1-D10, D21, D23-D25, D28)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-180"
+  - "+N"
+  - "Terminals 2x2"
+  - "cmd.panel_tab.open"
+  - "cmd.workspace_layout.split"
+  - "ui.panel_tab.activate"
+  - "workspace.layout_changed"
+  - "home_workspace_layout.v2"
+negative_constraints:
+  - "Do not reintroduce fixed editor panel slots, a singleton dashboard surface, terminal sections or a fixed bottom runtime zone."
+  - "Do not let the chat be docked, floated or moved inside the window; Pop out is its only way to move."
+  - "Do not give any caller its own opening or dedupe rule."
+  - "Do not reset a user's layout on upgrade."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+```
+
+### DL-181 - The Terminal Is Rebuilt As One Session Per Tab With No AI Of Its Own
+
+```yaml
+plan_unit_id: DL-181
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-181 records Jared's decisions of 2026-10-09 on the terminal. The terminal is an ordinary tab kind with one
+  session per tab and no splits inside it; Split makes a new panel beside it with the same folder and shell; sections,
+  workgroups, sub-tabs, in-tab splits, the editor terminal stack and the Quadrant layout retire, and the Terminals 2x2
+  named layout makes four terminal panels (SMPFS-180). Its chrome is a readable tab label (process and folder, the
+  exit code of a failed command, the agent mark) and one header row with the folder, branch, running command and
+  elapsed time, then Find, Split, Maximize and a menu, with 24 px targets, no bottom bar and no internal ids (F3-640).
+  It gains command marks drawn as glyphs, a sticky command header, command jumps, path links that open by the one
+  opening rule, find, a minimap-style scrollbar, copy mode and quick select, inactive dimming, progress, a visual
+  bell, IME and an accessible text buffer (F3-641, SMPFS-183). People and agents share terminals safely: a keystroke
+  takes over and pauses the agent, agents type into a human's terminal only when allowed (Allow once for one command,
+  or Allow in this terminal: an in-memory grant to that agent that ends when the terminal closes, the human takes over
+  or the agent's run ends, and that never replaces the per-invocation command approval of SMPFS-024 and PS-041),
+  secret prompts go only to the human, every command records who typed it, and the marks carry a per-terminal secret (SMPFS-182, F3-646). There
+  is no AI inside the terminal: Explain What Commands Do moves to the Teacher persona in the chat. DL-035's own engine
+  stands; other terminals are design references only (SMPFS-184). Lead ruling where the answer is silent: moving,
+  folding, maximizing or hiding a terminal tab never touches its session; closing it ends the session after saying
+  what is still running; reopening a closed terminal tab, or restoring one whose session did not survive, starts a new
+  session in the same folder and profile and never pretends to be the old one.
+gui_related: true
+gui_classification_reason: Records the owner decision that rebuilds the terminal as a tab kind with new chrome, features and agent rules.
+split_recommended: false
+depends_on: [DL-180]
+unblocks: [SMPFS-180, SMPFS-182, SMPFS-183, SMPFS-184, F3-640, F3-641, F3-646, UCC-201, WM-091, UIW-042, ACD-502, CV-362, SP-332, ATS-076]
+acceptance_criteria:
+  - "Canon holds one terminal session per tab; no active unit describes terminal sections, workgroups, sub-tabs, in-tab splits, the Quadrant layout or the four-section and four-pane caps (SMPFS-180)."
+  - "The terminal tab's chrome and features are owned once (F3-640, F3-641, SMPFS-183), with marks drawn as glyphs and never as stripes."
+  - "The agent rules hold: takeover by keystroke, agent input into a human's terminal only when allowed, secret prompts only to the human, attribution of every command, marks protected by a per-terminal secret (SMPFS-182)."
+  - "No AI feature exists in the terminal surface, and code.terminal.explanations is retired in favour of the Teacher persona."
+  - "DL-035's own-engine direction is unchanged."
+  - "Jared's words are quoted verbatim and the lead's rulings on sessions and on the Allow in this terminal grant are labelled as such."
+  - "No unit stores an agent's terminal write grant, keeps it after the terminal closes, the human takes over or the agent's run ends, or lets it stand in for command approval."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/Personas.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Wiring_Rules.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-035 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-037 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "Plans/Decision_Log.md#DL-038 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11-D13, D18-D20)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-ARCHITECTURE-542703c07c.md, SHA-256 b6daf31a8953b3d7b633dd0db0a7b8a0ecba41f4533e8d6db6df5fa0f08bf476 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-181"
+  - "Take over"
+  - "Interrupt"
+  - "Stop"
+  - "Explain What Commands Do"
+  - "code.terminal.explanations"
+negative_constraints:
+  - "Do not add splits, sections or workgroups inside a terminal tab."
+  - "Do not add an AI feature to the terminal surface."
+  - "Do not let an agent answer a password or secret prompt, or type into a human-opened terminal without the human's grant."
+owner_hints:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-182 - The Terminal Shows Images With Kitty Graphics Sixel And iTerm2 All In The First Release
+
+```yaml
+plan_unit_id: DL-182
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-182 records Jared's decision of 2026-10-09 on terminal images, the decision the terminal research of 2026-09-09
+  (DL-035) left out. The first terminal release has the complete kitty graphics protocol (direct, file, temporary-file
+  and shared-memory transmission, placements, Unicode placeholders, layering above and below text, and animation),
+  sixel, and iTerm2 inline images, with no phases. File, temporary-file and shared-memory transfers follow the
+  protocol's hardening rules, are refused in remote sessions and for commands an agent typed, and are bounded by per-
+  image, per-sequence and per-screen-buffer limits (no product-wide total in wave 1); a program that sends too much is refused, never allowed to freeze the app.
+  Images persist with the terminal's saved scrollback within its storage quota, an evicted image leaving a short text
+  placeholder that names it; animation pauses under Reduced Motion and while the terminal is hidden; images read as a
+  short text placeholder in the accessible buffer and in agent output reads (SMPFS-181, F3-645). DL-035's own-engine
+  rule stands: an image decoder is not a terminal emulator, parser or process host. The quota numbers come from the
+  terminal concept's measurements.
+gui_related: true
+gui_classification_reason: Records the owner decision that admits three image protocols into the terminal's first release.
+split_recommended: false
+depends_on: [DL-181]
+unblocks: [SMPFS-181, F3-645, ATS-076]
+acceptance_criteria:
+  - "SMPFS-181 owns the three protocols, their hardening rules, the remote refusal and the quotas, and F3-645 owns how images look in a tab."
+  - "No unit still says image protocols are not approved."
+  - "DL-035 is amended to point at this decision, with its own-engine rule unchanged."
+  - "Jared's words are quoted verbatim, including his correction that there are no phases."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/Settings_System.md
+  - Plans/Automated_Testing_System.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-035 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D14)"
+  - "Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs (image protocols left as a separate decision)"
+preserved_exact_tokens:
+  - "DL-182"
+  - "kitty graphics protocol"
+  - "sixel"
+  - "iTerm2"
+  - "Unicode placeholders"
+negative_constraints:
+  - "Do not phase the three protocols or ship one without the others."
+  - "Do not read device files, FIFOs, sockets or anything that is not a regular file (outside /dev/shm), and do not accept file, temporary-file or shared-memory media from a remote session."
+  - "Do not let saved images exceed the scrollback storage quota; an evicted image leaves a text placeholder naming it."
+owner_hints:
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-183 - The Terminal Gets Real Colour Schemes Backgrounds Effects And Fonts All Applying Live
+
+```yaml
+plan_unit_id: DL-183
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-183 records Jared's decisions of 2026-10-09 on the terminal's appearance. The terminal follows the theme by
+  default with a colour scheme chosen per look (Friendly Catppuccin, Glass Tokyo Night, Retro Puppet Master's Phosphor
+  Green and Amber and Paper Teletype, Basic One Half, NieR Mode's YoRHa Parchment and Ink), offers about 30 curated
+  schemes with clear licences, imports common theme files, and keeps a minimum-contrast floor. Cursor, background,
+  padding, line height, letter spacing, ligatures and weight are choices, every one applying live with no restart. One
+  layered appearance model resolves field by field from the look's defaults, the app default, a project default and a
+  per-tab override; one code colour-scheme catalog serves the editor and the terminal, each scheme carrying the
+  terminal palette and the editor's syntax colours, each surface defaulting to Follow look with its own scheme choice
+  and the editor reusing the terminal's Appearance popover, and Retro's monochrome editor syntax takes its colour from
+  the terminal's Retro scheme choice, stored once in the terminal's appearance model (Jared, 2026-10-10); the terminal's Appearance popover and Settings > Terminal bind the same model (F3-642, DR-068,
+  SSYS-051, SP-331). Effects run only on the focused terminal, stop when idle, turn off on battery saver and where
+  costly without a graphics card, and stop moving under Reduced Motion; the Full CRT tier is opt-in and flicker is off
+  by default and capped below WCAG 2.3.1 (F3-643). The editor's code face is JetBrains Mono in every look, Retro
+  included; the terminal defaults to JetBrains Mono except in Retro, where it defaults to VT323 with Sixtyfour and
+  Departure Mono as options and JetBrains Mono selectable; Atkinson Hyperlegible Mono is offered for readability; only
+  permissively licensed fonts (SIL Open Font License, Apache, MIT) are built in, through DL-161's pipeline (F3-644).
+  General code text across the chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in
+  Retro, PM NieR Mono in NieR; Jared, 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
+  this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are the terminal concept's.
+gui_related: true
+gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.
+split_recommended: false
+depends_on: [DL-181]
+unblocks: [F3-642, F3-643, F3-644, DR-068, SSYS-051, SP-331]
+acceptance_criteria:
+  - "One code colour-scheme catalog and one Appearance popover serve the editor and the terminal, each surface defaulting to Follow look with its own scheme choice, and Retro's monochrome editor syntax reads the terminal's Retro scheme choice from the terminal's appearance model with no second stored copy (F3-642, F3-639, DR-068)."
+  - "One terminal appearance model exists with four layers resolved field by field, and every field applies live with no restart badge (F3-642, DR-068, SSYS-051)."
+  - "Each look has its default scheme, and the curated schemes carry their licences."
+  - "Effects follow the focused-only, idle-stop, battery, no-GPU and Reduced Motion policy, with Full CRT opt-in and flicker off by default (F3-643)."
+  - "The editor's code face is JetBrains Mono in every look and the terminal's default face is JetBrains Mono except VT323 in Retro, and every built-in font is under the SIL Open Font License, Apache or MIT (F3-644)."
+  - "DL-161, F3-426 and F3-430 are cited for general code text and are not amended by this record."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+  - Plans/settings_inventory.json
+  - Plans/storage-plan.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-161 (cited, not a dependency, so units that compile this record close no dependency cycle through it)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D15-D17)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-1.md, SHA-256 1651ae9c41a61f215ee960288b27bb78ee8d9ad804c741495e3313ff4a33e299 (D17a)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md, SHA-256 71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2 (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-183"
+  - "Follow theme"
+  - "JetBrains Mono"
+  - "VT323"
+  - "Sixtyfour"
+  - "Departure Mono"
+  - "Atkinson Hyperlegible Mono"
+  - "WCAG 2.3.1"
+negative_constraints:
+  - "Do not mark a terminal appearance setting as needing a restart."
+  - "Do not keep a second terminal theme or font store beside the one appearance model."
+  - "Do not build in a font whose licence is not SIL Open Font License, Apache or MIT."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/Settings_System.md
+```
+
+### DL-184 - No Boxes With A Coloured Side No Emoji And No Pills Anywhere In Puppet Master
+
+```yaml
+plan_unit_id: DL-184
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-184 records Jared's rule of 2026-10-09, restated for the home redesign, as one shell-wide rule: no box with a
+  coloured border or stripe on one side, no emoji in Puppet Master's own chrome, and no pills (fully rounded capsules
+  used as tabs, tags, badges, buttons or status chips) anywhere in Puppet Master; keyboard key caps stay the one
+  capsule-like shape allowed, and a program's own output in the terminal may contain emoji (DR-069, F3-648). Selection
+  is shown by the surface itself, never by an edge stripe. The shell's default 3 px left-edge selection stripe, the
+  accent left borders and the pill skins on tab-like controls retire; the chat's, Settings' and the left rail's own
+  statements of the rule stay as instances of the one rule.
+gui_related: true
+gui_classification_reason: Records the owner's shell-wide ban on side stripes, emoji and pills.
+split_recommended: false
+depends_on: []
+unblocks: [DR-069, F3-648]
+acceptance_criteria:
+  - "DR-069 states the rule once for the whole app and F3-648 owns its presentation."
+  - "Section 3.5's selection stripe, F3-039's token, F3-276's accent left border, F3-469's inset left accent bar and the pill skins named by F3-648 carry dated retirement notes."
+  - "Jared's words are quoted verbatim."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D22 and Jared's brief)"
+preserved_exact_tokens:
+  - "DL-184"
+negative_constraints:
+  - "Do not draw a coloured border or stripe on one side of a box, a pill-shaped control, or an emoji in Puppet Master's chrome."
+owner_hints:
+  - Plans/DRY_Rules.md
+  - Plans/FinalGUISpec.md
+```
+
+### DL-185 - One Demo Studio For All Of PMConcept7 And What The 5.6 Pro Chat Needs When It Moves In
+
+```yaml
+plan_unit_id: DL-185
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-185 records Jared's decisions of 2026-10-09 on demo controls and the later chat port. PMConcept7's demo controls
+  (the tour's, onboarding's, the chat's, the home demos', and later the Orchestrator and Planning Wizard pages') fold
+  into one centralized Demo Studio modelled on the 5.6 Pro chat's; it is a concept tool and never a product control,
+  setting, command, wiring row, saved value or test gate (F3-649, DR-070, in the pattern of ACD-474). When the 5.6 Pro
+  chat is ported, after this redesign is published: its Basic, Friendly and Glass colours are fixed to match
+  PMConcept7's, its class names are namespaced, it sizes by its own column, it uses the one overlay root and stacking
+  order, PMConcept7's hover system owns its hover tags, its inline Shell box becomes a compact command card that opens
+  the terminal tab, its pills and side stripes are removed, and its demo controls move into the Demo Studio (ACD-501,
+  ACD-500). Publishing the redesign into PMConcept7 follows the NieR showpiece, the 5.6 Pro round with its fonts, the
+  Usage port, the left rail and the hover polish.
+gui_related: true
+gui_classification_reason: Records the owner decisions on one Demo Studio and the requirements of the later chat port.
+split_recommended: false
+depends_on: [DL-180, DL-184]
+unblocks: [F3-649, DR-070, ACD-501]
+acceptance_criteria:
+  - "One Demo Studio is owned by F3-649 and DR-070 and is excluded from every product catalog, setting, wiring row, persisted key and test gate."
+  - "ACD-501 lists the chat port's requirements and says the port follows this redesign."
+  - "Jared's words are quoted verbatim."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
+  - Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D26-D28)"
+preserved_exact_tokens:
+  - "DL-185"
+  - "Demo Studio"
+negative_constraints:
+  - "Do not give the Demo Studio or any demo control a command, setting, wiring row, persisted key or test gate."
+  - "Do not draw a separate demo panel per surface."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+  - Plans/assistant-chat-design.md
 ```

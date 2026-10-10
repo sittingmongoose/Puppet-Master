@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13807-L14194
+Source lines: L13823-L14228
 
-Source SHA256: `aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339`
+Source SHA256: `ece47700f08bfab6ed483e3649d3c6201fc47ae8736dbe5bdc70c828a1dc13b6`
 
 ---
 
@@ -20,17 +20,32 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive
+  output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs;
+  keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a
+  redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to
+  apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage
+  evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse
+  redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+  Amended 2026-10-09 (DL-181, DL-182): for the terminal, the RedactionSettlement stage applies to what leaves the live
+  screen: agent reads, chat previews and command cards, tool results, diagnostic bundles and logs. It never rewrites
+  the live terminal grid a person sees, which would break full-screen programs and cursor addressing. The saved
+  scrollback is this unit's raw local-only case: it keeps what the screen showed so a restored terminal looks as it
+  did (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181`), and it qualifies only because it stays on this
+  machine and is excluded from backups, exports and sync (`Plans/storage-plan.md#SP-332`). Anything read out of it
+  (an agent read, a preview, a card, a bundle or a log) passes RedactionSettlement like the live screen.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Secret fixture in tool output is redacted before GUI transcript render.
 - Privilege metadata logs actor/target/realm/transport without command secrets.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+- "Amended 2026-10-09 (DL-181): a secret fixture printed in a live terminal is redacted in agent reads, chat previews, tool results, diagnostic bundles and logs, while the live grid and the local saved scrollback show it as the program printed it."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -85,7 +100,10 @@ preserved_exact_tokens:
 - agent0ai/agent-zero
 - cline/cline
 - openai/codex
-negative_constraints: []
+negative_constraints:
+- "Do not rewrite the live terminal grid before render (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-182): terminal redaction applies to what leaves the live screen, not to the live grid or to the saved scrollback, which is this unit's raw local-only case because it never leaves this machine (SP-332)."
 observed_signal: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
 pm_current_coverage: PM has FileSafe and privileged session metadata minimization.
 pm_gap_or_delta: 'Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.'

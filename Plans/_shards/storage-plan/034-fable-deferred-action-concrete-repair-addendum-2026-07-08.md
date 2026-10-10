@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16798-L16909
+Source lines: L16852-L16965
 
-Source SHA256: `354348a85edc4cc54de98e1b424104cc92418378295ab3f9c786655cc7fdddf2`
+Source SHA256: `168d473174b407835e6656fbd5c861626b4ec1eee31622b63d06b63c0c6f3ca0`
 
 ---
 
@@ -23,6 +23,8 @@ Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 - These keys are GUI state and onboarding state only; they cannot carry runtime liveness, certification, or PNC-019 evidence.
 
 ### Terminal Storage Family Reconciliation
+
+Amended 2026-10-09 (DL-181): seven of these nine families (workspace, section, tab, pane, leaf pane, workgroup and editor terminal panel) are now read-only migration inputs; `terminal_session_record` moves to value v2 with an optional `tab_id`, and `terminal_command_block` is unchanged (SP-332).
 
 Repairs row `sfk-6e2bf4e4dd077d9ae2743668`.
 

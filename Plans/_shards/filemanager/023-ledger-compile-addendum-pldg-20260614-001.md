@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4250-L4290
+Source lines: L4308-L4351
 
-Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
+Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
 
 ---
 
@@ -21,9 +21,10 @@ canonical_text: >-
   FileManager owns file-surface placement for editor, terminal, browser tab, image viewing, HTML/browser preview, and hot-reload entrypoints.
   Missing Sections 5 through 8 and 13 through 14, plus the three-line Section 9 Tabs stub, must recover by consuming live browser,
   terminal, preview, persistence, and command-owner PlanUnits rather than inventing separate FileManager-only behavior.
+  Amended 2026-10-09 (DL-180): FileManager keeps these entrypoints, but where an editor, terminal, browser or preview tab lands in the home panels is the one opening module's (Plans/FinalGUISpec.md#F3-634), not FileManager's. Open in Terminal on a folder opens a new terminal tab in that folder, and on a file a new terminal tab in its folder (F-090).
 gui_related: true
 gui_classification_reason: This unit governs visible file manager tabs, previews, browser/terminal panes, image viewing, and hot-reload controls.
-depends_on: [F-002, F-009, F-010]
+depends_on: [F-002, F-009, F-010, DL-180]
 unblocks: [F3-387]
 acceptance_criteria:
   - Image viewing remains first-class where FileManager references Sections 8.1 and 14.
@@ -44,6 +45,8 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0050
   - source_ref:chat:next-gui-filemanager-cluster
 preserved_exact_tokens: ["§5", "§8.1", "§8.2", "§9", "§13", "§14", "§14.6", "Tabs: Editor, Terminal, Browser", "built-in browser", "browser/terminal tabs", "hot-reload controls", "image viewing"]
+stale_retired_dispositions:
+  - 'Amended 2026-10-09 (DL-180): FileManager no longer owns where editor, terminal, browser and preview tabs are placed; F3-634 does.'
 negative_constraints:
   - Do not make FileManager the browser behavior SSOT.
   - Do not leave the Tabs section as a three-line stub when compiling this recovery.

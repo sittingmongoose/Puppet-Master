@@ -2,13 +2,15 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L625-L701
+Source lines: L625-L708
 
-Source SHA256: `d0c067843836b388581c8d4bd645a3c74ad1b47039b6f57c6d25840f51b1d7fc`
+Source SHA256: `247c222314e6786e7bd4c7ea141db12a5b42c89181f170a3b79cb9fe840504bd`
 
 ---
 
 ## PMConcept7 Home Workspace wiring rules — 2026-08-04
+
+Superseded 2026-10-09 (DL-180): Home is one universal panel system with a fixed chat column. The fixed-zone controls this passage names (Panel 1 through Panel 4, Open Panel and Open Browser in Panel, File Manager's Open in Panel, the host drop targets, Collapse Bottom Terminal and the terminal add and split leaves) are retired; the Home census is UIW-040's closed list, the tab rules are UIW-041 and the wiring rows are `Plans/Wiring_Matrix.md#WM-090`. The rule that every visible control has exactly one production row or a `view_only` disposition, and that preview is local and one semantic end commits once, stands.
 
 Home Workspace is a reconciliation input for UI wiring. Every visible menu item,
 grab handle, Browser action, File Manager Open-in-Panel action, drop target, and
@@ -18,12 +20,12 @@ the typed command and persists the committed layout once.
 
 Popup/flyout disclosure controls are explicitly view-local and are recorded in the
 control census with a `view_only` disposition rather than fabricated command rows.
-The compact Home popup has exactly four top-level rows (amended 2026-08-13: Open
-Panel, Open Browser in Panel, Collapse Bottom Terminal, and Reset Layout); its
-Panel 1 through Panel 4
-leaf targets, each surface menu leaf, File Manager target leaf, terminal add/split
-leaf, drop endpoint, and committed resizer endpoint resolve to one typed production
-row and one executable test. Disabled rows project the owner-provided reason and
+The compact Home popup's rows are F3-502's (amended 2026-10-09, DL-180: the named and
+saved layouts, the chat's rows, Save this layout..., Restore home layout and Run setup
+wizard; the earlier four rows Open Panel, Open Browser in Panel, Collapse Bottom
+Terminal and Reset Layout, with their Panel 1 through Panel 4 leaves, are retired); each
+of its leaves, each tab, "+", panel and tab menu leaf, drop endpoint and committed
+divider endpoint resolves to one typed production row and one executable test. Disabled rows project the owner-provided reason and
 dispatch zero commands.
 
 Rows must prove the command ID, typed payload, expected layout/terminal revision,
@@ -52,7 +54,11 @@ canonical_text: >-
   top-right lines-only grip (the corner-triangle wording is retired), the drop-target
   rows carry the target-geometry change-gated hover-preview acceptance (the
   pickup-footprint wording is retired), and the census adds the row-dock track-handle
-  resize endpoint (home.resizer.dock_track).
+  resize endpoint (home.resizer.dock_track). Amended 2026-10-09 (DL-180): the census
+  is UIW-040's closed list of the universal panel controls; the fixed-zone rows named
+  above (the Dashboard Pop Out, the floating corner and dock track resizers, the
+  grab-handle and host drop-target rows) and the terminal caps are retired, and the
+  Chat's Pop Out row is the chat's Pop out into its own window only.
 gui_related: true
 gui_classification_reason: This unit owns concrete UI-to-command wiring completeness for the Home workspace.
 split_recommended: false
@@ -61,7 +67,7 @@ unblocks: []
 acceptance_criteria:
 - Disclosure-only menu/flyout actions are view_only; each selected leaf maps to exactly one command and exact result/event family.
 - Pointermove and live resize preview have no command/event/persistence mapping; one changed pointer-up/drop has one semantic mapping.
-- Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch.
+- Disabled terminal cap and Collapse states carry exact accessible reasons and zero dispatch. (Amended 2026-10-09, DL-180 - the terminal caps and Collapse Bottom Terminal are retired; every disabled Home control of UIW-040 carries its owner's reason and zero dispatch.)
 - The source-hashed control census reports unresolved_count=0 and every production row names an executable test, not declarative prose alone.
 validation_surfaces:
 - python3 scripts/pm-validate-wiring-matrix.py
@@ -83,5 +89,6 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The prior non-census Home reconciliation summary is superseded by the source-hashed control census.
+- "Amended 2026-10-09 (DL-180): the census contents are UIW-040's closed list; the fixed-zone rows, the terminal caps and Collapse Bottom Terminal leave it. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-040 depends on this unit instead. The validation surface home_workspace_matrix.mjs is superseded lineage from this date: its fixed-model cases do not prove the DL-180 rows, and the replacement executable cases are Plans/Automated_Testing_System.md#ATS-075."
 owner_hints: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.production.json]
 ```

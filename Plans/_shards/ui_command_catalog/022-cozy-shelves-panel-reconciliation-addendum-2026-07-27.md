@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L9736-L10655
+Source lines: L9803-L10728
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -209,7 +209,7 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 ### File Manager, editor, and chat navigation rows
 
-`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
+`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -704,9 +704,10 @@ canonical_text: >-
   prefix with a dirty-state confirm. cmd.chat.open_thread is the cross-surface chat thread entry wrapper that
   cmd.chat.open_at retires into; it opens the chat panel when closed and does not duplicate the panel-local
   cmd.chat.switch_thread row. cmd.chat.add_file_reference keeps its existing row and signature lock unchanged.
+  Amended 2026-10-09 (DL-180): cmd.file.open places its tab through CV-360's placement fields and the one opening module, not Panel 1 to 4, and cmd.editor.close_tab is an alias of cmd.panel_tab.close (UCC-200).
 gui_related: true
 gui_classification_reason: Registers user-visible file open, refresh, reveal, row-cap, editor tab, and chat thread controls.
-depends_on: [UCC-108, UCC-014]
+depends_on: [UCC-108, UCC-014, DL-180]
 unblocks: []
 acceptance_criteria:
   - cmd.file.open resolves through the OpenFile route contract and does not duplicate any CRUD closure row.
@@ -742,6 +743,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not duplicate the ten CRUD closure rows or the cmd.file.open_with row.
   - Do not collapse cmd.chat.open_thread and cmd.chat.switch_thread into one row.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): file placement and tab close move to UCC-200."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FileManager.md
@@ -891,9 +894,10 @@ canonical_text: >-
   bare-focus context is recorded as an alias mapping for markup migration only; the cmd.terminal.open catalog
   row itself stays a live, distinct row and the two rows never collapse into one normalized target, per the
   existing non-collapse rule.
+  Amended 2026-10-09 (DL-180): the word panel in cmd.panel.* stays the rail's side panels and the chat; home panels are named panel_id in cmd.panel_tab.* and cmd.workspace_layout.* and never join this vocabulary, and undock and redock are the chat's Pop out and Dock back (UCC-203).
 gui_related: true
 gui_classification_reason: Fixes user-visible panel switching, undock naming, and terminal focus dispatch for the rail shell.
-depends_on: [UCC-014, UCC-108]
+depends_on: [UCC-014, UCC-108, DL-180]
 unblocks: []
 acceptance_criteria:
   - cmd.panel.switch rejects panel_id values outside the closed ten-id set.
@@ -924,6 +928,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not extend the panel_id vocabulary without a new catalog adjudication row.
   - Do not collapse cmd.terminal.open and cmd.terminal.show into one normalized target.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): home panels never join the cmd.panel.switch vocabulary."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/FinalGUISpec.md

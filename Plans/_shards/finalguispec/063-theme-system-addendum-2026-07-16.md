@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29680-L30756
+Source lines: L30195-L31275
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -475,16 +475,19 @@ canonical_text: >-
   admits on the Skia GPU path only (F3-566). Effects the concept
   builds with mix-blend-mode or mask-composite, such as the glass pane sheen and gradient
   hairline rings, are either renderable natively by the toolkit or precomputed into baked
-  assets.
+  assets. The terminal adds no backdrop blur and takes no entry in this budget (DL-183): in Glass it draws its scheme
+  at 70 % (light) and 74 % (dark) opacity over the app shell's existing glass blur, and a terminal background
+  image's blur is baked once into the image (F3-642, F3-643).
 gui_related: true
 gui_classification_reason: This unit constrains how visible theme effects are produced so every variant renders on the Slint toolkit.
 split_recommended: false
-depends_on: [F3-426, F3-427, F3-430]
+depends_on: [F3-426, F3-427, F3-430, DL-183]
 unblocks: []
 acceptance_criteria:
 - "No color-mix() or alpha-scaling calc() color derivation survives to runtime; per-variant precomputed values replace them at build time."
 - "All theme fonts are bundled locally and cloudscapes are baked as pre-blurred bitmaps per background mode, with depth parallax layers baked separately."
 - "The backdrop-filter budget is closed at two glass blurs, three friendly blurs, two settings-modal blurs, and the DL-139 setup-popup sheet blur on the Skia GPU path, and no surface adds a blur outside that enumeration."
+- "No terminal tab draws a backdrop blur of its own; Glass terminals show the app shell's blur through their scheme's opacity."
 - "mix-blend-mode and mask-composite effects are renderable natively or precomputed into baked assets."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -514,6 +517,7 @@ compatibility_only_notes:
 - "Slint portability (updated for DL-139): this unit is the family-wide remediation contract. Blur, backdrop blur, masks, blend modes and filter effects are no longer banned for portability, because Puppet Master's Skia renderer extensions draw them (F3-582); this unit's closed backdrop-filter budget still limits backdrop blur. The note's other guidance (color math precomputed rather than runtime-mixed, and glass treatment as a single blur over a known wallpaper baked as a pre-blurred asset) remains a performance option."
 stale_retired_dispositions:
 - "DL-139 opens the closed budget by exactly one entry, the setup-popup sheet blur on the Skia GPU path, replacing the 2026-09-27 outcome of DL-114 that kept it closed."
+- "Amended 2026-10-09 (DL-183): the terminal's Glass look and its background images add no backdrop blur; the budget is not widened."
 owner_boundary_notes:
 - "The precomputed-color constraint phrasing aligns with PWIZ-019 in Plans/Planning_Wizard.md; that unit remains owner of the embedded-chat surface it constrains."
 owner_hints:

@@ -2,13 +2,15 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L26699-L26894
+Source lines: L26775-L26972
 
-Source SHA256: `354348a85edc4cc54de98e1b424104cc92418378295ab3f9c786655cc7fdddf2`
+Source SHA256: `168d473174b407835e6656fbd5c861626b4ec1eee31622b63d06b63c0c6f3ca0`
 
 ---
 
 ## Terminal workgroup moved — exact passive source read
+
+Amended 2026-10-09 (DL-181): workgroups and sections are retired and `terminal.workgroup_moved` is withdrawn under SMPFS-170's rule (`Plans/Contracts_V0.md#CV-361`): no new producer is admitted, and this passive reader stays only to read 1.0.0 events already written. Its "fifth-section admission" oracle describes the retired cap of four sections. DL-070's principle carries forward into the panels: moving a terminal tab keeps its session, transcript and process and creates nothing (SP-332).
 
 This is a **NEW Storage owner binding** under DL-045 for the existing registered
 `terminal.workgroup_moved@1.0.0`, semantic producer/consumer owned by SMPFS-170.

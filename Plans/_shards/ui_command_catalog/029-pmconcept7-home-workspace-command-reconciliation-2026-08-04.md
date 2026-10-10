@@ -2,13 +2,15 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11351-L11473
+Source lines: L11424-L11551
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
 ## PMConcept7 Home Workspace command reconciliation — 2026-08-04
+
+Superseded 2026-10-09 (DL-180): this section is lineage only. Home's four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat movement and the in-canvas float, `cmd.terminal.move_workgroup` and Collapse Bottom Terminal are retired; the universal panels' commands are UCC-200, the terminal's UCC-201 and the chat column's UCC-203 in the DL-180 to DL-183 addendum. `cmd.editor.open_panel` and `cmd.editor.close_panel` are retired, and the `cmd.workspace_layout.*` ids below keep their names with UCC-200's arguments.
 
 The Home workspace reuses `cmd.panel.undock`, `cmd.panel.redock`,
 `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`,
@@ -65,9 +67,11 @@ failed/rolled-back receipt and emits no success event.
 ```yaml
 plan_unit_id: UCC-144
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/UI_Command_Catalog.md
+superseded_by: UCC-200
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Home's four editor panels, Panel 1 to 4 routing, the singleton Dashboard, the chat grab and in-canvas float, the terminal workgroup move and Collapse Bottom Terminal are retired; the universal panels' tab and layout commands are UCC-200, the terminal's are UCC-201 and the chat column's are UCC-203, and this unit's leaf semantics (view-local disclosure, one command per leaf, revision, idempotency, typed no_change, disabled reasons) carry forward into UCC-200. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by UCC-200 (DL-180).
   Home disclosure controls are view-local and every selected leaf maps one-to-one to the
   existing typed panel, Browser, file, terminal, theme, or bounded Home command family with
   projected disabled/no-change/failure semantics and no command overload. Amended
@@ -128,6 +132,7 @@ negative_constraints:
 - Do not mint near-duplicate Home commands.
 compatibility_only_notes:
 - target_group is only an alias of target_editor_group_id.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-180): replaced whole by UCC-200, UCC-201 and UCC-203."
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/UI_Wiring_Rules.md]
 ```

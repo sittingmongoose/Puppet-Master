@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3607-L22258
+Source lines: L3614-L22417
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -1870,10 +1870,14 @@ plan_unit_id: ACD-039
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the editor on demand, and has defined minimum artifact contents.
+canonical_text: >-
+  Standard Plan shows the written plan plus normalized TODO list in the plan panel, may open the artifact in the
+  editor on demand, and has defined minimum artifact contents.
+  Amended 2026-10-09 (DL-180): the editor the plan artifact opens in is a plan tab in the home centre, opened through
+  ACD-500 and the one opening module (Plans/FinalGUISpec.md#F3-634), still only when the user asks.
 gui_related: true
 gui_classification_reason: Plan panel display, editor opening, and artifact review are user-visible GUI behavior.
-depends_on: [ACD-038]
+depends_on: [ACD-038, DL-180, ACD-500]
 unblocks: []
 acceptance_criteria:
   - Standard Plan displays written plan content and normalized TODO list in the plan panel.
@@ -1901,6 +1905,8 @@ preserved_exact_tokens:
   - "verification / validation notes"
   - "unresolved questions"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): opening the artifact in the editor means a plan tab placed by F3-634 through ACD-500."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -1953,15 +1959,21 @@ plan_unit_id: ACD-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface, defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+canonical_text: >-
+  Deep Plan produces a rich markdown planning document, automatically opens it in a preview-capable editing surface,
+  defaults to planning_draft, and uses transient generated:// artifact buffers when not persisted.
+  Amended 2026-10-09 (DL-180): the automatic open is the agent's own open, so the Deep Plan document lands as a
+  background plan tab with the hollow square and a polite announcement, and never takes keyboard focus or changes the
+  active tab of a panel the user is typing in (ACD-500, F3-634); the user's own click on it opens it and takes focus.
 gui_related: true
 gui_classification_reason: Automatic preview-capable editor opening and rich document rendering are user-visible GUI behavior.
-depends_on: [ACD-040]
+depends_on: [ACD-040, DL-180, ACD-500]
 unblocks: [ACD-042]
 acceptance_criteria:
   - Deep Plan documents open automatically in a preview-capable editing surface.
   - Non-persisted Deep Plan documents open as transient generated:// artifact buffers.
   - Source markdown and Mermaid text remain canonical even when richly rendered.
+  - "An automatically opened Deep Plan document lands as a background tab and never takes keyboard focus (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1984,6 +1996,8 @@ preserved_exact_tokens:
   - "source markdown / Mermaid text"
   - "Mermaid Diagrams"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the automatic open is an agent's background open under F3-634."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FileManager.md
@@ -3656,10 +3670,16 @@ plan_unit_id: ACD-077
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Terminal-associated threads are ordinary chat threads with terminal lineage. terminal-thread is a compatibility/search label for terminal or non-writable boundaries, not a durable object type.
+canonical_text: >-
+  Terminal-associated threads are ordinary chat threads with terminal lineage. terminal-thread is a
+  compatibility/search label for terminal or non-writable boundaries, not a durable object type.
+  Amended 2026-10-09 (DL-181): terminal lineage records a terminal session that the thread's own agent opened or
+  drove. The terminal offers no action that starts or asks a chat thread, because it has no AI of its own
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, ACD-502), so a thread spawned from a terminal context
+  means that lineage, never a terminal-side entry point.
 gui_related: false
 gui_classification_reason: Terminal lineage and compatibility labels are identity/modeling behavior, not GUI implementation.
-depends_on: [ACD-076]
+depends_on: [ACD-076, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Terminal lineage remains attached for audit after terminal exit.
@@ -3686,6 +3706,9 @@ preserved_exact_tokens:
   - "/surfaces"
 negative_constraints:
   - "Terminal-associated threads are ordinary chat threads with terminal lineage, not a second terminal-thread identity model."
+  - "Do not read terminal lineage as a terminal-side action that asks the chat."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): terminal lineage is a session the thread's agent opened or drove; there is no terminal-side entry point into the chat."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -5174,9 +5197,13 @@ canonical_text: >-
   and invocation card; explicit same-session rerun preserves terminal_session_id
   and creates a new invocation/block/card. Attachment recovery and presentation
   reconciliation preserve the original invocation without replaying execution.
+  Amended 2026-10-09 (DL-181): the bound session shows as a terminal tab, one session per tab (SMPFS-180), placed by
+  the one opening module (Plans/FinalGUISpec.md#F3-634; ACD-502): the user's Open in Terminal reveals or opens it and
+  takes focus, and a session the agent starts by itself lands as a background tab that never takes focus. Reconciling
+  a move or a reveal of that tab keeps the session and the invocation; a terminal tab has no detach.
 gui_related: true
 gui_classification_reason: Terminal handoff, preview, audit card, and Open in Terminal are visible UI behavior.
-depends_on: [ACD-102, ACD-104]
+depends_on: [ACD-102, ACD-104, DL-181, ACD-502]
 unblocks: [ACD-126, ACD-127]
 acceptance_criteria:
   - Interactive, long-running, stdin/TTY, watch/server, and user-promoted operations bind to terminal sessions.
@@ -5184,7 +5211,7 @@ acceptance_criteria:
   - Shell owns interactive state.
   - Replacement execution creates a new terminal_session_id and invocation card; prior cards remain bound to their original invocation.
   - An explicit same-session rerun creates a fresh invocation/block/card while preserving terminal_session_id; unavailable same-session continuity must not silently launch a replacement shell.
-  - Retrying attachment and reconciling move/detach/reveal preserve session and invocation identity, do not replay the command, and do not duplicate the invocation card.
+  - "Retrying attachment and reconciling a move or reveal of the terminal tab preserve session and invocation identity, do not replay the command, and do not duplicate the invocation card; a terminal tab has no detach (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5206,6 +5233,8 @@ preserved_exact_tokens:
   - "Open in Terminal"
   - "preview+audit"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the handed-off session is a terminal tab placed by F3-634 through ACD-502; move/detach/reveal reconciliation reads as move or reveal of that tab."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6101,9 +6130,13 @@ canonical_text: >-
   commands remain chat-inline by default, non-interactive work may promote if
   long-running, and every promoted command card binds to stable
   `terminal_session_id` while chat stops owning the full transcript.
+  Amended 2026-10-09 (DL-181): starting Terminal immediately and a terminal-owned session mean a terminal tab with one
+  session (SMPFS-180). When the agent starts it by itself, the tab lands in the background with the hollow square and
+  the agent mark, beside other terminals by F3-634's kind affinity, and never takes keyboard focus
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ACD-502).
 gui_related: true
 gui_classification_reason: Terminal promotion and session identity are visible handoff behavior.
-depends_on: [ACD-108, ACD-126]
+depends_on: [ACD-108, ACD-126, DL-181, ACD-502]
 unblocks: [ACD-128, ACD-129]
 acceptance_criteria:
   - stdin/TTY commands start Terminal immediately.
@@ -6111,6 +6144,7 @@ acceptance_criteria:
   - One-shot commands remain chat-inline by default.
   - Promoted command cards bind to a stable terminal_session_id.
   - Chat stops owning the full transcript after promotion.
+  - "A terminal the agent starts for promoted work appears as a background terminal tab and never takes keyboard focus (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6132,6 +6166,8 @@ preserved_exact_tokens:
   - "terminal_session_id"
   - "chat stops owning the full transcript"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): a promoted or terminal-owned session is a terminal tab that an agent's start places in the background."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6150,15 +6186,20 @@ canonical_text: >-
   `Show Terminal` focus the same live session, `Rerun in Terminal` keeps
   command-table treatment, and legacy `Pop Out Terminal` is only a deprecated
   alias for `Detach/Pop-Out`.
+  Amended 2026-10-09 (DL-181): Detach/Pop-Out and its old alias Pop Out Terminal are retired with no replacement: a
+  terminal tab moves between panels like every tab, its session survives every view change, and no panel tab pops out
+  to a window (SMPFS-180, Plans/UI_Command_Catalog.md#UCC-203). Open in Terminal and Show Terminal reveal the
+  session's terminal tab wherever it is, and the compact command card shows Open in Terminal only (ACD-500, ACD-502).
+  Rerun in Terminal keeps its command-table treatment.
 gui_related: true
 gui_classification_reason: Terminal action labels and aliases are visible command-card/menu behavior.
-depends_on: [ACD-127]
+depends_on: [ACD-127, DL-181, ACD-502]
 unblocks: [ACD-129]
 acceptance_criteria:
-  - Open in Terminal, Show Terminal, Rerun in Terminal, and Detach/Pop-Out remain distinct.
-  - Open in Terminal and Show Terminal focus the same live session.
+  - "Open in Terminal, Show Terminal and Rerun in Terminal remain distinct; Detach/Pop-Out is retired (DL-181)."
+  - "Open in Terminal and Show Terminal reveal the same live session's terminal tab."
   - Rerun in Terminal keeps command-table treatment.
-  - Pop Out Terminal remains a deprecated alias only.
+  - "Neither Detach/Pop-Out nor Pop Out Terminal appears on any card or menu (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6181,7 +6222,9 @@ preserved_exact_tokens:
   - "Detach/Pop-Out"
   - "Pop Out Terminal"
 negative_constraints:
-  - "Pop Out Terminal is only a deprecated alias for Detach/Pop-Out."
+  - "Pop Out Terminal and Detach/Pop-Out are retired labels and are never offered (DL-181)."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): Detach/Pop-Out and Pop Out Terminal retired with no replacement; Open in Terminal and Show Terminal reveal the session's terminal tab."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -6296,9 +6339,12 @@ canonical_text: >-
   Chat consumes the terminal model without owning the terminal engine/emulator,
   PTY/process host, or UI shell/chrome; chat cards expose bounded preview,
   audit, and reveal controls only.
+  Amended 2026-10-09 (DL-181): the terminal surface carries no AI affordance (no explain, fix, suggest, ask or inline
+  completion), and the chat's cards add none to it (SMPFS-180, ACD-502); agents act on a terminal only under
+  SMPFS-182's rules.
 gui_related: true
 gui_classification_reason: Terminal preview, audit, and reveal controls are visible chat UI.
-depends_on: [ACD-108, ACD-127]
+depends_on: [ACD-108, ACD-127, DL-181, ACD-502]
 unblocks: [ACD-132, ACD-133, ACD-134, ACD-135, ACD-137, ACD-143, ACD-145]
 acceptance_criteria:
   - Chat consumes terminal state without owning terminal execution or shell chrome.
@@ -6324,7 +6370,10 @@ preserved_exact_tokens:
   - "bounded preview"
   - "audit"
   - "reveal controls"
-negative_constraints: []
+negative_constraints:
+  - "Do not put an explain, fix, suggest, ask or completion action on the terminal surface (DL-181)."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the negative constraint that the terminal carries no AI affordance is added."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6343,9 +6392,14 @@ canonical_text: >-
   machine-readable output modes, diff-based redraw, `/command/exit markers`,
   recent-command navigation, `/detach/revive/reconnect` flows, and narrow
   `/extensibility` APIs rather than broad plugin surfaces.
+  Amended 2026-10-09 (DL-181): GPU fallback reads as DL-139's drawing on the graphics card or the processor, and
+  /detach/revive/reconnect names session continuity (SMPFS-180), never popping a terminal tab out. The terminal owners
+  now own this unit's rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183,
+  Plans/FinalGUISpec.md#F3-640, #F3-641; ACD-502); it stays as the chat's consumer record, and where it differs from
+  them they win.
 gui_related: true
 gui_classification_reason: Terminal fidelity affects visible terminal rendering, accessibility, and recovery surfaces.
-depends_on: [ACD-131]
+depends_on: [ACD-131, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Terminal rendering and accessibility fidelity preserves the listed product-critical cases.
@@ -6373,6 +6427,8 @@ preserved_exact_tokens:
   - "/detach/revive/reconnect"
   - "/extensibility"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): re-homed to the terminal owners (SMPFS-180, SMPFS-183, F3-640, F3-641) through ACD-502; this unit stays as the chat's consumer record."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6438,9 +6494,12 @@ canonical_text: >-
   `/progress/result` or `/results/structured` output routes to Output;
   diagnostics with `/line/code/location` route to Problems; discovered
   endpoints route to Ports.
+  Amended 2026-10-09 (DL-180): Terminal, Output, Problems and Ports are tab kinds of the home panels
+  (Plans/FinalGUISpec.md#F3-635), not siblings in a bottom panel; routing work to one of them opens or reveals its tab
+  by F3-634's kind affinity, so the tool tabs land beside the terminals.
 gui_related: true
 gui_classification_reason: Routing determines visible terminal, output, problems, ports, and chat preview surfaces.
-depends_on: [ACD-131, ACD-133]
+depends_on: [ACD-131, ACD-133, DL-180, DL-181, ACD-502]
 unblocks: [ACD-146]
 acceptance_criteria:
   - Terminal owns shell-like interactive and session-continuity work.
@@ -6471,6 +6530,8 @@ preserved_exact_tokens:
   - "/line/code/location"
 negative_constraints:
   - "Inline previews, command cards, and chat summaries are never the canonical execution-surface for shell work."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): Terminal, Output, Problems and Ports are panel tab kinds placed by F3-634."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6491,14 +6552,21 @@ canonical_text: >-
   linked Problems/Ports surfaces, tab-scoped overrides, `/reuse/binding`, and
   session-reveal semantics while keeping Terminal, Output, Problems, Ports,
   and chat controller ownership distinct.
+  Amended 2026-10-09 (DL-181): the terminal has no workspace of its own. Its tabs are panel tabs (F3-635), its
+  placement and docking are the home panels' (Plans/FinalGUISpec.md#F3-630, F3-634), and /tabs/panes reads as terminal
+  tabs, one session each, with no panes (SMPFS-180). The /focus/send-input/interrupt/resize/state APIs stay the typed
+  surface through which agents act on a terminal, under SMPFS-182's rules. The terminal owners now own this unit's
+  rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
+  ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Terminal workspace controls, labels, linked surfaces, and reveal behavior are visible UI.
-depends_on: [ACD-131]
+depends_on: [ACD-131, DL-181, ACD-502]
 unblocks: [ACD-136, ACD-138, ACD-139, ACD-140, ACD-141, ACD-142]
 acceptance_criteria:
-  - Terminal workspace state and controller APIs remain explicit.
+  - "The controller APIs (focus, send-input, interrupt, resize, state) remain explicit as the typed surface agents act through, under SMPFS-182's rules (DL-181)."
   - Terminal, Output, Problems, Ports, and chat ownership stay distinct.
   - Chat owns only preview/reveal cards for terminal work.
+  - "The terminal keeps no workspace, docking or tab model of its own; its tabs are panel tabs (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6522,6 +6590,8 @@ preserved_exact_tokens:
   - "/controller"
 negative_constraints:
   - "Chat does not guarantee full terminal transcript ownership after promotion."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): tabs, panes and docking settings are the home panels'; the controller APIs stay; re-homed to the terminal owners through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6540,9 +6610,13 @@ canonical_text: >-
   current-hit position, supports next and `/previous`, keeps stable highlights
   while output streams, jumps between `/matching` command blocks when metadata
   exists, and restores live/review state predictably on exit.
+  Amended 2026-10-09 (DL-181): the find overlay is F3-641's and its engine SMPFS-183's, per terminal tab with one
+  session, so /pane reads as the terminal tab. The terminal owners now own this unit's rules
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
+  ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Terminal search controls, hit navigation, and highlights are visible review UI.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Search scopes to current pane/session transcript history.
@@ -6568,6 +6642,8 @@ preserved_exact_tokens:
   - "/previous"
   - "/matching"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): re-homed to the terminal owners (SMPFS-180, SMPFS-183, F3-640, F3-641) through ACD-502; this unit stays as the chat's consumer record."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -6585,9 +6661,14 @@ canonical_text: >-
   navigation, `/confidence` metadata, and safe rerun; weak grouping must look
   approximate and running output extends the active block without re-keying the
   block identity.
+  Amended 2026-10-09 (DL-181): command blocks and their confidence are SMPFS-183's with SMPFS-021, SMPFS-022 and
+  SMPFS-129, and their marks carry a secret minted for the session so program output cannot fake them. The terminal
+  owners now own this unit's rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183,
+  Plans/FinalGUISpec.md#F3-640, #F3-641; ACD-502); it stays as the chat's consumer record, and where it differs from
+  them they win.
 gui_related: true
 gui_classification_reason: Command blocks, sticky headers, rerun controls, and confidence disclosure are visible terminal UI.
-depends_on: [ACD-131, ACD-126]
+depends_on: [ACD-131, ACD-126, DL-181, ACD-502]
 unblocks: [ACD-143, ACD-144]
 acceptance_criteria:
   - Authoritative command blocks require rich/basic shell integration.
@@ -6615,6 +6696,8 @@ preserved_exact_tokens:
   - "/copy-command"
 negative_constraints:
   - "PM must not show fake exact command blocks, exact command-text, /copy-command, or rerun controls unless command-text capture is authoritative or sufficiently trustworthy."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): re-homed to the terminal owners (SMPFS-180, SMPFS-183, F3-640, F3-641) through ACD-502; this unit stays as the chat's consumer record."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -6632,9 +6715,16 @@ canonical_text: >-
   hidden-structure, review-only, `/review-only`, history-only,
   pane-without-live-runtime, restored-without-history, `/disconnected`, and
   `/tab/pane/session` restore semantics as distinct user-visible states.
+  Amended 2026-10-09 (DL-181): an empty terminal is a terminal tab, and hidden-structure means a terminal tab in a
+  collapsed panel, behind another tab or in the "+N" list, which Open in Terminal reveals (ACD-502). /tab/pane/session
+  restore reads as the home layout record's tab restore (Plans/storage-plan.md#SP-330), apart from the session restore
+  of SMPFS-180: a terminal restored without a live session says so and starts a new one. The terminal owners now own
+  this unit's rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183,
+  Plans/FinalGUISpec.md#F3-640, #F3-641; ACD-502); it stays as the chat's consumer record, and where it differs from
+  them they win.
 gui_related: true
 gui_classification_reason: Empty, restore, and review states are visible terminal workspace states.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: [ACD-145]
 acceptance_criteria:
   - Hidden structure is not treated as first-run empty.
@@ -6665,6 +6755,8 @@ preserved_exact_tokens:
   - "/disconnected"
   - "/tab/pane/session"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the states read in terminal-tab words (hidden means collapsed, behind another tab or in \"+N\"); re-homed through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -6681,14 +6773,21 @@ canonical_text: >-
   aggregate precedence, exact runtime-state in pane headers, compact quiet tab
   counts, dock/chrome attention, focus-clearing rules, and contextual TUI
   mouse-capture guidance rather than permanent warning banners.
+  Amended 2026-10-09 (DL-181): dock/chrome attention, attention on dock entries and attention on detached windows are
+  retired. A terminal's state shows in its tab's header row, on its tab (the exit code of a failed command, the agent
+  mark, the static busy mark, and the hollow square only for a tab opened in the background) and in polite announcements (F3-640, SMPFS-183); aggregate precedence covers
+  tabs only, because sections are gone. The terminal owners now own this unit's rules
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
+  ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Pane status, badges, notifications, and chrome attention are visible terminal UI.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - terminal_session states and aggregate precedence are preserved.
   - Runtime state placement remains pane-header authoritative.
   - Focus clear rules preserve unseen output/completion and failure attention semantics.
+  - "No terminal state is shown on a dock entry or a detached window; it shows on the terminal tab and its header row (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -6713,6 +6812,8 @@ preserved_exact_tokens:
   - "TUI mouse-capture"
 negative_constraints:
   - "TUI mouse-capture guidance is contextual, not a permanent warning banner."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): dock and detached-window attention retired; state shows on the terminal tab and its header row; re-homed through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -6730,9 +6831,14 @@ canonical_text: >-
   `/reinitialize`, clear/reset/replace/close action separation, partial export
   history, metadata-only command blocks, and per-project retention settings
   remain distinct.
+  Amended 2026-10-09 (DL-181): closing a terminal tab ends its session after the tab's inline ask (SMPFS-180), and the
+  saved scrollback is Plans/storage-plan.md#SP-332's. Clear and Clear scrollback are
+  Plans/UI_Command_Catalog.md#UCC-201's. The terminal owners now own this unit's rules
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
+  ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Transcript, alternate-screen, reset, and history actions are visible terminal review controls.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Persisted transcript is not treated as emulator-state resurrection.
@@ -6762,6 +6868,8 @@ preserved_exact_tokens:
   - "close"
 negative_constraints:
   - "Persisted transcript is review continuity, not emulator-state resurrection."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): closing a terminal tab ends its session after the inline ask; re-homed through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/storage-plan.md
@@ -6779,9 +6887,15 @@ canonical_text: >-
   chips, context badges, subtitles, `/tooltips`, sticky headers, derived
   suggestions, `/metadata`, user labels, default Terminal/Terminal 2 labels,
   accessibility-name, descriptions, user-rename behavior, and reset-to-auto.
+  Amended 2026-10-09 (DL-181): the label is the panel tab's label (Plans/FinalGUISpec.md#F3-631, F3-635): by default
+  the running program and the folder, which replace the Terminal and Terminal 2 defaults, then the exit code when a
+  command failed and the agent mark on an agent's terminal (F3-640); pane headers read as the terminal tab's header
+  row; a user's rename still wins and reset-to-auto still restores the derived label. The terminal owners now own this
+  unit's rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640,
+  #F3-641; ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Terminal labels, badges, names, and accessibility descriptions are visible or assistive UI.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - User labels always win over derived context.
@@ -6809,6 +6923,8 @@ preserved_exact_tokens:
   - "reset-to-auto"
 negative_constraints:
   - "Derived context must not overwrite a user-facing label after rename."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the default label is the program and folder of F3-640; pane headers read as the header row; re-homed through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -6825,9 +6941,14 @@ canonical_text: >-
   user-facing pane UI avoids noisy internals and offers retry, restart pane,
   rerun command, reveal logs, or switch renderer mode while support exports and
   diagnostics surfaces share structured source state.
+  Amended 2026-10-09 (DL-181): restart pane reads as Restart session in the same tab (UCC-201), and switch renderer
+  mode is the app's drawing choice of DL-139, never a renderer of the terminal's own. Diagnostics show as the terminal
+  tab's inline notice rows, never modals and never side stripes (F3-640). The terminal owners now own this unit's
+  rules (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
+  ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
 gui_related: true
 gui_classification_reason: Diagnostic banners, actions, and drill-down details are visible terminal UI.
-depends_on: [ACD-135]
+depends_on: [ACD-135, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Diagnostics use structured events and typed reasons.
@@ -6858,6 +6979,8 @@ preserved_exact_tokens:
   - "IME /input_pipeline_error"
   - "unsupported_platform_capability"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): restart pane is Restart session; renderer mode is DL-139's; re-homed through ACD-502."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -6968,13 +7091,17 @@ canonical_text: >-
   `Open in Terminal` and `Show Terminal` focus or reveal the existing
   pane/tab/session or historical shell receipt; explicit `New Terminal`,
   restart, and `/rerun/new` remain separate user-visible actions.
+  Amended 2026-10-09 (DL-181): reveal activates the session's terminal tab in its panel, pulls it out of the "+N" list
+  and expands its collapsed panel (cmd.terminal.open and cmd.terminal.reveal, UCC-201; F3-634); there are no sections.
+  New Terminal is the "+" menu's Terminal row, the new-terminal key or, from the chat, New terminal here (ACD-502),
+  and stays separate from reveal.
 gui_related: true
 gui_classification_reason: Terminal reveal, focus, recovery, restart, and new-terminal actions are visible UI.
-depends_on: [ACD-128, ACD-138, ACD-143]
+depends_on: [ACD-128, ACD-138, ACD-143, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Visible terminal sessions are focused rather than duplicated.
-  - Hidden sessions reveal existing panes or tabs before creating anything new.
+  - "Hidden sessions reveal their existing terminal tab, wherever it is, before creating anything new."
   - Historical state opens a historical shell receipt with recovery actions.
   - New Terminal, restart, and rerun/new remain explicit separate choices.
 validation_surfaces:
@@ -7002,6 +7129,8 @@ preserved_exact_tokens:
   - "New Terminal"
 negative_constraints:
   - "Reveal-origin must not silently replace the true origin with a fresh shell unless the user chooses restart, /rerun/new, or explicit New Terminal."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): reveal is terminal-tab activation by F3-634; section wording retired."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -9808,9 +9937,11 @@ canonical_text: >-
   Chat shows dev-session lifecycle state while output routes to canonical
   Terminal, Output, Problems, Debug Console, and Ports surfaces rather than a
   parallel chat output model.
+  Amended 2026-10-09 (DL-180): Terminal, Output, Problems, Debug Console and Ports are tab kinds of the home panels
+  (F3-635), opened or revealed by F3-634's kind affinity, not surfaces of a bottom panel.
 gui_related: true
 gui_classification_reason: Dev-session lifecycle state and output routing are visible shell/chat UI.
-depends_on: [ACD-206]
+depends_on: [ACD-206, DL-180, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Dev-session states are visible in chat/shell surfaces.
@@ -9839,6 +9970,8 @@ preserved_exact_tokens:
   - "Terminal, Output, Problems, Debug Console, and Ports"
 negative_constraints:
   - "Chat does not create a parallel dev-output model."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the canonical shell surfaces are panel tab kinds placed by F3-634."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -9934,13 +10067,16 @@ canonical_text: >-
   Dev-session surface actions reveal current `dev_session_id` Output,
   Problems, Ports, or primary/last-active terminal without changing canonical
   owning runtime records.
+  Amended 2026-10-09 (DL-181): Show Output, Show Problems and Show Ports reveal or open those tool tabs by F3-634's
+  kind affinity, and Open in Terminal reveals the dev session's primary or last-active terminal tab; a leaf pane is
+  now a terminal tab with one session (SMPFS-180).
 gui_related: true
 gui_classification_reason: Show Output, Problems, Ports, and Open in Terminal are visible UI actions.
-depends_on: [ACD-209]
+depends_on: [ACD-209, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Show Output, Show Problems, and Show Ports reveal surfaces linked to dev_session_id.
-  - Open in Terminal reveals the primary or last-active terminal when one exists.
+  - "Open in Terminal reveals the primary or last-active terminal tab when one exists."
   - Reveal actions do not mutate owning runtime records.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -9964,6 +10100,8 @@ preserved_exact_tokens:
   - "Open in Terminal"
   - "dev_session_id"
 negative_constraints: []
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the revealed surfaces are panel tabs; a leaf pane is a terminal tab."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/UI_Command_Catalog.md
@@ -9974,15 +10112,21 @@ owner_hints:
 ```yaml
 plan_unit_id: ACD-211
 unit_type: constraint
-status: accepted
+status: superseded
 owner_doc: Plans/assistant-chat-design.md
+superseded_by: ACD-502
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The editor-stack terminal panels,
+  workgroups, leaf panes and the bottom workspace this unit reconciled are retired: a terminal is a panel tab with one
+  session in any panel (SMPFS-180), so nothing is mirrored and no placeholder is needed. The text below is retained
+  verbatim for lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by
+  ACD-502 (DL-181).
   Workgroup and editor-stack pane mirroring stays reconciled, and the bottom
   workspace shows placeholder guidance when a pane exists only in the editor
   stack rather than pretending the pane no longer exists.
 gui_related: true
 gui_classification_reason: Workgroup, pane, editor-stack, and placeholder guidance are visible shell/editor UI.
-depends_on: [ACD-209]
+depends_on: [ACD-209, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Mirrored workgroup/editor-stack pane references are removed or updated on close.
@@ -10009,6 +10153,8 @@ preserved_exact_tokens:
   - "placeholder guidance"
 negative_constraints:
   - "A pane that exists only in the editor stack must not be treated as nonexistent."
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-181): editor-stack mirroring and the bottom-workspace placeholder retire with the terminal's sections and workgroups; ACD-502 records it."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -10108,14 +10254,18 @@ canonical_text: >-
   Closing a workspace or terminal tab with an active dev session requires
   explicit consequence disclosure, and Puppet Master must not silently orphan
   background workflows by default.
+  Amended 2026-10-09 (DL-181): closing a terminal tab, or a panel holding one, discloses the consequence first, and
+  closing a terminal tab ends its session after the inline ask of SMPFS-180 ("Close this terminal? <process> is still
+  running and will be stopped.").
 gui_related: true
 gui_classification_reason: Workspace/terminal close consequence disclosure is visible safety UI.
-depends_on: [ACD-213]
+depends_on: [ACD-213, DL-181, ACD-502]
 unblocks: []
 acceptance_criteria:
   - Closing a workspace tab with active dev session discloses consequences.
   - Closing a terminal tab with active dev session discloses consequences.
   - Background workflows are not silently orphaned by default.
+  - "Closing a panel that holds a terminal tab with an active dev session discloses the consequence first (DL-181)."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -10135,6 +10285,8 @@ preserved_exact_tokens:
   - "Puppet Master MUST NOT silently orphan the background workflow by default"
 negative_constraints:
   - "Puppet Master MUST NOT silently orphan the background workflow by default."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): the close rule covers a terminal tab and a panel holding one."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L11686-L11780
+Source lines: L11764-L11861
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -57,10 +57,11 @@ canonical_text: >-
   state dispatch nothing. The concept-only semantic preset alias normalizes to
   cmd.workspace_layout.resize_surface; cmd.provider.usage.open_management
   remains rejected with no alias, and no PM7-only or duplicate primary command row is created.
+  Amended 2026-10-09 (DL-180): Home commits now use the cmd.panel_tab.* and extended cmd.workspace_layout.* families of UCC-200 on the pm.home_workspace_layout.v2 record (SP-330), and Dashboard widget rows run inside dashboard tabs addressed by board_id.
 gui_related: true
 gui_classification_reason: The catalog census binds visible PMConcept7 controls to canonical commands or explicit view-only behavior.
 split_recommended: false
-depends_on: [CS-068, UCC-060, UCC-144, UCC-146]
+depends_on: [CS-068, UCC-060, UCC-144, UCC-146, DL-180]
 unblocks: [WM-045, UIW-012, DR-039, ACD-448]
 acceptance_criteria:
   - Every listed PMConcept7 control maps to exactly one existing command or view_only disposition; Ledger attempt drill-through uses cmd.nav.open_usage_subject with route_target.object_kind usage_attempt, route_target.object_id attempt_id, top-level attempt_id, usage_event_ref correlation, and no OpenSubject, while provider, account, and presentation-panel aggregate details use stable local identities and dispatch no UICommand.
@@ -99,6 +100,8 @@ negative_constraints:
   - Do not attach OpenSubject to a Usage object route.
   - Do not create a PM7 command namespace or duplicate primary command row.
   - Do not revive or alias a rejected provider-management command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the Home rows of this census move to UCC-200."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24594-L24684
+Source lines: L24785-L24887
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -16,6 +16,9 @@ other primary pages. Page changes do not construct a second Assistant, do not co
 page-local store, and do not reset the active thread, draft, attachments, activity projection, context
 state, Context Detail Pane, or focus-return target. Returning Home restores the same component to the saved
 Home dock; boot never restores a floating Home placement.
+
+Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (`Plans/FinalGUISpec.md#F3-637`), not a
+saved dock, and More Details opens or reveals the thread's context tab in the home centre (ACD-448, ACD-500).
 
 The context ring is the compact projection of the active thread's actual context state. Its compact surface
 shows current-window usage/percentage, effective window and tokens loaded, cache hit, and source
@@ -48,14 +51,19 @@ canonical_text: >-
   Curated/Raw routing, fallback, cache, limits, compaction-state, and history views. No
   Assistant clone, app-wide Usage substitute, second detail drawer, or second context
   store is permitted.
+  Amended 2026-10-09 (DL-180): Home's seat is the fixed chat column on the right (Plans/FinalGUISpec.md#F3-637), not a
+  saved dock: returning Home puts the same Assistant back in its column, and its only other place is the popped-out
+  window, which Dock back returns (Plans/UI_Command_Catalog.md#UCC-203). Boot never restores a floating Home
+  placement, and nothing floats the chat inside the window. More Details opens or reveals the thread's context tab in
+  the home centre (ACD-500).
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
-depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039]
+depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039, DL-180]
 unblocks: []
 acceptance_criteria:
   - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
-  - Returning Home restores that same node to the saved Home dock with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement.
+  - "Returning Home restores that same node to the chat column (F3-637) with active thread, draft, attachments, transcript, context, details, and focus continuity intact; boot never restores floating placement (DL-180)."
   - The context ring/menu exposes current-window use, effective window/tokens loaded, cache hit, and source composition.
   - The click menu contains Compact Now and More Details; opening or hovering the menu dispatches nothing.
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection and updates the ring plus detail state coherently for started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed results.
@@ -81,6 +89,8 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/assistant-chat-design.md#ACD-500"
 preserved_exact_tokens:
   - Compact Now
   - More Details
@@ -95,6 +105,8 @@ negative_constraints:
   - Do not dispatch compaction from hover or menu disclosure.
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569, ACD-480 and ACD-452."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

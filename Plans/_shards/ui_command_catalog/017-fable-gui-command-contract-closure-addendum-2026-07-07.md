@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8071-L8234
+Source lines: L8127-L8295
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -54,6 +54,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+
+Amended 2026-10-09 (DL-180): `cmd.dashboard.add_widget` is an alias of `cmd.widget.add` (its `dashboard_id` read as `board_id`) and its `dashboard.widget_added` effect is withdrawn (UCC-202). From the home layout `cmd.panel.undock` and `cmd.panel.redock` take only `chat`, into a window (UCC-203).
 
 ### Retained Product Onboarding command-era row lineage
 
@@ -115,9 +117,10 @@ canonical_text: >-
   and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
   no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
   of the Project the application opens on (F3-468, DL-153).
+  Amended 2026-10-09 (DL-180): from the home layout cmd.panel.undock and cmd.panel.redock are dispatched only with chat, into a window (UCC-203); cmd.dashboard.add_widget becomes an alias of cmd.widget.add (UCC-202).
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
-depends_on: [UCC-089, UCC-097]
+depends_on: [UCC-089, UCC-097, DL-180]
 unblocks: [WM-042, PG-061]
 acceptance_criteria:
   - All command families named by the FABLE GUI repair have stable `cmd.*` IDs or explicit compatibility dispositions.
@@ -167,6 +170,8 @@ negative_constraints:
   - Do not duplicate existing FileManager CRUD command rows.
   - Do not treat command-catalog or wiring rows as runtime certification evidence.
   - Do not emit fabricated `*.command_applied` events.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): undock is the chat's Pop out only; cmd.dashboard.add_widget is an alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md

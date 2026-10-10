@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36247-L36554
+Source lines: L36853-L37160
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -50,7 +50,7 @@ What a wand module attaches to an ordinary reply is one line each (F3-570): the 
 
 ### 6. Plan card
 
-The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer. The Markdown view is read-only and preserves block identity.
+The Plan is a transcript card because it is a human-readable deliverable. Its header carries the Plan title, a `Plan · V5` badge, and a `Rich Text` / `Markdown` toggle with Rich Text selected by default. The body renders headings, paragraphs, tables, lists, code, Mermaid, charts, images, diagrams and supported artifacts with stable scroll and selection, **no editable caret**, an optional step-status gutter while building, and embedded artifacts that open in the normal artifact viewer (amended 2026-10-09, DL-180: an artifact tab, F3-635 and `Plans/Runtime_Artifacts_Panel.md#RAP-065`, placed by F3-634). The Markdown view is read-only and preserves block identity.
 
 The footer carries exactly one primary status control that changes label rather than being replaced by a separate badge. Before build the actions are `[Build] [Build With Crew] [Build At…] [Revise] [Send To Planning Wizard] [Export] [Cancel]`. During execution the primary control reads `Building…` alongside `Open To-Dos` and `Cancel`. After a terminal result it reads `Completed` or `Canceled`. A pause, quota wait or window boundary may appear as small support copy such as `Building… · paused until 10:00 PM`, but the button itself still reads `Building…`. The transcript card's status zone and its one action row are F3-606, and the schedule line's layout is F3-607 (DL-156).
 
@@ -74,7 +74,7 @@ Dynamic domains become `Goal · To-Dos · Subagents · Crew · BrainStorm · Rev
 
 The presentation of these surfaces is the wand modules GUI contract, F3-566 (sheets) and F3-569 (run cards, receipts and run views). One shared configuration sheet grammar and participant-row grammar serves all four kinds, with workflow-specific sections added rather than forked. A participant row exposes the role, the model, the Persona, and the requested-versus-effective disclosure when they differ. Wonderer and Grill Me appear as additive rows rather than replacing a core participant.
 
-Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
+Each run renders one transcript card that changes density in place as the run moves (Collaborative_Workflows CWR-019) and opens the run view, an editor document showing the same run (ACD-480; amended 2026-10-09, DL-180: a run tab, F3-635, placed by F3-634). Participants are clickable and open their own transcripts. The BrainStorm sheet shows the effective question maximum including the Grill extension; the Review sheet shows the reviewer count control across one to eight with repeated model choices permitted; the Chat Room sheet shows turn policy and rounds; the Crew sheet shows coordinator, roles, assignment strategy and parallelism.
 
 ### 11. BSD GUI
 

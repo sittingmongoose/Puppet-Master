@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L26352-L27041
+Source lines: L26585-L27290
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -362,14 +362,18 @@ canonical_text: >-
   preferences. The chat and the composer destination stay visible while the view is open, and a
   control that changes the run is rendered in one place at a time (Collaborative_Workflows CWR-020
   owns what the view contains). This unit does not change the minimum chat width.
+  Amended 2026-10-09 (DL-180): the editor tab system beside the chat is the home centre's panels. Open Panel opens or
+  reveals the run's run tab through ACD-500 and Plans/FinalGUISpec.md#F3-634, one tab per run identity, and it takes
+  focus because the user clicked it; in a narrow window it shows through F3-636's panel switcher beside the chat.
+  Return to chat retires for Home, because no tab covers the chat (ACD-500). The chat's width is F3-637's.
 gui_related: true
 gui_classification_reason: "Places collaboration run views in the editor tab system."
 split_recommended: false
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180]
 unblocks: [F3-569]
 acceptance_criteria:
-  - "Open Panel opens one editor document per run and focuses an existing tab instead of duplicating it."
-  - "Narrow widths show the run view full width with Return to chat, as the Plan tab does."
+  - "Open Panel opens one run tab per run in the home centre through F3-634 and reveals an existing tab instead of duplicating it (DL-180)."
+  - "In a narrow window the run tab shows in the centre's panel switcher beside the chat, as the plan tab does (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -387,6 +391,8 @@ node_compile_hint:
 source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/DESIGN-SPEC.md (SHA-256 dc0a02e550dd2e927faa59006cecab098e7c08b4aeb2479bf62e219f9b5907de) sections 4.4, 7.9, 7.12"
   - "IMPACT-REGISTER B-ACD-05 (item 15)"
+  - "Plans/Decision_Log.md#DL-180"
+  - "Plans/assistant-chat-design.md#ACD-500"
 preserved_exact_tokens:
   - "Open Panel"
   - "Return to chat"
@@ -394,6 +400,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not build a second document mechanism for run views."
   - "Do not open a run view as a centred modal panel."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): run views are run tabs placed by F3-634 through ACD-500, and Return to chat retires for Home; DL-180 is in depends_on, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Collaborative_Workflows.md
@@ -490,15 +498,20 @@ canonical_text: >-
   that ACD-435 renders for threads with diagnostics, with its route to the Problems bottom tab, is
   not part of this decision and is unchanged, as are FinalGUISpec F3-422's floating geometry and
   jump-to-latest rules.
+  Amended 2026-10-09 (DL-180, DL-184): there is no bottom panel; the problems row opens or reveals the
+  Problems tab, one per workspace, a tool tab kind of the home panels placed by the tool-kind affinity
+  of Plans/FinalGUISpec.md#F3-634 (F3-635, ACD-435). The Activity bar is no longer a pill in any look;
+  read "the Activity bar pill" as the Activity bar (ACD-452, Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648).
 gui_related: true
 gui_classification_reason: "Removes the footer chips above the composer and names where their information went."
 split_recommended: false
-depends_on: [ACD-435, ACD-436, ACD-476, ACD-478, DL-129]
+depends_on: [ACD-435, ACD-436, ACD-476, ACD-478, DL-129, DL-180, DL-184]
 unblocks: [F3-567]
 acceptance_criteria:
   - "No subagent chip, files chip or chip fan-out renders above the composer."
   - "The thread's total file count is reachable from Activity's Changes domain."
-  - "The problems row still routes to the Problems bottom tab."
+  - "The problems row still routes to the Problems tab of the home panels, one per workspace (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -524,6 +537,9 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not render the footer chips beside the dock."
   - "Do not drop the problems row as part of this supersession."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the problems row routes to the Problems tab of the home panels (F3-635, F3-634), not a bottom tab."
+  - "Amended 2026-10-09 (DL-184): the Activity bar in the composer stack is no longer a pill (ACD-452)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

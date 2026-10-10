@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9495-L10522
+Source lines: L9672-L10722
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
@@ -39,6 +39,8 @@ Repairs rows `sfk-2fe1c569e11d92dd4dbc7c76` and `sfk-7a6ddaeaa377096558537bb1`.
 - If two tabs claim the same `project_id` and normalized URL hash, PM keeps the tab with the newest `last_user_interaction_at_utc` as attached and marks the other `restore_conflict_detached`.
 
 ### Pane Layout Family Transform
+
+Superseded 2026-10-09 (DL-181): pane layout families retire with in-tab splits (`#SMPFS-180`); `nearest_valid_family` below is lineage only and no current surface uses it.
 
 Repairs row `sfk-821a87baaf08f064a2b71c15`.
 
@@ -332,15 +334,21 @@ status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
   P1-TERMINAL-SESSION-PRESERVE-UPDATE (P1) is compiled as canonical Puppet Master intent for Terminal session continuity across relaunch/update: Add TerminalSessionRestorePolicy by platform/runtime: local PTY, WSL, SSH, container, devcontainer. Define reconnect tokens, when impossible, and exact banners/actions. The preserved PM gap/delta is: Need a concrete platform matrix for live session survival/reconnect and a UX flow for when only historical review can be restored. The observed external-repo signal remains source-lineage evidence: Warp issue requests terminal/agent sessions alive across relaunch/app updates; Warp changelog includes reopen closed sessions and restored WSL PWD; tmux's mature value is session/window/pane durability.
+  Amended 2026-10-09 (DL-181): a terminal tab whose live session cannot survive is not left review-only. Its saved
+  scrollback is the review part, and a new session starts below it in the same folder and profile on its own, with
+  the dim rule and the restore notice (SMPFS-180); it is never shown as the earlier live session. Restart and rerun
+  stay the actions for a session that ended while the tab was open.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Relaunch fixtures prove PWD/profile/layout/transcript restoration.
 - If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity.
+- "Amended 2026-10-09 (DL-181): if live PTY cannot survive, the tab shows its saved scrollback as review above a new session that starts on its own, with the dim rule and the restore notice of SMPFS-180; the earlier session is never shown as live, and Restart and rerun stay for a session that ended while the tab was open."
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -774,12 +782,25 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
 canonical_text: >-
-  P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS (P1) is compiled as canonical Puppet Master intent for Terminal-bound agent output storms and UI safety: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and per-agent log suppression. The preserved PM gap/delta is: PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs. The observed external-repo signal remains source-lineage evidence: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
+  P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS (P1) is compiled as canonical Puppet Master intent for Terminal-bound agent
+  output storms and UI safety: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt
+  marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and
+  per-agent log suppression. The preserved PM gap/delta is: PM should add agent-specific terminal storm controls: when
+  the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and
+  semantic-marker needs. The observed external-repo signal remains source-lineage evidence: Warp reports TUI agent
+  output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker
+  handling shows semantic terminal metadata can be corrupted by middle layers.
+  Amended 2026-10-09 (DL-181): TerminalAgentSessionMode is passive: whatever program runs, detection serves only
+  backpressure, semantic markers and log suppression, and it adds no AI action or agent-specific control to the
+  terminal surface (SMPFS-180). Token extraction budgets belong to the agent that reads the terminal through
+  SMPFS-182's agent reads, not to the terminal; detached continuation means a process that keeps running, not a
+  terminal tab moved into another window.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
 - PDS-003
 - PNC-001
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Running a high-output TUI agent does not freeze GUI or explode logs.
@@ -841,6 +862,8 @@ preserved_exact_tokens:
 - tmux
 - Codex
 negative_constraints: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the agent session mode stays passive with no terminal controls; token budgets belong to the reading agent; detached means a process that keeps running."
 observed_signal: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
 pm_current_coverage: PM has terminal protocol, persistence, projection throttling, ring buffers, and output retention honesty.
 pm_gap_or_delta: 'PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs.'

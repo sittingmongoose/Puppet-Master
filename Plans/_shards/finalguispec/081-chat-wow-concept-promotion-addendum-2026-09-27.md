@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L38623-L38844
+Source lines: L39256-L39482
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -198,10 +198,13 @@ canonical_text: >-
   its own line rather than pushing past the edge, a ledger line's title ellipsizes and shows in full
   on hover or focus, text inside cards breaks long unbroken tokens, and the turn spine is paint-only
   (ACD-469). Send and Stop remain reachable at every width (section 16).
+  Amended 2026-10-09 (DL-180): inside the window the chat column never drops below 400 px; in narrow windows it folds to
+  its edge strip instead (F3-637, F3-636). These resilience rules now hold for the desktop app's popped-out chat window
+  (F3-504) when it is narrower than that.
 gui_related: true
 gui_classification_reason: "Keeps the transcript intact in narrow chat panes."
 split_recommended: false
-depends_on: [ACD-469]
+depends_on: [ACD-469, DL-180]
 unblocks: []
 acceptance_criteria:
   - "No demo thread overflows the transcript sideways at a 234px pane or at full width."
@@ -225,6 +228,8 @@ preserved_exact_tokens:
   - "234px"
 negative_constraints:
   - "Do not let any transcript item widen the transcript's scrollable area."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the 234 px in-window chat width is retired; it applies only to a popped-out chat window."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

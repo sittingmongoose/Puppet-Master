@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L31627-L32117
+Source lines: L32146-L32649
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -32,10 +32,13 @@ canonical_text: >-
   beneath it; the mask returns immediately after the picker closes. Amended 2026-10-09 (DL-162): the
   left rail's segmented sub-view strips neither scroll nor truncate a label with an ellipsis; they fit
   as F3-620 says, full labels, then the active tab's label with icons for the rest, then icons only.
+  Amended 2026-10-09 (DL-180): bottom-panel tabs no longer exist. Every home panel's strip, the dashboard's included,
+  follows F3-631 and F3-633 (the width cascade and "+N", never scrolling sideways); this recipe keeps page tabs and the
+  side-panel occupant tabs F3-620 does not cover.
 gui_related: true
 gui_classification_reason: This unit defines visible tabstrip layout, scrolling, and label truncation for non-editor tab systems.
 split_recommended: false
-depends_on: [F3-421]
+depends_on: [F3-421, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Page tabs, side-panel occupant tabs, and bottom-panel tabs render on one non-wrapping row that scrolls horizontally on overflow with ellipsized labels; when the PMConcept7 title-bar page overflow picker is present, every hidden page remains reachable, the picker stays above and owns hit testing across its full painted rectangle, the ancestor edge-fade mask is disabled only for its opening/open/closing lifecycle, and no click falls through to an underlying page control."
@@ -66,7 +69,8 @@ negative_constraints:
 - "Do not leave the title-bar edge-fade mask active over an open in-tree page picker or disable that mask after the picker closes."
 compatibility_only_notes:
 - "Slint portability: the tabstrip renders as an opaque horizontally scrollable row of precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-panel tabs and every home strip leave this recipe for F3-631 and F3-633."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -250,19 +254,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Terminal workgroups and individual terminals support user customization from terminal tab
-  context and customize menus: per-workgroup rename, per-terminal rename, an accent color
-  chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names,
-  colors, and icons render on the corresponding workgroup and terminal tabs.
+  Renaming a terminal is the panel tab rename (`cmd.panel_tab.rename`, F3-631): from the tab's menu the user sets a
+  label that replaces the terminal's own label (F3-640) until it is cleared. Workgroups retire, and workgroup rename
+  with them (DL-181). The 8-color accent swatch and the 20-icon catalog are not drawn on the redesigned strip, which
+  marks a tab only with its silhouette and the one mark set (F3-631, DL-141), and no colour is ever drawn on a tab as
+  a coloured border or stripe (DR-069).
 gui_related: true
 gui_classification_reason: This unit defines visible terminal tab rename, color, and icon customization controls.
 split_recommended: false
-depends_on: [F3-062, F3-063]
+depends_on: [DL-181, F3-640, F3-631]
 unblocks: []
 acceptance_criteria:
-- "Workgroups and terminals can each be renamed from their tab context or customize menus."
-- "The accent swatch offers exactly 8 colors and the icon catalog offers exactly 20 icons."
-- "Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+- "A terminal tab can be renamed from its tab menu through cmd.panel_tab.rename, and clearing the label restores the terminal's own label."
+- "No workgroup rename, accent swatch or icon catalog is drawn for terminal tabs, and no tab colour is drawn as a coloured border or stripe."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -286,7 +290,9 @@ negative_constraints:
 - "Do not expose customization through hidden gestures only; the tab context or customize menu is the canonical entry point."
 compatibility_only_notes:
 - "Slint portability: context and customize menus render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+- "Earlier text, lineage only: Terminal workgroups and individual terminals support user customization from terminal tab context and customize menus: per-workgroup rename, per-terminal rename, an accent color chosen from an 8-color swatch, and an icon chosen from a 20-icon catalog. Chosen names, colors, and icons render on the corresponding workgroup and terminal tabs."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): workgroup rename retires, terminal rename becomes the panel tab rename, and the accent swatch and icon catalog are not drawn on the strip."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -297,16 +303,22 @@ owner_hints:
 ```yaml
 plan_unit_id: F3-450
 unit_type: constraint
-status: accepted
+status: superseded
 owner_doc: Plans/FinalGUISpec.md
+superseded_by: F3-640
 canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four-pane cap and the 2x2 grid inside
+  a terminal workgroup section retire: a terminal tab holds one session and no panes, Split opens a new panel by the
+  panels' split fit rule, and four terminals side by side are the Terminals 2x2 named layout of four panels (F3-630,
+  SMPFS-180). The text below is retained verbatim for lineage and audit and must not be accepted or indexed as
+  active current-product truth. Superseded by F3-640 (DL-181).
   A terminal workgroup section holds at most 4 leaf panes, arranged in a 2x2 grid at
   capacity. When a section is at the 4-pane cap, split affordances render disabled with a
   visible reason instead of disappearing or failing silently.
 gui_related: true
 gui_classification_reason: This unit constrains visible terminal split layout and split affordance states.
 split_recommended: false
-depends_on: [F3-063]
+depends_on: [F3-063, DL-181]
 unblocks: []
 acceptance_criteria:
 - "No split action can create a fifth pane in a terminal workgroup section."
@@ -334,7 +346,8 @@ negative_constraints:
 - "Split affordances must not silently no-op or disappear at the pane cap; they disable with a reason."
 compatibility_only_notes:
 - "Slint portability: disabled split affordances and their reason presentation render as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Superseded 2026-10-09 (DL-181): one session per tab and no splits inside a terminal; the four-section and four-pane caps retire, and Terminals 2x2 is a named layout of four panels."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

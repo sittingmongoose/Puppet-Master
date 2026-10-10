@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L4189-L4308
+Source lines: L4206-L4335
 
-Source SHA256: `6dafd1db8537fab7df8c76a3003bec2d0b39ba27c6a40e58919b04c3174607b6`
+Source SHA256: `14c48908f1df9c8a95c6beb438dc36ef8cb16c6208b697c422e5c7a09ab3a988`
 
 ---
 
@@ -49,12 +49,17 @@ depends_on:
 - SSYS-034
 - UCC-160
 - WM-052
+- DL-180
+- DL-181
+- DL-182
 unblocks: []
 acceptance_criteria:
 - 'P3 keyboard profile: non-mutating capability queries; bounded push/pop; independent normal/alternate stacks;
   byte/chunk boundaries; reset and crash behavior; and one owner per input. Cover modifier/key identity, IME, accessibility,
   shortcuts, paste and local/Windows/SSH/tmux paths against pinned toolkit/platform field availability. Unsupported
-  fields cannot be advertised from engine-only evidence; images remain outside approval.'
+  fields cannot be advertised from engine-only evidence; images remain outside approval. Amended 2026-10-09 (DL-182):
+  image protocols are now approved (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181) and certified by ATS-076;
+  this P3 case still covers the keyboard profile only.'
 - 'P4 richer shell context: split sequences at byte boundaries; output before completion; malformed/forged sequences;
   nested/continuation/right prompts; and capability-qualified rich properties. Local, remote and replayed projections
   agree on source-qualified metadata; malformed/opaque signals never invent authoritative boundaries or completion.
@@ -88,7 +93,8 @@ acceptance_criteria:
   draining/displaying; unlock preserves the exact session; and close obeys the existing selected confirmation policy
   without implying suspension. Visible and accessible scope agrees with the admitted router. Reconnect/PM reopen
   retains protection only for the same verified live session; replacement starts unlocked and pane preference inheritance
-  is rejected. Historical metadata cannot establish liveness. Agent-input cases assert an explicit blocked result and zero child writes through every admitted input path, including command-mediated insertion. No blocked input is silently replayed on unlock. Separate interrupt/terminate controls retain their existing behavior; these fixtures are obligations, not executed passes.'
+  is rejected. Amended 2026-10-09 (DL-180, DL-181): protection stays with the session when its tab is moved, collapsed,
+  maximized, hidden or restored or its layout is applied, and ATS-076 adds those cases. Historical metadata cannot establish liveness. Agent-input cases assert an explicit blocked result and zero child writes through every admitted input path, including command-mediated insertion. No blocked input is silently replayed on unlock. Separate interrupt/terminate controls retain their existing behavior; these fixtures are obligations, not executed passes.'
 - Cross-surface regression preserves existing native layout/style, command-palette parity, keyboard/focus/IME/accessibility,
   requested/effective state and meaningful unavailable reasons. Rendering or parser replay alone cannot certify
   native input, remote writes, provider continuity or lifecycle behavior.
@@ -123,8 +129,12 @@ source_lineage:
 - Plans/ledgers/v2/pldg-20260908-001-terminal-research-repairs/records/design_atoms.jsonl:atom-0012
 negative_constraints:
 - No image protocol, new provider integration, environment-intake expansion, snapshot-history retention, automatic
-  remote setup or implicit P10 policy is admitted.
+  remote setup or implicit P10 policy is admitted. Amended 2026-10-09 (DL-182), which admits the image protocols
+  through SMPFS-181 with ATS-076 certifying them; the rest of this constraint stands.
 - Do not promote planned fixtures, static schema checks, missing runners or research claims into native execution
   or shipping evidence.
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-182): 'images remain outside approval' and the image-protocol exclusion are replaced by DL-182; ATS-076 certifies the image protocols, their hardening and saved scrollback with images."
+- "Amended 2026-10-09 (DL-180, DL-181): P10 input protection follows the session across tab moves, collapse, maximize, hide, restore and layout apply (ATS-076)."
 ```

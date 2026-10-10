@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8536-L9734
+Source lines: L8599-L9801
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -420,14 +420,15 @@ canonical_text: >-
   spawning a duplicate shell. cmd.terminal.restart_replace remains the canonical restart row; the WM-021 token
   cmd.terminal.restart_session is owner-doc lineage for the same replace-with-new-runtime action and is not a
   second command.
+  Amended 2026-10-09 (DL-181): cmd.terminal.reveal reveals the session's tab wherever it is, never the bottom panel; cmd.terminal.reattach_section retires with detached sections; cmd.terminal.restart_session is a retired spelling, not lineage for an alias (UCC-201, UCC-202).
 gui_related: true
 gui_classification_reason: Registers user-visible terminal reveal, terminate, kill, and reattach commands.
-depends_on: [UCC-067, UCC-068]
+depends_on: [UCC-067, UCC-068, DL-181]
 unblocks: []
 acceptance_criteria:
-  - Rule 4.2 terminal coverage (reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, focus-session) resolves to cataloged commands with production wiring rows.
+  - "Rule 4.2 terminal coverage resolves to cataloged commands with production wiring rows as UCC-201 keeps or replaces them (amended 2026-10-09, DL-181): reveal, show and rerun to cmd.terminal.reveal, cmd.terminal.show and cmd.terminal.rerun; split to cmd.workspace_layout.split with a terminal spec; close to cmd.panel_tab.close; clear to cmd.terminal.clear_scrollback (and the context menu Clear to cmd.terminal.clear); restart to cmd.terminal.restart_replace; terminate and kill to cmd.terminal.terminate_session and cmd.terminal.kill_session; focus-session to cmd.terminal.focus (cmd.terminal.focus_session is its alias, UCC-202). Detach and reattach are retired and have no production row."
   - terminate and kill remain distinct commands with distinct escalation semantics.
-  - reattach_section preserves tab, pane, and session identity across the layout change.
+  - "Retired 2026-10-09 (DL-181): the criterion that reattach_section preserves tab, pane and session identity across the layout change is lineage only; no terminal is detached or reattached (UCC-201), and moving a terminal tab with cmd.panel_tab.move never touches its session."
   - reveal focuses the existing bound session and never spawns a duplicate shell.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -455,6 +456,9 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not mint cmd.terminal.reattach or other differently spelled duplicates of the WM-021 ids.
   - Do not collapse terminate and kill into one command or imply a killed session remains live.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-181): reveal is panel-neutral; reattach_section retires."
+  - "Amended 2026-10-09 (DL-181): the rule 4.2 coverage criterion now resolves to UCC-201's kept rows and replacements, and the reattach_section criterion is retired to lineage."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Wiring_Matrix.md

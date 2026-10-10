@@ -4,15 +4,15 @@ Source: `Plans/FileManager.md`
 
 Source lines: L20-L120
 
-Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
+Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
 
 ---
 
 ## Summary
 
-The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below. Amended 2026-10-09 (DL-180): the editor is the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip is lineage (section 2.1).
 
-This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**. Amended 2026-10-09 (DL-180): the editor is now the editor tab kind in the home panels (`Plans/FinalGUISpec.md#F3-635`, `#F3-639`); the File Editor strip, dragging the editor out to its own window and back, and split editor panes as editor-only groups are lineage (section 2.1), and split panes are the panels' own splits (`#F3-630`).
 
 **Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
 
@@ -83,8 +83,8 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/L
 ### Definitions
 
 - **Buffer:** In-memory representation of a file's content; one per file path. Edits apply to the buffer until Save.
-- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group).
-- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model.
+- **Tab:** UI handle for an open buffer; one tab per path per editor group (no duplicate tabs for same path in one group). Amended 2026-10-09 (DL-180): a path is at most one editor tab in the whole workspace, and opening it again reveals that tab where it is (`Plans/FinalGUISpec.md#F3-635`, `#F3-634`).
+- **Editor group:** One pane in a split editor layout; has its own tab list and active tab; shares the global buffer model. Amended 2026-10-09 (DL-180): an editor group is now a home panel holding editor tabs among other kinds (`Plans/FinalGUISpec.md#F3-630`, `#F3-639`).
 - **Dirty:** Buffer state when in-memory content differs from last-saved content; UI shows unsaved indicator.
 - **Preset:** Language/framework configuration (e.g. Rust, Python) that defines run/debug configs and tools (§11).
 - **redb:** Durable key-value store for settings, sessions, project state, and editor state (see rewrite-tie-in-memo).

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L36742-L37444
+Source lines: L37348-L38058
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -115,6 +115,8 @@ invariants.
   command in `Plans/Commands_System.md`.
 
 ### 22. Plan Left Editor Tab Navigation, Surface Controls, and Responsive Resizing
+
+Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules (F3-634, `Plans/assistant-chat-design.md#ACD-500`). "The left editor tab bar" reads as the panel F3-634 picks; opening a plan that is already open reveals its tab wherever it is; a collapsed panel holding it expands; and the chat column's width is F3-637's, never below 400 px inside the window, so the 360 px minimum below is met by construction (F3-540).
 
 - **Left Editor Plan Tab Navigation (APR-036):** Clicking a plan title, the "Details" link,
   "Expand", or "Open plan" in a transcript Plan card opens or focuses the plan in the left editor
@@ -512,9 +514,13 @@ canonical_text: >-
   the left editor tab bar with tab deduplication. The left plan tab provides the full suite of owner-backed
   plan controls equivalent to the transcript Plan card. Activating a plan opens a readable editor pane
   even from a collapsed split, and subsequent divider resizing preserves a minimum functional chat width.
+  Amended 2026-10-09 (DL-180): a plan opens as a plan tab in the universal panels by the one set of opening rules
+  (F3-634, ACD-500): "the left editor tab bar" reads as the panel F3-634 picks, opening a plan that is already open
+  reveals its tab wherever it is, a collapsed panel holding it expands, and the chat column's width is F3-637's, never
+  below 400 px inside the window, so the 360 px minimum is met by construction.
 gui_related: true
 gui_classification_reason: Governs left editor plan tab navigation, control parity, and responsive split behavior.
-depends_on: [F3-533, F3-534]
+depends_on: [F3-533, F3-534, DL-180]
 unblocks: []
 acceptance_criteria:
   - Transcript plan actions open or focus the left plan tab without tab duplication.
@@ -544,6 +550,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not open duplicate tabs for the same plan.
   - Do not squeeze chat into the resize handle dead zone.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the left editor tab bar and the editor-to-chat divider are retired as placement terms; F3-634 places the plan tab and F3-637 owns the chat's width."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```

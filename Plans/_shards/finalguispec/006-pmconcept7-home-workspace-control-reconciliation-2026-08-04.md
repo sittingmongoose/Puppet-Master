@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L274-L1241
+Source lines: L276-L1387
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -14,6 +14,12 @@ This addendum is the GUI/shell behavior owner for the model-driven Home workspac
 canonical record shape, migration rules, and persistence key live in
 `Plans/home_workspace_layout.schema.json` and `Plans/storage-plan.md`; consumers cite
 those owners instead of copying field definitions.
+
+Superseded 2026-10-09 (DL-180): the GUI owner of the home centre is now the DL-180 to
+DL-185 addendum at the end of this document (F3-630 to F3-639 and F3-647), and the
+record is the v2 Home layout record (`Plans/storage-plan.md#SP-330`,
+`Plans/home_workspace_layout_v2.schema.json`). The units below stay findable as
+lineage; each carries a dated note saying what survives.
 
 ### F3-HOME-001 — Home composition and stable surface identity
 
@@ -52,6 +58,19 @@ and resurrected the stale persisted flag, which made `cmd.terminal.split_pane`
 appear to have editor side-effects. `mountActiveBrowser` now enforces a single
 active tab in the owning strip (removing any stale file-tab highlight) and
 un-hides a chip-collapsed browser tab when mounting.
+
+Superseded 2026-10-09 (DL-180): the composition above came from an audit packet
+(`PMConcept7_Home_Workspace_Audit_Packet_v1`), not from an owner decision, and is
+superseded. The five host registries, the four stable editor surfaces
+`editor_panel_1` to `editor_panel_4` with Panels 1 and 2 open by default, the
+singleton Dashboard, the Chat as a movable surface and terminal sections docked at
+the bottom give way to one universal panel system: an n-ary split tree of panels,
+each a tab group that holds any tab kind (F3-630), the tab kinds and their ids
+(F3-635), and a chat column fixed on the right that moves only by Pop out (F3-637).
+One rule here carries over: the layout stores references and presentation state
+only, and buffers, terminal sessions, browser sessions, dashboard widget layouts and
+chat messages stay with their domain owners (tab identity versus domain identity,
+F3-635). The paragraphs above remain lineage.
 
 ### F3-HOME-002 — Model-first movement and resize behavior
 
@@ -169,6 +188,24 @@ projected width, mirroring the `normalizeMainRowBases` re-sum the commit will
 run, so the preview and the committed layout agree. The PM_EDGE band geometry
 defers during ALL Home gestures — move and workgroup drags participate in the
 `pm-resizing`/`PM_DRAGEND` deferral alongside resize.
+
+Amended 2026-10-09 (DL-180): the gesture transaction above survives and now moves
+panels and tabs (F3-630). It keeps a committed layout and a local draft, a local
+preview that never re-renders a tab body, one typed command on a changed release,
+the exact restore on Escape, pointer cancel, window blur, an invalid target or an
+unchanged drop, the rule that loss of pointer capture alone is not a cancellation,
+the `invalid_target` result for a pointer past the workspace, the keyboard path with
+polite announcements, and adjacent-pair resize. What it moves changes: a whole panel
+by its grip or Move panel (`cmd.workspace_layout.move_surface`) and a tab by its
+strip (`cmd.panel_tab.move`), onto a panel's edge band, a strip, the centre's outer
+edge or the "+N" list, with F3-630's edge bands, thresholds, dwell, hysteresis and
+motion; the Usage board's gesture kit is the same kit (DR-066). Retired with this
+dated disposition: the five host registries and host adjacency for the keyboard
+path, the host caps and `host_full`, the per-kind fair-share minimums (editor
+220 px, chat 260 px, dashboard 240 px, terminal 150 px) and the host clamp bands (a
+panel's minimum is the largest content minimum of its tabs, F3-635), the floating
+corner handle, and the row-dock `size.cross_basis_px` track (every split keeps its
+own proportions, F3-630). The chat is never moved by a gesture (F3-637).
 
 ### F3-HOME-003 — Shell controls and capability envelope
 
@@ -379,6 +416,23 @@ floating. Native Slint 1.17.1 multi-window behavior remains the desktop authorit
 All eight themes and Light/Dark/Auto remain supported, and no new control may use
 emoji or non-inline image assets.
 
+Superseded 2026-10-09 (DL-180) where it moves the chat or names fixed panels and
+the bottom terminal. The `Home more options` menu loses `Open Panel` and
+`Open Browser in Panel` with their Panel 1 to Panel 4 flyouts, and
+`Collapse Bottom Terminal` with its runtime relabel: things open through the "+"
+menu and the one set of opening rules (F3-632, F3-634), any panel collapses to its
+strip (F3-630), and the menu's rows are F3-502's as amended. The chat loses its
+grip, its in-window float and its `Dock back` to a host: it is a fixed column that
+moves only by Pop out, and `Dock back` returns a popped-out chat to its column
+(F3-637). The bottom terminal's collapse chevron, workgroup movement, the
+empty-section guidance and the reseed rules above go with the terminal sections
+(DL-181, F3-640). What carries over to panels: each panel keeps a small lines-only
+corner grip as its whole-panel move affordance, with Enter on it opening Move panel,
+and a three-dot panel menu at the end of its strip (F3-630); opening a menu or a
+flyout stays view-local and every chosen leaf dispatches exactly one command or a
+typed no-change receipt; and opening something already open reveals it instead of
+duplicating it (F3-634). The web boundary is F3-504's.
+
 ### F3-HOME-004 — Transactional persistence and identity
 
 `HomeWorkspaceLayoutV1` is the only Home shell layout authority. A candidate
@@ -393,6 +447,18 @@ the next reload must be clean. Layout movement/reload never mints editor panel,
 editor group, worktree, buffer, dirty-buffer, terminal section, workgroup, pane,
 PTY/session, Browser, Dashboard, or Chat identity.
 
+Amended 2026-10-09 (DL-180): the Home layout authority is now the v2 record
+`home_workspace_layout.v2:{project_id}:{workspace_tab_id}`, schema id
+`pm.home_workspace_layout.v2` (`Plans/storage-plan.md#SP-330`,
+`Plans/home_workspace_layout_v2.schema.json`), which holds the split tree, the tab
+records and the chat column (F3-630, F3-635, F3-637). `HomeWorkspaceLayoutV1` and the
+Home part of `layout:v1` become read-only migration inputs, converted on first read
+and never reset. The transaction above (validate, write, read back, then commit;
+exact restore on failure; quarantine and a disclosed recovery for a corrupt record)
+and the rule that layout movement and reload never mint domain identity stand for the
+v2 record; in the new words, movement never mints a tab's domain reference (a path, a
+terminal session, a browser session, a board or a chat), F3-635.
+
 ### F3-HOME-005 — Native Slint portability contract
 
 The native Rust implementation owns the committed/draft layout model, command
@@ -405,6 +471,15 @@ Window size and position may be persisted, but exact position restoration on
 Wayland is best effort; an unprovable placement falls back to the last valid dock
 or `home_main`. DOM clone/FLIP mechanics remain prototype-only and cannot become
 native layout authority.
+
+Amended 2026-10-09 (DL-180): the contract holds for the split tree. Rust owns the
+committed and draft split tree, the tab records, the tab-kind registry (F3-635), the
+command transaction, persistence and the multi-window registry, which now holds only
+the popped-out chat (F3-637). One reusable Slint panel component renders every panel,
+its strip and its body, recursively inside row and column splits; one reusable strip
+component renders every tab strip (F3-631); tab bodies are the kinds' own components
+mounted when first shown. Input areas stay projections over the Rust model. An
+unprovable window placement for the popped-out chat falls back to its column.
 
 ### Explicit superseded dispositions
 
@@ -470,18 +545,36 @@ gesture; and DOM-only browser-tab deactivation is superseded by model-first
 `deactivateBrowserProjection` (restoreOwnerRefs can no longer resurrect a stale
 browser-active flag).
 
+Superseded 2026-10-09 (DL-180): the four stable editor panel model, four terminal
+sections with their default bottom placement, the Home host registries and host caps,
+the singleton Dashboard and the movable Chat are superseded by the universal panel
+system of the DL-180 to DL-185 addendum (F3-630 to F3-637): one split tree of panels
+that each hold any tab kind, a full-width bottom row in the default layout that is an
+ordinary panel row, and a chat column fixed on the right. The dispositions above
+remain lineage; the gesture transaction they refine survives for panels and tabs
+(F3-HOME-002 as amended).
+
 ### F3-501 - Home Workspace Model And Stable Identity
 
 ```yaml
 plan_unit_id: F3-501
 unit_type: requirement
-status: accepted
+status: superseded
+superseded_by: F3-630
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: Home is rendered from one Rust-owned HomeWorkspaceLayoutV1 across home_main, four outer docks, and a floating host; four editors, Dashboard, Chat, and up to four terminal sections retain stable domain-owner identities across move, close, reopen, float, re-dock, persistence, and reload.
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. The four fixed editor panels, the singleton
+  Dashboard and Chat surfaces, up to four terminal sections, the outer docks and the floating host are retired: the home
+  centre is one split tree of panels that each hold any tab kind, and the chat is a fixed column that moves only by Pop
+  out. The text below is retained verbatim for lineage and audit and must not be accepted or indexed as active
+  current-product truth. Superseded by F3-630 (DL-180).
+  Home is rendered from one Rust-owned HomeWorkspaceLayoutV1 across home_main, four outer docks, and a floating host;
+  four editors, Dashboard, Chat, and up to four terminal sections retain stable domain-owner identities across move,
+  close, reopen, float, re-dock, persistence, and reload.
 gui_related: true
 gui_classification_reason: This unit owns the user-visible Home shell composition and stable surface behavior.
 split_recommended: false
-depends_on: [F3-500]
+depends_on: [F3-500, DL-180]
 unblocks: [SP-245, UCC-144, CV-323, F3-502, F3-503, F3-504]
 acceptance_criteria:
 - Exactly four editor panel identities exist; Panels 1 and 2 default open and Panels 3 and 4 default closed.
@@ -507,6 +600,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
 - The HTML5/CSS-order Home swap demo is retired source lineage only.
+- "Superseded 2026-10-09 (DL-180): the four-editor-panel Home model came from an audit packet, not an owner decision; the universal panel system replaces it (F3-630, F3-635, F3-637)."
 owner_hints: [Plans/FinalGUISpec.md, Plans/storage-plan.md]
 ```
 
@@ -517,17 +611,33 @@ plan_unit_id: F3-502
 unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
-canonical_text: "The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces. Amended 2026-08-13 (tweak wave) - the Collapse row is a toggle: it relabels at runtime to Expand Bottom Terminal while the terminal is collapsed and expands it, dispatching cmd.workspace_layout.set_collapsed with the negated current value; the authored markup label stays Collapse Bottom Terminal."
+canonical_text: >-
+  The 28 by 28 Home more-options trigger immediately left of Theme opens one compact body-portaled four-row popup
+  (amended 2026-08-13): Open Panel, Open Browser in Panel, divider, Collapse Bottom Terminal, and Reset Layout; the
+  first two rows expose Panel 1 through Panel 4 side flyouts, Reset Layout dispatches cmd.workspace_layout.reset as a
+  dual surface with the Settings Startup & Recovery row, and all other Home actions live at their owner surfaces.
+  Amended 2026-08-13 (tweak wave) - the Collapse row is a toggle: it relabels at runtime to Expand Bottom Terminal while
+  the terminal is collapsed and expands it, dispatching cmd.workspace_layout.set_collapsed with the negated current
+  value; the authored markup label stays Collapse Bottom Terminal.
+  Amended 2026-10-09 (DL-180): Open Panel and Open Browser in Panel with their Panel 1 to Panel 4 flyouts, and Collapse
+  Bottom Terminal with its runtime Expand Bottom Terminal relabel, retire: things open through the "+" menu and the one
+  set of opening rules (F3-632, F3-634), and every panel collapses to its strip by itself (F3-630). The trigger stays.
+  Its popup now holds, in order: the named layouts (Home, Build, Terminals 2x2, Focus, then the user's saved layouts,
+  the current one checked; cmd.workspace_layout.apply_named); the chat's rows, Show the chat or Hide the chat
+  (cmd.panel.switch), Pop out the chat or Dock the chat back (cmd.panel.undock, cmd.panel.redock) and Keep the chat open
+  in narrow windows (F3-637); Save this layout... (cmd.workspace_layout.save_named); Restore home layout, the former
+  Reset Layout row, which still dispatches cmd.workspace_layout.reset as a dual surface with the Settings row
+  general.startup.reset-home-layout; and directly below it the Run setup wizard row of F3-520.
 gui_related: true
 gui_classification_reason: This unit owns the visible title-bar menu inventory, placement, keyboard behavior, and disabled treatment.
 split_recommended: false
-depends_on: [F3-501, UCC-144, UIW-010]
+depends_on: [F3-501, UCC-144, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
-- The popup has exactly the four ordered top-level actions (Open Panel, Open Browser in Panel, Collapse Bottom Terminal, Reset Layout) and no File Manager, Move/Dock, pop-out, close, count, recovery, revision, or debug row.
+- "The popup lists, in order, the named and saved layouts, the chat's Show or Hide, Pop out or Dock back and Keep the chat open in narrow windows rows, Save this layout..., Restore home layout and Run setup wizard, and no File Manager, Move/Dock, numbered panel, bottom terminal, close, count, recovery, revision, or debug row (amended 2026-10-09, DL-180)."
 - Flyouts support hover bridge, Enter/Right Arrow, Left Arrow, roving focus, Escape/outside dismissal, viewport flipping, reduced motion, and trigger focus restoration.
-- The Collapse row toggles; it reads Expand Bottom Terminal at runtime while the terminal is collapsed, round-trips collapse and expand with one cmd.workspace_layout.set_collapsed per activation, and exposes the canonical disabled reason when no eligible bottom terminal exists.
-- Reset is dual-surface; the top-bar Reset Layout row and Settings -> General & Appearance -> Startup & Recovery both dispatch cmd.workspace_layout.reset, no new command ID is minted, and the concept demo's post-reset page reload is demo behavior only, not part of the typed command contract.
+- "No row opens a numbered panel or collapses a bottom terminal; collapsing is per panel (F3-630) (amended 2026-10-09, DL-180)."
+- "Restore home layout is dual-surface: the title-bar row and the Settings row general.startup.reset-home-layout both dispatch cmd.workspace_layout.reset, keep every open tab, and mint no new command ID; the concept demo's post-reset page reload is demo behavior only."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 Concepts/pm7-tools/build_pm7.py
@@ -549,6 +659,7 @@ stale_retired_dispositions:
 - Diagnostics, File Manager, Move/Dock, pop-out, close, count, recovery, and revision rows in the title-bar Home menu remain retired.
 - "Amended 2026-08-13: the 2026-08-04 reset prohibition in the title-bar Home menu is itself retired — Reset Layout is a required fourth row, dual-surface with the Settings Startup & Recovery row, both dispatching cmd.workspace_layout.reset. The three-row inventory is retired with it."
 - "Amended 2026-08-13 (tweak wave): the one-way Collapse contract (Collapse stays Collapse, never an Expand alias) is retired — the row is a toggle with a runtime Expand Bottom Terminal relabel while collapsed."
+- "Amended 2026-10-09 (DL-180): Open Panel, Open Browser in Panel, their Panel 1 to Panel 4 flyouts and the Collapse Bottom Terminal toggle with its Expand relabel are retired; Reset Layout reads Restore home layout; the popup gains the named layouts, Save this layout... and the chat's rows."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
 ```
 
@@ -665,25 +776,35 @@ canonical_text: >-
   four PM_EDGE bands report display none; home_main shows 2 dividers for 3 visible
   surfaces. At 1180 px home_main computes overflow-x auto with a zero scrollbar gutter,
   and returns to the clip path at 1920.
+  Amended 2026-10-09 (DL-180): the transaction, the shared resizer glow and recovery, the four-edge scroll dissolve, the
+  change-gated landing preview, the hysteresis, the latch-based geometric targeting, the invalid_target window exit and
+  the scroll lock now serve panels and tabs in the split tree (F3-630): what moves is a whole panel or a tab, the
+  targets are panel edge bands, strips, the centre's outer edge and the "+N" list, and F3-630 owns the edge bands,
+  thresholds, dwell, hysteresis and motion. Retired with this dated disposition: the five hosts, the host caps (left and
+  right 3, top and bottom 2, floating 4) and host_full, the per-kind fair-share minimums and the host clamp bands (a
+  panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
+  the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
+  follow F3-636's ladder.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
-depends_on: [F3-501, UIW-010]
+depends_on: [F3-501, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
 - Pickup retains pointer offset and shows landing placeholder, neighbor reflow, and narrow theme-aware edge previews.
 - Escape, pointercancel, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event; loss of pointer capture alone is not a cancellation vector.
 - Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
-- The drag placeholder projects the target geometry (fair share of the destination host; full width plus the dock's track thickness in a row-axis dock), sits at the correct flex order, and re-seats only when the resolved host or insertion index changes; a pickup still inside the source surface's rect resolves to the source placement, a host expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the surface.
-- The top and bottom docks resize on both axes; column dividers transfer width between the adjacent pair inside the row, and the full-width track handle changes the dock's rendered thickness by writing size.cross_basis_px (host-max semantics, host-band clamped), with pre-field layouts migrating cross_basis_px from basis_px.
+- "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
+- "Every split resizes by adjacent-pair transfer on its own dividers and keeps its own proportions; the row-dock size.cross_basis_px track is retired (amended 2026-10-09, DL-180; F3-630)."
 - A candidate drop target must survive two consecutive resolved frames before the placeholder re-seats; a surface carrying data-pm-home-flip is invisible to the drag hit-test; auto-scroll does not re-apply without actual scroll or pointer movement; and the placeholder's previewed width equals the proportional share the post-commit normalizeMainRowBases re-sum would grant (wave 3, 2026-08-13).
-- Host targeting reads only latched geometry; per-dock entry/exit bands freeze at pickup and no drop-target resolution reads the painted element stack, so approaching an occupied row dock produces exactly one host transition and one track opening per approach (wave 4, 2026-08-13).
-- A divider drag transfers pixels between the adjacent pair only (+N/-N exactly), non-adjacent surfaces are untouched, and commit produces no settle flash; effective minimums degrade to fair share so every boundary stays reachable, and floating surfaces resize on both axes from the bottom-right corner handle.
-- At render, boot, and window resize the visible home_main bases re-sum to the host width; a degenerate persisted layout self-heals with no host background band wider than the gap token, and a full host refuses an incoming drop with an announced host_full disposition while normalization spills overflow to home_main.
+- "Drop targeting reads only latched geometry: every panel's edge bands and strip and the centre's outer edge band freeze at pickup, and no drop-target resolution reads the painted element stack, so approaching a panel edge produces exactly one target transition and one landing preview per approach (wave 4, 2026-08-13; amended 2026-10-09, DL-180; F3-630)."
+- "A divider drag transfers pixels between the two panels it separates only (+N/-N exactly), other panels are untouched, and commit produces no settle flash; each panel stops at its own minimum (F3-635, never less than 280 x 120 px) and a panel dragged below half its minimum collapses to its strip, and no Home surface floats (amended 2026-10-09, DL-180; F3-630)."
+- "At render, boot, and window resize the split tree's proportions fill the centre with no dead space and a degenerate persisted layout self-heals on normalization; host caps and host_full are retired (amended 2026-10-09, DL-180; F3-630)."
 - "At the default width no Home box is scrollable: the workspace, the host grid, the owning dashboard panel and every host report scrollWidth == clientWidth and scrollHeight == clientHeight, forcing scrollLeft leaves it at 0, and a horizontal or vertical wheel storm over any pane moves nothing (wave 8, 2026-08-15)."
-- "An empty dock measures 0 px on its cross axis and its four PM_EDGE frost bands are display none until it gains real size; home_main renders exactly visible-minus-one resize dividers so every divider has a right-hand pair partner, while the column docks keep their last-surface track handle (wave 8, 2026-08-15)."
-- "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar, ID-anchored), and below 1320 px home_main deliberately regains overflow-x auto so min-width-floored pane content stays reachable, still with a zero-width gutter (wave 8, 2026-08-15)."
+- "A scrollport that measures 0 px on either axis keeps its four edge frost bands display none until it gains real size, and every split renders exactly one divider fewer than its children so every divider has a neighbour on each side; empty docks and the column docks' last-surface track handle are retired (wave 8, 2026-08-15; amended 2026-10-09, DL-180; F3-630)."
+- "Host scrollbars occupy zero space on every engine (scrollbar-width none plus a zero-size ::-webkit-scrollbar), and the centre never scrolls sideways at any width; the below-1320 px overflow-x exception is retired (amended 2026-10-09, DL-180; F3-636)."
+- "Panels and tabs move with this transaction: nothing dispatches during a drag, a changed release commits one command, and every cancel path restores the exact earlier layout (F3-630)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 risk_class: home_gesture_regression
@@ -706,6 +827,8 @@ stale_retired_dispositions:
 - "Amended 2026-08-13 (wave 3): instant single-frame target adoption is retired in favour of the two-frame hysteresis; mid-FLIP surfaces are excluded from hit-testing; per-frame auto-scroll re-application is retired (actual movement only); the fair-share placeholder width is refined to the proportional projected width mirroring normalizeMainRowBases; PM_EDGE deferral widens from resize-only to all Home gestures."
 - "Amended 2026-08-13 (wave 4): painted-stack drop-target resolution (elementsFromPoint) is retired — reading painted geometry starved under its own preview (FLIP-marked surfaces and drop-active docks both skipped, falling through to home_main, collapsing and re-adopting the dock at roughly 9 Hz with ~120 px placeholder jumps); latch-based geometric targeting yields exactly one host transition and one track opening per approach into an occupied dock."
 - "Amended 2026-08-15 (wave 8): the wave-7 scroll-lock rationale is retired. Three claims go with it — that overflow-x clip beside overflow-y auto forbids programmatic scrollLeft (it computes to hidden per CSS Overflow 3 §3.1, the hosts stayed scroll containers and scrollLeft still moved 12 px, and Safari ≤ 15 drops the declaration entirely); that the host-level `scrollbar-color: var(--border-light) transparent` declaration suppressed gutters (it defeated the scrollbar opt-in list's transparent idle ink and produced an always-visible thumb, and it never applied at all on the Safari builds where the 10 px webkit bars were actually stealing space); and that the tab silhouette contributed the residual horizontal overflow (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). The overflow is removed at its three measured sources instead — empty-dock padding, zero-extent frost bands, and the pairless last home_main divider — with a both-axes clip belt and ID-anchored zero-width host scrollbars, and the sub-1320 px home_main overflow-x auto is a documented reachability exception, not a leak."
+- "Amended 2026-10-09 (DL-180): the gesture transaction now moves panels and tabs; the five hosts, host caps and host_full, per-kind fair-share minimums, host clamp bands, floating surfaces, the cross_basis_px track and the below-1320 px overflow-x exception are retired."
+- "Amended 2026-10-09 (DL-180): four more acceptance criteria are rewritten for panels and the split tree; their fair-share host projection, per-dock latch bands, fair-share minimum degradation, floating corner handle, empty dock and column-dock track handle wording is lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -725,18 +848,26 @@ canonical_text: >-
   cannot cover the title bar, and cannot produce a second chat surface. Floating is never
   a boot state; persisted floating surfaces demote to last_docked_host at boot with a
   storage.boot_demote_floating receipt.
+  Amended 2026-10-09 (DL-180): the chat is a fixed column and Pop out is its only way to move (F3-637). Pop out is a
+  desktop app action (native builds, D3): it opens the one chat in its own native window through the multi-window
+  registry, and Dock back returns it to its column. In the web client the chat is never floated, docked or moved inside
+  the page either, so the in-canvas chat float above is retired; whether the web client offers a Pop out of its own is
+  not decided here and stays an open question for the lead. No other Home surface floats or opens a window: panels and
+  tabs move only inside the split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2
+  Home layout record keeps (SP-330).
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
-depends_on: [F3-501]
+depends_on: [F3-501, DL-180]
 unblocks: []
 acceptance_criteria:
 - Native reusable surfaces are backed by shared Rust models and a multi-window registry; Slint input areas do not own layout identity.
 - Wayland window position restoration is best effort with a valid in-app fallback.
-- window.open is never the only path, is attempted only under direct user activation, and blocked popup state falls back to in-canvas floating.
+- "window.open is never the only path and is attempted only under direct user activation; a blocked popup never falls back to floating the chat inside the page (amended 2026-10-09, DL-180)."
 - Reduced motion disables interpolation but retains target and state cues.
-- The chat pop-out floats in-canvas in the Home float layer with no full-viewport scrim, the title bar stays visible above it, and no re-render while it is open yields a second chat surface.
+- "The chat never floats in-canvas: no Home surface has an in-window or in-page float, no full-viewport scrim covers the title bar, and no re-render yields a second chat surface (amended 2026-10-09, DL-180; the in-canvas chat pop-out is lineage)."
 - A reload never restores a floating surface; each persisted floating surface demotes to its last_docked_host and the demotion persists with a storage.boot_demote_floating receipt.
+- "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
@@ -753,9 +884,12 @@ preserved_exact_tokens: [Slint 1.17.1, Wayland, direct user activation, in-canva
 negative_constraints:
 - Do not claim OS docking or unrestricted popup placement as a web guarantee.
 - Do not reintroduce a full-viewport chat overlay or any scrim that can cover the title bar.
+- "Do not float the chat inside the page in the web client (DL-180)."
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "Amended 2026-08-13: the PM6 base full-screen chat overlay (.pm6-chat-overlay fixed panel plus viewport scrim) is retired in PM7 via a T20-anchored guard on the base applyLayout; its scrim CSS remains dead code in the base for census stability but no code path can show it."
+- "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
+- "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -923,17 +1057,26 @@ canonical_text: >-
   bit this wave: T16 is a RAW SUBSTRING COUNT over the whole assembled document, so a
   CSS COMMENT that merely spells the property name trips it - the comment was reworded
   and the count returned to 134.
+  Amended 2026-10-09 (DL-180): this silhouette becomes the one tab silhouette of every panel and every tab kind; F3-631
+  consumes it and F3-647 draws it in each look. The strip is 35 px in every panel with 31 px tabs whose plate overlaps
+  the body by 1 px, 8 px apart (Retro 2 px); contact is measured to the neighbour's content inset by 8 px within the 20
+  px morph window; the crown, shoulder and flare radii per look are F3-631's. The fused shape is the only active-tab
+  marker: Basic's 2 px accent-blue crown strip is retired, and no look gives the active tab a separately coloured plate,
+  Glass dark included (Jared, 2026-10-10); the per-theme skins above yield to F3-631 and F3-647 where they differ. The
+  dashboard's own Main, Metrics and Monitoring strip retires: a dashboard is a tab in a panel's strip (F3-638). The
+  rotating Retro trio, the pointer-capture reorder, the snap-while-dragging contract and the minimap as the code pane's
+  only scrollbar stand, and now apply in every strip (F3-631, F3-639).
 gui_related: true
 gui_classification_reason: This unit defines the visible active-editor-tab chrome, its joined-surface geometry, and its motion.
 split_recommended: false
-depends_on: [F3-421, F3-466]
+depends_on: [F3-421, F3-466, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The active tab, its corner helpers and the code canvas resolve to one fill token, the rail resolves darker, and no border or seam separates the active tab from the canvas at any frame."
 - "leftProgress and rightProgress are computed independently against a 20 px threshold; a flush side renders canvasRx 0 and cutoutRx 0 while the opposite side keeps its corner."
-- "Only the horizontal extent of a corner animates, driven by the per-side progress custom properties --ed-lp/--ed-rp; as of the 2026-08-13 tweak wave the CSS derives the radii from that progress against the 12 px shoulder/canvas maxima and the theme's --ed-top-radius crown (13 px default; friendly 16, glass 14, retro 6)."
-- "The dashboard tab strip participates in the same connected-surface system with the shared rail recipe at the same alpha, and tabs start flush at the panel's left edge."
-- "Per-theme silhouette skins resolve through --ed-shape-outline, --ed-shape-crown/--ed-shape-crown-h, and --ed-tab-inactive-ring: retro renders its hard outline with square inactive rings, basic renders the 2 px accent-blue crown at a 9 px radius, and glass renders the 1 px --glass-edge crown strip clipped by the silhouette path at 84 percent rail alpha (wave 6 re-tune of the wave-3 three-edge bevel)."
+- "Only the horizontal extent of a corner animates, driven by the per-side contact progress --ed-lp/--ed-rp against the 20 px window; the crown, shoulder and flare radii per look are F3-631's (amended 2026-10-09, DL-180; the tweak-wave 13, 16, 14 and 6 px crowns are lineage)."
+- "Every panel's strip, a dashboard tab's panel included, participates in the same connected-surface system, and tabs start flush at the panel's left edge (amended 2026-10-09, DL-180; F3-631, F3-638)."
+- "Per-look silhouette skins follow F3-631 and F3-647: no look draws an accent crown strip, an underline or a separately coloured plate on the active tab; Glass keeps its 1 px glass rim along the fused shape's crown as part of its material, never in an accent colour (amended 2026-10-09, DL-180)."
 - "The silhouette is one JS-composed clip-path path() per frame (superellipse-approximating crown cubics, handle factor 0.5523 + 0.35 x progress; ogee descents with a 10:8 canvas-neck to shoulder-flare ratio), progress is linear in gap/20, per-side gap measures to the nearest contact (strip content-box edge or adjacent tab's transform-free layout edge), strip-end caps key off the strip box only, and rendering is identical in Safari and Chromium (wave 6, 2026-08-14)."
 - "The editor minimap is the only code-pane scrollbar; native scrollbars are suppressed and the minimap band aligns with the frosted rail via margin, not padding."
 - "Dragging tracks the pointer one-to-one with corner values derived in the same frame; selection by click, snap or keyboard produces the identical transition."
@@ -972,6 +1115,7 @@ stale_retired_dispositions:
 - "Wave-3 follow-up (2026-08-13): the retro hard outline on the travelling connected shape is retired — the outline renders on the active tab as a three-edge inset ring that snaps on arrival."
 - "Amended 2026-08-14 (wave 6): the border-radius crown, the corner-shape/superellipse @supports enhancement blocks (engine-split, Chromium-only — the explicit motivation for the change), the masked shoulder pseudo-elements, and the glass three-edge inset box-shadow bevel are all retired — the silhouette is one JS-composed clip-path path() per frame and the glass edge is a 1 px --glass-edge crown strip clipped by that path. The uniform 12 px shoulder/canvas radii are re-tuned to the reference 10:8 canvas-neck to shoulder-flare ratio, and the first/last-laid-tab gap track is retired (it froze the morph when dragging the end tabs and wobbled under FLIP transforms) in favour of nearest-contact per-side gap measurement. Follow-up defect-fix refinement: the unclamped ogee (which inverted the wall segment into a visible hump), corner-meet-agnostic inflection placement, and token-scaled bezier handles (which doubled back on short chords) are retired for the height-clamped ogee, natural-corner inflection, and 0.55-of-own-radius handles."
 - "Amended 2026-08-14 (wave 6): three retro tab-motion prototype concepts initially shipped pane-gated and EXPERIMENTAL (phosphor/crt/dos via data-retro-motion on editor panes 1/2/3), with two retunes (timings ~2.3x slower; then phosphor dither 240 ms / afterglow 650 ms, CRT outgoing collapse-to-line removed as it read like the old tab blacking out, DOS block caret removed). RESOLVED 2026-08-14 (third follow-up, user decision): ALL THREE concepts are canon as a ROTATING TRIO — every selection click and every reorder gesture rolls a mode from a shuffle bag (fair rotation, no immediate repeats). The pane gates (data-retro-motion) are removed everywhere; the effects cover all editor strips and the dashboard strip under retro themes; the steady state is the standard retro active ring, with phosphor gaining a 650 ms solid-hold fade and CRT a 500 ms scanline-hold fade so each flourish hands back cleanly. Reorder: phosphor and dos gestures quantize the glide to 8 px cells, crt glides smooth; the drop cues (crt roll / dos blink) are unchanged; reduced motion suppresses all of it. Part-25 integration routes through PM6_RETRO_MOTION.beginDrag(). The single-winner plan and the EXPERIMENTAL status are retired with this dated disposition."
+- "Amended 2026-10-09 (DL-180): the editor-and-dashboard scope widens to every panel strip (F3-631); Basic's 2 px accent-blue crown, any separately coloured active plate (Glass dark's included) and the dashboard's own Main/Metrics/Monitoring strip are retired; the strip is 35 px for every panel."
 owner_boundary_notes:
 - "F3-421 owns editor tab close, pane close and the width-aware +N more overflow chip; F3-466 owns the friendly-theme editor tab shape; F3-464 owns the title-bar page-tab sliding ink and is unaffected by this unit. As of the 2026-08-13 tweak wave this unit covers editor file tabs AND the dashboard tab strip (Main/Metrics/Monitoring); title-bar page tabs remain out of scope."
 owner_hints: [Plans/FinalGUISpec.md]

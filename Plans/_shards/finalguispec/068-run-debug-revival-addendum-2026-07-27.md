@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L33465-L34527
+Source lines: L34018-L35115
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -104,10 +104,14 @@ canonical_text: >-
   FinalGUISpec F3-619's glyph and word in place of the rail chip and status dots: initializing as pending, running
   as live, paused as the paused glyph, terminated as the stopped ring and adapter_crashed as failed. Every surface
   still reads the one session store.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" and "bottom-tab chrome" read as the Debug
+  tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed
+  beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session-state chips, transport enablement, and inspection clear/populate behavior driven by DAP events.
 split_recommended: false
-depends_on: [F3-259]
+depends_on: [F3-259, DL-180]
 unblocks: []
 acceptance_criteria:
 - "All six states (none, initializing, running, paused, terminated, adapter_crashed) and the stated DAP event-to-UI mapping hold on every debug surface."
@@ -155,7 +159,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: session state maps to a single observable model with derived bindings per surface; state chips and transport enablement are plain property bindings."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns the session state machine and transport enablement law; F3-259 owns the reliability risk row (timeouts, single auto-restart) it references."
 owner_hints:
@@ -183,10 +188,13 @@ canonical_text: >-
   Amended 2026-10-09 (DL-162): in the rail the session picker opens as the chat picker (F3-621) and lists each
   session with its state glyph and word by F3-483's mapping in place of coloured dots and a spinner; a terminated
   session keeps its struck-through label, the focused session is checked, and the per-row close action is unchanged.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom Debug tab" reads as the Debug tab. The Debug tab is
+  a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals
+  by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible session picker, focus model, and per-session sub-tab behavior.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Multiple concurrent sessions per project run simultaneously, with child sessions nested under parents in the picker."
@@ -221,7 +229,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: the picker dropdown renders via PopupWindow; status dots are precomputed color glyphs with no runtime color mixing."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom Debug tab reads as a Debug Console tab in any panel (F3-635)."
 owner_boundary_notes:
 - "This unit owns session multiplicity, nesting, picking, and focus; session states themselves are owned by F3-483."
 owner_hints:
@@ -631,10 +640,14 @@ canonical_text: >-
   mirrored state chip as F3-619's glyph and word, marks the selected session sub-tab with an ink, shows stream tags
   as coloured lowercase words, and opens its configuration menu as the chat picker (F3-621). In TERMINATED the
   retained console scrollback stays visible under the ended chrome, as this unit already requires.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom-zone Debug tab" and "the bottom zone's debugger
+  occupant" read as the Debug tab; its three states, session chrome, Console and Process panes stand. The Debug tab is a
+  tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside the terminals by
+  F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible bottom-zone Debug tab states, session chrome, console, and conditional process pane.
 split_recommended: false
-depends_on: [F3-483, F3-489]
+depends_on: [F3-483, F3-489, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The tab renders EMPTY, ATTACHED, and TERMINATED states exactly as specified; EMPTY names no rail panel."
@@ -676,6 +689,7 @@ compatibility_only_notes:
 - "Slint portability: the PROCESS pane reuses the existing terminal widget; the CONSOLE pane is a virtualized scrollback view with a bottom input row."
 stale_retired_dispositions:
 - "The bottom-zone enumeration inconsistency between the §7.20.2 pane list's 'Debug Console' entry and the locked-decision 'classical debugger surface' entry is resolved: both resolve to this Debug tab."
+- "Amended 2026-10-09 (DL-180): the bottom zone is retired; the Debug tab is a Debug Console tab in any panel (F3-635, F3-634)."
 owner_boundary_notes:
 - "This unit owns the Debug tab's states, chrome, and pane composition; Debug Console REPL semantics are owned by Plans/Section15_MVP_Promoted_Features_Spec.md; reveal/focus handoff is owned by F3-491."
 owner_hints:
@@ -703,10 +717,15 @@ canonical_text: >-
   boundary (referenced) and names the command ids that perform reveals:
   cmd.run_debug.console.reveal and cmd.run_debug.terminal.reveal, whose semantics
   are referenced from Plans/Commands_System.md §7.2, not restated.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. Reveal Output reveals the Debug tab wherever it is, expanding
+  its panel if it is collapsed and opening it by F3-634 when none is open; on session start the Debug tab is revealed
+  the same way without taking keyboard focus; and the unread-output badge is the tab's attention mark (F3-631). The
+  Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it, placed beside
+  the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the visible focus, reveal, and unread-badge behavior across the rail panel, bottom tab, and editor.
 split_recommended: false
-depends_on: [F3-483]
+depends_on: [F3-483, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Reveal Output and Show in Run & Debug perform the stated focus moves, including bottom-zone un-collapse."
@@ -741,7 +760,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: reveal-without-focus is a visibility/tab-selection change decoupled from focus transfer; the unread badge is a precomputed dot plus count on the tab header."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"un-collapsing the bottom zone\" reads as expanding the Debug tab's panel; the bottom tab is a Debug Console tab in any panel."
 owner_boundary_notes:
 - "This unit extends the F3-044 reveal/focus owner boundary for debug surfaces; F3-044 retains the general run_debug owner boundary; command semantics stay owned by Plans/Commands_System.md."
 owner_hints:
@@ -766,10 +786,14 @@ canonical_text: >-
   rail, or bottom zone has focus, and never inside text inputs. On macOS, F-key
   normalization accounts for the fn-layer so the same bindings hold whether the
   hardware row sends function keys or media keys.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "The bottom zone has focus" reads as focus in the Debug tab or
+  another tool tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel
+  holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it
+  usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the keyboard-facing debug command bindings and their dispatch scoping.
 split_recommended: false
-depends_on: [F3-483, F3-059]
+depends_on: [F3-483, F3-059, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The six bindings (F5, Ctrl+F5, F10, F11, Shift+F11, Shift+F5) map to the stated cmd.run_debug.* commands, including the F5 start-versus-continue split and the attach-session disconnect swap."
@@ -812,7 +836,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: key dispatch scopes map to focused-surface checks in the Rust-side registry; no platform-specific key handling leaks into Slint view code."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): bottom-zone focus reads as focus in a tool tab (F3-635)."
 owner_boundary_notes:
 - "F3-059 owns the shortcut tiers and key labels; this unit owns only the debug command bindings; command semantics are owned by Plans/Commands_System.md §7.2."
 owner_hints:
@@ -970,10 +995,14 @@ canonical_text: >-
   assistant-investigation scoped (Plans/Commands_System.md §7.1, referenced) and
   the classical debugger family is cmd.run_debug.* (Plans/Commands_System.md §7.2,
   referenced).
+  Amended 2026-10-09 (DL-180): there is no bottom zone. "Debug Console" is no longer a bottom-zone pane: it is the
+  Console pane of the Debug tab. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in
+  whichever panel holds it, placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row
+  is where it usually lands (F3-630).
 gui_related: true
 gui_classification_reason: This unit fixes the user-visible names and labels that distinguish the four debug-adjacent surfaces.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The four names (\"Debug\" icon, \"Debug & Run\" panel, \"Assistant Debug Mode\", \"Debug Console\") and the `system.advanced.debug-mode` row are used exactly and never collapsed across docs, palettes, labels, and help text."
@@ -1008,7 +1037,8 @@ negative_constraints:
 - "Do not use cmd.debug.* for classical debugger actions or cmd.run_debug.* for assistant-investigation actions."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom-zone REPL pane reads as the Debug tab's Console pane in a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only the terminology boundary; Assistant Debug Mode semantics stay owned by Plans/assistant-chat-design.md and Debug Console pane semantics by Plans/Section15_MVP_Promoted_Features_Spec.md."
 owner_hints:
@@ -1032,10 +1062,14 @@ canonical_text: >-
   store mirrors F3-483's state machine so demo actions (start, stop, select,
   reveal) drive both surfaces. Concepts/pm6-build/** remains illustrative
   source-lineage only per Plans/usage-feature.md.
+  Amended 2026-10-09 (DL-180): there is no bottom zone. The demo's bottom Debug tab is a Debug Console tab in the home
+  panels. The Debug tab is a tab of the Debug Console tool kind (debug_console, F3-635) in whichever panel holds it,
+  placed beside the terminals by F3-634's tool affinity; the default Home layout's tools row is where it usually lands
+  (F3-630).
 gui_related: true
 gui_classification_reason: This unit defines the demo-renderable fixture composition of the run/debug rail panel and bottom tab.
 split_recommended: false
-depends_on: [F3-485, F3-490]
+depends_on: [F3-485, F3-490, DL-180]
 unblocks: []
 acceptance_criteria:
 - "The PMConcept7 demo `panel-run` view renders F3-485..F3-488 with the stated fixture data (two sessions, populated locals, two watches, four-frame main thread, four breakpoint kinds plus exception filters)."
@@ -1065,7 +1099,8 @@ negative_constraints:
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 compatibility_only_notes:
 - "Slint portability: demo fixtures map to static model data behind the same Slint model views used by the live surfaces."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the demo's bottom Debug tab reads as a Debug Console tab (F3-635)."
 owner_boundary_notes:
 - "This unit owns only demo fixture composition; live panel, tab, and state-machine semantics stay owned by F3-483 through F3-491."
 owner_hints:

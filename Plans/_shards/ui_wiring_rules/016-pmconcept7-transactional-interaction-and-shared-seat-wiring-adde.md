@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L762-L870
+Source lines: L771-L891
 
-Source SHA256: `d0c067843836b388581c8d4bd645a3c74ad1b47039b6f57c6d25840f51b1d7fc`
+Source SHA256: `247c222314e6786e7bd4c7ea141db12a5b42c89181f170a3b79cb9fe840504bd`
 
 ---
 
@@ -28,6 +28,11 @@ PMConcept7 Ledger attempt row normalizes to usage_attempt/attempt_id without `Op
 usage_event_ref plus provider/account/runtime refs as correlation.
 Current PMConcept7 aggregate provider/account/panel cards open local inspectors with no command, receipt, event, or
 invented route kind.
+
+Amended 2026-10-09 (DL-180): on Home the chat is a fixed column on the right, from the title bar to the status bar
+(F3-637); it has no saved Home dock and never moves inside the window. Pop out into its own window (desktop
+app) and Dock back are its only move (`cmd.panel.undock` and `cmd.panel.redock` with `chat`), and the same node and
+store serve the window. The sentences below keep their identity rules; "saved Home host" now reads as the chat column.
 
 The shared Assistant has one DOM/native component identity and one thread/context store. Shell wiring may
 re-seat that same node between its saved Home host and the right-side global host for other primary pages.
@@ -56,7 +61,10 @@ canonical_text: >-
   cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject and retains the
   event ref as correlation. Home preset sizing normalizes to resize_surface, and shell
   wiring re-seats one shared Assistant node/store between Home and global hosts without
-  cloning or losing thread/context continuity. Usage card body magnetism remains active, but
+  cloning or losing thread/context continuity. Amended 2026-10-09 (DL-180): the same
+  transaction carries every panel and tab gesture of the universal panels (a tab drag, a
+  panel move, a divider, a fold); the chat never moves inside the window, Pop out into its
+  own window is its only relocation, and the same node/store serves that window. Usage card body magnetism remains active, but
   move/resize acquisition uses the controls' measured base-coordinate zones, continuous
   translation attenuation, and at most one pointer-id/time/bounds-scoped document-capture
   handoff to the existing controller. Direct and rescued activation clear that lease before
@@ -78,7 +86,8 @@ acceptance_criteria:
   - A changed pointer release dispatches exactly one canonical command after final-coordinate resolution, a changed keyboard reorder drop dispatches one move command for its selected insertion intent, and each supported keyboard-resize activation settles atomically through one resize command; no-change and cancel paths dispatch nothing. Event-primary Usage callers use usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses cmd.nav.open_usage_subject with usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate cards remain local with no command, receipt, event, or route identity.
   - Commit and cancel both release capture and remove ghost, placeholder, portal, preview, animation-frame, and transient-listener state.
   - Home preset sizing uses cmd.workspace_layout.resize_surface after preset resolution and does not register cmd.workspace_layout.size_surface.
-  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock.
+  - Re-seating preserves one Assistant node/store, active thread, draft, transcript, attachment, context, detail-pane, and focus identity across primary pages and back to the saved Home dock. (Amended 2026-10-09, DL-180 - the saved Home dock is now the fixed chat column, and the same identity holds across Pop out and Dock back.)
+  - "A tab drag, a panel move, a divider drag and a fold each follow this transaction: one changed release dispatches one command and emits one workspace.layout_changed; cancel, no change and failure dispatch nothing (amended 2026-10-09, DL-180)."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -111,7 +120,10 @@ negative_constraints:
   - Do not leave pointer capture, pending animation frames, portals, ghosts, placeholders, or transient listeners after commit or cancel.
   - Do not let magnet translation move a Usage handle away during acquisition or let an occluded, stale, expired, foreign-pointer, or other-interactive lease start a widget transaction; do not allow two widget-operation controllers to coexist.
   - Do not clone the Assistant node, controller, transcript store, or context store.
+  - Do not move, dock or float the chat inside the window; Pop out is its only relocation (DL-180).
   - Do not route aggregate Usage cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt object_id.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the chat's saved Home dock and in-window re-seat retire; the transaction covers every panel and tab gesture. DL-180 is cited here and not in depends_on: DL-180 builds on DL-147, whose chain already reaches this unit, so the dependency would close a loop; UIW-041 depends on this unit instead."
 owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Wiring_Matrix.md

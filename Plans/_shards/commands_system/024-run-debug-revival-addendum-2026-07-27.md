@@ -2,19 +2,19 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L4491-L4743
+Source lines: L4497-L4751
 
-Source SHA256: `92a0b6989461936a42d30f23aee6d3dbcd01acd86cffd0d06f7e3345d147b301`
+Source SHA256: `675134f8f3a9b0f190562f18a68e18437407e488fd3b9f0bfad155729112a3b3`
 
 ---
 
 ## Run & Debug Revival Addendum - 2026-07-27
 
-This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
+This addendum mints the `cmd.run_debug.*` dispatch family for the classical DAP debugger (§7.2), reaffirms the `cmd.debug.*` assistant-investigation boundary (CS-009, §7.1), and registers the `cmd.run.*` orchestrator run-control trio (§7.3) referenced by the `run_interrupted` CTA card (`Plans/FinalGUISpec.md`). Bottom-zone Debug tab (the Debug Console tab in the universal panels from 2026-10-09, DL-180) and rail "Debug & Run" panel layout and state-machine canon lives in `Plans/FinalGUISpec.md` Run & Debug Revival Addendum (F3-482..F3-496) and is consumed here by unit id only, never restated. `Concepts/**` materials remain source-lineage-only. Row-level command registration remains owned by `Plans/UI_Command_Catalog.md`; this addendum states family semantics, availability and confirmation classes, and the closed disabled-reason set exactly once and does not mint catalog rows. It does not edit existing PlanUnits, retired bridges, `preserved_exact_tokens`, or canonical_text, and it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.
 
 ### 7.2 Run & Debug dispatch family (cmd.run_debug.*)
 
-Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*`, for classical DAP debugger dispatch. These dispatch IDs are internal wiring identifiers for the classical debugger surfaces — the rail "Debug & Run" panel and the bottom-zone Debug tab per `Plans/FinalGUISpec.md` F3-482/F3-485/F3-490 (referenced) — not User Commands. They are distinct from the assistant-investigation `cmd.debug.*` family (§7.1) per the CS-009 boundary: `cmd.debug.*` remains scoped to assistant-thread investigation control, and classical debugger dispatch uses only `cmd.run_debug.*`.
+Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*`, for classical DAP debugger dispatch. These dispatch IDs are internal wiring identifiers for the classical debugger surfaces — the rail "Debug & Run" panel and the Debug Console tab in the universal panels (amended 2026-10-09, DL-180: formerly the bottom-zone Debug tab; see the Run & Debug reveal rows in the DL-180 to DL-183 addendum) per `Plans/FinalGUISpec.md` F3-482/F3-485/F3-490 (referenced) — not User Commands. They are distinct from the assistant-investigation `cmd.debug.*` family (§7.1) per the CS-009 boundary: `cmd.debug.*` remains scoped to assistant-thread investigation control, and classical debugger dispatch uses only `cmd.run_debug.*`.
 
 | Command ID | Label | Description | Preconditions |
 |---|---|---|---|
@@ -55,8 +55,10 @@ Run & Debug actions use a dedicated canonical UICommand family, `cmd.run_debug.*
 | `cmd.run_debug.callstack.show_execution_point` | Show Execution Point | Returns the editor to the pause location | `session_paused` |
 | `cmd.run_debug.console.evaluate` | Evaluate Expression | Evaluates the REPL input against the selected frame with context 'repl' | `session_active` |
 | `cmd.run_debug.console.clear` | Clear Console | Clears the Debug Console pane scrollback | always |
-| `cmd.run_debug.console.reveal` | Reveal Debug Tab | Focuses/un-collapses the bottom-zone Debug tab per F3-491 (referenced) | always |
-| `cmd.run_debug.terminal.reveal` | Reveal Process Pane | Focuses the Debug tab's Process pane when present per F3-490 (referenced) | `session_active && console_routing == integrated_terminal` |
+| `cmd.run_debug.console.reveal` | Reveal Debug Tab | Reveals the Debug Console tab wherever it is (activates it, pulls it out of "+N", expands its collapsed panel) per F3-491 (referenced); amended 2026-10-09, CS-101 | always |
+| `cmd.run_debug.terminal.reveal` | Reveal Process Pane | Reveals the tab that hosts the debuggee's integrated terminal wherever it is, per F3-490 (referenced); amended 2026-10-09, CS-101 | `session_active && console_routing == integrated_terminal` |
+
+Amended 2026-10-09 (DL-180, DL-181): there is no fixed bottom zone; the Debug Console and the debuggee's terminal are tabs in the universal panels, and both reveal rows find their tab wherever it is through the one opening module (CS-101).
 
 The three stepping commands are enabled only while the focused session is paused, per the `Plans/FinalGUISpec.md` F3-483 debug session state machine (referenced, not restated).
 

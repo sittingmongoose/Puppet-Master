@@ -2,13 +2,15 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L11907-L12127
+Source lines: L12128-L12360
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
 ## Terminal workgroup moved — original operation and passive history contract
+
+Superseded 2026-10-09 (DL-181): terminal workgroups are retired, so `terminal.workgroup_moved` is withdrawn under this contract's own withdrawal rule (below): no new producer admission and no new reader disclosure. The producer `terminal.workgroup_move_commit.v1` never activated, so no operation was admitted; an event already recorded, if any, keeps its exact 1.0.0 interpretation and `RP-AUTHORITY-INDEFINITE@1.0.0`. Committed layout changes emit only `workspace.layout_changed` (`Plans/Contracts_V0.md#CV-361`). The text below is lineage only (`#SMPFS-170`).
 
 ### Scope and binding search
 
@@ -193,18 +195,26 @@ session lifetime, hold, result archive, public command or product policy follows
 ```yaml
 plan_unit_id: SMPFS-170
 unit_type: schema_contract
-status: accepted
+status: superseded
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: The new terminal.workgroup_move_commit.v1 producer and terminal.workgroup_move_history_read.v1
-  consumer bind the existing terminal.workgroup_moved family to its original admitted identity-preserving
-  move, exact original result and shared append authority. Terminal and applicable Home obligations remain
-  independently owned and durably coordinated. Producer activation waits for exact original pending/result
-  companions and owner admission; passive history has no terminal effects or family checkpoint. A move
-  that vacates its source section leaves it empty and reusable, with no replacement workgroup, pane or
-  session (DL-070).
+superseded_by: SMPFS-180
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Terminal workgroups are retired, so
+  terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule: the producer
+  terminal.workgroup_move_commit.v1 never activates and the passive reader admits no new disclosure; no operation was
+  ever admitted, and an event already recorded, if any, keeps its exact 1.0.0 interpretation and
+  RP-AUTHORITY-INDEFINITE@1.0.0. Every committed layout change emits only workspace.layout_changed
+  (`Plans/Contracts_V0.md#CV-361`). The text below is retained verbatim for lineage and audit and must not be accepted
+  or indexed as active current-product truth. Superseded by SMPFS-180 (DL-181).
+  The new terminal.workgroup_move_commit.v1 producer and terminal.workgroup_move_history_read.v1 consumer bind the
+  existing terminal.workgroup_moved family to its original admitted identity-preserving move, exact original result
+  and shared append authority. Terminal and applicable Home obligations remain independently owned and durably
+  coordinated. Producer activation waits for exact original pending/result companions and owner admission; passive
+  history has no terminal effects or family checkpoint. A move that vacates its source section leaves it empty and
+  reusable, with no replacement workgroup, pane or session (DL-070).
 gui_related: true
 gui_classification_reason: Preserves existing workgroup placement, section limits and visible terminal identity.
-depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, DL-045, DL-070]
+depends_on: [SMPFS-138, UCC-144, CV-323, CV-333, CV-339, SP-245, SP-273, SP-278, SP-286, DL-045, DL-070, DL-181]
 unblocks: []
 acceptance_criteria:
   - Authenticate the original request, operation, full owner identity, revisions, current authority and complete membership before effects.
@@ -226,6 +236,8 @@ negative_constraints:
   - No payload, registry, retention, public command, PTY or session-lifetime change.
   - No Home custody alias, missing-source reconstruction, native proof or complete event-depth claim.
   - No reseed of a vacated source section, no source_reseeded field and no new creation authority for reset or boot recovery (DL-070).
+stale_retired_dispositions:
+  - "Superseded 2026-10-09 (DL-181): terminal.workgroup_moved is withdrawn under this unit's own withdrawal rule; no producer activates and no new reader disclosure is admitted."
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md#SP-319, ContractName:Plans/Contracts_V0.md#CV-323, ContractName:Plans/Decision_Log.md#DL-045, ContractName:Plans/Decision_Log.md#DL-070, ContractName:Plans/Decision_Log.md#DL-076

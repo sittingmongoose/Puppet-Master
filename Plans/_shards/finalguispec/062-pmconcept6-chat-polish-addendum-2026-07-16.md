@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29499-L29678
+Source lines: L30004-L30193
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -35,10 +35,13 @@ canonical_text: >-
   shrink so floating-footer reserve changes cannot crush embedded cards. Superseded lineage
   (2026-07-16 float repair, kept findable): the initial promotion reserved scrollport space
   under the stream, which rendered an opaque band around the pill.
+  Amended 2026-10-09 (DL-184): the floating footer is no longer a pill: it is a content-sized rectangle with the look's
+  inner radius, never a radius of half its height or more (F3-648); its centring, see-through stream, reserve and
+  jump-to-latest rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible chat footer pill geometry and jump-to-latest placement.
 split_recommended: false
-depends_on: [F3-131, F3-189, F3-420]
+depends_on: [F3-131, F3-189, F3-420, DL-184]
 unblocks: []
 acceptance_criteria:
 - "The footer pill floats centered over the stream, sized to its content with no fixed side gutters, in both the docked panel and the floating window; the stream is visible around and beneath the pill, with no opaque band or full-width strip."
@@ -46,6 +49,7 @@ acceptance_criteria:
 - "The jump-to-latest control renders above the footer pill at a higher z-order, appears only when scrolled more than 24px away from the bottom, and returns the stream to the latest message."
 - "Pinned-to-bottom reserve changes re-scroll so the newest content stays visible above the pill; stream children do not flex-shrink."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "The footer has no capsule shape in any look (amended 2026-10-09, DL-184; F3-648)."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -71,7 +75,8 @@ negative_constraints:
 - "The footer pill must not use fixed side gutters or full-width footer bars; it is content-sized and centered."
 compatibility_only_notes:
 - "Slint portability: the pill and jump control are anchored overlay surfaces expressed as layout constraints rather than measure-then-write style passes; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the footer's pill shape is retired (F3-648)."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns footer content semantics (ACD-435); this unit records geometry and scroll-reserve behavior only."
 owner_hints:
@@ -94,15 +99,18 @@ canonical_text: >-
   max(380px, min(var(--floating-chat-w), 40vw)) so the selector row is not clipped on first
   open. The docked #chatPanel mount and the floating #floatingChat mount render both layouts
   from the shared chat template of the unified component.
+  Amended 2026-10-09 (DL-180): the chat no longer floats inside the window or the page. This 380px floor now holds only
+  for the chat's popped-out window in the desktop app (F3-504, F3-637), which the user sizes and places above it; the
+  chat column's own width is F3-637's.
 gui_related: true
 gui_classification_reason: This unit defines visible composer, selector row, and floating chat width layout.
 split_recommended: false
-depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437]
+depends_on: [F3-135, F3-131, F3-253, F3-420, ACD-437, DL-180]
 unblocks: []
 acceptance_criteria:
 - "Composer left rail renders attach plus ELI5, YOLO, and CREW toggles; the right side renders the rewind FAB with an extra gap before icon-only inline-SVG send and stop controls."
 - "The selector row renders Persona, Model, and Mode as equal-shrink slots with label ellipsis when narrow, in both mounts."
-- "The floating chat window width floor resolves as max(380px, min(var(--floating-chat-w), 40vw)) and the selector row is not clipped on first open."
+- "The desktop app's popped-out chat window is never narrower than 380px and the selector row is not clipped on first open; the expression max(380px, min(var(--floating-chat-w), 40vw)) is lineage of the retired in-page float (amended 2026-10-09, DL-180)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -132,7 +140,9 @@ negative_constraints:
 - "Send and stop controls are icon-only inline SVG glyphs; no emoji glyphs and no text-labeled send button."
 compatibility_only_notes:
 - "Slint portability: the width floor maps to a min-width constraint on the floating window; toggles and FABs are opaque precomputed surfaces with no arbitrary-content backdrop blur, no SVG filters, and precomputed color math."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the floating chat floor no longer applies to the chat in the window; F3-637 owns the column's width."
+- "Amended 2026-10-09 (DL-180): the floor applies to the desktop app's popped-out chat window, not to a web float; the web client floats no chat."
 owner_boundary_notes:
 - "Plans/assistant-chat-design.md owns selector-row behavior semantics (ACD-437); this unit records layout geometry."
 owner_hints:

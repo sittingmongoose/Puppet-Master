@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L32119-L32766
+Source lines: L32651-L33316
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -212,10 +212,13 @@ canonical_text: >-
   with the active tab at step-3. Retro and basic keep the legacy underline chrome strip.
   The strip carries bottom margin so the Node Graph pane and other panes do not sit flush
   beneath it.
+  Amended 2026-10-09 (DL-184): Friendly's cozy pill bar and mint pill tabs and Glass's rounded frosted bar become
+  rectangles with the look's inner radius, never capsules (F3-648); the tab set, the active fill and the bottom margin
+  stand.
 gui_related: true
 gui_classification_reason: This unit defines visible Orchestrator tab-strip theme skins and the content gap beneath the strip.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The Orchestrator tab set (Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger) is unchanged by this unit; only presentation changes."
@@ -243,7 +246,8 @@ negative_constraints:
 - "Do not change the Orchestrator tab set, tab order, or tab semantics from this unit; presentation only."
 compatibility_only_notes:
 - "Slint portability: the tab strip renders as opaque precomputed surfaces; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Orchestrator strip's pill skins are retired (F3-648)."
 owner_boundary_notes:
 - "The Orchestrator tab set and tab semantics are owned by Plans/Orchestrator_Page.md; this unit owns tab-strip theme presentation and the content gap only."
 owner_hints:
@@ -270,10 +274,13 @@ canonical_text: >-
   fonts-ready. Under reduced motion the ink snaps and the panel animation is skipped
   entirely. First paint never runs an enter animation; page transitions gate until after
   boot.
+  Amended 2026-10-09 (DL-184): Glass's step-3 frost pill and Friendly's mint-mix pill become ink slabs with the look's
+  inner radius, never capsules (F3-648); the shared spring, the directional page transitions and the reduced-motion
+  rules stand.
 gui_related: true
 gui_classification_reason: This unit defines visible page-tab active chrome motion and directional page transitions.
 split_recommended: false
-depends_on: [F3-034]
+depends_on: [F3-034, DL-184]
 unblocks: []
 acceptance_criteria:
 - "A single shared ink element animates position and width between page tabs with spring stiffness 500 and damping 35, and the active tab keeps only text color and weight."
@@ -306,7 +313,8 @@ negative_constraints:
 - "Do not insert a blank gap between the leaving and entering pages and do not blur the full page during transitions."
 compatibility_only_notes:
 - "Slint portability: the ink and page panels render as opaque precomputed surfaces with translate/opacity/width animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): the Glass and Friendly page-tab ink pills are retired (F3-648)."
 owner_boundary_notes:
 - "F3-445 owns the non-editor tabstrip layout recipe; F3-468 owns the boot paint and first-paint transition gate this unit consumes; this unit owns the shared ink and directional transition presentation."
 - "Scope clarified 2026-08-12: this unit covers the title-bar PAGE tabs only. Editor file tabs are owned by F3-505 (contact-aware silhouette) and F3-466 (friendly tab shape); the sliding ink is not applied to editor file tabs."
@@ -399,10 +407,12 @@ canonical_text: >-
   On the friendly theme family, editor file tabs render as top-rounded folder tabs with
   radius-md applied to the top corners only and a cozy mint active fill; they do not
   render as full pills on a bordered strip.
+  Amended 2026-10-09 (DL-180): Friendly's editor tabs are F3-631's one strip with the Friendly crown, shoulder and flare
+  (16, 16 and 25 px); the active tab takes its body's own fill and is never a pill.
 gui_related: true
 gui_classification_reason: This unit defines the visible friendly-theme editor file tab shape and active fill.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "Friendly editor file tabs round only their top corners at radius-md and use the cozy mint active fill."
@@ -428,7 +438,8 @@ negative_constraints:
 - "Do not render friendly editor file tabs as full pills on a bordered strip."
 compatibility_only_notes:
 - "Slint portability: editor tabs render as opaque precomputed surfaces with per-corner radii; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the Friendly editor tab shape is now F3-631's per-look silhouette."
 owner_boundary_notes:
 - "F3-421 owns editor tab overflow behavior; this unit owns the friendly-theme tab shape and active fill only."
 owner_hints:
@@ -447,10 +458,13 @@ canonical_text: >-
   fields and pill controls, carries enough inline padding, roughly half the control height
   and 12-14px at default sizes, that glyphs clear the rounded ends, and overflow stays
   visible so the focus glow is not clipped.
+  Amended 2026-10-09 (DL-184): Friendly's pill controls and pill-shaped fields are retired: they take the look's rounded
+  rectangle, never a radius of half their height or more (F3-648); the inline padding rule (glyphs clear the corners,
+  the focus glow is not clipped) stands.
 gui_related: true
 gui_classification_reason: This unit defines visible friendly-theme pill field padding and focus glow clearance.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "Friendly pill fields and pill controls pad inline by roughly half the control height (12-14px at default sizes) so glyphs clear the rounded ends."
@@ -476,7 +490,8 @@ negative_constraints:
 - "Do not clip the focus glow on friendly pill chrome and do not let glyphs enter the rounded ends."
 compatibility_only_notes:
 - "Slint portability: pill fields render as opaque precomputed surfaces with static padding values; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-184): Friendly's pill field and control skins are retired (F3-648)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -562,10 +577,12 @@ canonical_text: >-
   bar and border and per-theme shadows: retro hard offset, glass soft glow, friendly
   cozy. The presentation applies to both the docked and pop-out chat mounts, which share
   the sidebar builder.
+  Amended 2026-10-09 (DL-184): the 3 px inset left accent bar on the selected thread and the left accent bar on active
+  collapsed rows are retired; selection is the tinted fill, the hairline ring and the bolder title (F3-648).
 gui_related: true
 gui_classification_reason: This unit defines visible chats rail labeling, collapse geometry, row chrome, and selection presentation.
 split_recommended: false
-depends_on: []
+depends_on: [DL-184]
 unblocks: []
 acceptance_criteria:
 - "The rail label reads Chats at 11.5px in both expanded and collapsed states, and the compact new-thread control is 18x18 and vertically centered."
@@ -602,6 +619,7 @@ compatibility_only_notes:
 - "Slint portability: rail rows, glow, and accent bars render as opaque precomputed surfaces with width-threshold state switching; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
 - "The HISTORY rail label, the chevron collapse control, and the stream provenance banner are retired per PMConcept7 chats rail cleanup; resize-driven collapse and the Chats label supersede them."
+- "Amended 2026-10-09 (DL-184): the inset left accent bar and the collapsed rows' left accent bar are retired as coloured side bars (F3-648)."
 owner_boundary_notes:
 - "Chat rail behavior, thread lifecycle, and rail data semantics are owned by Plans/assistant-chat-design.md (ACD-444 chats rail cleanup); this unit owns geometry, thresholds, and presentation."
 owner_hints:

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1781-L2133
+Source lines: L1781-L2137
 
-Source SHA256: `6b9f016bf0f528950923a143041b81db69c3446d70369fb300422c4a1b5d4d88`
+Source SHA256: `5cc71ee452e04f71c3ac06746d55294a1b47168317343bdce32f4644d74cb395`
 
 ---
 
@@ -85,6 +85,8 @@ Every stage has a programmatic heading, path-correct progress derived from the a
 Guided Tour teaches through successful actions in this exact chapter order: Assistant Chat/Teacher -> workspace -> Planning Wizard. This accepted September 3 correction supersedes the September 1 Usage-first/Chat-final film and its no-resume/keep-Chat terminal rules; it does not revive the older five-chapter controller. It runs in the real application, never a tooltip carousel or parallel demo. The top controls contain `ELI5`, `Pause`, and always-available `Skip Tour`. A brief comfort introduction explains ELI5 and the Settings-owned Reduced Motion preference without becoming a separate chapter or requiring a Settings detour. ELI5 changes explanation detail; Guided Tour MUST NOT invent a separate Reduced Motion toggle.
 
 The current chapter IDs are `chat_teacher`, `workspace`, and `planning_wizard`; stable step IDs belong to those chapters, with an optional non-action introduction. Assistant Chat opens first through its existing shell control. The learner selects Teacher, sends the supplied question `What happens before Puppet Master changes my files?` through the real composer, sees the local answer stream in that same conversation, and then sees that same answer in simple words through Explain this reply simply (`cmd.chat.eli5.explain_reply`), which adds one extra, simpler reply after the example answer and leaves the original reply unchanged; the callout then points to the quick dot by the message box, which makes later replies simple, because switching ELI5 never rewrites or regenerates a reply (DL-126, ACD-484). The thread is labeled `Guided example`. The simpler reply uses clearer adult language, shorter structure, and less assumed knowledge; forced analogies or baby talk are not required. The real Chat owner owns the messages and reply; the Tour controller stores refs, not chat content. Normal Chat send and ELI5 retain their domain owners; a local tour fixture must never fall through to a provider-backed send or claim a production receipt.
+
+Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035).
 
 Workspace practice explains page navigation and panels, then asks for a real Chat move/dock and a real widget add, move, resize, or focus action. Manual practice and `Show Me` use the same mounted owner handler and success predicate. Every important action first brings its target into view, explains one outcome, offers Try it and visible Show Me, and acknowledges the observed result. Show Me adds interruptible pre-cue, visible travel, destination reaction, and settle around that handler; timers, narration, screenshot substitution, a second mutation implementation, and generic Next never satisfy an action checkpoint.
 
@@ -317,7 +319,7 @@ canonical_text: >-
   words through Explain this reply simply, which adds one extra, simpler reply and leaves the original unchanged
   (DL-126); the callout then points to the quick dot by the message box, which makes later replies simple, and
   names the ELI5 popup behind the wand's ELI5 row, where the chat's choice is set (DL-126, ACD-484, F3-581);
-  moves Chat and performs a real widget action; then describes the book-club goal, answers a meaningful question,
+  practises the workspace panels of PWIZ-035 and performs a real widget action; then describes the book-club goal, answers a meaningful question,
   reviews the plan, edits an answer, and sees the specific consequence before the approval boundary. Planning owns
   at least half of meaningful actions and dwell time. Try it and Show Me share each mounted owner's handler and
   success predicate. Tour state never grants approval or starts work. ELI5, Pause, Skip, Back, safe-step resume,
@@ -336,7 +338,7 @@ acceptance_criteria:
   - Reduced Motion uses the effective preference; adjustment routes to Settings and there is no Guided Tour-specific motion toggle.
   - Chat opens first; the supplied question is sent through the real composer, the deterministic answer streams in the same labeled conversation, and Explain this reply simply (`cmd.chat.eli5.explain_reply`) adds one extra, simpler reply with the same facts while the original reply stays unchanged (DL-126).
   - After that step the callout points to the quick dot (`cmd.chat.eli5.set`, later replies only) and names the ELI5 popup behind the wand's ELI5 row; neither rewrites the example answer (DL-126).
-  - Manual and Show Me practice share the same existing owner action and success predicate for Chat movement and a real widget action; choreography never invents success.
+  - Manual and Show Me practice share the same existing owner action and success predicate for the workspace panel steps (PWIZ-035) and a real widget action; choreography never invents success.
   - Planning Wizard receives at least half of meaningful actions and dwell time, including goal, outcomes, meaningful answer, why, review, answer edit, and the specific shared-access consequence with unaffected outcomes held still.
   - Unknown editor access remains unresolved; the tour uses the real Wizard names/modes and ends before approval with no work started.
   - The deterministic novice reply never silently falls back to a provider, model, token, or AI plan.
@@ -360,4 +362,6 @@ source_lineage:
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/05_DEMO_SCRIPT_AND_COPY_STANDARD.md"
   - "source_packet:PM_Onboarding_Tour_Newbie_First_Addendum_2026-09-03/06_IMPLEMENTATION_ACCEPTANCE_AND_IMPACTS.md"
 negative_constraints: [Do not restore either predecessor controller., Do not restore ui.guided_tour.restore_layout or ui.guided_tour.keep_layout as separate current actions., Do not build a tooltip carousel or parallel demo., Do not use provider credentials or tokens., Do not fabricate action success., "Do not rewrite, regenerate or replace the example answer for ELI5; the simpler version is one extra reply (DL-126).", Do not add a Guided Tour-specific Reduced Motion toggle., Do not let callouts escape the viewport or point at stale geometry., Do not keep a demonstrated layout without explicit selection., Do not leave a partial composer draft after Skip., Do not expose protected authentication content., Do not promote local page/focus presentation into a domain command or handler., Do not treat fixture completion as runtime certification or approval to begin work.]
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the move-or-dock-chat step retires; the workspace chapter teaches panels (PWIZ-035)."
 ```

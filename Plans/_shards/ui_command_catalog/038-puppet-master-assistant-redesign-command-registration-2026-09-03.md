@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L12446-L12742
+Source lines: L12527-L12826
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -197,7 +197,7 @@ Immediate-send rows use an isolated payload and can never send unrelated compose
 | `cmd.browser.component.add_to_composer` | Add Component To Composer List | Appends the selected component to the numbered composer component list and stores its hidden reference. | `component_selected && composer_available` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_add_to_composer` |
 | `cmd.browser.component.insert_at_cursor` | Insert Component At Cursor | Inserts a component chip at the composer caret position. | `component_selected && composer_available && caret_position_known` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_insert_at_cursor` |
 | `cmd.browser.component.mode.set_default` | Set Component Mode Default | Persists the last used component action as the initial mode for the next selection. | `settings_writable` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentModeRequest` → `SettingsTransactionResult` | `handlers::browser_runtime::component_mode_set_default` |
-| `cmd.browser.devtools.open` | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
+| `cmd.browser.devtools.open` (alias of `cmd.browser.open_devtools` from 2026-10-09, UCC-202) | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
 
 Source surfaces for this family: `browser_selection_bar`, `browser_toolbar`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
@@ -210,9 +210,10 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   The approved Puppet Master Assistant redesign registers eighty-four exact command IDs across simplified Goal, Assistant Plan, To-Do, collaborative workflow, Back Seat Driver, scheduling, attachment, composer, Teach, Planning Wizard intake, and browser-capture families. Each row names exactly one owner document, one request contract, one result contract, and one sole future target handler. An alias census over all live Plans ran before registration and identified exactly three pre-existing IDs -- cmd.chat.goal.start, cmd.chat.goal.update, and cmd.bsd.set -- which are reconciled in place to their revised contracts and receive no duplicate row, peer control, or second handler. Every row remains handler_unavailable and its GUI controls remain disabled with command_not_registered until the central command contract layer, Event Authority, storage registration, and production wiring close for that row.
+  Amended 2026-10-09 (DL-180): cmd.browser.devtools.open is an alias of cmd.browser.open_devtools (UCC-202).
 gui_related: true
 gui_classification_reason: These rows are the reverse-consumer identity for every new Assistant mode menu, wand item, Plan card control, Activity control, workflow modal, BSD surface, scheduling modal, attachment control, and browser capture control.
-depends_on: [UCC-155, CS-077]
+depends_on: [UCC-155, CS-077, DL-180]
 unblocks: []
 acceptance_criteria:
   - All eighty-four IDs appear exactly once with label, description, preconditions, command_kind, owner, request/result contracts, and a single named future target handler.
@@ -253,6 +254,8 @@ negative_constraints:
   - Do not create a second catalog row, peer control, or alternate handler for a pre-existing command ID.
   - Do not claim a native dispatcher, handler, rendered control, receipt, or runtime from static catalog registration.
   - Do not let a page-local action ID, alias, or toast stand in for an unregistered command.
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): cmd.browser.devtools.open becomes an alias."
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Commands_System.md

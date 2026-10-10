@@ -2,13 +2,15 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L9424-L9493
+Source lines: L9587-L9670
 
-Source SHA256: `bd4a2ef95f38b65034382ae6e0d557c69f483859ef154805e1b03d6626b38c8c`
+Source SHA256: `cd97c9aeb64d74ac119e48c37dcf891ada8abc697384056ccf0414495b8802bf`
 
 ---
 
 ## PMConcept7 Home Workspace terminal reconciliation — 2026-08-04
+
+Superseded 2026-10-09 (DL-181): terminal sections, workgroups and the four-section and four-visible-pane limits are retired; the terminal is one tab kind of the universal panels with one session per tab (`#SMPFS-180`), and the default Home layout's bottom row is an ordinary panel row (`Plans/FinalGUISpec.md#F3-630`). This passage, `#SMPFS-138` and its DL-070 empty-section rule are lineage only. Its identity rule survives in SMPFS-180: a layout move never mints a PTY or a session.
 
 The promoted terminal surface participates in the model-driven Home workspace. The
 bottom dock remains the default terminal placement, while a terminal section may be
@@ -33,20 +35,31 @@ individual terminal pane; `cmd.terminal.move_pane` is not extended.
 The former two-terminal-section limit and editor-area exclusion are superseded by
 the four-section Home model above. Bottom-dock default placement, terminal runtime
 identity ownership, and the rule that terminal does not become the PM control plane
-remain canonical.
+remain canonical. Amended 2026-10-09 (DL-181): the four-section Home model and bottom-dock default placement are themselves
+retired (`#SMPFS-180`); terminal runtime identity ownership and the control-plane rule remain canonical.
 
 ### SMPFS-138 - Home Terminal Sections Workgroups And Pane Limits
 
 ```yaml
 plan_unit_id: SMPFS-138
 unit_type: requirement
-status: accepted
+status: superseded
 owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
-canonical_text: Home supports up to four terminal sections and up to four visible panes total in the active workgroup presentation; bottom is the default host, while each section can move to main, any outer dock, or float without changing terminal section, workgroup, pane, session, or PTY identity.
+superseded_by: SMPFS-180
+canonical_text: >-
+  COMPATIBILITY AND SOURCE-LINEAGE ONLY -- NOT ACTIVE CURRENT-PRODUCT TRUTH. Terminal sections, workgroups and the
+  four-section and four-visible-pane limits are retired: the terminal is one tab kind of the universal panels with one
+  session per tab, and the bottom row of the default Home layout is an ordinary panel row; this unit's identity rule
+  survives in SMPFS-180 (a layout move never mints a PTY or a session). The text below is retained verbatim for
+  lineage and audit and must not be accepted or indexed as active current-product truth. Superseded by SMPFS-180
+  (DL-181).
+  Home supports up to four terminal sections and up to four visible panes total in the active workgroup presentation;
+  bottom is the default host, while each section can move to main, any outer dock, or float without changing terminal
+  section, workgroup, pane, session, or PTY identity.
 gui_related: true
 gui_classification_reason: This unit owns the user-visible terminal section, workgroup, pane, disabled-limit, and empty-section behavior.
 split_recommended: false
-depends_on: [F3-501, UCC-144, SP-245]
+depends_on: [F3-501, UCC-144, SP-245, DL-181]
 unblocks: []
 acceptance_criteria:
 - Four terminal sections can exist; attempting a fifth is disabled before dispatch with Maximum four terminal sections.
@@ -76,5 +89,6 @@ compatibility_only_notes:
 - SMPFS-079 is retained only as retired source lineage.
 stale_retired_dispositions:
 - The two-terminal-section limit and editor-area exclusion are retired.
+- "Superseded 2026-10-09 (DL-181): sections, workgroups, the four-section and four-pane limits and the bottom default host retire; SMPFS-180 is the terminal's container model."
 owner_hints: [Plans/Section15_MVP_Promoted_Features_Spec.md, Plans/FinalGUISpec.md, Plans/storage-plan.md]
 ```

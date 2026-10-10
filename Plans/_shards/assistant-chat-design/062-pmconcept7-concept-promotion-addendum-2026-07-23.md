@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L24226-L24592
+Source lines: L24399-L24783
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -193,6 +193,13 @@ floating case is re-pointed. This note creates no WorkNodes, NodeSeeds, executab
 queues, implementation files, runtime artifacts, generated wiring rows, production
 build tasks, final manifests, or PNC-019 receipts.
 
+Superseded 2026-10-09 (DL-180): the in-canvas Home float layer is retired. The
+chat's only mounts are its fixed column (`Plans/FinalGUISpec.md#F3-637`) and, when
+popped out, its own window, which Dock back returns to the column
+(`Plans/UI_Command_Catalog.md#UCC-203`); nothing floats the chat inside the window.
+The floating mount of ACD-440 and ACD-441 reads as the popped-out chat, and their
+behaviour contracts are otherwise unchanged (ACD-500).
+
 ### ACD-442 - Header Chrome Menu Sprouts And Theme-Matched Popout Chrome
 
 ```yaml
@@ -267,15 +274,19 @@ canonical_text: >-
   Pop out, Cycle layout, and Close remain surface affordances without new command
   registrations. The kebab follows the header chrome menu sprout and chrome contract
   (ACD-442) and tracks `aria-expanded`.
+  Amended 2026-10-09 (DL-180): Pop out dispatches cmd.panel.undock with chat and is the chat's only way to move
+  (Plans/FinalGUISpec.md#F3-637, Plans/UI_Command_Catalog.md#UCC-203). The popped-out chat's kebab menu lists Dock
+  back (cmd.panel.redock), which returns the chat to its column, and Close chat. Cycle layout is retired, because the
+  chat is never floated inside the window. Neither is a new command registration.
 gui_related: true
 gui_classification_reason: Defines the visible more-options kebab and its menu contents.
 split_recommended: false
-depends_on: [ACD-071, ACD-442]
+depends_on: [ACD-071, ACD-442, DL-180, F3-637, UCC-203]
 unblocks: []
 acceptance_criteria:
   - "The docked chat header shows one vertical-ellipsis kebab instead of a row of standalone Duplicate/Archive/Pop out/Close icon buttons; its menu lists Duplicate thread, Archive thread, Pop out, and Close chat as full-width rows with icon plus label."
-  - "The floating chat header kebab menu lists Cycle layout and Close chat."
-  - "Archive dispatches `cmd.chat.archive`; Duplicate, Pop out, Cycle layout, and Close remain surface affordances with no new command registrations."
+  - "The popped-out chat's header kebab menu lists Dock back and Close chat; Cycle layout is retired (DL-180)."
+  - "Archive dispatches `cmd.chat.archive`, Pop out dispatches cmd.panel.undock and Dock back cmd.panel.redock (UCC-203); Duplicate and Close remain surface affordances with no new command registrations."
   - "The kebab menu opens and closes per the ACD-442 sprout and chrome contract with aria-expanded tracked."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -300,12 +311,13 @@ preserved_exact_tokens:
   - "Cycle layout"
   - "cmd.chat.archive"
 negative_constraints:
-  - "Do not register new commands for Duplicate, Pop out, Cycle layout, or Close in this pass; only `cmd.chat.archive` is cataloged among the menu actions."
+  - "Do not register new commands for Duplicate, Pop out, Dock back, Cycle layout, or Close in this pass; Archive uses `cmd.chat.archive`, and Pop out and Dock back use UCC-203's existing cmd.panel.undock and cmd.panel.redock (DL-180). Cycle layout is retired (DL-180)."
   - "The kebab glyph is an inline SVG, not an emoji glyph."
 compatibility_only_notes:
   - "Slint portability: the kebab menu renders as an opaque precomputed popup surface with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
 stale_retired_dispositions:
   - "Docked chat header row of four standalone icon buttons (Duplicate thread, Archive thread, Pop out, Close chat) retired; the actions are hosted in the more-options kebab menu."
+  - "Amended 2026-10-09 (DL-180): the floating chat's Cycle layout is retired; Pop out and Dock back dispatch UCC-203's existing commands."
 owner_boundary_notes: []
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -332,17 +344,22 @@ canonical_text: >-
   selected threads show a tinted fill, an inset left accent bar, a hairline outer ring, and a
   bolder title, with role colors carried to the bar and border. The docked and pop-out chat
   mounts share the sidebar builder and behave identically.
+  Amended 2026-10-09 (DL-180, DL-184): this Chats rail is PMConcept7's current thread list. One thread-history list
+  survives, the 5.6 Pro chat's History list, which replaces this rail when the chat is ported (ACD-500, ACD-501);
+  until then this unit's rules stand, and its pop-out mount is the popped-out chat (Plans/FinalGUISpec.md#F3-637). Its
+  left accent bars retire now (Plans/DRY_Rules.md#DR-069): an expanded selected thread shows by its tinted fill,
+  hairline outer ring and bolder title, with the role colour on the ring, and an active collapsed row by its glow.
 gui_related: true
 gui_classification_reason: Defines visible thread sidebar labeling, provenance, collapse, and selection behavior.
 split_recommended: false
-depends_on: [ACD-071]
+depends_on: [ACD-071, DL-180, DL-184, ACD-500]
 unblocks: []
 acceptance_criteria:
   - "The thread sidebar label reads Chats at an unchanged size across expanded and collapsed states, with a compact vertically centered new-thread control."
   - "No stream provenance banner renders in the thread; first paint is the first user message, and provenance stays reachable through thread metadata/audit surfaces."
   - "There is no chevron collapse control; crossing the collapse width threshold toggles collapsed chrome only, without locking width or disabling resize."
-  - "Collapsed rows truncate the title, hide status/timestamp/summary, and carry the thread-status color on border and glow; active collapsed rows keep glow plus a left accent bar."
-  - "Expanded selected threads show tinted fill, inset left accent bar, hairline outer ring, and bolder title with role colors on bar and border, identically in docked and pop-out mounts."
+  - "Collapsed rows truncate the title, hide status/timestamp/summary, and carry the thread-status color on border and glow; active collapsed rows keep their glow and show no left accent bar (DL-184)."
+  - "Expanded selected threads show tinted fill, hairline outer ring and bolder title with the role color on the ring and no left accent bar (DL-184), identically in the chat column and the popped-out chat."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -370,6 +387,7 @@ stale_retired_dispositions:
   - "Sidebar HISTORY label retired; the rail is labeled Chats."
   - "Chevron collapse button retired; collapse is resize-driven content-chrome toggling."
   - "Stream provenance banner (Thread created from ... injected context) retired from thread first paint; provenance remains in thread metadata and audit surfaces."
+  - "Amended 2026-10-09 (DL-180, DL-184): the rail's two left accent bars retire; the 5.6 Pro History list replaces this rail at the port."
 owner_boundary_notes:
   - "Plans/FinalGUISpec.md F3-469 owns chats-rail geometry, pixel thresholds, and per-theme presentation skins; this unit owns the chat-behavior semantics (label, provenance removal, resize-driven collapse, selection and status disclosure)."
 owner_hints:

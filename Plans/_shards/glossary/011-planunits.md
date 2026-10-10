@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L357-L1681
+Source lines: L367-L1695
 
-Source SHA256: `e4f403a703b8eb7f7ec5fdfc9d3dfebb9926516d99db63680707332d954b1663`
+Source SHA256: `7592380acec3c58e3976b234f50cd8a742128a97dc0ec99b220d8d0ee4813f39`
 
 ---
 
@@ -429,17 +429,18 @@ plan_unit_id: G-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Glossary.md
-canonical_text: Terminal runtime terms distinguish Terminal Section, Terminal Tab, Terminal Pane, Terminal Session, terminal_session_id, Dev Session, and dev_session_id so visible terminal binding and runtime PTY continuity stay separate.
+canonical_text: Terminal runtime terms distinguish Terminal Tab, a panel tab of kind terminal that holds exactly one terminal session for its whole life (G-030, SMPFS-180), from Terminal Session, terminal_session_id, Dev Session, and dev_session_id, so the visible tab and runtime PTY continuity stay separate. Terminal Section and Terminal Pane are retired words (DL-181), kept only for lineage and for the records that are read-only migration inputs.
 gui_related: true
 gui_classification_reason: This unit defines user-visible terminology, copy, help, surface, or UI routing vocabulary.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad G-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- Terminal Section and Terminal Pane appear only as retired words; a Terminal Tab holds one session and has no splits inside it.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -463,8 +464,11 @@ preserved_exact_tokens:
 - dev_session_id
 negative_constraints:
 - Dev Session must not replace terminal_session_id when exact shell reuse matters.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not use Terminal Section or Terminal Pane for current product behaviour.
+compatibility_only_notes:
+- Terminal Section and Terminal Pane remain readable in the old terminal records, which are read-only migration inputs (SP-332).
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-181): Terminal Tab is now a panel tab of kind terminal holding one session; Terminal Section and Terminal Pane are retired words.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/Glossary.md

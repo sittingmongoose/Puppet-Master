@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23980-L24204
+Source lines: L24145-L24377
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -28,13 +28,19 @@ canonical_text: >-
   (ACD-478), and the thread's total file count is in Activity's Changes domain. Threads with
   diagnostics render a problems row that links to the Problems bottom tab. Rewind
   actions live in the composer rewind FAB and never render in the stream footer.
+  Amended 2026-10-09 (DL-184): the footer keeps this content and routing, but it is no longer a pill:
+  Plans/FinalGUISpec.md#F3-422 now draws it as a content-sized rectangle with the look's inner radius
+  (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648).
+  Amended 2026-10-09 (DL-180): there is no bottom panel; the problems row opens or reveals the Problems tab, one per
+  workspace, a tool tab kind of the home panels (Plans/FinalGUISpec.md#F3-635) placed by the tool-kind affinity of
+  Plans/FinalGUISpec.md#F3-634. Read "the Problems bottom tab" in this unit as that Problems tab.
 gui_related: true
 gui_classification_reason: Defines visible chat footer content and routing behavior.
-depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217]
+depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217, DL-180, DL-184]
 unblocks: [ACD-482]
 acceptance_criteria:
   - "No subagent chip, files chip or middle-dot separator renders in the footer pill or above the composer (DL-129, ACD-482)."
-  - "Threads with diagnostics render a problems row that opens the Problems bottom tab scoped to the thread's diagnostics."
+  - "Threads with diagnostics render a problems row that opens or reveals the Problems tab (one per workspace, placed by F3-634) scoped to the thread's diagnostics (DL-180)."
   - "No rewind affordance renders in the footer."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -64,8 +70,10 @@ compatibility_only_notes:
   - "Slint portability: chips are opaque precomputed surfaces; diff totals use precomputed per-theme colors; no arbitrary-content backdrop blur and no SVG filters."
 stale_retired_dispositions:
   - "Superseded 2026-09-27 by ACD-482 (DL-129): the subagent chip, the files chip and their separator no longer render above the composer; live runs are dock lines (ACD-476), each reply that changed files has its own files row (ACD-478), and the thread's total file count is in Activity's Changes domain. The problems row and its route to the Problems bottom tab are not part of that decision and are unchanged."
+  - "Amended 2026-10-09 (DL-180): the problems row routes to the Problems tab of the home panels (F3-635, F3-634), not a bottom tab."
+  - "Amended 2026-10-09 (DL-184): the footer is no longer a pill; F3-422 draws it as a content-sized rectangle."
 owner_boundary_notes:
-  - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422); this unit records footer content and routing semantics."
+  - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422; a content-sized rectangle, no longer a pill, since 2026-10-09, DL-184); this unit records footer content and routing semantics."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```

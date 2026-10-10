@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25836-L26350
+Source lines: L26060-L26583
 
-Source SHA256: `0fe964276531d100915e802554b18a7d8474ab3fa7d52e9f4a4661b440a627c2`
+Source SHA256: `96fd6dacc0f9af15e1209b02de50655c4ad72f1c79cdf18ca5c1edc14daaea05`
 
 ---
 
@@ -411,14 +411,18 @@ canonical_text: >-
   (play, pause, step, complete, reset, work history), the instant or stream reply switch, the
   scripted replies, the film clock, and every measured timing recorded in the concept's notes. None
   of them receives a command, setting, wiring row, persisted key or test gate.
+  Amended 2026-10-09 (DL-185): Demo Studio is now one for all of PMConcept7 (Plans/DRY_Rules.md#DR-070,
+  Plans/FinalGUISpec.md#F3-649): the chat's demo controls, the tour's and onboarding's, the home demos and later the
+  Orchestrator's and the Planning Wizard's are its sections, and it stays lab only under this unit's exclusions.
 gui_related: true
 gui_classification_reason: "Keeps concept lab controls out of product surfaces."
 split_recommended: false
-depends_on: [DL-106]
+depends_on: [DL-106, DL-185, DR-070]
 unblocks: []
 acceptance_criteria:
   - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
   - "The working card offers no play, pause, step, complete, reset or history controls in product."
+  - "The one Demo Studio of PMConcept7 is excluded from every product catalog, setting, wiring row, persisted key and test gate, like the chat's was (DL-185)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -436,6 +440,9 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-106"
   - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+  - "Plans/Decision_Log.md#DL-185"
+  - "Plans/DRY_Rules.md#DR-070"
+  - "Plans/FinalGUISpec.md#F3-649"
 preserved_exact_tokens:
   - "Demo Studio"
   - "Motion voice"
@@ -443,6 +450,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
   - "Do not carry concept family or variant indices into product settings."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185 and DR-070 are in depends_on, and F3-649 stays in source_lineage because F3-649 depends on this unit."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md

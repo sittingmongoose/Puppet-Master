@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8006-L8069
+Source lines: L8062-L8125
 
-Source SHA256: `a02a8597998228205894531eeb4a41350f2551dfa77a710e9536aae6e3d5e45d`
+Source SHA256: `3ff2b67914c1b2b6ac34a5b6f9f5f28ff45d1cdb51c68bd2a0156e21f4c0a764`
 
 ---
 
@@ -68,7 +68,7 @@ Testing policy UI is a first-class command surface, not settings prose alone.
 | `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
 | `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
 | `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |
-| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. |
+| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. Settled 2026-10-09 (UCC-202): `cmd.terminal.focus_session` is an alias of `cmd.terminal.focus`. |
 | `cmd.indexOf` | Parser false-positive from JavaScript and not a UICommand. |
 
 `START`, `BUILD`, and `Approve & Continue` are retired as ordinary planning/build launch labels. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch command. Post-approval runtime controls must use scoped commands such as `cmd.plan_compile.open_build`, `cmd.plan_compile.resume`, `cmd.runtime.approve`, or route/open commands with disabled reasons and receipt effects.

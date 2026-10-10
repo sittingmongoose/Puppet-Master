@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L2657-L2722
+Source lines: L2697-L2765
 
-Source SHA256: `f74170d53bb0c3e40f22f0036119e31e5ec6ca1471fda28804f777671dd4dc7b`
+Source SHA256: `11109edad77de99e5435ec7d13cd33654af0587b6a16f26eba546597831321c0`
 
 ---
 
@@ -24,7 +24,7 @@ canonical_text: >-
   F3-567 through F3-577, F3-592, F3-594, F3-595, F3-601 and F3-602: the configuration sheet anatomy, sizes and yield
   rules, the plate and the cast plate (its floor and wrap, with the shared parts DR-045 names), kind marks and the agent puppets (one puppet primitive draws
   every agent everywhere, DL-149), run card budgets and width tiers, the one-line receipt, the dock, the one-line
-  reply traces and the run view as an editor document (ACD-480). Every implementation builds these
+  reply traces and the run view as a run tab in a home panel (ACD-480, F3-635). Every implementation builds these
   from one shared set of primitives; a module owner supplies content only and never forks or
   restyles a primitive. Every module's finished trace uses the one receipt grammar, and time,
   cost and token phrases each come from one shared formatter (there is no stand-in phrase, DL-121), with one time-zone
@@ -36,11 +36,12 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Fixes one owner for the wand modules' presentation grammar."
 split_recommended: false
-depends_on: [DR-043, F3-566, DL-109]
+depends_on: [DR-043, F3-566, DL-109, DL-180]
 unblocks: []
 acceptance_criteria:
   - "No second sheet grammar, receipt grammar, dock or time formatter exists for a wand module."
   - "No wand-module owner restates the family map, the accent rule or EP-128's vocabulary."
+  - "The run view opens as a run tab in a home panel through the one opening module (F3-635, DR-071), with the grammar above unchanged."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -68,9 +69,11 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not restate the wand modules' grammar in a module owner."
   - "Do not restate the family map, the accent rule or EP-128's vocabulary in the wand grammar."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the run view is a run tab in a home panel (F3-635), no longer an editor document; the wand grammar is unchanged."
 owner_hints:
   - Plans/DRY_Rules.md
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/Executor_Protocol.md#EP-128
+ContractRef: ContractName:Plans/DRY_Rules.md#DR-043, ContractName:Plans/FinalGUISpec.md#F3-566, ContractName:Plans/assistant-chat-design.md#ACD-469, ContractName:Plans/Executor_Protocol.md#EP-128, ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/DRY_Rules.md#DR-071

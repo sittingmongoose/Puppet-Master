@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L29253-L29497
+Source lines: L29751-L30002
 
-Source SHA256: `30c23bb4de94c31eb7c49350a5304f6aa83ad1a981a00a804aa54278c73464f6`
+Source SHA256: `f009c0ba75fb6744043de354d831c0aa0eeac4af57c44278005fb2e9e2a5f582`
 
 ---
 
@@ -208,19 +208,24 @@ canonical_text: >-
   lag 0.00 px across 2,615 samples of a deliberately slow drag (40 moves of
   0.4 px with pauses) on a non-active tab, while a click-to-select still travels
   through 18 distinct intermediate positions, monotonic and without overshoot.
+  Amended 2026-10-09 (DL-180): the width-aware "+N more" chip and its picker are superseded by F3-633's "+N" list in
+  every strip; per-tab close and its bookkeeping, the pointer-capture reorder and its snap-while-dragging contract now
+  serve every panel and every tab kind (F3-631). Editor panes are panels (F3-630): "all four editor panes" reads as
+  every panel, the pane-close row is the panel menu's Close panel, and closing the last tab follows F3-630's lifecycle
+  (the panel closes unless it is the only or a locked panel, which shows the empty-panel launcher of F3-632).
 gui_related: true
 gui_classification_reason: This unit defines visible editor tab, pane, and overflow controls.
 split_recommended: false
-depends_on: [F3-140, F3-131, F3-132, F3-152]
+depends_on: [F3-140, F3-131, F3-132, F3-152, DL-180]
 unblocks: []
 acceptance_criteria:
-- "Closing a tab updates the open-tab model and activates a neighboring tab; closing the last tab yields the editor empty state or the underlying view."
-- "Closing a pane expands the sibling pane; when no panes remain visible the editor empty state is shown."
-- "A width-aware +N more overflow chip exposes hidden tabs through a picker with per-item close while the active tab stays visible."
+- "Closing a tab updates the open-tab model and activates a neighbouring tab; closing the last tab follows F3-630's lifecycle: the panel closes and its neighbour takes the space, unless it is the only panel in the centre or a locked panel, which stays and shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
+- "Closing a panel gives its share to its previous sibling, else to the next, and closes its tabs, each kind asking first where it asks (F3-630, F3-635; amended 2026-10-09, DL-180; sibling-pane expansion and the editor empty state are lineage)."
+- "Tabs that do not fit are reached through F3-633's plain-text \"+N\" list with per-item close, and the active tab stays visible (amended 2026-10-09, DL-180)."
 - "Thread context detail tabs and browser preview tabs participate in close and overflow behavior."
-- "Dragging a tab to a new position persists on all four editor panes and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending."
-- "The overflow chip and its picker use the shared portal menu family styling with no bespoke accent glow."
-- "The overflow chip sits immediately left of the actions cluster, fitting runs live on tab add/remove, and a newly opened overflowing tab stays visible while the chip-adjacent non-active tab moves into the picker (wave 3, 2026-08-13)."
+- "Dragging a tab to a new position persists in every panel's strip and survives any re-render or fitter pass; a newly opened tab inserts at its model index rather than appending (amended 2026-10-09, DL-180)."
+- "The \"+N\" list opens in the one overlay root with no bespoke accent glow (F3-633, DR-067; amended 2026-10-09, DL-180)."
+- "\"+N\" follows F3-631's width cascade and F3-633, fitting live on tab add and remove, and a newly opened tab stays visible (amended 2026-10-09, DL-180; the chip-left-of-actions placement is lineage)."
 - "Tab drag-reorder animates: no native drag ghost, the dragged tab tracks the pointer transform-only with its layout at the insertion slot, reduced motion is instant, and the silhouette stays at the insertion slot throughout; as of wave 4 the gesture is pointer-capture (4 px threshold, 1:1 translateX glide, 220 ms neighbour FLIP, 200 ms low-bounce settle), works identically in Safari, survives its first re-slot, and defers the model re-render to settle-end."
 - "Grabbing a NON-ACTIVE tab never springs the travelling plate: any EDSHAPE sync while the strip contains .tab.dragging snaps in-frame, so the plate never lags the carried tab and never exposes the tab underneath (worst lag 0.00 px over 2,615 slow-drag samples), while click-to-select springs still travel (18 monotonic intermediate positions, no overshoot) (wave 8, 2026-08-15)."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
@@ -242,13 +247,15 @@ preserved_exact_tokens:
 - "+N more"
 - "empty state"
 negative_constraints:
-- "Closing the last visible editor pane must not leave a dead surface; it must show the editor empty state or yield to the underlying view."
+- "Closing the last tab of a panel must not leave a dead surface: its neighbour takes the space, or the only or a locked panel shows the empty-panel launcher of F3-632 (amended 2026-10-09, DL-180; the editor empty state and the underlying view are lineage)."
 compatibility_only_notes:
 - "Slint portability: the overflow picker, drag affordances, and pane-close overlays are opaque surfaces; no arbitrary-content backdrop blur or SVG filters, and color math is precomputed."
 stale_retired_dispositions:
 - "Amended 2026-08-13: pane-1-only reorder persistence (DOM-only reorder on panes 2-4 that the next re-render scrambled) is retired; the lime-accent pill chip and its generic gray picker are retired in favour of the app portal-menu family."
 - "Amended 2026-08-13 (tweak wave): the dedicated per-pane close glyph is retired; the kebab Close Panel row is the single pane-close affordance, with pane-close semantics unchanged."
 - "Amended 2026-08-13 (wave 4): HTML5 DnD tab reorder is retired along with the wave-3 attached-ghost/-webkit-user-drag Safari shim. Root causes recorded: Safari's sparse dragover cadence, the native drag snapshot taken when the custom drag image is unrenderable (opacity 0), and the lostpointercapture-on-reparent trap — a re-slot insertBefore releases pointer capture, so a tab-scoped cancel killed the gesture on the first re-slot, the same trap the T20 grip comments document. The pointer-capture gesture uses gesture-scoped window listeners (the T07 document-pointermove pin is untouched)."
+- "Amended 2026-10-09 (DL-180): the editor-only \"+N more\" chip and picker, the four-pane scope and the per-pane wording are retired; F3-631 and F3-633 own the strip and its overflow for every panel."
+- "Amended 2026-10-09 (DL-180): the two close criteria and the negative constraint now follow F3-630's panel lifecycle and F3-632's empty-panel launcher; the editor empty state, the underlying view and sibling-pane expansion are lineage."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"

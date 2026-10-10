@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2941-L13278
+Source lines: L2943-L13294
 
-Source SHA256: `aafe2b1dae88e702340f53a1166c4c71f621ff80ecc9f4013742016589939339`
+Source SHA256: `ece47700f08bfab6ed483e3649d3c6201fc47ae8736dbe5bdc70c828a1dc13b6`
 
 ---
 
@@ -361,16 +361,19 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  Projection trust and hostability become FileSafe guard-visible context when actions launch from
-  FinalGUISpec, Widget_System.md, or Orchestrator_Page.md, requiring trust-state coverage for
-  projection-backed tabs, widgets and panels, terminal widget identity, Dashboard and Progress
-  hostability, filters, focused-run scope, and widget-local display config.
+  Projection trust and hostability become FileSafe guard-visible context when actions launch from FinalGUISpec,
+  Widget_System.md, or Orchestrator_Page.md, requiring trust-state coverage for projection-backed tabs, widgets and
+  panels, terminal widget identity, Dashboard and Progress hostability, filters, focused-run scope, and widget-local
+  display config.
+  Amended 2026-10-09 (DL-181): terminal widget identity means the terminal tab's identity in the universal panels, its
+  panel tab id and its terminal_session_id (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`).
 gui_related: true
 gui_classification_reason: >-
   This unit governs user-visible shell, projection, widget, tab, and hostability context needed
   for safe FileSafe actions.
 split_recommended: false
-depends_on: []
+depends_on:
+- DL-181
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -405,8 +408,10 @@ preserved_exact_tokens:
 - "focused-run"
 - "widget-local display config"
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "terminal widget identity is the lineage name for the terminal tab's identity since 2026-10-09 (DL-181)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal widget identity reads as the terminal tab's panel tab id and terminal_session_id."
 owner_boundary_notes:
 - "FinalGUISpec, Widget_System.md, and Orchestrator_Page.md provide projection and hostability context that FileSafe consumes when relevant to guard decisions."
 owner_hints:
@@ -7526,15 +7531,22 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  Assistant Chat shows a persistent warning chip when YOLO is enabled and FileSafe guards are
-  active, renders blocked commands as inline approval cards with orange border and actions to
-  approve once or approve and add to list, auto-dismisses after 60 seconds, logs blocked
-  commands, and shows terminal blocked output in red with the FileSafe prefix.
+  Assistant Chat shows a persistent warning chip when YOLO is enabled and FileSafe guards are active, renders blocked
+  commands as inline approval cards with orange border and actions to approve once or approve and add to list,
+  auto-dismisses after 60 seconds, logs blocked commands, and shows terminal blocked output in red with the FileSafe
+  prefix.
+  Amended 2026-10-09 (DL-181, DL-184): the terminal's blocked line is shown for a command an agent sent that FileSafe
+  refused, so it never reached the shell; it is drawn in the active terminal scheme's red under the contrast floor
+  (`Plans/FinalGUISpec.md#F3-642`), not a fixed RED, and keeps the prefix. The approval card's orange left border is a
+  coloured side border, which DL-184 bans (`Plans/DRY_Rules.md#DR-069`): the card shows its state with a tinted
+  surface and a text label instead.
 gui_related: true
 gui_classification_reason: >-
   This unit defines Assistant Chat and terminal user-visible blocked-command behavior.
 split_recommended: false
-depends_on: []
+depends_on:
+- DL-181
+- DL-184
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7567,8 +7579,10 @@ preserved_exact_tokens:
 - "FinalGUISpec §7.16"
 - "FileSafe event log"
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "The tokens Orange left border and RED are retired lineage since 2026-10-09 (DL-184, DL-181); the exact strings of the card, its actions and the blocked prefix stand."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181, DL-184): the terminal blocked line uses the scheme's red, and the approval card drops its orange side border for a tinted surface and text label."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FileSafe.md"

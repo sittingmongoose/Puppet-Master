@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L605-L4237
+Source lines: L642-L4295
 
-Source SHA256: `67a2ee82304de9502783981ff00dd2bb54a91fe6bd86dc5c3483b7b452b15033`
+Source SHA256: `2f5388481b47b616dfb48e68cf95b01b5f901b9e266d360c8e5fef37d35e0c28`
 
 ---
 
@@ -397,16 +397,18 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   The File Manager panel lists project files under root, opens selected files through the editor open-file contract, virtualizes large trees, restores expand/collapse state, exposes Hide ignored and row-cap settings, and shows explicit open/refresh/empty/permission error states.
+  Amended 2026-10-09 (DL-180): opening a selected file into the home panels follows F-090: a single click opens the target panel's preview tab, a double click or Enter keeps it, Alt+click opens a new panel, and a file already open anywhere is revealed where it is; the target panel is the opening module's (Plans/FinalGUISpec.md#F3-634).
 gui_related: true
 gui_classification_reason: This unit defines visible File Manager tree behavior, settings, and error states.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
 - ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+- 'Amended 2026-10-09 (DL-180): a single click on a file row opens a preview tab and a double click a kept tab in the panel the opening module chooses (F-090).'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -435,7 +437,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Open failure must not leave the tree in an inconsistent state.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the editor open-file contract now names the panel and the preview or kept tab through F-090 and F3-634.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -833,10 +836,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor placement uses the File Editor strip and supports docked visibility, detach/redock, four stable independently floating editor panels, tabs with active-buffer switching, close/unsaved prompts, reorder, and persistence.
+  Amended 2026-10-09 (DL-180): the editor is the editor tab kind in any home panel (Plans/FinalGUISpec.md#F3-635, #F3-639). The File Editor strip, detach and redock, and the four stable independently floating editor panels retire with the universal panels; where a file opens is F-090's and F3-634's; tabs, their reorder and the close prompt for unsaved changes are the panel tab strip's (F3-631, F3-635), and their persistence is the v2 Home layout record's (Plans/storage-plan.md#SP-330).
 gui_related: true
 gui_classification_reason: This unit defines editor placement, layout, detach, and tab UI behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -868,7 +872,8 @@ preserved_exact_tokens:
 - persistence
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the File Editor strip, detach and redock, and the four stable floating editor panels are retired; the editor is a tab kind in the universal panels.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1154,10 +1159,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Split editor panes are MVP scope with multiple editor groups, one tab list and active tab per group, one shared buffer per file path, focused group open targeting by default, optional Open in other group/new group actions, and per-view cursor and scroll state.
+  Amended 2026-10-09 (DL-180): editor groups are now home panels (Plans/FinalGUISpec.md#F3-630). The default open target is no longer the focused group but the last-focused panel that holds documents (F3-634); Open in other group and Open in new group become Open to the side and Open in new panel (F-090). One path is one tab in the whole workspace, so the same file is never shown in two panels; the one shared buffer per path still serves the editor tab and every other surface that opens the path, such as the embedded document pane (F-024), and cursor and scroll stay per view.
 gui_related: true
 gui_classification_reason: This unit defines visible split-pane editor group behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1188,7 +1194,8 @@ preserved_exact_tokens:
 - Cursor/scroll position is per-view
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): focused group open targeting by default becomes the last-focused document panel (F3-634), and a path is open in at most one panel.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1467,10 +1474,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor focus handles Save, Close tab, Go to line, Next/Previous tab, Save As, and app/chat shortcut routing; floating editor windows handle editor shortcuts when any editor window has OS focus and open-file actions target/focus the floating editor.
+  Amended 2026-10-09 (DL-180): floating editor windows retire with the File Editor strip (F-017), and the editor is the editor tab kind in a home panel (Plans/FinalGUISpec.md#F3-635, #F3-639); where an open-file action lands is F-090's and Plans/FinalGUISpec.md#F3-634's; the keys that close a tab and move between tabs, including next and previous tab, are the panel keyboard map of Plans/FinalGUISpec.md#F3-635, which gives Ctrl+Tab and Ctrl+Shift+Tab to recent tabs. Save, Go to line and Save As stay editor keys while focus is in an editor tab, and the dirty-tab prompt on close stays.
 gui_related: true
 gui_classification_reason: This unit covers user-visible keyboard shortcuts and floating-editor focus routing.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1503,7 +1511,8 @@ preserved_exact_tokens:
 negative_constraints:
 - When focus is elsewhere, app/chat shortcuts apply instead of editor shortcuts.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): floating editor windows and their focus routing retire; open-file actions follow F-090 and F3-634, and the tab navigation and close keys are F3-635''s panel keyboard map (Ctrl+Tab is recent tabs, not next tab).'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1518,10 +1527,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   Editor persistence stores open tab order, active tab index, scroll/cursor state, max tabs, session view state, layout/recent files, lazy-load restore behavior, persisted tab cap, dirty-buffer exit prompts, and recover-unsaved availability using redb-backed per-project/session keys without persisting full buffer content.
+  Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the panel layout (split groups, the active group and collapse) live in the v2 Home layout record, the only Home layout authority (Plans/storage-plan.md#SP-330), and the redb `tabs.{project_id}` and `active_tab.{project_id}` keys and the editor layout entry are superseded by it; buffers, per-tab scroll and cursor view state, session view state, recent files, lazy-load restore, the max-tabs and persisted-tab caps, the dirty-buffer exit prompt and recover-unsaved stay this unit's, and a tab they name is the panel's editor tab (Plans/FinalGUISpec.md#F3-635).
 gui_related: true
 gui_classification_reason: This unit defines persisted editor tab, cursor, and layout state visible across sessions.
 split_recommended: true
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1555,7 +1565,8 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not persist full buffer content as ordinary editor state.
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): open tab order, the active tab, pinned and preview state and the editor layout move to the v2 Home layout record (SP-330); buffers, scroll and cursor view state, the tab caps, the exit prompt and recover-unsaved stay here.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/FileManager.md
@@ -1680,10 +1691,11 @@ status: accepted
 owner_doc: Plans/FileManager.md
 canonical_text: >-
   File Manager, editor, and chat share one project context, @ mention uses the same file list as File Manager, and clicking a file path or code block in chat opens the file in the editor.
+  Amended 2026-10-09 (DL-180): a file path clicked in the chat opens by the same rules as the file tree (F-090): the panel's preview tab on a single click, revealed where it is when already open; what the chat opens is Plans/assistant-chat-design.md#ACD-500's and the rules are Plans/FinalGUISpec.md#F3-634's.
 gui_related: true
 gui_classification_reason: Although span_map inferred non-GUI, this unit governs visible click-to-open integration between chat and editor.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
@@ -1712,7 +1724,8 @@ preserved_exact_tokens:
 - §5
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): chat file opens follow the one opening module (F3-634, ACD-500).'
 owner_boundary_notes:
 - GUI-related classification corrects span_map inference because this span defines visible click-to-open behavior.
 owner_hints:
@@ -1731,12 +1744,13 @@ canonical_text: >-
   Contracts_V0 route/open semantics, opened files bind to the active worktree
   execution_unit_context, and chat file-edit cards open the worktree filesystem path resolved from
   working_directory + relative_path without a special rewrite layer.
+  Amended 2026-10-09 (DL-180): which home panel an opened file lands in is decided by the one opening module (Plans/FinalGUISpec.md#F3-634) from the placement fields of Plans/Contracts_V0.md#CV-360, never by an editor panel or group target; route_target resolution and worktree binding are unchanged.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible file/editor open behavior from GUI, CLI, chat cards, and internal
   routing.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -1766,7 +1780,8 @@ preserved_exact_tokens:
 - "worktree path"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): editor panel and editor group targets no longer route an open; placement is CV-360 and F3-634.'
 owner_boundary_notes:
 - "Contracts_V0 owns shared route/open semantics; FileManager realizes workspace file opens rather than raw route_target reads."
 owner_hints:
@@ -1836,12 +1851,15 @@ canonical_text: >-
   Route/open handling keeps Contracts_V0 as owner for canonical route_target and OpenSubject
   contracts, keeps Crosswalk limited to primitive boundary ownership, and keeps OpenFile narrow as
   a filesystem/editor realization for path, optional line/range, target_group, navigation, and
-  workspace file paths.
+  workspace file paths. Amended 2026-10-09 (DL-180): `target_editor_panel_id`, `target_editor_group_id` and
+  `target_group` no longer select a home panel; the placement fields `where`, `mode`, `by` and `background` travel
+  beside OpenFile on the open route, never inside its identity (Plans/Contracts_V0.md#CV-360), and OpenFile stays
+  the narrow file realization.
 gui_related: false
 gui_classification_reason: >-
   This unit defines routing and owner-boundary contracts rather than visual presentation.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -1875,7 +1893,8 @@ preserved_exact_tokens:
 negative_constraints:
 - "OpenFile must not become the owner for every openable object."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Amended 2026-10-09 (DL-180): the editor panel and group target fields of OpenFile are retired as home placement; CV-360 carries placement.'
 owner_boundary_notes:
 - "Contracts_V0 owns route_target and OpenSubject; Crosswalk owns primitive boundary ownership; FileManager owns narrow workspace-file realization."
 owner_hints:
@@ -2071,11 +2090,12 @@ canonical_text: >-
   use terminal_tab_id, terminal_pane_id, and terminal_session_id from the terminal model, browser
   tabs use browser-session identity from browser owner docs, and pinning, capability badges, and
   labels keep the state separate.
+  Amended 2026-10-09 (DL-180, DL-181): a terminal is one session per tab, with no panes (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); terminal_tab_id holds the panel tab id (`terminal:<session>`, Plans/FinalGUISpec.md#F3-635), terminal_pane_id retires, and terminal_session_id stays the session identity. Terminal and browser tabs stay separate kinds.
 gui_related: true
 gui_classification_reason: >-
   This unit governs visible tabs, labels, pinning, and capability badges.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180, DL-181]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -2109,6 +2129,7 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions:
 - "The source shorthand /cap/browser-tab is retired as an ambiguous combined concept rather than a live tab type."
+- "Amended 2026-10-09 (DL-180, DL-181): terminal_pane_id is retired with panes; terminal_tab_id holds the panel tab id."
 owner_boundary_notes:
 - "Terminal and browser owner docs define their respective tab/session identity models."
 owner_hints:
