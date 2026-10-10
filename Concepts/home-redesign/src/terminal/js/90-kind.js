@@ -15,8 +15,16 @@
     ];
   }
 
+  /* the Home default layout's terminal hints */
+  var SCRIPTS = { 'cargo-test': 'cargo test --workspace', 'dev': 'npm run dev', 'build': 'cargo build --workspace' };
+  function expandCwd(cwd) {
+    if (!cwd) return null;
+    var home = (T.Session.machine() && T.Session.machine().home) || '/home/jared';
+    return cwd === '~' ? home : cwd.indexOf('~/') === 0 ? home + cwd.slice(1) : cwd;
+  }
+
   function createSession(spec) {
-    var s = new T.Session({ profile: spec.profile || 'zsh', cwd: spec.cwd || null, by: spec.by || 'user',
+    var s = new T.Session({ profile: spec.profile || 'zsh', cwd: expandCwd(spec.cwd), by: spec.by || 'user',
       cols: 100, rows: 30 });
     records.set(s.id, { session: s, view: null, spec: spec });
     return s;
@@ -54,6 +62,7 @@
       prefixes: ['terminal:'],
       min: { w: 320, h: 120 },
       dedicated: true,
+      eager: true,   /* a background terminal runs from the start: its label, exit code and agent mark stay true */
       idFor: function (spec) {
         if (spec.session && (records.has(spec.session) || [].concat(Array.from(records.values())).some(function (r) { return r.alias === spec.session; }))) return 'terminal:' + spec.session;
         var s = createSession(spec);
@@ -74,11 +83,14 @@
         }
         var restoredDead = false;
         if (!rec) {
-          /* a restored tab: the page reloaded, so its PTY is gone. Say so; never fake continuity. */
-          var s = new T.Session({ profile: state.profile || 'zsh', cwd: state.cwd || null, by: 'user' });
+          /* No live session for this id. A tab this terminal saved (state.v) is a restore after a reload: its PTY is
+             gone, so say so and never fake continuity. A tab seeded by a layout (the Home default's terminal:t1 and
+             t2) simply starts its session; its `script` hint names what to run first. */
+          var s = new T.Session({ profile: state.profile || 'zsh', cwd: expandCwd(state.cwd), by: 'user' });
           rec = { session: s, view: null, spec: state, alias: state.session };
+          if (state.script && SCRIPTS[state.script]) rec.spec = Object.assign({}, state, { invocation: { command: SCRIPTS[state.script] } });
           records.set(s.id, rec);
-          restoredDead = true;
+          restoredDead = state.v === 1;
         }
         var view = mountView(host, api, rec, state);
         if (restoredDead) {
@@ -86,7 +98,7 @@
         }
         return {
           unmount: function () { rec.view.dispose(); rec.session.dispose(); records.delete(rec.session.id); },
-          serialize: function () { var sh = rec.session.shell; return { session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: rec.view.tabAppearance || {} }; },
+          serialize: function () { var sh = rec.session.shell; return { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: rec.view.tabAppearance || {} }; },
           /* while a divider drag is still moving the body (final === false) the reflow and PTY resize wait,
              at most every 120 ms; the final call lays out at once */
           onResize: function (sz) {

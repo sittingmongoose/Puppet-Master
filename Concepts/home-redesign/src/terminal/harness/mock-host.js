@@ -51,6 +51,7 @@
   var ICON_PATHS = {
     search: '<circle cx="7" cy="7" r="4.5"/><path d="M10.4 10.4 14 14"/>',
     split: '<rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M8 3v10"/>',
+    splitRight: '<rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M8 3v10"/>',
     'split-down': '<rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 8h12"/>',
     maximize: '<path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/>',
     restore: '<path d="M6 2.5V6H2.5M10 2.5V6h3.5M10 13.5V10h3.5M6 13.5V10H2.5"/>',
@@ -61,6 +62,7 @@
     check: '<path d="M3.5 8.5l3 3 6-7"/>',
     chevron: '<path d="M6 3.5 10.5 8 6 12.5"/>',
     branch: '<circle cx="5" cy="3.5" r="1.5"/><circle cx="5" cy="12.5" r="1.5"/><circle cx="11" cy="5" r="1.5"/><path d="M5 5v6M11 6.5c0 3-6 2.2-6 4.5"/>',
+    git: '<circle cx="5" cy="3.5" r="1.5"/><circle cx="5" cy="12.5" r="1.5"/><circle cx="11" cy="5" r="1.5"/><path d="M5 5v6M11 6.5c0 3-6 2.2-6 4.5"/>',
     clock: '<circle cx="8" cy="8" r="5.6"/><path d="M8 5v3.2l2.1 1.4"/>',
     file: '<path d="M4 1.8h5.4L12.2 4.6v9.6H4z"/><path d="M9.4 1.8v2.8h2.8"/>',
     folder: '<path d="M1.8 4.2v8.3h12.4V5.6H7.6L6.2 4.2z"/>',

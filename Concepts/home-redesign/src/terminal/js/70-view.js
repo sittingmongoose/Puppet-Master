@@ -330,7 +330,7 @@
   View.prototype._headerLeft = function () {
     var left = [{ id: 'cwd', text: this._cwd ? this._cwd() : '~', mono: true, title: 'Folder' }];
     var br = this._branch ? this._branch() : '';
-    if (br) left.push({ id: 'branch', text: br, icon: 'branch', title: 'Branch', priority: 1 });
+    if (br) left.push({ id: 'branch', text: br, icon: 'git', title: 'Branch', priority: 1 });
     var run = this._running ? this._running() : null;
     if (run) left.push({ id: 'run', text: run.cmdline.length > 48 ? run.cmdline.slice(0, 47) + '…' : run.cmdline, detail: T.util.fmtElapsed(Date.now() - run.start), icon: 'clock', title: 'Running: ' + run.cmdline, priority: 2 });
     return left;
@@ -339,7 +339,7 @@
     var self = this, api = this.api;
     return [
       { id: 'find', label: 'Find', icon: 'search', shortcut: T.keys.label('find'), run: function () { self.openFind(); } },
-      { id: 'split', label: 'Split', icon: 'split', shortcut: T.keys.label('split'), run: function () { self.split(); } },
+      { id: 'split', label: 'Split', icon: 'splitRight', shortcut: T.keys.label('split'), run: function () { self.split(); } },
       { id: 'max', label: api && api.isMaximized && api.isMaximized() ? 'Restore' : 'Maximize', icon: api && api.isMaximized && api.isMaximized() ? 'restore' : 'maximize', run: function () { self.toggleMaximize(); } },
       { id: 'more', label: 'More', icon: 'more', menu: function () { return self.moreMenu(); } }
     ];
