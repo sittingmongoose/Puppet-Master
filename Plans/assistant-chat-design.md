@@ -27473,7 +27473,7 @@ canonical_text: >-
   command card (D27). It shows the command, the folder it ran in, its status as a glyph and words, how long it ran
   (counting while it runs), the last lines of its output as plain text, and who ran it. Amended 2026-10-10 (DL-185,
   terminal SPEC section 11 at 01c5e78c42): the status words are Running, Needs input, Done, Failed and Interrupted,
-  with canon's Ended with the earlier session below; a stopped command says its exit code in words after its status,
+  and canon adds Ended with the earlier session, described below; a stopped command says its exit code in words after its status,
   "Failed · exited 101", "Done · exited 0", "Interrupted · exited 130", and a failed command with no exit code reads
   Failed alone, so the exit code is part of the status. Interrupted is muted and still, in the tone of the one status
   set's Skipped mark (Plans/FinalGUISpec.md#F3-585), with no motion. The elapsed time is set in tabular figures and
