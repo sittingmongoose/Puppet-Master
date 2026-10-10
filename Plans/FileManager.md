@@ -5322,8 +5322,9 @@ canonical_text: >-
   Plans/FinalGUISpec.md#F3-634, Plans/DRY_Rules.md#DR-071) and keeps no placement or dedupe rule of its own. A single
   click on a file row opens the file in the target panel's preview tab, with an italic label, which the next single
   click replaces, and leaves keyboard focus in the tree so the arrow keys keep walking it; a double click opens the
-  file kept and moves focus to its tab; an edit in the tab, or dragging the tab, keeps a preview tab. Enter on a
-  focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
+  file kept and moves focus to its tab; an edit in the tab, or dragging the tab, keeps a preview tab. With the Preview
+  Tabs setting off (`general.interaction.preview-tabs`, Plans/Settings_System.md#SSYS-050), a single click opens the
+  file kept. Enter on a focused file row opens it as a double click does. The tree dispatches the existing `cmd.file.open` with the placement
   fields of Plans/Contracts_V0.md#CV-360 beside the file's identity: `mode: preview` for a single click, `mode: keep`
   for a double click or Enter, `where: panel` for Alt+click, and `background: true` for Ctrl+click (Cmd+click on
   macOS), which opens the file without taking focus. A file already open anywhere in the workspace is revealed where it
@@ -5345,7 +5346,7 @@ split_recommended: false
 depends_on: [DL-180, F3-634, CV-360]
 unblocks: [ATS-075, GRRC-040]
 acceptance_criteria:
-  - "A single click on a file row opens that file in the target panel's one italic preview tab, replacing the previous preview there, and focus stays in the tree."
+  - "A single click on a file row opens that file in the target panel's one italic preview tab, replacing the previous preview there, and focus stays in the tree; with Preview Tabs off it opens the file kept."
   - "A double click, or Enter on a focused file row, opens the file kept and moves focus to its tab; an edit in a preview tab or a drag of it keeps it."
   - "Each open dispatches exactly one `cmd.file.open` with CV-360's placement fields and no `target_editor_panel_id`, `target_editor_group_id` or `target_group`."
   - "Clicking a file that is already open in any panel, including a collapsed panel or one hidden in \"+N\", reveals that tab and opens no second tab."
