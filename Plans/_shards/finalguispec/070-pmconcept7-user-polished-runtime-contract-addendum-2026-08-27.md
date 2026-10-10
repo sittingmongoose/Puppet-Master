@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34787-L35228
+Source lines: L34787-L35231
 
-Source SHA256: `c1b4f13c5fe476c656f4b69fcf2eadd1c088be679a557c34f8b22dea84570c57`
+Source SHA256: `069e4390ce5eb9f669bc45df980bd05acd04045cbb3f9678b29aaf5e5b550493`
 
 ---
 
@@ -402,7 +402,10 @@ canonical_text: >-
   browser execution, raw receipts, and independent review. Final certification combines deterministic build
   proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
   The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
-  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity,
+  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity
+  up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
+  gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
+  in the same single settled transaction and never as a later step,
   direct and rescued magnetic-control
   acquisition, cancellation/no-op cleanup, stable mounted reorder peers, and black/empty-frame detection.
   The acquisition evidence includes a real top-layer occluder and transaction reentrancy probes, while settled

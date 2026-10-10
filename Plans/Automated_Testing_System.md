@@ -3641,10 +3641,13 @@ canonical_text: >-
   reconciliation, rollback, and cleanup. Usage reorder films also verify that preview retains the same mounted
   peer nodes at nonzero opacity, never restarts their entrance animation, and reconciles DOM order only once after
   an accepted move. Usage pointer-resize films verify that affected occupied peers visibly repack from each supported
-  held target footprint through exact accepted settlement while peer nodes, opacity, entrance state, child list,
-  and scroll stay stable; cancellation and failed settlement restore the baseline exactly. Resize films cover the
+  held target footprint through accepted settlement while peer nodes, opacity, entrance state, child list,
+  and scroll stay stable; the accepted layout equals the last-painted preview exactly except for the Usage board
+  gravity of WS-019 (DL-176), by which shown cards other than the active one slide up into space freed above them,
+  committed in the same single settled transaction and never as a later step; cancellation and failed settlement
+  restore the baseline exactly. Resize films cover the
   far right as the primary edge case plus far-left and middle positions, pointer and keyboard expansion/contraction;
-  obstructing-peer held-preview and exact preview-to-settlement parity are pointer-only, while keyboard resize is
+  obstructing-peer held-preview and preview-to-settlement parity up to that settle-time gravity are pointer-only, while keyboard resize is
   verified as atomic changed-only settlement. The matrix also covers same-direction overshoot and edge-limited one-step
   intent. Direct and displaced move/resize-control approaches cover fast and slow magnetic acquisition, pointer-
   specific rescue, false-positive guards, and complete lease reset. Usage and Home Dashboard pointer and keyboard films exercise the same
