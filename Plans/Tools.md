@@ -377,6 +377,8 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_Syst
 | `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
 | `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |
 
+Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one canonical `terminal_session_id` its shell binds to (T-007). The runtime keeps that join, so Open in Terminal and Show Terminal reveal the session's terminal tab (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-017`, `#SMPFS-180`), and the handle never appears in the UI. A `shellId` that resolves to a terminal a human opened writes only under the human's grant and the rules of `Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182`: without a grant the write is refused before any byte reaches the session, after a human keystroke it is refused as `preempted`, during a password or secret prompt as `secret_input`, and under input protection with the explicit blocked result of SMPFS-165; the result fields are `Plans/Contracts_V0.md#CV-362`'s. `detach` means process detachment: the process keeps running after the client shuts down. It is not a panel tab's placement or a pop-out, and it opens, moves or closes no tab.
+
 **Successful output**
 
 - Completed sync result: `{ shellId, status: "completed", stdout, stderr, exit_code }`
@@ -394,6 +396,8 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_Syst
 | `filesafe_blocked` | Shell command rejected by FileSafe, command blocklist, or path guard. |
 | `shell_not_found` | Referenced `shellId` does not exist or is no longer active. |
 | `spawn_failed` | Runtime could not start the shell or child process. |
+| `preempted` | The write targeted a terminal where a human took over; nothing was written and the agent has been told (added 2026-10-09, SMPFS-182). |
+| `secret_input` | The terminal is reading a password or other secret, which only the human may answer; nothing was written (added 2026-10-09, SMPFS-182). |
 | `output_limit_exceeded` | Output exceeded cap and was truncated or the command was aborted per runtime policy. |
 | `timeout` | Hard execution ceiling expired before process completion. |
 
@@ -3452,19 +3456,27 @@ plan_unit_id: T-018
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: '`bash` accepts command execution parameters, returns shell-bound sync/async results, emits structured errors,
-  and applies default wait and hard timeout behavior without fabricating terminal state.'
+canonical_text: >-
+  `bash` accepts command execution parameters, returns shell-bound sync/async results, emits structured errors, and
+  applies default wait and hard timeout behavior without fabricating terminal state.
+  Amended 2026-10-09 (DL-181): `shellId` is the caller's opaque handle for the one canonical `terminal_session_id` its
+  shell binds to, joined so Open in Terminal and Show Terminal reveal that session's terminal tab; `detach` means
+  process detachment, never tab placement or pop-out; a write through a `shellId` into a terminal a human opened
+  follows Section 15's SMPFS-182 and is refused without the human's grant, as `preempted` after a take-over and as
+  `secret_input` during a secret prompt.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
 split_recommended: false
 depends_on:
 - T-007
 - T-017
+- DL-181
 unblocks: []
 acceptance_criteria:
 - Parameters `command`, `mode`, `initial_wait`, `shellId`, and `detach` remain preserved.
 - Output shapes for completed sync, still-running sync, and async launch remain preserved.
 - All error codes and timeout behavior remain preserved.
+- "Amended 2026-10-09 (DL-181): every shellId resolves to exactly one terminal_session_id that Open in Terminal and Show Terminal can reveal as its terminal tab; detach never opens, moves or closes a tab; writes into a human-opened terminal follow SMPFS-182 with explicit preempted and secret_input refusals."
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -3493,10 +3505,13 @@ preserved_exact_tokens:
 - spawn_failed
 - output_limit_exceeded
 - timeout
+- preempted
+- secret_input
 negative_constraints: []
 preserved_contractrefs: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): shellId is joined to terminal_session_id, detach is process detachment only, and writes into a human's terminal follow SMPFS-182."
 owner_hints:
 - Plans/Tools.md
 ```
