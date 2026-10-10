@@ -2631,6 +2631,8 @@ Core rules:
 
 ContractRef: Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
 
+Amended 2026-10-09 (DL-180): the diagram card's opens go through the one opening module as ACD-500 lists them. Open in editor opens the diagram's source as an editor buffer tab, and Open detached preview opens the rendered diagram in the artifact viewer tab (`Plans/Runtime_Artifacts_Panel.md#RAP-065`) in the home panels, never a separate window; the widget itself stays `Plans/FinalGUISpec.md` section 15.6's.
+
 Rules:
 - Copy source
 - Open in editor
@@ -27391,7 +27393,9 @@ canonical_text: >-
   thread (ACD-448); a fetched page or a link as a browser tab; a search, MCP, app-inspector or work record as a record
   tab; the rules list, Gist Review, a revert's files, a debug investigation, a lens source and Wonderer results as
   document tabs; an artifact card's Open, an attachment's Open and an artifact embedded in a plan as the artifact
-  viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065), or the editor for a file; a command's session as its
+  viewer tab (Plans/Runtime_Artifacts_Panel.md#RAP-065), or the editor for a file; a Mermaid diagram card's Open
+  in editor as an editor buffer tab holding the diagram's source, and its Open detached preview as the artifact
+  viewer tab showing the rendered diagram, never a separate window (section 28); a command's session as its
   terminal tab (ACD-502). Each open dispatches the route Plans/UI_Command_Catalog.md#UCC-200 lists for the thing
   opened, with the placement fields of Plans/Contracts_V0.md#CV-360. What an agent opens by itself, for example a
   Deep Plan document it wrote (ACD-041) or a terminal it started (ACD-502), lands as a background tab with the hollow
@@ -27460,6 +27464,7 @@ unblocks: [ACD-039, ACD-041, ACD-416, ACD-444, ACD-453, ACD-455, ACD-458, ACD-48
 acceptance_criteria:
   - "Every file reference a person clicks in the chat (message and card paths, diff views, Changes rows, transcript file records, files-touched entries) opens the preview tab on a single click and a kept tab on a double click, reveals a file already open anywhere, and opens a new panel on Alt+click, all through F3-634."
   - "Plans, run views, transcripts, the thread's context, browsers, records, documents, artifacts and terminals the user opens from the chat open as their F3-635 tab kinds and take focus; nothing the chat opens is drawn in a pane of its own or as a centred modal."
+  - "A Mermaid diagram card's Open in editor opens its source in an editor tab and its Open detached preview opens the artifact viewer tab, never a separate window (DL-180)."
   - "What an agent opens by itself lands as a background tab with the hollow square and an announcement and never takes keyboard focus."
   - "Activity Detail, the wand's setup sheets, Plan Export and Send to Planning Wizard never become panel tabs, and no Goal tab exists."
   - "Opening the same plan, run, child transcript or thread context twice reveals one tab; closing a tab the chat draws tells the chat, and the active tab in each panel is reported to it."
