@@ -1,87 +1,37 @@
-/* The Guided Tour's Home steps for the panels (D25), rewritten at runtime so the opus-5.5 sources stay untouched until
-   the panels publish (digest 01, section 9.10). PMW.tour.install() runs once the panels have booted (90-boot.js) and
-   edits O55.tour.defs / O55.tour.byId in place:
-   - workspace_orientation: its middle spotlight is the panels centre (#pm-home-centre) and its copy names the panels;
-   - move_or_dock_chat is retired (D3: the chat moves only by popping out; the orientation copy says so);
-   - three new action steps, each finished by what the panels report, never by a timer: open a tab from "+"
-     (open_from_plus), open a file from the rail (open_file_from_rail), split by dragging a tab to a panel edge
-     (split_by_drag; the tab menu's Split right / Split down with this tab counts too);
-   - widget_action teaches Upcoming resets on the Home dashboard board (D10 round two P10): it opens dashboard:home,
-     hides the widget when the board already shows it so the step can add it, and is done when the board's log shows
-     the widget added and then moved or resized.
-   Steps are re-indexed after the splice. A saved checkpoint holds a position, not a step id, so a run saved under
-   another step order (the published page's 18 steps) would pick up at the wrong step: every save is stamped with its
-   step id and this order's signature, and at install a checkpoint without this signature is moved to its step by id.
-   A checkpoint whose step is retired (move_or_dock_chat) picks up at the first step of that step's chapter, and done
-   ids of retired steps are dropped (Plans rule proposed by the planning thread, 2026-10-10). Back puts the panels
-   back as they were when the step began (PMW.snapshot at entry, PMW.restoreSnapshot on Back). The tour's own start
-   snapshot and its Skip / Finish restore go through PM_HOME_WORKSPACE.layout.pmw and o55RestoreSnapshot (00-shim.js).
-   At publish these defs move into 83-tour-steps.js and their copy into copy.json. */
+/* The panels' Guided Tour hooks (D25). The tour's workspace steps are native to the tour (opus-5.5 src/js/83-tour-steps.js:
+   workspace_orientation, open_from_plus, open_file_from_rail, split_by_drag and widget_action, their copy in copy.json
+   and NieR's Pod lines in copy.d/50-nier-tour.json; checkpoints across step orders are the tour core's). What only the
+   panels know is here, on PMW.tour, and the steps look it up when they run (the panels boot after the tour's script):
+   - entry(id, o): Back puts the panels and the dashboard boards back as they were when the step began (PMW.snapshot
+     at entry, PMW.restoreSnapshot and PMW.dashboard.restore on Back);
+   - the + step: watchPlus(), plusButton(), plusMenu(), plusRow() (what Show Me picks), plusDone();
+   - the file step: watchFile(o), showFiles(), fileRow(), fileDone();
+   - the split step: watchSplit(), splitEdge(), carrying(), splitTarget(done), splitDone(), splitDrag() (Show Me's carry);
+   - the widget step (Upcoming resets on the Home dashboard board, D10 round two P10): watchWidget(), showDashboard(),
+     widgetAddButton(), widgetDone(st), widgetShowMe().
+   install() follows the tour through its public events only: the + menu and the open events feed the + and file
+   steps, a new run forgets the last one, and Skip and Finish put the boards and the rail's file marks back after the
+   panels are restored (TR.on('end')). Nothing here defines or edits a step. The tour's own start snapshot and its
+   Skip / Finish restore of the panels go through PM_HOME_WORKSPACE.layout.pmw and o55RestoreSnapshot (00-shim.js). */
 
 (function () {
 /* its own scope: the names below never meet the core's */
-var tour = PMW.tour = { installed: false, version: 1 };
-
-/* the copy the new and changed steps need, merged into O55.copy at install (keys copy.json lacks; NieR's Pod lines too) */
-var TOUR_COPY = {
-  workspace_orientation: {
-    title: 'Your workspace',
-    do: 'Pages sit across the top. Everything you open lands in these panels: files, terminals, browsers, plans. The chat stays on the right; pop it out to move it.',
-    doEli5: 'Pages are on top. What you open shows up in these panels. Chat stays on the right.'
-  },
-  open_from_plus: {
-    title: 'Open anything from +',
-    do: 'Choose + at the end of the tabs, then pick something to open, like a terminal or a browser.',
-    doEli5: 'Click +, then pick something.',
-    pick: 'Pick something to open. It opens as a new tab in this panel.',
-    pickEli5: 'Pick one.',
-    after: 'It opened as a new tab in this panel. Each panel has its own +.'
-  },
-  open_file_from_rail: {
-    title: 'Open a file into a panel',
-    do: 'Click a file in the Files list. One click opens a preview tab; a double click keeps it open.',
-    doEli5: 'Click a file on the left.',
-    after: 'A preview tab makes way for the next file you click. Double-click a file, or its tab, to keep it.'
-  },
-  split_by_drag: {
-    title: 'Split by dragging a tab',
-    do: 'Drag this tab to the edge of a panel and let go when that half lights up. Or right-click the tab and choose Split right with this tab.',
-    doDown: 'Drag this tab to the edge of a panel and let go when that half lights up. Or right-click the tab and choose Split down with this tab.',
-    doEli5: 'Drag the tab to the edge of a panel.',
-    doDownEli5: 'Drag the tab to the edge of a panel.',
-    after: 'The tab has a panel of its own now. Drag it back onto the other tabs to join them again.'
-  },
-  widget_action: {
-    title: 'Add a widget',
-    do: 'On your Home dashboard, choose Add widget, find Upcoming resets and add it. Then drag it up to where you can glance at it.',
-    doEli5: 'Add Upcoming resets to Home.',
-    after: 'Upcoming resets is on your Home dashboard now. Each dashboard keeps its own widgets.'
-  }
-};
-var POD_COPY = {
-  workspace_orientation: { line: 'Report: Scan complete. Pages on top, panels in the middle, Chat on the right.' },
-  open_from_plus: { line: 'Proposal: Use + to open a new tab. Any kind will do.' },
-  open_file_from_rail: { line: 'Report: One click previews a file. Two clicks keep it.' },
-  split_by_drag: { line: 'Proposal: Drag the tab to an edge. It gets a panel of its own.' },
-  widget_action: { line: 'Proposal: Add Upcoming resets to Home. It shows the next limit resets.' }
-};
+var tour = PMW.tour = { installed: false, version: 2 };
 
 /* ---- small helpers (the page's own lookups; nothing here throws into the core) ---- */
 function tourApi() { var O = window.O55; return O && O.tour && Array.isArray(O.tour.defs) && O.tour.byId ? O.tour : null; }
 function tVis(el) { return !!(el && el.isConnected && el.getClientRects().length && el.getBoundingClientRect().width > 0); }
 function firstVis(sel, from) { var all = qsa(sel, from); for (var i = 0; i < all.length; i++) if (tVis(all[i])) return all[i]; return null; }
 function cssId(v) { return window.CSS && CSS.escape ? CSS.escape(v) : String(v).replace(/["\\]/g, '\\$&'); }
-function currentPage() { var t = qs('.page-tab.active[data-page]'); return t ? t.getAttribute('data-page') : ''; }
-function goPage(p) { if (currentPage() === p) return; var t = firstVis('.page-tab[data-page="' + p + '"]'); if (t) t.click(); }
 function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 async function waitFor(fn, ms) { var t0 = Date.now(); while (Date.now() - t0 < ms) { var v = null; try { v = fn(); } catch (_) {} if (v) return v; await wait(60); } return null; }
+function nextPaint() { return new Promise(function (r) { requestAnimationFrame(function () { r(); }); }); }
 function tabIds() { var l = state.layout; return l ? Object.keys(l.tabs) : []; }
 function panelCount() { var l = state.layout; return l ? model.panels(l).length : 0; }
 function kick() { var TR = tourApi(); if (TR && TR.st && TR.st.kick && TR.running) { try { TR.st.kick(); } catch (_) {} } }
 function stepIs(id) { var TR = tourApi(); return !!(TR && TR.running && TR.st && TR.st.step && TR.st.step.id === id); }
-function stepDone(id) { var TR = tourApi(); return !!(TR && TR.st && TR.st.sess && TR.st.sess.done.indexOf(id) >= 0); }
 
-/* what each new step has seen since it began (reset at its entry) */
+/* what each step has seen since it began (reset at its entry) */
 var marks = { plus: null, file: null, split: null };
 /* the panels and the dashboard boards as each step found them: Back puts them back (the tour's rewind covers the chat
    and the page's own widgets; the boards go back through PMW.dashboard) */
@@ -90,9 +40,9 @@ function dashSnapshot() { try { return PMW.dashboard && PMW.dashboard.snapshot ?
 function dashRestore(snap) {
   if (!snap) return;
   try { if (PMW.dashboard && PMW.dashboard.restore) PMW.dashboard.restore(snap); }
-  catch (err) { try { console.warn('[pm-home] tour: Back could not put the dashboards back', err); } catch (_) {} }
+  catch (err) { try { console.warn('[pm-home] tour: the dashboards could not be put back', err); } catch (_) {} }
 }
-function stepEntry(id, o) {
+tour.entry = function (id, o) {
   if (o && o.back && entrySnaps[id]) {
     var e = entrySnaps[id], panels = e && e.panels ? e.panels : e;
     try { PMW.restoreSnapshot(panels, 'guided_tour_back'); } catch (err) { try { console.warn('[pm-home] tour: Back could not put the panels back', err); } catch (_) {} }
@@ -100,7 +50,7 @@ function stepEntry(id, o) {
     return;
   }
   try { entrySnaps[id] = { panels: PMW.snapshot(), dash: dashSnapshot() }; } catch (_) {}
-}
+};
 /* the boards as the run found them: Skip and Finish put them back after the panels are restored (P10) */
 var tourStartDash = null;
 
@@ -125,19 +75,22 @@ function focusedPanelId() {
   for (var i = 0; i < ps.length; i++) if (tVis(panelEl(ps[i].id))) return ps[i].id;
   return null;
 }
-function plusBtn() {
+
+/* ---- open_from_plus: the + at the end of a panel's tabs ---- */
+tour.watchPlus = function () { marks.plus = { used: false, opened: [], tabs: tabIds() }; };
+tour.plusButton = function () {
   var el = panelEl(focusedPanelId());
   var b = el && qs('.pmw-plus', el);
   return tVis(b) ? b : firstVis('#pm-home-centre .pmw-plus');
-}
-function plusMenuEl() {
+};
+tour.plusMenu = function () {
   var cur = PMW.menu && PMW.menu.current;
   if (!cur || !cur.spec || String(cur.spec.id || '').indexOf('plus') !== 0) return null;
   return tVis(cur.el) ? cur.el : null;
-}
+};
 /* the row Show Me picks: Browser, else Terminal, else the first row that opens at once (no picker, no submenu) */
-function plusRowEl() {
-  var m = plusMenuEl(); if (!m) return null;
+tour.plusRow = function () {
+  var m = tour.plusMenu(); if (!m) return null;
   var items = qsa('.pmw-mitem', m).filter(tVis);
   var want = ['kind-browser', 'kind-terminal'];
   for (var w = 0; w < want.length; w++) {
@@ -151,16 +104,23 @@ function plusRowEl() {
     }
   }
   return null;
-}
+};
+/* done once the + menu was used and then something opened (a created 'open' event or a new tab id) */
+tour.plusDone = function () {
+  var m = marks.plus; if (!m || !m.used) return false;
+  if (m.opened.length) return true;
+  return tabIds().some(function (t) { return m.tabs.indexOf(t) < 0; });
+};
 
-/* a file row in the rail's Files list that is not open yet (README.md or Cargo.toml first: short, plain files) */
+/* ---- open_file_from_rail: a file row in the rail's Files list that is not open yet ---- */
 var fileChoice = null;
 function fileRows() {
   return qsa('#panel-files .fm-row[data-path]').filter(function (r) {
     return r.getAttribute('data-kind') !== 'folder' && !r.classList.contains('ignored') && tVis(r);
   });
 }
-function fileRow() {
+/* README.md or Cargo.toml first (short, plain files), then any file not open yet */
+tour.fileRow = function () {
   var rows = fileRows(); if (!rows.length) return null;
   if (fileChoice) { for (var i = 0; i < rows.length; i++) if (rows[i].getAttribute('data-path') === fileChoice) return rows[i]; }
   var l = state.layout || { tabs: {} };
@@ -171,15 +131,30 @@ function fileRow() {
   pick = pick || fresh[0] || rows[0];
   fileChoice = pick.getAttribute('data-path');
   return pick;
-}
+};
 /* the Files list on the rail, shown through the activity bar's own Files icon when another rail panel is up */
-function showFiles() {
+tour.showFiles = function () {
   if (fileRows().length) return;
   var ic = firstVis('#activityBar .icon[data-ab-id="files"]');
   if (ic) ic.click();
-}
+};
+/* at the step's entry: the rail's file marks as they were (Back puts them back), a fresh choice, the Files list shown */
+tour.watchFile = async function (o) {
+  if (o && o.back) setRailMarks(fileMarks); else fileMarks = railMarks();
+  fileChoice = null;
+  marks.file = { opened: [], tabs: tabIds() };
+  tour.showFiles();
+  await waitFor(function () { return tour.fileRow(); }, 900);
+};
+/* done once an editor tab was created since the step began */
+tour.fileDone = function () {
+  var m = marks.file; if (!m) return false;
+  if (m.opened.length) return true;
+  var l = state.layout;
+  return tabIds().some(function (t) { return m.tabs.indexOf(t) < 0 && l.tabs[t] && l.tabs[t].kind === 'editor'; });
+};
 
-/* the tab the split step asks for: the documents panel's active tab (it has company there to split from) */
+/* ---- split_by_drag: the documents panel's active tab, dragged to a panel edge ---- */
 var splitChoice = null;
 function docsPanel() {
   var l = state.layout; if (!l) return null;
@@ -196,7 +171,7 @@ function splitTabId() {
   return splitChoice;
 }
 function tabEl(tid) { return tid ? firstVis('#pm-home-centre .pmw-tab[data-tab-id="' + cssId(tid) + '"]') : null; }
-/* which way the tab's panel can split (the same fit rule the drag and the tab menu use) */
+/* which way the tab's panel can split (the same fit rule the drag and the tab menu use): 'right', 'bottom' or null */
 function splitEdge(tid) {
   var l = state.layout, p = tid && l && model.panelOf(l, tid); if (!p) return null;
   try {
@@ -214,14 +189,47 @@ function splitMoves(since) {
       rec.some(function (r) { return r.seq === c.seq && r.outcome === 'applied'; });
   });
 }
-function splitCommitted(since) { return splitMoves(since).length > 0; }
 /* the tab the learner split off (the last applied split move since the step began) */
 function splitMovedTab(since) { var m = splitMoves(since); return m.length ? m[m.length - 1].args.tabId : null; }
 function lastSeq() { var log = PM_HOME.command_log || []; return log.length ? log[log.length - 1].seq : 0; }
+/* at the step's entry: a fresh choice, the log position and panel count to compare with; returns the edge to name */
+tour.watchSplit = function () {
+  splitChoice = null;
+  marks.split = { seq: lastSeq(), panels: panelCount() };
+  return splitEdge(splitTabId());
+};
+tour.splitEdge = function () { return splitEdge(splitTabId()); };
+/* a tab is being carried */
+tour.carrying = function () { return doc.body.classList.contains('pmw-dragging'); };
+/* the tab; while it is carried, the whole centre (every edge it can land on); once split (done), its new panel */
+tour.splitTarget = function (done) {
+  if (tour.carrying()) return state.centre;
+  if (done) {
+    var moved = marks.split && splitMovedTab(marks.split.seq), p = moved && model.panelOf(state.layout, moved);
+    return (p && panelEl(p.id)) || state.centre;
+  }
+  return tabEl(splitTabId());
+};
+/* done once a split move was applied since the step began and the panel count grew */
+tour.splitDone = function () {
+  var m = marks.split; if (!m) return false;
+  return splitMoves(m.seq).length > 0 && panelCount() > m.panels;
+};
+/* Show Me's carry: from the tab to a point inside its panel's own edge band, clear of the centre's outer band (which
+   would make a full-length panel); ready once the gesture has a split zone */
+tour.splitDrag = function () {
+  var tid = splitTabId(), el = tabEl(tid), l = state.layout, p = tid && model.panelOf(l, tid), pe = p && panelEl(p.id);
+  if (!el || !pe) return null;
+  var edge = splitEdge(tid) || 'bottom';
+  var strip = qs('.pmw-strip', pe), pr = pe.getBoundingClientRect(), top = strip ? strip.getBoundingClientRect().bottom : pr.top;
+  var to = edge === 'right' ? { x: pr.right - 34, y: (top + pr.bottom) / 2 } : { x: pr.left + pr.width / 2, y: pr.bottom - 30 };
+  return { el: el, to: to, ready: function () { var g = PMW.gesture.active; return !!(g && g.zone && g.zone.type === 'split'); } };
+};
 
-/* the Home dashboard tab, open and holding its board, so the widget step's Add widget button is on screen. An open of
-   the open tab reveals it. Waits, polling each frame, until the Home board exists and its element is in the document. */
-async function showDashboard() {
+/* ---- widget_action: Upcoming resets on the Home dashboard board ---- */
+/* the Home dashboard tab, open and holding its board, so the step's Add widget button is on screen. An open of the open
+   tab reveals it. Waits, polling each frame, until the Home board exists and its element is in the document. */
+tour.showDashboard = async function () {
   var l = state.layout; if (!l) return null;
   try { PM_HOME.open({ id: 'dashboard:home', kind: 'dashboard', board: 'home', mode: 'keep' }); } catch (_) {}
   var t0 = Date.now();
@@ -230,22 +238,30 @@ async function showDashboard() {
     try { b = PMW.dashboard && PMW.dashboard.board ? PMW.dashboard.board('home') : null; } catch (_) {}
     try { el = b && b.el ? b.el() : null; } catch (_) {}
     if (b && el && el.isConnected) return b;
-    await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
+    await nextPaint();
   }
   return null;
-}
+};
+/* at the step's entry: the Home board shown, Upcoming resets hidden when the board already shows it (the step adds
+   it), and the Usage log position to read from (returned) */
+tour.watchWidget = async function () {
+  var b = await tour.showDashboard();
+  try { if (b && b.visible && b.visible().indexOf('ov-resets') >= 0) b.setVisible('ov-resets', false); } catch (_) {}
+  var U = window.PM7_USAGE;
+  return U && U.command_log ? U.command_log.length : 0;
+};
 /* the Home dashboard tab's Add widget button (the header row of the panel whose active tab is dashboard:home) */
-function widgetAddBtn() {
+tour.widgetAddButton = function () {
   var btns = qsa('.pmw-tabbody[data-pmw-tab="dashboard:home"] .pmw-hrow .pmw-hbtn[data-id="add"]');
   for (var i = 0; i < btns.length; i++) if (tVis(btns[i])) return btns[i];
   return null;
-}
-/* done when, since the step began, the Usage log shows Upcoming resets added to the Home board and then moved or
-   resized there. Entries join their receipts by the command's instance id; only accepted ones count. */
-function widgetDone(st) {
+};
+/* done when, since the step began (st.wlog), the Usage log shows Upcoming resets added to the Home board and then moved
+   or resized there. Entries join their receipts by the command's instance id; only accepted ones count. */
+tour.widgetDone = function (st) {
   var U = window.PM7_USAGE;
   if (!U || !U.command_log || !U.receipt_log) return false;
-  var cmds = U.command_log.slice(st.wlog || 0), ok = {};
+  var cmds = U.command_log.slice((st && st.wlog) || 0), ok = {};
   U.receipt_log.forEach(function (r) {
     if (r && (r.status === 'accepted' || r.outcome === 'accepted' || r.outcome === 'applied')) ok[r.command_instance_id] = true;
   });
@@ -260,233 +276,21 @@ function widgetDone(st) {
     if (mine(cmds[j], 'cmd.widget.move') || mine(cmds[j], 'cmd.widget.resize')) return true;
   }
   return false;
-}
+};
+/* Show Me: add Upcoming resets to the Home board, then move it to the top */
+tour.widgetShowMe = async function () {
+  var b = null;
+  try { b = PMW.dashboard && PMW.dashboard.board ? PMW.dashboard.board('home') : null; } catch (_) {}
+  if (!b) return;
+  try { b.add('ov-resets'); } catch (_) {}
+  await nextPaint();
+  try {
+    var rect = b.rect ? b.rect('ov-resets') : null;
+    if (rect) b.move('ov-resets', Object.assign({}, rect, { x: 0, y: 0 }), 'tour');
+  } catch (_) {}
+};
 
-/* While a tab is carried the tour's callout and bar hold still and step back, as they do for any drag in the tour
-   (80-tour-core.js reads body.pm-home-dragging); the class is the tour's, set here only while this step carries. */
-var dragHold = false;
-function syncDragHold(on) {
-  var cl = doc.body.classList;
-  if (on && !dragHold) { dragHold = true; cl.add('pm-home-dragging'); }
-  else if (!on && dragHold) { dragHold = false; cl.remove('pm-home-dragging'); }
-}
-
-/* ---- the step definitions ---- */
-function defs(TR) {
-  var O55 = window.O55;
-  var refresh = function () { try { TR.refresh(); } catch (_) {} };
-  var phaseSound = function () { try { O55.sound.play('phase'); } catch (_) {} };
-
-  var openFromPlus = {
-    id: 'open_from_plus', chapter: 'workspace', kind: 'action', after: true,
-    enter: function (st, o) {
-      stepEntry('open_from_plus', o);
-      goPage('dashboard');
-      marks.plus = { used: false, opened: [], tabs: tabIds() };
-      st.plusPhase = null;
-    },
-    leave: function (st) { st.plusPhase = null; },
-    /* two moves: open the menu, then pick a row; the spotlight follows the menu while it is open */
-    tick: function (st) {
-      var ph = plusMenuEl() ? 'pick' : 'do';
-      if (st.plusPhase !== ph) { var first = st.plusPhase == null; st.plusPhase = ph; if (!first) { st.side = null; st.fixed = null; refresh(); } }
-    },
-    doKey: function (st) { return st.plusPhase === 'pick' ? 'pick' : 'do'; },
-    target: function () { return plusMenuEl() || plusBtn(); },
-    done: function () {
-      var m = marks.plus; if (!m || !m.used) return false;
-      if (m.opened.length) return true;
-      return tabIds().some(function (t) { return m.tabs.indexOf(t) < 0; });
-    },
-    showMe: async function (sm) {
-      if (!plusMenuEl()) { await sm.click(plusBtn()); await sm.wait(380); }
-      var row = plusRowEl(); if (row) await sm.click(row);
-    },
-    goTo: function () { goPage('dashboard'); }
-  };
-
-  var openFileFromRail = {
-    id: 'open_file_from_rail', chapter: 'workspace', kind: 'action', after: true,
-    enter: async function (st, o) {
-      stepEntry('open_file_from_rail', o);
-      if (o && o.back) setRailMarks(fileMarks); else fileMarks = railMarks();
-      goPage('dashboard');
-      fileChoice = null;
-      marks.file = { opened: [], tabs: tabIds() };
-      showFiles();
-      await waitFor(function () { return fileRow(); }, 900);
-    },
-    target: function () { return fileRow(); },
-    done: function () {
-      var m = marks.file; if (!m) return false;
-      if (m.opened.length) return true;
-      var l = state.layout;
-      return tabIds().some(function (t) { return m.tabs.indexOf(t) < 0 && l.tabs[t] && l.tabs[t].kind === 'editor'; });
-    },
-    showMe: async function (sm) { showFiles(); await sm.click(fileRow()); },
-    goTo: function () { goPage('dashboard'); showFiles(); }
-  };
-
-  var splitByDrag = {
-    id: 'split_by_drag', chapter: 'workspace', kind: 'action', after: true, pad: 6,
-    enter: function (st, o) {
-      stepEntry('split_by_drag', o);
-      goPage('dashboard');
-      splitChoice = null;
-      marks.split = { seq: lastSeq(), panels: panelCount(), panel: null };
-      st.splitEdge = splitEdge(splitTabId());
-    },
-    tick: function (st) {
-      syncDragHold(doc.body.classList.contains('pmw-dragging'));
-      if (dragHold || stepDone('split_by_drag')) return;
-      var e = splitEdge(splitTabId());
-      if (e && e !== st.splitEdge) { st.splitEdge = e; refresh(); }
-    },
-    leave: function () { syncDragHold(false); },
-    doKey: function (st) { return st.splitEdge === 'bottom' ? 'doDown' : 'do'; },
-    /* the tab; while it is carried, the whole centre (every edge it can land on); once split, its new panel */
-    target: function () {
-      if (doc.body.classList.contains('pmw-dragging')) return state.centre;
-      if (stepDone('split_by_drag')) {
-        var moved = marks.split && splitMovedTab(marks.split.seq), p = moved && model.panelOf(state.layout, moved);
-        return (p && panelEl(p.id)) || state.centre;
-      }
-      return tabEl(splitTabId());
-    },
-    done: function () {
-      var m = marks.split; if (!m) return false;
-      return splitCommitted(m.seq) && panelCount() > m.panels;
-    },
-    showMe: async function (sm) {
-      var tid = splitTabId(), el = tabEl(tid), l = state.layout, p = tid && model.panelOf(l, tid), pe = p && panelEl(p.id);
-      if (!el || !pe) return;
-      var edge = splitEdge(tid) || 'bottom';
-      var strip = qs('.pmw-strip', pe), pr = pe.getBoundingClientRect(), top = strip ? strip.getBoundingClientRect().bottom : pr.top;
-      /* inside the panel's own edge band, clear of the centre's outer band (which would make a full-length panel) */
-      var to = edge === 'right' ? { x: pr.right - 34, y: (top + pr.bottom) / 2 } : { x: pr.left + pr.width / 2, y: pr.bottom - 30 };
-      await sm.drag(el, to, { ready: function () { var g = PMW.gesture.active; return !!(g && g.zone && g.zone.type === 'split'); } });
-    },
-    goTo: function () { goPage('dashboard'); }
-  };
-  return [openFromPlus, openFileFromRail, splitByDrag];
-}
-
-/* ---- install ---- */
-function mergeCopy(O55) {
-  var c = O55.copy; if (!c || !c.tour) return;
-  var steps = c.tour.steps = c.tour.steps || {};
-  Object.keys(TOUR_COPY).forEach(function (id) { steps[id] = Object.assign({}, steps[id] || {}, TOUR_COPY[id]); });
-  var pod = c.tour.nier && c.tour.nier.pod;
-  if (pod) {
-    pod.steps = pod.steps || {};
-    Object.keys(POD_COPY).forEach(function (id) { pod.steps[id] = Object.assign({}, pod.steps[id] || {}, POD_COPY[id]); });
-  }
-}
-
-function patchOrientation(TR) {
-  var d = TR.byId.workspace_orientation; if (!d) return;
-  var ORIENT = [
-    function () { return TR.q('.page-tabs'); },
-    function () { return document.getElementById('pm-home-centre'); },
-    function () { return document.getElementById('chatPanel'); }
-  ];
-  d.target = function (st) { return ORIENT[(st && st.orient) || 0](); };
-  d.avoid = function () { return [ORIENT[0](), ORIENT[2]()]; };
-}
-
-function patchWidget(TR) {
-  var d = TR.byId.widget_action; if (!d || d._pmwPatched) return;
-  d._pmwPatched = true;
-  d.enter = async function (st, o) {
-    stepEntry('widget_action', o);
-    goPage('dashboard');
-    var b = await showDashboard();
-    /* the step adds Upcoming resets, so it starts hidden when the Home board already shows it */
-    try { if (b && b.visible && b.visible().indexOf('ov-resets') >= 0) b.setVisible('ov-resets', false); } catch (_) {}
-    var U = window.PM7_USAGE;
-    st.wlog = U && U.command_log ? U.command_log.length : 0;
-  };
-  d.target = function () { return widgetAddBtn(); };
-  d.done = function (st) { return widgetDone(st); };
-  d.showMe = async function () {
-    var b = null;
-    try { b = PMW.dashboard && PMW.dashboard.board ? PMW.dashboard.board('home') : null; } catch (_) {}
-    if (!b) return;
-    try { b.add('ov-resets'); } catch (_) {}
-    await new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
-    try {
-      var rect = b.rect ? b.rect('ov-resets') : null;
-      if (rect) b.move('ov-resets', Object.assign({}, rect, { x: 0, y: 0 }), 'tour');
-    } catch (_) {}
-  };
-  d.goTo = function () { goPage('dashboard'); showDashboard(); };
-  /* the old step's add-and-place phases went with it: one move, one target */
-  d.tick = null; d.doKey = null; d.place = null;
-}
-
-function splice(TR, steps) {
-  var list = TR.defs;
-  // retire the chat drag (D3), then the new steps go in after the orientation, before the widget step
-  var old = TR.byId.move_or_dock_chat;
-  if (old) { var oi = list.indexOf(old); if (oi >= 0) list.splice(oi, 1); delete TR.byId.move_or_dock_chat; }
-  steps.forEach(function (s) { if (TR.byId[s.id]) { var i0 = list.indexOf(TR.byId[s.id]); if (i0 >= 0) list.splice(i0, 1); } });
-  var anchor = TR.byId.widget_action ? list.indexOf(TR.byId.widget_action) : -1;
-  if (anchor < 0) { var orient = TR.byId.workspace_orientation; anchor = orient ? list.indexOf(orient) + 1 : list.length; }
-  Array.prototype.splice.apply(list, [anchor, 0].concat(steps));
-  steps.forEach(function (s) { TR.byId[s.id] = s; });
-  list.forEach(function (d, i) { d.index = i; });
-}
-
-/* ---- checkpoints across step orders ---- */
-// a retired step's chapter, for a checkpoint that names it when the published defs are not at hand to say so
-var RETIRED = { move_or_dock_chat: 'workspace' };
-function orderSignature(TR) {
-  var str = TR.defs.map(function (d) { return d.id; }).join('|'), h = 5381;
-  for (var i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
-  return 'pmw-' + TR.defs.length + '-' + h.toString(36);
-}
-function chapterStart(TR, chapter) {
-  for (var i = 0; i < TR.defs.length; i++) if (TR.defs[i].chapter === chapter) return i;
-  return -1;
-}
-// every checkpoint this page writes names its step and this step order
-function stampSaves(TR) {
-  var O = window.O55;
-  if (!O || !O.store || typeof O.store.set !== 'function' || O.store.set._pmwTour) return;
-  var set0 = O.store.set;
-  O.store.set = function (name, value) {
-    if (name === 'tour' && value && typeof value === 'object' && !Array.isArray(value) && Number.isInteger(value.index)) {
-      var d = TR.defs[value.index];
-      value = Object.assign({}, value, { order: tour.order, step: d ? d.id : null });
-    }
-    return set0.call(this, name, value);
-  };
-  O.store.set._pmwTour = true;
-}
-/* A checkpoint written under another step order goes to its own step by id, or, when that step is retired, to the
-   first step of its chapter. before: the published defs' ids and chapters, read before the splice. Returns true when
-   the checkpoint moved. */
-function migrateCheckpoint(TR, before) {
-  var O = window.O55;
-  if (!O || !O.store) return false;
-  var saved = O.store.get('tour', null);
-  if (!saved || saved.v !== 2 || !Number.isInteger(saved.index) || saved.order === tour.order) return false;
-  var id = saved.step || (before[saved.index] && before[saved.index].id) || null;
-  if (!id) return false;
-  var at = -1;
-  if (TR.byId[id]) at = TR.byId[id].index;
-  else {
-    var chapter = RETIRED[id] || null;
-    before.forEach(function (b) { if (b.id === id && b.chapter) chapter = b.chapter; });
-    at = chapter ? chapterStart(TR, chapter) : -1;
-  }
-  if (at < 0) return false;
-  var done = (Array.isArray(saved.done) ? saved.done : []).filter(function (d) { return TR.byId[d] && TR.byId[d].index < at; });
-  O.store.set('tour', Object.assign({}, saved, { index: at, done: done }));
-  tour.migrated = { from: id, to: TR.defs[at].id };
-  return true;
-}
-
+/* ---- install: the tour's public events only ---- */
 function wireEvents(TR) {
   // the "+" menu opened (by its button, Ctrl+Shift+Space or the empty-panel launcher's "+"): the plus step may count
   // the open that follows
@@ -508,47 +312,27 @@ function wireEvents(TR) {
     var t = e && e.detail && e.detail.type;
     if (t === 'started') { entrySnaps = {}; marks = { plus: null, file: null, split: null }; startMarks = railMarks(); fileMarks = null; tourStartDash = dashSnapshot(); }
     else if (t === 'resumed' && !tourStartDash) tourStartDash = dashSnapshot();
-    if (t === 'skipped' || t === 'finished') { entrySnaps = {}; tourStartDash = null; syncDragHold(false); }
+    if (t === 'skipped' || t === 'finished') { entrySnaps = {}; tourStartDash = null; }
   });
-  // the tour ended mid-carry: the hold goes with it. Skip and Finish put the boards back after the panels are
-  // restored (the 'end' hook runs after the restore); Keep this layout keeps them as they are.
+  // Skip and Finish put the boards and the rail's file marks back after the panels are restored (the 'end' hook runs
+  // after the restore); Keep this layout keeps them as they are
   if (TR.on) TR.on('end', function (d) {
-    syncDragHold(false);
     if (d && !d.keep && d.status !== 'restore-pending' && startMarks) setRailMarks(startMarks);
     if (d && !d.keep && d.status !== 'restore-pending' && tourStartDash) dashRestore(tourStartDash);
   });
-  // about 5.2 minutes at 200 words a minute with every action shown, estimated (three actions replace one; the
-  // census tool measures it at publish), rounded up so the promise is kept
-  TR.minutes = function () { return 6; };
 }
 
 tour.install = function () {
   if (tour.installed) return true;
   var TR = tourApi();
-  if (!TR || !TR.byId.workspace_orientation) {
-    // the tour engine is not there yet (or this page has none): try again a few times, then leave the tour as it is
+  if (!TR) {
+    // the tour engine is not there yet (or this page has none): try again a few times, then leave it
     tour.tries = (tour.tries || 0) + 1;
     if (tour.tries <= 25) setTimeout(tour.install, 200);
     return false;
   }
   tour.installed = true;
-  try {
-    mergeCopy(window.O55);
-    patchOrientation(TR);
-    patchWidget(TR);
-    var before = TR.defs.map(function (d) { return { id: d.id, chapter: d.chapter || null }; });
-    splice(TR, defs(TR));
-    tour.order = orderSignature(TR);
-    stampSaves(TR);
-    // Settings' Resume row and its "step N of M" are redrawn on o55:tour
-    if (migrateCheckpoint(TR, before)) { try { window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'steps-changed' } })); } catch (_) {} }
-    wireEvents(TR);
-    if (TR.running) { try { TR.renderBar(); TR.refresh(); } catch (_) {} }
-  } catch (err) {
-    try { console.error('[pm-home] tour steps failed', err); } catch (_) {}
-  }
+  try { wireEvents(TR); } catch (err) { try { console.error('[pm-home] tour hooks failed', err); } catch (_) {} }
   return true;
 };
-/* for checks: the panels' view of the tour's Home steps */
-tour.ids = function () { var TR = tourApi(); return TR ? TR.defs.map(function (d) { return d.id; }) : []; };
 })();

@@ -1,8 +1,8 @@
 /* Guided Tour census: meaningful actions and dwell time per chapter, measured on the real tour.
  * node tools/tour_census.mjs <out-dir> [--wpm 200] [--page <path>]
  * The tour is walked the way t2 walks it (Show Me for each action, Next for each explanation). For every step it
- * records the learner's meaningful actions (an action step is one; adding and then placing the widget, and opening
- * Why before answering, are two), the words on screen the step asks the learner to read (the callout, plus the
+ * records the learner's meaningful actions (an action step is one; adding Upcoming resets to the Home dashboard and then
+ * moving it, and opening Why before answering, are two; the + step's open-the-menu-then-pick counts as one), the words on screen the step asks the learner to read (the callout, plus the
  * answer, simpler reply or plan section the step points at), and the time the action itself took. Dwell per step is
  * reading time at the given pace + the action's own time + 0.8 s to decide per action. The packet asks that Plan
  * before building get at least half of both. Writes census.json and prints the table. */
@@ -36,7 +36,7 @@ const READ = {
   consequence_changed: () => (document.querySelector('#pm6WizDoc [data-key="s-dec"]') || {}).textContent || '',
   review_parts: () => ['part1', 'part2', 'part3', 'part4'].map((k) => window.O55.tx('tour.steps.review_parts.' + k)).join(' ')
 };
-const EXTRA_ACTIONS = { widget_action: 1, access_answer: 1 }; /* place after add; Why before the answer */
+const EXTRA_ACTIONS = { widget_action: 1, access_answer: 1 }; /* move after add; Why before the answer */
 
 const profile = `${tmpdir()}/pm-census-${process.pid}`;
 const { page, close, chrome } = await launch({ width: 1600, height: 1000, profile });

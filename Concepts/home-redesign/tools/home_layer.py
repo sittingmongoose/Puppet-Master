@@ -61,7 +61,9 @@ REQUIRED = ['id="pm-home-workspace"', 'id="panel-dashboard"', 'id="chatPanel"', 
             'window.registerResizer(chatResizer, {',
             "setupResizer('leftPanelResizer', 'sidePanelSlot', 'editorView');",
             'window.PM_PAGES = {',
-            "id: 'workspace_orientation'", "id: 'move_or_dock_chat'", "id: 'widget_action'"]
+            # the Guided Tour's workspace steps (opus-5.5 83-tour-steps.js), which call the panels' tour hooks (52-tour.js)
+            "id: 'workspace_orientation'", "id: 'open_from_plus'", "id: 'open_file_from_rail'", "id: 'split_by_drag'",
+            "id: 'widget_action'"]
 
 # Present at least once (the chat column CSS must outrank this rule; it occurs in two media variants).
 PRESENT = ['body.pm7-chat-global-owner #chatPanel.pm7-global-chat-panel{']
@@ -176,7 +178,7 @@ def build_early() -> str:
 def apply(text: str, need) -> tuple[str, dict]:
     notes: dict = {'bytes_in': len(text.encode('utf-8'))}
     for marker in (CSS_START, CSS_END, JS_START, JS_END, 'id="pm-home-css"', 'id="pm-home-js"', 'id="pm-home-early"',
-                   'id="pm-home-centre"', 'data-pmw-home'):
+                   'id="pm-home-centre"'):  # (data-pmw-home is read by the tour's own steps, 83-tour-steps.js)
         need(marker not in text, f'home layer: {marker} already in the input (layer applied twice?)')
     for needle in REQUIRED:
         n = text.count(needle)
