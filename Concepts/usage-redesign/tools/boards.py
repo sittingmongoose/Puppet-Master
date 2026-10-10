@@ -93,7 +93,7 @@ KINDS = {
     'switch': (4, None, 3, 18, [
         P('strip', 'Strip', 'full', 3, 'The switch levels on one line', minpx=480),
         P('panel', 'Panel', 6, 10, 'Controls and most room, stacked', fit='all'),
-        P('ladder', 'Ladder', 'full', 10, "Controls and every account's headroom", fit='all', hmin={'S': 9, 'M': 7, 'L': 7, 'XL': 7}, minpx=480)]),
+        P('ladder', 'Ladder', 'full', 10, "Controls and every account's headroom", fit='all', hmin={'S': 10, 'M': 8, 'L': 8, 'XL': 8}, minpx=480)]),
     'providers': (4, None, 3, 12, [
         P('compact', 'Compact', 6, 5, 'Every provider, stacked', fit='all'),
         P('standard', 'Standard', 10, 4, 'Every provider on one line', fit='all')]),

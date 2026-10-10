@@ -489,7 +489,7 @@
       });
       var labTop = 0;
       mid.forEach(function (m0) { if (m0.n) paths.push({ k: m0.key, d: band(x3, m0.y, m0.y + m0.h, x4, labTop + (m0.key === 'rep' ? 0 : repH), labTop + (m0.key === 'rep' ? repH : repH + estH + 12)), stage: 2 }); });
-      body.innerHTML = '<div class="pmu-flow">' + head + '<div class="pmu-flowcaps" style="grid-template-columns:' + c1 + 'px ' + gapW + 'px ' + colW + 'px ' + gapW + 'px ' + colW + 'px">' +
+      body.innerHTML = '<div class="pmu-flow' + (bw < 460 ? ' is-narrow' : '') + '">' + head + '<div class="pmu-flowcaps" style="grid-template-columns:' + c1 + 'px ' + gapW + 'px ' + colW + 'px ' + gapW + 'px ' + colW + 'px">' +
         '<span class="pmu-cap">READING</span><span></span><span class="pmu-cap">AUTHORITY</span><span></span><span class="pmu-cap">LABEL</span></div>' +
         '<div class="pmu-flowplot" style="height:' + H + 'px">' +
         '<svg class="pmu-flowsvg" width="' + (x4 + colW) + '" height="' + H + '" viewBox="0 0 ' + (x4 + colW) + ' ' + H + '" aria-hidden="true">' + paths.map(function (p) {

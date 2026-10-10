@@ -600,6 +600,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-atdot.is-pending { background: transp
 #panel-usage .pmu-flowmid.is-row { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; }
 #panel-usage .pmu-flowmid.is-row b { font-size: 22px; }
 #panel-usage .pmu-flowlab b { font-size: 22px; }
+/* (lane c-presets) a flow under 460 px (a 400 px board): 100 px authority and label columns keep "6 of 6" on one line */
+#panel-usage .pmu-flow.is-narrow :is(.pmu-flowmid, .pmu-flowlab) { padding: 0 9px; }
+#panel-usage .pmu-flow.is-narrow .pmu-flowlab b { font-size: 20px; white-space: nowrap; }
 #panel-usage :is(.pmu-flowmid, .pmu-flowlab) span { font-size: 12.5px; font-weight: 560; color: var(--pmu-ink-2); }
 #panel-usage .pmu-flowlab em { font-style: normal; font-size: 12px; line-height: 1.35; color: var(--pmu-ink-3); }
 html[data-theme^="retro"] #panel-usage :is(.pmu-flowsrc, .pmu-flowmid, .pmu-flowlab) { border-radius: 0; }
@@ -699,6 +702,9 @@ html[data-o55-nier="on"] #panel-usage .pmu-wmk em { border-radius: 0; background
 /* round 3: the quiet count of a small card's folded readings, in its head ("+6", layers glyph, 12 px ink-3; the hover tag
    lists them). It sits in the head tools slot, before any tool. */
 #panel-usage .pmu-headmore { display: inline-flex; align-items: center; gap: 4px; flex: none; height: 20px; padding: 0 2px; font-size: 12px; line-height: 1; color: var(--pmu-ink-3); cursor: default; white-space: nowrap; }
+/* (lane c-presets) in a tile head the count keeps the head's 18 px line: at 20 px it made the head 2 px taller, so a tile
+   measured with the count rendered one fact fewer than one measured without it, and kept the count (gauge 8 x 8) */
+#panel-usage .pmu-card[data-head="tile"] > .pmu-cardhead .pmu-headmore { height: 18px; }
 #panel-usage .pmu-headmore .pmu-glyph { width: 13px; height: 13px; opacity: .8; }
 #panel-usage .pmu-headmore .pmu-glyph svg { width: 13px; height: 13px; }
 #panel-usage .pmu-headmore b { font-weight: 600; font-variant-numeric: tabular-nums; }
