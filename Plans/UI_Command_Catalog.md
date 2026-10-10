@@ -14861,6 +14861,7 @@ Metadata used in the tables. Every `cmd.panel_tab.*` and `cmd.workspace_layout.*
 | `ui.panel_tab.activate` | `panel_tab_id`, `focus?` | Makes the tab its panel's active tab, pulls it out of "+N" when it was hidden there, and updates the recent-tab order; written with the layout's view state, never a receipt or event | A click on a tab; a row chosen in the "+N" list, the every-tab list or the recent-tab list; Ctrl+Tab / Ctrl+Shift+Tab (web client Alt+\` / Alt+Shift+\`); Ctrl+PgDn / Ctrl+PgUp; Alt+1..8 and Alt+9 for the last tab; the arrow keys, Home, End, Enter and Space in a focused strip |
 | `ui.workspace_layout.maximize` | `panel_id`, or none to restore | Sets or clears the maximized flag outside the split tree (`#F3-630`) | Shift+Escape; Escape while focus is in a strip restores; double click on a strip's empty space; panel menu Maximize or Restore panels; a terminal header row's Maximize or Restore |
 | `ui.workspace_layout.focus_panel` | `panel_id`, or `direction` | Moves focus to a panel | Alt+arrows; Alt+Shift+1..9; a panel chosen in the narrow panel switcher |
+| `ui.output.select_channel` | `channel` | Switches the channel shown in `output`; channel is view state, never part of its tab id, with no receipt or event | Output channel picker; channel opened from elsewhere follows F3-634 |
 
 ### Aliases and the open routes that keep their ids
 
@@ -14910,7 +14911,7 @@ The "+" opens the menu and never creates a tab by itself; opening the menu, typi
 | Dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new dashboard tab on a new, empty board (the dashboard kind makes the board, `Plans/Widget_System.md#WS-030`) | each board: `cmd.panel_tab.open` with its `board_id` (revealed when already open) |
 | Plan or document... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` | none |
 | Artifact... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` with the artifact subject | none |
-| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Problems and Ports reveal their one tab) |
+| Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Output opens or reveals `output`; Problems and Ports reveal their one tab) |
 | Split right | `cmd.workspace_layout.split` with `direction: right` | none |
 | Split down | `cmd.workspace_layout.split` with `direction: down` | none |
 | Reopen closed tab | `cmd.panel_tab.reopen_closed` | none |
@@ -15032,7 +15033,7 @@ canonical_text: >-
   panel_id. Every committed structural change emits the one existing event workspace.layout_changed with its v2
   payload (CV-361); an open that only reveals an existing tab emits nothing, and a failed commit rolls back and emits
   nothing. View state is typed local actions with no receipt and no event: ui.panel_tab.activate,
-  ui.workspace_layout.maximize and ui.workspace_layout.focus_panel. Opening the "+" menu, the "+N" list, the
+  ui.workspace_layout.maximize, ui.workspace_layout.focus_panel and ui.output.select_channel. Opening the "+" menu, the "+N" list, the
   every-tab and recent-tab lists, a panel menu, a tab menu, a picker or a prompt, hovering and dragging dispatch
   nothing, and each leaf dispatches exactly one command or typed local action as this addendum's tables map it,
   with a typed no_change for an already-done target and a disabled reason from the closed set otherwise. A "+" row's
@@ -15049,6 +15050,9 @@ canonical_text: >-
   workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
   in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
   This unit supersedes UCC-144.
+  Output opens or reveals `output`; its channel picker switches the channel with `ui.output.select_channel`, a
+  view action with no command, receipt or event. "Open in new tab" dispatches `cmd.panel_tab.open` with
+  `output:<channel>` and shows only that channel. Other channel opens follow F3-634.
 gui_related: true
 gui_classification_reason: "Owns the command ids, arguments, availability, disabled reasons, events and keys of every control the universal panels add."
 split_recommended: false
@@ -15063,6 +15067,7 @@ acceptance_criteria:
   - "No row or route selects a home panel through target_editor_panel_id, target_editor_group_id or target_group, and cmd.file.open_with keeps exactly its five values."
   - "A dashboard tab's widget commands are cmd.widget.* addressed by board_id and emit no workspace.layout_changed; cmd.dashboard.add_widget dispatches only as UCC-202's alias."
   - "In the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`, and every label shows the key that works where the app runs."
+  - "The channel picker switches output with ui.output.select_channel as view state, with no command, receipt or event; Open in new tab dispatches cmd.panel_tab.open with output:<channel>."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -15080,11 +15085,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64; D1, D2, D5 to D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md (SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162; Commands and keys; concept lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
+  - "ui.output.select_channel"
   - "cmd.panel_tab.open"
   - "cmd.panel_tab.close"
   - "cmd.panel_tab.rename"
@@ -15117,6 +15127,7 @@ compatibility_only_notes:
   - "cmd.editor.close_tab is recorded alias metadata of cmd.panel_tab.close with no handler of its own."
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
 owner_hints:

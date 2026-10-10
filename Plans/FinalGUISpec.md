@@ -4293,7 +4293,10 @@ These decisions are final and must not be revisited during implementation:
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
-12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
+12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output (one tab; its channel switches inside it), Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
+
+Amended 2026-10-10 (Addendum 2 D28, DL-180): Output is one tab with its channel switched inside it (F3-635).
+
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
@@ -43665,6 +43668,7 @@ canonical_text: >-
   label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
   launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
   Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
+  The Output row opens or reveals `output`, the one Output tab whose channel switches inside it (F3-635).
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -43677,6 +43681,7 @@ acceptance_criteria:
   - "Opening and browsing the menu dispatch nothing; each chosen row dispatches one command; disabled rows show their reason."
   - "An empty panel shows the same rows as 32 px full-width list rows, then five recent files, then a hint, with no tiles and no pills."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "The Output row opens or reveals output and never makes output:<channel>; a reveal leaves its tab where it is."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43691,6 +43696,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D6)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -43698,6 +43704,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/proposal-visual.html, SHA-256 52dd51521a1266e39a2ab6b274176d89666baaaacb1d933e5cc2237c151ab981 (the agreed anatomy; concept lineage only)"
   - "Concepts/home-redesign/src/panels/js/38-menus.js on branch concept/home-panels-20261009 at 1565156bce (the disabled Split and Reopen closed tab rows with their reasons; concept lineage only)"
 preserved_exact_tokens:
+  - "output"
   - "Open anything: kinds, files, URLs"
   - "Terminal"
   - "Browser"
@@ -43717,7 +43724,8 @@ negative_constraints:
   - "Do not dispatch anything when the menu opens, filters or closes."
 compatibility_only_notes:
   - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -43818,7 +43826,7 @@ canonical_text: >-
   the "+" menu's recent files and every file an agent opens open kept tabs. Placement of a new tab: a document kind goes
   to the last-focused panel that holds documents; panels holding only dedicated kinds (terminals, browsers, dashboards,
   tool kinds) and locked panels are skipped. A terminal, browser or dashboard goes to the last-focused panel already
-  holding that kind, else the last-focused document panel. A tool kind (Output, Problems, Ports, Debug Console) goes to
+  holding that kind, else the last-focused document panel. A tool kind (Output (one tab; its channel switches inside it), Problems, Ports, Debug Console) goes to
   the last-focused panel holding that kind, then to the last-focused panel holding a terminal, then to the last-focused
   document panel, so tools land beside the terminals. With no such panel, a new panel by the fit rule (F3-630).
   Alt+click anywhere opens a new panel by the fit rule; an open may also ask for the panel it came from or a split of it
@@ -43832,6 +43840,9 @@ canonical_text: >-
   narrow return works ACD-500's. This supersedes the per-caller open rules for Home: F3-HOME-003's Open Panel and Open
   Browser in Panel targets, section 7.3's bottom_panel destination class, the "left editor tab
   bar" of APR-036 to APR-038, the "beside the chat" wording of F3-569, and, through F-090, F-080's four-panel routing.
+  Opening an Output channel from anywhere switches the `output` tab to that channel, or focuses a split-off tab
+  already showing it. With no Output tab, the opening module opens `output` by the tools rule above, beside the
+  terminals. The channel picker's "Open in new tab" alone splits off `output:<channel>` (F3-635).
 gui_related: true
 gui_classification_reason: Defines the one set of rules that decides where anything opened in the home centre lands and whether it takes focus.
 split_recommended: false
@@ -43846,6 +43857,7 @@ acceptance_criteria:
   - "A user click opens with focus; an agent's open lands in the background with the hollow square and an announcement, never takes keyboard focus and never changes the active tab of a panel the user is typing in."
   - "Below a centre width of 600 px no new panel is created and the announcement says where the item opened."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "A channel opened from anywhere switches output or focuses a split-off tab already showing it; with no Output tab it opens output by the tools rule beside the terminals."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43863,6 +43875,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D7, D8)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (concept lineage only)"
@@ -43870,6 +43883,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-home-audit.md, SHA-256 f8e65fd64028014e3ee9bebf68594356d40eb5c831975645da6a3406cef2e3e8 (audit lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
+  - "output"
   - "where"
   - "mode"
   - "by"
@@ -43888,7 +43904,8 @@ negative_constraints:
   - "Do not create a new panel below a centre width of 600 px."
 compatibility_only_notes:
   - "The concept names its module PM_HOME.open and its chat bridge openEditor; those names are concept lineage, not product names."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
@@ -43918,7 +43935,8 @@ canonical_text: >-
   artifact ids; a subtype per artifact kind, versioned; RAP-065); run (`collab-run:`, `crew-work:`, `review:`, `room:`,
   `brainstorm:`, `review-evidence:`, `brainstorm-evidence:`: Crew, Review, Chat Room, BrainStorm and their evidence);
   transcript (`thread-<agentId>`: an agent's read-only live feed); context (`context:<threadId>`: thread-keyed context
-  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output:<channel>`); problems
+  detail); record (`search:`, `mcp:`, `app:`, `work-record:`: read-only records); output (`output`, one Output tab whose channel switches inside it; `output:<channel>` only for a channel
+  split off with "Open in new tab", showing only that channel); problems
   (`problems`); ports (`ports`); and debug_console (`debug-console:<session>`). The document kinds are editor, plan,
   document, artifact, run, transcript, context and record; terminal, browser, dashboard and the four tool kinds output,
   problems, ports and debug_console are dedicated; a panel holding only tool kinds and terminals has the role tools.
@@ -43967,6 +43985,7 @@ canonical_text: >-
   keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab, are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` (Alt+Shift+`
   backwards), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
   F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
+  The channel shown in `output` is view state, never part of its id (Addendum 2 D28).
 gui_related: true
 gui_classification_reason: Defines the list of tab kinds, how a kind plugs into a panel, the shared header row, the overlay order and the panel keyboard.
 split_recommended: false
@@ -43983,6 +44002,7 @@ acceptance_criteria:
   - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
   - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T and Alt+` replace the four browser-owned chords with every label showing the key that works."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+  - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -43999,6 +44019,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D9, D11, D12)"
@@ -44007,6 +44028,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/chat56-audit.md, SHA-256 6d1563bd1776860739e6be272b191c419aba3c38b9dd9fe8ba44fd1ebb3231b5 (sections 9 and 10; audit lineage only)"
   - "Concepts/home-redesign on branch concept/home-panels-20261009 at 1565156bce (concept lineage only)"
 preserved_exact_tokens:
+  - "Open in new tab"
+  - "output:<channel>"
   - "editor"
   - "terminal"
   - "browser"
@@ -44040,7 +44063,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/UI_Command_Catalog.md

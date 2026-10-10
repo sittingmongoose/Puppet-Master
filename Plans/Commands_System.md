@@ -7577,6 +7577,7 @@ canonical_text: >-
   a cmd.* id; a ui.terminal.mark.* action that runs a command dispatches that catalog command. View state is ruled:
   choosing a tab, maximizing or restoring a panel and focusing a panel are ui.panel_tab.activate,
   ui.workspace_layout.maximize and ui.workspace_layout.focus_panel, written with the layout record's view state;
+  selecting Output's channel is ui.output.select_channel, view state of the one output tab, never part of its id;
   opening any menu, list, picker or prompt, hovering, drag previews and the narrow ladder's states dispatch nothing
   and are never saved. Every committed structural change is one shell_view catalog command with a receipt that emits
   workspace.layout_changed; an open that only reveals emits nothing; a failed commit rolls back; no event family is
@@ -7591,6 +7592,7 @@ acceptance_criteria:
   - "No id under ui.panel_tab., ui.workspace_layout. or ui.terminal. has a catalog command row, a receipt or an event, and none is also a cmd.* id."
   - "Choosing a tab, maximizing or restoring and focusing a panel emit no receipt and no event; every committed structural change emits exactly one workspace.layout_changed."
   - "Menu, list, picker and prompt openings, hover, drag previews and narrow-ladder states dispatch nothing and write nothing."
+  - "Selecting the Output channel uses ui.output.select_channel with no command, receipt or event and never changes the output tab id."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -7606,12 +7608,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS-ADDENDUM-2.md, SHA-256 a7cf9f8cea26ad50df796f5b7ac1472c1468a92ee511ea954a3f8e2505b28be2 (Addendum 2 D28)"
   - "Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; section 8; concept lineage only)"
 preserved_exact_tokens:
+  - "output"
+  - "ui.output.select_channel"
   - "cmd.panel_tab."
   - "cmd.workspace_layout."
   - "ui.panel_tab."
@@ -7627,6 +7632,7 @@ negative_constraints:
   - "Do not add an event family for panel or tab changes."
 compatibility_only_notes: []
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
   - "Amended 2026-10-09 (DL-180): CDRY-006's local-tab rule now covers panel tab activation explicitly; CS-060's registry gains two prefixes."
 owner_hints:
   - Plans/Commands_System.md
