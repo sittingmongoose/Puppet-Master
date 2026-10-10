@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-theme="basic-dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="pmg-build" content="PMG:BUILD">
+<title>Puppet Master glyphs: the neon set for every surface</title>
+<script>
+/* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
+(function () {
+  var q = new URLSearchParams(location.search), s = {};
+  try { s = JSON.parse(localStorage.getItem('pmg.view') || '{}'); } catch (e) {}
+  var look = q.get('look') || (s.family && s.mode ? (s.family + '-' + s.mode) : 'basic-dark');
+  var m = /^(basic|friendly|glass|retro|nier)-(light|dark)$/.exec(look) || [0, 'basic', 'dark'];
+  var html = document.documentElement;
+  html.setAttribute('data-theme', (m[1] === 'nier' ? 'basic' : m[1]) + '-' + m[2]);
+  if (m[1] === 'nier') { html.setAttribute('data-o55-nier', 'on'); html.setAttribute('data-o55-nier-parts', 'icons'); }
+  if ((q.get('motion') || s.motion) === 'reduced') html.setAttribute('data-motion', 'reduced');
+  if (q.get('frame')) html.setAttribute('data-pmg-frame', q.get('frame'));
+})();
+</script>
+<style>
+/*PMG:CSS*/
+</style>
+</head>
+<body>
+<div class="pmg-app" data-concept-model="Opus 5.5">
+  <header class="pmg-top">
+    <div class="pmg-brand">
+      <span class="pmg-brand-mark" aria-hidden="true"></span>
+      <div class="pmg-brand-text">
+        <h1>Puppet Master glyphs</h1>
+        <p>The 5.6 Pro chat's neon set, made the default for every surface. <span class="pmg-model">Opus 5.5</span></p>
+      </div>
+    </div>
+    <nav class="pmg-controls" aria-label="View">
+      <div class="pmg-ctl" role="radiogroup" aria-label="Look" data-ctl="family">
+        <span class="pmg-ctl-label">Look</span>
+        <button role="radio" data-v="basic">Basic</button><button role="radio" data-v="friendly">Friendly</button><button role="radio" data-v="glass">Glass</button><button role="radio" data-v="retro">Retro</button><button role="radio" data-v="nier">NieR</button>
+      </div>
+      <div class="pmg-ctl" role="radiogroup" aria-label="Mode" data-ctl="mode">
+        <span class="pmg-ctl-label">Mode</span>
+        <button role="radio" data-v="light">Light</button><button role="radio" data-v="dark">Dark</button>
+      </div>
+      <div class="pmg-ctl" role="radiogroup" aria-label="Motion" data-ctl="motion">
+        <span class="pmg-ctl-label">Motion</span>
+        <button role="radio" data-v="full">Full</button><button role="radio" data-v="reduced">Reduced</button>
+      </div>
+      <div class="pmg-ctl" role="radiogroup" aria-label="Layout" data-ctl="layout">
+        <span class="pmg-ctl-label">Show</span>
+        <button role="radio" data-v="one">This look</button><button role="radio" data-v="all">All ten looks</button>
+      </div>
+    </nav>
+  </header>
+  <div class="pmg-body">
+    <aside class="pmg-nav" aria-label="Sections"><ol id="pmgNav"></ol></aside>
+    <main class="pmg-main" id="pmgMain" tabindex="-1"></main>
+  </div>
+</div>
+<div class="pmg-detail" id="pmgDetail" hidden></div>
+<!--PMG:JS-->
+</body>
+</html>
