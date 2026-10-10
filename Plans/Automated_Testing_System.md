@@ -6031,3 +6031,174 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Automated_Testing_System.md#ATS-029
+
+### ATS-076 - Terminal Tab Certification
+
+```yaml
+plan_unit_id: ATS-076
+unit_type: validation_criterion
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  The terminal tab (DL-181, DL-182, DL-183) is certified by its own matrix, under ATS-075's rules of evidence: every
+  case asserts the visible or recorded outcome, records commands, receipts, events and writes, and passes only with
+  zero console and page errors. Sessions (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180,
+  Plans/FinalGUISpec.md#F3-640): one session per tab; moving, reordering, collapsing, maximizing or hiding the tab,
+  splitting beside it, applying a named layout and revealing it with `cmd.terminal.reveal` in any panel keep the same
+  terminal_session_id, with no restart, no replayed input, no second PTY and no change to shell-failure counting; Split
+  opens a new panel with a new session in the same folder and shell profile; closing a running terminal asks inline
+  first and closing ends its session; Reopen closed tab and a tab restored after a restart start a new session in the
+  same folder and profile and say so with the restored notice, never pretending to be the old session; an ended
+  session shows its inline row and dims the screen to 72 %. Chrome (F3-640): the tab label, the exit code of a failed
+  command and the agent mark; the header row's content, labels from a 520 px body width and icons below, hidden under
+  150 px of body height; the gutter and scrollbar widths at 399 and 400 px; the More, context and command-mark menus
+  with exactly their items in order, opening in the one overlay root; notices as inline rows, never modals and never
+  side stripes; no session id, tab id or nonce as text. Features (F3-641, SMPFS-183): command marks carry the
+  terminal's secret, and a mark with a missing or wrong secret stays output and draws no glyph; every command record
+  carries `by` and the mark menu names who typed it; a plain click on a link selects text, Ctrl+click (Cmd+click) on a
+  `path:line:col` reference opens the panel's preview tab at that line and column by F3-634, Ctrl+double-click keeps
+  it, Ctrl+Alt+click opens a new panel, a URL opens a Browser tab, and Open output in an editor tab opens a buffer,
+  never a preview; find with case, whole word, regular expressions, highlight-all and its scrollbar marks; copy mode
+  and quick select with their keys; the plain-text buffer; the terminal's keys, the host keys it gives back, and every
+  other Ctrl+key reaching the shell; and no explain, fix, suggest or ask action and no inline completion anywhere in
+  the tab. Appearance (F3-642, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
+  Plans/DRY_Rules.md#DR-068): each field resolves this tab, then the project default, then the app default, then the
+  look's default, an unset field falling through; every field applies live from the Appearance popover and from
+  Settings and none shows a restart badge; the popover writes This terminal or All terminals and only Settings writes
+  the project default; each look's Follow theme scheme in light and dark; the minimum-contrast floor at 4.5:1 by
+  default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
+  alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
+  cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
+  animates; an idle terminal draws no ambient frames; battery saver turns motion off; where no GPU draws the
+  terminal only the static scanlines and glow are drawn and the popover names what it could not draw; Reduced Motion
+  stops every moving part and keeps the static looks; Retro dark shows scanlines and phosphor glow by default, and Full
+  CRT and flicker are off by default in every look; flicker defaults to 0.02 and never exceeds 0.03 of relative
+  luminance; degauss is a one-shot action; NieR's terminal touches follow their installed parts. Faces (F3-644): the
+  six faces, JetBrains Mono, VT323, Sixtyfour, Sixtyfour Raster, Departure Mono and Atkinson Hyperlegible Mono;
+  JetBrains Mono in every look but Retro, where VT323 is the default; each face at its default size and line height;
+  JetBrains Mono's bytes from the page's code face, never a second copy, and the terminal's own faces 84,572 bytes
+  before base64; box drawing, block, braille, powerline and sextant glyphs drawn by the terminal; every face under a
+  permissive licence. Images (SMPFS-181, F3-645): the complete kitty graphics protocol (direct, file,
+  temporary-file and shared-memory transmission, chunking, ids and placement ids, placements, relative placements, the
+  three z tiers, every delete selector, Unicode placeholders, animation frames, control and compose, queries), sixel,
+  and iTerm2 inline images single and multipart; the paint order; images anchored to their cell through scroll, reflow
+  and clipping; text over a sixel or iTerm2 image cutting it out; output after an image waiting for its decode. The
+  hardening cases, each asserting its exact reply: a file medium that is not a regular file, a path under `/proc`,
+  `/sys` or `/dev` other than `/dev/shm`, a symlink loop, and a missing, unreadable or short file each answer exactly
+  `EBADF:Failed to read image file`; a temporary file is deleted only inside `/tmp` or `/dev/shm` and only with
+  `tty-graphics-protocol` in its path; shared memory is unlinked after reading; a remote (SSH) session and a command an
+  agent typed get the same `EBADF` for every file medium and may use direct transmission; every error reply is one of
+  SMPFS-181's fixed strings and never echoes what the program sent; a sequence over its escape-sequence cap gets
+  `EFBIG`; the per-screen-buffer image quota with its eviction order (images without placements, then transient ones,
+  then the least recently used), the animation-frame pool, the per-side, iTerm2 and sixel limits, 2048-byte names,
+  relative placements deeper than allowed (`ETOODEEP`) and in a cycle (`ECYCLE`), and the fastest frame shown. An
+  animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion. The accessible
+  buffer and agent reads show `[image W×H px]` (", animated" when it is), `[image]` for a Unicode-placeholder run, or a
+  dropped image's placeholder label, never image data. Saved scrollback (SP-332, SMPFS-181, F3-640, F3-645): what is
+  saved and what never is (the alternate screen, the command line being typed, selections and find highlights); a
+  restored terminal showing its lines, marks and images where they were, then the dim restored rule, then the new
+  prompt, with the restored notice; the 64 MiB quota per terminal, with text never giving way to images and images
+  dropped oldest first, an unreadable frame treated the same; each dropped image's cells showing the dashed placeholder
+  `[<name> <W>×<H> · not kept]` and the notice counting the images not kept; placeholder ids on restored lines resolving
+  only to restored images, so a new program reusing an image id never paints into the old scrollback; a command still
+  running when the page went away coming back ended and indeterminate, "ended with the earlier session", never done;
+  the write cadence (1.5 s after output settles, at most every 5 s while output streams, and when the page hides,
+  never rewriting an unchanged terminal); Clear scrollback emptying the saved copy at the next save; a closed tab's
+  copy kept while the tab can be reopened and for at most 7 days; the 5 s load budget, past which the tab starts
+  without its scrollback and says so; and saved scrollback staying on this machine, excluded from backups, exports and
+  sync. Agents (SMPFS-182, F3-646, Plans/Contracts_V0.md#CV-362): the four inline rows with their exact text and
+  actions; a keystroke in a terminal an agent drives taking over at once, the Paused row, and the agent's next write
+  refused as `preempted`; Allow once letting exactly one command through, after which the row, the mark and the writer
+  lease go back to the human; Allow in this terminal held in memory only and never stored, ending when the terminal
+  closes, when the human takes over by a keystroke, Take over or Stop, and when that agent's run ends, given again by
+  Hand back for the rest of that run, and never replacing command approval: every command typed under it still passes
+  the Tools policy engine with its own approval over that exact invocation
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-024, Plans/Permissions_System.md#PS-041); Deny refusing the
+  write and telling the agent; no control labelled Always allow here; a secret prompt showing the padlock cursor and
+  refusing agent input as `secret_input`; Interrupt sending SIGINT and Stop ending the agent's run and returning the
+  lease; agent-typed commands carrying the square gutter mark; an agent-opened terminal landing in the background with
+  the hollow square and never taking focus; input protection outranking every grant and blocking an agent with an
+  explicit blocked result and zero child writes across tab moves, collapse, maximize, layout apply and restore
+  (ATS-047 P10); and agent reads returning rendered text with a read state, never raw bytes and never images. Commands
+  and wiring: each terminal control dispatches its command of Plans/UI_Command_Catalog.md#UCC-201 and is in
+  Plans/UI_Wiring_Rules.md#UIW-042's census with its Plans/Wiring_Matrix.md#WM-091 row. Concept checks of the
+  terminal concept are concept evidence only, as ATS-075 says; native receipts name the revision, platform, toolkit,
+  renderer and transport, and a missing runner stays `not_run`. This amends ATS-047, whose image exclusion DL-182
+  replaces, and takes over ATS-029's terminal identity fixtures.
+gui_related: true
+gui_classification_reason: The certification exercises every visible behaviour of the terminal tab, its images, its appearance, its saved scrollback and its agent rows.
+split_recommended: false
+depends_on: [DL-181, DL-182, DL-183, SMPFS-180, SMPFS-181, SMPFS-182, SMPFS-183, F3-640, F3-641, F3-642, F3-643, F3-644, F3-645, F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042, WM-091, ATS-047, ATS-075]
+unblocks: [GRRC-040]
+acceptance_criteria:
+  - "Moving, reordering, collapsing, maximizing, hiding, splitting beside, layout-applying and revealing a terminal tab keep one terminal_session_id with no restart, replayed input or second PTY; Split, close, Reopen closed tab and restore each behave as SMPFS-180 says, with the restored notice."
+  - "The label, header row, gutter and scrollbar widths at 399 and 400 px, the three menus and the inline notices match F3-640, and no internal id appears as text."
+  - "A mark without the terminal's secret draws no glyph, every command record carries `by`, and the link, find, copy mode, quick select, plain-text buffer and key cases pass as F3-641 and SMPFS-183 say; no AI action exists in the tab."
+  - "Each appearance field resolves through the four layers, applies live with no restart badge, and the contrast floor, import limits and cell geometry cases pass."
+  - "Only the focused, visible terminal animates, idle terminals draw no ambient frames, the no-GPU and Reduced Motion cases keep only the static looks, and flicker never exceeds 0.03 of relative luminance."
+  - "The six faces load with their default sizes and line heights, JetBrains Mono is never a second copy, and the terminal's own faces total 84,572 bytes before base64."
+  - "Each kitty graphics feature, sixel and iTerm2 single and multipart images render in the paint order and stay anchored to their cells."
+  - "Every hardening case returns its exact fixed reply, including `EBADF:Failed to read image file` for every file-medium failure and for file media from a remote session or an agent-typed command, and no reply echoes program input."
+  - "Quota, eviction order, frame pool, size, name, depth and cycle limits each refuse or evict as SMPFS-181 says, and animation pauses while hidden and holds its first frame under Reduced Motion."
+  - "Saved scrollback restores with its images, drops images oldest first with the dashed placeholder and a counted notice, resolves restored placeholder ids only to restored images, brings back a running command as ended and indeterminate, honours the write cadence, Clear scrollback, the 7-day closed-tab limit and the 5 s load budget, and never leaves this machine."
+  - "The four agent rows show their exact text; take-over refuses the agent's next write as `preempted`; Allow once lets one command through; Allow in this terminal is never stored, ends on close, take-over or run end, returns on Hand back, and every command under it still asks for its own approval; Deny refuses; secret prompts refuse agent input as `secret_input` with the padlock; no control reads Always allow here."
+  - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, layout apply and restore, and outranks every grant."
+  - "Agent reads return rendered text with a read state and never raw bytes or images; the accessible buffer reads images as `[image W×H px]`, `[image]` or the placeholder label."
+  - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - "Future terminal tab, image hardening, saved scrollback and agent matrix receipts; native and visual execution remain not_run"
+risk_class: home_panels_terminal_redesign_drift
+reasoning_tier: high
+context_scope: home_panels_terminal
+implementation_surfaces:
+  - Plans/Automated_Testing_System.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: accepted_planning_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-181"
+  - "Plans/Decision_Log.md#DL-182"
+  - "Plans/Decision_Log.md#DL-183"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D11-D18)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-ac63b1f467.md, SHA-256 4e3b5aabb4e41fed43d338a1b8c852b752b5860277f2058332575ba3953dbc8b (sections 1-8; concept lineage only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/plans-terminal-audit.md, SHA-256 12f95fa6f79b1c0a1f9f34b1eee004cac9edacfd8e0a7f4e6495fe1af23aabe3 (the ATS rows and gap G16; audit lineage only)"
+preserved_exact_tokens:
+  - "EBADF:Failed to read image file"
+  - "EFBIG"
+  - "ETOODEEP"
+  - "ECYCLE"
+  - "tty-graphics-protocol"
+  - "/dev/shm"
+  - "preempted"
+  - "secret_input"
+  - "Allow once"
+  - "Allow in this terminal"
+  - "[image W×H px]"
+  - "[<name> <W>×<H> · not kept]"
+  - "ended with the earlier session"
+  - "cmd.terminal.reveal"
+negative_constraints:
+  - "Do not certify a terminal case by a dispatch count or a screenshot alone, or report a concept result as native certification."
+  - "Do not accept an image error reply that echoes program input or differs from SMPFS-181's fixed strings."
+  - "Do not accept a stored Allow in this terminal grant, or a grant that lets a command skip its own approval."
+  - "Do not accept a restored terminal that presents the old session as live, or a running command restored as done."
+compatibility_only_notes:
+  - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-182): ATS-047's 'images remain outside approval' is replaced; image protocols, their hardening and saved scrollback with images are certified here."
+owner_boundary_notes:
+  - "SMPFS-180 to SMPFS-183, F3-640 to F3-646, SP-331, SP-332, CV-362, UCC-201, UIW-042 and WM-091 own the behaviour; this unit only tests it. Effect parameters per look, GPU frame times and performance budgets arrive in a later terminal SPEC installment and join this matrix then."
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-182, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-181, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-182, ContractName:Plans/FinalGUISpec.md#F3-640, ContractName:Plans/Automated_Testing_System.md#ATS-047
