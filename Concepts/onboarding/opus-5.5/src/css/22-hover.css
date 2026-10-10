@@ -87,9 +87,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-light-r: 150px; --pmh-light-a: .07;
   --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
 }
-[data-theme^="basic"]    { --pmh-mag: 2.5; --pmh-stiff: 260; --pmh-damp: 32; --pmh-light-a: .06; }
-[data-theme^="friendly"] { --pmh-mag: 3.5; --pmh-stiff: 200; --pmh-damp: 24; --pmh-light-a: .08; --pmh-glow-blur: 14px; --pmh-glow-alpha: .14; }
-[data-theme^="glass"]    { --pmh-mag: 3.5; --pmh-stiff: 170; --pmh-damp: 24; --pmh-light-r: 180px; --pmh-light-a: .09; --pmh-glow-blur: 16px; --pmh-glow-alpha: .14; }
+/* Basic, Friendly and Glass: the FAMILY LOOK section below. */
 /* Retro: no glow; a stepped 2 px magnet and a hard corner frame that jumps between boxes (placeholder). */
 [data-theme^="retro"]    { --pmh-mag: 2; --pmh-step: 1; --pmh-hz: 12; --pmh-field: 0; --pmh-glow: 0;
                            --pmh-frame: 1; --pmh-frame-hz: 20; --pmh-frame-k: .5; --pmh-frame-follow: 1; }
@@ -100,21 +98,177 @@ html[data-o55-nier]      { --pmh-mag: 0; --pmh-field: 0; --pmh-glow: 0; --pmh-fr
 [data-pmh-kind="row"]  { --pmh-mag-gain: .35; --pmh-glow: 0; }
 [data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
 
-/* (a) Host light: a small soft accent pool at the pointer, under the content. */
-:is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, .pmh-near):not(.pmu-card)::after {
-  content: "";
-  position: absolute; inset: 0; z-index: -1;
-  border-radius: inherit; pointer-events: none;
-  -webkit-mask: none; mask: none;
-  background: radial-gradient(var(--pmh-light-r) circle at var(--pmh-x) var(--pmh-y),
-    rgba(var(--accent-primary-rgb), calc(var(--pmh-i) * var(--pmh-light-a))) 0%,
-    rgba(var(--accent-primary-rgb), calc(var(--pmh-i) * var(--pmh-light-a) * .4)) 45%,
-    transparent 100%);
-}
-html[data-pmh-soft] :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, .pmh-near)::after { content: none; }
+/* ===== FAMILY LOOK: Basic, Friendly, Glass (final, 2026-10-10) =====
+   Usage's plate merged with PM8's field, both smaller and calmer. A hovered card, tile or row:
+     1. leans toward the pointer on the engine's `translate` spring, 2-2.5 px at an edge (icons never move);
+     2. takes ONE light, its own ::after UNDER the content (z-index -1 in the host's isolated stacking context): a faint
+        surface sheen and a hairline catch along the border, both pre-painted and revealed by a single soft radial mask
+        centred on the pointer (--pmh-x/-y, registered and non-inherited). Its opacity is the field intensity --pmh-i, so
+        a neighbour inside the bleed catches the same light on its near edge, continuously;
+     3. gets the plate: a short elevation shadow plus half of PM8's emitted bloom, pre-painted on #pmh-glow at the box's
+        REST rect. It never follows the magnet; only its opacity fades.
+   The box's own paint never changes. Only translate and opacity animate; no blend modes, filters, canvas or :has().
+   Every rule is scoped to the three families and leaves Retro and NieR (html[data-o55-nier]) alone. */
 
-/* (b) Emitted glow: pre-painted at half of PM8's bloom, static; only the layer's opacity moves. */
-#pmh-glow > i { box-shadow: 0 0 var(--pmh-glow-blur) rgba(var(--accent-primary-rgb), var(--pmh-glow-alpha)); }
+/* --- engine tokens (read through the probe) and paint tokens --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) {
+  --pmh-pos: 1;                         /* only --pmh-x/-y are used */
+  --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
+  --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
+  /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+  --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
+}
+/* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
+   plate. */
+:root[data-theme="basic-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+:root[data-theme="basic-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+/* Friendly: soft and warm. A little more travel on a softer, slightly underdamped spring; no hard line, a wide warm
+   band in the area's own cozy accent (rule below); a warm sheen; a soft, deep plate with a warm bloom; slower. */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+/* Glass: depth and light. A slow drift; a bright specular hairline (white into the accent in the dark, the accent in
+   the light) with a medium roll-off; the strongest sheen, light through glass (accent-tinted in the light look, where
+   white on white would not show); the deepest plate. */
+:root[data-theme="glass-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+:root[data-theme="glass-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+/* kinds: tiles lean and glow less, rows take the light and a token of the magnet but no plate, icons nothing (they keep
+   their own quiet hover tint; a lean on a 24-32 px button moves the click target) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"] { --pmh-mag-gain: .35; --pmh-glow: 0; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+
+/* --- the light: one ::after per card, tile and row, always present (opacity 0 at rest), under the content --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
+     border radius; only the mask moves with the pointer */
+  background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark: the engine removes --pmh-i and the position together; the light fades where it was, and the position
+     falls back to its initial value only once the fade is over (a zero-length transition after a delay) */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card):is(.pmh-on, .pmh-near)::after {
+  transition: opacity var(--pmf-in) linear;
+}
+/* Friendly's catch takes the area's own cozy accent (--pm6-sheen-accent is set on panels, so it resolves on the box):
+   a faint line inside a wide warm band, no crisp edge */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 45%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 50%, transparent);
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 75%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 50%, transparent);
+}
+/* smaller boxes take a smaller light (a row is a strip; the card radius would light all of it) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"]::after { --pmf-r: 64px; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"]::after { --pmf-r: 56px; }
+
+/* --- the plate: elevation plus half bloom, pre-painted on the rest-rect proxy; only its opacity moves --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i { box-shadow: var(--pmf-plate), var(--pmf-bloom); }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i[data-pmh-kind="tile"] {
+  box-shadow: 0 4px 10px -5px rgba(0, 0, 0, .28), var(--pmf-bloom);
+}
+
+/* --- Glass's own dashboard-card :hover (base: a brighter fill, a deeper shadow and a translateY(-1px), all !important,
+   so the engine part's PM8-parity rule cannot reach them) swapped the whole card in one frame, a pop before the pointer
+   was even inside. The card keeps its resting paint; the plate and the light above are the hover. The two values
+   restate the base's resting Glass dash card. --- */
+html[data-theme^="glass"]:not([data-o55-nier]) .pm6-dash-card.pm6-dash-card[data-pmh-kind]:is(:hover, .pmh-on) {
+  transform: none !important;
+  background:
+    linear-gradient(152deg, rgba(255,255,255,.08), transparent 38%),
+    linear-gradient(var(--rg-card), var(--rg-card)) padding-box,
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.035) 65%, var(--rg-rim-low)) border-box !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 16px 30px var(--rg-shadow-soft) !important;
+}
+
+/* --- Reduced Motion: no magnet and no following light (the engine). The state still reads at once: the whole
+   hairline at half strength, no sheen, and the plate (the base patch already makes every transition none). --- */
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+    -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+  }
+}
+/* --- software-rendered (html[data-pmh-soft]): the engine writes no field and hides #pmh-glow, so the hovered box gets
+   the same static half-strength hairline, painted once per hover; the magnet is off too (a translate per frame
+   repaints the whole card on a software compositor). --- */
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind] { --pmh-mag-gain: 0; }
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: 0; transition: none;
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card).pmh-on::after { opacity: .5; }
+/* ===== end of FAMILY LOOK ===== */
 
 /* (c) Frame: four corner brackets just outside the box (Retro accent, NieR ink). */
 #pmh-frame { color: var(--accent-primary); }
