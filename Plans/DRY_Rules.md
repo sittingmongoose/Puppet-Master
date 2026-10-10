@@ -3421,8 +3421,9 @@ canonical_text: >-
   through: the look's defaults ("Follow look": the current look's scheme, face and effects), then the app default
   (Settings > Terminal), then the project default, then the per-tab override, each later layer winning (F3-642). The
   Appearance popover in the terminal's More menu, Settings > Terminal and the per-look defaults read and write this
-  one model: the popover writes This terminal (the tab's override) or All terminals (the app default), only Settings
-  writes the project default, and the look layer reads the current look from its one store (SSYS-010, DR-056) and
+  one model: the popover writes This terminal (the tab's override) or All terminals (the project default, written
+  through the same Settings transaction Settings uses over SSYS-051's rows, F3-642), no surface writes an app-wide value
+  until q-035 admits an app-wide store (SSYS-002), and the look layer reads the current look from its one store (SSYS-010, DR-056) and
   keeps no copy. The fields are F3-642's, the storage SP-331's (the app default in Settings rows, the project default
   in the Project's Settings, the override inside the terminal tab's saved state) and the Settings rows SSYS-051's; the
   existing terminal appearance rows, code.terminal.theme and code.terminal.font-family among them, bind the app layer
@@ -3478,9 +3479,10 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not keep a second terminal theme, scheme, font, background or effects store."
   - "Do not mark a terminal appearance setting as needing a restart."
-  - "Do not let the popover write the project default."
+  - "Do not let the popover or any other surface write an app-wide terminal appearance value until q-035 admits an app-wide store."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
+  - "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project default through the Settings transaction (F3-642, SSYS-051), replacing the app default and the rule that only Settings writes the project default; no surface writes an app-wide value until q-035."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
 owner_hints:
   - Plans/DRY_Rules.md

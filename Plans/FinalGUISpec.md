@@ -1052,6 +1052,9 @@ canonical_text: >-
   panel's minimum is F3-635's), floating surfaces and their corner handle, the row-dock size.cross_basis_px track, and
   the deliberate below-1320 px home_main overflow-x auto exception: the centre never scrolls sideways and narrow windows
   follow F3-636's ladder.
+  Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel, as DR-066's cancel set says: it commits
+  nothing and restores the exact earlier layout. The 2026-08-12 rule that loss of pointer capture alone is not a
+  cancellation vector is retired.
 gui_related: true
 gui_classification_reason: This unit owns visible layout gestures, previews, resize feedback, scrolling-edge treatment, and recovery.
 split_recommended: false
@@ -1059,7 +1062,7 @@ depends_on: [F3-501, UIW-010, DL-180]
 unblocks: []
 acceptance_criteria:
 - Pickup retains pointer offset and shows landing placeholder, neighbor reflow, and narrow theme-aware edge previews.
-- Escape, pointercancel, blur, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event; loss of pointer capture alone is not a cancellation vector.
+- "Escape, pointercancel, blur, a lost pointer capture, invalid targets, and unchanged drops restore the exact committed model with no command, persistence, or success event (amended 2026-10-10, lead ruling L13; DR-066)."
 - Every eligible boundary uses the shared theme-aware diamond glow/recovery controller and commits once on changed pointer-up only.
 - Every new vertical or horizontal scrollport enrolls in the shared four-edge dissolve system with no-overflow and reduced-motion handling.
 - "The landing preview projects the target geometry (the share F3-630's insertion rule gives a panel split from a panel edge band or the centre's outer edge, or the tab's slot in the destination strip) and re-seats only when the resolved target (an edge band, a strip, the outer edge or the \"+N\" list) or the insertion index changes; a pickup still inside its source panel resolves to the source placement, a panel expanded only by the preview never captures the hit-test for that expansion, and dragging past the workspace root shows the invalid_target no-drop state and never floats the panel or tab (amended 2026-10-09, DL-180; F3-630)."
@@ -1096,6 +1099,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-15 (wave 8): the wave-7 scroll-lock rationale is retired. Three claims go with it — that overflow-x clip beside overflow-y auto forbids programmatic scrollLeft (it computes to hidden per CSS Overflow 3 §3.1, the hosts stayed scroll containers and scrollLeft still moved 12 px, and Safari ≤ 15 drops the declaration entirely); that the host-level `scrollbar-color: var(--border-light) transparent` declaration suppressed gutters (it defeated the scrollbar opt-in list's transparent idle ink and produced an always-visible thumb, and it never applied at all on the Safari builds where the 10 px webkit bars were actually stealing space); and that the tab silhouette contributed the residual horizontal overflow (its flare box overhangs the START edge, which does not count toward scrollWidth in LTR). The overflow is removed at its three measured sources instead — empty-dock padding, zero-extent frost bands, and the pairless last home_main divider — with a both-axes clip belt and ID-anchored zero-width host scrollbars, and the sub-1320 px home_main overflow-x auto is a documented reachability exception, not a leak."
 - "Amended 2026-10-09 (DL-180): the gesture transaction now moves panels and tabs; the five hosts, host caps and host_full, per-kind fair-share minimums, host clamp bands, floating surfaces, the cross_basis_px track and the below-1320 px overflow-x exception are retired."
 - "Amended 2026-10-09 (DL-180): four more acceptance criteria are rewritten for panels and the split tree; their fair-share host projection, per-dock latch bands, fair-share minimum degradation, floating corner handle, empty dock and column-dock track handle wording is lineage only."
+- "Amended 2026-10-10 (lead ruling L13): a lost pointer capture is a cancel (DR-066); the criterion 'loss of pointer capture alone is not a cancellation vector' and the 2026-08-12 retirement recorded above are reversed and are lineage only."
 owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Wiring_Rules.md]
 ```
 
@@ -1122,6 +1126,8 @@ canonical_text: >-
   not decided here and stays an open question for the lead. No other Home surface floats or opens a window: panels and
   tabs move only inside the split tree (F3-630). The chat's popped-out state belongs to the chat column state the v2
   Home layout record keeps (SP-330).
+  Amended 2026-10-10 (lead ruling L6): Pop out is desktop only. The web client offers no Pop out; the chat stays in its
+  column (F3-637). This settles the open question above.
 gui_related: true
 gui_classification_reason: This unit owns visible native/web capability behavior and degradation disclosure.
 split_recommended: false
@@ -1135,6 +1141,7 @@ acceptance_criteria:
 - "The chat never floats in-canvas: no Home surface has an in-window or in-page float, no full-viewport scrim covers the title bar, and no re-render yields a second chat surface (amended 2026-10-09, DL-180; the in-canvas chat pop-out is lineage)."
 - A reload never restores a floating surface; each persisted floating surface demotes to its last_docked_host and the demotion persists with a storage.boot_demote_floating receipt.
 - "In the desktop app Pop out opens the one chat in its own window and Dock back returns it to its column; no panel or tab floats (amended 2026-10-09, DL-180; F3-637)."
+- "The web client shows no Pop out for the chat, and the chat stays in its column (amended 2026-10-10, lead ruling L6; F3-637)."
 validation_surfaces:
 - node Concepts/pm7-tools/verify/home_workspace_matrix.mjs
 - python3 scripts/pm-plan-index.py validate
@@ -1157,6 +1164,7 @@ stale_retired_dispositions:
 - "Amended 2026-08-13: the PM6 base full-screen chat overlay (.pm6-chat-overlay fixed panel plus viewport scrim) is retired in PM7 via a T20-anchored guard on the base applyLayout; its scrim CSS remains dead code in the base for census stability but no code path can show it."
 - "Amended 2026-10-09 (DL-180): editor panels and the Dashboard no longer pop out or float; Pop out is the chat's alone and returns to the chat's fixed column (F3-637)."
 - "Amended 2026-10-09 (DL-180): the web client's in-canvas chat float is retired with every other in-window float; Pop out is a desktop app action (D3), and a web Pop out is an open question for the lead, not canon."
+- "Amended 2026-10-10 (lead ruling L6): The open question on a web Pop out is settled: the web client offers no Pop out and the chat stays in its column (F3-637)."
 owner_hints: [Plans/FinalGUISpec.md]
 ```
 
@@ -2507,9 +2515,9 @@ Graph and evidence schemas add work-package `/seam/promotion/account/lane` ident
 
 Route payload passthroughs include `correlation_id` as a matrix-verifiable field when owner contracts require it, rather than relying on prose-only correlation.
 
-Amended 2026-10-10 (lead ruling L2): Home panel tab routes use primary_view (Contracts CV-163).
+Amended 2026-10-10 (lead ruling L2): `bottom_panel` is a legacy destination class; a route to a home panel tab uses `primary_view` (Contracts CV-163).
 
-A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired; a route to a home panel tab uses `primary_view` (Contracts CV-163) (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
+A route whose destination is a terminal, problems, output, ports, browser or debug console opens a tab of that kind through the one opening module (F3-634), carrying the placement fields of `Plans/Contracts_V0.md#CV-360`; the `bottom_panel` destination class is retired (amended 2026-10-09, DL-180). `embedded_surface` covers embedded sub-surfaces such as `document_pane` and `agent_activity` without turning those panes into route-object taxonomy.
 
 Usage-event identity stays primary for Usage `/Ledger` navigation, while node `/attempt` identity stays primary for runtime and graph inspectors.
 
@@ -4297,13 +4305,12 @@ These decisions are final and must not be revisited during implementation:
 9. **Model/platform selection via dropdowns**, not text entry
 10. **Product name: `Puppet Master`**
 11. **All 12 former future considerations are MVP** -- browser, instant project switch, sound effects, hot reload, instructions editor, custom themes, language detection, catalog, sync, SSH, Debug Mode workflows, and terminal tab management
-12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output (one tab; its channel switches inside it), Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
-
-Amended 2026-10-10 (Addendum 2 D28, DL-180): Output is one tab with its channel switched inside it (F3-635).
-
+12. **Bottom runtime zone includes the classical debugger surface** -- Superseded 2026-10-09 (DL-180, DL-181): there is no fixed bottom runtime zone. Terminal, Output, Problems, Ports and Debug Console are tab kinds that open in any panel, the tools landing beside the terminals by kind affinity, and the default Home layout's full-width bottom row is an ordinary panel row (F3-630, F3-634, F3-635); each terminal tab holds one session (F3-640, SMPFS-180). What stands: the Debugger / DAP Debugger stays part of the product (decision 14), and browser-capable preview/browsing is not a debug substitute. Earlier text, kept for lineage: "Terminal, Problems, Output, Ports, and Debugger / DAP Debugger remain runtime-zone occupants; browser-capable preview/browsing is not a bottom-panel debug substitute"
 13. **Browser runtime contract is capability-first, not crate-name-first** -- implementation must satisfy the promoted browser/session model rather than hard-locking the spec to stale `wry` wording
 14. **Classical debugger uses DAP** -- the integrated debugger surface is DAP-based and distinct from Assistant Debug Mode
 15. **SSH uses system keychain / agent flows** -- credentials stay in OS-managed stores, never in config files
+
+Amended 2026-10-10 (Addendum 2 D28, DL-180), decision 12: Output is one tab with its channel switched inside it (F3-635).
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
@@ -10146,11 +10153,12 @@ negative_constraints:
 - "No terminal theme or font choice carries a restart badge, and no second terminal theme store exists beside the one appearance model."
 compatibility_only_notes: []
 stale_retired_dispositions:
+- "Amended 2026-10-10 (lead ruling L16): The popover's All terminals writes the project layer through the Settings transaction instead of the app default, and no surface writes an app-wide value until q-035."
 - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for the terminal appearance default in surviving amendment prose."
 - "Amended 2026-10-09 (DL-183): the terminal theme catalogue, preview and instant apply become F3-642's real appearance model; Settings > Terminal binds its app and project layers and the Appearance popover writes This terminal or All terminals."
 owner_boundary_notes:
 - "Settings > Terminal owns durable terminal appearance/theme/color, default cwd, font, and default behavior controls."
-- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or the app default through the same model, and only Settings writes the project layer."
+- "Since DL-183 the durable appearance values are the app and project layers of F3-642's model, bound by SSYS-051 and stored as SP-331 says; the terminal's Appearance popover writes the tab's override or, through All terminals, the project layer by the same Settings transaction Settings uses (F3-642), and no surface writes an app-wide value until q-035 admits one."
 owner_hints:
 - "Plans/FinalGUISpec.md"
 ```
@@ -43423,7 +43431,7 @@ canonical_text: >-
   adopted after 100 ms of dwell (skipped on release and under Reduced Motion), and an adopted zone holds while the
   pointer stays within 12 px of it. Every drag runs the gesture transaction Home already uses and shares with the Usage
   board's gesture kit (F3-HOME-002, F3-503, DR-066): the preview is local, nothing dispatches while dragging, a changed
-  release commits one command, an unchanged release, Escape, a pointer cancel, a lost window or a drop past the
+  release commits one command, an unchanged release, Escape, a pointer cancel, a lost pointer capture, a lost window or a drop past the
   workspace commits nothing and restores the exact earlier picture, and a failed commit rolls back. Every drag outcome
   also has a menu path and a keyboard path (Move panel, Move to panel, Alt+Shift+arrows; F3-635). Motion: a panel glides
   into its new place in 180 ms by default, in Friendly 220 ms, Glass 260 ms, Basic 200 ms, Retro 140 ms in steps and
@@ -43470,7 +43478,7 @@ acceptance_criteria:
   - "The default layout Home has a full-width bottom row of 0.4 that holds any tab kind, and Home, Build, Terminals 2x2 and Focus build exactly the trees and proportions stated here."
   - "Applying a named layout or Restore home layout ends no terminal session, drops no unsaved buffer and closes no tab."
   - "A tab dragged to a panel's edge band splits that panel; a tab pulled 14 px vertically or 40 px horizontally off its strip tears off; a whole panel moves by its grip or Move panel; each drag has a menu and keyboard equivalent."
-  - "During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no command, persistence or event; a failed commit rolls back."
+  - "During a drag nothing dispatches; a changed release commits one command; Escape, pointer cancel, a lost pointer capture, window blur, a drop past the workspace and an unchanged release restore the exact earlier layout with no command, persistence or event; a failed commit rolls back."
   - "Under Reduced Motion every glide, slide, settle and cancel duration is 0 and every drag still shows its landing preview."
   - "An existing Home layout from before this redesign opens converted, with its tabs, on first read; no upgrade resets it."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
@@ -43526,7 +43534,8 @@ negative_constraints:
 compatibility_only_notes:
   - "Slint portability: the split tree, the strip, the silhouette and every gesture are projections over the Rust-owned layout model (F3-HOME-005); the concept's DOM and CSS mechanics are not the product mechanism."
   - "The concept seeds its Home layout with demo files, a demo plan and two terminals; the seed contents are illustrative, the tree and proportions are canon."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L13): Adds a lost pointer capture to the gesture's cancel set, as DR-066 says."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
@@ -43969,7 +43978,7 @@ canonical_text: >-
   SVG icon_id, never an emoji), its id prefixes, its content minimum, whether it is dedicated, its "+" menu row and
   sub-row, how it makes a tab id for an open (the terminal mints a new session), how it mounts, what it serializes and
   whether a tab may close now. Content minimums: terminal 320 x 120 px, browser 360 x 200, dashboard 320 x 120, run 360 x 200, plan, document, artifact, transcript and context 280 x 160, and editor, record and tools 280 x 120. The host mounts a tab's body only when the tab is first shown, so a restored
-  background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no scrollback; an editor buffer may carry the bounded text state of F3-639. Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
+  background tab costs nothing until it is opened. A kind's serialized state is at most 16 KB of plain data, with no scrollback and no buffer text (Plans/storage-plan.md#SP-330); an untitled editor buffer's tab state carries only the title, language and edit or read-only state of F3-639 (amended 2026-10-10). Before a tab closes its kind may ask first: a dirty editor offers to save, and a running
   terminal says what will stop (F3-640). A tab body is its own box, sized by its panel: it never sizes against the
   window, only against its own width and height; it is told when they change, with a last call once a divider drag or a
   layout animation has settled so costly work can wait for it; it is told when it is shown, hidden, focused and blurred
@@ -43993,9 +44002,9 @@ canonical_text: >-
   Enter on a panel grip for Move panel. Pinning is in the tab menu only; no binding is a bare letter or digit; Escape
   closes only the innermost open thing (F3-568). The panels hold these keys while focus is in the centre; while focus is
   inside a tab body the kind is asked first, a terminal keeps the shell's keys and gives back the host keys F3-640
-  lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the four chords the browser
-  keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab, are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` (Alt+Shift+`
-  backwards), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
+  lists, and ordinary text inputs keep their own keys. Web-client mapping rule: in a web browser the chords the browser
+  keeps, Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp, are answered as Alt+T, Alt+W, Alt+Shift+T, Alt+`
+  (Alt+Shift+` backwards) and Alt+PgDn/PgUp (panels NUMBERS 6026fa8432, keyboard), and every label, menu shortcut and hover tag shows the key that works where the app runs. This supersedes
   F3-HOME-001's typed surface kinds and F3-152's terminal-and-browser-only tab identity, which now holds for every kind.
   The channel shown in `output` is view state, never part of its id (Addendum 2 D28).
   A tab's typing field, including the terminal input and the editor's IME field, passes the panels'
@@ -44016,9 +44025,11 @@ canonical_text: >-
   ordinary/protected session choice, DevTools visibility, details/DevTools/captures rail choice,
   elements/console/network/access tool choice, dock dimensions, history and index, ordinary URL, captures,
   page title and policy differences only. The agent-access policy has 14 rows: Navigation, Tabs and frames,
-  Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and
-  Viewport and device sizes default On; Network, Performance, Storage and cookies, Form input and Downloads
-  default Ask; Request simulation defaults Off; rows cycle Off, Ask, On. Browser is the plus menu's order-20
+  Page structure and components, Styles, Console, Network, Source maps and files, Performance, Storage and
+  cookies, Screenshots and recording, Form input, Downloads, Viewport and device sizes and Request
+  simulation; rows cycle Off, Ask, On. Agent and browser introspection stay explicit opt-in
+  (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-092); this unit sets no row's default, which is the
+  browser owner's to set and an open question for the lead until it does (amended 2026-10-10). Browser is the plus menu's order-20
   kind, with Ctrl+Shift+B and recent-address sub-rows. The four tools each have a 280 × 120 px minimum and
   follow in plus order 70/71/72/73. Output caps at 600 lines, turns Follow off beyond 24 px from the end,
   hides time below 520 px, and saves channel, follow and wrap. Its channel picker is 300 px wide, with a
@@ -44121,7 +44132,7 @@ acceptance_criteria:
   - "No tab body reads the window's size; each responds to its own width and height and gets a final size call after a drag or animation settles."
   - "Every kind with a control row uses the shared header row with the stated heights, targets, text sizes, label threshold and hide threshold."
   - "Every menu, list, ghost and preview opens in the one overlay root in the stated order, and no kind appends its own overlay."
-  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T and Alt+` replace the four browser-owned chords with every label showing the key that works."
+  - "Every key in the desktop map works while focus is in the centre, none uses Ctrl+K or Ctrl+1..9 or a bare letter or digit, and in a web browser Alt+T, Alt+W, Alt+Shift+T, Alt+` and Alt+PgDn/PgUp replace the browser-owned chords Ctrl+T, Ctrl+W, Ctrl+Shift+T, Ctrl+Tab and Ctrl+PgDn/PgUp with every label showing the key that works."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
   - "Output has id output and switches channel as view state; Open in new tab produces output:<channel> showing only that channel."
   - "Typing fields pass host navigation keys after the tab declines them, with the Mac typing rule and IME composition respected; F6 reaches the chat composer from every region."
@@ -44186,7 +44197,11 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept's registration call, host API names, container name and z-index values are concept lineage; the stacking order is canon, its numbers are not."
   - "The concept spells the tool kind debug-console in its id prefix; the kind's schema name is debug_console."
+  - "The concept browser's demo agent-access defaults (panels NUMBERS 6026fa8432, browser): Navigation, Tabs and frames, Page structure and components, Styles, Console, Source maps and files, Screenshots and recording and Viewport and device sizes On; Network, Performance, Storage and cookies, Form input and Downloads Ask; Request simulation Off. They are concept lineage only, not product defaults (SMPFS-092)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35 review, panels NUMBERS 6026fa8432 keyboard): The web-client mapping rule also answers Ctrl+PgDn/PgUp as Alt+PgDn/PgUp."
+  - "Amended 2026-10-10 (R35 review, SMPFS-092): The agent-access policy keeps its 14 rows and the Off, Ask, On cycle; the concept's per-row defaults move to compatibility_only_notes as lineage, and the product defaults are left to the browser owner as an open question for the lead."
+  - "Amended 2026-10-10 (R35 review, SP-330): Restores the no-buffer-text exclusion; the bounded editor-buffer text state the R35 line below permits is concept lineage until the lead rules whether SP-330 admits it."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses the per-kind document minima and permits the bounded editor-buffer state."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds settled browser, tool, document, run, transcript, context, record and shared-helper dimensions and timings."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Passes host navigation keys from tab typing fields and cycles F6 to the chat composer."
@@ -44227,10 +44242,11 @@ canonical_text: >-
   window-width columns, is superseded by F3-638), F3-503's below-1320
   px overflow-x exception, F3-517's rule that Home collapses to a single column, and the chat's own narrow-width rules
   as they apply to Home (APR-038's full-width plan tab is read through the switcher and ACD-500).
-  With History pinned and the rail folded, History drops to a flyout at 1170 px of window width going
-  narrower and returns at 1210 px going wider; the chat folds to its strip at 930 px going narrower and
-  unfolds at 990 px going wider. The ladder uses 48 px hysteresis; these measured transition pairs and
-  temporary History drops are never saved.
+  With History pinned and the rail folded, the centre-width ladder, before the chat folds, drops the pinned
+  History to a flyout; measured as window widths, the drop happens at 1170 px going narrower and History
+  returns at 1210 px going wider, and the chat folds to its strip at 930 px going narrower and unfolds at
+  990 px going wider. These are measured outcomes of the C keys above, not window-width keys. The ladder
+  uses 48 px hysteresis; these transition pairs and temporary History drops are never saved.
 gui_related: true
 gui_classification_reason: Defines what gives way, and in what order, when the room left for the panels gets narrow.
 split_recommended: false
@@ -44243,7 +44259,7 @@ acceptance_criteria:
   - "At the measured window widths the rail, chat and centre widths match the values stated here."
   - "No dashboard, header row or other tab content reads the window width, and the centre never scrolls sideways."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
-  - "With the rail folded, History drops at 1170 px and returns at 1210 px; the chat folds at 930 px and returns at 990 px; the 48 px ladder hysteresis and temporary states are never saved."
+  - "With History pinned and the rail folded, the centre-width ladder drops History at a measured 1170 px window width and returns it at 1210 px, and folds the chat at 930 px and returns it at 990 px; the 48 px ladder hysteresis and temporary states are never saved."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -44278,7 +44294,6 @@ negative_constraints:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds History drop and strip fold thresholds with the rail folded, without saving narrow state."
 compatibility_only_notes: []
-stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
@@ -44321,8 +44336,8 @@ canonical_text: >-
   The saved width and the 400-760 px drag range describe the message area. Pinning History adds 240 px to
   the column, or 200 px while the whole column is under 540 px; the messages keep their width. The pinned
   column's minimum is 640 px; its drag range is 640 to 760 + 240 px, capped by the 960 px centre budget. A
-  folded chat has History dropped to a flyout; its peek is 400 px, or 640 px when History is pinned, capped
-  at the row width minus 48 px.
+  folded chat always has History dropped to a flyout, so its peek opens at 400 px; with History pinned in the
+  peek it is 640 px, capped at the row width minus 48 px.
   Measured History cases: at 1920 px in Friendly dark, the flyout column is 600 px, the pinned column 666 px
   (History 240 px, messages 425 px) and C 960 px; at 1920 px in NieR, flyout is 600 px and pinned 681 px
   (History 240 px, messages 440 px), with C 960 px. At 1470 px in Glass light with the rail folded, flyout
@@ -44387,10 +44402,9 @@ negative_constraints:
 compatibility_only_notes:
   - "The concept floats the popped-out chat inside the page at 440 x min(720, window - 140) px with Dock back; that is the concept's browser stand-in, not a canon size."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Records measured pinned History column and message widths from NUMBERS."
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths, keeps the width and drag range tied to the messages, and records the measured pinned History column and message widths from NUMBERS; a folded chat's peek opens at 400 px with History dropped, and is 640 px only with History pinned in the peek."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds pinned History widths and keeps width and drag range tied to the messages."
-  - "Amended 2026-10-10 (lead ruling L9): The History pin names ui.chat_column.pin_history and commits history_pinned with chat_column_changed."
+  - "Amended 2026-10-10 (lead ruling L9, corrected): The History pin is the typed local action ui.chat_column.pin_history, view state saved in the v2 record's chat column as history_pinned with no event; this supersedes the earlier L9 wording 'commits history_pinned with chat_column_changed'."
   - "Amended 2026-10-10 (lead ruling L7): After restart the chat starts in its column; reopening popped out remains an open question for Jared."
   - "Amended 2026-10-10 (lead ruling L6): Pop out is desktop only; the web chat stays in its column."
 owner_hints:
@@ -44482,7 +44496,6 @@ negative_constraints:
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds dashboard tab presentation dimensions and shared-holder behaviour."
 compatibility_only_notes: []
-stale_retired_dispositions: []
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Widget_System.md
@@ -44542,7 +44555,9 @@ canonical_text: >-
   lines plus 24 above and below; a far jump guesses when more than 300 lines past the tokenized prefix;
   background tokenizing processes 1,200 lines per 12 ms slice; brace scopes wait for full tokenizing above
   3,000 lines. Saved editor state carries path, reveal line, scroll top, mode and optional diff layout;
-  buffer state adds title, language, edit or read-only state and text up to 12,000 characters. The line is a
+  buffer state adds title, language and edit or read-only state; a buffer's text is not saved in the tab state
+  (Plans/storage-plan.md#SP-330), and an unsaved buffer's text is kept by unsaved editor recovery
+  (Plans/storage-plan.md#SP-169) (amended 2026-10-10). The line is a
   reveal target and top restores scroll. Untitled buffers are numbered Untitled 1, Untitled 2 and onward.
   Editor keys are Ctrl+F, Ctrl+H, Ctrl+G, Ctrl+S, F3/Shift+F3 and Alt+F5/Shift+Alt+F5 for next/previous
   change; find uses Alt+C and Alt+R, Ctrl+Shift+1 replaces one and Ctrl+Alt+Enter replaces all; Alt+W
@@ -44602,8 +44617,10 @@ negative_constraints:
   - "Do not switch the diff layout by the window's width."
   - "Do not use IBM Plex Mono or VT323 as the editor's code face in Retro."
 compatibility_only_notes:
-  - "The width at which the diff turns inline is a concept number still to come (wave 2)."
+  - "The width at which the diff turns inline was a concept number still to come (wave 2); retired 2026-10-10 (R35, panels NUMBERS 6026fa8432): the canonical text now gives side by side at 900 px and inline below 852 px."
+  - "The concept saves an untitled buffer's text, up to 12,000 characters, in its tab state (panels NUMBERS 6026fa8432, editor saved state); that is concept lineage only while SP-330 keeps buffers out of the Home record, and whether SP-330 should admit a bounded buffer text state is an open question for the lead."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35 review, SP-330): A buffer's tab state keeps title, language and edit or read-only state only; its text stays out of the Home record and the concept's 12,000-character text state is lineage pending a lead ruling."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Adds editor metrics, minimap, sticky scroll, diff, find, rendering, undo, state and scheme tint numbers."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Specifies scheme-painted editor surfaces, contrast floors and Appearance row detail."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Retro editor syntax reads the terminal Retro scheme choice once and keeps no copy."
@@ -44662,7 +44679,7 @@ canonical_text: >-
   in every look and in NieR. They are mixed from the page's own colours so the Settings accent flows
   through. A primary button chooses black or white ink from the fill's luminance and keeps at least 4.5:1
   contrast.
-  The shared icon grammar uses 16 px strokes and Retro glyphs of at most 2 cells; this amends the one-cell
+  Kind icons follow the shared 16 px stroke icon grammar, and Retro glyphs are at most 2 cells; this amends the one-cell
   wording for kinds where needed. Crew, Review, Chat Room and BrainStorm use &, ?, ~ and ^ respectively;
   Open in new tab uses + and Appearance uses *. Each kind supplies its icon to the strip, +N list, every-tab
   list and recent-tab switcher through the one registered icon source. Primary-button black/white ink
@@ -44900,7 +44917,8 @@ canonical_text: >-
   "Close this terminal? <process> is still running and will be stopped.", with Close terminal and Keep it open. A tab
   with no live session (restored after a restart or a reload, or a closed tab reopened) loads its saved scrollback
   before its new session starts (F3-645, SP-332), draws the dim rule `── Restored <time> · the earlier session ended ──`
-  above the new prompt, starts a new local session in the same folder and shell profile, never presents itself as the old
+  above the new prompt, starts a new session in the same folder and shell profile (at once for a local profile; a tab
+  whose profile is an SSH host asks first, Reconnect / Close tab, as below), never presents itself as the old
   session (F3-226, F3-228), and says so: "This terminal was restored with its scrollback (N images were not kept).
   Its earlier session ended when the page reloaded; this is a new session.", the parenthesis shown only when images
   were dropped, and for a reopened tab "This terminal was reopened with its scrollback" with "Its earlier session
@@ -45010,6 +45028,7 @@ compatibility_only_notes:
   - "The concept's kind registration, its script globals, its class and data-attribute prefixes and its terminal settings keys are lineage only; the concept's example profiles (zsh, bash, pwsh and one SSH host) and the agent name in its mark menu are demo data."
 stale_retired_dispositions:
   - "Amended 2026-10-10 (lead ruling L14): SSH-host terminal restore asks Reconnect / Close tab before any remote reconnection."
+  - "Amended 2026-10-10 (lead ruling L14, review): The general restore sentence names the SSH-host exception in place, so only a local-profile tab starts its new session at once."
   - "Supersedes F3-062's bottom runtime workgroup strip and F3-450's four-pane split guard, and retires the workgroup, sub-tab and editor-terminal-stack parts of F3-063 and F3-064 (DL-181)."
 owner_hints:
   - Plans/FinalGUISpec.md

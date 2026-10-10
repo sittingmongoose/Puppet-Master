@@ -6095,8 +6095,9 @@ canonical_text: >-
   the tab. Appearance (F3-642, Plans/storage-plan.md#SP-331, Plans/Settings_System.md#SSYS-051,
   Plans/DRY_Rules.md#DR-068): each field resolves this tab, then the project default, then the app default, then the
   look's default, an unset field falling through; every field applies live from the Appearance popover and from
-  Settings and none shows a restart badge; the popover writes This terminal or All terminals and only Settings writes
-  the project default; each look's Follow look scheme in light and dark; the minimum-contrast floor at 4.5:1 by
+  Settings and none shows a restart badge; the popover writes This terminal or All terminals, All terminals is enabled
+  and writes the project default through the same Settings transaction Settings uses, its hover tag says in this
+  project, and no surface writes an app-wide value; each look's Follow look scheme in light and dark; the minimum-contrast floor at 4.5:1 by
   default with Off, 3:1, 4.5:1 and 7:1, moving OKLab lightness only and leaving block, powerline and sextant glyphs
   alone; import of the seven formats with the 256 KB cap, no evaluation and fixed errors that never echo the file; and
   cells of whole device pixels with no stripe at the padding. Effects (F3-643): only the focused, visible terminal
@@ -6233,6 +6234,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The terminal concept's harness hooks and its demo agents are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L16): Certifies that All terminals is enabled and writes the project default through the Settings transaction with the in this project hover tag and no app-wide value, replacing 'only Settings writes the project default'."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Uses Follow look for editor and terminal appearance defaults."
   - "Amended 2026-10-10 (R34, DL-183): Adopts the effects CPU budget, idle deadline and no-GPU fallback rule."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."

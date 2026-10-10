@@ -2072,7 +2072,7 @@ depends_on: [DL-180, UIW-010, UIW-012, UCC-200, UCC-203, F3-502, F3-630, F3-631,
 unblocks: [ATS-075]
 acceptance_criteria:
   - "Every control on the list maps to exactly one WM-090 row, and every home.* production entry maps to a control on the list: the census reports unresolved_count=0."
-  - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is committed with chat_column_changed, and no pending exception remains."
+  - "The History list pin has exactly one WM-090 row for ui.chat_column.pin_history; history_pinned is saved as view state with no workspace.layout_changed event, revision advance or receipt, and no pending exception remains."
   - "No row exists for a retired control on the list's retired part, and Plans/PMConcept7_Home_Workspace_Control_Reconciliation.json records those rows as retired."
   - "A disabled control (for example Split right when the centre is too narrow to split, Reopen closed tab when no tab has been closed) shows its owner's reason and dispatches nothing."
   - "Every key label on the list shows the key that works where the app runs; a browser shows Alt+T, Alt+W, Alt+Shift+T and Alt+` for the four browser-owned chords."
@@ -2093,7 +2093,6 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md (SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9; sections 6 to 9; concept lineage only)"
@@ -2107,7 +2106,7 @@ negative_constraints:
   - "Do not wire a control that is not on the list, or leave a control on the list without a row."
   - "Do not keep a row for a fixed editor panel, a dock or floating host, a terminal section, a chat grab or Collapse Bottom Terminal."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Saves History pin as view state with no layout event, revision advance or receipt."
+  - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Saves History pin as view state with no layout event, revision advance or receipt."
   - "Amended 2026-10-10 (lead ruling L9): Replaces the pending History pin exception with ui.chat_column.pin_history in the closed census."
   - "Superseded 2026-10-09 (DL-180): the fixed-zone census rows of the 2026-08-04 Home rules and UIW-010's 2026-08-13 amendments (Panel 1 to Panel 4, Chat and Dashboard Pop Out, the floating corner and dock track resizers, terminal add and split leaves, terminal caps, Collapse Bottom Terminal)."
 owner_hints:

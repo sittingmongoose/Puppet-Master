@@ -72015,7 +72015,7 @@
         "terminal.appearance.field dispatches cmd.terminal.appearance.set exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_tab_id and the changed fields of F3-642; an unset field falls through to the next layer; the change applies live, never with a restart, and is kept in the tab's serialized state (SP-331).",
         "Hovering a scheme is a live preview that Escape reverts and dispatches nothing; the This terminal and All terminals switch, the scheme search, the background image picker and Close are view-local.",
-        "With All terminals selected the same fields compose cmd.settings.transaction.preview then cmd.settings.transaction.apply over SSYS-051's rows and never this command; only Settings writes the project layer.",
+        "With All terminals selected the same fields compose cmd.settings.transaction.preview then cmd.settings.transaction.apply over SSYS-051's rows and never this command; only the Settings transaction writes the project layer.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "terminal.appearance.field emits no event and no workspace.layout_changed."
       ],

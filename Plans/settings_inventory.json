@@ -6997,7 +6997,7 @@
   {
    "id": "code.terminal.search",
    "label": "Search in Terminal",
-   "desc": "Find is in every terminal: Ctrl+Shift+F (Cmd+F on a Mac), or Find in the terminal's header row or right-click menu, opens its bar, with match case, whole word and regular expressions, every match marked in the text and on the scrollbar (F3-641). Find is always there, so this switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value. (Superseded: find is always present, F3-641; DL-181.)",
+   "desc": "Find is in every terminal: Ctrl+Shift+F (Cmd+F on a Mac), or Find in the terminal's header row or right-click menu, opens its bar, with match case, whole word and regular expressions, every match marked in the text and on the scrollbar (F3-641). Find is always there, so this switch no longer turns it off: the row is retired and renders nowhere, and nothing reads its stored value. (Superseded by the terminal find control, which is always present, F3-641; DL-181)",
    "type": "toggle",
    "default": true,
    "scope": [

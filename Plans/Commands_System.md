@@ -7555,6 +7555,8 @@ The name `panel_tab` keeps panel tabs apart from `workspace_tab_id` (project tab
 
 **Typed local action prefixes.** `ui.panel_tab.`, `ui.workspace_layout.` and `ui.terminal.` are typed local action prefixes in the pattern of `ui.guided_tour.focus_route` (CS-072): an action under them has no catalog command row, no central registration, no handler of the command bus, no receipt and no event, and is never also a `cmd.*` id. Their members are UCC-200's and UCC-201's tables: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`, and the `ui.terminal.*` actions. A `ui.terminal.mark.*` action that runs a command (Rerun, Insert command, Open output in an editor tab) dispatches that catalog command, which carries its own receipt.
 
+Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): `ui.output.` and `ui.chat_column.` are typed local action prefixes too, under the same rule. Their members are `ui.output.select_channel` (UCC-200: the Output tab's channel, view state of the one `output` tab) and `ui.chat_column.pin_history` (UCC-203: the History list's pin, saved as the v2 record's chat column `history_pinned` with no `workspace.layout_changed` event, revision advance or receipt).
+
 **The view-state ruling** (the decision CDRY-006 left open for panel tabs):
 - Choosing a tab (a click, the "+N" list, the every-tab and recent-tab lists, the tab keys), maximizing or restoring a panel, and focusing a panel are view state: `ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`. They are written with the layout record's view state (active tab, focused panel, maximized panel, recent-tab order, `Plans/storage-plan.md#SP-330`) and emit no receipt and no event.
 - Opening the "+" menu, the "+N" list, the every-tab and recent-tab lists, a panel menu, a tab menu, a picker or a name prompt, hovering, the drag ghost and landing previews, and the narrow ladder's own states (the rail overlay, the folded chat strip, the panel switcher) dispatch nothing and are never saved.
@@ -7572,12 +7574,13 @@ canonical_text: >-
   unpin, reopen_closed) and cmd.workspace_layout. (split, move_surface, resize_surface, set_collapsed, close_panel,
   lock, apply_named, save_named, reset), with Plans/UI_Command_Catalog.md the only minter. panel_tab is kept apart
   from workspace_tab_id, from route tab_id and from cmd.panel.switch, whose closed vocabulary home panels never
-  join. ui.panel_tab., ui.workspace_layout. and ui.terminal. are typed local action prefixes in the pattern of
+  join. ui.panel_tab., ui.workspace_layout., ui.terminal., ui.output. and ui.chat_column. are typed local action prefixes in the pattern of
   ui.guided_tour.focus_route: no catalog command row, no central registration, no receipt, no event, and never also
   a cmd.* id; a ui.terminal.mark.* action that runs a command dispatches that catalog command. View state is ruled:
   choosing a tab, maximizing or restoring a panel and focusing a panel are ui.panel_tab.activate,
   ui.workspace_layout.maximize and ui.workspace_layout.focus_panel, written with the layout record's view state;
   selecting Output's channel is ui.output.select_channel, view state of the one output tab, never part of its id;
+  pinning the chat's History list is ui.chat_column.pin_history, view state saved in the layout record's chat column;
   opening any menu, list, picker or prompt, hovering, drag previews and the narrow ladder's states dispatch nothing
   and are never saved. Every committed structural change is one shell_view catalog command with a receipt that emits
   workspace.layout_changed; an open that only reveals emits nothing; a failed commit rolls back; no event family is
@@ -7589,7 +7592,7 @@ depends_on: [DL-180, DL-181, CS-060, CS-061, CS-062, CS-068, CS-072, UCC-200, UC
 unblocks: [WM-090, WM-091, UIW-040, UIW-041]
 acceptance_criteria:
   - "The reserved-prefix registry names cmd.panel_tab. and cmd.workspace_layout. with Plans/UI_Command_Catalog.md as the only minter, and no User Command can be created under them."
-  - "No id under ui.panel_tab., ui.workspace_layout. or ui.terminal. has a catalog command row, a receipt or an event, and none is also a cmd.* id."
+  - "No id under ui.panel_tab., ui.workspace_layout., ui.terminal., ui.output. or ui.chat_column. has a catalog command row, a receipt or an event, and none is also a cmd.* id."
   - "Choosing a tab, maximizing or restoring and focusing a panel emit no receipt and no event; every committed structural change emits exactly one workspace.layout_changed."
   - "Menu, list, picker and prompt openings, hover, drag previews and narrow-ladder states dispatch nothing and write nothing."
   - "Selecting the Output channel uses ui.output.select_channel with no command, receipt or event and never changes the output tab id."
@@ -7633,6 +7636,7 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D28, DL-180): Output uses one tab with its channel as view state; only an explicit channel split-off uses output:<channel>."
+  - "Amended 2026-10-10 (Addendum 2 D28; lead ruling L9, corrected to view state with no event): Registers ui.output. and ui.chat_column. as typed local action prefixes and adds the History pin, ui.chat_column.pin_history, to the view-state list."
   - "Amended 2026-10-09 (DL-180): CDRY-006's local-tab rule now covers panel tab activation explicitly; CS-060's registry gains two prefixes."
 owner_hints:
   - Plans/Commands_System.md

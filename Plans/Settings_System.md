@@ -2937,9 +2937,11 @@ This addendum compiles the Settings side of four decisions of 2026-10-09: `Plans
 
 ### What Settings stores, and what it never writes
 
-Every row below is an ordinary Settings value bound to exactly one Project (SSYS-002); the inventory's scope field is applicability metadata and admits no app-global store (SSYS-004). Settings never writes the Home layout record (SP-330): the split tree, the tabs, a panel's collapsed or locked state, the chat column's width, its pinned History and its popped-out state are layout state, committed by the layout commands of UCC-200. The rows here only choose defaults and how things start.
+Every row below is an ordinary Settings value bound to exactly one Project (SSYS-002); the inventory's scope field is applicability metadata and admits no app-global store (SSYS-004). Settings never writes the Home layout record (SP-330): the split tree, the tabs, a panel's collapsed or locked state, the chat column's width, its pinned History and its popped-out state are layout state, committed by the layout commands of UCC-200. Amended 2026-10-10 (lead ruling L9, corrected to view state with no event; lead ruling L7): of the chat column's three, only the width is committed by a UCC-200 command (`cmd.workspace_layout.resize_surface`); the History pin is view state written by UCC-203's `ui.chat_column.pin_history`, with no layout event, and `popped_out` is current-run state changed by `cmd.panel.undock` and `cmd.panel.redock` (UCC-203). None of them is a Settings value. The rows here only choose defaults and how things start.
 
-The terminal's appearance is one model with four layers resolved field by field: the look's defaults ("Follow look"), the app default, the project default, then the tab's own override (F3-642). Settings > Terminal writes the app default and is the only writer of the project default, and the Appearance popover's All terminals writes the app default (F3-642). Each SSYS-051 row is one field's project default: an ordinary Settings value in the open Project's settings snapshot (SSYS-002), written only by Settings through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the exact id. The app default follows SSYS-028's rule for the ELI5 All chats edit exactly. SSYS-002 and SSYS-004 admit no app-wide store, so until one is admitted (the open question SSYS-028 records as `pldg-20260927-001-wand-collab-workflows` q-035) a field's app default is the row's bundled inventory default, and both app-default edits, the one in Settings > Terminal and the popover's All terminals, are disabled with the Settings owner's reason. Their editable requirement is kept, not replaced by a permanent read-only decision, and no app-wide write is admitted from scope metadata alone. The tab's override is the terminal tab's own serialized state (SP-331), written by the popover's This terminal through `cmd.terminal.appearance.set` (UCC-201); Settings never writes it.
+Amended 2026-10-10 (lead ruling L16): the Appearance popover's All terminals is enabled and writes SSYS-051's project default row through the same Settings transaction Settings uses, so it changes every terminal while this Project is open, and its hover tag says "in this project". Only the app-wide edit stays disabled, until q-035 admits an app-wide store. This overrides the earlier wording that All terminals wrote the app default and was disabled.
+
+The terminal's appearance is one model with four layers resolved field by field: the look's defaults ("Follow look"), the app default, the project default, then the tab's own override (F3-642). Settings > Terminal and the Appearance popover's All terminals write the project default, through the same Settings transaction (F3-642). Each SSYS-051 row is one field's project default: an ordinary Settings value in the open Project's settings snapshot (SSYS-002), written by Settings and by the popover's All terminals through `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` over the exact id; All terminals is enabled, and its hover tag says "in this project". The app default follows SSYS-028's rule for the ELI5 All chats edit exactly. SSYS-002 and SSYS-004 admit no app-wide store, so until one is admitted (the open question SSYS-028 records as `pldg-20260927-001-wand-collab-workflows` q-035) a field's app default is the row's bundled inventory default, and the app-wide edit in Settings > Terminal is disabled with the Settings owner's reason. Its editable requirement is kept, not replaced by a permanent read-only decision, and no app-wide write is admitted from scope metadata alone. The tab's override is the terminal tab's own serialized state (SP-331), written by the popover's This terminal through `cmd.terminal.appearance.set` (UCC-201); Settings never writes it.
 
 Every row added or amended here applies live. A change commits through the Settings transaction over its exact id (SSYS-009), the panels, the editor, the chat column and every open terminal read the committed value at once, and no row carries a restart badge or waits for a reload. A row that says how something starts (Starting layout, Chat history list, Remember window layout, Terminals when reopening a project, Tabs remembered between sessions) is in effect at once for the next start it governs, and a row that caps or opens tabs (Max open editor tabs, Preview tabs) at the next open. No Settings change opens, closes, moves or rearranges a panel or a tab that is already open (SSYS-042); Restore home layout routes to Home's own `cmd.workspace_layout.reset` after one plain question.
 
@@ -2972,7 +2974,9 @@ SSYS-050's seven:
 | `code.editing.word-wrap` | Wrap Long Lines | Applies at once in every editor tab; the editor's word wrap is this row, not a new one. |
 | `code.terminal.layout-restore` | Terminals When Reopening a Project (was When Reopening a Project) | Re-scoped from the terminal's own layout to the terminal tabs of a saved layout: Restore Last Layout brings them back as SMPFS-180 says, Start Fresh leaves them closed. A session verified still running always comes back in its tab, whatever this row or Remember Window Layout says. |
 
-SSYS-051's twelve:
+Amended 2026-10-10 (lead ruling L18): `code.terminal.search` is retired (Rows retired above) and renders nowhere; its row below is kept as lineage only, so SSYS-051 amends eleven live rows.
+
+SSYS-051's twelve (eleven live, and `code.terminal.search`, retired since):
 
 | Id | Label | What changed |
 |---|---|---|
@@ -2986,12 +2990,14 @@ SSYS-051's twelve:
 | `code.terminal.right-click-paste` | Right-Click to Paste | Off by default now, because a right click opens the terminal's menu (F3-640); on, a right click pastes and Shift+right click opens the menu. |
 | `code.terminal.rendering-mode` | Rendering Mode (was Terminal Look & Feel Preset) | Keeps the render modes of the Section15 terminal (Interactive Rich, Plain, Minimal) and says it never sets colours, fonts, backgrounds or effects: those are the Terminal look rows. |
 | `code.terminal.shell-integration` | Shell Integration (was Shell Integration Status) | A switch, as its type always was: on, the shell's prompts and commands are marked (each mark carrying the terminal's secret, SMPFS-183); off, the shell runs as it is, with no command marks, sticky command header or command jumps. |
-| `code.terminal.search` | Search in Terminal | Find is in every terminal (Ctrl+Shift+F, Cmd+F on a Mac, F3-641; the old Ctrl+F is corrected), so the switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value. |
+| `code.terminal.search` | Search in Terminal | Superseded 2026-10-10 by its retirement (lead ruling L18; Rows retired above): the row renders nowhere. Before that: Find is in every terminal (Ctrl+Shift+F, Cmd+F on a Mac, F3-641; the old Ctrl+F is corrected), so the switch no longer turns it off: it shows on and unavailable with that reason, and nothing reads its stored value. |
 | `code.terminal.transcript-retention` | Saved Terminal Output (was Keep Terminal History For) | Bound to the terminal's saved scrollback (`Plans/storage-plan.md#SP-332`), which restore brings back: Keep Saved Scrollback (default, was Session Only) keeps it by SP-332's rule, and Session Only saves none, so a restored or reopened terminal starts without its earlier output. The 24 Hours, 7 Days, 30 Days and Forever choices, the 7 Days recommendation and the adjudication badge go, because SP-332's quota and closed-tab limit replace them. |
 
 ### Rows added
 
-SSYS-050's eleven, all scope `global`, stored per Project:
+Amended 2026-10-10 (Addendum 2 D27; R35): `code.editing.color-scheme` (Editor Colors) joins the rows below, making twelve, and Editor Line Spacing's default is 1.55 (it read "none yet").
+
+SSYS-050's twelve, all scope `global`, stored per Project:
 
 | Id | Label | Type and choices | Default | Group |
 |---|---|---|---|---|
@@ -3002,7 +3008,8 @@ SSYS-050's eleven, all scope `global`, stored per Project:
 | `general.interaction.tab-sizing` | Tab Sizing | select: Shrink to fit, Fixed width | Shrink to fit | Editor & Terminal › Saving & tabs |
 | `code.editing.font-family` | Editor Font | select: JetBrains Mono, Atkinson Hyperlegible Mono, System monospace | JetBrains Mono | Editor & Terminal › Editing |
 | `code.editing.font-size` | Editor Text Size | number, px | 13 | Editor & Terminal › Editing |
-| `code.editing.line-height` | Editor Line Spacing | slider, a multiple of the text size | none yet | Editor & Terminal › Editing |
+| `code.editing.line-height` | Editor Line Spacing | slider, a multiple of the text size | 1.55 | Editor & Terminal › Editing |
+| `code.editing.color-scheme` | Editor Colors | select: Follow look or a catalog scheme (F3-642) | Follow look | Editor & Terminal › Editing |
 | `code.editing.minimap` | Minimap Scrollbar | toggle | on | Editor & Terminal › Editing |
 | `code.editing.sticky-scroll` | Sticky Scroll | toggle | on | Editor & Terminal › Editing |
 | `code.editing.diff-layout` | Diff Layout | select: Automatic, Side by side, Inline | Automatic | Editor & Terminal › Editing |
@@ -3171,11 +3178,13 @@ owner_hints:
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Distinguishes the inventory-wide retired census from this wave retirement set."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Recounts live and retired inventory rows and includes the search retirement."
+  - "Amended 2026-10-10 (lead ruling L18): Recounts live and retired inventory rows and includes the search retirement."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Sets the already-listed editor line-height default to 1.55."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Requires an Editor scheme row using the shared catalog and defaulting to Follow look."
   - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
-  - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations, code.terminal.tab-role and code.terminal.search."
+  - "Amended 2026-10-10 (lead ruling L18): The 2026-10-09 retirement line below keeps its original seven ids; this L18 line records the search retirement."
+  - "Amended 2026-10-10 (Addendum 2 D27; R35): The prose Rows added table lists twelve rows with Editor Colors and Editor Line Spacing's 1.55 default."
+  - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-181, ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Settings_System.md#SSYS-002, ContractName:Plans/Settings_System.md#SSYS-040, ContractName:Plans/Settings_System.md#SSYS-042, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-637, ContractName:Plans/storage-plan.md#SP-330, ContractName:Plans/UI_Command_Catalog.md#UCC-200
@@ -3192,11 +3201,11 @@ canonical_text: >-
   Plans/DRY_Rules.md#DR-068; DL-183) with one row per field, each applying live with no restart badge: the restart
   badges on code.terminal.theme and code.terminal.font-family are removed. The model resolves field by field: the
   look's defaults ("Follow look"), the app default, the project default, then the tab's override. Each row is a
-  field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one. The tab's override is the tab's serialized state (SP-331), written by the popover's This
+  field's project default, held, like every Settings value, in the open Project's settings snapshot (SSYS-002), and Settings and the Appearance popover's All terminals write it through cmd.settings.transaction.preview then cmd.settings.transaction.apply over its exact id. The popover's All terminals is enabled and writes the project default row of SSYS-051 through the same Settings transaction Settings uses, so it changes every terminal while this Project is open; its hover tag says in this project; no surface writes an app-wide value until q-035 admits one. Until an app-wide store is admitted (the open question SSYS-028 records as q-035), a field's app default is the row's bundled inventory default and the app-default edit in Settings > Terminal stays disabled with the Settings owner's reason, its editable requirement kept and no app-wide write admitted from scope metadata alone. The tab's override is the tab's serialized state (SP-331), written by the popover's This
   terminal, never by Settings. Amended rows carry five fields: code.terminal.theme (Follow look or
   one of the shared catalog schemes or an imported one; Follow look), code.terminal.font-family (Follow look, JetBrains Mono,
   Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or System monospace; Follow
-  theme), code.terminal.font-size (Font default), code.terminal.copy-on-select (off) and code.terminal.sticky-header
+  look), code.terminal.font-size (Font default), code.terminal.copy-on-select (off) and code.terminal.sticky-header
   (on). Added rows carry the rest: code.terminal.scheme-pair (on), min-contrast (Off, 3:1, 4.5:1 or 7:1; 4.5:1),
   import-scheme (an action), font-weight (400), line-height (Font default), letter-spacing (0), ligatures (on),
   bold-bright (off), cursor-shape, cursor-blink (on), cursor-trail, background (Follow look, theme surface,
@@ -3217,7 +3226,7 @@ canonical_text: >-
   the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
   a terminal's Text size zoom are not rows.
   The terminal scheme row binds the same code colour-scheme catalog as Settings > Editor (SSYS-050, F3-642).
-  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow look".
+  Its scheme choice defaults to "Follow look"; this is the per-look scheme previously labelled "Follow theme" (R35 a).
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
@@ -3284,6 +3293,8 @@ stale_retired_dispositions:
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."
   - "Amended 2026-10-10 (lead ruling L16): All terminals is enabled and writes the project default through the Settings transaction, with the hover tag in this project and no app-wide write."
+  - "Amended 2026-10-10 (lead ruling L16): Restores the q-035 rule for the app default layer: until q-035 admits an app-wide store, a field's app default is the bundled inventory default and only the Settings > Terminal app-default edit stays disabled, its editable requirement kept."
+  - "Amended 2026-10-10 (R35 a): Terminal Font's default reads Follow look; the scheme note says the per-look scheme was previously labelled Follow theme."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
 ```

@@ -2208,7 +2208,7 @@ canonical_text: >-
   or panel tab where it could be confused, is one tab in a panel's strip, with an opaque, stable id whose prefix names
   its kind; it is separate from the domain object it shows and lives in exactly one panel (F3-635). A tab kind is one
   of the fifteen kinds of F3-635: editor, terminal, browser, dashboard, plan, document, artifact, run, transcript,
-  context, record, output (one tab; its channel switches inside it), problems, ports and debug_console. A tool kind is one of output (one tab; its channel switches inside it), problems, ports and
+  context, record, output (one tab; its channel switches inside it), problems, ports and debug_console. A tool kind is one of output, problems, ports and
   debug_console, the runtime views that used to sit in the bottom zone; a tools panel is a panel that holds only tool
   kinds and terminals, where those kinds land beside the terminals (F3-634). A workspace tab is still a project tab,
   the tab that switches projects (workspace_tab_id, F3-038); where older text says editor/workspace tab for the place

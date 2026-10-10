@@ -8093,7 +8093,6 @@ node_compile_hint:
   mode: canonical_field_minima_for_attempt_terminal_dev_records
   create_worknodes: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
 preserved_exact_tokens:
@@ -8119,7 +8118,7 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
+- "Amended 2026-10-10 (lead ruling L1): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): terminal layout and focus minima move to the v2 Home record (SP-330, SP-332)."
 owner_hints:
 - Plans/storage-plan.md
@@ -9567,7 +9566,6 @@ node_compile_hint:
   mode: terminal_pane_session_and_restore_identity_split
   create_worknodes: false
 source_lineage:
-- "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
 - Plans/ledgers/v2/pldg-20260908-002-terminal-workflow-findings/records/design_atoms.jsonl:atom-0002
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
 preserved_exact_tokens:
@@ -9589,7 +9587,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes: []
 stale_retired_dispositions:
-- "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
+- "Amended 2026-10-10 (lead ruling L1): Names the terminal-session panel pointer panel_tab_id in the DL-181 amendment."
 - "Amended 2026-10-09 (DL-181): the section/tab/pane/session split becomes tab/session."
 owner_hints:
 - Plans/storage-plan.md
@@ -27406,6 +27404,8 @@ This addendum compiles Jared's home and terminal decisions of 2026-10-09 into st
 
 **First read and migration.** The first read for a project and workspace tab that has no v2 record converts its layout into one. The sources are read in this order: the v1 record (its dotted key, then its compatibility colon keys, as SP-245 reads them), else the Home part of `layout:v1`, else nothing, which creates the default Home layout of `Plans/FinalGUISpec.md#F3-630` (stamp `created_default`, revision 0, no event). The conversion runs through the StorageMigrationCoordinator in one verified transaction: convert, check the schema and every invariant, write the v2 key, read it back. The source is never written, reset or deleted: it stays where it was, read-only, as input and lineage. A converted record's `revision` is the v1 `layout_revision` plus one (1 for a `layout:v1` source), and the conversion appends one `workspace.layout_changed` with `change` `migrated_from_v1` and actor `system`. A user's layout is never lost on upgrade.
 
+Amended 2026-10-10 (lead ruling L7): the chat column's `popped_out` is current-run state, so a chat popped out into its own window comes back in its fixed column after a restart; the chat row of the table below said it stayed popped out, and that rule no longer holds.
+
 The conversion table:
 
 | v1 source | v2 result |
@@ -27415,7 +27415,7 @@ The conversion table:
 | A hidden editor panel with no tabs and no browser session | Nothing: it holds nothing to keep. |
 | The dashboard surface | A panel holding `dashboard:home`, pinned; its widgets stay where `Plans/Widget_System.md#WS-030` puts the Home board. A hidden dashboard becomes the same panel, collapsed. |
 | Each terminal section | A panel in the bottom row, in slot order. Each workgroup pane becomes its own terminal tab `terminal:<terminal_session_id>` bound to its existing session, in workgroup and pane order, read from the section, workgroup, pane, leaf-pane and session records (SP-332). The tab of the section's active session is active. A pane's own tab title becomes the tab's user label; section and workgroup titles are not carried. A pane with no attached session makes no tab. A hidden terminal section becomes the same panel, collapsed, and one with no attached session makes no panel. The conversion never starts, ends or restarts a session; the terminal runtime checks liveness later (SP-125). |
-| A docked or floating chat | The fixed chat column, shown as it was shown, at the window's default width; its host, slot and floating bounds are dropped. A chat popped out into its own window stays popped out. |
+| A docked or floating chat | The fixed chat column, shown as it was shown, at the window's default width; its host, slot and floating bounds are dropped. A chat popped out into its own window comes back in its fixed column (popped_out is current-run state, lead ruling L7). |
 | A floating editor panel or dashboard | Docked: it joins the top row at its end. |
 | Geometry | The top row holds the non-terminal surfaces in host order (`dock_left`, `home_main` by slot index, `dock_right`, `dock_top`, then floating ones); the bottom row holds the terminal sections; the column is 0.6 over 0.4, the Home layout's proportions, because v1 stores the bottom dock's thickness in pixels without the window height. A row's shares are its surfaces' `flex_weight` normalized to sum to 1, and the row uses equal shares when every weight is 0 or any normalized share would be at or below 0.02. A row with one panel is that panel; with no terminal sections the top row is the root. |
 | Collapsed, focus and recent order | A collapsed v1 surface stays collapsed. The surface with the highest `last_focus_seq` becomes the focused panel; the recent-tab order is each surface's active tab, newest `last_focus_seq` first. |
@@ -27493,7 +27493,6 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-6026fa8432.md, SHA-256 27ddd358f2c98848e424d7802e753435e09568a9555330884a84c725a844f2c7 (concept lineage only)"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D3, D10)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-CONTRACT-v1-778c8494e6.md, SHA-256 aa16fc080f44f6824b0ef32a2b568bfcae81277b6962caaba1b441015d68dae9 (sections 2, 3 and 12; concept lineage only)"
@@ -27521,8 +27520,8 @@ negative_constraints:
 compatibility_only_notes:
   - "The v1 record, its compatibility colon keys and the Home part of layout:v1 are read-only conversion inputs and lineage."
 stale_retired_dispositions:
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Clarifies conversion-table geometry does not restore popped-out chat after restart."
-  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Explicitly includes History pin among saved view fields that emit no layout event."
+  - "Amended 2026-10-10 (lead ruling L7): Clarifies conversion-table geometry does not restore popped-out chat after restart."
+  - "Amended 2026-10-10 (lead ruling L9, corrected to view state with no event): Explicitly includes History pin among saved view fields that emit no layout event."
   - "Amended 2026-10-10 (lead ruling L7): The chat popped_out field is current-run state and restart starts the chat in its column."
   - "Supersedes the v1 record as the selected Home layout (SP-245 amended 2026-10-09, DL-180)."
 owner_hints:

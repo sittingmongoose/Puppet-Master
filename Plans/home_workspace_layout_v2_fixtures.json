@@ -73,7 +73,7 @@
               "tab_ids": [
                 "terminal:t1",
                 "terminal:t2",
-                "output:build"
+                "output"
               ],
               "active_tab_id": "terminal:t1",
               "preview_tab_id": null,
@@ -164,7 +164,7 @@
               "terminal_session_id": "t2"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
@@ -414,7 +414,7 @@
             "plan:ap-index",
             "terminal:t1",
             "terminal:t2",
-            "output:build"
+            "output"
           ],
           "active_tab_id": "file:src/main.rs",
           "preview_tab_id": null,
@@ -499,7 +499,7 @@
               "terminal_session_id": "t2"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
@@ -536,7 +536,7 @@
     },
     {
       "name": "collapsed_and_maximized",
-      "description": "Home with the tools panel collapsed to its strip and the documents panel maximized; a preview tab, a user label, a saved named layout, one closed tab, and a popped-out chat with History pinned at 520 px.",
+      "description": "Home with the tools panel collapsed to its strip and the documents panel maximized; a preview tab, a user label, a saved named layout, one closed tab, and a popped-out chat with History pinned at 520 px; the Output tab (output, its channel build as view state) and beside it a split-off channel tab (output:tests, Addendum 2 D28).",
       "record": {
         "schema_id": "pm.home_workspace_layout.v2",
         "schema_version": "2.0.0",
@@ -594,7 +594,8 @@
               "tab_ids": [
                 "terminal:t1",
                 "terminal:t2",
-                "output:build"
+                "output",
+                "output:tests"
               ],
               "active_tab_id": "terminal:t1",
               "preview_tab_id": null,
@@ -685,13 +686,23 @@
               "terminal_session_id": "t2"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
             "mode": "kept",
             "state": {
               "channel": "build"
+            },
+            "ref": {}
+          },
+          "output:tests": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "tests"
             },
             "ref": {}
           },
@@ -857,7 +868,7 @@
               "tab_ids": [
                 "terminal:t1",
                 "terminal:t2",
-                "output:build"
+                "output"
               ],
               "active_tab_id": "terminal:t1",
               "preview_tab_id": null,
@@ -938,7 +949,7 @@
               "terminal_session_id": "t2"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
@@ -1053,7 +1064,7 @@
               "tab_ids": [
                 "terminal:t1",
                 "terminal:t2",
-                "output:build"
+                "output"
               ],
               "active_tab_id": "terminal:t1",
               "preview_tab_id": null,
@@ -1144,7 +1155,7 @@
               "terminal_session_id": "t7"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
@@ -1240,7 +1251,7 @@
               "tab_ids": [
                 "terminal:t1",
                 "terminal:t2",
-                "output:build"
+                "output"
               ],
               "active_tab_id": "terminal:t1",
               "preview_tab_id": null,
@@ -1331,7 +1342,7 @@
               "terminal_session_id": "t2"
             }
           },
-          "output:build": {
+          "output": {
             "kind": "output",
             "label": null,
             "pinned": false,
@@ -2006,7 +2017,7 @@
       "ops": [
         {
           "op": "replace",
-          "path": "/tabs/output:build/kind",
+          "path": "/tabs/output/kind",
           "value": "goal"
         }
       ],
