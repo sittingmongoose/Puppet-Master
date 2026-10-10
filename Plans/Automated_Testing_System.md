@@ -4242,6 +4242,8 @@ depends_on:
 - SSYS-034
 - UCC-160
 - WM-052
+- DL-180
+- DL-181
 - DL-182
 unblocks: []
 acceptance_criteria:
@@ -4327,6 +4329,7 @@ negative_constraints:
 - No implementation, WorkNodes, NodeSeeds, runtime acceptance or governance seal is created by this PlanUnit.
 stale_retired_dispositions:
 - "Amended 2026-10-09 (DL-182): 'images remain outside approval' and the image-protocol exclusion are replaced by DL-182; ATS-076 certifies the image protocols, their hardening and saved scrollback with images."
+- "Amended 2026-10-09 (DL-180, DL-181): P10 input protection follows the session across tab moves, collapse, maximize, hide, restore and layout apply (ATS-076)."
 ```
 
 ## ATS-048 — Existing Session and Bundle Command Bindings
@@ -6118,7 +6121,7 @@ canonical_text: >-
   refusing agent input as `secret_input`; Interrupt sending SIGINT and Stop ending the agent's run and returning the
   lease; agent-typed commands carrying the square gutter mark; an agent-opened terminal landing in the background with
   the hollow square and never taking focus; input protection outranking every grant and blocking an agent with an
-  explicit blocked result and zero child writes across tab moves, collapse, maximize, layout apply and restore
+  explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore
   (ATS-047 P10); and agent reads returning rendered text with a read state, never raw bytes and never images. Commands
   and wiring: each terminal control dispatches its command of Plans/UI_Command_Catalog.md#UCC-201 and is in
   Plans/UI_Wiring_Rules.md#UIW-042's census with its Plans/Wiring_Matrix.md#WM-091 row. Concept checks of the
@@ -6142,7 +6145,7 @@ acceptance_criteria:
   - "Quota, eviction order, frame pool, size, name, depth and cycle limits each refuse or evict as SMPFS-181 says, and animation pauses while hidden and holds its first frame under Reduced Motion."
   - "Saved scrollback restores with its images, drops images oldest first with the dashed placeholder and a counted notice, resolves restored placeholder ids only to restored images, brings back a running command as ended and indeterminate, honours the write cadence, Clear scrollback, the 7-day closed-tab limit and the 5 s load budget, and never leaves this machine."
   - "The four agent rows show their exact text; take-over refuses the agent's next write as `preempted`; Allow once lets one command through; Allow in this terminal is never stored, ends on close, take-over or run end, returns on Hand back, and every command under it still asks for its own approval; Deny refuses; secret prompts refuse agent input as `secret_input` with the padlock; no control reads Always allow here."
-  - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, layout apply and restore, and outranks every grant."
+  - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore, and outranks every grant."
   - "Agent reads return rendered text with a read state and never raw bytes or images; the accessible buffer reads images as `[image W×H px]`, `[image]` or the placeholder label."
   - "Every terminal control has its UCC-201 command, UIW-042 census entry and WM-091 row."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
