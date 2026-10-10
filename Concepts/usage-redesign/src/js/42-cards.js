@@ -168,7 +168,13 @@
     agenda: ['reset', 'resets'], qhist: ['account', 'accounts'], models: ['model', 'models'], ranked: ['row', 'rows'], mix: ['part', 'parts'],
     providers: ['provider', 'providers'], context: ['family', 'families'] };
   var fitCache = {};   /* measured fit heights: id|class|w|fit|look|range|scope|config -> rows */
-  var picked = {};     /* widget id -> {cls, w, h, pid}: the preset a panel was last set to from the menu (its fit height) */
+  /* the heights of the last opening of the picker: each opening measures afresh (the data may have changed), and until it
+     has, a pick, a row and a Shift step use these (no 80-160 ms measure in the click; the idle measure corrects a row) */
+  var fitStale = {};
+  /* widget id -> {class: {w, h, px, pid}}: the preset a panel was last set to from the menu at each board class (its fit
+     height); kept in the layout record (40-board, presets), so a reload keeps the preset's name */
+  var picked = {};
+  function pickedAt(id, cls) { return picked[id] ? picked[id][cls] || null : null; }
   function clsNow() { return PMU.board && PMU.board.cls ? PMU.board.cls() : { name: 'S', tracks: 12, pitchX: 47 }; }
   function viewKey(id) {
     var l = PMU.theme.look(), c = cfgOf(id);
@@ -196,20 +202,26 @@
   function fitKeyOf(id, cls, w, fit) { return [id, cls, pxOf(w), fit, viewKey(id)].join('|'); }
   /* the presets a panel offers at the board's class now: [{id, name, desc, w, h, fit, measured}] (a fit preset's h is its
      measured height when known, else the kind's fallback) */
-  function presetsOf(id) {
+  function presetsOf(id) { return dedupe(allPresets(id)); }
+  presetsOf.all = function (id) { return allPresets(id); };
+  function allPresets(id) {
     var ks = PMU.widgets.spec(id), cls = clsNow();
     if (!ks) return [];
     var list = (ks.presets || []).filter(function (p) { return offered(p, cls.name) && (!p.minPx || Math.min(cls.tracks, (ks.wMax || cls.tracks)) * (cls.pitchX || NOMINAL_PITCH) - GAP_PX >= p.minPx); }).map(function (p) {
-      var w = widthAt(p, ks, cls), h = p.h, measured = p.fit == null;
+      var w = widthAt(p, ks, cls), h = p.h, measured = p.fit == null, stale = false;
       if (p.fit != null) {
-        var k = fitCache[fitKeyOf(id, cls.name, w, p.fit)], pk = picked[id];
+        var key = fitKeyOf(id, cls.name, w, p.fit), k = fitCache[key], pk = pickedAt(id, cls.name);
         if (k != null) { h = k; measured = true; }
-        else if (pk && pk.pid === p.id && pk.cls === cls.name && pk.w === w && pk.px === pxOf(w)) { h = pk.h; measured = true; }
+        else if (pk && pk.pid === p.id && pk.w === w && pk.px === pxOf(w)) { h = pk.h; measured = true; stale = true; }
+        else if (fitStale[key] != null) { h = fitStale[key]; measured = true; stale = true; }
       }
-      return { id: p.id, name: p.name, desc: p.desc, w: w, h: h, fit: p.fit == null ? null : p.fit, hMin: p.hMin || null, measured: measured };
+      return { id: p.id, name: p.name, desc: p.desc, w: w, h: h, fit: p.fit == null ? null : p.fit, hMin: p.hMin || null, measured: measured, stale: stale };
     });
-    /* two presets that come to the same size here (a narrow board gives a 10- and a 12-track preset its whole width; a
-       fit of eight rows where the panel has eight) are one preset: the later, larger tier keeps the row */
+    return list;
+  }
+  /* two presets that come to the same size here (a narrow board gives a 10- and a 12-track preset its whole width; a
+     fit of eight rows where the panel has eight) are one preset: the later, larger tier keeps the row */
+  function dedupe(list) {
     return list.filter(function (p, i) {
       return !list.slice(i + 1).some(function (q) { return q.w === p.w && (p.measured && q.measured ? q.h === p.h : p.fit == null && q.fit == null ? q.h === p.h : p.fit != null && q.fit === p.fit); });
     });
@@ -219,8 +231,11 @@
   function sizeName(ks, w, h, id) {
     var cls = clsNow().name;
     if (id) {
-      var pk = picked[id], list = presetsOf(id);
-      if (pk && pk.cls === cls && pk.w === w && pk.h === h) { var hit = list.filter(function (p) { return p.id === pk.pid; })[0]; if (hit) return hit.name; }
+      var pk = pickedAt(id, cls), list = presetsOf(id);
+      if (pk && pk.w === w && pk.h === h) {
+        var mine = function (p) { return p.id === pk.pid && p.w === w; };
+        var hit = list.filter(mine)[0] || allPresets(id).filter(mine)[0]; if (hit) return hit.name;
+      }
       var m = list.filter(function (p) { return p.w === w && p.h === h && p.measured; })[0];
       return m ? m.name : null;
     }
@@ -339,7 +354,7 @@
     };
     var finish = function (h) {
       job.done = true; job.h = h; delete jobs[key];
-      if (h != null) fitCache[key] = h;
+      if (h != null) { fitCache[key] = h; delete fitStale[key]; }
       dropGhost(card); card = null;
       if (PMU.cards._fitLog) PMU.cards._fitLog.push({ id: id, w: w, fit: fit, h: h, renders: job.renders, ms: Math.round(performance.now() - job.t0) });
     };
@@ -361,7 +376,7 @@
   function measureFit(id, w, fit) { var j = fitJob(id, w, fit); var guard = 0; while (!j.done && guard++ < 50) j.step(); return j.h; }
   /* a fit preset's height now (measured, or measured here) */
   function presetH(id, p) {
-    if (p.fit == null || p.measured) return p.h;
+    if (p.fit == null || p.measured) return p.h;   /* a stale height counts: the idle measure corrects it */
     var m = measureFit(id, p.w, p.fit);
     if (m != null) { p.h = m; p.measured = true; }
     return p.h;
@@ -399,9 +414,12 @@
     var m = /^size:(.+)$/.exec(v); if (!m) return false;
     var raw = /^(\d+)x(\d+)$/.exec(m[1]);
     if (raw) { PMU.board.resize(id, { w: +raw[1], h: +raw[2] }, 'size_menu'); return true; }
-    var p = presetsOf(id).filter(function (x) { return x.id === m[1]; })[0]; if (!p) return false;
-    var h = presetH(id, p);
-    picked[id] = { cls: clsNow().name, w: p.w, px: pxOf(p.w), h: h, pid: p.id };
+    /* a row the idle measure has since folded into a larger preset of the same size (a click that lands while the rows
+       update) still picks: the preset itself, at its size */
+    var p = presetsOf(id).filter(function (x) { return x.id === m[1]; })[0] || presetsOf.all(id).filter(function (x) { return x.id === m[1]; })[0];
+    if (!p) return false;
+    var h = presetH(id, p), cls = clsNow().name;
+    (picked[id] = picked[id] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
     PMU.board.resize(id, { w: p.w, h: h }, 'size_menu');
     return true;
   }
@@ -436,6 +454,7 @@
   function previewTo(p) {
     if (!pv || !p || !pv.view || !pv.view.isConnected) return;
     var id = pv.id, cls = clsNow(), h = presetH(id, p), key = p.id + ':' + p.w + 'x' + h;
+    pv.p = p;
     if (pv.key === key) return;
     var view = pv.view, vw = view.clientWidth || 320, vh = view.clientHeight || 160;
     var pxW = Math.round(p.w * cls.pitchX - GAP_PX), pxH = h * ROW_PX - GAP_PX;
@@ -496,8 +515,8 @@
       var t0 = performance.now();
       do {
         if (!job || job.done) {
-          var next = presetsOf(id).filter(function (p) { return p.fit != null && !p.measured; })[0];
-          if (!next) { if (h.spec && h.spec.id === 'size:' + id) h.update(sizeMenuSpec(id, h.spec._nested)); return; }
+          var next = presetsOf(id).filter(function (p) { return p.fit != null && (!p.measured || p.stale); })[0];
+          if (!next) { if (h.spec && h.spec.id === 'size:' + id) settleRows(h, id); return; }
           job = fitJob(id, next.w, next.fit);
         }
         job.step();
@@ -505,6 +524,31 @@
       pv.idle = idle(step, { timeout: 500 });
     };
     pv.idle = idle(step, { timeout: 500 });
+  }
+  /* the measured rows: the same presets update in place (their size, footprint and check), so a row never re-renders under
+     the pointer; only a changed set of rows (a preset that came to the size of a larger one) rebuilds the list */
+  function settleRows(h, id) {
+    var next = sizeMenuSpec(id, h.spec._nested), rows = next.sections[1].rows;
+    var els = Array.prototype.slice.call(h.el.querySelectorAll('.pmu-mitem'));
+    var olds = els.map(function (el) { return h.flat[+el.getAttribute('data-mi')]; });
+    var same = !h.query && olds.length === rows.length && olds.every(function (r, i) { return r && r.preset && r.value === rows[i].value; });
+    if (!same) { h.update(next); return; }
+    h.spec = next;
+    els.forEach(function (el, i) {
+      var r = rows[i], mi = +el.getAttribute('data-mi'), was = h.flat[mi];
+      h.flat[mi] = r;
+      if (was.right !== r.right) { var rt = el.querySelector('.pmu-mright'); if (rt) rt.textContent = r.right; }
+      if (was.icon !== r.icon) { var ic = el.querySelector('.pmu-micon'); if (ic) ic.innerHTML = SVG[r.icon] || ''; }
+      if (!!was.active !== !!r.active) {
+        el.classList.toggle('active', !!r.active); el.setAttribute('aria-checked', r.active ? 'true' : 'false');
+        var ck = el.querySelector('.pmu-mcheck');
+        if (r.active && !ck) el.insertAdjacentHTML('beforeend', '<span class="pmu-mcheck" aria-hidden="true">' + (SVG.check || '') + '</span>');
+        else if (!r.active && ck) ck.remove();
+      }
+    });
+    var cur = h.el.querySelector('.pmu-mcur'); if (cur && next.current) cur.textContent = 'Current · ' + next.current;
+    /* the miniature on show follows its row's measured height */
+    if (pv && pv.h === h && pv.p) { var now = rows.filter(function (r) { return r.preset.id === pv.p.id; })[0]; if (now) previewTo(now.preset); }
   }
   function mountStage(id, h) {
     var slot = h.el.querySelector('.pmu-szslot'); if (!slot) return;
@@ -523,15 +567,9 @@
     }
     slot.appendChild(pv.el);
     /* the stage gives way where the menu would not fit beside its anchor (a card near the window's top or bottom edge):
-       the view shrinks to 100 px at least, so every size row shows without the menu scrolling (the menu's own room:
+       the view shrinks to 96 px at least, so every size row shows without the menu scrolling (the menu's own room:
        45-menu.js place, 6 px gap and 8 px edge) */
-    var appEl = document.getElementById('pmuApp'), anc = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : null;
-    if (appEl && anc && pv.view) {
-      var hostR = appEl.getBoundingClientRect(), roomM = Math.max(hostR.bottom - anc.bottom, anc.top - hostR.top) - 6 - 8;
-      pv.view.style.height = '';
-      var over = h.el.offsetHeight - roomM;
-      if (over > 0) pv.view.style.height = Math.max(100, 160 - over) + 'px';
-    }
+    fitStage(h);
     if (!h.el._pmuSzWired) {
       h.el._pmuSzWired = true;
       /* one miniature a frame, the last row asked for (a fast sweep down the rows renders where it stops) */
@@ -546,8 +584,28 @@
       h.el.addEventListener('focusin', onRow);
     }
   }
+  /* the menu's height with nothing cut: its box is capped (place's max-height once it has opened, a spring's fixed height
+     while it springs), so the list's hidden overflow is added back. The room is the side place gave it once it has
+     opened (a drill-in from the card menu keeps the card menu's side), else the larger side, as place will choose */
+  var STAGE_PX = 160, STAGE_MIN = 96;
+  function fitStage(h) {
+    var appEl = document.getElementById('pmuApp'), a = h.anchor && h.anchor.isConnected ? h.anchor.getBoundingClientRect() : h.lastAnchor;
+    if (!appEl || !a || !pv || !pv.view) return;
+    var hostR = appEl.getBoundingClientRect(), capped = parseFloat(h.el.style.maxHeight);
+    var room = capped > 0 ? capped : Math.max(hostR.bottom - a.bottom, a.top - hostR.top) - 6 - 8;
+    var was = pv.view.offsetHeight, hold = h.el.style.height;
+    pv.view.style.height = '';
+    h.el.style.height = '';
+    var list = h.el.querySelector('.pmu-mlist');
+    var natural = h.el.offsetHeight + (list ? Math.max(0, list.scrollHeight - list.clientHeight) : 0);
+    h.el.style.height = hold;
+    var over = Math.ceil(natural - room);
+    if (over > 0) pv.view.style.height = Math.max(STAGE_MIN, STAGE_PX - over) + 'px';
+    /* a stage that changed height re-places the miniature on show */
+    if (pv.key && pv.p && pv.view.offsetHeight !== was) { var p = pv.p; pv.key = null; previewTo(p); }
+  }
   /* a fresh measure for each opening of the picker: the data, the range or the look may have changed since the last one */
-  function freshFits(id) { Object.keys(fitCache).forEach(function (k) { if (k.indexOf(id + '|') === 0) delete fitCache[k]; }); }
+  function freshFits(id) { Object.keys(fitCache).forEach(function (k) { if (k.indexOf(id + '|') === 0) { fitStale[k] = fitCache[k]; delete fitCache[k]; } }); }
   function sizeMenuSpec(id, nested) {
     var list = presetsOf(id);
     return { id: 'size:' + id, _nested: !!nested, title: t('cardmenu.size'), current: currentLabel(id), align: 'end', width: 360, className: 'pmu-szmenu',
@@ -756,7 +814,24 @@
     /* the presets of a panel at the board's class now ([{id, name, desc, w, h, fit, measured}]), a fit preset's measured
        height, and applying one (the keyboard's Shift steps, the API, the probes) */
     presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
-    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null
+    applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null,
+    /* the layout record's presets ({class: {id, w, h, px}}): the preset a panel was set to at each class while its geometry
+       there is still that size (40-board writes and reads it) */
+    presetsSet: function (id, geo) {
+      var out = null, mine = picked[id] || {};
+      Object.keys(mine).forEach(function (cls) {
+        var pk = mine[cls], g = geo && geo[cls];
+        if (pk && g && g.w === pk.w && g.h === pk.h) (out = out || {})[cls] = { id: pk.pid, w: pk.w, h: pk.h, px: pk.px };
+      });
+      return out;
+    },
+    seedPresets: function (id, set, geo) {
+      Object.keys(set || {}).forEach(function (cls) {
+        var e = set[cls], g = geo && geo[cls];
+        if (!e || typeof e.id !== 'string' || !g || g.w !== e.w || g.h !== e.h) return;
+        (picked[id] = picked[id] || {})[cls] = { w: e.w, h: e.h, px: +e.px || 0, pid: e.id };
+      });
+    }
   };
 
   /* tool clicks (delegated on the board) */

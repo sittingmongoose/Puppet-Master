@@ -64,6 +64,7 @@
 
   /* ---- layout store (DESIGN-SPEC 6.6): one envelope, records per widget, geometry per board class edited ---- */
   function geoStr(r) { return r.x + ',' + r.y + ',' + r.w + ',' + r.h; }
+  function geoMap(g) { var out = {}; Object.keys(g || {}).forEach(function (cls) { var r = parseGeo(g[cls]); if (r) out[cls] = r; }); return out; }
   function parseGeo(s) { var p = String(s || '').split(',').map(Number); return p.length === 4 && p.every(function (n) { return isFinite(n) && n >= 0; }) ? { x: p[0], y: p[1], w: p[2], h: p[3] } : null; }
   function cfgRefs(cfg) { return Object.keys(cfg || {}).filter(function (k) { return cfg[k] != null && cfg[k] !== ''; }).map(function (k) { return k + '=' + cfg[k]; }); }
   function parseRefs(list) { var out = {}; (list || []).forEach(function (s) { var i = String(s).indexOf('='); if (i > 0) out[s.slice(0, i)] = s.slice(i + 1); }); return out; }
@@ -108,6 +109,8 @@
       if (rec.configuration_refs && rec.configuration_refs.length) configs[rec.widget_id] = parseRefs(rec.configuration_refs);
       if (rec.committed_revision) revisions[rec.widget_id] = rec.committed_revision;
       if (!keepGeometry) return;
+      /* the preset each class's size was set to (its name survives the reload; a fit preset's size alone cannot say) */
+      if (rec.presets && typeof rec.presets === 'object' && PMU.cards && PMU.cards.seedPresets) PMU.cards.seedPresets(rec.widget_id, rec.presets, geoMap(rec.geometry));
       Object.keys(rec.geometry || {}).forEach(function (cls) {
         var g = parseGeo(rec.geometry[cls]); if (!g) return;
         layout[rec.room_id] = layout[rec.room_id] || {};
@@ -160,6 +163,7 @@
         var card = current.room === room ? cardOf(id) : null;
         var rec = { room_id: room, widget_id: id, visible: !(st.hidden[room] || {})[id], order_index: order[id] != null ? order[id] : null, geometry: g,
           preset_id: mine ? (PMU.cards.sizeName(kindSpec(id), mine.w, mine.h, id) || 'custom') : null,
+          presets: PMU.cards.presetsSet ? PMU.cards.presetsSet(id, geoMap(g)) : null,
           semantic_tier_id: card ? (card.getAttribute('data-tw') || '') + '.' + (card.getAttribute('data-th') || '') : null,
           configuration_refs: cfgRefs(configs[id]), committed_revision: revisions[id] || 0 };
         byWidget[room + '/' + id] = rec; recs.push(rec);
@@ -1507,16 +1511,21 @@
       /* Shift steps to the next preset in the arrow's direction: Right / Left by width, Down / Up by height (ties: the
          preset closest in the other dimension) */
       /* the presets offered at this board class, a fit preset at its measured height (lane c-presets) */
-      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks - r.x; })
-        .map(function (p) { return { w: p.w, h: PMU.cards.presetH ? PMU.cards.presetH(g.id, p) : p.h }; });
+      /* ranked on the heights known now (measured, the last picker's, or the kind's fallback); only the preset a step
+         lands on is measured, if it still has to be (one fit, not every preset's in one key press) */
+      var presets = (PMU.cards.presets ? PMU.cards.presets(g.id) : []).filter(function (p) { return p.w <= cls.tracks - r.x; });
       var horiz = key === 'ArrowRight' || key === 'ArrowLeft', fwd = key === 'ArrowRight' || key === 'ArrowDown';
-      var cands = presets.filter(function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; });
+      var toward = function (p) { var a = horiz ? p.w : p.h, b = horiz ? r.w : r.h; return fwd ? a > b : a < b; };
+      var cands = presets.filter(function (p) { return !p.measured || toward(p); });
       cands.sort(function (p, q) {
         var pa = horiz ? p.w : p.h, qa = horiz ? q.w : q.h;
         if (pa !== qa) return fwd ? pa - qa : qa - pa;
         return Math.abs((horiz ? p.h : p.w) - (horiz ? r.h : r.w)) - Math.abs((horiz ? q.h : q.w) - (horiz ? r.h : r.w));
       });
-      if (cands[0]) { r.w = cands[0].w; r.h = cands[0].h; }
+      for (var ci = 0; ci < cands.length; ci++) {
+        var cp = cands[ci], ch = PMU.cards.presetH ? PMU.cards.presetH(g.id, cp) : cp.h;
+        if (toward({ w: cp.w, h: ch })) { r.w = cp.w; r.h = ch; break; }
+      }
     } else {
       var wMax = Math.min(ks.wMax || cls.tracks, cls.tracks - r.x), hMax = ks.hMax || 40;
       if (key === 'ArrowRight') r.w = Math.min(wMax, r.w + 1); if (key === 'ArrowLeft') r.w = Math.max(ks.wMin || 1, r.w - 1);

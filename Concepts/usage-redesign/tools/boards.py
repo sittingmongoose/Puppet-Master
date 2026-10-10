@@ -85,7 +85,7 @@ KINDS = {
     # (lane d-plans turns a plan plate into one row per account: its width may reach the board's, its height grows by rows)
     'limit': (3, None, 3, 24, [
         P('compact', 'Compact', 4, 9, "The active account's windows", fit=1),
-        P('standard', 'Standard', 8, 12, 'Three accounts, a column per window', fit=3),
+        P('standard', 'Standard', 8, 12, 'Up to three accounts, a column per window', fit=3),
         P('expanded', 'Expanded', 12, 14, 'Every account, window and fact', fit='all')]),
     'provider': (3, None, 3, 24, [
         P('compact', 'Compact', 6, 7, 'The active account', fit=1),
