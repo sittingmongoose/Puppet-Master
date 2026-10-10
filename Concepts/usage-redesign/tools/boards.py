@@ -118,7 +118,9 @@ KINDS = {
     'budget': (5, None, 5, 16, [
         P('compact', 'Compact', 6, 7, 'Spend, estimate and a small line'),
         P('standard', 'Standard', 8, 10, 'Projection chart and burn facts'),
-        P('expanded', 'Expanded', WIDE(), 10, 'Adds plan versus metered')]),
+        # fit 'all' (agent 5): at 557 px the room hero's big number left no line for the burn facts at 10 rows, so the
+        # larger preset showed less than Standard; the height now grows until the facts row and the mix both show
+        P('expanded', 'Expanded', WIDE(), 10, 'Adds plan versus metered', fit='all')]),
     'heat': (6, None, 5, 14, [
         # 11 rows: at 368 px the legend wraps to three lines and 10 rows left the cells at their 11 px floor with the
         # legend's last line under the card's edge (NieR, agent 4)
