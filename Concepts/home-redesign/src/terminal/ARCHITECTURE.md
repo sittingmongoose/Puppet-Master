@@ -240,7 +240,8 @@ and the no-GPU path keeps only the CSS fallbacks (static scanlines, a CSS glow) 
 'interrupted'|'waiting', exitCode, elapsedMs, startedAt, lines: string[] (plain text, no escapes), totalLines,
 by: 'user'|'agent:<name>', onOpen, onRerun, onViewOutput, onToggle, expanded, failureLine }`. `failureLine` is
 computed by the terminal from its command log (`PMT.cardSpec(session, command)` builds a whole spec), or by the chat with
-`T.CommandCard.failureLineOf(lines)` as a fallback.
+`T.CommandCard.failureLineOf(lines)` as a fallback. Keyboard focus inside a card sets `data-pmt-focus="key"` on it (Retro's reverse-video head and NieR's target brackets
+show for keyboard focus only). The card's glyph slot (`glyphSvg()`, `CHEVRON`) is where the neon glyph swap goes.
 
 ## 8. Public API (`window.PMT`, 90-kind.js)
 

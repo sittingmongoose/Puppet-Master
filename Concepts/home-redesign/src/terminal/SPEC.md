@@ -294,6 +294,23 @@ Phosphor schemes map colours outside the 16 (the 256-colour cube and truecolor),
 10, 11, 12), onto the phosphor by brightness, so a program's `38;5;196` never paints red on a green tube. The scheme's
 own 16 stay as authored.
 
+## 11. Chat command card (D27 chat port, js/80-card.js)
+
+The chat's compact, bounded preview and audit card for a command; the shell owns the session and Open in Terminal
+reveals that exact session (canon ACD-102, ACD-108, ACD-126 to ACD-131). The file header of `js/80-card.js` holds the
+full rules; the numbers:
+
+| Rule | Value |
+|---|---|
+| Preview | Last 5 lines collapsed, last 15 expanded; the lines above the window counted at the top as "N earlier lines", the first row fading into it; lines keep their spacing, never wrap, scroll sideways (a cut-off line fades at its edge); 1000 characters a line at most; "No output" for a finished command with none |
+| Status | A glyph plus words: Running, Needs input, Done, Failed, Interrupted; a stopped command says its code in words: "Failed · exited 101", "Done · exited 0", "Interrupted · exited 130". Interrupted is muted and still (the glyph catalog's skipped tone). No stripes, no capsule badges |
+| Elapsed | Tabular figures from startedAt, once a second, one shared timer; Friendly sets it in the code face (Poppins has no tabular figures), so the line never shifts |
+| Who | "You ran in <folder>", or the gutter's agent mark and "<Agent> ran in <folder>" with the name in the primary ink |
+| Actions | Open in Terminal only with a live session; View output only without one; Rerun once stopped; 24 px text buttons |
+| Narrow (360 px) | The failure line wraps after `/` and `::` so `file:line` stays whole; who and where take their own line |
+| Motion | A status change rolls the status word over and slides the line to its new width, the glyph settles per look, and the exit words, failure line and Rerun come in after; new output scrolls the window a row at a time (more than 3 lines at once jumps); expand and collapse grow and shrink from the last line; per-look language as in section 9 (Basic ease, Friendly spring, Glass glide, Retro steps, NieR stepped parts); Reduced Motion: 120 ms fades only. Nothing moves on first paint |
+| Contrast | 4.5:1 text and 3:1 marks in every look and mode, hover states included |
+
 ## 10. Performance
 
 Targets for the native engine (research-terminal-engines-ide.md E3; DL-035's own engine must meet them):

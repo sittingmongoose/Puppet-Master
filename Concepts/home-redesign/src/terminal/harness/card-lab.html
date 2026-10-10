@@ -10,7 +10,10 @@
   the home layer never inlines it. Serve the Concepts folder over http (fonts load by relative URL) and open
   home-redesign/src/terminal/harness/card-lab.html.
   URL parameters for scripted shots: family=friendly|glass|retro|basic, mode=light|dark, nier=1, reduced=1,
-  width=360|480|600|all, freeze=1 (no streaming; the running card keeps ticking).
+  niermotion=0 (NieR with its Look parts only: no Slice open, Text decode or Alert glitch), width=360|480|600|all,
+  freeze=1 (no streaming; the running card keeps ticking).
+  The Finish buttons end the running test the way a real run ends (Done, Failed with its failure line, Interrupted,
+  Needs input), so each transition can be watched in every look.
 -->
 <style>
 /* ---- faces (the lab loads them by relative URL; the layer inlines its own) ---- */
@@ -24,8 +27,8 @@
 @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2"); }
 @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2"); }
 @font-face { font-family: 'PM NieR Sans'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/settings/nier/fonts/mplus1-latin-var.woff2") format("woff2"); }
-@font-face { font-family: 'PM NieR Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url("../fonts/pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
-@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("../fonts/pmt-jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'PM NieR Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/settings/nier/fonts/jetbrains-mono-latin-var.woff2") format("woff2"); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 800; font-display: swap; src: url("../../../../onboarding/opus-5.5/src/settings/nier/fonts/jetbrains-mono-latin-var.woff2") format("woff2"); }
 
 /* ---- the page's theme tokens, copied verbatim (the radius capsule token is left out) ---- */
 /* PM7 :root token contract (PMConcept7.html lines 171-213) */
@@ -688,6 +691,15 @@ html[data-o55-nier][data-theme="basic-dark"] {
   --o55-nier-shadow-rgb: 33,31,27;
 }
 
+/* ---- the page's Reduced Motion rule, copied from PMConcept7 (its REDUCED MOTION block): every animation is stilled
+   and every transition is off, so the lab shows what the card's calm versions really get ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
+}
+[data-motion="reduced"] *, [data-motion="reduced"] *::before, [data-motion="reduced"] *::after {
+  animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important;
+}
+
 /* ---- host token the panels CSS defines (CONTRACT.md section 10): JetBrains Mono first in every look ---- */
 :root { --pm-font-code: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; }
 
@@ -777,6 +789,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
   </span>
   <span class="pmt-lab-group" role="group" aria-label="Modes over the look">
     <button type="button" class="pmt-lab-btn" data-lab-toggle="nier">NieR</button>
+    <button type="button" class="pmt-lab-btn" data-lab-toggle="niermotion">NieR Motion parts</button>
     <button type="button" class="pmt-lab-btn" data-lab-toggle="reduced">Reduced Motion</button>
   </span>
   <span class="pmt-lab-group" role="group" aria-label="Chat width"><span>Chat width</span>
@@ -789,6 +802,12 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     <button type="button" class="pmt-lab-btn" data-lab-do="expand">Expand all</button>
     <button type="button" class="pmt-lab-btn" data-lab-do="collapse">Collapse all</button>
     <button type="button" class="pmt-lab-btn" data-lab-do="restart">Restart the running test</button>
+  </span>
+  <span class="pmt-lab-group" role="group" aria-label="Finish the running test"><span>Finish as</span>
+    <button type="button" class="pmt-lab-btn" data-lab-end="ok">Done</button>
+    <button type="button" class="pmt-lab-btn" data-lab-end="failed">Failed</button>
+    <button type="button" class="pmt-lab-btn" data-lab-end="interrupted">Interrupted</button>
+    <button type="button" class="pmt-lab-btn" data-lab-end="waiting">Needs input</button>
   </span>
 </header>
 <main class="pmt-lab-stage" id="pmt-lab-stage"></main>
@@ -804,6 +823,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     family: q.get('family') || 'basic',
     mode: q.get('mode') || 'dark',
     nier: q.get('nier') === '1',
+    niermotion: q.get('niermotion') !== '0',
     reduced: q.get('reduced') === '1',
     width: q.get('width') || '480'
   };
@@ -906,22 +926,48 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     return wrap;
   }
 
-  var streamTimer = 0;
+  var streamTimer = 0, streamed = [], streamStart = Date.now() - 12000;
   function stream() {
     clearTimeout(streamTimer);
+    streamed = [];
     if (freeze) return;
-    var start = Date.now(), i = 0;
+    var start = streamStart = Date.now(), i = 0;
     live.forEach(function (n) { T.CommandCard.update(n, { status: 'running', startedAt: start, lines: [], totalLines: 0, exitCode: null }); });
     (function step() {
       if (i < rerunScript.length) {
         i++;
-        var shown = rerunScript.slice(0, i);
+        var shown = streamed = rerunScript.slice(0, i);
         live.forEach(function (n) { T.CommandCard.update(n, { lines: shown, totalLines: shown.length }); });
         streamTimer = setTimeout(step, i < 3 ? 1600 : 900);
       } else {
         live.forEach(function (n) { T.CommandCard.update(n, { status: 'ok', exitCode: 0, elapsedMs: Date.now() - start }); });
       }
     })();
+  }
+
+  /* the running test ends now, the way a real run would */
+  var ENDS = {
+    ok: function () { return { status: 'ok', exitCode: 0, add: ['', 'test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 122 filtered out; finished in 0.88s'] }; },
+    failed: function () {
+      return { status: 'failed', exitCode: 101, failureLine: "thread 'media::import::tests::streams_thumbnails' panicked at src/media/thumbs.rs:61:9:",
+        add: ['test media::import::tests::streams_thumbnails ... FAILED', '', 'failures:', '',
+          "thread 'media::import::tests::streams_thumbnails' panicked at src/media/thumbs.rs:61:9:", 'called `Result::unwrap()` on an `Err` value: Vips("libvips not found")',
+          '', 'test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 122 filtered out; finished in 0.91s', '',
+          'error: test failed, to rerun pass `-p tastebook-api --lib`'] };
+    },
+    interrupted: function () { return { status: 'interrupted', exitCode: 130, add: ['^C'] }; },
+    waiting: function () { return { status: 'waiting', add: ['Thumbnails need libvips; install it now? [y/N] '] }; }
+  };
+  function finish(kind) {
+    clearTimeout(streamTimer);
+    live.forEach(function (n) {
+      var e = ENDS[kind](), base = streamed.length ? streamed : rerunScript.slice(0, 8), all = base.concat(e.add);
+      var spec = { status: e.status, lines: all, totalLines: all.length, failureLine: e.failureLine || null };
+      if ('exitCode' in e) spec.exitCode = e.exitCode;
+      if (e.status !== 'waiting') spec.elapsedMs = Date.now() - streamStart;
+      T.CommandCard.update(n, spec);
+    });
+    note('The running test ended: ' + kind);
   }
 
   function render() {
@@ -936,7 +982,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     html.setAttribute('data-theme', (look.nier ? 'basic' : look.family) + '-' + look.mode);
     if (look.nier) {
       html.setAttribute('data-o55-nier', 'on');
-      html.setAttribute('data-o55-nier-parts', 'square cursor headers brackets icons ground');
+      html.setAttribute('data-o55-nier-parts', 'square cursor headers brackets icons ground' + (look.niermotion ? ' slice decode glitch wipe' : ''));
     } else {
       html.removeAttribute('data-o55-nier');
       html.removeAttribute('data-o55-nier-parts');
@@ -948,6 +994,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     });
     document.querySelectorAll('[data-lab-mode]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lab-mode') === look.mode)); });
     document.querySelectorAll('[data-lab-toggle]').forEach(function (b) { b.setAttribute('aria-pressed', String(!!look[b.getAttribute('data-lab-toggle')])); });
+    document.querySelector('[data-lab-toggle="niermotion"]').disabled = !look.nier;
     document.querySelectorAll('[data-lab-width]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lab-width') === look.width)); });
   }
 
@@ -957,6 +1004,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
     else if (b.hasAttribute('data-lab-mode')) look.mode = b.getAttribute('data-lab-mode');
     else if (b.hasAttribute('data-lab-toggle')) { var k = b.getAttribute('data-lab-toggle'); look[k] = !look[k]; }
     else if (b.hasAttribute('data-lab-width')) { look.width = b.getAttribute('data-lab-width'); applyLook(); render(); return; }
+    else if (b.hasAttribute('data-lab-end')) { finish(b.getAttribute('data-lab-end')); return; }
     else if (b.hasAttribute('data-lab-do')) {
       var d = b.getAttribute('data-lab-do');
       if (d === 'restart') { stream(); return; }
@@ -968,7 +1016,7 @@ html[data-theme^="retro"] .pmt-lab-user, html[data-o55-nier="on"] .pmt-lab-user 
 
   applyLook();
   render();
-  window.pmtLab = { look: look, render: render, applyLook: applyLook, stream: stream };
+  window.pmtLab = { look: look, render: render, applyLook: applyLook, stream: stream, finish: finish, live: function () { return live; } };
 })();
 </script>
 </body>
