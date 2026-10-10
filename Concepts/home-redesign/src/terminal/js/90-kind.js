@@ -8,7 +8,7 @@
 
   function profiles() {
     return [
-      { id: 'zsh', label: 'zsh', detail: 'Default shell', icon: 'terminal' },
+      { id: 'zsh', label: 'zsh', detail: 'Default', icon: 'terminal' },
       { id: 'bash', label: 'bash', detail: 'GNU bash 5.2', icon: 'terminal' },
       { id: 'pwsh', label: 'pwsh', detail: 'PowerShell 7.5', icon: 'terminal' },
       { id: 'ssh-devbox', label: 'ssh devbox', detail: 'jared@devbox', icon: 'terminal' }

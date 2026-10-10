@@ -13,7 +13,7 @@
   T.strWidth = strWidth;
 
   var PROFILES = {
-    zsh: { id: 'zsh', label: 'zsh', shell: 'zsh', detail: 'Default shell' },
+    zsh: { id: 'zsh', label: 'zsh', shell: 'zsh', detail: 'Default' },
     bash: { id: 'bash', label: 'bash', shell: 'bash', detail: 'GNU bash 5.2' },
     pwsh: { id: 'pwsh', label: 'pwsh', shell: 'pwsh', detail: 'PowerShell 7.5' },
     'ssh-devbox': { id: 'ssh-devbox', label: 'ssh devbox', shell: 'zsh', detail: 'jared@devbox', ssh: 'devbox' }
@@ -65,7 +65,7 @@
     this.state = 'running';
     var self = this;
     this.shell = new Shell(this, { vfs: this.vfs, cwd: this.cwd, host: this.host, user: this.user, profile: this.profile });
-    this.shell.run().then(function (code) { self._ended(code); }, function (e) { console.error('[pmt] shell crashed', e); self._ended(1); });
+    this.shell.run().then(function (code) { self._ended(code); }, function (e) { console.error('[pmt] the session process crashed', e); self._ended(1); });
     if (this.profile.ssh) setTimeout(function () { self.shell.typeCommand('ssh ' + self.profile.ssh, 'user'); }, 30);
   };
   Session.prototype._ended = function (code) {
@@ -408,7 +408,7 @@
       case 'type': case 'which': {
         var rc = 0;
         argv.slice(1).forEach(function (a) {
-          if (BUILTINS.indexOf(a) >= 0) write(name === 'which' ? a + ': shell built-in command\n' : a + ' is a shell builtin\n');
+          if (BUILTINS.indexOf(a) >= 0) write(name === 'which' ? a + ': shell built-in command\n' : a + ' is a shell builtin\n'); /* program output */
           else if (self.aliases[a]) write(a + ' is an alias for ' + self.aliases[a] + '\n');
           else if (T.Programs && T.Programs[a]) write(name === 'which' ? '/usr/bin/' + a + '\n' : a + ' is /usr/bin/' + a + '\n');
           else { write(a + ' not found\n'); rc = 1; }
