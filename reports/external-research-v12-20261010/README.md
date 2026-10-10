@@ -7,3 +7,5 @@
 [Portable v2 recipe](recipes/materialize-v2/README.md) (21 files, 236 retained checks); [portable v3 recipe](recipes/materialize-v3/README.md) (33 files, 194 retained checks). Checks retained without rerun; no scientific or production qualification inferred.
 
 Failures and limitations remain in the complete analysis and original reviews. D-R1-03 treatment is MISSING_PRE_INPUT_GUARD_FAILURE / UNASSESSED. Billing, vendor-effective settings and omitted source coverage remain UNKNOWN. Full authored science and requested settings retained; native/source bodies privately archived. No live host/source retrieval; original hash reads use actual frozen inputs.
+
+[Verified owned cleanup](CLEANUP.md) · [Actual cleanup receipt](provenance/CLEANUP_FINAL.json) · [Scientific GitHub readback](provenance/SCIENTIFIC_GITHUB_READBACK.json)
