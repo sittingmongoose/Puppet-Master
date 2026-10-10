@@ -5951,7 +5951,20 @@ canonical_text: >-
   tabs and their boards (Plans/Widget_System.md#WS-030, F3-638); the four named layouts' exact trees and proportions,
   applying one keeping every tab with no terminal ended and no unsaved buffer dropped, Restore home layout, and saved
   layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
-  hover tag showing the key that works where the app runs (F3-635); the migration from `home_workspace_layout.v1` and
+  hover tag showing the key that works where the app runs (F3-635); the tab kinds: each of F3-635's fifteen kinds
+  registered once with its id prefixes and content minimum (terminal 320 x 120 px, browser 360 x 200, dashboard 320 x
+  120, run 360 x 200, every other kind 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
+  only when it is first shown, and each tab body sized by its own box, never the window (F3-635); the shared header row,
+  30 px tall with 24 px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with
+  hover tags below it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+"
+  menu, the "+N" list, panel menus, drag ghosts and landing previews opening in the one overlay root in its fixed
+  stacking order, with no kind appending an overlay of its own (Plans/DRY_Rules.md#DR-067); the artifact viewer's own
+  behaviour: a subtype per artifact type, the metadata record and owner routes for a type with no subtype, the version
+  list opening or revealing `artifact:<artifact_id>@v<n>`, the unversioned tab following the current version, and the
+  loading, stale, error and retention tombstone states, never an empty tab (RAP-065); the editor tab: the contact-aware
+  strip, the minimap as the code pane's only scrollbar with its change marks, sticky scroll, find and replace, go to
+  line, preview tabs, and the diff side by side when the tab body is wide and inline when it is narrow, decided by the
+  body's own width (Plans/FinalGUISpec.md#F3-639); the migration from `home_workspace_layout.v1` and
   the Home part of `layout:v1` into the v2 record, converted on first read and never reset, including corrupt and
   unknown inputs (Plans/storage-plan.md#SP-330); every look, Friendly, Glass, Retro and Basic in light and dark, NieR
   Mode with each part installed and absent, and Reduced Motion (F3-647); the bans, enforced by a lint that fails the
@@ -5973,7 +5986,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The certification exercises and captures every visible behaviour of the home panels across looks, widths, layouts, motion and failures.
 split_recommended: false
-depends_on: [DL-180, DL-184, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-069]
+depends_on: [DL-180, DL-184, F3-630, F3-631, F3-632, F3-633, F3-634, F3-635, F3-636, F3-637, F3-638, F3-639, F3-647, F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065, DR-067, DR-069]
 unblocks: [GRRC-040]
 acceptance_criteria:
   - "After every structural command the split tree satisfies each invariant listed, and the fit rule, the shares, the gaps, the divider target and keys, collapse, maximize, locking and last-tab closing each have a passing case that asserts rendered geometry."
@@ -5982,6 +5995,10 @@ acceptance_criteria:
   - "At each of the seven measured widths the rail, chat and centre widths match F3-636, each ladder step undoes only 48 px past its threshold, and no ladder state is saved."
   - "Each named layout applies with its exact tree and proportions and keeps every tab, terminal session and unsaved buffer."
   - "Every key of the desktop map does its action, and in the web client the four browser-owned chords are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+` with labels showing those keys."
+  - "Each of the fifteen tab kinds is registered once with its id prefixes and content minimum, an unknown prefix opens no tab, a restored background tab mounts only when first shown, and every tab body sizes by its own box."
+  - "The shared header row has the stated height, targets, text sizes, 520 px label threshold and 150 px hide threshold in every kind that uses it, and every menu, list, drag ghost and landing preview opens in the one overlay root in its fixed stacking order."
+  - "The artifact viewer shows each type in its subtype or, without one, its metadata record and owner routes; choosing a version opens or reveals `artifact:<artifact_id>@v<n>` while the unversioned tab follows the current version; loading, stale, error and tombstone states each show, never an empty tab."
+  - "The editor tab has the contact-aware strip, the minimap as the only code-pane scrollbar, sticky scroll, find and replace, go to line and preview tabs, and its diff is side by side when the tab body is wide and inline when narrow, decided by the body's width."
   - "A v1 Home layout and the Home part of `layout:v1` convert into the v2 record on first read with every tab kept and nothing reset; corrupt and unknown inputs follow SP-330."
   - "The bans lint fails the build on a pill, a coloured side border or inset side shadow of 2 px or wider, or an emoji in chrome, and a census finds no internal id shown as text."
   - "Each structural commit appends exactly one `workspace.layout_changed`; reveals, `ui.*` actions, menus, hover and drags append none; a cancelled, invalid or unchanged gesture restores the model exactly with zero dispatches and zero writes; a rejected commit rolls back."
@@ -6017,6 +6034,7 @@ preserved_exact_tokens:
   - "layout:v1"
   - "not_run"
   - "zero console and page errors"
+  - "artifact:<artifact_id>@v<n>"
 negative_constraints:
   - "Do not certify Home with a dispatch count, a global marker or a screenshot alone."
   - "Do not substitute an internal API for a missing visible production control."
@@ -6027,7 +6045,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
 owner_boundary_notes:
-  - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-638, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041 and WM-090 own the behaviour."
+  - "This unit tests the owner units it cites and adds no rule of its own; F3-630 to F3-639, F3-647 and F3-648, WS-030, F-090, RAP-065, SP-330, CV-361, UCC-200, UIW-040, UIW-041, WM-090, DR-065 and DR-067 own the behaviour."
 owner_hints:
   - Plans/Automated_Testing_System.md
   - Plans/FinalGUISpec.md
@@ -6035,7 +6053,7 @@ owner_hints:
   - Plans/Wiring_Matrix.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Automated_Testing_System.md#ATS-029
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/FinalGUISpec.md#F3-630, ContractName:Plans/FinalGUISpec.md#F3-634, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-639, ContractName:Plans/Runtime_Artifacts_Panel.md#RAP-065, ContractName:Plans/DRY_Rules.md#DR-067, ContractName:Plans/Contracts_V0.md#CV-361, ContractName:Plans/UI_Command_Catalog.md#UCC-200, ContractName:Plans/Automated_Testing_System.md#ATS-029
 
 ### ATS-076 - Terminal Tab Certification
 
@@ -6097,7 +6115,7 @@ canonical_text: >-
   `EFBIG`; the per-screen-buffer image quota with its eviction order (images without placements, then transient ones,
   then the least recently used), the animation-frame pool, the per-side, iTerm2 and sixel limits, 2048-byte names,
   relative placements deeper than allowed (`ETOODEEP`) and in a cycle (`ECYCLE`), and the fastest frame shown. An
-  animated image pauses while its terminal is hidden and holds its first frame under Reduced Motion. The accessible
+  animated image pauses while its terminal is hidden and under Reduced Motion. The accessible
   buffer and agent reads show `[image W×H px]` (", animated" when it is), `[image]` for a Unicode-placeholder run, or a
   dropped image's placeholder label, never image data. Saved scrollback (SP-332, SMPFS-181, F3-640, F3-645): what is
   saved and what never is (the alternate screen, the command line being typed, selections and find highlights); a
@@ -6144,7 +6162,7 @@ acceptance_criteria:
   - "The six faces load with their default sizes and line heights, JetBrains Mono is never a second copy, and the terminal's own faces total 84,572 bytes before base64."
   - "Each kitty graphics feature, sixel and iTerm2 single and multipart images render in the paint order and stay anchored to their cells."
   - "Every hardening case returns its exact fixed reply, including `EBADF:Failed to read image file` for every file-medium failure and for file media from a remote session or an agent-typed command, and no reply echoes program input."
-  - "Quota, eviction order, frame pool, size, name, depth and cycle limits each refuse or evict as SMPFS-181 says, and animation pauses while hidden and holds its first frame under Reduced Motion."
+  - "Quota, eviction order, frame pool, size, name, depth and cycle limits each refuse or evict as SMPFS-181 says, and animation pauses while hidden and under Reduced Motion."
   - "Saved scrollback restores with its images, drops images oldest first with the dashed placeholder and a counted notice, resolves restored placeholder ids only to restored images, brings back a running command as ended and indeterminate, honours the write cadence, Clear scrollback, the 7-day closed-tab limit and the 5 s load budget, and never leaves this machine."
   - "The four agent rows show their exact text; take-over refuses the agent's next write as `preempted`; Allow once lets one command through; Allow in this terminal is never stored, ends on close, take-over or run end, returns on Hand back, and every command under it still asks for its own approval; Deny refuses; secret prompts refuse agent input as `secret_input` with the padlock; no control reads Always allow here."
   - "Input protection blocks an agent with an explicit blocked result and zero child writes across tab moves, collapse, maximize, hide, layout apply and restore, and outranks every grant."
