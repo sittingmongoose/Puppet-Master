@@ -6,32 +6,28 @@ var shims = PMW.shims = {};
 
 function demo() { return window.PM_DEMO || null; }
 
-/* file tree: a single click opens the preview tab, a double click keeps it (D7) */
-shims.fileTree = function () {
-  var lastClick = { path: null, at: 0 };
-  // capture before the demo router so the tree row never reaches the old pane-1 path
-  doc.addEventListener('click', function (e) {
-    var row = e.target.closest && e.target.closest('.fm-row[data-path][data-demo-action="cmd.file.open"], .fm-openrow[data-path]');
-    if (!row || row.getAttribute('data-kind') === 'folder' || row.hasAttribute('data-collapse')) return;
-    if (row.getAttribute('data-ignored') === '1') return;
-    e.stopPropagation(); e.preventDefault();
-    var path = row.getAttribute('data-path');
-    qsa('.fm-row.active-file').forEach(function (r) { r.classList.remove('active-file'); });
-    row.classList.add('active-file');
-    if (window.PM_PAGES && PM_PAGES.current !== 'dashboard') { try { PM_PAGES.go('dashboard'); } catch (_) {} }
-    var now = Date.now();
-    var dbl = lastClick.path === path && now - lastClick.at < 450;
-    lastClick = { path: path, at: now };
-    PM_HOME.open({ kind: 'editor', path: path, mode: dbl ? 'keep' : 'preview', where: e.altKey ? 'panel' : 'auto', background: e.ctrlKey || e.metaKey });
-  }, true);
-  doc.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    var row = e.target.closest && e.target.closest('.fm-row[data-path][data-demo-action="cmd.file.open"]');
-    if (!row || row.hasAttribute('data-collapse')) return;
-    e.stopPropagation(); e.preventDefault();
-    PM_HOME.open({ kind: 'editor', path: row.getAttribute('data-path'), mode: 'keep', where: e.altKey ? 'panel' : 'auto' });
-  }, true);
-};
+/* file tree: the shell's own rows and handlers stay (the left rail's concept D is a skin over them and restores them
+   byte for byte); the open is rerouted BEHIND the shell's handler: the demo router hands its cmd.file.open action the
+   click event, and that action (re-registered below, last registration wins) applies D7: a single click opens the
+   preview tab, a double click keeps it, Alt+click opens a new panel, Ctrl/Cmd+click opens in the background. */
+function fileOpenFromRow(ctx) {
+  var el = ctx && ctx.el, e = ctx && ctx.event;
+  var path = el && el.dataset ? (el.dataset.path || '') : '';
+  if (!path && ctx) path = ctx.path || '';
+  if (!path && ctx && typeof ctx.arg === 'string') path = ctx.arg.indexOf('cmd.file.open:') === 0 ? ctx.arg.slice(14) : ctx.arg;
+  if (!path) return { ok: false };
+  if (window.PM_PAGES && PM_PAGES.current && PM_PAGES.current !== 'dashboard') { try { PM_PAGES.go('dashboard'); } catch (_) {} }
+  var dbl = !!(e && e.detail >= 2);
+  var r = PM_HOME.open({ kind: 'editor', path: path, mode: dbl ? 'keep' : 'preview', where: e && e.altKey ? 'panel' : 'auto',
+    background: !!(e && (e.ctrlKey || e.metaKey)) });
+  var host = el && el.closest ? el.closest('#panel-files') : null;
+  if (host && r.ok) {
+    host.querySelectorAll('.fm-row.active-file').forEach(function (row) { row.classList.remove('active-file'); });
+    el.classList.add('active-file');
+  }
+  return { ok: !!r.ok };
+}
+shims.fileTree = function () {};
 
 /* the demo engine's facades and actions (last registration wins) */
 shims.demoFacades = function () {
@@ -44,13 +40,7 @@ shims.demoFacades = function () {
     };
   }
   if (D.actions && typeof D.actions.register === 'function') {
-    D.actions.register('cmd.file.open', function (ctx) {
-      var path = ctx && (ctx.path || ctx.arg || (ctx.el && ctx.el.getAttribute && ctx.el.getAttribute('data-path')));
-      if (typeof path === 'string' && path.indexOf('cmd.file.open:') === 0) path = path.slice('cmd.file.open:'.length);
-      if (!path) return { ok: false };
-      var r = PM_HOME.open({ kind: 'editor', path: path, mode: 'preview' });
-      return { ok: !!r.ok };
-    });
+    D.actions.register('cmd.file.open', fileOpenFromRow);
     var reveal = function (kind, spec) {
       return function () { return PM_HOME.open(Object.assign({ kind: kind }, spec || {})); };
     };

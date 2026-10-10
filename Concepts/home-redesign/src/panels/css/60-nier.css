@@ -16,11 +16,11 @@ html[data-o55-nier="on"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scop
   --pmw-hover: var(--o55-nier-hover); --pmw-press: var(--o55-nier-active);
   --pm-font-ui: var(--body-font, inherit);
   --pm-font-code: 'JetBrains Mono', 'PM NieR Mono', ui-monospace, monospace;
-  --pmw-tab-active: var(--o55-nier-on-ink); --pmw-tab-inactive: rgba(var(--o55-nier-ink-rgb), .65);
+  --pmw-tab-active: var(--o55-nier-ink); --pmw-tab-inactive: rgba(var(--o55-nier-ink-rgb), .65);
   --pmw-tab-weight: 500;
   --pmw-tab-hover: var(--o55-nier-hover);
   --pmw-tab-idle-fill: transparent;
-  --pmw-plate-fill: var(--o55-nier-ink); --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px; --pmw-plate-filter: none;
+  --pmw-plate-fill: var(--pmw-surface); --pmw-plate-crown: transparent; --pmw-plate-crown-h: 0px; --pmw-plate-filter: none;
   --pmw-tab-crown: 9px; --pmw-tab-shoulder: 14px; --pmw-tab-flare: 22px; --pmw-tab-profile: arc;
   --pmw-t-med: 200ms;
 }
@@ -28,29 +28,30 @@ html[data-o55-nier="on"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scop
 html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(#pm-home-centre, .pmw-scope) {
   --pmw-tab-profile: chamfer; --pmw-tab-crown: 6px; --pmw-tab-shoulder: 0px; --pmw-tab-flare: 14px;
 }
-/* the fused foot drops straight into an ink rule under the strip */
-html[data-o55-nier="on"] .pmw-strip { box-shadow: inset 0 -1px 0 var(--o55-nier-ink); }
-/* the focused panel's active tab: full ink plus the square before the label; other panels: a 50 % ink block */
-html[data-o55-nier="on"] .pmw-panel:not([data-focused]) { --pmw-plate-fill: rgba(var(--o55-nier-ink-rgb), .5); }
-html[data-o55-nier="on"] .pmw-panel[data-focused] .pmw-tab[data-active] .pmw-tlabel::before {
+/* Every touch beyond colour is gated by an installed part (NIER-RULES-for-new-surfaces):
+   square: the chamfer silhouette (above), the ink rule under each strip, square marks, hairline dividers with ticks,
+           the hatched landing preview and the square drag chip */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-strip { box-shadow: inset 0 -1px 0 var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tdot { border-radius: 0; width: 6px; height: 6px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-tattn { border-color: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"]:not([data-motion="reduced"]) .pmw-tab[data-attention] .pmw-tattn { animation: pmw-nier-fill 400ms steps(1, end) 1 forwards; }
+@keyframes pmw-nier-fill { to { background: currentColor; } }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-divider[data-dir="row"] .pmw-divider-line { background: repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 5px 100% no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-divider[data-dir="col"] .pmw-divider-line { background: repeating-linear-gradient(to right, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 100% 5px no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-divider:is(:hover, .pmw-active) .pmw-divider-line { background: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-landing { border: 1px solid var(--o55-nier-ink); border-radius: 0; background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .20) 0 1px, transparent 1px 6px); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-landing-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmw-chip { border-radius: 0; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16), 0 0 0 1px var(--o55-nier-ink); }
+/* cursor: the active tab is the ink block (selected item), the focused panel's carries the YoRHa square; other panels
+   show a 50 % ink block */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(#pm-home-centre, .pmw-scope) { --pmw-plate-fill: var(--o55-nier-ink); --pmw-tab-active: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-panel:not([data-focused]) { --pmw-plate-fill: rgba(var(--o55-nier-ink-rgb), .5); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmw-panel[data-focused] .pmw-tab[data-active] .pmw-tlabel::before {
   content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 6px 1px 0; background: currentColor; vertical-align: middle;
 }
-html[data-o55-nier="on"] .pmw-tab .pmw-tlabel { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
-html[data-o55-nier="on"] .pmw-tdot { border-radius: 0; width: 6px; height: 6px; }
-html[data-o55-nier="on"] .pmw-tattn { border-color: currentColor; }
-html[data-o55-nier="on"]:not([data-motion="reduced"]) .pmw-tab[data-attention] .pmw-tattn { animation: pmw-nier-fill 400ms steps(1, end) 1 forwards; }
-@keyframes pmw-nier-fill { to { background: currentColor; } }
-html[data-o55-nier="on"] .pmw-more { font-variant: small-caps; letter-spacing: .08em; box-shadow: inset 1px 0 0 rgba(var(--o55-nier-ink-rgb), .45); border-radius: 0; }
-html[data-o55-nier="on"] .pmw-divider[data-dir="row"] .pmw-divider-line { background: repeating-linear-gradient(to bottom, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 5px 100% no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
-html[data-o55-nier="on"] .pmw-divider[data-dir="col"] .pmw-divider-line { background: repeating-linear-gradient(to right, var(--o55-nier-ink) 0 1px, transparent 1px 16px) 0 0 / 100% 5px no-repeat, linear-gradient(rgba(var(--o55-nier-ink-rgb), .35), rgba(var(--o55-nier-ink-rgb), .35)); }
-html[data-o55-nier="on"] .pmw-divider:hover .pmw-divider-line, html[data-o55-nier="on"] .pmw-divider.pmw-active .pmw-divider-line { background: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-landing { border: 1px solid var(--o55-nier-ink); border-radius: 0; background: repeating-linear-gradient(45deg, rgba(var(--o55-nier-ink-rgb), .20) 0 1px, transparent 1px 6px); }
-html[data-o55-nier="on"] .pmw-landing-label { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-radius: 0; text-transform: uppercase; letter-spacing: .16em; font-size: 11px; }
-html[data-o55-nier="on"] .pmw-chip { border-radius: 0; box-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16), 0 0 0 1px var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-panel { border-radius: 0; }
-html[data-o55-nier="on"] .pmw-body { border-radius: 0; }
-
-/* headers part: the header row and menu titles take the YoRHa caption treatment */
+/* headers part: tab labels, +N, the header row and menu titles take the YoRHa caption treatment */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-tab .pmw-tlabel { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-more { font-variant: small-caps; letter-spacing: .08em; box-shadow: inset 1px 0 0 rgba(var(--o55-nier-ink-rgb), .45); border-radius: 0; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-hrow { text-transform: uppercase; letter-spacing: .07em; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; margin: -6px -6px 6px; padding: 8px 12px; }
 html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-mhead strong { text-transform: uppercase; letter-spacing: .16em; font-size: 11px; }
@@ -78,5 +79,5 @@ html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced
 html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmw-menu[data-mstate="open"] { transform: none; transition: none; animation: o55np-slice 300ms linear backwards; }
 /* ground part: the grid shows between panels */
 html[data-o55-nier="on"][data-o55-nier-parts~="ground"] #pm-home-centre { --pmw-gutter: transparent; }
-html[data-o55-nier="on"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmw-act.is-primary, html[data-o55-nier="on"] .pmw-btn-primary { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }
+html[data-o55-nier="on"] :is(.pmw-act.is-primary, .pmw-btn-primary) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }

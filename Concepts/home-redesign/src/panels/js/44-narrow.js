@@ -64,7 +64,22 @@ narrow.update = function () {
   var next = narrow.solve(m.base, m.railUser, m.chatW, m.chatShown, !!PMW.settings.get('chat.pinOpen'), prev);
   narrow.apply(next, prev);
 };
+/* the hook agreed with the left rail lead: data-pm-rail-fold on #sidePanelSlot (never on <html>) and the document event
+   pm:rail-fold { mode: 'eased'|'overlay'|'docked', width }; the rail's concept D refits and styles its overlay from it */
+var lastFold = null;
+function signalRail(next) {
+  var s = slotEl();
+  if (!s) return;
+  var mode = next.rail === 'fold' ? 'overlay' : next.rail === 'ease' ? 'eased' : 'docked';
+  setAttr(s, 'data-pm-rail-fold', mode === 'docked' ? null : mode);
+  var width = mode === 'overlay' ? 280 : mode === 'eased' ? LADDER.railEased : Math.round(next.railWidth || 0);
+  var key = mode + ':' + width;
+  if (key === lastFold) return;
+  lastFold = key;
+  try { doc.dispatchEvent(new CustomEvent('pm:rail-fold', { detail: { mode: mode, width: width } })); } catch (_) {}
+}
 narrow.apply = function (next, prev) {
+  signalRail(next);
   var ma = mainArea();
   if (ma) {
     setAttr(ma, 'data-pmw-rail', next.rail === 'open' ? null : next.rail);

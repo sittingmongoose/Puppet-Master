@@ -245,6 +245,19 @@ Other events: `'open'` (`{ tabId, panelId, kind, created, by }`), `'focus'` (foc
   `failNextPersistenceWrite`, `setSurfaceVisible('chat', ...)`, `popOutChat`) as thin wrappers; the rest return
   `{ ok: false, reason: 'retired' }`.
 
+### 6.3 The left rail (agreed with the left rail lead, 2026-10-09)
+
+- **File opens from the rail.** The rail's concept D is a skin over the shell's own nine panels and never opens files
+  itself; every click goes through the shell rows' `data-demo-action` / `data-path` handlers. The panels reroute behind
+  those handlers: they re-register the demo engine's `cmd.file.open` action (the router hands it the click event, so a
+  double click keeps, Alt+click opens a new panel, Ctrl/Cmd+click opens in the background) and never replace a row
+  element or its `data-*` attributes (D's undo registry restores the shell byte for byte).
+- **The narrow hook.** The ladder writes `data-pm-rail-fold="eased"` or `data-pm-rail-fold="overlay"` on
+  `#sidePanelSlot` (removed when docked) and dispatches the document event `pm:rail-fold` with
+  `{ mode: 'eased' | 'overlay' | 'docked', width }` (240 eased, 280 as an overlay, at least 240). Never on `<html>`.
+- **Build order.** Settings, Usage, the rail (`rail_layer.apply_published`, step 4 of opus `build_text()`), then the home
+  layer, which inserts just before `</head>` and `</body>` and never rewrites the rail's band markup.
+
 ## 7. The "+" menu and the empty panel (D6)
 
 The "+" sits right after the last tab and opens the menu; it never creates a tab by itself. Ctrl+T makes a new tab of
