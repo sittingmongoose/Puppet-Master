@@ -387,8 +387,9 @@ and writes through the same model, so Settings > Terminal only binds controls.
 ## 14. Overlays and stacking
 
 One overlay root, `#pmw-overlay` (body-level, fixed), holds the "+" menu, "+N" list, panel menus, drag ghosts and
-landing previews. Z ladder inside the page: panel content 0-10; strip and dividers 20; drag ghost 1300; menus 1200;
-hover tags and the tour stay above (the page's existing 2147483000 band). Menus from a kind (`api.menu`) open in this
+landing previews. Z ladder: panel content 0-10; strip and dividers 20; #pmw-overlay at 2147481800 (above the page's
+status bar at 2147481700, below the demo pill at 2147482600 and the hover tags and the tour at 2147483000); inside it
+menus, then the drag chip and the landing preview. Menus from a kind (`api.menu`) open in this
 root. A kind never appends its own overlay to `document.body`.
 
 ## 15. Change log

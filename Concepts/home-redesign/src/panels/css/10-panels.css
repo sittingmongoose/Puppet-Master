@@ -295,7 +295,8 @@ body.pmw-dragging #pm-hover-tag-root, body.pm-resizing #pm-hover-tag-root { disp
   background: color-mix(in srgb, var(--pmw-surface) 80%, transparent);
 }
 .pmw-landing-label[hidden] { display: none; }
-#pmw-overlay { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; z-index: 1200; }
+/* above the page's status bar (2147481700), below the demo pill (2147482600), hover tags and the tour (2147483000) */
+#pmw-overlay { position: fixed; inset: 0 auto auto 0; width: 0; height: 0; z-index: 2147481800; }
 
 /* toasts and the MRU switcher */
 .pmw-toast {
