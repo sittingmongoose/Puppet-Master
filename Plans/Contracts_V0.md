@@ -23592,7 +23592,9 @@ One placement field set travels beside the identity fields of every route that c
 | `by` | `user`, `agent:<name>` | `user` | Who asked for the open. `agent:<name>` always opens in the background and opens files kept. |
 | `background` | `true`, `false` | `false` | A background open the user asked for (Ctrl+click or Cmd+click). Agent opens are always in the background, whatever this says. |
 
-An open returns `{ ok, tab_id, panel_id, created, reason }`. `tab_id` is the panel tab id (the record key of SP-330, the argument UCC-200 calls `panel_tab_id`); it is not section 7.3's `tab_id` focus field. `panel_id` is the panel that holds the tab. `created` is `true` when the open added a tab and `false` when it revealed one. `reason` is null when `ok` is `true`; otherwise it is the refusal: `unknown_kind` for an id or kind no tab kind claims, `not_ready` while the layout has not loaded, or a refusal from the route's own error set.
+Amended 2026-10-10 (lead ruling L1): The open result names its home panel tab panel_tab_id; the page-tab route focus field stays tab_id.
+
+An open returns `{ ok, panel_tab_id, panel_id, created, reason }`. `panel_tab_id` is the panel tab id (the record key of SP-330, the argument UCC-200 calls `panel_tab_id`); it is not section 7.3's `tab_id` focus field. `panel_id` is the panel that holds the tab. `created` is `true` when the open added a tab and `false` when it revealed one. `reason` is null when `ok` is `true`; otherwise it is the refusal: `unknown_kind` for an id or kind no tab kind claims, `not_ready` while the layout has not loaded, or a refusal from the route's own error set.
 
 One id is one tab in the whole workspace. When the id's tab is already open, the open reveals it where it is and never moves it, whatever `where` says: the result has `created: false` and the receipt is `no_change` with no event. Activating the tab and pulling it out of "+N" are view state. When the tab's panel is collapsed, the reveal expands it (`Plans/FinalGUISpec.md#F3-634`), and that expand is one committed `panel_expanded` change under the open's command id (CV-361), because the collapsed flag is part of the stored tree. The one exception is an open with `mode: keep` of an id whose tab is its panel's preview tab: the tab is kept in place, which is one `tab_kept` change (CV-361). An open that adds a tab commits once and appends one `workspace.layout_changed` with `change: tab_opened`. A preview open into a panel that already has a preview tab replaces that tab in place (`Plans/FinalGUISpec.md#F3-635`): it is still one `tab_opened`, whose `affected_tab_ids` name the new tab and the replaced one, and the replaced preview is dropped, never put on the closed-tab stack, because it was never kept. In the narrow centre (`Plans/FinalGUISpec.md#F3-636`), `panel`, `right` and `down` open in the next panel of the switcher instead of creating a panel. Focus and the announcement for `by` and `background` are F3-634's rules.
 
@@ -23639,7 +23641,7 @@ canonical_text: >-
   field set beside its identity fields, never inside route identity: where (auto, tab, panel, right, down or a panel
   id; default auto; an id that names no panel reads as auto), mode (preview or keep; preview only for kinds with a
   preview tab), by (user or agent:<name>; default user; an agent always opens in the background and opens files kept)
-  and background (default false). An open returns { ok, tab_id, panel_id, created, reason }: tab_id is the panel tab
+  and background (default false). An open returns { ok, panel_tab_id, panel_id, created, reason }: panel_tab_id is the panel tab
   id, created is false when an open tab was revealed, and reason is null on success, else unknown_kind, not_ready or
   the route's own refusal. One id is one tab in the whole workspace: an open of an open id reveals it where it is,
   never moves it, returns no_change and appends no event, except that mode keep on a preview tab keeps it (one
@@ -23654,7 +23656,7 @@ acceptance_criteria:
   - "Every open route UCC-200 lists carries where, mode, by and background with the values and defaults above, and no route carries another placement field."
   - "No placement field is part of route_target identity, OpenSubject or OpenFile identity."
   - "An open of an id that is already open returns created false, reveals the tab in its own panel, writes nothing and appends no event; mode keep on that panel's preview tab keeps it with one tab_kept change, and a tab in a collapsed panel is revealed by expanding the panel with one panel_expanded change."
-  - "An open that adds a tab returns created true with its tab_id and panel_id and appends exactly one workspace.layout_changed with change tab_opened."
+  - "An open that adds a tab returns created true with its panel_tab_id and panel_id and appends exactly one workspace.layout_changed with change tab_opened."
   - "A preview open into a panel that has a preview tab replaces it with one tab_opened whose affected_tab_ids name both tabs, and the replaced preview is not on the closed-tab stack afterwards."
   - "An open by agent:<name> is a background open whatever background says, and opens files kept."
   - "A refused open returns ok false with reason unknown_kind, not_ready or the route's own refusal, and changes nothing."
@@ -23684,7 +23686,7 @@ preserved_exact_tokens:
   - "by"
   - "background"
   - "agent:<name>"
-  - "{ ok, tab_id, panel_id, created, reason }"
+  - "{ ok, panel_tab_id, panel_id, created, reason }"
   - "unknown_kind"
   - "not_ready"
   - "target_editor_panel_id"
@@ -23698,6 +23700,7 @@ negative_constraints:
 compatibility_only_notes:
   - "target_editor_panel_id, target_editor_group_id and target_group stay readable on old payloads as lineage; they place nothing."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L1): Home panel tab references are named panel_tab_id."
   - "Replaces the PMConcept7 Home Workspace OpenFile placement addendum of 2026-08-04 and OpenFile's editor panel and group selectors as home placement (DL-180)."
 owner_hints:
   - Plans/Contracts_V0.md

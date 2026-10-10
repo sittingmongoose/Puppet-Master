@@ -27616,7 +27616,9 @@ ContractRef: ContractName:Plans/Decision_Log.md#DL-183, ContractName:Plans/Final
 
 ### Terminal records re-scoped, and saved scrollback (SP-332)
 
-**One session per tab.** A terminal tab shows one session at a time. Its tab id is `terminal:<session>`, minted from the session it was first opened with, and it never changes; its domain reference names the session it shows now, which differs from the id's suffix after Restart or after a restore whose session did not survive (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). `terminal_session_record` moves to value `pm.storage_value.terminal_session_record.v2` 2.0.0 at its unchanged key `terminal_session_record.v1:{project_id}:{terminal_session_id}`: its required `terminal_leaf_pane_id` becomes an optional `tab_id`: the id of the terminal tab that shows the session, or that last showed it once the session has ended, or null. It is the tab's id, never derived from the session's own id, so a session survives every view change and a tab keeps its id across sessions. When Restart, a restore or a reopen starts a new session in a tab, the new session's record takes that tab's id, and the ended session's record keeps it as history. Moving, collapsing, maximizing or hiding the tab never touches the session record; closing the tab ends the session (SMPFS-180), and the record keeps its history under its retention. The StorageMigrationCoordinator converts every row: `terminal_leaf_pane_id` moves to `legacy_terminal_leaf_pane_id`, and `tab_id` is the id of the terminal tab SP-330's conversion placed the session in (minted from that session, so `terminal:<terminal_session_id>`), else null. The exact v1 value schema stays under `$defs.legacy_v1` for old-store admission, conversion and backup inspection, as the command-block migration does.
+Amended 2026-10-10 (lead ruling L1): the session record references its home panel tab as panel_tab_id.
+
+**One session per tab.** A terminal tab shows one session at a time. Its tab id is `terminal:<session>`, minted from the session it was first opened with, and it never changes; its domain reference names the session it shows now, which differs from the id's suffix after Restart or after a restore whose session did not survive (`Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180`). `terminal_session_record` moves to value `pm.storage_value.terminal_session_record.v2` 2.0.0 at its unchanged key `terminal_session_record.v1:{project_id}:{terminal_session_id}`: its required `terminal_leaf_pane_id` becomes an optional `panel_tab_id`: the id of the terminal tab that shows the session, or that last showed it once the session has ended, or null. It is the tab's id, never derived from the session's own id, so a session survives every view change and a tab keeps its id across sessions. When Restart, a restore or a reopen starts a new session in a tab, the new session's record takes that tab's id, and the ended session's record keeps it as history. Moving, collapsing, maximizing or hiding the tab never touches the session record; closing the tab ends the session (SMPFS-180), and the record keeps its history under its retention. The StorageMigrationCoordinator converts every row: `terminal_leaf_pane_id` moves to `legacy_terminal_leaf_pane_id`, and `panel_tab_id` is the id of the terminal tab SP-330's conversion placed the session in (minted from that session, so `terminal:<terminal_session_id>`), else null. The exact v1 value schema stays under `$defs.legacy_v1` for old-store admission, conversion and backup inspection, as the command-block migration does.
 
 **Read-only migration inputs.** `terminal_workspace_state`, `terminal_section_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` become read-only migration inputs; so do `terminal_tab_record`, `terminal_pane_record` and `terminal_leaf_pane_record`, because one session per tab and no splits inside a terminal leave them nothing to hold (DL-181: terminal layout records are converted or retired). SP-330's conversion reads them once; nothing writes them again. `terminal_session_record`, `terminal_command_block` and `dev_session_record` stay current. The terminal's place in the layout lives only in the v2 Home record.
 
@@ -27653,7 +27655,7 @@ owner_doc: Plans/storage-plan.md
 canonical_text: >-
   Terminal storage follows one session per tab (DL-181, SMPFS-180). terminal_session_record moves to value
   pm.storage_value.terminal_session_record.v2 at its unchanged key: the required terminal_leaf_pane_id becomes an
-  optional tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never
+  optional panel_tab_id, the id of the terminal tab that shows the session (or last showed it, once ended) or null, never
   derived from the session's own id, so a session survives every view change and a tab keeps its id when Restart
   or a restore gives it a new session, with a
   coordinator-only conversion and the v1 value schema kept under $defs.legacy_v1. terminal_workspace_state,
@@ -27680,7 +27682,7 @@ split_recommended: false
 depends_on: [DL-181, DL-182, SMPFS-180, SMPFS-181, SP-125, SP-128, SP-330, SP-331, CV-362]
 unblocks: []
 acceptance_criteria:
-  - "A terminal tab moved, collapsed, maximized or hidden leaves its terminal_session_record unchanged; tab_id is the tab that shows the session (or last showed it) or null, and it may differ from terminal:<this session id> after Restart or a restore."
+  - "A terminal tab moved, collapsed, maximized or hidden leaves its terminal_session_record unchanged; panel_tab_id is the tab that shows the session (or last showed it) or null, and it may differ from terminal:<this session id> after Restart or a restore."
   - "A terminal tab has at most one saved copy, keyed by project and tab id; the first save of a new session after Restart or a restore replaces the earlier copy, an ended session keeps no copy of its own, and a restored or reopened tab loads the copy under its own tab id."
   - "terminal_session_record v1 values convert only through the StorageMigrationCoordinator, with the v1 schema kept under $defs.legacy_v1."
   - "The seven terminal layout families have no writer after the conversion and are read only by SP-330."
@@ -27715,7 +27717,7 @@ source_lineage:
 preserved_exact_tokens:
   - "pm.storage_value.terminal_session_record.v2"
   - "terminal_session_record.v1:{project_id}:{terminal_session_id}"
-  - "tab_id"
+  - "panel_tab_id"
   - "legacy_terminal_leaf_pane_id"
   - "transient_only"
   - "64 MiB"
@@ -27733,6 +27735,7 @@ negative_constraints:
 compatibility_only_notes:
   - "terminal_leaf_pane_id survives only as legacy_terminal_leaf_pane_id on converted values."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L1): Home panel tab references are named panel_tab_id."
   - "Supersedes SP-122's nine-key decomposition (DL-181)."
   - "Retires the section, workgroup, tab, pane, leaf-pane, workspace and editor-terminal-panel families as writable records (DL-181)."
 owner_hints:
