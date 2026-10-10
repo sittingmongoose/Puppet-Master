@@ -646,7 +646,9 @@ function mountBrowser(host, st, api) {
     page = resolvePage(S.url, hint);
     viewport.textContent = '';
     viewport.appendChild(page.build());
-    Array.prototype.forEach.call(viewport.querySelectorAll('a, button, input, select, textarea, [tabindex]'), function (n) { n.setAttribute('data-pm-hover-exempt', 'true'); });
+    // the fixture page is a web page, not app chrome: no app hover tags (exempt) and no hover effect (data-pmh off; the
+    // hover engine still hovers an element that carries the exempt mark itself, pm7-hover 4edc02bb3c)
+    Array.prototype.forEach.call(viewport.querySelectorAll('a, button, input, select, textarea, [tabindex]'), function (n) { n.setAttribute('data-pm-hover-exempt', 'true'); n.setAttribute('data-pmh', 'off'); });
     viewport.scrollTop = 0;
     viewport.setAttribute('aria-label', 'Page: ' + page.title);
     addrIn.value = S.url;
