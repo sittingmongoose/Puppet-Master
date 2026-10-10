@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42135-L42590
+Source lines: L42137-L42593
 
-Source SHA256: `4ec30f657e469012700abae3e452003960b098edd6129590f51e5ef02c699b4e`
+Source SHA256: `e694dbfff9faff413e718e4b678e319b08c485422019a4c4e975e84e2b178622`
 
 ---
 
@@ -106,7 +106,8 @@ canonical_text: >-
   half-filled circle; orphaned an open arc with a dot; a stash a tray; paused (a debug session) a solid disc with two
   bars knocked out; immutable (a Jujutsu change) a solid disc with a padlock knocked out. Errored, a harness
   failure, takes the failed shape in its own colour so it stays distinct from failed; needs input and flaky take the
-  warning triangle; and skipped, cancelled, superseded and terminated take the stopped ring. A row's state is the
+  warning triangle; and skipped, cancelled, superseded, terminated and expired take the stopped ring (an expired
+  runtime artifact reads Expired, never stale: owner, 2026-10-10). A row's state is the
   same in its head and in its opened details. Knock-outs show whatever is behind the glyph,
   a shelf tint or a selected row. Colours are token roles: done and live --graph-passed, running --graph-running,
   warning, stale and changed --accent-warning, failed and blocked --graph-failed, pending and info --accent-blue,
