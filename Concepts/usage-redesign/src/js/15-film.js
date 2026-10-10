@@ -1591,10 +1591,12 @@
     try {
       lightAt(lr, { noSweep: true, dur: T3.land });
       var kd = (fl.it && fl.it.kind) || 'num';
-      /* Friendly: marks and numbers land with a squash (a plate-like body, never a fill length); meters, ladders and
-         controls get a puff of three warm dots instead, so no fill ever reads longer than its value (MOTION-4 4.2) */
+      /* Friendly: marks land with a squash (a plate-like body); a number hops 4 px up and settles back without changing
+         its size (a number never reads bigger than it is); meters, ladders and controls get a puff of three warm dots
+         instead, so no fill ever reads longer than its value (MOTION-4 4.2) */
       if (f === 'friendly') {
-        if (kd === 'prov' || kd === 'acct' || kd === 'num') anim(t, [{ transform: 'scale(1)' }, { transform: 'scale(1.08,.94)', offset: 0.3 }, { transform: 'scale(.97,1.03)', offset: 0.65 }, { transform: 'scale(1)' }], { dur: 280, easing: E.out });
+        if (kd === 'prov' || kd === 'acct') anim(t, [{ transform: 'scale(1)' }, { transform: 'scale(1.08,.94)', offset: 0.3 }, { transform: 'scale(.97,1.03)', offset: 0.65 }, { transform: 'scale(1)' }], { dur: 280, easing: E.out });
+        else if (kd === 'num') anim(t, [{ transform: 'none' }, { transform: 'translateY(-4px)', offset: 0.4 }, { transform: 'none' }], { dur: 300, easing: E.out });
         else if (kd !== 'chart') puff(lr);
       }
       if (f === 'glass' && (kd === 'prov' || kd === 'acct')) halo(t, { dur: 600 });
