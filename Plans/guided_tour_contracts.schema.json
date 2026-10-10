@@ -282,9 +282,9 @@
         "step_index": {"type": "integer", "minimum": 0, "maximum": 2},
         "phase": {"enum": [
           "comfort_intro", "open_chat", "select_teacher", "send_question", "answer_stream", "same_answer_eli5",
-          "workspace_orientation", "move_or_dock_chat", "widget_action",
+          "workspace_orientation", "open_from_plus", "open_file_from_rail", "split_by_drag", "move_or_dock_chat", "widget_action",
           "open_planning", "book_club_goal", "three_outcomes", "access_answer", "review", "answer_edit", "consequence_changed", "completion_boundary"
-        ]},
+        ], "description": "The tour's phases. move_or_dock_chat is retired (DL-180): it is accepted only for reading saved positions, and such a position resumes at workspace_orientation, the first step of its chapter."},
         "status": {"enum": ["first_launch", "demonstrating", "awaiting_user", "paused", "interrupted", "recovery_required", "skipped", "completed"]},
         "durability_class": {"const": "ephemeral_live_session"},
         "session_persistence": {"const": "bounded_checkpoint_only"},
@@ -312,7 +312,7 @@
       },
       "allOf": [
         {"if": {"properties": {"step": {"const": "chat_teacher"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 0}, "phase": {"enum": ["comfort_intro", "open_chat", "select_teacher", "send_question", "answer_stream", "same_answer_eli5"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.chat_teacher.heading"}}}}}},
-        {"if": {"properties": {"step": {"const": "workspace"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 1}, "phase": {"enum": ["workspace_orientation", "move_or_dock_chat", "widget_action"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.workspace.heading"}}}}}},
+        {"if": {"properties": {"step": {"const": "workspace"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 1}, "phase": {"enum": ["workspace_orientation", "open_from_plus", "open_file_from_rail", "split_by_drag", "move_or_dock_chat", "widget_action"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.workspace.heading"}}}}}},
         {"if": {"properties": {"step": {"const": "planning_wizard"}}, "required": ["step"]}, "then": {"properties": {"step_index": {"const": 2}, "phase": {"enum": ["open_planning", "book_club_goal", "three_outcomes", "access_answer", "review", "answer_edit", "consequence_changed", "completion_boundary"]}, "heading_focus": {"properties": {"target": {"const": "guided_tour.planning_wizard.heading"}}}}}},
         {"if": {"properties": {"status": {"const": "completed"}}, "required": ["status"]}, "then": {"properties": {"step": {"const": "planning_wizard"}, "phase": {"const": "completion_boundary"}, "layout_disposition": {"enum": ["restore", "keep"]}}}},
         {"if": {"properties": {"status": {"const": "skipped"}}, "required": ["status"]}, "then": {"properties": {"layout_disposition": {"const": "restore"}}}}
@@ -530,7 +530,7 @@
     "guided_tour_workspace_progression": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["schema_id", "schema_version", "storyboard_revision", "step", "orientation", "chat_layout_action", "widget_action", "layout_reversible", "completed_predicate_refs"],
+      "required": ["schema_id", "schema_version", "storyboard_revision", "step", "orientation", "open_from_plus_action", "open_file_from_rail_action", "split_by_drag_action", "widget_action", "layout_reversible", "completed_predicate_refs"],
       "properties": {
         "schema_id": {"const": "pm.guided_tour.workspace_progression.v3"},
         "schema_version": {"const": "3.0.0"},
@@ -538,6 +538,9 @@
         "step": {"const": "workspace"},
         "orientation": {"type": "object", "additionalProperties": false, "required": ["page_navigation_explained", "panel_purpose_explained", "mounted_application_visible"], "properties": {"page_navigation_explained": {"const": true}, "panel_purpose_explained": {"const": true}, "mounted_application_visible": {"const": true}}},
         "chat_layout_action": {"$ref": "#/$defs/safe_ref"},
+        "open_from_plus_action": {"$ref": "#/$defs/safe_ref"},
+        "open_file_from_rail_action": {"$ref": "#/$defs/safe_ref"},
+        "split_by_drag_action": {"$ref": "#/$defs/safe_ref"},
         "widget_action": {"$ref": "#/$defs/safe_ref"},
         "layout_reversible": {"const": true},
         "completed_predicate_refs": {"type": "array", "prefixItems": [{"$ref": "#/$defs/predicate_ref"}, {"$ref": "#/$defs/predicate_ref"}], "items": false, "minItems": 2, "maxItems": 2}
