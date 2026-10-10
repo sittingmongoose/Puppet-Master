@@ -303,17 +303,18 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Command card terminal | id terminal:cmd-bench, session cmd-bench, cwd ~/tastebook/api, invocation 'cargo bench'. |
 | Agent opens | (D8, all background): terminal:agent-bench (agent:Query Analyzer, cargo bench --bench analytics), browser:2 (agent:Query Analyzer), plan:ap-embeds (agent:Builder), file:src/analytics/index_hints.rs kept (agent:Builder), crew-work:crew-query-perf (agent:Builder), thread-agent-schema (agent:Query Performance). |
 
-### Guided Tour workspace chapter (js/52-tour.js)
+### Guided Tour workspace chapter (opus-5.5 83-tour-steps.js, the panels' hooks in js/52-tour.js)
 
 | What | Value |
 |---|---|
 | Tour step ids | new order in chapter 'workspace': workspace_orientation, open_from_plus, open_file_from_rail, split_by_drag, widget_action. Retired: move_or_dock_chat. Total steps 20 (was 18). Workspace-chapter actions: 4 (was 2). |
-| TR.minutes | 6 (estimate; the census tool should measure it at publish). |
+| TR.minutes | 5: tour_census.mjs measured 4.8 minutes at 200 words a minute (2026-10-10): 16 actions, Planning 7 (44 %) and 49 % of the time, the workspace chapter 5 actions (the widget step counts two). |
 | Done-conditions | open_from_plus = menus.plus used and then a created 'open' event or a new tab id. open_file_from_rail = an editor tab created since the step began. split_by_drag = an applied cmd.panel_tab.move with args.split since the step began, and the panel count grew. |
 | Split Show Me drop point | 34 px inside the documents panel's right edge, or 30 px above its bottom edge. This keeps the drop clear of the centre's 12 px outer root band. Ready when PMW.gesture.active.zone.type is 'split'. |
 | Fit at 1920x1080 | in the Home layout (rail open, chat about 600 px): documents panel 511x598, editor minimum 280x120, so only Split down fits and the copy names Split down. |
-| widget_action | waits up to 1500 ms for #pm6DashAddBtn after revealing dashboard:home. The file step waits up to 900 ms for a file row. |
+| widget_action | waits up to 1500 ms for the Home board after revealing dashboard:home; its target is that tab's Add widget header button. The file step waits up to 900 ms for a file row. |
 | Restore sources | 'guided_tour_restore' (Skip or Finish, through PM_HOME_WORKSPACE.o55RestoreSnapshot) and 'guided_tour_back' (Back). |
+| Checkpoints | every save names its step and order (TR.order(), 'o55-<count>-<hash>'); another order moves by step id; the retired move_or_dock_chat resumes at its chapter's first step (TR.retired); the page before the panels' unstamped checkpoints are read by its 18-step order (TR.unstamped); step and chapter both gone: fresh start with the notice. |
 
 ## Keyboard (CONTRACT section 9)
 

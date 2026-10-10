@@ -16,7 +16,7 @@ the published concept, and its review copy is a generated page. The Concept Hub 
 ```
 Concepts/home-redesign/
   CONTRACT.md                 the tab-kind registry and host contract (panels thread; the terminal thread builds on it)
-  tools/home_layer.py         apply(text, need) -> (text, notes), lint(), syntax_check(text)
+  tools/home_layer.py         apply(text, need) -> (text, notes), lint(), syntax_check(text), published_problems(text)
   tools/build_home.py         build / --check Concepts/HomeTestPMConcept7.html (--out PATH for private builds)
   src/panels/early/*.js       <script id="pm-home-early"> in <head>: the PM_HOME_WORKSPACE shim, html[data-pmw-home]
   src/panels/js/*.js          the engine, one shared strict scope: window.PM_HOME (public) and window.PMW (internals)
@@ -44,27 +44,53 @@ Concepts/home-redesign/
 | `kinds/52-record.js` | Records: search, MCP calls, the database inspector, work records | `search:`, `mcp:`, `app:`, `work-record:` |
 | `kinds/95-standin-chat.js` | the stand-in chat over `#chatPanel` (a scripted conversation that opens every kind) | |
 
-The tour's workspace chapter (D25) is `js/52-tour.js`; it moves into the onboarding tour sources at publish.
+The Guided Tour's workspace chapter (D25) is native to the tour: `open_from_plus`, `open_file_from_rail`, `split_by_drag`
+and `widget_action` (Upcoming resets on the Home dashboard board) are defined in
+`Concepts/onboarding/opus-5.5/src/js/83-tour-steps.js`, with their copy in that package's `src/copy.json` and NieR's Pod
+lines in `src/copy.d/50-nier-tour.json`. What only the panels know (their buttons, menus, tabs, receipts, the Back
+snapshots of the panels and boards) stays here as the panels' tour hooks, `PMW.tour` in `js/52-tour.js`, which the
+steps look up when they run; it defines and edits no step.
+
+## How the page is built (published)
+
+The Home layer is published. `Concepts/onboarding/opus-5.5/tools/build.py` builds the page in this order: Settings, the
+Usage page (`usage_layer`), the left rail (`rail_layer.apply_published`), then this layer (`home_layer.apply`, step 5
+of `build_text()`). So `build.py` writes `Concepts/Onboarding concepts/TestOpus5.5PmConcept.html` with the panels and
+the terminal, and `build.py --publish-pm7` writes the same bytes to `Concepts/PMConcept7.html`. `build.py` and
+`build.py --check` lint this package's sources (`home_layer.lint()`, in `lint_sources()`) and add
+`home_layer.published_problems()` to their checks.
+
+The review copy `Concepts/HomeTestPMConcept7.html` (the Concept Hub's `opus-5.5-hub/` frames it) is the same bytes as a
+fresh build, so it can never drift from the published page. `build_home.py --check` fails when a source breaks the
+layer's rules, a script does not parse, a HOME marker or a kept anchor is not there exactly once, or the review copy,
+`TestOpus5.5PmConcept.html` or `PMConcept7.html` differs from a fresh build. Every one of them is generated: after
+changing a source, run `build.py --publish-pm7`, then `build_home.py` (and the rail's `build_rail.py`, whose review
+copy stacks on the published page).
 
 ## Commands (from the repository root)
 
 ```
-python3 Concepts/home-redesign/tools/build_home.py            # build Concepts/HomeTestPMConcept7.html
-python3 Concepts/home-redesign/tools/build_home.py --check    # rebuild in memory, lint, syntax, byte parity
-python3 Concepts/home-redesign/tools/build_home.py --out PATH # a private build (workers, screenshots)
+python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build and publish PMConcept7.html with the layer
+python3 Concepts/home-redesign/tools/build_home.py                 # write the review copy (the same bytes)
+python3 Concepts/leftrail-redesign/tools/build_rail.py             # the rail's review copy, stacked on the page
+python3 Concepts/onboarding/opus-5.5/tools/build.py --check        # lint, syntax, markers, both published pages current
+python3 Concepts/home-redesign/tools/build_home.py --check         # the same for this layer, plus the review copy
+python3 Concepts/home-redesign/tools/build_home.py --out PATH      # a private build (workers, screenshots)
+python3 Concepts/onboarding/opus-5.5/tools/build.py --out PATH --no-home  # a private reference page with today's Home
 python3 Concepts/ConceptHub/validate.py "Concepts/home-redesign/opus-5.5-hub"
-python3 Concepts/onboarding/opus-5.5/tools/build.py --check   # the published concept stays untouched: "check ok"
 ```
 
-`?home=current` on the review copy shows today's Home (the layer stands down) for an A/B; `?o55=off` skips onboarding.
+`?home=current` shows today's Home (the layer stands down, and the tour's workspace chapter is its orientation alone)
+for an A/B; `?o55=off` skips onboarding.
 
 ## What the layer does
 
-`home_layer.apply()` starts from opus-5.5 `build.build_text()` and adds, between `HOME:` markers: the early script and
+`home_layer.apply()` runs as the last step of opus-5.5 `build.build_text()` and adds, between `HOME:` markers: the early script and
 `<style id="pm-home-css">` before `</head>`, and `<script id="pm-home-js">` before `</body>` (panels core, then each
 panels kind in its own scope, then the terminal, then `PM_HOME.boot()`), plus the panels' NieR hook classes in the
-Settings script's NieR selector lists, on anchors the Usage and rail layers do not use. One guarded app JS patch
-(`homeActive`) lets the chat stay one column on every page. It never edits the page's markup.
+Settings script's NieR selector lists, on anchors the Usage and rail layers do not use. Guarded app JS patches let the
+chat stay one column on every page (`homeActive`) and give the status bar's host item plain words that NieR's readout
+finds by an attribute. It never edits the page's markup.
 
 At run time the early script defines `PM_HOME_WORKSPACE` before the old Home controller parses, so that controller's own
 guard skips it: one Home model. The centre mounts in `#panel-dashboard`; the chat column reuses `#chatPanel` and
@@ -75,5 +101,5 @@ Lint (the build fails on each): emoji, `:has(`, a coloured side border (`border-
 more, inset side shadows), class names containing `pill`, capsule radii, viewport width `@media` inside the package,
 window-size reads outside the narrow ladder, banned copy words, and a top-level name declared twice in one scope.
 
-Publishing into PMConcept7 waits for the planning thread (D28): the NieR showpiece, the 5.6 Pro chat round with the
-fonts, the Usage port, the left rail and the hover polish publish first.
+Publishing into PMConcept7 followed the order D28 set: the NieR showpiece, the 5.6 Pro chat round with the fonts, the
+Usage port, the left rail, the hover polish and the Plans canon first, then the panels and the terminal (2026-10-10).

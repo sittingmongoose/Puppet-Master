@@ -15,9 +15,11 @@ is announced to the terminal and Plans threads before it is pushed.
 ```
 Concepts/home-redesign/
   CONTRACT.md, README.md, concept-hub.json      panels thread
-  tools/home_layer.py, tools/build_home.py       panels thread (apply / lint / syntax_check, review build)
+  tools/home_layer.py, tools/build_home.py       panels thread (apply / lint / syntax_check / published_problems,
+                                                 the review copy)
   src/panels/css/*.css, src/panels/js/*.js       panels thread (engine, strip, menus, every kind except Terminal)
-  src/terminal/{js,css,fonts,schemes,harness}/   terminal thread; also src/terminal/SPEC.md
+  src/terminal/{js,css,schemes,harness}/         terminal thread; also src/terminal/SPEC.md (its faces are the
+                                                 page's own, opus-5.5 src/fonts, DL-161)
 ```
 
 | Owner | JS global | CSS classes | Data attributes | Storage keys |
@@ -30,12 +32,13 @@ Nobody else's prefix is used in either tree. The hover thread owns `PMH` / `pmh-
 
 ### 1.1 How the layer assembles the page
 
-`tools/home_layer.py` `apply(text, need)` starts from `Concepts/onboarding/opus-5.5/tools/build.py`'s `build_text()`
-and adds, between `<!-- HOME:CSS:START/END -->` and `<!-- HOME:BODY:START/END -->`:
+`tools/home_layer.py` `apply(text, need)` is step 5 of `Concepts/onboarding/opus-5.5/tools/build.py`'s `build_text()`,
+after Settings, Usage and the rail, so `build.py --publish-pm7` publishes it into `PMConcept7.html`. It adds, between
+`<!-- HOME:CSS:START/END -->` and `<!-- HOME:BODY:START/END -->`:
 
 1. `<style id="pm-home-css">`: `src/panels/css/*.css` sorted, then `src/terminal/css/*.css` sorted. Font refs
-   `url("o55font:<file>")` are inlined as `data:` URIs, looked up in `src/terminal/fonts/` then `src/panels/fonts/`
-   (file names must be unique across the two).
+   `url("o55font:<file>")` are inlined as `data:` URIs from `src/panels/fonts/`; the terminal's faces and JetBrains
+   Mono are the page's own (opus-5.5 `src/css/01-webfonts.css` and `src/fonts/`, DL-161).
 2. `<script id="pm-home-js">`, in this order, each part in its own `try { (function () { 'use strict'; ... })(); }`:
    - the panels core: `src/panels/js/*.js` sorted, one shared scope, publishes `window.PM_HOME` and `window.PMW`;
    - the terminal: `src/terminal/js/*.js` sorted, one shared scope of its own, wrapped as
@@ -362,7 +365,10 @@ only while `drawsHistory()` is true.
   (D40, section 6.1); the panels answer it in the window's capture phase, ahead of the page's own handlers, and leave a
   press that becomes the rail's drag to the rail.
 - **Build order.** Settings, Usage, the rail (`rail_layer.apply_published`, step 4 of opus `build_text()`), then the home
-  layer, which inserts just before `</head>` and `</body>` and never rewrites the rail's band markup.
+  layer (`home_layer.apply`, step 5), which inserts just before `</head>` and `</body>` and never rewrites the rail's
+  band markup. `build.py` and `--publish-pm7` write the published page with it; `build.py --check` adds the layer's
+  lint and `home_layer.published_problems()` (both scripts parse, the HOME markers and the tour's
+  `failNextPersistenceWrite` anchor exactly once, the app patches in place, the Home block after the rail's).
 
 ## 7. The "+" menu and the empty panel (D6)
 
@@ -603,3 +609,8 @@ root. A kind never appends its own overlay to `document.body`.
   capped. Section 6.1: the chat column's API, the rail's Chat entry toggling the column on every page (D40), and a
   popped-out chat starting back in its column after a restart (D32). Section 7: the SSH hosts row, the filter finding
   hosts, the launcher's inline sub-rows.
+- v1.4 (2026-10-10): the publish. Sections 1, 1.1 and 6.3: the home layer is step 5 of opus `build_text()` and publishes
+  into `PMConcept7.html`; the review copy is the same bytes; the terminal's faces are the page's own. Section 6.1:
+  Settings' Chat Layout row is retired, so nothing replays a pop out at start and `popOutChat()` is `chatCol.popOut()`.
+  The Guided Tour's workspace steps are native to the tour (opus-5.5 `83-tour-steps.js`); the panels keep their tour
+  hooks on `PMW.tour` (`js/52-tour.js`).
