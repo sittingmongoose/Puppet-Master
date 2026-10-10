@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A5-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "The assigned reviser stage is complete. The full proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/sources/index.md)\n\nThe revision addresses all eight obligations and dispositions C1\u2013C6, including the #29 release link, BagIt coverage for sidecars, transcript wording, and separation of preservation and access storage. Artifact checks passed for all eight clauses and 15 source IDs. Product and media checks remain **NOT_RUN**.\n\nThe native Goal was created from the frozen objective and its terminal update returned `complete` (thread `01a1241b-b841-7d30-8e31-d7818dccd012`; 153,891 tokens; 611 seconds). Provider/model provenance and UTC-converted timestamps are recorded as **UNKNOWN**; raw timestamp fields are preserved in the source map.\n\nDisclosure: I inadvertently opened `critic/status.json`, which was outside the input map\u2019s listed paths. I did not use its contents in the proposal. No nested agents or parent history were used.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:04af2084-b596-4102-860f-3839b4590cf3",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "The assigned reviser stage is complete. The full proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/reviser/sources/index.md)\n\nThe revision addresses all eight obligations and dispositions C1\u2013C6, including the #29 release link, BagIt coverage for sidecars, transcript wording, and separation of preservation and access storage. Artifact checks passed for all eight clauses and 15 source IDs. Product and media checks remain **NOT_RUN**.\n\nThe native Goal was created from the frozen objective and its terminal update returned `complete` (thread `01a1241b-b841-7d30-8e31-d7818dccd012`; 153,891 tokens; 611 seconds). Provider/model provenance and UTC-converted timestamps are recorded as **UNKNOWN**; raw timestamp fields are preserved in the source map.\n\nDisclosure: I inadvertently opened `critic/status.json`, which was outside the input map\u2019s listed paths. I did not use its contents in the proposal. No nested agents or parent history were used.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:04af2084-b596-4102-860f-3839b4590cf3",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "de3d26711ce3b52088424c435642dfc21a465b7865b86793760143932392e03a"
   }
 }

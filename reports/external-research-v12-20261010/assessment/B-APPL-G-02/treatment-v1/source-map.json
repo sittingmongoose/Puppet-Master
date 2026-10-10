@@ -480,7 +480,7 @@
       "candidate_disposition": "REFUTED",
       "review": "SUPPORTED_REFUTATION",
       "candidate_lines": "74-86",
-      "assessment": "Correctly distinguishes daily midnight syntax/next-occurrence calculation from execution/completion, clock correctness and boot activation. A possible three-minute runtime is enough to disprove a universal two-second completion guarantee; actual runtime is unknown. The midnight \u00b1 wording is loose: AccuracySec adds a nonnegative window, not symmetric scheduling jitter. This is minor given claim 4\u2019s explicit after-time wording.",
+      "assessment": "Correctly distinguishes daily midnight syntax/next-occurrence calculation from execution/completion, clock correctness and boot activation. A possible three-minute runtime is enough to disprove a universal two-second completion guarantee; actual runtime is unknown. The midnight ± wording is loose: AccuracySec adds a nonnegative window, not symmetric scheduling jitter. This is minor given claim 4’s explicit after-time wording.",
       "evidence": [
         {
           "source_id": "time-manual",

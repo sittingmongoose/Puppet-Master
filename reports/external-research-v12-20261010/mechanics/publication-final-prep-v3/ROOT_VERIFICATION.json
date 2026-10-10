@@ -1,0 +1,13 @@
+{
+  "at_utc": "2026-10-10T08:43:37.631567+00:00",
+  "passed": true,
+  "full_diff_reviewed": true,
+  "code_sha256": {
+    "prepare.py": "463bfc36acb08e01f87067224d5260141bbd653b9a137e17578ffdcec77cde44",
+    "checks.py": "880b945c97bb87563986c1892160ce69015dcae7426c3f6a3cb056f3ad6cedfa"
+  },
+  "old_fixture_groups_pass": 40,
+  "new_check": "Original final byte re-read guard unchanged; cache confined to finite pre-staging original SHA reads. Full dependent metadata records and strict C/D lock enforcement retained. Actual final build/readback still required.",
+  "root_direct_mechanical_repair": true,
+  "science_regraded": false
+}

@@ -1,0 +1,24 @@
+{
+  "status": "fulfilled",
+  "value": {
+    "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+    "observedAt": "2026-10-10T03:58:46.850Z",
+    "result": {
+      "schema": "er12.public-native-lifecycle.v1",
+      "actual_lifecycle_metadata": [
+        {
+          "structured_content_metadata": [
+            {
+              "status": "failed"
+            }
+          ],
+          "structuredContent": {
+            "status": "failed"
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": true,
+      "original_json_value_sha256": "3526255b5c2242247a8ad777a04354d8164abfee693887d86d986fda97fcd109"
+    }
+  }
+}

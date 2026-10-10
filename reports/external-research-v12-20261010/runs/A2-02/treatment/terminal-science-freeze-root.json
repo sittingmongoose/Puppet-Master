@@ -250,25 +250,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A2-02",
-    "arm": "treatment",
-    "stage": "investigator",
-    "helper": "ER12_RUNTIME/helpers/topology-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed only the investigator stage under the original native Goal. The complete proposal and source bundle are saved in [final.md](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md), with the [source map](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json), [critique dispositions](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json), and [source index](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md).\n\nC01 is amended to attribute the viewer comparison to the IIIF community guide and avoid inferring that Universal Viewer lacks annotation capability. C02 is amended: issue #75\u2019s tentative master-branch comment is dated June 21, 2023, and establishes no released fix ([issue #75](https://github.com/ProjectMirador/mirador-annotations/issues/75), [IIIF guide](https://guides.iiif.io/using_iiif_resources/)). No product validation was run.\n\n`seal-final` succeeded. Its report left `scope_fidelity_proven` and `source_truth_proven` false; I do not treat the seal as certifying either. The same native Goal is complete. Its [activation receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/native-goal-activation.json) and [completion receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-completion.json) are preserved. The completion response reports 416,226 tokens and 1,906 seconds elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8f069367-fba0-48fb-8bea-00e169999758",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed only the investigator stage under the original native Goal. The complete proposal and source bundle are saved in [final.md](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md), with the [source map](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/source-map.json), [critique dispositions](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/critique-dispositions.json), and [source index](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/sources/index.md).\n\nC01 is amended to attribute the viewer comparison to the IIIF community guide and avoid inferring that Universal Viewer lacks annotation capability. C02 is amended: issue #75\u2019s tentative master-branch comment is dated June 21, 2023, and establishes no released fix ([issue #75](https://github.com/ProjectMirador/mirador-annotations/issues/75), [IIIF guide](https://guides.iiif.io/using_iiif_resources/)). No product validation was run.\n\n`seal-final` succeeded. Its report left `scope_fidelity_proven` and `source_truth_proven` false; I do not treat the seal as certifying either. The same native Goal is complete. Its [activation receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/native-goal-activation.json) and [completion receipt](ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/native-goal-completion.json) are preserved. The completion response reports 416,226 tokens and 1,906 seconds elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-02-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8f069367-fba0-48fb-8bea-00e169999758",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "5c91204fe55adadc82603adf8ec31b068e8e0a303c727fb765034937c0913a0f"
   }
 }

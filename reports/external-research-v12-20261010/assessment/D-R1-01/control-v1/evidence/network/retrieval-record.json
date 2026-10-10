@@ -1,0 +1,28 @@
+[
+  {
+    "key": "crossref-s003",
+    "url": "https://api.crossref.org/works/10.1016/j.fpsl.2016.01.003",
+    "final_url": "https://api.crossref.org/works/10.1016/j.fpsl.2016.01.003",
+    "http_status": 200,
+    "content_type": "application/json",
+    "bytes": 11371,
+    "observed_request_start_utc": "2026-10-10T07:11:39.843877+00:00",
+    "saved_path": "ER12_RUNTIME/assessment/D-R1-01/control-v1/evidence/network/crossref-s003.txt"
+  },
+  {
+    "key": "s003-author-repository",
+    "url": "https://repositorio.ucp.pt/server/api/core/items/546b3848-594e-411e-9336-7baaea41ea4e/bundles",
+    "observed_request_start_utc": "2026-10-10T07:11:39.845912+00:00",
+    "error": "<HTTPError 403: 'Forbidden'>"
+  },
+  {
+    "key": "s007-pmc",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9815692/?pdf=1",
+    "final_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9815692/?pdf=1",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 202499,
+    "observed_request_start_utc": "2026-10-10T07:11:39.847128+00:00",
+    "saved_path": "ER12_RUNTIME/assessment/D-R1-01/control-v1/evidence/network/s007-pmc.txt"
+  }
+]

@@ -280,25 +280,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A1-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed only the assigned reviser stage. Saved:\n\n- [final.md](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json)\n- [Evidence index](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md)\n\nThe final covers C1\u2013C6, dispositions F1\u2013F4, retains U1 as unresolved, and distinguishes source checks from proposed, unrun implementation validation. Frozen input hashes matched. No importer, exporter, database, provider, or client tests were run.\n\nThe native Goal was directly observed active, then completed and confirmed complete. Goal thread: `01a12411-07bf-7bb2-b6ef-4e8874c8b103`. Activation and terminal timestamps: UNKNOWN. Usage: 222,994 tokens and 13m45s.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4399a6ac-5f71-446d-a6dd-7eaf40bf49b0",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed only the assigned reviser stage. Saved:\n\n- [final.md](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/source-map.json)\n- [Evidence index](ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/sources/README.md)\n\nThe final covers C1\u2013C6, dispositions F1\u2013F4, retains U1 as unresolved, and distinguishes source checks from proposed, unrun implementation validation. Frozen input hashes matched. No importer, exporter, database, provider, or client tests were run.\n\nThe native Goal was directly observed active, then completed and confirmed complete. Goal thread: `01a12411-07bf-7bb2-b6ef-4e8874c8b103`. Activation and terminal timestamps: UNKNOWN. Usage: 222,994 tokens and 13m45s.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4399a6ac-5f71-446d-a6dd-7eaf40bf49b0",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "0b2d50079bf35ca2cedc428c277cf2247d8df1c894888aca0c0b4170e2d1d854"
   }
 }

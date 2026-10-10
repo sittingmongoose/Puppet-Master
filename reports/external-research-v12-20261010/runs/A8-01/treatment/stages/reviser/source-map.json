@@ -47,22 +47,55 @@
     "terminal_state_when_source_map_was_last_written": "Not yet observed; artifacts were saved while the native Goal was directly observed active."
   },
   "reviewed_inputs": [
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md", "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/assignment.md", "sha256": "8c74f4d66311597371dad2546d94183f1bcbdfd6d5d0c9eda9c6c9a3a24eb3ca"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/input-map.json", "sha256": "985eb9a20682732389aa744218a64b4c4af632103b51d6729e9ce8aed55bdec0"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md", "sha256": "baef8ae18b8f568005def64e37525a34857771fd3ca7e1ce09548b680646430e"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md", "sha256": "0af43bf0c4c5fdcdf703052e68fd11214c99a7dfa70715ab1f106cf0f66544df"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json", "sha256": "116008968cd18bbb54e5224b3320e3b547674fe568c43548bbbf1d4a15b40c1b"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md", "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json", "sha256": "c71db7d937329294db97f04470c59b94c80dac6ffb167492a9066e3157895afa"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md", "sha256": "9bd06b82fa828f1bea56e9448ab90c95e392986cdde4d0bb14663480d746b10b"},
-    {"path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json", "sha256": "21ec44bf61bc8d698e236675f515d7135bc92ae038e8bc735e642bff5dc22ab4"}
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/inputs/brief.md",
+      "sha256": "33a97f960ac3e92a24cfeaa5e170a0adb51428d699f49be026f40a909e648c47"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/assignment.md",
+      "sha256": "8c74f4d66311597371dad2546d94183f1bcbdfd6d5d0c9eda9c6c9a3a24eb3ca"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/input-map.json",
+      "sha256": "985eb9a20682732389aa744218a64b4c4af632103b51d6729e9ce8aed55bdec0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md",
+      "sha256": "baef8ae18b8f568005def64e37525a34857771fd3ca7e1ce09548b680646430e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md",
+      "sha256": "0af43bf0c4c5fdcdf703052e68fd11214c99a7dfa70715ab1f106cf0f66544df"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json",
+      "sha256": "116008968cd18bbb54e5224b3320e3b547674fe568c43548bbbf1d4a15b40c1b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "6964f85a4fdd4b74e4a40cbda44e93524aec1b8ed3860fa5ddec434dd8a2fdca"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "c71db7d937329294db97f04470c59b94c80dac6ffb167492a9066e3157895afa"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/critique.md",
+      "sha256": "9bd06b82fa828f1bea56e9448ab90c95e392986cdde4d0bb14663480d746b10b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/A8-01/treatment/stages/critic/source-map.json",
+      "sha256": "21ec44bf61bc8d698e236675f515d7135bc92ae038e8bc735e642bff5dc22ab4"
+    }
   ],
   "source_index": "sources/index.md",
   "source_id_policy": "S01-S06 are preserved from the frozen investigator source map with the same primary-source identities. Critic evidence confirms or qualifies these identities; no source ID was silently rebound. Independent reviser access was read-only.",
   "independent_review_access": {
     "exact_request_timestamps": "UNKNOWN; the web retrieval tool did not expose per-request UTC timestamps.",
-    "bounded_utc_window": ["2026-10-10T04:30:44Z", "2026-10-10T04:32:47Z"],
+    "bounded_utc_window": [
+      "2026-10-10T04:30:44Z",
+      "2026-10-10T04:32:47Z"
+    ],
     "observed_operation": "Opened official primary-source pages/PDF and inspected the cited sections using read-only open/find operations. No code, product, validator or source download was executed."
   },
   "sources": [
@@ -71,7 +104,14 @@
       "title": "The BagIt File Packaging Format (V1.0)",
       "exact_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
       "released_version_or_commit": "RFC 8493; BagIt v1.0; October 2018.",
-      "locator": ["§1.1", "§2.1.3", "§2.2.2–2.2.4", "§2.4", "§3", "§6.1.1–6.1.2"],
+      "locator": [
+        "§1.1",
+        "§2.1.3",
+        "§2.2.2–2.2.4",
+        "§2.4",
+        "§3",
+        "§6.1.1–6.1.2"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened the official RFC, then inspected the manifest/completeness definitions, custom-tag rules, hash support/default modality, and filename normalization and Windows/Unix interoperability sections. Read only; no BagIt tool or validator was run.",
       "governing_condition_default_exception": "A payload manifest lists each payload path and digest. Completeness and checksum validity are separate. BagIt 1.0 creation and validation tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. bag-info.txt is optional human-use metadata; arbitrary tag files are permitted, but the RFC does not define gallery CSV field semantics. Filesystems/utilities can normalize names differently; normalization-aware comparison is recommended. The RFC addresses corruption, not active attacks.",
@@ -82,7 +122,13 @@
       "title": "Oxford Common File Layout Specification",
       "exact_url": "https://ocfl.io/1.1/spec/",
       "released_version_or_commit": "OCFL v1.1 specification family; release tag 1.1.1, commit c3f88b3, shown as Latest at inspection; earlier 1.1.0 remains separately published.",
-      "locator": ["§3.3–3.3.1", "§3.5.1–3.5.3", "§3.6", "§3.7", "§3.8"],
+      "locator": [
+        "§3.3–3.3.1",
+        "§3.5.1–3.5.3",
+        "§3.6",
+        "§3.7",
+        "§3.8"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened the official 1.1 specification and inspected object version directories, content and inventory rules, current/root state, digest sidecars, optional version inventories and logs. Read only; no OCFL validator or implementation was run.",
       "governing_condition_default_exception": "OCFL inventories track current state and version history. The object ID remains stable and version directories are continuous; existing versions are expected immutable. Every file in a version content directory must be referenced in that version's inventory. The root inventory MUST exist; version-directory inventories SHOULD be included. Every inventory file that exists MUST have a digest sidecar. The format does not define the gallery's curatorial-completeness rule.",
@@ -93,7 +139,12 @@
       "title": "OCFL issue #538, clarity on manifest requirements in historic inventories",
       "exact_url": "https://github.com/OCFL/spec/issues/538",
       "released_version_or_commit": "Issue opened 2021-04-02; 1.1 milestone; closed by #547 on 2021-06-10; no standalone release commit identity for the issue.",
-      "locator": ["Issue description", "opening date", "milestone and closure status", "link to #547"],
+      "locator": [
+        "Issue description",
+        "opening date",
+        "milestone and closure status",
+        "link to #547"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened issue body/status and checked the initial description and closure metadata. It was a specification-interpretation discussion; no implementation failure or data-loss incident was claimed.",
       "governing_condition_default_exception": "The issue records ambiguity over which inventory a content-directory manifest rule refers to. The released rule is sourced to the official change log (S04), not inferred from the issue alone.",
@@ -103,9 +154,19 @@
       "id": "S04",
       "title": "OCFL specification change log and release history",
       "exact_url": "https://ocfl.io/1.1/spec/change-log.html",
-      "related_urls": ["https://github.com/OCFL/spec/releases/tag/1.1", "https://github.com/OCFL/spec/releases/tag/1.1.1", "https://github.com/OCFL/spec/pull/547"],
+      "related_urls": [
+        "https://github.com/OCFL/spec/releases/tag/1.1",
+        "https://github.com/OCFL/spec/releases/tag/1.1.1",
+        "https://github.com/OCFL/spec/pull/547"
+      ],
       "released_version_or_commit": "OCFL 1.1 tag / commit 4b05472; OCFL 1.1.1 tag / commit c3f88b3. The 1.1.1 tag page displayed the Latest badge at inspection.",
-      "locator": ["v1.0 to v1.1.0 changes", "Clarifications in v1.1.0", "Clarify manifest requirements in historic inventories", "1.1 and 1.1.1 release tag records", "PR #547"],
+      "locator": [
+        "v1.0 to v1.1.0 changes",
+        "Clarifications in v1.1.0",
+        "Clarify manifest requirements in historic inventories",
+        "1.1 and 1.1.1 release tag records",
+        "PR #547"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened the official change log and separate release-tag pages; checked the historic-inventory entry and tag/commit identities. A direct open of the generic releases index returned an internal error, so release identity was confirmed from the individual 1.1 and 1.1.1 tag pages instead. No source code was run.",
       "governing_condition_default_exception": "The v1.1.0 change-log entry for #538 says each historical inventory manifest must reference every file in that version directory. The separate v1.1 §3.7 wording makes root inventory MUST and version-directory inventory SHOULD; §3.6 requires a sidecar for every inventory file that exists. v1.1.1 is a later clarification release, not evidence that the v1.1.0 fix was a data-loss repair.",
@@ -115,9 +176,15 @@
       "id": "S05",
       "title": "PREMIS Data Dictionary for Preservation Metadata v3.0",
       "exact_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
-      "related_urls": ["https://www.loc.gov/standards/premis/v3/index.html"],
+      "related_urls": [
+        "https://www.loc.gov/standards/premis/v3/index.html"
+      ],
       "released_version_or_commit": "PREMIS v3.0; Library of Congress identifies full data dictionary updated November 2015.",
-      "locator": ["§1.5.2, pp. 58–60", "§2 Event entity, pp. 137–157", "event date, outcome and Object/Agent relations"],
+      "locator": [
+        "§1.5.2, pp. 58–60",
+        "§2 Event entity, pp. 137–157",
+        "event date, outcome and Object/Agent relations"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened the official Library of Congress PDF and inspected fixity and Event/outcome passages. Read only; no PREMIS serialization or validator was run.",
       "governing_condition_default_exception": "PREMIS separates digest algorithm/value from the fixity-check Event and its outcome/date. Event identifiers, type and datetime are mandatory in the data model. Some backup-copy actions may be recorded in system logs rather than as PREMIS events.",
@@ -127,9 +194,16 @@
       "id": "S06",
       "title": "git-annex whereis, log and fsck manuals",
       "exact_url": "https://git-annex.branchable.com/git-annex-whereis/",
-      "related_urls": ["https://git-annex.branchable.com/git-annex-log/", "https://git-annex.branchable.com/git-annex-fsck/"],
+      "related_urls": [
+        "https://git-annex.branchable.com/git-annex-log/",
+        "https://git-annex.branchable.com/git-annex-fsck/"
+      ],
       "released_version_or_commit": "Online manuals did not identify a reviewed release; version-sensitive current documentation.",
-      "locator": ["whereis description and stale-location note", "log description and history limits", "fsck description, --from and --fast"],
+      "locator": [
+        "whereis description and stale-location note",
+        "log description and history limits",
+        "fsck description, --from and --fast"
+      ],
       "access_utc": "UNKNOWN exact request timestamp; independent reviser access occurred within the bounded window in independent_review_access.",
       "observed_operation": "Opened the three official manual pages and inspected location reporting, history limits and remote-check options. Read only; git-annex was not installed, configured or run.",
       "governing_condition_default_exception": "whereis reports last-received location information and does not contact remotes. fsck --from normally copies remote content for checksum verification; --fast skips checksum calculations and transfer, checking expected presence. The log's history can be absent under documented forget/private settings.",
@@ -137,12 +211,64 @@
     }
   ],
   "selected_scw_adjudications": [
-    {"id": "SCW-1", "sources": ["S01", "S02"], "C": "UNDETERMINED; retain uncertainty", "C_star": "UNDETERMINED; retain uncertainty", "disposition": "BagIt for the stated small pilot remains a conditional product choice/inference; no relative-cost threshold or many-revision conclusion is established."},
-    {"id": "SCW-2", "sources": ["S01", "S02"], "C": "ENTAILS; accept", "C_star": "CONTRADICTS; reject", "disposition": "BagIt has no native successor-version model; OCFL has version directories, inventories and state. A separate gallery register remains compatible with BagIt."},
-    {"id": "SCW-3", "sources": ["S02", "S03", "S04"], "C": "ENTAILS; accept", "C_star": "ENTAILS; accept as nondiscriminating", "disposition": "Retain the historical-inventory clarification; separately state root inventory MUST, per-version inventory SHOULD and sidecar MUST for each inventory present."},
-    {"id": "SCW-4", "sources": ["S01"], "C": "ENTAILS; accept", "C_star": "CONTRADICTS; reject", "disposition": "MUST support both SHA-256 and SHA-512; SHOULD enable SHA-512 by default. Actual tool behavior is untested."},
-    {"id": "SCW-5", "sources": ["S01"], "C": "ENTAILS; accept", "C_star": "UNDETERMINED by the RFC; retain uncertainty", "disposition": "The CSV remains optional local content; BagIt does not assign standard semantics to its fields; test human readability."},
-    {"id": "SCW-6", "sources": ["S01"], "C": "ENTAILS; accept", "C_star": "UNDETERMINED; retain uncertainty", "disposition": "Retain the cross-filesystem/normalizing-tool risk; make no universal claim about an unchanged single filesystem."}
+    {
+      "id": "SCW-1",
+      "sources": [
+        "S01",
+        "S02"
+      ],
+      "C": "UNDETERMINED; retain uncertainty",
+      "C_star": "UNDETERMINED; retain uncertainty",
+      "disposition": "BagIt for the stated small pilot remains a conditional product choice/inference; no relative-cost threshold or many-revision conclusion is established."
+    },
+    {
+      "id": "SCW-2",
+      "sources": [
+        "S01",
+        "S02"
+      ],
+      "C": "ENTAILS; accept",
+      "C_star": "CONTRADICTS; reject",
+      "disposition": "BagIt has no native successor-version model; OCFL has version directories, inventories and state. A separate gallery register remains compatible with BagIt."
+    },
+    {
+      "id": "SCW-3",
+      "sources": [
+        "S02",
+        "S03",
+        "S04"
+      ],
+      "C": "ENTAILS; accept",
+      "C_star": "ENTAILS; accept as nondiscriminating",
+      "disposition": "Retain the historical-inventory clarification; separately state root inventory MUST, per-version inventory SHOULD and sidecar MUST for each inventory present."
+    },
+    {
+      "id": "SCW-4",
+      "sources": [
+        "S01"
+      ],
+      "C": "ENTAILS; accept",
+      "C_star": "CONTRADICTS; reject",
+      "disposition": "MUST support both SHA-256 and SHA-512; SHOULD enable SHA-512 by default. Actual tool behavior is untested."
+    },
+    {
+      "id": "SCW-5",
+      "sources": [
+        "S01"
+      ],
+      "C": "ENTAILS; accept",
+      "C_star": "UNDETERMINED by the RFC; retain uncertainty",
+      "disposition": "The CSV remains optional local content; BagIt does not assign standard semantics to its fields; test human readability."
+    },
+    {
+      "id": "SCW-6",
+      "sources": [
+        "S01"
+      ],
+      "C": "ENTAILS; accept",
+      "C_star": "UNDETERMINED; retain uncertainty",
+      "disposition": "Retain the cross-filesystem/normalizing-tool risk; make no universal claim about an unchanged single filesystem."
+    }
   ],
   "executed_research_operations": [
     "Read the frozen original brief, investigator discovery/draft/source map/revealed plan/reveal record, critic critique/source map and bounded inherited source notes.",
@@ -157,5 +283,9 @@
     "Copy one package from the existing offsite copy to a separate staging directory, validate it, and open representative files; record the result."
   ],
   "product_validation_status": "NOT_RUN. No package creation, validator execution, file mutation/copy, account, install, purchase, production access, offsite access, restore, or source-file move occurred.",
-  "output_paths": ["final.md", "source-map.json", "sources/index.md"]
+  "output_paths": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md"
+  ]
 }

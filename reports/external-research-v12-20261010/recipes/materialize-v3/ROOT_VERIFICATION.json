@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-10T07:16:19.288207+00:00",
+  "review": "full materializer diff and README, full new overlay diff/wrapper/snippet and full115line delta checks; prior v2 code reviewed previously",
+  "status": "ACCEPTED_PORTABLE_MECHANICAL_RECIPE",
+  "bundle_members": 33,
+  "bundle_mismatches_or_private_routes": [],
+  "original_v2_sources_changed": [],
+  "original_replication_pins": [
+    {
+      "recipe": "D-R1",
+      "mismatches": []
+    },
+    {
+      "recipe": "D-R2",
+      "mismatches": []
+    }
+  ],
+  "offline_delta_checks": 194,
+  "passed": true,
+  "prior236_rerun": false,
+  "root_rerun": false,
+  "scientific_or_production_qualification": false,
+  "native_candidate_call_or_reveal": false,
+  "limits": [
+    "fresh caller-owned inputs/route/deadline required",
+    "actual native Goal authenticity/freshness and effective/billing unknown beyond guard",
+    "new common activation capture mechanical version is not treatment gain"
+  ]
+}

@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the critic stage. Saved:\n\n- [critique.md](ER12_RUNTIME/runs/A4-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-01/control/stages/critic/sources/index.md)\n\nThe critique records the R2 attribution error in the frozen discovery and its correction in the draft, plus an AWS multipart checksum-type detail that needs clearer wording. Source retrieval was research only; product checks remain NOT_RUN.\n\nThe single native Goal was completed after saving the outputs: `01a12400-e9b3-7573-97fc-1b18d45c3705` — 148,100 tokens used over 238 seconds.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7f077c6e-4a74-40e5-a583-8367bedb7a2c",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the critic stage. Saved:\n\n- [critique.md](ER12_RUNTIME/runs/A4-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-01/control/stages/critic/sources/index.md)\n\nThe critique records the R2 attribution error in the frozen discovery and its correction in the draft, plus an AWS multipart checksum-type detail that needs clearer wording. Source retrieval was research only; product checks remain NOT_RUN.\n\nThe single native Goal was completed after saving the outputs: `01a12400-e9b3-7573-97fc-1b18d45c3705` — 148,100 tokens used over 238 seconds.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7f077c6e-4a74-40e5-a583-8367bedb7a2c",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "15667e18037dbc109d574902fddee99747ec24f3d9f5ad122de26f9c01aa0003",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A4-01/control/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

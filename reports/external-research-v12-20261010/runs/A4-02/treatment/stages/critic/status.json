@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the critic stage and saved the required outputs:\n\n- [Critique](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md>)\n- [Critic source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json>)\n- [Critic evidence index](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md>)\n\nThe main finding is that Microsoft documents approximately 3-hour refresh guidance for Outlook.com and approximately 6-hour guidance for Outlook on the web; the draft groups those operations together. I also recorded a smaller omission about iPhone’s calendar-level event-alert control. Product validation remains **NOT_RUN**.\n\nOne native Goal was activated with the exact objective and completed. Its recovered native state and completion response are saved. The raw activation response was lost when the capture code failed after activation; the failure and limitation are documented in the [capture note](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-capture.md>). No second Goal was created.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2bf6ff1f-574d-4acb-a990-e7a91a3a5ae3",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the critic stage and saved the required outputs:\n\n- [Critique](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/critique.md>)\n- [Critic source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/source-map.json>)\n- [Critic evidence index](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/sources/index.md>)\n\nThe main finding is that Microsoft documents approximately 3-hour refresh guidance for Outlook.com and approximately 6-hour guidance for Outlook on the web; the draft groups those operations together. I also recorded a smaller omission about iPhone’s calendar-level event-alert control. Product validation remains **NOT_RUN**.\n\nOne native Goal was activated with the exact objective and completed. Its recovered native state and completion response are saved. The raw activation response was lost when the capture code failed after activation; the failure and limitation are documented in the [capture note](<ER12_RUNTIME/runs/A4-02/treatment/stages/critic/native-goal-capture.md>). No second Goal was created.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2bf6ff1f-574d-4acb-a990-e7a91a3a5ae3",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "f6ecf977cfe7a218917e706b78eaae15687851d9ad9ee2c14e8587ebfb09f0bb",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A4-02/treatment/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

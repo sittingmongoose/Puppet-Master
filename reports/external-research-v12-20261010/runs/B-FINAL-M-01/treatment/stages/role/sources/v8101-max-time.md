@@ -1,30 +1,20 @@
----
-c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
-SPDX-License-Identifier: curl
-Long: max-time
-Short: m
-Arg: <seconds>
-Help: Maximum time allowed for transfer
-Category: connection timeout
-Added: 4.0
-Multi: single
-See-also:
-  - connect-timeout
-  - retry-max-time
-Example:
-  - --max-time 10 $URL
-  - --max-time 2.92 $URL
----
-
-# `--max-time`
-
-Set maximum time in seconds that you allow each transfer to take. Prevents
-your batch jobs from hanging for hours due to slow networks or links going
-down. This option accepts decimal values (added in 7.32.0).
-
-If you enable retrying the transfer (--retry) then the maximum time counter is
-reset each time the transfer is retried. You can use --retry-max-time to limit
-the retry time.
-
-The decimal value needs to be provided using a dot (.) as decimal separator -
-not the local version even if it might be using another separator.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+  "rawSHA256": "36ffc3a4f0b6615359c480f9bc1bb5e5f22d5a59cfbcd6439e0a363d4b8b948b",
+  "original_bytes": 884,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-max-time.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

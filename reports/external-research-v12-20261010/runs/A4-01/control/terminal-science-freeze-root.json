@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A4-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "**Reviser stage complete.** The native Goal is complete (thread `01a12405-759a-78a3-a0cf-c96524140981`; 132,887 tokens; 6m 59s).\n\n- [final.md](ER12_RUNTIME/runs/A4-01/control/stages/reviser/final.md) contains the complete proposal, all eight plan-clause dispositions, and the validation table.\n- [source-map.json](ER12_RUNTIME/runs/A4-01/control/stages/reviser/source-map.json) preserves all 19 source IDs and records the independent checks and critique dispositions. [sources/index.md](ER12_RUNTIME/runs/A4-01/control/stages/reviser/sources/index.md) provides navigation.\n- C1 was accepted: the R2 checksum marker is in the CopyObject row, not CompleteMultipartUpload. C2 was accepted and amended: AWS lists SHA-256 as a composite multipart checksum, while its full-object entries are CRC algorithms. [R2 API matrix](https://developers.cloudflare.com/r2/api/s3/api/), [AWS multipart checksum documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html). C3 remains an owner decision.\n- Source-map structure and source-ID coverage were checked. Product and endpoint validations remain **NOT_RUN**; public-source review is recorded as research, not product validation.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b9e78ee7-d234-47c8-9043-7c89a0556dce",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "**Reviser stage complete.** The native Goal is complete (thread `01a12405-759a-78a3-a0cf-c96524140981`; 132,887 tokens; 6m 59s).\n\n- [final.md](ER12_RUNTIME/runs/A4-01/control/stages/reviser/final.md) contains the complete proposal, all eight plan-clause dispositions, and the validation table.\n- [source-map.json](ER12_RUNTIME/runs/A4-01/control/stages/reviser/source-map.json) preserves all 19 source IDs and records the independent checks and critique dispositions. [sources/index.md](ER12_RUNTIME/runs/A4-01/control/stages/reviser/sources/index.md) provides navigation.\n- C1 was accepted: the R2 checksum marker is in the CopyObject row, not CompleteMultipartUpload. C2 was accepted and amended: AWS lists SHA-256 as a composite multipart checksum, while its full-object entries are CRC algorithms. [R2 API matrix](https://developers.cloudflare.com/r2/api/s3/api/), [AWS multipart checksum documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html). C3 remains an owner decision.\n- Source-map structure and source-ID coverage were checked. Product and endpoint validations remain **NOT_RUN**; public-source review is recorded as research, not product validation.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b9e78ee7-d234-47c8-9043-7c89a0556dce",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "794796ad66134b8cad2dc04102ef408a9969c92794dd77b68f40c67014020c86"
   }
 }

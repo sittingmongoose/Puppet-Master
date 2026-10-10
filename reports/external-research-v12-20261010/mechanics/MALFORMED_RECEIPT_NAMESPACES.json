@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-10-10T08:48:39.579741+00:00",
+  "records": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "historical_original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "historical_original_bytes": 0,
+      "current_raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_raw_bytes": 0,
+      "preserved_public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "preserved_public_bytes": 0,
+      "historical_current_raw_equal": true,
+      "private_current_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "native_proof_inferred": false,
+      "source_judgments_unchanged": true
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "historical_original_sha256": "32c3573630f4508ff01d0a43b7dec66b2eeb69bf100859e6fbdc913e5359b81d",
+      "historical_original_bytes": 467,
+      "current_raw_sha256": "748940b72217e1551ea0e91dabb94407a612ef3f2b8a06cda110df480c578bdc",
+      "current_raw_bytes": 472,
+      "preserved_public_sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "preserved_public_bytes": 429,
+      "historical_current_raw_equal": false,
+      "private_current_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "native_proof_inferred": false,
+      "source_judgments_unchanged": true
+    }
+  ],
+  "namespace": "Current raw native diagnostics, historical raw hash, previously sanitized public hash remain distinct. No repair or history rebind; raw current bytes copied privately and selected-original rehash enforced."
+}

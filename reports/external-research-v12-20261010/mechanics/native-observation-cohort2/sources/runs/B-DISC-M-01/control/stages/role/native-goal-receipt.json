@@ -1,0 +1,34 @@
+{
+  "native_goal": {
+    "objective": "ER12 B-DISC-M-01/control: execute ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "activation": {
+      "threadId": "01a123f3-1a90-7ee3-a3e8-85fe4a669122",
+      "status": "active",
+      "tokensUsed_on_create": 0,
+      "timeUsedSeconds_on_create": 0,
+      "createdAt": 1791604524,
+      "updatedAt_on_create": 1791604524,
+      "remainingTokens": null,
+      "completionBudgetReport": null,
+      "get_goal_observation": {
+        "status": "active",
+        "tokensUsed": 2068,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791604524,
+        "updatedAt": 1791604524
+      }
+    },
+    "completion": {
+      "threadId": "01a123f3-1a90-7ee3-a3e8-85fe4a669122",
+      "objective": "ER12 B-DISC-M-01/control: execute ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "status": "complete",
+      "tokensUsed": 101462,
+      "timeUsedSeconds": 550,
+      "createdAt": 1791604524,
+      "updatedAt": 1791605074,
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    },
+    "other_provenance": "UNKNOWN"
+  }
+}

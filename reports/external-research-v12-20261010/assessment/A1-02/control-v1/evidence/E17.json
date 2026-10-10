@@ -1,1 +1,50 @@
-{"version":{"id":2305354,"crate":"aimcal-ical","num":"0.12.1","dl_path":"/api/v1/crates/aimcal-ical/0.12.1/download","readme_path":"/api/v1/crates/aimcal-ical/0.12.1/readme","updated_at":"2026-04-25T08:37:15.217418Z","created_at":"2026-04-25T08:37:15.217418Z","downloads":273,"features":{"default":["jiff"],"jiff":["dep:jiff"]},"yanked":false,"yank_message":null,"lib_links":null,"license":"Apache-2.0","links":{"dependencies":"/api/v1/crates/aimcal-ical/0.12.1/dependencies","version_downloads":"/api/v1/crates/aimcal-ical/0.12.1/downloads","authors":"/api/v1/crates/aimcal-ical/0.12.1/authors"},"crate_size":222601,"published_by":{"id":345790,"login":"yzx9","name":"Zexin Yuan","avatar":"https://avatars.githubusercontent.com/u/41458459?v=4","url":"https://github.com/yzx9","github_username_matches":true,"created_at":"2018-07-20T02:30:03Z"},"audit_actions":[{"action":"publish","user":{"id":345790,"login":"yzx9","name":"Zexin Yuan","avatar":"https://avatars.githubusercontent.com/u/41458459?v=4","url":"https://github.com/yzx9","github_username_matches":true,"created_at":"2018-07-20T02:30:03Z"},"time":"2026-04-25T08:37:15.217418Z"}],"checksum":"8aef12f9c8e5769d064ab85f2abb7adb595b1606181280fb33a863407a7a37f8","rust_version":null,"has_lib":true,"bin_names":[],"edition":"2024","description":"AIM - Analyze. Interact. Manage Your Time, with calendar support","homepage":"https://github.com/yzx9/aim","documentation":"https://docs.rs/aimcal/","repository":"https://github.com/yzx9/aim","trustpub_data":null,"linecounts":{"languages":{"Rust":{"code_lines":16663,"comment_lines":980,"files":51}},"total_code_lines":16663,"total_comment_lines":980}}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://crates.io/api/v1/crates/aimcal-ical/0.12.1"
+  ],
+  "source_urls": [
+    "https://crates.io/api/v1/crates/aimcal-ical/0.12.1"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E17-lines.txt"
+    },
+    {
+      "line_text_sha256": "32655fdca5381a5ece40ab7a456341309e8ac07487cc966f72dd25710b060212"
+    },
+    {
+      "line_count": 75
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A1-02/control-v1/evidence/retrievals.json",
+      "source_id": "E17",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A1-02/control-v1/evidence/E17-lines.txt"
+    },
+    {
+      "line_text_sha256": "32655fdca5381a5ece40ab7a456341309e8ac07487cc966f72dd25710b060212"
+    },
+    {
+      "line_count": 75
+    }
+  ],
+  "raw_sha256": "b492754b8aff0418f25b6cfd6cb76e534595346e783a4dca286e98a0b6aabfe9",
+  "rawSHA256": "b492754b8aff0418f25b6cfd6cb76e534595346e783a4dca286e98a0b6aabfe9",
+  "original_bytes": 1652,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A1-02/control-v1/evidence/E17.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,0 +1,2017 @@
+{
+  "schema": "ER12 independent full-pipeline semantic assessment v1",
+  "case_id": "ER12-D-R1-04-FRESH",
+  "slot_id": "D-R1-04",
+  "arm": "control",
+  "assessment_version": "control-v1",
+  "reviewer_identity": "codex-er12-d-r1-04-control-v1-review",
+  "review_scope": "One ordinary three-stage full pipeline only: investigator discovery/draft → critic critique → reviser final. No other arms/results/history or ER11.",
+  "review_started_utc": "2026-10-10T07:04:16+00:00",
+  "judgment_saved_utc": "2026-10-10T07:19:41.647925+00:00",
+  "review_envelope_deadline_utc": "2026-10-10T07:49:16+00:00",
+  "envelope_capped": false,
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "final_semantic_source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_reason": "No remaining material source error, scientific omission or unsupported consequential final decision was found after all six axes and exact plan clauses were assessed. Specific nonmaterial depth/fidelity and lineage limits are retained. Original full 60-minute use is UNMET separately; semantic qualification is not an unqualified full-duration delivery pass.",
+  "per_arm": {
+    "control": {
+      "delivery": "COMPLETE authored discovery/draft/critique/final/maps/indexes and assignments/input maps/freezes inspected",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "coverage": "ALL_SIX_AXES_ASSESSED",
+      "original_duration_requirement": "UNMET",
+      "full_original_delivery": "NOT_AN_UNQUALIFIED_PASS_DUE_TO_DURATION",
+      "native": "SAVED_ACTIVE_AND_COMPLETE_RECEIPTS; INDEPENDENT_PROVENANCE_UNKNOWN",
+      "protocol": "NO_SCIENCE_ASSISTANCE_EVIDENT_IN_ALLOWED_RECORDS; COMPLETE_EXECUTION_TRACE_UNKNOWN",
+      "effective_route": "UNKNOWN",
+      "billing": "UNKNOWN"
+    }
+  },
+  "remaining_material_source_findings": [],
+  "material_findings": [
+    {
+      "finding_id": "T-01",
+      "domain": "original time/scope obligation, separate from source judgment",
+      "status": "UNMET; false fulfilled label corrected in final",
+      "materiality": "Literal original full-window obligation not delivered",
+      "evidence": [
+        "brief Request / plan full-60-minute clauses",
+        "investigator freeze: 1800s cap, deadline 06:54:15.841Z",
+        "saved investigator native activation 06:24:35Z and 1316s reported completion elapsed",
+        "final line 69"
+      ],
+      "not_a_material_source_error": true
+    }
+  ],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "rationale": "The final is a qualified-partner research proposal, maintains four outcomes, useful alternatives, specified covariates, history inquiry, transfer limits and later observations. Negative constraints are respected. Every exact plan sentence/bullet is mapped below. Site history and owner permissions/priority are legitimate external unknowns, not missing fabricated work. Literal full-duration use is unmet and reported separately, not waived by the corrected final label.",
+      "candidate_locators": [
+        "final 5–18",
+        "final 34–63",
+        "final 65–85"
+      ],
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om",
+        "E05-queens-record",
+        "E06-mpca-101"
+      ],
+      "limits": [
+        "T-01 original duration unmet; separate time/scope result",
+        "L-01 thin runoff-generation depth",
+        "L-02 historical-photo warning implicit"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "rationale": "Independent primary retrieval supports final conditional capture, inlet debris/grade, soil/underdrain, antecedent/storm and intended-bypass distinctions. Local thresholds, values and causes are not asserted. 48 hours remains contextual; Queens capture is of received water versus tributary-area capture, not a local performance promise. USGS event examples independently checked by reviewer. Earlier study-count/attribution slips do not survive as consequential final claims.",
+      "candidate_locators": [
+        "final 20–32",
+        "final 34–52",
+        "final 63"
+      ],
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om",
+        "E03-mpca-overview",
+        "E04-mpca-compaction",
+        "E05-queens-record",
+        "E06-mpca-101",
+        "E07-epa-install-om",
+        "E08-mpca-assessment",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ],
+      "limits": [
+        "No local jurisdiction/design evidence",
+        "LF-02/03 minor lineage source imprecision",
+        "No article data reanalysis; live revision IDs unavailable"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, history and opportunity breadth",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "rationale": "Discovery yields non-obvious distinctions and actual analogous evidence: capture can fail despite infiltration; intended offline bypass; inlet orientation/divots; pretreatment maintenance; underdrain paths; Portland/New York iterative inlet history; contrasting USGS studies and visual versus quantitative assessment. Competing entry/routing, maintenance/soil and observation-first routes have meaningful decision roles. Conditional accepted bypass and qualified diagnostics avoid a preselected repair.",
+      "candidate_locators": [
+        "discovery 9–29",
+        "draft 50–78",
+        "final 20–52"
+      ],
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E03-mpca-overview",
+        "E05-queens-record",
+        "E08-mpca-assessment",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ],
+      "limits": [
+        "L-01 runoff generation/cover/connectivity treatment thin",
+        "L-03 concrete municipal histories compressed in final; supported meaning and map remain"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections, rejections and exact plan dispositions",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS",
+      "rationale": "CR-01 correctly rejects the fulfilled-duration label, CR-02 corrects sumps typo, CR-03 appropriately retains genuinely unavailable site inputs. All three final dispositions are defensible; no criticism forces scope reduction or an unauthorized repair. No correction to hypothetical brief facts is warranted. Table assertions about generation and untimed-photo coverage are stronger than prose depth and are recorded as nonmaterial limits.",
+      "candidate_locators": [
+        "critique 9–17",
+        "draft 20–47",
+        "final 65–87"
+      ],
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E04-mpca-compaction",
+        "E08-mpca-assessment"
+      ],
+      "limits": [
+        "Time criticism does not itself establish a scientific source defect",
+        "CR-01 correction cannot recover elapsed time"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery, draft, critique and final",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "rationale": "Four outcomes, conditional alternatives, source/site conditions, records requests, owner choices, event design, uncertainty, no-test/no-design boundaries and validation status survive in self-contained final prose. Reviser namespaces preserve S/C IDs and access limitations. Specific municipal history details are compressed, while the resulting capture/safety/maintenance tradeoff remains. Final avoids rather than repeats earlier framework attribution and Madison total-count imprecision.",
+      "candidate_locators": [
+        "discovery 4–41",
+        "draft 5–108",
+        "critique 3–49",
+        "final 7–91"
+      ],
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E05-queens-record",
+        "E08-mpca-assessment",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ],
+      "limits": [
+        "L-03 reduced final detail on named public inlet sequences",
+        "Candidate USGS independent recheck remained limited; reviewer check is separate"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED",
+      "source_judgment": "PASS",
+      "rationale": "Proposed 6–10-event exploratory observations, representative interval rain, fixed views/references, separate outcomes, exact check times/misses, maintenance-period comparisons and stop/escalation are meaningful. They discriminate approach/entry from retention/outlet families, not infiltration rate, causal compaction, volume, pollutant or compliance. No numerical pass/fail performance oracle is asserted. Executed work is bounded source/document review; field, model, test and local-history verification remain unperformed.",
+      "candidate_locators": [
+        "discovery 31–41",
+        "draft 80–106",
+        "critique 43–49",
+        "final 54–63, 89–91"
+      ],
+      "primary_evidence_ids": [
+        "E05-queens-record",
+        "E08-mpca-assessment",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ],
+      "limits": [
+        "Exploratory count/times are proposals, not power or validated monitoring sufficiency",
+        "Causal attribution needs further approved measurement/control; final acknowledges this"
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_plan_clause_dispositions": [
+    {
+      "clause_id": "PC-001",
+      "section": "Concealed prospective design record",
+      "plan_line": 9,
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "PROTOCOL_RECORDED_WITH_UNKNOWN",
+      "independent_reason": "Plan was absent from investigator pre-release input map and a single-use reveal record was supplied. Complete access trace and campaign recipe/budget lock were not inspected.",
+      "candidate_locator": "final 65–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-002",
+      "section": "Concealed prospective design record",
+      "plan_line": 9,
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "Final retains the original request and open alternatives; plan is treated as source of scope.",
+      "candidate_locator": "final 65–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-003",
+      "section": "Concealed prospective design record",
+      "plan_line": 9,
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "No completed-method answer key or prescribed winner is inferred.",
+      "candidate_locator": "final 34–41, 78–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-004",
+      "section": "Concealed prospective design record",
+      "plan_line": 9,
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "SATISFIED",
+      "independent_reason": "No repair/retrofit is selected as a site remedy.",
+      "candidate_locator": "final 34–41, 78–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-005",
+      "section": "Concealed prospective design record",
+      "plan_line": 9,
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "Authoring history is distinguished from later desk research; no field work claimed.",
+      "candidate_locator": "final 84, 89–91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-006",
+      "section": "Exact original request and clauses",
+      "plan_line": 13,
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "Frozen original and released copy were fully read; bytes match.",
+      "candidate_locator": "final 65–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-007",
+      "section": "Exact original request and clauses",
+      "plan_line": 13,
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "SATISFIED_SEMANTIC_WITH_TIME_UNMET",
+      "independent_reason": "Scope is not reduced to an easier design; the original duration is disclosed as unmet rather than replaced.",
+      "candidate_locator": "final 69–85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-008",
+      "section": "Project situation",
+      "plan_line": 25,
+      "exact_clause": "A neighborhood demonstration rain garden appears to receive water through one curb opening during some storms, while flow passes the opening during others.",
+      "disposition": "SYNTHETIC_INPUT_PRESERVED",
+      "independent_reason": "Intermittent reported entry is a hypothetical observation, not verified site data.",
+      "candidate_locator": "final 5–18, 22",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-009",
+      "section": "Project situation",
+      "plan_line": 25,
+      "exact_clause": "Volunteers recently added mulch and cleared nearby leaves, and a construction delivery may have compacted part of the edge.",
+      "disposition": "SYNTHETIC_INPUT_PRESERVED",
+      "independent_reason": "Mulch/leaf work and possible delivery compaction remain leads to a documented timeline.",
+      "candidate_locator": "final 26, 45–52",
+      "primary_evidence_ids": [
+        "E02-mpca-om",
+        "E04-mpca-compaction"
+      ]
+    },
+    {
+      "clause_id": "PC-010",
+      "section": "Project situation",
+      "plan_line": 25,
+      "exact_clause": "The city partner wants a research proposal before considering repairs.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Records/observation proposal precedes any repair selection.",
+      "candidate_locator": "final 5–9, 34–61",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-011",
+      "section": "Project situation",
+      "plan_line": 25,
+      "exact_clause": "There are no surveyed levels, rainfall records, soil tests, or catchment measurements.",
+      "disposition": "UNKNOWN_PRESERVED",
+      "independent_reason": "No levels, rain, soils or catchment numbers are manufactured.",
+      "candidate_locator": "final 18, 45–52, 91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-012",
+      "section": "Project situation",
+      "plan_line": 25,
+      "exact_clause": "All site details are hypothetical.",
+      "disposition": "SYNTHETIC_INPUT_PRESERVED",
+      "independent_reason": "Explicitly hypothetical throughout.",
+      "candidate_locator": "final 5",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-013",
+      "section": "Request",
+      "plan_line": 29,
+      "exact_clause": "Use the full 60-minute research window to develop a proposal that distinguishes runoff capture problems from storage or infiltration limitations.",
+      "disposition": "SCIENTIFIC_SCOPE_SATISFIED_TIME_UNMET",
+      "independent_reason": "Capture versus storage/infiltration is separated. Literal full duration was not used; final corrects fulfilled label. About 29m40s was available after recorded investigator activation, not actual research occupancy. Timing is evaluated separately.",
+      "candidate_locator": "final 9–18, 69",
+      "primary_evidence_ids": [
+        "E05-queens-record",
+        "E06-mpca-101"
+      ]
+    },
+    {
+      "clause_id": "PC-014",
+      "section": "Request",
+      "plan_line": 29,
+      "exact_clause": "Explain mechanisms and useful alternatives, investigate installation and maintenance history, and propose a modest later observation or test program.",
+      "disposition": "SATISFIED_WITH_EXTERNAL_LIMITS",
+      "independent_reason": "Mechanisms and alternatives are substantive, history inquiry is specific, and the later observation design is modest. Real site history cannot be investigated empirically for a synthetic site with no records.",
+      "candidate_locator": "final 20–63",
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om",
+        "E07-epa-install-om"
+      ]
+    },
+    {
+      "clause_id": "PC-015",
+      "section": "Request",
+      "plan_line": 29,
+      "exact_clause": "The deliverable should support discussion with a qualified site partner, not provide a construction or drainage design.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Qualified-partner discussion; no design dimensions, test execution or drainage work.",
+      "candidate_locator": "final 5, 34–41, 61",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-016",
+      "section": "Requirements to preserve",
+      "plan_line": 33,
+      "exact_clause": "Treat entry capture, temporary storage, infiltration, and downstream effects as separate outcomes.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Four separate outcomes, including outlet/underdrain and downstream route. Drawdown is a proxy, not an infiltration measurement.",
+      "candidate_locator": "final 11–18, 58–63",
+      "primary_evidence_ids": [
+        "E06-mpca-101"
+      ]
+    },
+    {
+      "clause_id": "PC-017",
+      "section": "Requirements to preserve",
+      "plan_line": 34,
+      "exact_clause": "Compare inlet or surface-routing ideas with maintenance or soil-management investigation and a useful observation-first alternative.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Four conditional rows compare entry/routing review, maintenance/soil inquiry, and observation first.",
+      "candidate_locator": "final 34–41",
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om",
+        "E04-mpca-compaction"
+      ]
+    },
+    {
+      "clause_id": "PC-018",
+      "section": "Requirements to preserve",
+      "plan_line": 35,
+      "exact_clause": "Consider storm intensity and duration, antecedent wetness, sediment or leaf accumulation, and local geometry rather than attributing the problem solely to compaction.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Timing/intensity, antecedent proxy, debris, geometry and maintenance periods are recorded; compaction is one unverified hypothesis.",
+      "candidate_locator": "final 22–30, 57–60",
+      "primary_evidence_ids": [
+        "E04-mpca-compaction",
+        "E05-queens-record",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ]
+    },
+    {
+      "clause_id": "PC-019",
+      "section": "Requirements to preserve",
+      "plan_line": 36,
+      "exact_clause": "Investigate original installation and recent maintenance history and explain the limits of transferring evidence from other rain gardens.",
+      "disposition": "SATISFIED_WITH_EXTERNAL_LIMITS",
+      "independent_reason": "Specific as-built/construction/O&M requests and transfer limits are provided; no actual local records exist in input.",
+      "candidate_locator": "final 43–52",
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E07-epa-install-om"
+      ]
+    },
+    {
+      "clause_id": "PC-020",
+      "section": "Requirements to preserve",
+      "plan_line": 37,
+      "exact_clause": "Propose comparisons across events, feasible measurements, uncertainties, and an escalation or stop condition; distinguish proposed field validation from research or modeling actually executed.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Natural event contrasts, feasible categorical/level/rain observations, missing checks, uncertainty and stop/escalation conditions; no executed field/model claim.",
+      "candidate_locator": "final 54–63, 89–91",
+      "primary_evidence_ids": [
+        "E08-mpca-assessment"
+      ]
+    },
+    {
+      "clause_id": "PC-021",
+      "section": "Boundaries",
+      "plan_line": 41,
+      "exact_clause": "Do not excavate, change a curb, redirect runoff, perform infiltration tests, or prescribe final civil-engineering dimensions.",
+      "disposition": "RESPECTED",
+      "independent_reason": "No excavation, curb work, runoff redirection, infiltration test or final dimensions in this study. Qualified future characterization is conditional, not an instruction to run a prohibited test.",
+      "candidate_locator": "final 38–41, 61, 76",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-022",
+      "section": "Boundaries",
+      "plan_line": 42,
+      "exact_clause": "Do not claim flood protection, pollutant removal, or regulatory compliance from visible ponding or a literature example.",
+      "disposition": "RESPECTED",
+      "independent_reason": "No flood, pollutant or regulatory inference from ponding or other gardens.",
+      "candidate_locator": "final 5, 18, 77",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-023",
+      "section": "Boundaries",
+      "plan_line": 43,
+      "exact_clause": "Do not fabricate rainfall, soil properties, catchment area, grade, or construction damage.",
+      "disposition": "RESPECTED",
+      "independent_reason": "No site rain, soil, area, grade or damage invented. Proposed counts/times are explicitly study-design choices.",
+      "candidate_locator": "final 18, 26, 57–63, 77",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-024",
+      "section": "Still unresolved",
+      "plan_line": 47,
+      "exact_clause": "We do not know the drainage boundary, slopes, inlet geometry, plant and soil layers, overflow route, storm distribution, public-access limits, or observation permissions.",
+      "disposition": "UNKNOWN_PRESERVED_WITH_CONSEQUENCES",
+      "independent_reason": "Boundary/grades/inlet prevent capture calculation or inlet remedy; layers/outlet govern drawdown interpretation; overflow route prevents downstream claims; storm classes limit comparison; access/permission gate observations.",
+      "candidate_locator": "final 18, 45–61, 78",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-025",
+      "section": "Still unresolved",
+      "plan_line": 47,
+      "exact_clause": "The city has not identified whether entry failure or slow drawdown is its main concern.",
+      "disposition": "EXTERNAL_OWNER_DECISION_PRESERVED",
+      "independent_reason": "Ask city about entry versus drawdown and design-acceptable bypass; keep all four outcomes regardless.",
+      "candidate_locator": "final 9, 56, 78",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-026",
+      "section": "Still unresolved",
+      "plan_line": 47,
+      "exact_clause": "State the consequences for study design.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Consequences are concrete calculation, diagnosis, routing and access limits, not generic caution.",
+      "candidate_locator": "final 18, 38–41, 56–63, 78",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-027",
+      "section": "Research question and incompleteness",
+      "plan_line": 53,
+      "exact_clause": "What first research and observation sequence would distinguish water failing to enter the feature from water entering but being retained or transmitted differently than expected?",
+      "disposition": "SATISFIED",
+      "independent_reason": "Records plus event observation distinguish absent approach/entry from retained or transmitted water.",
+      "candidate_locator": "final 9–18, 54–61, 79",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-028",
+      "section": "Research question and incompleteness",
+      "plan_line": 55,
+      "exact_clause": "The relevant storm class, owner objective, authorized access, measurement equipment, and minimum evidence for escalation remain unresolved.",
+      "disposition": "EXTERNAL_CHOICES_PRESERVED",
+      "independent_reason": "Event classes, objective, permission and equipment remain explicit gates; local criterion/escalation observations are named.",
+      "candidate_locator": "final 56–63, 79",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-029",
+      "section": "Research question and incompleteness",
+      "plan_line": 55,
+      "exact_clause": "The proposal should preserve an observation-first route while comparing practical interventions conditionally and exposing data gaps.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Observation first remains useful alongside conditional alternatives and specific data gaps.",
+      "candidate_locator": "final 34–41, 54–63",
+      "primary_evidence_ids": [
+        "E08-mpca-assessment"
+      ]
+    },
+    {
+      "clause_id": "PC-030",
+      "section": "Meaningful useful alternatives",
+      "plan_line": 59,
+      "exact_clause": "Investigate inlet clearing and documented maintenance, surface-routing or inlet geometry assessment, soil condition and infiltration inquiry, and staged event observation before changing anything.",
+      "disposition": "SATISFIED_WITH_EXTERNAL_LIMITS",
+      "independent_reason": "Maintenance history, entry geometry, soil/media/outlet inquiry and staged observation are compared; study does not itself clear or change anything.",
+      "candidate_locator": "final 34–52",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-031",
+      "section": "Meaningful useful alternatives",
+      "plan_line": 59,
+      "exact_clause": "Accepting limited capture for some storms could be a useful baseline if it is consistent with the actual objective.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Limited capture baseline depends on owner objective and design intent, not an assumed complete-capture goal.",
+      "candidate_locator": "final 9, 41, 56",
+      "primary_evidence_ids": [
+        "E03-mpca-overview"
+      ]
+    },
+    {
+      "clause_id": "PC-032",
+      "section": "Meaningful useful alternatives",
+      "plan_line": 59,
+      "exact_clause": "A qualified survey or diagnostic study may be more valuable than an immediate repair.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Survey or diagnostic follows inconclusive observation; immediate repair is not privileged.",
+      "candidate_locator": "final 38–41, 60",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-033",
+      "section": "Meaningful useful alternatives",
+      "plan_line": 59,
+      "exact_clause": "No inlet, soil treatment, or retrofit is preselected.",
+      "disposition": "SATISFIED",
+      "independent_reason": "No predetermined intervention.",
+      "candidate_locator": "final 34–41, 80",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-034",
+      "section": "Mechanism opportunity",
+      "plan_line": 63,
+      "exact_clause": "Develop an account of runoff generation, approach flow, entry geometry, storage, overflow, and soil-water movement.",
+      "disposition": "ADDRESSED_WITH_NONMATERIAL_DEPTH_LIMIT",
+      "independent_reason": "Approach/entry/storage/overflow/media pathways are clear. Runoff generation is thinner: event and contributing-area/loading questions are named, but surface cover/connectivity and initial losses are not developed. This limits breadth, without supporting a wrong flow estimate or disabling the first capture-versus-drawdown study.",
+      "candidate_locator": "final 18, 22–32, 34–41, 81",
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E06-mpca-101"
+      ]
+    },
+    {
+      "clause_id": "PC-035",
+      "section": "Mechanism opportunity",
+      "plan_line": 63,
+      "exact_clause": "Separate observed bypass from inferred infiltration failure.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Bypass does not diagnose infiltration failure.",
+      "candidate_locator": "final 9, 22–32",
+      "primary_evidence_ids": [
+        "E05-queens-record"
+      ]
+    },
+    {
+      "clause_id": "PC-036",
+      "section": "Mechanism opportunity",
+      "plan_line": 63,
+      "exact_clause": "Storm characteristics and antecedent conditions can alter several processes at once.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Explicit covariates, confounding and cautious event comparisons.",
+      "candidate_locator": "final 28–30, 57–60",
+      "primary_evidence_ids": [
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ]
+    },
+    {
+      "clause_id": "PC-037",
+      "section": "Mechanism opportunity",
+      "plan_line": 63,
+      "exact_clause": "Propose evidence that could discriminate mechanisms, and state when a simple water balance would be informative or unsupported.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Entry observations, ponding/recession and routes distinguish broad mechanism families. Current water balance unsupported; later quantitative balance requires qualified inputs/outputs/storage measurements.",
+      "candidate_locator": "final 18, 54–63",
+      "primary_evidence_ids": [
+        "E08-mpca-assessment",
+        "E09-usgs-omaha"
+      ]
+    },
+    {
+      "clause_id": "PC-038",
+      "section": "Implementation and history opportunity",
+      "plan_line": 67,
+      "exact_clause": "Investigate design intent, as-built information, maintenance dates, sediment accumulation, and possible traffic or delivery effects.",
+      "disposition": "SATISFIED_WITH_EXTERNAL_LIMITS",
+      "independent_reason": "Actual design and work records unavailable; records request covers every named lead rather than inferring history.",
+      "candidate_locator": "final 43–52",
+      "primary_evidence_ids": [
+        "E01-epa-handbook",
+        "E07-epa-install-om"
+      ]
+    },
+    {
+      "clause_id": "PC-039",
+      "section": "Implementation and history opportunity",
+      "plan_line": 67,
+      "exact_clause": "Public implementation reports need catchment, geometry, event conditions, operation, and measured outcomes to support transfer.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Other studies kept in their catchment/geometry/event/operation domain; no numeric transfer.",
+      "candidate_locator": "final 28–32, 52",
+      "primary_evidence_ids": [
+        "E05-queens-record",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ]
+    },
+    {
+      "clause_id": "PC-040",
+      "section": "Implementation and history opportunity",
+      "plan_line": 67,
+      "exact_clause": "The recollection of compaction is a lead rather than a confirmed defect.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Unverified lead; no local soil defect asserted.",
+      "candidate_locator": "final 26, 49–50",
+      "primary_evidence_ids": [
+        "E04-mpca-compaction"
+      ]
+    },
+    {
+      "clause_id": "PC-041",
+      "section": "Implementation and history opportunity",
+      "plan_line": 67,
+      "exact_clause": "Historical ponding photographs without timing or input conditions may fail to distinguish capture from drawdown.",
+      "disposition": "ADDRESSED_IMPLICITLY_NONMATERIAL_LIMIT",
+      "independent_reason": "Dated/time-stamped event photos and separate input/outcome logs implement this concern. The exact warning about old untimed photos appears only as a disposition assertion, not a developed explanatory sentence. No inference actually relies on such photos.",
+      "candidate_locator": "final 49, 57–63, 82",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-042",
+      "section": "Proposed versus executed validation",
+      "plan_line": 71,
+      "exact_clause": "A later authorized study could document event conditions, entry or bypass observations, ponding and drawdown, and stable reference points across several storms.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Safe fixed baseline, event conditions, entry/bypass, ponding and recession observations across events; proposed only.",
+      "candidate_locator": "final 54–63",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-043",
+      "section": "Proposed versus executed validation",
+      "plan_line": 71,
+      "exact_clause": "Explain observation timing, safe access, comparison limits, and what would trigger a qualified survey or soil investigation rather than a volunteer repair.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Post-event checks, exact times/misses, safe access, confounding, and escalation to survey/media/outlet investigation are explicit.",
+      "candidate_locator": "final 56–63",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-044",
+      "section": "Proposed versus executed validation",
+      "plan_line": 71,
+      "exact_clause": "An assumed water balance or diagram executed in the hour is desk work only.",
+      "disposition": "SATISFIED",
+      "independent_reason": "No executed balance or diagram claimed; future assumed desk work is distinguished from field validation.",
+      "candidate_locator": "final 18, 63, 85, 91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-045",
+      "section": "Proposed versus executed validation",
+      "plan_line": 71,
+      "exact_clause": "Field capture, infiltration performance, downstream benefit, and pollutant outcomes remain unvalidated.",
+      "disposition": "UNVALIDATED_PRESERVED",
+      "independent_reason": "No measured local capture, infiltration, downstream or pollutant result.",
+      "candidate_locator": "final 5, 18, 83, 91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-046",
+      "section": "Proposed versus executed validation",
+      "plan_line": 73,
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "Synthetic-case preparation is distinct from candidate desk research.",
+      "candidate_locator": "final 84",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-047",
+      "section": "Proposed versus executed validation",
+      "plan_line": 73,
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_reason": "Statement refers to case authoring, not a prohibition on later researcher search. Final distinguishes later source review.",
+      "candidate_locator": "final 84, 89–91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-048",
+      "section": "Proposed versus executed validation",
+      "plan_line": 73,
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Actual desk research and access failures vs unperformed site validation explicitly described. Raw execution audit is unavailable; scientific status is accurately bounded.",
+      "candidate_locator": "final 28–30, 89–91",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-049",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "SCIENTIFIC_SCOPE_RETAINED_TIME_UNMET",
+      "independent_reason": "Substantive research/proposal content remains broad; explicit original 60-minute use is unmet and remains a separate time obligation.",
+      "candidate_locator": "final 20–63, 69, 85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-050",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "SATISFIED",
+      "independent_reason": "Records/observation first is a provisional sequence; no retrofit winner.",
+      "candidate_locator": "final 9, 34–41, 85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-051",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "It requests no product build.",
+      "disposition": "RESPECTED",
+      "independent_reason": "No product/build/deployment invented.",
+      "candidate_locator": "final 5, 85",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-052",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "INTEGRITY_OBSERVED",
+      "independent_reason": "Original hashes unchanged and plan reveal exact-match; reviewer writes only reserved assessment subtree.",
+      "candidate_locator": "evidence/freeze-integrity.json",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-053",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "disposition": "PROTOCOL_UNKNOWN_BEYOND_RECORDED_REVEAL",
+      "independent_reason": "Single-use reveal after saved discovery is recorded; campaign recipe/budget lock and complete access/feedback trace are outside this bounded evidence. No reviewer feedback sent to candidates.",
+      "candidate_locator": "investigator plan-reveal.json; evidence/freeze-integrity.json",
+      "primary_evidence_ids": []
+    },
+    {
+      "clause_id": "PC-054",
+      "section": "Scope and release boundary",
+      "plan_line": 77,
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "PROTOCOL_UNKNOWN",
+      "independent_reason": "No release-authority inference made from readiness or file existence.",
+      "candidate_locator": "stage input-map/freeze and reveal record",
+      "primary_evidence_ids": []
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "criticism_id": "CR-01",
+      "original_classification": "Material incomplete",
+      "final_disposition": "ACCEPT",
+      "reviewer_disposition": "ACCEPT correction; preserve original time noncompliance separately",
+      "evidence": "Draft first disposition row reports about 29m40s available but labels scope fulfilled. Investigator receipt records 1316 seconds elapsed, with a 30-minute cap. Exact brief asks full 60 minutes. Final says duration unmet and cannot retroactively satisfy it.",
+      "original_locator": "draft 24; critique 13",
+      "final_locator": "final 69, 87",
+      "source_refs": [
+        "frozen brief Request",
+        "investigator freeze/activation/completion",
+        "evidence/lifecycle-records.json"
+      ],
+      "remaining_material_source_issue": false
+    },
+    {
+      "criticism_id": "CR-02",
+      "original_classification": "Minor locator/wording",
+      "final_disposition": "ACCEPT",
+      "reviewer_disposition": "ACCEPT",
+      "evidence": "Draft alternatives has “Inlet sums/pretreatment”; discovery and EPA discuss sumps. Final uses inlet sump/pretreatment and explicitly accepts typo. No scientific choice changes.",
+      "original_locator": "draft 54; critique 14",
+      "final_locator": "final 38, 87",
+      "source_refs": [
+        "E01-epa-handbook"
+      ],
+      "remaining_material_source_issue": false
+    },
+    {
+      "criticism_id": "CR-03",
+      "original_classification": "Honestly unresolved external input",
+      "final_disposition": "RETAIN UNCERTAINTY",
+      "reviewer_disposition": "ACCEPT retention; not an empirical omission in a synthetic case",
+      "evidence": "Frozen brief provides no measured site or records. Final lists specific missing records/owner decisions and their effects on estimates, diagnoses and access. No cause is manufactured.",
+      "original_locator": "critique 15; draft 35–47, 59–68, 104",
+      "final_locator": "final 18, 43–63, 78, 87",
+      "source_refs": [
+        "frozen brief Project situation / Still unresolved",
+        "E01-epa-handbook",
+        "E04-mpca-compaction",
+        "E07-epa-install-om"
+      ],
+      "remaining_material_source_issue": false
+    }
+  ],
+  "lineage_findings": [
+    {
+      "finding_id": "LF-01",
+      "severity": "MATERIAL original time/scope gap; separate from source accuracy",
+      "stage": "investigator draft",
+      "finding": "Full-window disposition was falsely called fulfilled in scope despite only about 29m40s available. That allowance is not executed research duration. Saved receipt reports about 21m56s active elapsed.",
+      "final_resolution": "Explicitly corrected at final line 69; actual duration obligation remains unmet.",
+      "primary_support": [
+        "exact frozen brief/plan",
+        "original stage freeze and saved receipts"
+      ],
+      "remaining_material_source_error": false
+    },
+    {
+      "finding_id": "LF-02",
+      "severity": "MINOR study-layout imprecision",
+      "stage": "investigator discovery and source map; carried critic source map",
+      "finding": "Madison summarized as two gardens with contrasting soil/vegetation; official abstract specifies two side-by-side gardens at each of two soil locations (four treatment gardens).",
+      "original_locators": [
+        "discovery 15",
+        "investigator source-map S-08",
+        "critic source-map C-07"
+      ],
+      "final_resolution": "Final says studied gardens with no total count, retains transfer/access limits and makes no numeric or causal comparison dependent on the simplification.",
+      "primary_support": [
+        "E10-usgs-madison, Abstract p.1"
+      ],
+      "remaining_material_source_error": false
+    },
+    {
+      "finding_id": "LF-03",
+      "severity": "MINOR source attribution",
+      "stage": "investigator draft",
+      "finding": "Draft calls S-06 an EPA assessment framework. It is an MPCA page describing a University of Minnesota/St. Anthony Falls Hydraulic Laboratory manual. Scientific visual-versus-monitoring distinction is supported.",
+      "original_locators": [
+        "draft 76",
+        "investigator source-map S-06"
+      ],
+      "final_resolution": "Final omits wrong EPA attribution; original source identity is retained correctly in embedded map.",
+      "primary_support": [
+        "E08-mpca-assessment L61–78"
+      ],
+      "remaining_material_source_error": false
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L-01",
+      "severity": "NONMATERIAL depth/breadth limit",
+      "finding": "Runoff generation is represented mainly by contributing area/loading, rain and approach-flow questions. The final’s claim to preserve a complete generation account is stronger than its explanation of surface-cover/connectivity and initial losses.",
+      "why_not_material": "No volume or runoff coefficient is calculated, and direct approach/entry observation plus records/survey is a viable first discriminator. Other mechanism families and unknown source area are explicit. This does not justify inventing a local runoff model obligation.",
+      "candidate_locator": "final 18, 22–32, 81",
+      "source_refs": [
+        "E01-epa-handbook Ch.4",
+        "E06-mpca-101"
+      ]
+    },
+    {
+      "id": "L-02",
+      "severity": "NONMATERIAL wording/fidelity limit",
+      "finding": "The exact caveat about untimed historical ponding photographs is asserted in the plan-disposition table but developed mainly implicitly through dated records, time-stamped photos and event input logs.",
+      "why_not_material": "No scientific inference relies on an untimed photograph; required later timing and input context are concrete.",
+      "candidate_locator": "final 49, 56–63, 82",
+      "source_refs": [
+        "exact plan Implementation and history opportunity"
+      ]
+    },
+    {
+      "id": "L-03",
+      "severity": "NONMATERIAL compression of supported discovery",
+      "finding": "Discovery/draft give concrete New York and Portland inlet issue-fix sequences; final reduces them to general EPA capture/safety/maintenance tradeoffs while retaining the source records.",
+      "why_not_material": "Mechanisms, alternatives and history inquiry remain useful and self-contained; exact municipal names/details do not determine this site’s proposal. Reduced detail is recorded rather than claiming every original illustrative sentence survived.",
+      "candidate_locator": "discovery 29; draft 16; final 38; reviser source-map prior_source_maps S-01",
+      "source_refs": [
+        "E01-epa-handbook pp.6-9,6-15"
+      ]
+    },
+    {
+      "id": "L-04",
+      "severity": "EVIDENCE/PROVENANCE LIMIT",
+      "finding": "Candidate authored source records are maps/indexes, not preserved full browser call traces or source captures. Their executed-review extent is reported, not independently attested.",
+      "why_not_material": "The reviewer independently retrieved governing primary sources to judge the resulting final claims. Semantic support does not depend on trusting candidate access claims.",
+      "candidate_locator": "all three sources/index.md and source maps",
+      "source_refs": [
+        "E01-epa-handbook",
+        "E02-mpca-om",
+        "E03-mpca-overview",
+        "E04-mpca-compaction",
+        "E05-queens-record",
+        "E06-mpca-101",
+        "E07-epa-install-om",
+        "E08-mpca-assessment",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Capture can be the bottleneck despite strong infiltration of water that enters",
+      "importance": "Prevents soil repair being selected for a gutter bypass symptom",
+      "source_ids": [
+        "E05-queens-record"
+      ],
+      "preserved_in_final": "final 9, 28"
+    },
+    {
+      "discovery": "Some bypass is intentional when storage fills or flow exceeds chosen capture",
+      "importance": "Owner intent and outlet path must be established before treating every missed storm as failure",
+      "source_ids": [
+        "E03-mpca-overview"
+      ],
+      "preserved_in_final": "final 9, 32, 41, 56"
+    },
+    {
+      "discovery": "Small approach-flow changes, orientation and debris can alter inlet capture",
+      "importance": "Makes records/geometry review compete meaningfully with soil investigation",
+      "source_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om"
+      ],
+      "preserved_in_final": "final 22, 38–39"
+    },
+    {
+      "discovery": "Inlet retrofits can improve capture while introducing vehicle-access or maintenance problems",
+      "importance": "Public New York/Portland sequences are useful implementation-history analogies, not transferable fixes",
+      "source_ids": [
+        "E01-epa-handbook"
+      ],
+      "preserved_in_final": "final 38 at general tradeoff level; exact sequences only in carried map"
+    },
+    {
+      "discovery": "Underdrain discharge differs from infiltration into native soil",
+      "importance": "Surface drawdown cannot by itself establish infiltration or volume benefit",
+      "source_ids": [
+        "E06-mpca-101"
+      ],
+      "preserved_in_final": "final 15, 24"
+    },
+    {
+      "discovery": "Mulch/leaf/sediment and maintenance timing can alter multiple pathways",
+      "importance": "Document actual work and confounding rather than infer a delivery/compaction cause",
+      "source_ids": [
+        "E02-mpca-om",
+        "E04-mpca-compaction",
+        "E07-epa-install-om"
+      ],
+      "preserved_in_final": "final 24–26, 43–52, 59–60"
+    },
+    {
+      "discovery": "Rainfall depth alone fails to capture event intensity, duration and antecedent effects",
+      "importance": "Prospective comparison logs need coupled covariates and noncausal interpretation",
+      "source_ids": [
+        "E05-queens-record",
+        "E09-usgs-omaha",
+        "E10-usgs-madison"
+      ],
+      "preserved_in_final": "final 28–30, 57–60"
+    },
+    {
+      "discovery": "Visual inspection and quantitative testing/monitoring have different evidentiary roles",
+      "importance": "Observation-first can narrow mechanisms while leaving performance unvalidated",
+      "source_ids": [
+        "E08-mpca-assessment"
+      ],
+      "preserved_in_final": "final 41, 54–63; full levels not reproduced"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Existing inlet/approach review",
+      "comparison": "Blockage, orientation, level or flow-rate hypotheses; potentially a qualified geometry option after evidence. Capture/loading, erosion, access and maintenance tradeoffs.",
+      "source_ids": [
+        "E01-epa-handbook",
+        "E02-mpca-om"
+      ],
+      "final_locator": "final 38"
+    },
+    {
+      "name": "Surface-routing review",
+      "comparison": "Determine if runoff reaches the opening; filter strip/spreading only with survey and suitable geometry, no redirection in the study.",
+      "source_ids": [
+        "E01-epa-handbook"
+      ],
+      "final_locator": "final 39"
+    },
+    {
+      "name": "Maintenance/soil-history investigation",
+      "comparison": "Timeline and visible condition before diagnostics; compaction one hypothesis; no tests or soil work now.",
+      "source_ids": [
+        "E02-mpca-om",
+        "E04-mpca-compaction",
+        "E07-epa-install-om"
+      ],
+      "final_locator": "final 40, 43–52"
+    },
+    {
+      "name": "Observation first / limited-capture baseline",
+      "comparison": "Natural event contrasts with no imposed intervention; quantify neither volumes nor cause. Accept limited capture only if objective and design permit.",
+      "source_ids": [
+        "E03-mpca-overview",
+        "E08-mpca-assessment"
+      ],
+      "final_locator": "final 41, 54–63"
+    },
+    {
+      "name": "Qualified survey or diagnostic follow-up",
+      "comparison": "Escalate if visual event records cannot distinguish entry and drawdown, or risk/criterion triggers arise; no predetermined repair.",
+      "source_ids": [
+        "E01-epa-handbook",
+        "E04-mpca-compaction"
+      ],
+      "final_locator": "final 60–61"
+    }
+  ],
+  "validation_oracle_assessment": [
+    {
+      "question": "Approach/entry capture versus post-entry retention",
+      "proposed_oracle": "Observe approach flow reaching opening and classify enters/bypasses/both, together with ponding and recession at exact times. No approach flow must remain unknown for capture efficiency.",
+      "status": "PROPOSED ONLY",
+      "limits": "Categorical behavior narrows mechanism families, not capture volume or design failure."
+    },
+    {
+      "question": "Storage/drawdown/media/outlet mechanism",
+      "proposed_oracle": "Confirm entry, log level/footprint and visible outlet/overflow with subsequent checks, and compare to confirmed design/local criterion.",
+      "status": "PROPOSED ONLY",
+      "limits": "Recession is not a native-soil infiltration-rate test; input/outlet/media data needed for diagnosis."
+    },
+    {
+      "question": "Event/maintenance variation",
+      "proposed_oracle": "Exploratory 6–10 safely observable storms, representative interval rain, contrasting intensity/duration and antecedent proxy, before/after maintenance periods with confounding logged.",
+      "status": "PROPOSED ONLY",
+      "limits": "No powered inference, causal cleaning effect or exhaustive storm-class coverage promised."
+    },
+    {
+      "question": "Unsafe/downstream or persistent-ponding trigger",
+      "proposed_oracle": "Stop unsafe/unapproved observations; notify partner for blockage, scour/settlement, road/access/property water or ponding beyond confirmed local/design criterion.",
+      "status": "PROPOSED ONLY",
+      "limits": "Not a compliance or flood-protection oracle; 48 hours is a suggested check time."
+    },
+    {
+      "question": "Source/document review",
+      "proposed_oracle": "Candidate public-source maps plus exact discovery/plan reveal, draft, critique and final; independent reviewer primary-source corroboration.",
+      "status": "CANDIDATE REPORTED EXECUTED; REVIEWER INDEPENDENT SOURCE CHECKS EXECUTED",
+      "limits": "No archived full candidate tool trace; reviewer confirms resulting claim support, not candidate retrieval provenance."
+    },
+    {
+      "question": "Local data/model/test validation",
+      "proposed_oracle": "Survey, site/maintenance records, rainfall analysis, instrumented water balance, infiltration/media tests, interventions or pollutant/benefit/compliance measurement.",
+      "status": "NOT EXECUTED; SOME FOLLOW-UP CONDITIONAL, NO IN-SCOPE INFILTRATION TEST",
+      "limits": "Synthetic site and explicit boundaries make such validation unavailable; no additional deployment obligation invented."
+    }
+  ],
+  "native_t3_protocol_time": {
+    "basis": "Original saved request/dispatch/freeze/goal receipt bytes and root terminal-science freeze, not a live replay or candidate history audit",
+    "stage_records": [
+      {
+        "stage": "investigator",
+        "activation_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/native-goal-create-response.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/native-goal-completion-response.json",
+        "receipt_thread_id": "01a1247b-d4bd-7b00-982c-2975d615b643",
+        "exact_frozen_objective_matches": true,
+        "same_receipt_thread_id": true,
+        "recorded_activation_status": "active",
+        "recorded_completion_status": "complete",
+        "recorded_created_at_utc": "2026-10-10T06:24:35+00:00",
+        "recorded_updated_at_utc": "2026-10-10T06:46:32+00:00",
+        "reported_elapsed_seconds": 1316,
+        "reported_tokens_used": 218973,
+        "reported_completion_within_stage_deadline": true,
+        "saved_output_mtimes_before_recorded_completion": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/discovery.md",
+            "mtime_utc": "2026-10-10T06:36:15.789605+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/draft.md",
+            "mtime_utc": "2026-10-10T06:42:47.762680+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/source-map.json",
+            "mtime_utc": "2026-10-10T06:36:15.844367+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/sources/index.md",
+            "mtime_utc": "2026-10-10T06:36:15.858605+00:00",
+            "before": true
+          }
+        ],
+        "receipt_provenance": "UNKNOWN independently; content inspected; guard explicitly says provenance_independently_proved=false",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN"
+      },
+      {
+        "stage": "critic",
+        "activation_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/native-activation-response.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/native-completion-response.json",
+        "receipt_thread_id": "01a12490-ae02-7351-8c8c-d65c9aa3d315",
+        "exact_frozen_objective_matches": true,
+        "same_receipt_thread_id": true,
+        "recorded_activation_status": "active",
+        "recorded_completion_status": "complete",
+        "recorded_created_at_utc": "2026-10-10T06:47:23+00:00",
+        "recorded_updated_at_utc": "2026-10-10T06:55:19+00:00",
+        "reported_elapsed_seconds": 476,
+        "reported_tokens_used": 109630,
+        "reported_completion_within_stage_deadline": true,
+        "saved_output_mtimes_before_recorded_completion": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/critique.md",
+            "mtime_utc": "2026-10-10T06:54:07.759115+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/source-map.json",
+            "mtime_utc": "2026-10-10T06:54:07.758589+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/sources/index.md",
+            "mtime_utc": "2026-10-10T06:54:46.737231+00:00",
+            "before": true
+          }
+        ],
+        "receipt_provenance": "UNKNOWN independently; content inspected; guard explicitly says provenance_independently_proved=false",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN"
+      },
+      {
+        "stage": "reviser",
+        "activation_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/native-goal-activation.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/native-goal-completion.json",
+        "receipt_thread_id": "01a12498-cc82-7791-9434-4a1561f4a110",
+        "exact_frozen_objective_matches": true,
+        "same_receipt_thread_id": true,
+        "recorded_activation_status": "active",
+        "recorded_completion_status": "complete",
+        "recorded_created_at_utc": "2026-10-10T06:56:18+00:00",
+        "recorded_updated_at_utc": "2026-10-10T07:00:14+00:00",
+        "reported_elapsed_seconds": 236,
+        "reported_tokens_used": 126859,
+        "reported_completion_within_stage_deadline": true,
+        "saved_output_mtimes_before_recorded_completion": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/final.md",
+            "mtime_utc": "2026-10-10T06:59:55.050598+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/source-map.json",
+            "mtime_utc": "2026-10-10T06:59:36.839764+00:00",
+            "before": true
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/sources/index.md",
+            "mtime_utc": "2026-10-10T06:59:36.839983+00:00",
+            "before": true
+          }
+        ],
+        "receipt_provenance": "UNKNOWN independently; content inspected; guard explicitly says provenance_independently_proved=false",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN"
+      }
+    ],
+    "original_full_60_minutes": "UNMET",
+    "about_29m40s": "Investigator available allowance after recorded activation, not executed research duration",
+    "root_terminal_record": "Root recorded reviser task completed/result_available/no pending at 07:03:59.501980Z; this is separate from native lifecycle proof",
+    "deadline_delivery": "Saved outputs and recorded native completions precede stage caps; whole root freeze precedes whole deadline. Independent execution provenance remains UNKNOWN.",
+    "candidate_scientific_assistance": "No candidate source coaching in inspected mechanics; complete no-feedback trace UNKNOWN",
+    "requested_route": "All three requested AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna / max / default after recorded prospective tier change. Effective options, inference and billing UNKNOWN.",
+    "no_savings_inference": true
+  },
+  "unknowns": [
+    "Actual local drainage boundary, grades, inlet/overflow elevations, media/soil/plant layers, underdrain/outlet, storm distribution and observation permission: UNKNOWN as supplied.",
+    "City’s priority, intended/acceptable bypass, local governing drawdown criterion and authorized equipment: unresolved external choices.",
+    "Candidate native receipt provenance, pre-input tool ordering, exactly-one/no-replacement enforcement and complete trace of scope/no-feedback compliance: UNKNOWN independently. Saved receipts and guards exist, but guards explicitly disclaim provenance proof.",
+    "Effective backend model/reasoning/service tier, inference work and billed cost: UNKNOWN. Requested route and recorded dispatch provider/model are evidence of requests/acceptance only; default tier request is not billing proof.",
+    "Exact per-page candidate source access timestamp and current MPCA page revision/commit: UNKNOWN; maps record windows and living pages.",
+    "Queens full-article statistical/measurement methods and exact formula values were not assessed; final does not depend on an asserted p-value/sample size or transferred coefficient.",
+    "No comparative latency, speed, billing or causal treatment inference is available from this single-arm review."
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613453609999692,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791613453610117087,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/terminal-science-freeze-root.json",
+      "bytes": 8929,
+      "sha256": "13d681b0f0589d14235b3978dadcb297c64429e3f3b76b5ecb7333da8a69d4c8",
+      "mtime_ns": 1791615839502289681,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/inputs/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613455840983998,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "2c112a28ee531c808ca82bfedade3eb7858c174a6daacd4da7e6f5fcd8acdfc7",
+      "mtime_ns": 1791613456557745698,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/discovery.md",
+      "bytes": 12498,
+      "sha256": "b19e8ff39bda11064c9ac460bea19a8a6e00412859af86eaccaea7070caaa758",
+      "mtime_ns": 1791614175789605071,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/draft.md",
+      "bytes": 20980,
+      "sha256": "3c162353a739d5d75c2e968054462df3c6b6dea87814899d75a0b1b5a4a51c76",
+      "mtime_ns": 1791614567762680258,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "875291a87c153ff13dc3ef6c24041c3be2b571a61aa8983192e9d9b78560e26b",
+      "mtime_ns": 1791613456557975763,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "0089a22f660f4779dcbcd7e8029f40710fdc92c027a66936289fa4ecf54165a6",
+      "mtime_ns": 1791613456556682417,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "59142460982cac92561c16e3ed8f0d12e22d546eb66152b705b27fef68b3273f",
+      "mtime_ns": 1791613456557286168,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "18a5fc001cc2a2d6323cf0df7d0b0fc2cf0b016918c0e7f18685b0a8d15cfac4",
+      "mtime_ns": 1791613456347607535,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/native-goal-binding-guard-response.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791613663574955329,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/native-goal-completion-response.json",
+      "bytes": 809,
+      "sha256": "40abd59be309d7486b8a008b70b797437f3b6c77c469031b224682a94a2f49e9",
+      "mtime_ns": 1791614792447763523,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/native-goal-create-response.json",
+      "bytes": 480,
+      "sha256": "b17c52733f30811215c03a48c5aa7da6504dbd1579b495eca928a1868802fd0a",
+      "mtime_ns": 1791613663568955300,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "949ffb80d2abec1f2cec80bc8ab809ff70ba334cc88e6f56ce4592842c6ed1e7",
+      "mtime_ns": 1791614195062884257,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/revealed-plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791614195062758881,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "dab91db641ec1f15a5663ef2bfa54e7352ea0af654e27e4cac8bb042707c009c",
+      "mtime_ns": 1791613456151344593,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/source-map.json",
+      "bytes": 19571,
+      "sha256": "6517deff8f75773ba026d8fbc06f709512a4285142dac41a321ccd1149bab852",
+      "mtime_ns": 1791614175844367323,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/sources/index.md",
+      "bytes": 2984,
+      "sha256": "8e0f9140ae0ac7e45caf4e28df4f9e82ea899de4a3f5718e0fe7541ee0e45c10",
+      "mtime_ns": 1791614175858605415,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "976619e9024737502f7db5d56d46eeccb40d013c07807763cd3a06468a6036e1",
+      "mtime_ns": 1791614823354503277,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/critique.md",
+      "bytes": 10625,
+      "sha256": "4e92e5031db797c07c5c39860bce6f0fa3282e9a8feef21860d3f090e844c8f5",
+      "mtime_ns": 1791615247759114840,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "692ec3a9549a42fb58b1f3f1d536e141cbc43e3d9d821cb5d52c8d2e3bafd36e",
+      "mtime_ns": 1791614823354713512,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "9ab095aa372cc334ab0eb57216d23821e9d8c21be2dd68e849159f91c386384d",
+      "mtime_ns": 1791614823353434664,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "7bf129ababc1718c86f8230e2968e4e2f2f8e2137b70d6f1f23971ebb5e5f339",
+      "mtime_ns": 1791614823353944887,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "441ebeffaa2bac15e5da0842b63c7a9fd3db733a81e2cd4fdb8510b295ef99f8",
+      "mtime_ns": 1791614823169966469,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/native-activation-guard.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791615198698207448,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/native-activation-response.json",
+      "bytes": 468,
+      "sha256": "6a3c1138b70b765aeffb41bcd78d038e19170929440481eec26de6987f33890c",
+      "mtime_ns": 1791614877905332948,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/native-completion-response.json",
+      "bytes": 797,
+      "sha256": "8d46f608c2a164b2f1176a658b97eaa17da46cd303f14f8986f42e2ef9af2512",
+      "mtime_ns": 1791615319705442976,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "73b0ef6eacd0b2c9aae2628008304326de01c128fb05064f6ff11261ff1553da",
+      "mtime_ns": 1791614822963366931,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/source-map.json",
+      "bytes": 12576,
+      "sha256": "a459e6d56877520f12590583a972a456a3450cf03a4cd7b4de0b848db93b663f",
+      "mtime_ns": 1791615247758589371,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/sources/index.md",
+      "bytes": 2297,
+      "sha256": "80a0350a08a6ff79876c66edba5e0a92b7eb9563cec39f7ea2f87ed4b070a932",
+      "mtime_ns": 1791615286737231317,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "14480a4bf45c0134a3d1b21cec7d3f172ee69c24b61cec7b50d5be052332b810",
+      "mtime_ns": 1791615355315709661,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "2b970a6dda42a8298a96482c2c8ed76205cb5e012c1dbf3c06242e04403338b5",
+      "mtime_ns": 1791615355315938088,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/final.md",
+      "bytes": 20817,
+      "sha256": "c5201821b44f42b34823083300dbdff2dc780a808ac4ce7cae9105a8afa9f4c7",
+      "mtime_ns": 1791615595050597810,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/freeze.json",
+      "bytes": 4093,
+      "sha256": "7302f50df1c1494aed706eef417e1c0c45cbc880eb0375d93780bb73500f9f1c",
+      "mtime_ns": 1791615355314080762,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "0e65f13ef2d219980f7bbefb1b0ff546e02fff439b79670d774c85eb9a876245",
+      "mtime_ns": 1791615355314892565,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "20c646007edcf6d46428f9fa3bb4cdcf131361266ccfaaa3ebd3fc9e1fc2c147",
+      "mtime_ns": 1791615355127635129,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/native-goal-activation.json",
+      "bytes": 469,
+      "sha256": "f0aa42298fc7eeea9257abaccf9ec42409e005520d7d46e23896e4680e308497",
+      "mtime_ns": 1791615399678834229,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/native-goal-binding-guard-response.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791615576838799939,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/native-goal-completion.json",
+      "bytes": 798,
+      "sha256": "e8fdee82adf1bd877557164c65e2aca3714c72c5c70723c11fc8ba3b4dc6509f",
+      "mtime_ns": 1791615617250376448,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "1bf7697330ec70dab1e6baa22eee361c66bc9cef461f0ea6597271fbf3c9323c",
+      "mtime_ns": 1791615354924649982,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/source-map.json",
+      "bytes": 46271,
+      "sha256": "86ae4a9d90cdb38ba4ba55e919a072d73af37eb43ed933840a530eae95a188a0",
+      "mtime_ns": 1791615576839763836,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/sources/index.md",
+      "bytes": 2676,
+      "sha256": "b60ad26f7ce49bee502dae01a110f003b60f0dd1adc1fcbfce51f380321c35a1",
+      "mtime_ns": 1791615576839982957,
+      "inspection": "full content read in this review"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "07e0fdfe47f38f2902d47e7828d9127eb2a9fe534fd4a1dcc8f4199837a98a86",
+      "mtime_ns": 1791613456555992322,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "feb01dd3458f6bb9d59a97f9fe2a6beb5bb6b9dfb3aa473041c14d75f64bf818",
+      "mtime_ns": 1791613457741584723,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "953b6c6c9adc10ad6a220078093d2d74398e02801e9103af7cbd8e4c2c9e7160",
+      "mtime_ns": 1791614823352913146,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "c168797e2a960a41deab2782700a0438b48132e22a6505c958524df0a22914e7",
+      "mtime_ns": 1791614824114330851,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "b0d748d2b107c936bb2350f26f74d354c88298760dadef22dfe1c8866dfd052a",
+      "mtime_ns": 1791615355313198103,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "523dce8f84a006f5e37f1a94de09be0e18f85bca173a5bf1f7555962b0a699be",
+      "mtime_ns": 1791615356223848751,
+      "inspection": "full saved request/dispatch content read; no live provider attestation inferred"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/root-review-request.json",
+      "bytes": 3603,
+      "sha256": "b4bb6536ae7e3814cb771904a3d668a2e32a618aad70b5d4b12790c3c546b99e",
+      "mtime_ns": 1791615839650247781,
+      "inspection": "full bounded reviewer assignment read"
+    }
+  ],
+  "original_freeze_integrity": "All 11 root-frozen science artifacts match original SHA-256 and byte count; frozen brief equals run brief, frozen plan equals revealed plan. Integrity is not semantic proof.",
+  "independent_sources": [
+    {
+      "source_id": "E01-epa-handbook",
+      "title": "Bioretention Design Handbook: Designing Holistic Bioretention for Performance and Longevity",
+      "publisher": "US Environmental Protection Agency",
+      "exact_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+      "released_version_or_commit": "EPA 841-B-23-002, November 2023",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Chapter 4 §§4.1–4.2, pp. 4-2–4-4; Chapter 6 §§6.3–6.6, especially pp. 6-9, 6-15, 6-20; Chapter 7 §7.2, pp. 7-3–7-5, and §7.3; Chapters 10, 13, 14. Local text lines 1705–1707 (as-builts), 2959–2972 (Portland sequence), 3768–3906 (flow spreading/pretreatment). Scope at opening disclaimers.",
+      "governing_conditions_defaults_units_exceptions": "Site analysis/local requirements govern; handbook is guidance, not a binding specification. The capture alternatives have geometry, erosion, access and maintenance conditions. A level spreader distributes concentrated flow; filter strips need suitable space and sheet flow. No handbook dimension is used in the final.",
+      "checked_claim_and_assessment": "Conditional inlet/approach review, pretreatment, underdrain distinction, design/as-built history, and the New York/Portland issue-fix examples are supported. Final uses the examples at a more general level than discovery/draft.",
+      "applicability_limits": "No local dimensions, grade, contributing area, intent, hydrology, cause or treatment performance established; no current errata assertion made. Published municipal examples are analogous evidence, not this site’s history.",
+      "candidate_source_ids": [
+        "S-01",
+        "C-01",
+        "R-01"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E01-epa-handbook",
+        "requested_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "started_utc": "2026-10-10T07:07:38.044687+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "http_status": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "retrieved_utc": "2026-10-10T07:07:38.552801+00:00",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E01-epa-handbook.html",
+        "bytes": 332608,
+        "sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f",
+        "text_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E01-epa-handbook.txt",
+        "text_sha256": "d0d6ee05b9876301a1c6fe1c8bd815cac21fd70c076d08412bf3a5aa83a4a8df",
+        "content_valid": true
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E01-epa-handbook.txt",
+        "sha256": "d0d6ee05b9876301a1c6fe1c8bd815cac21fd70c076d08412bf3a5aa83a4a8df",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E01-epa-handbook.html",
+        "raw_sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f",
+        "format": "direct independent HTTPS body and local text extraction",
+        "access_utc": "2026-10-10T07:07:38.552801+00:00"
+      }
+    },
+    {
+      "source_id": "E02-mpca-om",
+      "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+      "publisher": "Minnesota Pollution Control Agency",
+      "exact_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+      "released_version_or_commit": "Living Minnesota Stormwater Manual page; current revision/commit not exposed in reviewed text",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L86–95 (typical issues), L109–164 (local context/construction/O&M), L170–178 (schedule), L200–212 (mulch/troubleshooting).",
+      "governing_conditions_defaults_units_exceptions": "The 48-hour check is semiannual after the first year, after rain with unfrozen ground; deep sumps may pond. First-year table refers to >0.5-inch storms during first six months. Troubleshooting lists possible sediment, pretreatment, debris and grading causes. These are contextual guidance, not a local diagnosis or universal threshold.",
+      "checked_claim_and_assessment": "Final correctly treats leaves/mulch/sediment and grading as competing leads, keeps 48 hours as an observation time, and defers governing drawdown criteria to the site partner. It does not prescribe table repairs.",
+      "applicability_limits": "Minnesota is not established as this site’s jurisdiction. Generic schedules cannot establish compliance, cause or permission. Native direct GET returned an anti-bot page; only independent web-render content is used as governing evidence.",
+      "candidate_source_ids": [
+        "S-03",
+        "C-02",
+        "R-02"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E02-mpca-om",
+        "requested_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+        "started_utc": "2026-10-10T07:07:38.045868+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://validate.perfdrive.com/ [challenge query omitted]",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.449164+00:00",
+        "bytes": 15133,
+        "sha256": "f79801ad42228944eef1f80742b4a4d8720916522da6c1b3a255289bfebe808e",
+        "text_sha256": "bf4864a73ae0a3db5a772537057a3fc86b185f97a900043c7b163443200b23db",
+        "content_valid": false,
+        "error": "HTTP 200 anti-bot challenge; NOT primary source content. Independent web renderer retrieved governing page instead."
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E02-mpca-om-web-render.txt",
+        "sha256": "fb92232e5ce04317050a05479d5de64efa21e247e22244f2cb164e410a034109",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E03-mpca-overview",
+      "title": "Overview for bioretention",
+      "publisher": "Minnesota Pollution Control Agency",
+      "exact_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+      "released_version_or_commit": "Living Minnesota Stormwater Manual page; current revision/commit not exposed",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L81–87 (permit applicability), L106, L110–119 (offline/online/high-flow bypass).",
+      "governing_conditions_defaults_units_exceptions": "High-flow bypass described after maximum ponding depth, during storms beyond the water-quality design storm. Offline arrangements share the entrance/exit path at capacity or use upstream diversion; offline is preferred where feasible for erosion reasons. Local and potentially stricter requirements can apply.",
+      "checked_claim_and_assessment": "Final’s distinction between potentially intended bypass and a capture defect is supported. It does not assume this garden is full whenever gutter bypass occurs, or recommend an overflow structure.",
+      "applicability_limits": "Actual design intent, stage, geometry and downstream route unknown. The source’s particular high-flow configuration is not a universal definition of every inlet-bypass observation.",
+      "candidate_source_ids": [
+        "S-10",
+        "C-03",
+        "R-03"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E03-mpca-overview",
+        "requested_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+        "started_utc": "2026-10-10T07:07:38.046839+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://validate.perfdrive.com/ [challenge query omitted]",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.428471+00:00",
+        "bytes": 15073,
+        "sha256": "8ed66ce65881054d31dd4b4fdbd025bbfdc705a638c56b92607593c0a431f3a3",
+        "text_sha256": "eef6a232205ece003d82b2d7d7c8e76ed22b8479f773f68d4c49a37eca42358a",
+        "content_valid": false,
+        "error": "HTTP 200 anti-bot challenge; NOT primary source content. Independent web renderer retrieved governing page instead."
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E03-mpca-overview-web-render.txt",
+        "sha256": "8a20b2f2ba49a23770aa17a066e0f1a58ad20a2f2ae699d33e3978e9d1bf5d3b",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E04-mpca-compaction",
+      "title": "Alleviating compaction from construction activities",
+      "publisher": "Minnesota Pollution Control Agency",
+      "exact_url": "https://stormwater.pca.state.mn.us/alleviating_compaction_from_construction_activities",
+      "released_version_or_commit": "Living manual page; explicitly under review/revision (web-render L61); current commit not exposed",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L61–63; L103–133 (causes and identification); L145; L211; L222–241 (site dependence/mixed methods).",
+      "governing_conditions_defaults_units_exceptions": "Construction traffic, storage and stockpiling can compact soil; wet/clay soils are more susceptible. Ponding may indicate compaction but measurements have limits. Remediation is site-specific, and compaction may be intentional in some other construction applications.",
+      "checked_claim_and_assessment": "Treating the delivery as an unverified lead and avoiding an automatic soil treatment is supported. Final does not equate ponding with compaction or prescribe ripping, amendment, equipment or tests.",
+      "applicability_limits": "Generic source cannot establish contact with this garden, its soil, damage or an appropriate remedy. The under-revision banner is not carried in the candidate map; no final remediation depends on that omission.",
+      "candidate_source_ids": [
+        "S-04",
+        "C-04",
+        "R-04"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E04-mpca-compaction",
+        "requested_url": "https://stormwater.pca.state.mn.us/alleviating_compaction_from_construction_activities",
+        "started_utc": "2026-10-10T07:07:38.051750+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://validate.perfdrive.com/ [challenge query omitted]",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.424213+00:00",
+        "bytes": 15099,
+        "sha256": "3503dbac46d571dddb9e486b645680ce3bc20a6146bb3e3e4bf595a80b65b80b",
+        "text_sha256": "d8a3193054105d1c92b2b71cd62b46d1f0489ad6b368b30517f04e316323f7c9",
+        "content_valid": false,
+        "error": "HTTP 200 anti-bot challenge; NOT primary source content. Independent web renderer retrieved governing page instead."
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E04-mpca-compaction-web-render.txt",
+        "sha256": "b1c03afc93b848efe0bfacf61b963b59e3fefe95f35c9978fd7c277eb97f3112",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E05-queens-record",
+      "title": "Evaluating Green Infrastructure Stormwater Capture Performance under Extreme Precipitation",
+      "publisher": "Drexel author publication record; Journal of Extreme Events / World Scientific",
+      "exact_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+      "released_version_or_commit": "June 2016, volume 3(2), article 1650006, DOI 10.1142/S2345737616500068",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L4–13 (identity); L25–29 (complete relevant abstract).",
+      "governing_conditions_defaults_units_exceptions": "One Queens facility monitored 2011–14, sandy in-situ soils, dimensionless 3.8:1 hydraulic loading ratio. Nearly all runoff received through the inlet infiltrated there; bypass limited capture. Duration, total rain and peak-hourly intensity were associated with capture; maintenance/vegetation inference was anecdotal and future work.",
+      "checked_claim_and_assessment": "Final accurately limits the finding to capture versus infiltration and covariate logging. It transfers no capture percentage, overflow volume, infiltration rate or causal maintenance effect.",
+      "applicability_limits": "Full article/data not independently reanalyzed. Abstract formula placeholders prevent checking exact sample sizes/p-value; final makes no such numeric claim. Facility also received some runoff from outside designed tributary area, another transfer limitation.",
+      "candidate_source_ids": [
+        "S-09",
+        "C-05",
+        "R-05"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E05-queens-record",
+        "requested_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+        "started_utc": "2026-10-10T07:07:38.055865+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+        "http_status": 200,
+        "content_type": "text/html",
+        "retrieved_utc": "2026-10-10T07:07:38.349259+00:00",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E05-queens-record.html",
+        "bytes": 2328,
+        "sha256": "af1743206dc653d1e48304d896aa243be2755efd6ca1937752ee5f90cf72a52f",
+        "text_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E05-queens-record.txt",
+        "text_sha256": "3f8cd89f23500128eb0021db9ad954356429e41e4ef1cda93a8e6ea0a12366b6",
+        "content_valid": true
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E05-queens-record-web-render.txt",
+        "sha256": "28a9e47385404643eb6e124e5212b9028bf0778861b86e028f6ce1dfe7fd540b",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E06-mpca-101",
+      "title": "Rain gardens (bioretention) 101",
+      "publisher": "Minnesota Pollution Control Agency",
+      "exact_url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+      "released_version_or_commit": "Living manual page; current revision/commit not exposed",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L62–66, L76–87, L90–91.",
+      "governing_conditions_defaults_units_exceptions": "Captured water may percolate into native soil or discharge through an underdrain; even underdrained systems may have some native-soil infiltration. Generic day-or-two description does not establish this garden’s local criterion. Roof/street runoff is illustrative, not a delineated catchment here.",
+      "checked_claim_and_assessment": "Final preserves different underdrained/non-underdrained paths and avoids equating surface recession with native-soil infiltration volume. Generic performance percentages and dimensions are not transferred.",
+      "applicability_limits": "Actual soil/media/underdrain configuration and site criterion must be confirmed. Broad guide claims do not validate pollutant removal here.",
+      "candidate_source_ids": [
+        "S-02"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E06-mpca-101",
+        "requested_url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+        "started_utc": "2026-10-10T07:07:38.057108+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://validate.perfdrive.com/ [challenge query omitted]",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.461684+00:00",
+        "bytes": 15077,
+        "sha256": "5c5c3316a1f650e1aa9df5be4ddaa4d1d325f4ab950d0b4f2150972e8c5f01d6",
+        "text_sha256": "eba73dee5f94fea75d06895b0b1cf3f0362ba2c3f703d9cd7785928cfe0d8737",
+        "content_valid": false,
+        "error": "HTTP 200 anti-bot challenge; NOT primary source content. Independent web renderer retrieved governing page instead."
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E06-mpca-101-web-render.txt",
+        "sha256": "22c207169e71e9201244e9d02ec250091a21c07fb1a966c048b1b56b3a906f85",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E07-epa-install-om",
+      "title": "Green Infrastructure Installation, Operation, and Maintenance",
+      "publisher": "US Environmental Protection Agency",
+      "exact_url": "https://www.epa.gov/green-infrastructure/green-infrastructure-installation-operation-and-maintenance",
+      "released_version_or_commit": "Living official EPA webpage as independently retrieved; no fixed edition assumed",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Construction section; Operation and Maintenance; Municipal O&M Programs / Develop Maintenance Plans. Web-render earlier L4–17, L23–48; corresponding headings in local direct text.",
+      "governing_conditions_defaults_units_exceptions": "Construction sequencing, avoiding clogging/compaction, written O&M plans, responsibility and tracking are relevant. Specific owner duties follow local codes. Routine maintenance and corrective action differ.",
+      "checked_claim_and_assessment": "Records requests, maintenance timeline logging and responsible-party decisions are useful supported investigation, not a claim that records were actually obtained.",
+      "applicability_limits": "No public page can establish this hypothetical garden’s installation or recent maintenance. No local binding duty inferred.",
+      "candidate_source_ids": [
+        "S-05"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E07-epa-install-om",
+        "requested_url": "https://www.epa.gov/green-infrastructure/green-infrastructure-installation-operation-and-maintenance",
+        "started_utc": "2026-10-10T07:07:38.357918+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://www.epa.gov/green-infrastructure/green-infrastructure-installation-operation-and-maintenance",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.511906+00:00",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E07-epa-install-om.html",
+        "bytes": 76939,
+        "sha256": "c77e42267091acb88f6a6ec56a484fdff3c0429e10f5234b76c7aca7900814f2",
+        "text_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E07-epa-install-om.txt",
+        "text_sha256": "7624fceea92a0ee1754281f0b7bf87c5b3a2b7929847b558cc65b0496b8f35f7",
+        "content_valid": true
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E07-epa-install-om.txt",
+        "sha256": "7624fceea92a0ee1754281f0b7bf87c5b3a2b7929847b558cc65b0496b8f35f7",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E07-epa-install-om.html",
+        "raw_sha256": "c77e42267091acb88f6a6ec56a484fdff3c0429e10f5234b76c7aca7900814f2",
+        "format": "direct independent HTTPS body and local text extraction",
+        "access_utc": "2026-10-10T07:07:38.511906+00:00"
+      }
+    },
+    {
+      "source_id": "E08-mpca-assessment",
+      "title": "Assessing the performance of stormwater Best Management Practices (BMPs)",
+      "publisher": "Minnesota Pollution Control Agency, describing University of Minnesota / St. Anthony Falls Hydraulic Laboratory work",
+      "exact_url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+      "released_version_or_commit": "Living manual; 2010 assessment manual and related June 2024 update explicitly identified",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Web-render L61–78 (origin, levels, credit limits and effort/time table).",
+      "governing_conditions_defaults_units_exceptions": "Visual inspection gives limited diagnostic information and no numerical performance data for credit. Capacity tests, simulated runoff and monitoring answer different questions. Fourteen months is a generic monitoring-table estimate, not a required duration for the proposed exploratory observations.",
+      "checked_claim_and_assessment": "Observation-first rationale is supported. Draft attribution to an EPA framework is inaccurate; cited S-06 is MPCA/University of Minnesota. Final does not repeat that attribution or transform the generic effort table into a site schedule.",
+      "applicability_limits": "No requirement to carry out tests prohibited by the brief. A 6–10-event pilot does not become comprehensive monitoring or a validated performance oracle.",
+      "candidate_source_ids": [
+        "S-06"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E08-mpca-assessment",
+        "requested_url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+        "started_utc": "2026-10-10T07:07:38.437220+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://validate.perfdrive.com/ [challenge query omitted]",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "retrieved_utc": "2026-10-10T07:07:38.803219+00:00",
+        "bytes": 15118,
+        "sha256": "9da1f5f11fcb51ff0d40855f1637615e75dbc41ea1b8e326b1789d55966626b7",
+        "text_sha256": "04824cc51b5e99dbf550312e167115ccda361eb84a21c42c95ed43afc4a2fd78",
+        "content_valid": false,
+        "error": "HTTP 200 anti-bot challenge; NOT primary source content. Independent web renderer retrieved governing page instead."
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E08-mpca-assessment-web-render.txt",
+        "sha256": "cbac84ef9e0ccbe9cf27ecb0f2ef73f1cdf8d8b7496f0d7ba64657c3b81da585",
+        "format": "independently returned web renderer text with source line locators",
+        "access_utc_interval": [
+          "2026-10-10T07:04:16+00:00",
+          "2026-10-10T07:19:41.647925+00:00"
+        ],
+        "access_time_note": "Tool did not give per-page access timestamp; conservative review interval, not a fabricated exact page time."
+      }
+    },
+    {
+      "source_id": "E09-usgs-omaha",
+      "title": "Water balance monitoring for two bioretention gardens in Omaha, Nebraska, 2011–14",
+      "publisher": "US Geological Survey",
+      "exact_url": "https://pubs.usgs.gov/sir/2015/5188/sir20155188.pdf",
+      "released_version_or_commit": "Scientific Investigations Report 2015–5188, published 2016; DOI 10.3133/sir20155188",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Official PDF report p. 9 (flume limitation), p. 13 “Performance on an Event Basis”, especially local pdftotext lines 620–631 and 809–876.",
+      "governing_conditions_defaults_units_exceptions": "At DCHC, >0.7-ft ponding inundated the Parshall flume, invalidating its inflow relation and excluding large events. The two similar-depth storms differ in duration, maximum intensity and antecedent dry interval; that comparison does not isolate a causal variable. ENOA recorded no overflow during the monitoring period.",
+      "checked_claim_and_assessment": "Reviewer independently verified the detailed event pair the later candidate stages could not reopen. The investigator’s qualitative event-variation claim and exclusion caveat are supported; final correctly labels its own limited recheck and transfers no number.",
+      "applicability_limits": "Site-specific, instrument-limited observational evidence. The 0.7-ft limit is an analysis/instrument limit, not an infiltration or compliance criterion for the hypothetical garden. Reviewer retrieval does not retroactively change candidate executed work.",
+      "candidate_source_ids": [
+        "S-07",
+        "C-06"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E09-usgs-omaha",
+        "requested_url": "https://pubs.usgs.gov/sir/2015/5188/sir20155188.pdf",
+        "started_utc": "2026-10-10T07:07:38.443565+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://pubs.usgs.gov/sir/2015/5188/sir20155188.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "retrieved_utc": "2026-10-10T07:07:39.736868+00:00",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E09-usgs-omaha.pdf",
+        "bytes": 3797847,
+        "sha256": "a8bae7ee1ba550574bea635ef11571514dcf4633108ad476f09fefd837de7407",
+        "text_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E09-usgs-omaha.txt",
+        "text_sha256": "47a7ef951185d71b786649d1b55cbd0059ad6d51618d1f52357a881eb2ee196e",
+        "content_valid": true
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E09-usgs-omaha.txt",
+        "sha256": "47a7ef951185d71b786649d1b55cbd0059ad6d51618d1f52357a881eb2ee196e",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E09-usgs-omaha.pdf",
+        "raw_sha256": "a8bae7ee1ba550574bea635ef11571514dcf4633108ad476f09fefd837de7407",
+        "format": "direct independent HTTPS body and local text extraction",
+        "access_utc": "2026-10-10T07:07:39.736868+00:00"
+      }
+    },
+    {
+      "source_id": "E10-usgs-madison",
+      "title": "Evaluation of turf-grass and prairie-vegetated rain gardens in a clay and sand soil, Madison, Wisconsin, water years 2004–08",
+      "publisher": "US Geological Survey and University of Wisconsin",
+      "exact_url": "https://pubs.usgs.gov/sir/2010/5077/pdf/sir20105077.pdf",
+      "released_version_or_commit": "Scientific Investigations Report 2010–5077, 2010; DOI 10.3133/sir20105077",
+      "type_and_domain": "official primary guidance or primary research record; urban stormwater/bioretention",
+      "reviewer_operation": "independent retrieval and substantive inspection of specified governing passages; no field work or source-data reanalysis",
+      "locator": "Official PDF Abstract p. 1 (local text lines 253–312); Study Area; Effects of Antecedent Conditions and Precipitation Intensity on Storage, pp. 22–26; Table 3 p. 15.",
+      "governing_conditions_defaults_units_exceptions": "Two side-by-side gardens were built at EACH of two soil-type locations: four treatment gardens, not two total. Roof-fed, purpose-built sites, study years 2004–08; loading altered in 2008. Abstract supports intensity and antecedent-dry-day effects on underlying storage saturation.",
+      "checked_claim_and_assessment": "Qualitative storm/soil-variable use is supported. Earlier stage maps/discovery simplify the study to two gardens; final avoids a total count. No soil value, loading ratio or performance result is transferred.",
+      "applicability_limits": "Minor lineage study-layout imprecision; not a remaining final material decision. Soil/plant/site configuration and input routing differ from an unmeasured curb-fed garden. No underlying data reanalysis.",
+      "candidate_source_ids": [
+        "S-08",
+        "C-07"
+      ],
+      "direct_get_diagnostic": {
+        "source_id": "E10-usgs-madison",
+        "requested_url": "https://pubs.usgs.gov/sir/2010/5077/pdf/sir20105077.pdf",
+        "started_utc": "2026-10-10T07:07:38.458993+00:00",
+        "operation": "independent reviewer HTTPS GET; no candidate capture used",
+        "response_url": "https://pubs.usgs.gov/sir/2010/5077/pdf/sir20105077.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "retrieved_utc": "2026-10-10T07:07:44.712404+00:00",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E10-usgs-madison.pdf",
+        "bytes": 5595112,
+        "sha256": "c16cd6eff785e5b7e1b11cee4c3ffb039d891abcf4ae49836b7cdcc96d6bff53",
+        "text_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E10-usgs-madison.txt",
+        "text_sha256": "8e4f62e2c3507f623dd673bcacf221d848a5ccc79f8756723903bc900cf63422",
+        "content_valid": true
+      },
+      "evidence": {
+        "path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E10-usgs-madison.txt",
+        "sha256": "8e4f62e2c3507f623dd673bcacf221d848a5ccc79f8756723903bc900cf63422",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/E10-usgs-madison.pdf",
+        "raw_sha256": "c16cd6eff785e5b7e1b11cee4c3ffb039d891abcf4ae49836b7cdcc96d6bff53",
+        "format": "direct independent HTTPS body and local text extraction",
+        "access_utc": "2026-10-10T07:07:44.712404+00:00"
+      }
+    }
+  ],
+  "missing_or_incomplete": {
+    "required_science_artifacts_missing": [],
+    "required_science_artifacts_incomplete": [],
+    "extra_critique_dispositions_or_checks": "No separate authored disposition/check files found in this ordinary control stage tree; all three are in critique.md and final.md.",
+    "authored_source_evidence": "Three complete source maps and their source indexes; no candidate raw full captures present.",
+    "candidate_usgs_access": "Critic/reviser full-report access limitations preserved; reviewer independently retrieved governing report text."
+  },
+  "reviewer_protocol": {
+    "native_goal": "One real native Goal created before substantive input read; current active tool response saved separately; completion occurs only after assessment/evidence saving",
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "git_publication_account_changes": false,
+    "other_arms_roster_history_read": false,
+    "own_inbox_only": true,
+    "originals_modified": false
+  },
+  "output_paths": {
+    "assessment_md": "ER12_RUNTIME/assessment/D-R1-04/control-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/D-R1-04/control-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/D-R1-04/control-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/D-R1-04/control-v1/evidence/README.md"
+  }
+}

@@ -1,0 +1,231 @@
+[
+  {
+    "id": "E01",
+    "candidate_id": "S01",
+    "judgment": "SUPPORTED",
+    "subject": "General rain-garden routing and underdrain distinction",
+    "operation": "Official educational mechanism and maintenance guidance; no site measurement",
+    "locator": "How does a rain garden work? / Why would I need an underdrain? / What maintenance is needed; independent text lines 16–27",
+    "conditions": "A configured underdrain can return filtered water to a storm sewer; without one water can enter native soil. One-to-two-day drainage is a general statement, not this site's criterion.",
+    "unit": "day; neither site dimensions nor published removal percentages adopted",
+    "type": "Educational guidance; underdrained versus non-underdrained systems",
+    "default": "No local default established",
+    "exceptions": "Unknown site configuration and jurisdiction; no local benefit inferred",
+    "local_file": "evidence/primary/S01.txt",
+    "final_lines": [
+      27,
+      29,
+      33
+    ]
+  },
+  {
+    "id": "E02",
+    "candidate_id": "S02",
+    "judgment": "SUPPORTED",
+    "subject": "Capacity-conditioned high-flow bypass",
+    "operation": "MPCA overview; water-quantity treatment and surrounding permit context",
+    "locator": "Water quantity treatment; text lines 56–62; permit applicability text lines 21–24",
+    "conditions": "An offline curb cut at the intended maximum ponding elevation can let excess gutter flow pass once the cell fills. Source distinguishes online flow paths and erosion/short-circuiting concerns.",
+    "unit": "No prescribed site dimensions or event-size threshold",
+    "type": "Offline versus online bypass",
+    "default": "Minnesota recommendations do not establish governing rules for unidentified site",
+    "exceptions": "Observed bypass at the hypothetical opening is not proof of intended design; recover plans and event context",
+    "local_file": "evidence/primary/S02.txt",
+    "final_lines": [
+      19,
+      109,
+      110
+    ]
+  },
+  {
+    "id": "E03",
+    "candidate_id": "S03",
+    "judgment": "SUPPORTED",
+    "subject": "Curb-cut capture and conditional routing alternatives",
+    "operation": "EPA Green Streets Handbook February 2021, Ch. 4.4 and design-context note",
+    "locator": "Printed pp. 4-1, 4-6–4-7; PDF zero-based p45; text lines 1671–1674 and 1878–1963",
+    "conditions": "Placement in the gutter flow path, grading toward the feature, and steep-slope berm/runnel examples are conditional. Grated cuts and trench drains address specific debris/access situations.",
+    "unit": "Handbook includes dimensions, but final adopts none",
+    "type": "Concentrated curb/gutter flow versus sheet flow; conceptual design examples",
+    "default": "No chosen design or software-sizing operation",
+    "exceptions": "Guidance directs designers to local requirements; source does not justify modifying this curb",
+    "local_file": "evidence/primary/S03.txt",
+    "final_lines": [
+      19,
+      21,
+      65
+    ]
+  },
+  {
+    "id": "E04",
+    "candidate_id": "S04",
+    "judgment": "SUPPORTED_WITH_CONTEXT",
+    "subject": "Maintenance, compaction/debris hypotheses, and 48-hour inspection",
+    "operation": "MPCA O&M page, post-construction schedule and troubleshooting",
+    "locator": "Independent text lines 101–159 and 225–245; web source post-construction table and common problems",
+    "conditions": "Later semiannual ponding checks are 48 hours after rain when ground is not frozen; deep sumps may pond. Troubleshooting identifies sediment/clogging as possible, not exclusive, causes. Mulch and debris may obstruct flow.",
+    "unit": "48 hours; first-year table includes storms >0.5 inches, not adopted as site event threshold",
+    "type": "Inspection schedule versus symptom/possible-cause table",
+    "default": "No universal local compliance threshold",
+    "exceptions": "Frozen ground and deep-sump conditions; local design and drain configuration unknown",
+    "local_file": "evidence/primary/S04.txt",
+    "final_lines": [
+      29,
+      33,
+      41,
+      43,
+      111
+    ]
+  },
+  {
+    "id": "E05",
+    "candidate_id": "S05",
+    "judgment": "SUPPORTED",
+    "subject": "Records-first inspection and drawdown observation",
+    "operation": "EPA road/parking-lot runoff O&M technical memorandum, 2016",
+    "locator": "Printed pp.7–10; text Inspection and Assessment, Infiltration Rates, and records paragraph around lines 328–383, 471–475",
+    "conditions": "Standing water at 48 hours is an example prompting further evaluation. Inspection cadence depends on drainage area, use/activity and rainfall. Level observations and design/maintenance records support staged assessment.",
+    "unit": "hour/day observation intervals, not a universal infiltration-rate oracle",
+    "type": "Visual screening and qualified assessment",
+    "default": "No site-specific criterion",
+    "exceptions": "Recession alone cannot isolate infiltration in an unknown system with drain/overflow/storage terms",
+    "local_file": "evidence/primary/S05.txt",
+    "final_lines": [
+      33,
+      53,
+      74,
+      97,
+      111
+    ]
+  },
+  {
+    "id": "E06",
+    "candidate_id": "S06",
+    "judgment": "SUPPORTED",
+    "subject": "Different levels of BMP assessment",
+    "operation": "Official MPCA four-level assessment summary",
+    "locator": "Levels 1–4 and credit caveat; independent text lines 4–48",
+    "conditions": "Visual inspection, capacity tests, synthetic-runoff tests and monitoring have distinct outputs and effort. Visual inspection supplies no numerical performance data for credit.",
+    "unit": "Candidate does not adopt source table's effort multipliers or monitoring durations",
+    "type": "Qualitative screening versus quantitative assessment",
+    "default": "No mandatory test sequence inferred",
+    "exceptions": "Agency consultation needed for regulatory use; current pilot cannot certify hydrologic or pollutant performance",
+    "local_file": "evidence/primary/S06.txt",
+    "final_lines": [
+      53,
+      63,
+      88,
+      104
+    ]
+  },
+  {
+    "id": "E07",
+    "candidate_id": "S07",
+    "judgment": "SUPPORTED",
+    "subject": "Pretreatment selection conditions",
+    "operation": "Official MPCA article independently retrieved by web tool; direct HTTP body was CAPTCHA",
+    "locator": "Pretreatment compatibility/applicability and definitions; web lines 91–106, 147–162",
+    "conditions": "Pretreatment filter strips need shallow distributed sheet flow; concentrated flow is unsuitable for that type. Forebays are associated with channelized flow; screens with leaves/large debris. Space, topography, downstream practice and maintenance matter.",
+    "unit": "No device size or quantitative removal rating adopted",
+    "type": "Pretreatment, not a standalone treatment BMP",
+    "default": "Examples assume no overriding limitations",
+    "exceptions": "Candidate does not select a device for an unmeasured curb opening",
+    "local_file": "evidence/web-specific-1.json",
+    "final_lines": [
+      51,
+      66
+    ]
+  },
+  {
+    "id": "E08",
+    "candidate_id": "S08",
+    "judgment": "SUPPORTED_BOUNDED_SUMMARY",
+    "subject": "UMN five-configuration pretreatment test and maintenance comparison",
+    "operation": "Independent official project-summary retrieval; actual linked full report attempted but blocked",
+    "locator": "Project overview, Research findings, Reports and Presentations; independent text lines 8–34",
+    "conditions": "Named grass/rock inlets, Bunker/Turret and shallow sump were tested; capture differed by test intensity. Simulated overflow reduced sump gross-solid retention. Maintenance comparison is within these configurations.",
+    "unit": "Candidate uses qualitative comparisons; no study percentages transferred",
+    "type": "Pretreatment test evidence, not natural-event whole-garden performance guarantee",
+    "default": "No product preference at the hypothetical site",
+    "exceptions": "Full report not inspected; reported report number 586 not independently confirmed from blocked record",
+    "local_file": "evidence/primary/S08.txt",
+    "final_lines": [
+      51,
+      66
+    ]
+  },
+  {
+    "id": "E09",
+    "candidate_id": "S09",
+    "judgment": "SUPPORTED",
+    "subject": "Groundwater/media boundary and inlet-maintenance mechanisms",
+    "operation": "EPA 841-B-23-002 November 2023 handbook, Ch.3.1 and 14.2",
+    "locator": "Printed pp.3-2–3-3 and 14-4–14-5; text lines 531–539, 795–806, 5663–5692",
+    "conditions": "Groundwater interaction with media reduces available void space for capture; high seasonal/year-round groundwater is a context for noninfiltration approaches. Inlet guidance addresses grading, damage, grit/leaves/debris.",
+    "unit": "2-foot design separation occurs in source but final does not prescribe it",
+    "type": "National guidance and conditional system boundary",
+    "default": "Local specifications must be consulted",
+    "exceptions": "No measured groundwater, slow-drawdown diagnosis, local rule or retrofit follows from this passage",
+    "local_file": "evidence/primary/S09.txt",
+    "final_lines": [
+      31,
+      143
+    ]
+  },
+  {
+    "id": "E10",
+    "candidate_id": "S10",
+    "judgment": "SUPPORTED_WITH_RETRIEVAL_LIMIT",
+    "subject": "Event and antecedent-media-storage study; five-minute method",
+    "operation": "Independently queried official publisher-indexed article and version notes; direct retrieval blocked",
+    "locator": "Water 2026 18(18):2320; DOI 10.3390/w18182320; Abstract, §2.1–2.5, §4.1 and Conclusions; indexed methods in web-specific-1.json",
+    "conditions": "Three wet seasons at two contrasting roof-fed Beijing systems. Storage metrics and response depend on loading, media depth and drainage boundaries. §2.3 explicitly uses 5-minute rainfall records and maximum 30-minute intensity.",
+    "unit": "5 min and 30 min method units verified; no performance number adopted",
+    "type": "Two engineered field cases with different outflow accounting, not a local oracle",
+    "default": "No prescribed rainfall interval for the hypothetical pilot",
+    "exceptions": "Index-retrieved primary text verified relevant passage; no full direct article/raw-data audit. Final omission is a reviewer-access qualification, not proof earlier method claim was false.",
+    "local_file": "evidence/web-specific-1.json",
+    "final_lines": [
+      45,
+      145
+    ]
+  },
+  {
+    "id": "E11",
+    "candidate_id": "S11",
+    "judgment": "SUPPORTED",
+    "subject": "SWMM 5.2 LID layer representation and water balance",
+    "operation": "EPA user's manual Version 5.2, February 2022",
+    "locator": "§3.4.8 printed pp.91–92, Figure3-13/Table3-3; text lines 2849–2908; §3.4.1 surface runoff text lines 2643–2652",
+    "conditions": "LID properties are per-unit-area; a moisture balance tracks layer transfers/storage. Bioretention Cell and Rain Garden are distinct software types; optional storage/drain layers should not be presumed for every rain garden.",
+    "unit": "Per-unit-area parameterization; no executed model or chosen units/defaults",
+    "type": "Parameterized simulator, not site measurement",
+    "default": "No modeling configuration or version default selected in final",
+    "exceptions": "Real rainfall/catchment/geometry/media/drain inputs are absent; schematic balances do not establish site performance",
+    "local_file": "evidence/primary/S11.txt",
+    "final_lines": [
+      55,
+      68,
+      129,
+      136
+    ]
+  },
+  {
+    "id": "E12",
+    "candidate_id": "S12",
+    "judgment": "SUPPORTED",
+    "subject": "Specific SWMM v5.2.4 release corrections",
+    "operation": "Independent EPA-maintained tagged release record",
+    "locator": "Build5.2.4 (Aug2023), tag v5.2.4 commit7952ca8; Engine Updates2–3,6–8; text lines32–42",
+    "conditions": "Changes affect LID underdrain input checking, fluxes in Bioretention/Permeable Pavement/Infiltration Trench, depressed-gutter street transect/slope and inclined-throat curb-inlet head.",
+    "unit": "Version/commit identifiers, not physical site quantities",
+    "type": "Software correction history",
+    "default": "Final makes no latest-version or universal-fix assertion",
+    "exceptions": "Does not diagnose physical rain-garden capture or justify a model run without inputs",
+    "local_file": "evidence/primary/S12.txt",
+    "final_lines": [
+      55,
+      144
+    ]
+  }
+]

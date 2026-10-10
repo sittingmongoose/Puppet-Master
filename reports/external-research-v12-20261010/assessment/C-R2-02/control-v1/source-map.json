@@ -1,0 +1,652 @@
+{
+  "assessment_id": "C-R2-02/control-v1",
+  "scope": "ONE ordinary investigator–critic–reviser control pipeline; final stages/reviser/final.md",
+  "sources": [
+    {
+      "id": "I01",
+      "candidate_source_id": "S01",
+      "title": "PRISMA-Search official page",
+      "exact_url": "https://www.prisma-statement.org/prisma-search",
+      "version_or_date": "PRISMA-S 2021; live landing page",
+      "locator": "Opening paragraph, local text line 24; Key documents",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.826951+00:00",
+        "direct_get_completed": "2026-10-10T06:42:03.942680+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://www.prisma-statement.org/prisma-search",
+      "governing_conditions_and_applicability": "Verified reporting-aid scope, not a completeness oracle.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S01-primary-response.html",
+          "relative_path": "evidence/S01-primary-response.html",
+          "sha256": "54eb43142d8d8a59f295f0e8f06539fe3cfcce8bea59cbe2ab378824c04a310c",
+          "bytes": 103094
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S01-primary-text.txt",
+          "relative_path": "evidence/S01-primary-text.txt",
+          "sha256": "a61716076d46512c2685c8e1a420ab7ceedeef3599b654d313244963c14b00a7",
+          "bytes": 1075
+        }
+      ]
+    },
+    {
+      "id": "I02",
+      "candidate_source_id": "S02",
+      "title": "Cochrane Handbook Chapter 4: Searching for and selecting studies",
+      "exact_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "version_or_date": "Handbook 6.5.1, last updated March 2025",
+      "locator": "Chapter §§4.2.3, 4.3.5, 4.4.8, 4.5, 4.6.1–4.6.4; local text 1308, 1490, 1612, 1676; web-03 and web-07",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.830370+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.276718+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "governing_conditions_and_applicability": "Report linking and eligibility are separate judgments; retain secondary reports. Health-review recommendations do not set this case’s source list or authorize author contact.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S02-primary-response.html",
+          "relative_path": "evidence/S02-primary-response.html",
+          "sha256": "ec451a2b9d443b96459529247d93bb5b413ff468ae817c5b3c3d6d7604b4403e",
+          "bytes": 372750
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S02-primary-text.txt",
+          "relative_path": "evidence/S02-primary-text.txt",
+          "sha256": "8ad148b2116e62404923f93aeb635a8250ec54b0daac9d42513f19d690ebc4cd",
+          "bytes": 210824
+        }
+      ]
+    },
+    {
+      "id": "I03",
+      "candidate_source_id": "S03",
+      "title": "TARCiS citation-searching statement",
+      "exact_url": "https://www.bmj.com/content/385/bmj-2023-078384",
+      "version_or_date": "BMJ 2024;385:e078384, published 2024-05-09; correction I04",
+      "locator": "Recommendations 2–4, 6–10 and context, indexed publisher text in web-05; direct publisher GET is 403",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.835285+00:00",
+        "direct_get_completed": "2026-10-10T06:42:03.922330+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "INDEXED_PRIMARY_TEXT_WITH_DIRECT_ACCESS_FAILURE",
+      "http_status": 403,
+      "resolved_url": "https://www.bmj.com/content/385/bmj-2023-078384",
+      "governing_conditions_and_applicability": "Verified supplementary citation-search and seed/reporting conditions from indexed primary article text. A defined seed sample can be justified; standalone citation search is barred for completeness aims, not every bounded pilot.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S03-primary-response.html",
+          "relative_path": "evidence/S03-primary-response.html",
+          "sha256": "0a00ffb4cf54808a4f039dc802ed6aee587453a4232ef3d9d1c30123ada88049",
+          "bytes": 5547
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S03-primary-text.txt",
+          "relative_path": "evidence/S03-primary-text.txt",
+          "sha256": "301dc171e5fa8c5fdeb69592a92a5c378f5f758f68d2338200235d60eb04b9ad",
+          "bytes": 16
+        }
+      ]
+    },
+    {
+      "id": "I04",
+      "candidate_source_id": "S04",
+      "title": "TARCiS erratum record",
+      "exact_url": "https://pubmed.ncbi.nlm.nih.gov/39510583/",
+      "version_or_date": "BMJ 2024;387:q2458, 2024-11-07; DOI 10.1136/bmj.q2458; PMID39510583",
+      "locator": "BMJ correction notice and PubMed ErratumFor metadata in web-05; direct PubMed GET cookie shell",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.837294+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.189122+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "INDEXED_PRIMARY_CORRECTION_METADATA",
+      "http_status": 203,
+      "resolved_url": "https://pubmed.ncbi.nlm.nih.gov/39510583/",
+      "governing_conditions_and_applicability": "Erratum concerns Recommendation 5. Exact before/after replacement wording remains UNKNOWN; candidate defers that operation instead of asserting verified wording.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S04-primary-response.html",
+          "relative_path": "evidence/S04-primary-response.html",
+          "sha256": "69720b8a7ed55b54d552c8e53b559f6e6af92093b49868cbb862e9bbf430d604",
+          "bytes": 5590
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S04-primary-text.txt",
+          "relative_path": "evidence/S04-primary-text.txt",
+          "sha256": "0f34a5ac20db018f88ba217d1ce074383dfbe097f4a34a8e582039a141a11bc1",
+          "bytes": 153
+        }
+      ]
+    },
+    {
+      "id": "I05",
+      "candidate_source_id": "S05",
+      "title": "OpenAlex launch post",
+      "exact_url": "https://blog.openalex.org/openalex-launch/",
+      "version_or_date": "Post 2022-01-06 describing launch 2022-01-03",
+      "locator": "Launch post As expected / Slight change of plan / Huge exciting news; local text 14–40; web-08",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.926068+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.785515+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://blog.openalex.org/openalex-launch/",
+      "governing_conditions_and_applicability": "Verified historical MAG replacement, REST/five-entity model and acknowledged inherited coverage/structure issues; not proof of present urban-report coverage.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S05-primary-response.html",
+          "relative_path": "evidence/S05-primary-response.html",
+          "sha256": "c1ae788def4734592cdc742e7383df89dd8b054492726049f68f9b78531355c7",
+          "bytes": 144357
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S05-primary-text.txt",
+          "relative_path": "evidence/S05-primary-text.txt",
+          "sha256": "cef4343b0d4e5a958c5e3cad648c262dfdde5bae895d0b23ad77b6021b58aea5",
+          "bytes": 2928
+        }
+      ]
+    },
+    {
+      "id": "I06",
+      "candidate_source_id": "S06",
+      "title": "OpenAlex works-search documentation",
+      "exact_url": "https://help.openalex.org/api/searching/",
+      "version_or_date": "Live official page last updated 2026-10-03",
+      "locator": "What gets searched; scoped parameters; Relevance score; Rerank; Semantic search; local text 66–140, 341–402; web-01",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:03.955716+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.062590+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://help.openalex.org/api/searching/",
+      "governing_conditions_and_applicability": "Works API generic search includes full text and keywords; scoped requests differ. Relevance is the API default; top-100 rerank is conditional. Website defaults differ. Final R01 resolves upstream unspecified-default ambiguity.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S06-primary-response.html",
+          "relative_path": "evidence/S06-primary-response.html",
+          "sha256": "2b7e13eaf234632428e9d5887411a5be2f6b69011a1dc0dfaba6d9e72999dda1",
+          "bytes": 53520
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S06-primary-text.txt",
+          "relative_path": "evidence/S06-primary-text.txt",
+          "sha256": "0b2a2f5913b9cb2c134709253f959f9867d53df13581e56275e24df4da03f35c",
+          "bytes": 14876
+        }
+      ]
+    },
+    {
+      "id": "I07",
+      "candidate_source_id": "S07",
+      "title": "OpenAlex synchronization and change history",
+      "exact_url": "https://help.openalex.org/access/sync/",
+      "version_or_date": "Live official page last updated 2026-09-24",
+      "locator": "Release cadence; Deletions and merged entities; Tracing merges; Point-in-time; local text 67, 266, 319, 386; web-02",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.083747+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.196422+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://help.openalex.org/access/sync/",
+      "governing_conditions_and_applicability": "Verified quarterly free snapshots versus paid daily snapshots, historical merge-map retirement, works deletion log and location-ID merge trail. Preserving raw IDs/state is applicable; a quarterly cadence is not the live API cadence.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S07-primary-response.html",
+          "relative_path": "evidence/S07-primary-response.html",
+          "sha256": "9973481cc338a1d57dbc638fffe54bc461cd0d16193d41b6ed6f5ed6a5eb5825",
+          "bytes": 47330
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S07-primary-text.txt",
+          "relative_path": "evidence/S07-primary-text.txt",
+          "sha256": "c8182776e761ea99e3282f5ec4506973149dd2ca821ff6eac2ddb89a5afe5cdb",
+          "bytes": 14600
+        }
+      ]
+    },
+    {
+      "id": "I08",
+      "candidate_source_id": "S08",
+      "title": "Crossref REST API documentation",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "version_or_date": "Live page labels last updated 2020-04-08",
+      "locator": "REST API description and /works endpoint; local text 312–319; web-02",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.193586+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.352301+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "governing_conditions_and_applicability": "Public no-signup metadata search supports a provisional Crossref arm; records depend on deposits and absences cannot prove absence of a report.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S08-primary-response.html",
+          "relative_path": "evidence/S08-primary-response.html",
+          "sha256": "7fa3b2fcca9134b850c9f433516e4bedbf44b304d0cc914ecb615c72962875f8",
+          "bytes": 70823
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S08-primary-text.txt",
+          "relative_path": "evidence/S08-primary-text.txt",
+          "sha256": "082f3cc3e512909a448ca09282b75b5381b93d3d92bd8b5a97545255a8e51b63",
+          "bytes": 13600
+        }
+      ]
+    },
+    {
+      "id": "I09",
+      "candidate_source_id": "S09",
+      "title": "Crossref relationship schema",
+      "exact_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "version_or_date": "Live official schema page; last-updated label 2020-04-08",
+      "locator": "Declaring relationship types; intra/inter-work tables; General typed relations; local text 360–441; web-08",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.214580+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.352673+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "governing_conditions_and_applicability": "Version/preprint/translation relations are typed metadata, not study identity. Non-DOI identifiers are unverified; DOI deposit validation and reverse relation creation also do not adjudicate underlying studies.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S09-primary-response.html",
+          "relative_path": "evidence/S09-primary-response.html",
+          "sha256": "21e3f0918322210b44fbfcd0efcf087007e2ff03c525539209251f5a8620d1ba",
+          "bytes": 91390
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S09-primary-text.txt",
+          "relative_path": "evidence/S09-primary-text.txt",
+          "sha256": "87d129d72e1d7a076cedca358d9b4727b0b85b6f0865bcc0f686efb3160f09e8",
+          "bytes": 26712
+        }
+      ]
+    },
+    {
+      "id": "I10",
+      "candidate_source_id": "S10",
+      "title": "Zotero duplicate-detection documentation",
+      "exact_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "version_or_date": "Live main-branch official documentation; no software build version fixed by this page",
+      "locator": "Finding Duplicates and Merging Duplicates; local text 174–185; web-04",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.349949+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.701511+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "governing_conditions_and_applicability": "Library-local title/DOI/ISBN, year-within-one-year and partial-author heuristics produce candidates; false-positive candidate opt-out unavailable in documented interface. Candidate correctly avoids automatic study merging.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S10-primary-response.html",
+          "relative_path": "evidence/S10-primary-response.html",
+          "sha256": "b48941024081a141264f6f93be52afe5fa07c7af7840d9c88e0d92a53c665d39",
+          "bytes": 244442
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S10-primary-text.txt",
+          "relative_path": "evidence/S10-primary-text.txt",
+          "sha256": "db4032f260aa0d294bd278f63d52418d46df7c58eee7fd78bb5cd7d43db70c9a",
+          "bytes": 5408
+        }
+      ]
+    },
+    {
+      "id": "I11",
+      "candidate_source_id": "S11",
+      "title": "ASReview LAB release history",
+      "exact_url": "https://github.com/asreview/asreview/releases",
+      "version_or_date": "v3.0.8 d3e863c94e1945ace7848b6ca5bcf2fb1eecbdb5; v3.0.5 516290b; release page date labels lack year",
+      "locator": "v3.0.8 entry and v3.0.5 migration fix; local text 170–208 and 327–373; web-08",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.391512+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.216312+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases",
+      "governing_conditions_and_applicability": "Verified migration and record-ID fix history. This supports version capture, not a claim of measured screening savings or present local-study accuracy.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S11-primary-response.html",
+          "relative_path": "evidence/S11-primary-response.html",
+          "sha256": "6c80a25f1118713881fb72615edb4b12fd53e06a87ff280c486733fffe139e69",
+          "bytes": 462434
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S11-primary-text.txt",
+          "relative_path": "evidence/S11-primary-text.txt",
+          "sha256": "dedbc2d1d616c505c7e8b8d3bcb4c548fbd7678b36dd27365564bea233c9e8aa",
+          "bytes": 12589
+        }
+      ]
+    },
+    {
+      "id": "I12",
+      "candidate_source_id": "S12",
+      "title": "ASReview LAB README at v3.0.8 commit",
+      "exact_url": "https://github.com/asreview/asreview/blob/d3e863c/README.md",
+      "version_or_date": "Pinned README d3e863c94e1945ace7848b6ca5bcf2fb1eecbdb5 (v3.0.8)",
+      "locator": "What’s New in Version 3; local text 209–215; web-04",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.408746+00:00",
+        "direct_get_completed": "2026-10-10T06:42:04.783772+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/blob/d3e863c/README.md",
+      "governing_conditions_and_applicability": "Duplicate titles AND texts are documented as hidden during screening, with export inclusion selectable. This is a record/workload behavior, not a study-identity verdict; no execution reproduced.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S12-primary-response.html",
+          "relative_path": "evidence/S12-primary-response.html",
+          "sha256": "f5905b03bf0386e8d39700176652f5696539372c79e87b33c095d062cebe61ab",
+          "bytes": 276694
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S12-primary-text.txt",
+          "relative_path": "evidence/S12-primary-text.txt",
+          "sha256": "1d59596a4f28af108d189f37d6272ef4ebc17c4cb3ca1de2d337d0b6fba90212",
+          "bytes": 6337
+        }
+      ]
+    },
+    {
+      "id": "I13",
+      "candidate_source_id": "S13",
+      "title": "ASReview user discussion on duplicate rows during screening",
+      "exact_url": "https://github.com/asreview/asreview/discussions/1741",
+      "version_or_date": "Discussion opened 2024-05-07; answer 2024-05-28; June follow-ups",
+      "locator": "User report and maintainer answer; local text 191–200, 221–226; web-08",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.764393+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.124318+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_DISCUSSION",
+      "http_status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/discussions/1741",
+      "governing_conditions_and_applicability": "User conjectures title-spelling variation caused a missed duplicate; maintainer recommends consistent labels. It is historical user evidence, not verified cause or controlled performance. Final uses it as a reported issue.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S13-primary-response.html",
+          "relative_path": "evidence/S13-primary-response.html",
+          "sha256": "e2d80478cdc707f053528ba0b42eac343e1d6edcee9cd2faf3dfdebaa24ef947",
+          "bytes": 315026
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S13-primary-text.txt",
+          "relative_path": "evidence/S13-primary-text.txt",
+          "sha256": "3edab1e3344f957ed6788ba82e4b7881a2cf82da18d90ca9f3f8ff87eef1e92d",
+          "bytes": 6591
+        }
+      ]
+    },
+    {
+      "id": "I14",
+      "candidate_source_id": "S14",
+      "title": "CADTH PRESS 2015 search-review form",
+      "exact_url": "https://www.cadth.ca/sites/default/files/PRESS_Peer_Review_Electronic_Search_Strate/Table_10_PRESS.pdf",
+      "version_or_date": "PRESS 2015 search-review form; full PDF not retrieved",
+      "locator": "Search Submission and Peer Review Assessment instruction, indexed official PDF in web-07; direct redirect cda-amc.ca returns403",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.845014+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.026536+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "INDEXED_OFFICIAL_PDF_WITH_DIRECT_ACCESS_FAILURE",
+      "http_status": 403,
+      "resolved_url": "https://www.cda-amc.ca/sites/default/files/PRESS_Peer_Review_Electronic_Search_Strate/Table_10_PRESS.pdf",
+      "governing_conditions_and_applicability": "Exact strategies and per-line hits are requested by the form. Supports reporting/review aid only; full PDF/version context not independently inspected.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S14-primary-response.html",
+          "relative_path": "evidence/S14-primary-response.html",
+          "sha256": "48f60d03153be7b50800edf39ba9efa919b378bfe41a988af238a4715f714fde",
+          "bytes": 5797
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S14-primary-text.txt",
+          "relative_path": "evidence/S14-primary-text.txt",
+          "sha256": "301dc171e5fa8c5fdeb69592a92a5c378f5f758f68d2338200235d60eb04b9ad",
+          "bytes": 16
+        }
+      ]
+    },
+    {
+      "id": "I15",
+      "candidate_source_id": "S15",
+      "title": "Urban heat, vulnerability, and mitigation in U.S. cities: A systematic review",
+      "exact_url": "https://doi.org/10.1016/j.scsadv.2026.100077",
+      "version_or_date": "Sustainable Cities and Society: Advances 2(3), September2026,100077; DOI10.1016/j.scsadv.2026.100077",
+      "locator": "Publisher abstract indexed in web-05/web-09; DOI redirects to an empty linkinghub shell; publisher open403",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:04.851303+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.066450+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "PARTIAL_PRIMARY_ABSTRACT_AND_ACCESS_FAILURE",
+      "http_status": 200,
+      "resolved_url": "https://linkinghub.elsevier.com/retrieve/pii/S3051052X26000550",
+      "governing_conditions_and_applicability": "Identity, U.S./peer-reviewed scope and Web of Science are independently supported. Backward-citation and municipal-grey-literature specifics were not recovered independently; retain UNKNOWN. Final uses only a qualified disclosure example, no coverage/effect benchmark.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S15-primary-response.html",
+          "relative_path": "evidence/S15-primary-response.html",
+          "sha256": "c26624e7c64b65dd362a2867745e31961cb8929ad41a9e30a82ff95b102a5bc9",
+          "bytes": 2692
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S15-primary-text.txt",
+          "relative_path": "evidence/S15-primary-text.txt",
+          "sha256": "e55fb1a1d731153e943b68844af12dcce8bfac917c98ffdea64c80da0607dd47",
+          "bytes": 11
+        }
+      ]
+    },
+    {
+      "id": "I16",
+      "candidate_source_id": "S16",
+      "title": "OpenAlex API authentication and basic access",
+      "exact_url": "https://help.openalex.org/api/authentication/",
+      "version_or_date": "Live official page last updated2026-08-19",
+      "locator": "Authentication opening, Rate limits and usage headers; web-01; direct official body",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:05.031175+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.200639+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "DIRECT_PRIMARY_BODY",
+      "http_status": 200,
+      "resolved_url": "https://help.openalex.org/api/authentication/",
+      "governing_conditions_and_applicability": "Basic anonymous queries are documented; keys enlarge budget. More than100 requests/second or budget exhaustion can return429; per_page100/basic paging10000. Supports account-free provisional pilot, not tested end-to-end service availability.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S16-primary-response.html",
+          "relative_path": "evidence/S16-primary-response.html",
+          "sha256": "542410ebf3c4f41f8cd442e6253b544813fd0fc546d612516a2bc1673f76bbf7",
+          "bytes": 32386
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S16-primary-text.txt",
+          "relative_path": "evidence/S16-primary-text.txt",
+          "sha256": "3622da9c10180d7ab94320ae9faf61b88c91af8da175c1e387df8f0052e95a7c",
+          "bytes": 4246
+        }
+      ]
+    },
+    {
+      "id": "I17",
+      "candidate_source_id": "S17",
+      "title": "A systematic review of urban heat island and heat waves research (1991–2022)",
+      "exact_url": "https://doi.org/10.1016/j.crm.2024.100603",
+      "version_or_date": "Climate Risk Management44(2024)100603; DOI10.1016/j.crm.2024.100603",
+      "locator": "§3 Method in indexed primary publisher text web-10; DOI linkinghub shell; direct open403",
+      "observed_operation": "Independent web search/open/find plus direct public unauthenticated HTTP GET; no topic pilot or software execution.",
+      "access_observation_utc": {
+        "review_start": "2026-10-10T06:36:58Z",
+        "direct_get_started": "2026-10-10T06:42:05.070901+00:00",
+        "direct_get_completed": "2026-10-10T06:42:05.316177+00:00",
+        "server_fetch_timestamp": "UNKNOWN"
+      },
+      "retrieval_status": "INDEXED_PRIMARY_METHOD_TEXT_WITH_DIRECT_ACCESS_FAILURE",
+      "http_status": 200,
+      "resolved_url": "https://linkinghub.elsevier.com/retrieve/pii/S2212096324000202",
+      "governing_conditions_and_applicability": "Independently corroborated WoS Core Collection search2023-10-19 and exclusion of grey reports/policy/government documents; English/available-full-text eligibility. This is source-bound method history, not a local-report coverage oracle.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S17-primary-response.html",
+          "relative_path": "evidence/S17-primary-response.html",
+          "sha256": "0c2097d078faf86be4363e579c972d53e877f54d894f44e3df7b0c1b5719fa6b",
+          "bytes": 2697
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/S17-primary-text.txt",
+          "relative_path": "evidence/S17-primary-text.txt",
+          "sha256": "e55fb1a1d731153e943b68844af12dcce8bfac917c98ffdea64c80da0607dd47",
+          "bytes": 11
+        }
+      ]
+    }
+  ],
+  "web_result_captures": [
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-01-openalex-crossref.json",
+      "relative_path": "evidence/web-01-openalex-crossref.json",
+      "sha256": "0215fa9c5d3606c043f1d6401e162eb6e30b0b2697b72b4ede8ad21ad2e69c24",
+      "bytes": 31886,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-02-history-relations.json",
+      "relative_path": "evidence/web-02-history-relations.json",
+      "sha256": "0f208dbbc1784188a019b2970f445c789caff834ecdec45c23bba57194acacaa",
+      "bytes": 32959,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-03-methods.json",
+      "relative_path": "evidence/web-03-methods.json",
+      "sha256": "21816864e230140d8bcda7c236c084924e5538dd3bfef8ac3a8cfd6645fe5878",
+      "bytes": 36316,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-04-software.json",
+      "relative_path": "evidence/web-04-software.json",
+      "sha256": "5d50489bf56fafa3a0bd0268923316cce7b8bdf2e5eff7cccd39378cdcb5dab0",
+      "bytes": 29406,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-05-reviews-correction-press.json",
+      "relative_path": "evidence/web-05-reviews-correction-press.json",
+      "sha256": "d7347d51d7d0e31319cce34eabf1832f7bc6e8b3cdab4e07afd1da51039478ff",
+      "bytes": 35552,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-06-review-open-attempts.json",
+      "relative_path": "evidence/web-06-review-open-attempts.json",
+      "sha256": "516925de3b433bbc7ddfd14244398c0076461e5cdef20e62109d0c14df1604b4",
+      "bytes": 1319,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-07-governing-context.json",
+      "relative_path": "evidence/web-07-governing-context.json",
+      "sha256": "98b65158c6f9e858d27689f2d7ae83e83dd442b93e8aec965a15c6cfe10d7979",
+      "bytes": 36193,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-08-software-history-context.json",
+      "relative_path": "evidence/web-08-software-history-context.json",
+      "sha256": "02f5a55b2937a7ca14486d1ad2e095f7c7bba71b6f0d014121201d8bac9395f2",
+      "bytes": 28841,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-09-primary-review-methods.json",
+      "relative_path": "evidence/web-09-primary-review-methods.json",
+      "sha256": "49e1bbee644a9adacec666e1eca2be4c5101f98c0c3eb4277e294ff266018eae",
+      "bytes": 40274,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-02/control-v1/evidence/web-10-exact-method-conditions.json",
+      "relative_path": "evidence/web-10-exact-method-conditions.json",
+      "sha256": "c1670942f27ef5683258d2ff58afbc134ed52b979de1ea2ca21d3c41f6deb0a8",
+      "bytes": 34158,
+      "basis": "Unmodified complete independently returned web-tool result serialized as JSON; no candidate feedback."
+    }
+  ],
+  "original_inspected_artifacts": "original-inspected-hashes.json",
+  "integrity_checks": "evidence/freeze-integrity-check.json",
+  "claim_judgment_policy": "Read governing primary conditions and actual authored meanings. Hashes establish byte identity only. Indexed primary text and access failures are distinguished from retrieved full text.",
+  "excluded_scope": [
+    "other arms/results/history",
+    "ER11",
+    "shared roster",
+    "candidate repair/feedback",
+    "Git/publication",
+    "account changes",
+    "nested delegation"
+  ],
+  "reviewer_native_active_receipt": "evidence/reviewer-native-goal-active.json"
+}

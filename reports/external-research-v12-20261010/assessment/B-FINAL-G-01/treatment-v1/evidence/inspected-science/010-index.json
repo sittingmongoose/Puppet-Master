@@ -1,27 +1,20 @@
 {
-  "sources": [
-    {
-      "source_id": "S1",
-      "title": "rsync manual",
-      "url": "https://download.samba.org/pub/rsync/rsync.1",
-      "version": "Live upstream man page, unpinned; target both peers rsync 3.2.7; check relevant option semantics",
-      "retrieved_at": "2026-10-10T03:54:10Z",
-      "navigation": "Usage; --delete; --delete-excluded; FILTER RULES; --dry-run; --delay-updates",
-      "file": "corpus/S1.md",
-      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
-      "verbatim_word_count": 11
-    },
-    {
-      "source_id": "S2",
-      "title": "rsync project FAQ",
-      "url": "https://rsync.samba.org/FAQ.html",
-      "version": "Live upstream FAQ, unpinned; target both peers rsync 3.2.7",
-      "retrieved_at": "2026-10-10T03:54:10Z",
-      "navigation": "FAQ questions; protocol-startup troubleshooting; usage links",
-      "file": "corpus/S2.md",
-      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
-      "verbatim_word_count": 2
-    }
-  ],
-  "retrieval_policy": "Both arms may follow the listed URLs and retrieve up to eight additional primary pages within the same 600-second investigation allowance. Snapshots are short excerpts and attributed paraphrases, not complete manuals."
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+  "rawSHA256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+  "original_bytes": 1281,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/B-FINAL-G-01/treatment-v1/evidence/inspected-science/010-index.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

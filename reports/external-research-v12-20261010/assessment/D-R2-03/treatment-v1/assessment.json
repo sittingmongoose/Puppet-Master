@@ -1,0 +1,3774 @@
+{
+  "schema_version": "ER12-independent-full-pipeline-assessment-v1",
+  "case_id": "ER12-D-R2-03-FRESH",
+  "slot_id": "D-R2-03",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "reviewer_identity": "codex-er12-d-r2-03-review-10681257",
+  "review_start_utc": "2026-10-10T07:50:38Z",
+  "saved_at_utc": "2026-10-10T08:09:10.041541+00:00",
+  "review_deadline_utc": "2026-10-10T08:35:38Z",
+  "scope_complete": true,
+  "unassessed_axes": [],
+  "source_judgment": "FAIL",
+  "basis": "F01 remaining material requested astronomical-mechanism omission; other substantive final source claims are supported with minor limitations. Neither time shortfall nor receipt/hash counts determine source grade.",
+  "delivery": {
+    "status": "COMPLETE",
+    "ordinary_final_path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+    "actual_pipeline": "investigator -> critic -> reviser; composite A1/A8 recorded in freezes",
+    "alternate_A2_A7_handoff": "NOT_APPLICABLE to mapped pipeline",
+    "missing_required_science_artifacts": []
+  },
+  "coverage": {
+    "status": "INCOMPLETE_MATERIAL",
+    "axes_assessed": 6,
+    "exact_plan_sentences_disposed": 55,
+    "finding_ids": [
+      "F01"
+    ]
+  },
+  "native": {
+    "status": "SAVED_RECEIPTS_PRESENT; LIVE_HISTORICAL_PROVENANCE_UNKNOWN",
+    "stage_records": [
+      {
+        "stage": "investigator",
+        "create_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/native-goal-create.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/native-goal-completion.json",
+        "create_response": {
+          "goal": {
+            "threadId": "01a1249a-14e3-7c53-9cdd-f31939d31136",
+            "objective": "ER12 investigator stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791615457,
+            "updatedAt": 1791615457
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "completion_response": {
+          "goal": {
+            "threadId": "01a1249a-14e3-7c53-9cdd-f31939d31136",
+            "objective": "ER12 investigator stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 405197,
+            "timeUsedSeconds": 803,
+            "createdAt": 1791615457,
+            "updatedAt": 1791616260
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread_id": true,
+        "recorded_stage_deadline_utc": "2026-10-10T07:27:18.124Z",
+        "recorded_prepared_at_utc": "2026-10-10T06:57:18.124Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model_effort_tier": "UNKNOWN",
+        "provider_provenance_freshness_and_preinput_order": "UNKNOWN; files are saved receipts, guard/capture integration JSON is instruction metadata, not a live provider transcript."
+      },
+      {
+        "stage": "critic",
+        "create_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/native-goal-create.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/native-goal-complete.json",
+        "create_response": {
+          "goal": {
+            "threadId": "01a124a6-e71a-7a42-91b9-ca661d79074d",
+            "objective": "ER12 critic stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791616293,
+            "updatedAt": 1791616293
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "completion_response": {
+          "goal": {
+            "threadId": "01a124a6-e71a-7a42-91b9-ca661d79074d",
+            "objective": "ER12 critic stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 255075,
+            "timeUsedSeconds": 965,
+            "createdAt": 1791616293,
+            "updatedAt": 1791617259
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread_id": true,
+        "recorded_stage_deadline_utc": "2026-10-10T07:39:18.124Z",
+        "recorded_prepared_at_utc": "2026-10-10T07:11:18.365Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model_effort_tier": "UNKNOWN",
+        "provider_provenance_freshness_and_preinput_order": "UNKNOWN; files are saved receipts, guard/capture integration JSON is instruction metadata, not a live provider transcript."
+      },
+      {
+        "stage": "reviser",
+        "create_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/native-goal-create.json",
+        "completion_receipt": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/native-goal-complete.json",
+        "create_response": {
+          "goal": {
+            "threadId": "01a124b7-8fcb-7340-91e3-f7d57144d752",
+            "objective": "ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791617394,
+            "updatedAt": 1791617394
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "completion_response": {
+          "goal": {
+            "threadId": "01a124b7-8fcb-7340-91e3-f7d57144d752",
+            "objective": "ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 262951,
+            "timeUsedSeconds": 1184,
+            "createdAt": 1791617394,
+            "updatedAt": 1791618578
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread_id": true,
+        "recorded_stage_deadline_utc": "2026-10-10T07:57:12.779Z",
+        "recorded_prepared_at_utc": "2026-10-10T07:29:30.067Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model_effort_tier": "UNKNOWN",
+        "provider_provenance_freshness_and_preinput_order": "UNKNOWN; files are saved receipts, guard/capture integration JSON is instruction metadata, not a live provider transcript."
+      }
+    ],
+    "reviewer_goal": "One actual native Goal activated in this reviewer turn; active receipt saved before terminal. Same Goal to be completed only after full judgment saved.",
+    "reviewer_goal_receipts": {
+      "active": "evidence/reviewer-native-active.json",
+      "completion": "evidence/reviewer-native-completion.json",
+      "completion_order": "Full assessment.md, assessment.json and source-map.json saved before update_goal complete. Completion receipt is appended separately after the terminal tool call."
+    }
+  },
+  "protocol": {
+    "status": "UNKNOWN beyond bounded frozen evidence",
+    "observed": "Discovery and plan-reveal identities match; ordinary stage handoff follows maps; no unauthorized scientific help or candidate repair observed in inspected record. Reviewer used no nested delegation, Git, account change, publication, candidate feedback, other-arm results/history or roster.",
+    "limits": "Full provider transcripts/assistance/read-order/release-lock execution are not inspected. Root capture instructions are not proof of their execution."
+  },
+  "time": {
+    "status": "FULL_60_ACTIVE_MINUTES_NOT_ESTABLISHED",
+    "original_request": "Use full 60-minute research window",
+    "recorded_native_first_create_to_last_complete_seconds": 3121,
+    "recorded_investigator_prepare_to_terminal_freeze_seconds": 3179.275803,
+    "candidate_final_discloses_shortfall": true,
+    "deadline_status": "Saved completion receipts precede their recorded absolute stage deadlines. Stage instructions allow early completion; exact active-research time remains UNKNOWN.",
+    "inference_or_billing_savings": "UNKNOWN; no comparative speed claim or other-arm judgment made"
+  },
+  "rubric_axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "assessment": "The original situation, missing inputs, unknown endpoint, boundaries and concrete instrumental/environmental/processing dimensions are preserved. Archive-first, comparison-field, controlled acquisition and conditional independent-data routes are substantive. The requested astronomical explanation/mechanism investigation remains a placeholder (F01), so literal clause quotation and addressed labels do not establish complete coverage. Full-window time is separately limited, not the basis of F01.",
+      "finding_ids": [
+        "F01"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E15",
+        "E16"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential claims: subject, operation, version, default, unit, type, domain and exceptions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent primary retrieval supports the substantive instrument, time, survey and statistical conditions in the final. Claims are bounded to task/version and case applicability is conditional. No case period, accuracy, significance, flux conversion, target or cause is fabricated. Minor source-map API modality, PDF page convention and detector-coordinate wording remain L02–L04. F01 is an omission assessed under axes 1/3 rather than an invented false measurement claim.",
+      "finding_ids": [],
+      "limitation_ids": [
+        "L02",
+        "L03",
+        "L04"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09",
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "assessment": "Useful unfamiliar discoveries include distinct flat/illumination operations, named IRAF defaults and overwrite risks, specialized fixed-pixel controls, release-specific AIJ bugs, time-label versus calculation distinctions, independent survey product conditions and dependence-aware period inference. These affect later decision-making. Software/manual history is properly coupled to recovered settings. However, all physical astronomical explanations are deferred as unspecified variability; missing target class is used in place of the requested mechanism investigation. This material breadth gap is F01.",
+      "finding_ids": [
+        "F01"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "FAIL",
+      "assessment": "All five SCW records and ordinary findings have explicit final dispositions, independently assessed below. ZTF criticism is wrong and correctly rejected with expanded primary context; cloud/AIJ/time refinements are supported; AIJ quotation mismatch is explicitly identified. Every exact original-plan sentence has a reviewer disposition. Candidate released-plan table paraphrases some clauses; its addressed/all-scope disposition of the mechanism obligation is wrong in the astronomical branch (F01). This is the same material omission, not a second finding. Time limitation is honestly retained, with original deadline now inspectable.",
+      "limitation_ids": [
+        "L01",
+        "L03"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E06",
+        "E08",
+        "E11",
+        "E12",
+        "E18"
+      ],
+      "finding_ids": [
+        "F01"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final preserves supported source alternatives, unknowns, provisional archive-first order, controls, independence distinction and negative constraints. It narrows cloud/overwrite/calculation conditions without dropping the source-backed branches; source IDs and crosswalks remain separate. Correct ZTF date survives wrong criticism. The astronomical gap is original and remains uncorrected (F01); it is not revision-induced loss. Inherited work-action actor ambiguity and source-access records limit lineage provenance (L05/L06).",
+      "limitation_ids": [
+        "L05",
+        "L06"
+      ],
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E05",
+        "E06",
+        "E08",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "assessment": "The proposal has meaningful discriminators, change-one-factor reprocessing, held-out checks/nights, standard-reference accuracy tests, position/background/condition residuals, survey suitability/lineage gates and escalation criteria. It explicitly distinguishes these from source reading and byte checks. No empirical archive or target validation occurred or is required by this planning scenario. Hash agreement only verifies identity; generic documentation only verifies generic operations; a curve/periodogram or same-exposure second reduction cannot prove independent variability. The null procedure and tolerances correctly remain owner/data-dependent.",
+      "evidence_ids": [
+        "E01",
+        "E04",
+        "E06",
+        "E11",
+        "E12",
+        "E13",
+        "E14"
+      ]
+    }
+  ],
+  "material_findings": [
+    {
+      "finding_id": "F01",
+      "severity": "MATERIAL",
+      "kind": "omitted requested astronomical mechanism investigation",
+      "remaining_in_final": true,
+      "affected_axes": [
+        1,
+        3,
+        4
+      ],
+      "original_obligation_locators": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/brief.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+          "line": 55
+        }
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/discovery.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/draft.md",
+          "line": 33
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 168
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E15",
+        "E16"
+      ],
+      "assessment": "The original asks to investigate astronomical explanations and explain mechanisms; the plan additionally preserves useful astronomical branches. Discovery, draft and final never develop a physical astronomical explanation: the final says only that a real source may vary and then describes generic residual/replication tests. The already cited AAVSO guide section 2.3 offers physical alternatives without knowing this target; official variability definitions corroborate that true brightness variability spans physically distinct source and geometric mechanisms. This is a missing requested causal branch, not a demand for a diagnosis, an exhaustive taxonomy, a particular catalog, a numerical period, an executed classification or a deployment. Its consequence is that the proposed investigator can distinguish robust target behavior from measurement artifacts but receives no investigated causal alternatives for the still-open astrophysical-classification endpoint. The final’s addressed/all-scope claims therefore overstate coverage. Endpoint uncertainty is preserved honestly, but is not sufficient investigation of this branch.",
+      "lineage": "Present in original discovery and draft, missed by critic, retained without correction in final. It is not a defect introduced by revision."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "time/protocol separate",
+      "assessment": "Full 60 minutes of active research is not established and literal occupancy is shorter in the saved receipts. Final openly retains the limitation. Stage instructions also allow early completion and impose earlier investigator/critic deadlines; this is recorded as a time-contract tension, not used alone as semantic FAIL.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ]
+    },
+    {
+      "id": "L02",
+      "kind": "minor inherited API modality",
+      "assessment": "S09 source-map summary says Time objects require input format and scale, while the API marks both optional and examples auto-parse strings. The final’s scientific requirement to document conventions is valid. No recommended consequential case operation depends on rejecting optional constructor inputs.",
+      "evidence_ids": [
+        "E08",
+        "E18"
+      ]
+    },
+    {
+      "id": "L03",
+      "kind": "minor locator",
+      "assessment": "AAVSO p.69 is zero-based PDF index 69; printed page is 70. Same-degree text is directly findable by section 4.8.5 and extracted lines. This is a locator convention issue, not failed cloud evidence.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "L04",
+      "kind": "minor detector/sky scope wording",
+      "assessment": "Gate 3’s only from validated headers/WCS conflates raw pixel positions with sky/orientation transformations. Pixel coordinates can be measured directly; the report elsewhere preserves those diagnostics.",
+      "evidence_ids": [
+        "E14"
+      ]
+    },
+    {
+      "id": "L05",
+      "kind": "minor actor attribution",
+      "assessment": "Final work-performed section inherits investigator reveal-helper and S13/S14-addition first-person actions. Maps/reveal establish their predecessor origin, but the final could be read as claiming the reviser itself performed them. No case validation is fabricated by this ambiguity.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 228
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 229
+        }
+      ]
+    },
+    {
+      "id": "L06",
+      "kind": "evidence provenance limits",
+      "assessment": "Authored source notes are summaries, not raw contemporaneous captures. Same-URL sources retain IDs and crosswalks, but access-window strings differ between global and individual records and are not provider telemetry. Reviewer independent raw captures support current source meaning, not historical freshness or elapsed active research."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "type": "case scientific inputs",
+      "status": "UNKNOWN",
+      "detail": "Target field/class, filters, raw/calibration/recipe/time/geometry/exposure/reference/weather inputs; authentic sports-field chronology and standards absent."
+    },
+    {
+      "id": "U02",
+      "type": "external owner choices",
+      "status": "HONESTLY_UNRESOLVED",
+      "detail": "Reliability versus classification, error tolerance and available authorized archive/survey data; needed investigation is specified for these choices. This does not excuse F01."
+    },
+    {
+      "id": "U03",
+      "type": "native historical provenance",
+      "status": "UNKNOWN",
+      "detail": "Saved stage receipts present; live provider freshness, pre-input goal creation/order, one-goal uniqueness and guard execution not independently established."
+    },
+    {
+      "id": "U04",
+      "type": "effective execution and billing",
+      "status": "UNKNOWN",
+      "detail": "Requested AUTHORIZED_PROVIDER_INSTANCE/gpt-6-luna/max/default is recorded. Effective provider/model/effort/tier, token accounting semantics, dollars and inference/billing savings are not exposed by inspected evidence."
+    },
+    {
+      "id": "U05",
+      "type": "T3/method activity",
+      "status": "UNKNOWN beyond required root freeze",
+      "detail": "Root terminal freeze records completion basis; reviewer did not read shared roster, other status/outcome files, full campaign history or live child-thread transcript. Assistance absence and precise scheduling/dispatch/notification cannot be proved."
+    },
+    {
+      "id": "U06",
+      "type": "time accounting",
+      "status": "UNKNOWN active minutes",
+      "detail": "Receipt clock fields and recorded deadlines can be reported; source access windows, wall occupancy and native timeUsed are different measures and not active-research proof."
+    }
+  ],
+  "exact_plan_clause_dispositions": [
+    {
+      "clause_id": "P09.1",
+      "exact_text": "Keep this file outside the candidate-facing research packet.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 9
+      },
+      "judgment": "CONTEXT_RELEASE",
+      "reviewer_disposition": "Not a scientific answer key; outside-packet boundary is protocol. Discovery was frozen before recorded reveal; provider read order remains unverified.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+          "line": 1
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P09.2",
+      "exact_text": "It preserves the authored request and open design opportunities.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 9
+      },
+      "judgment": "CONTEXT_RELEASE",
+      "reviewer_disposition": "Not a scientific answer key; outside-packet boundary is protocol. Discovery was frozen before recorded reveal; provider read order remains unverified.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+          "line": 1
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P09.3",
+      "exact_text": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 9
+      },
+      "judgment": "CONTEXT_RELEASE",
+      "reviewer_disposition": "Not a scientific answer key; outside-packet boundary is protocol. Discovery was frozen before recorded reveal; provider read order remains unverified.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+          "line": 1
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P09.4",
+      "exact_text": "Nothing here selects an eventual research method.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 9
+      },
+      "judgment": "CONTEXT_RELEASE",
+      "reviewer_disposition": "Not a scientific answer key; outside-packet boundary is protocol. Discovery was frozen before recorded reveal; provider read order remains unverified.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+          "line": 1
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P09.5",
+      "exact_text": "No empirical validation has been executed in authoring this case.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 9
+      },
+      "judgment": "CONTEXT_RELEASE",
+      "reviewer_disposition": "Not a scientific answer key; outside-packet boundary is protocol. Discovery was frozen before recorded reveal; provider read order remains unverified.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+          "line": 1
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P13.1",
+      "exact_text": "The original brief follows verbatim between the delimiters.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 13
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Original brief bytes equal the mapped brief and revealed-plan copy; original obligations judged here independently.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 148
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P13.2",
+      "exact_text": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 13
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Original brief bytes equal the mapped brief and revealed-plan copy; original obligations judged here independently.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 148
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.1",
+      "exact_text": "A teaching observatory has a set of nightly images in which several stars appear to show a repeating brightness pattern.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.2",
+      "exact_text": "The camera was rotated and the image-processing routine was revised during the observing term.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.3",
+      "exact_text": "Students suspect a variable star, but some comparison stars appear to drift too.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.4",
+      "exact_text": "A nearby illuminated sports field is mentioned in staff notes.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.5",
+      "exact_text": "No images, calibration frames, pipeline code, or confirmed variable-object catalog entries are supplied.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P25.6",
+      "exact_text": "This is a synthetic research-planning scenario.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 25
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Preserved as synthetic reports, chronology/environment leads and absent data; no reported star/cause becomes a result.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 156
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P29.1",
+      "exact_text": "Use the full 60-minute research window to prepare a proposal for investigating instrumental, environmental, processing, and astronomical explanations.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 29
+      },
+      "judgment": "PARTIAL_MATERIAL_AND_TIME_LIMITATION",
+      "reviewer_disposition": "Instrumental/environmental/processing investigation is substantive; astronomical explanation mechanisms remain omitted (F01). Full 60 active minutes is not established; time judged separately.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 167
+        }
+      ],
+      "finding_ids": [
+        "F01"
+      ]
+    },
+    {
+      "clause_id": "P29.2",
+      "exact_text": "Explain mechanisms, compare useful analysis and acquisition alternatives, and investigate calibration or implementation history.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 29
+      },
+      "judgment": "PARTIAL_MATERIAL",
+      "reviewer_disposition": "Analysis/acquisition alternatives and implementation history are useful; astronomical causal mechanisms are not explained (F01).",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 167
+        }
+      ],
+      "finding_ids": [
+        "F01"
+      ]
+    },
+    {
+      "clause_id": "P29.3",
+      "exact_text": "Design a later reanalysis or observation pilot that can discriminate explanations.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 29
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Later discriminating design is prospective and substantive; no software product or variable-object announcement is made.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 167
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P29.4",
+      "exact_text": "We need no observatory software and no announcement of a new variable object.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 29
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Later discriminating design is prospective and substantive; no software product or variable-object announcement is made.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 167
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P33.1",
+      "exact_text": "Distinguish repeatable measured brightness changes, calibrated photometric performance, and evidence for intrinsic source variability.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 33
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Three-level claim ladder; no measured or calibrated or intrinsic result claimed.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 89
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P34.1",
+      "exact_text": "Compare calibration or reduction changes with observing or comparison-field strategy and a useful independent-data or no-new-observations alternative.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 34
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Archive-first, calibration, comparison/background, controlled acquisition and independent-existing-data routes compared with limits.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 112
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P35.1",
+      "exact_text": "Address camera orientation, detector position, exposure and timing, background contamination, atmosphere, and comparison-star behavior without assuming any one cause.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 35
+      },
+      "judgment": "FULFILLED_WITH_MINOR_WORDING",
+      "reviewer_disposition": "Each required factor has plausible mechanism and future discriminator, without case cause; raw pixel versus WCS wording is L04.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 127
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P36.1",
+      "exact_text": "Investigate processing and instrument history and the operating details of relevant prior implementations, including what evidence makes them transferable.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 36
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Recovered chronology and version/settings/calibration/error/overwrite details govern implementation transfer.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P37.1",
+      "exact_text": "Propose controls, reanalysis provenance, independent comparisons, and a decision about further observation; separate planned validation from any desk calculation or search actually performed.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 37
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Controls, provenance, independent checks and escalation decisions are proposed; only source/identity reading actually done.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 123
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 233
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P41.1",
+      "exact_text": "Do not claim a discovery, identify a real star as variable, or fabricate a period, light curve, calibration accuracy, or significance.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 41
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "No real-object identity, period, curve, accuracy, significance or discovery asserted.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 186
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P42.1",
+      "exact_text": "Do not operate the telescope, alter the archive, install a reduction pipeline, or schedule live observations.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 42
+      },
+      "judgment": "FULFILLED_AS_REPORTED",
+      "reviewer_disposition": "No operation/installation/scheduling claimed or present in science files; full external activity telemetry is UNKNOWN.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 187
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 219
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P43.1",
+      "exact_text": "Do not treat a visually periodic plot or repeated pipeline output as independent confirmation.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 43
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Same-image reduction and periodic appearance explicitly excluded as independent confirmation.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 20
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 91
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P47.1",
+      "exact_text": "The field, filters, camera behavior, timing conventions, exposure history, calibration procedure, reduction revisions, comparison selection, and weather records are unknown.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 47
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "All named unknowns and undecided endpoint retained; owner choices not silently replaced.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 194
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 208
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P47.2",
+      "exact_text": "The instructor has not decided whether the first goal is pipeline reliability or astrophysical classification.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 47
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "All named unknowns and undecided endpoint retained; owner choices not silently replaced.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 194
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 208
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P47.3",
+      "exact_text": "Preserve these uncertainties in the proposal.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 47
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "All named unknowns and undecided endpoint retained; owner choices not silently replaced.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 194
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 208
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P53.1",
+      "exact_text": "What research and later data comparisons would distinguish an apparent brightness pattern inherited from the observing and processing chain from credible evidence of source variability?",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 53
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Useful discrimination of measurement-chain artifacts and robust target-specific behavior answers this research question; broader physical-mechanism scope is independently deficient (F01).",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 8
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P55.1",
+      "exact_text": "Archive access, timing integrity, availability of calibrations and independent observations, and the primary research endpoint remain unresolved.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 55
+      },
+      "judgment": "PRESERVED",
+      "reviewer_disposition": "Archive access, time integrity, calibrations, independent observations and endpoint all remain unknown.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 10
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P55.2",
+      "exact_text": "The proposal should preserve useful instrumental and astronomical branches and justify an evidence-gathering order without assuming a discovery.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 55
+      },
+      "judgment": "PARTIAL_MATERIAL",
+      "reviewer_disposition": "Unknown inputs/endpoint and evidence order preserved, but useful astronomical causal branches are only labeled, not investigated (F01).",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 10
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 108
+        }
+      ],
+      "finding_ids": [
+        "F01"
+      ]
+    },
+    {
+      "clause_id": "P59.1",
+      "exact_text": "Investigate calibration and detector-position effects, controlled reprocessing with provenance, comparison-star and background strategies, observing geometry, and independent public data where suitable.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 59
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "All named analysis/acquisition/independent alternatives preserved; existing authorized data first and gaps-based reference/pilot escalation; no preselected winner.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 132
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P59.2",
+      "exact_text": "A documented reanalysis of existing authorized data may be useful before new observing.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 59
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "All named analysis/acquisition/independent alternatives preserved; existing authorized data first and gaps-based reference/pilot escalation; no preselected winner.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 132
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P59.3",
+      "exact_text": "A decision to seek better reference or calibration observations may be justified if the archive is inadequate.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 59
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "All named analysis/acquisition/independent alternatives preserved; existing authorized data first and gaps-based reference/pilot escalation; no preselected winner.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 132
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P59.4",
+      "exact_text": "No reduction technique, catalog, or astrophysical explanation is preselected.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 59
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "All named analysis/acquisition/independent alternatives preserved; existing authorized data first and gaps-based reference/pilot escalation; no preselected winner.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 132
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P63.1",
+      "exact_text": "Trace the path from incoming light through atmosphere, optics, detector sampling, background estimation, calibration, and relative photometry.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 63
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Explicit chain, orientation/reference/time/periodic-condition mechanisms, shared versus individual signatures and testable future predictions.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P63.2",
+      "exact_text": "Study how orientation changes, reference selection, timing conventions, or periodic observing conditions might produce apparent patterns.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 63
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Explicit chain, orientation/reference/time/periodic-condition mechanisms, shared versus individual signatures and testable future predictions.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P63.3",
+      "exact_text": "Distinguish shared systematic variation from object-specific behavior without asserting that one is present.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 63
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Explicit chain, orientation/reference/time/periodic-condition mechanisms, shared versus individual signatures and testable future predictions.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P63.4",
+      "exact_text": "Identify predictions that could be tested with actual archive metadata and images.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 63
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Explicit chain, orientation/reference/time/periodic-condition mechanisms, shared versus individual signatures and testable future predictions.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 101
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P67.1",
+      "exact_text": "Investigate camera rotation dates, calibration acquisition, reduction revisions, observing routines, and relevant published implementation descriptions.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 67
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Recover instrument/reducer/acquisition chronology and publish transfer conditions; sports field remains a lead and no implementation assigned as cause.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P67.2",
+      "exact_text": "Transferable accounts need acquisition and calibration details, comparison strategy, and demonstrated limits, not merely a visually attractive curve.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 67
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Recover instrument/reducer/acquisition chronology and publish transfer conditions; sports field remains a lead and no implementation assigned as cause.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P67.3",
+      "exact_text": "Sports-field lighting is a future environmental-history lead rather than a confirmed cause.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 67
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Recover instrument/reducer/acquisition chronology and publish transfer conditions; sports field remains a lead and no implementation assigned as cause.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P67.4",
+      "exact_text": "No source or prior implementation is supplied as the correct explanation.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 67
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Recover instrument/reducer/acquisition chronology and publish transfer conditions; sports field remains a lead and no implementation assigned as cause.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 138
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 140
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P71.1",
+      "exact_text": "A later authorized study could preserve raw data, document alternative reprocessing, track detector position and observing conditions, examine several comparison objects, and use independent observations where justified.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 71
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Prospective raw-data/provenance/control design and dependence/multiplicity explanations; no toy calculation executed or promoted into validation.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 123
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 243
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P71.2",
+      "exact_text": "Explain time-series dependence, selection effects, repeatability, and how multiple candidate patterns complicate inference.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 71
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Prospective raw-data/provenance/control design and dependence/multiplicity explanations; no toy calculation executed or promoted into validation.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 123
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 243
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P71.3",
+      "exact_text": "Toy time-series calculations or a synthetic calibration example actually produced during the hour do not validate a period, instrument precision, or astrophysical classification.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 71
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Prospective raw-data/provenance/control design and dependence/multiplicity explanations; no toy calculation executed or promoted into validation.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 123
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 243
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P73.1",
+      "exact_text": "Authoring status: only synthetic input files have been prepared.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 73
+      },
+      "judgment": "CONTEXT_PRESERVED",
+      "reviewer_disposition": "Synthetic authoring status remains context, not a ban on later primary-source research. Source research is reported separately; no case empirical validation claimed.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 214
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 226
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P73.2",
+      "exact_text": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 73
+      },
+      "judgment": "CONTEXT_PRESERVED",
+      "reviewer_disposition": "Synthetic authoring status remains context, not a ban on later primary-source research. Source research is reported separately; no case empirical validation claimed.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 214
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 226
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P73.3",
+      "exact_text": "Future researchers must state the actual extent of any work they execute.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 73
+      },
+      "judgment": "FULFILLED_WITH_ATTRIBUTION_LIMITATION",
+      "reviewer_disposition": "Actual work versus future work is stated; final inherits predecessor first-person reveal/addition actions (L05).",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 214
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 226
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P77.1",
+      "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "PARTIAL_MATERIAL_AND_TIME_LIMITATION",
+      "reviewer_disposition": "Substantive instrumental discovery/history/validation design, remaining astronomical opportunity gap F01 and unproven full research-hour activity.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": [
+        "F01"
+      ]
+    },
+    {
+      "clause_id": "P77.2",
+      "exact_text": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Provisional order and open owner choices; no selected winning method or product build.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P77.3",
+      "exact_text": "It requests no product build.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "FULFILLED",
+      "reviewer_disposition": "Provisional order and open owner choices; no selected winning method or product build.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P77.4",
+      "exact_text": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "IDENTITY_VERIFIED",
+      "reviewer_disposition": "Brief/revealed-plan bytes equal originals and terminal hashes; reviewer made no original changes.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P77.5",
+      "exact_text": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "PROTOCOL_UNKNOWN",
+      "reviewer_disposition": "No designer feedback observed in mapped science record and readiness not inferred; full release-condition/assistance telemetry is outside inspected evidence.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": []
+    },
+    {
+      "clause_id": "P77.6",
+      "exact_text": "Input readiness does not assert that those release conditions have been satisfied.",
+      "plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+        "line": 77
+      },
+      "judgment": "PROTOCOL_UNKNOWN",
+      "reviewer_disposition": "No designer feedback observed in mapped science record and readiness not inferred; full release-condition/assistance telemetry is outside inspected evidence.",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 200
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 224
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+          "line": 231
+        }
+      ],
+      "finding_ids": []
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "SCW-01",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 25
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 18
+      },
+      "criticism_or_diagnostic": "Separate acquisition versus separate processing lineage; C supported, C* case-undetermined.",
+      "final_disposition": "ACCEPT WITH QUALIFICATION",
+      "reviewer_disposition": "Supported. Survey-origin documentation supports a distinct acquisition route, not unknown case coverage or downstream independence. Same-image reductions remain sensitivity checks.",
+      "evidence_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "SCW-02",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 35
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 26
+      },
+      "criticism_or_diagnostic": "Similar-condition cloud wording versus uniformity-alone counterclaim.",
+      "final_disposition": "AMEND to same-degree effect and rare",
+      "reviewer_disposition": "Supported tightening. Neither broad counterclaim was proved for this case, and final appropriately retains uncertainty.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "SCW-03",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 45
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 34
+      },
+      "criticism_or_diagnostic": "Named IRAF defaults versus unidentified reducer transfer.",
+      "final_disposition": "ACCEPT named-task example; no case transfer",
+      "reviewer_disposition": "Supported. Draft already named IRAF; critique does not establish a wrong case assignment.",
+      "evidence_ids": [
+        "E04"
+      ]
+    },
+    {
+      "id": "SCW-04",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 55
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 42
+      },
+      "criticism_or_diagnostic": "Raw-save overwrite versus all-AIJ-workflow overwrite; quotation adds absent draft words.",
+      "final_disposition": "AMEND to enabled named Re-save Raw Science; correct quote mismatch",
+      "reviewer_disposition": "Supported final. Critic’s purported exact quotation was not exact; original defect is preserved in lineage. Panel access through DP is possible, so operation specificity is the governing distinction.",
+      "evidence_ids": [
+        "E06"
+      ]
+    },
+    {
+      "id": "SCW-05",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 65
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      "criticism_or_diagnostic": "Compute barycentric correction versus applying/reading a time label.",
+      "final_disposition": "AMEND to computing from observatory timestamps",
+      "reviewer_disposition": "Supported clarification; not proof original intended calculation was false. Reading a label is a different operation.",
+      "evidence_ids": [
+        "E08",
+        "E18",
+        "E06"
+      ]
+    },
+    {
+      "id": "OF-01",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 83
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 64
+      },
+      "criticism_or_diagnostic": "Full-window request not demonstrated; predecessor deadline authenticity unresolved from critic packet.",
+      "final_disposition": "ACCEPT as material time limitation",
+      "reviewer_disposition": "Honest final disclosure. Reviewer can inspect the original investigator freeze and confirm the recorded deadline, but cannot establish active minutes or independent telemetry authenticity. Time is separate from source grade.",
+      "evidence_ids": []
+    },
+    {
+      "id": "OF-02",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 84
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 65
+      },
+      "criticism_or_diagnostic": "Exact ZTF DR24 cutoff unsupported in overview lines 73–102; omit or provide direct source.",
+      "final_disposition": "REJECT after checking DR24 lines 103–109",
+      "reviewer_disposition": "Correct rejection of wrong criticism. The same primary page directly supports the original date. No science repair to that date was needed.",
+      "evidence_ids": [
+        "E11"
+      ]
+    },
+    {
+      "id": "OF-03",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 85
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      "criticism_or_diagnostic": "Minor cloud wording.",
+      "final_disposition": "ACCEPT/AMEND through SCW-02",
+      "reviewer_disposition": "Supported; duplicate issue, not a second defect count.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "OF-04",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 86
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 67
+      },
+      "criticism_or_diagnostic": "Minor AIJ operation locator.",
+      "final_disposition": "ACCEPT/AMEND through SCW-04",
+      "reviewer_disposition": "Supported; duplicate issue, not a second defect count.",
+      "evidence_ids": [
+        "E06"
+      ]
+    },
+    {
+      "id": "OF-05",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 87
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      "criticism_or_diagnostic": "Light-to-measurement chain scattered in rows.",
+      "final_disposition": "ACCEPT minor presentation gap; make sequence explicit",
+      "reviewer_disposition": "Reasonable presentation improvement; mechanisms were already present.",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "OF-06",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+        "line": 88
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 69
+      },
+      "criticism_or_diagnostic": "No additional material wrong/unsupported claim established.",
+      "final_disposition": "RETAIN PROVISIONALLY",
+      "reviewer_disposition": "Accept only as a report of the critic’s findings, not independent qualification. F01 is a remaining omitted mechanism branch missed by all three stages.",
+      "evidence_ids": [
+        "E01",
+        "E15",
+        "E16"
+      ]
+    }
+  ],
+  "consequential_claim_audit": [
+    {
+      "claim_id": "C01",
+      "subject": "precision, accuracy, intrinsic evidence",
+      "operation": "claim ladder and standards comparisons",
+      "version_or_domain": "general stellar photometry",
+      "conditions_defaults_units_types_exceptions": "Repeated scatter estimates repeatability; standard/reference comparisons and conditions are additional; no numeric performance granted.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E01",
+        "E02"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 89
+      },
+      "assessment": "The three evidence levels are separated and none is asserted for the synthetic archive."
+    },
+    {
+      "claim_id": "C02",
+      "subject": "camera rotation and sensor response",
+      "operation": "map image position and residuals",
+      "version_or_domain": "detector photometry",
+      "conditions_defaults_units_types_exceptions": "Rotation/pointing can change response sampling; mere chronology is not causal proof.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E01",
+        "E03"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 101
+      },
+      "assessment": "Testable instrumental mechanism and fixed-pixel control are retained with a separate intentional dither block."
+    },
+    {
+      "claim_id": "C03",
+      "subject": "IRAF ccdproc",
+      "operation": "processing switches and subset selection",
+      "version_or_domain": "2.18 ccdred",
+      "conditions_defaults_units_types_exceptions": "fixpix/overscan/trim/zero/dark/flat yes; illumination/fringe/read/scan no; masks/sections/calibrations needed; flat subsets match; output blank replaces inputs.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E04"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 102
+      },
+      "assessment": "Named task defaults remain separate from the unknown reducer. Copying inputs also protects dependent calibration frames processed in-place."
+    },
+    {
+      "claim_id": "C04",
+      "subject": "lamp and sky flat alternatives",
+      "operation": "local response versus large-scale illumination",
+      "version_or_domain": "IRAF 2.18 Direct Imaging",
+      "conditions_defaults_units_types_exceptions": "Suitable illumination, filter and blank sky condition the alternatives; adding corrections by default is not endorsed.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E05"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 102
+      },
+      "assessment": "Useful conditional alternative, not a universal method ranking."
+    },
+    {
+      "claim_id": "C05",
+      "subject": "AstroImageJ",
+      "operation": "Multi-Aperture versus Data Processor",
+      "version_or_domain": "current guide, historical build unknown",
+      "conditions_defaults_units_types_exceptions": "Calibrated series typical; calibration and header metadata are operations, not proof of case software.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E06"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 103
+      },
+      "assessment": "Final does not assign a reducer to the archive."
+    },
+    {
+      "claim_id": "C06",
+      "subject": "AstroImageJ original science FITS",
+      "operation": "enabled Re-save Raw Science in Astrometry Settings",
+      "version_or_domain": "current unversioned guide",
+      "conditions_defaults_units_types_exceptions": "Enabled option overwrites originals with WCS-added data; panel can be accessed through DP or image view; not every workflow overwrites.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E06"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 103
+      },
+      "assessment": "Operation-scoped final corrects inherited ambiguity and avoids the critic’s broad-operation counterclaim."
+    },
+    {
+      "claim_id": "C07",
+      "subject": "AstroImageJ history",
+      "operation": "release-specific bug fixes",
+      "version_or_domain": "6.0.0.00 / 6.0.4.00 / 6.0.4.02; latest 6.0.11.00",
+      "conditions_defaults_units_types_exceptions": "Multi-thread uncertainty-column and WCS/TESS fixes are build-specific; no implication that case used affected build.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E07"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 103
+      },
+      "assessment": "Implementation history is useful and correctly bounded."
+    },
+    {
+      "claim_id": "C08",
+      "subject": "cloud attenuation",
+      "operation": "differential cancellation",
+      "version_or_domain": "AAVSO guide v1.0",
+      "conditions_defaults_units_types_exceptions": "Thin uniform cloud must affect targets and comparisons equally; described as rare; spatial uniformity alone insufficient evidence.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E01"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 104
+      },
+      "assessment": "The final’s tighter wording is source-supported; original looser wording remains a lineage limitation."
+    },
+    {
+      "claim_id": "C09",
+      "subject": "seeing and scintillation",
+      "operation": "condition-dependent photometry noise",
+      "version_or_domain": "Osborn 2015 / AAVSO",
+      "conditions_defaults_units_types_exceptions": "Intensity fluctuation differs from PSF seeing; median model is not a realized-night estimate; site/exposure/atmosphere required.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E01",
+        "E02",
+        "E10"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 105
+      },
+      "assessment": "No case noise estimate or correction is invented."
+    },
+    {
+      "claim_id": "C10",
+      "subject": "timestamps and barycentric correction",
+      "operation": "compute correction rather than read label",
+      "version_or_domain": "Astropy 8.0.1 / Eastman v3 / AIJ guide",
+      "conditions_defaults_units_types_exceptions": "Input time convention, source coordinate and observer location are verified; TimeDelta seconds added to TDB; BJD label alone has no generation proof.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E08",
+        "E09",
+        "E18",
+        "E06"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 106
+      },
+      "assessment": "Correctly narrowed computation; no conversion, precision or output value claimed."
+    },
+    {
+      "claim_id": "C11",
+      "subject": "comparison selection and extraction",
+      "operation": "ensemble/check and sensitivity checks",
+      "version_or_domain": "AAVSO / Photutils 3.0.0",
+      "conditions_defaults_units_types_exceptions": "Nearby similar color/magnitude helps; no guaranteed stability. Background, masks, centroid, blend and geometry matter.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E01",
+        "E02",
+        "E14"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 107
+      },
+      "assessment": "Held-out check and leave-one-out are meaningful planned controls, not independent observations."
+    },
+    {
+      "claim_id": "C12",
+      "subject": "aperture flux extraction",
+      "operation": "aperture_photometry overlap",
+      "version_or_domain": "Photutils 3.0.0",
+      "conditions_defaults_units_types_exceptions": "Input background subtraction expected; exact default, center/subpixel alternatives; pixel coordinates and summed image-value units are not calibrated rates/magnitudes.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E14"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 121
+      },
+      "assessment": "Proposal requests declaring aperture/error conventions and makes no invalid unit conversion."
+    },
+    {
+      "claim_id": "C13",
+      "subject": "model extraction",
+      "operation": "conditional PSF/model fitting if blends present",
+      "version_or_domain": "Photutils 3.0.0 corroboration",
+      "conditions_defaults_units_types_exceptions": "Needs an applicable model and image-level evidence; no universal superiority claim.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E17"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 107
+      },
+      "assessment": "The conditional alternative is useful and does not preselect a model or demand installation."
+    },
+    {
+      "claim_id": "C14",
+      "subject": "true source mechanism",
+      "operation": "astronomical explanation branch",
+      "version_or_domain": "general physical source variability",
+      "conditions_defaults_units_types_exceptions": "Final says only a real source may vary and lists robustness requirements; no causal source mechanism is explained.",
+      "judgment": "MATERIAL_OMISSION",
+      "independent_sources": [
+        "E01",
+        "E15",
+        "E16"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 108
+      },
+      "assessment": "F01: generic variability is a placeholder, despite the explicit mechanism and useful astronomical-branch obligations. Unknown target class prevents diagnosis, not general conditional mechanism investigation."
+    },
+    {
+      "claim_id": "C15",
+      "subject": "ZTF releases",
+      "operation": "DR24 public observation cutoff",
+      "version_or_domain": "DR24 22 January 2026; separate ZTF-3 schedule",
+      "conditions_defaults_units_types_exceptions": "Public cutoff 22 October 2025; 60-day image sliding window and annual curve release policy are distinct; no field coverage proof.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E11"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "assessment": "Original claim supported; critic’s narrower absent-context inference is wrong; final rejection is correct."
+    },
+    {
+      "claim_id": "C16",
+      "subject": "TESS data",
+      "operation": "selected-target pixels and SPOC light curves",
+      "version_or_domain": "product/cycle-dependent mission",
+      "conditions_defaults_units_types_exceptions": "SAP/corrected fluxes have uncertainties; pixel availability/cadence/resolution/quality need target check; approximately 21 arcsec pixels.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E12"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 119
+      },
+      "assessment": "Independent acquisition is conditional, and no unknown case target coverage is asserted."
+    },
+    {
+      "claim_id": "C17",
+      "subject": "independence",
+      "operation": "separate acquisition versus same-image reduction",
+      "version_or_domain": "general inference plus survey product origin",
+      "conditions_defaults_units_types_exceptions": "Acquisition and upstream lineage must be documented; separate reduction of same exposure is robustness only.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E11",
+        "E12"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 20
+      },
+      "assessment": "Qualification correctly preserves a genuinely useful no-new-acquisition route."
+    },
+    {
+      "claim_id": "C18",
+      "subject": "period inference",
+      "operation": "searched maximum, aliases and null calibration",
+      "version_or_domain": "VanderPlas 2017/2018",
+      "conditions_defaults_units_types_exceptions": "Single-frequency probability differs from search maximum; ordinary bootstrap lacks correlated-noise representation; FAP is not posterior periodicity probability.",
+      "judgment": "SUPPORTED",
+      "independent_sources": [
+        "E13"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 134
+      },
+      "assessment": "Future block/model choice is explicitly unresolved until actual cadence/residual diagnostics; no vacuous universal bootstrap recommendation."
+    },
+    {
+      "claim_id": "C19",
+      "subject": "sports field",
+      "operation": "environmental history and spatial/temporal correspondence",
+      "version_or_domain": "general background measurement reasoning",
+      "conditions_defaults_units_types_exceptions": "The note is a lead, no site illumination, record, magnitude or cause confirmed.",
+      "judgment": "SUPPORTED_AS_PROPOSAL",
+      "independent_sources": [
+        "E01"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 138
+      },
+      "assessment": "No real sports-field investigation is claimed. Future background/geometry tests can weaken a causal lead."
+    },
+    {
+      "claim_id": "C20",
+      "subject": "detector coordinates",
+      "operation": "chronology gate detector x/y only from validated headers/WCS",
+      "version_or_domain": "pixel versus sky domains",
+      "conditions_defaults_units_types_exceptions": "Pixel extraction does not inherently require WCS; WCS is needed for sky conversion and orientation/sky mapping.",
+      "judgment": "MINOR_SCOPE_WORDING",
+      "independent_sources": [
+        "E14"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+        "line": 127
+      },
+      "assessment": "Literal only is too restrictive. The wider report retains position/extraction diagnostics and missing-data gates; this is not counted as an independent material failure."
+    }
+  ],
+  "supported_meaning_lineage": [
+    {
+      "meaning": "Three distinct evidence levels",
+      "discovery": "discovery.md:7–13",
+      "draft": "draft.md:14–20",
+      "final": "final.md:89–95",
+      "status": "PRESERVED"
+    },
+    {
+      "meaning": "Position/orientation, calibration, software, sky, atmosphere, timing, comparisons",
+      "discovery": "discovery.md:15–25",
+      "draft": "draft.md:22–35",
+      "final": "final.md:97–110",
+      "status": "PRESERVED_AND_CONDITIONS_NARROWED"
+    },
+    {
+      "meaning": "Physical astronomical explanations",
+      "discovery": "discovery.md:25",
+      "draft": "draft.md:33",
+      "critic": "Not identified as deficient",
+      "final": "final.md:108",
+      "status": "ORIGINAL_MATERIAL_OMISSION_RETAINED",
+      "finding_id": "F01"
+    },
+    {
+      "meaning": "Reduction versus acquisition versus independent existing data",
+      "discovery": "discovery.md:29–37",
+      "draft": "draft.md:37–47",
+      "final": "final.md:112–121",
+      "status": "PRESERVED_WITH_LINEAGE_QUALIFICATION"
+    },
+    {
+      "meaning": "IRAF defaults and flat alternatives",
+      "discovery": "S04/S05 and mechanism rows",
+      "draft": "draft.md:27,40",
+      "final": "final.md:102,116",
+      "status": "PRESERVED_NAMED_IMPLEMENTATION_SCOPE"
+    },
+    {
+      "meaning": "Cloud similarity condition",
+      "discovery": "background/atmosphere source guidance",
+      "draft": "draft.md:29",
+      "critic": "critique.md:35–43,85",
+      "final": "final.md:26–32,104",
+      "status": "LOOSER_ORIGINAL_WORDING_CORRECTLY_TIGHTENED"
+    },
+    {
+      "meaning": "AIJ raw-save warning",
+      "draft": "draft.md:28",
+      "critic": "critique.md:55–63,86",
+      "final": "final.md:42–48,103",
+      "status": "OPERATION_NARROWED; CRITIC_QUOTATION_DEFECT_RECORDED"
+    },
+    {
+      "meaning": "Barycentric computation versus reading label",
+      "draft": "draft.md:31",
+      "critic": "critique.md:65–73",
+      "final": "final.md:50–56,106",
+      "status": "PRESERVED_WITH_OPERATION_CLARIFICATION"
+    },
+    {
+      "meaning": "Supported DR24 cutoff",
+      "draft": "draft.md:45",
+      "critic": "critique.md:84 incomplete context",
+      "final": "final.md:65,119",
+      "status": "CORRECT_CLAIM_PRESERVED; WRONG_CRITICISM_REJECTED"
+    },
+    {
+      "meaning": "Dependence, window, selection and multiplicity",
+      "discovery": "Initial uncertainty/dependence planning; no S13 yet",
+      "draft": "draft.md:65 with post-reveal S13",
+      "final": "final.md:134",
+      "status": "SUPPORTED_POST_REVEAL_ADDITION_PRESERVED; NO_BACKDATED_DISCOVERY"
+    },
+    {
+      "meaning": "Photutils aperture/background assumptions",
+      "discovery": "Generic aperture choices; no S14 yet",
+      "draft": "draft.md:47 with post-reveal S14",
+      "final": "final.md:107,121",
+      "status": "SUPPORTED_POST_REVEAL_ADDITION_PRESERVED"
+    },
+    {
+      "meaning": "No actual case validation",
+      "discovery": "discovery.md:54–57",
+      "draft": "draft.md:141–158",
+      "final": "final.md:214–243",
+      "status": "PRESERVED; PREDECESSOR_ACTION_ACTOR_AMBIGUITY_L05"
+    },
+    {
+      "meaning": "Source identity and frozen plan",
+      "discovery": "S01–S12; frozen before reveal",
+      "draft": "S13/S14 supplements separately recorded",
+      "critic": "CR01–CR14 separately recorded",
+      "final": "S01–S14, CR01–CR14, RV01–RV08 crosswalks",
+      "status": "NO_SOURCE_REBIND_OBSERVED"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D01",
+      "discovery": "Flat response and illumination mismatch are distinct operations",
+      "use": "Avoid default-adding a sky correction without calibration acquisition/optical evidence",
+      "source_ids": [
+        "E05"
+      ]
+    },
+    {
+      "id": "D02",
+      "discovery": "Named IRAF switches and dependent in-place calibration behavior",
+      "use": "Preserve original science and calibration inputs and reconstruct exact historical settings",
+      "source_ids": [
+        "E04"
+      ]
+    },
+    {
+      "id": "D03",
+      "discovery": "AIJ history and operation-specific overwrites",
+      "use": "Check identified build/settings rather than attribute any changelog bug to the archive",
+      "source_ids": [
+        "E06",
+        "E07"
+      ]
+    },
+    {
+      "id": "D04",
+      "discovery": "Fixed-pixel precision control versus deliberate separate position test",
+      "use": "Compare acquisition designs serving repeatability and detector response separately",
+      "source_ids": [
+        "E03",
+        "E01"
+      ]
+    },
+    {
+      "id": "D05",
+      "discovery": "Time labels, time scales and correction computation differ",
+      "use": "Audit raw exposure time/provenance before combining series; do not cosmetically relabel BJD",
+      "source_ids": [
+        "E08",
+        "E09",
+        "E18"
+      ]
+    },
+    {
+      "id": "D06",
+      "discovery": "Survey release and product limitations condition independence",
+      "use": "Existing-data branch remains useful but requires coverage/resolution/cadence/lineage checks",
+      "source_ids": [
+        "E11",
+        "E12"
+      ]
+    },
+    {
+      "id": "D07",
+      "discovery": "Period-search maximum, alias window, correlation and bootstrap limitations",
+      "use": "Do not infer a source probability from a single-frequency FAP or ordinary resampling",
+      "source_ids": [
+        "E13"
+      ]
+    },
+    {
+      "id": "D08",
+      "discovery": "Aperture input/background and overlap are controlled implementation choices",
+      "use": "Keep extraction variants limited and declared; sums are not calibrated accuracy",
+      "source_ids": [
+        "E14"
+      ]
+    }
+  ],
+  "competing_and_analogous_alternatives": [
+    {
+      "route": "Authorized archive-first exact-recipe reconstruction",
+      "benefit": "No new observing; identifies reproducibility and change chronology",
+      "limit": "Missing raw/calibration/recipe/time provenance can block inference",
+      "candidate": "final.md:114,125–129"
+    },
+    {
+      "route": "Calibration/reduction alternatives",
+      "benefit": "Distinguish sensitivity to response/flat/background/mask/extraction choices",
+      "limit": "Same exposures are not independent; standards/conditions needed for accuracy",
+      "candidate": "final.md:115–116"
+    },
+    {
+      "route": "Comparison ensemble and held-out check/background",
+      "benefit": "Discriminate shared reference/environment trends from target residuals",
+      "limit": "Selection can manufacture attractive curves; held-out check remains same-night acquisition",
+      "candidate": "final.md:117"
+    },
+    {
+      "route": "Stable same-pixel baseline plus separate dither/rotation pilot",
+      "benefit": "Different controls for precision and position response",
+      "limit": "Only future authorized design, not observation; preserve block identity",
+      "candidate": "final.md:118"
+    },
+    {
+      "route": "Independent existing ZTF/TESS or suitable other data",
+      "benefit": "Distinct acquisition without new telescope time",
+      "limit": "Unknown coverage, bandpass, cadence, crowding and product lineage",
+      "candidate": "final.md:119,132"
+    },
+    {
+      "route": "Model-based extraction when actual blend/PSF evidence warrants",
+      "benefit": "Conditional alternative to simple aperture sensitivity",
+      "limit": "Need validated model and method-specific assumptions; no universal winner",
+      "candidate": "final.md:107"
+    },
+    {
+      "route": "Astronomical causal alternatives",
+      "benefit": "Would support still-open astrophysical interpretation endpoint",
+      "limit": "Not investigated beyond generic variability (F01)",
+      "candidate": "final.md:108"
+    }
+  ],
+  "validation": {
+    "executed_as_reported": [
+      "Read synthetic brief/revealed plan and stage packet",
+      "Generic primary-source retrieval/reading",
+      "Discovery/revealed-plan hash and byte comparisons",
+      "Text drafting, critique and revision"
+    ],
+    "not_executed": [
+      "Case archive access or image/calibration analysis",
+      "Target/crossmatch/catalog/survey query or data download",
+      "Photometry/light curve/periodogram/time conversion",
+      "Calibration accuracy or significance calculation",
+      "Toy time-series or synthetic calibration witness",
+      "Telescope operation, observing, scheduling, pipeline installation"
+    ],
+    "proposed": [
+      "Authorized archive-first exact-recipe reconstruction",
+      "Calibration/reduction alternatives",
+      "Comparison ensemble and held-out check/background",
+      "Stable same-pixel baseline plus separate dither/rotation pilot",
+      "Independent existing ZTF/TESS or suitable other data",
+      "Model-based extraction when actual blend/PSF evidence warrants"
+    ],
+    "oracles": [
+      {
+        "oracle": "Hashes/counts",
+        "applicability": "File identity only; no semantic, photometric or source truth"
+      },
+      {
+        "oracle": "Primary manuals/changelogs",
+        "applicability": "Documented task behavior/conditions only; transfer needs actual software/configuration"
+      },
+      {
+        "oracle": "Multiple reductions of same exposure",
+        "applicability": "Reproducibility/sensitivity; no independent acquisition confirmation"
+      },
+      {
+        "oracle": "Standard field/reference photometry",
+        "applicability": "Calibrated performance only under matched measurement definitions/conditions; not automatically source classification"
+      },
+      {
+        "oracle": "Held-out check/whole nights",
+        "applicability": "Limits selection leakage/shared short-term effects; not all systematic dependence removed"
+      },
+      {
+        "oracle": "ZTF/TESS agreement",
+        "applicability": "Useful independent comparison only after coverage/product lineage/passband/resolution/cadence/quality checks"
+      },
+      {
+        "oracle": "Periodogram/FAP",
+        "applicability": "Specified statistic and null; not probability true source is periodic or classification"
+      },
+      {
+        "oracle": "Controlled acquisition pilot",
+        "applicability": "Future manipulation and controls can discriminate position/conditions; none executed"
+      }
+    ]
+  },
+  "independent_primary_sources": [
+    {
+      "source_id": "E01",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "retrieved_url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "version": "Version 1.0, July 2022; 132 PDF pages; hosting date is not edition",
+      "locator": "sections 2.1–2.3, 4.8.5, 7.1–7.2; web extraction lines 489–518, 590–653, 2044–2054, 2564–2618; PDF indices 17–18, 21–23, 69, 86–88",
+      "candidate_crosswalk": "S01 / CR01 / RV01",
+      "reviewer_observation": "Cloud cancellation is a rare same-effect condition. Standards and repeated measurements address different performance questions; position, color and calibration matter. Section 2.3 explains several physical source mechanisms, which the candidate astronomical row does not investigate. PDF index 69 corresponds to printed page 70.",
+      "scope_conditions_exceptions": "General guidance is not evidence of this archive, weather, calibrated accuracy or source class.",
+      "retrieval": {
+        "source_id": "E01",
+        "requested_url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+        "started_at_utc": "2026-10-10T08:00:00.804729+00:00",
+        "response_url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E01.pdf",
+        "bytes": 7603432,
+        "sha256": "4a17c356f6a2b1d81383ff0b7351deadf06a6c6bf9d6ce7829ace66780db91c4",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.014113+00:00"
+      },
+      "local_note": "sources/E01.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E02",
+      "title": "AAVSO Stellar Photometry",
+      "url": "https://aavso.org/stellar-photometry/",
+      "retrieved_url": "https://aavso.org/stellar-photometry/",
+      "version": "Current official page; no edition displayed",
+      "locator": "Quality Considerations, extraction lines 135–155",
+      "candidate_crosswalk": "S02 / CR09",
+      "reviewer_observation": "Nearby reference stars with comparable color and brightness, linear unsaturated acquisition, flat-fielding and transformations condition photometry quality.",
+      "scope_conditions_exceptions": "No field, detector, reference sequence or transformation coefficients are supplied.",
+      "retrieval": {
+        "source_id": "E02",
+        "requested_url": "https://aavso.org/stellar-photometry/",
+        "started_at_utc": "2026-10-10T08:00:00.806643+00:00",
+        "response_url": "https://aavso.org/stellar-photometry/",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E02.html",
+        "bytes": 183712,
+        "sha256": "670c81e34193f5425bbd5d314ddd066d756038a0131a126e87f4bc6980c4a694",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:00.921107+00:00"
+      },
+      "local_note": "sources/E02.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E03",
+      "title": "AAVSO Exoplanet Photometry",
+      "url": "https://aavso.org/exoplanet-photometry/",
+      "retrieved_url": "https://aavso.org/exoplanet-photometry/",
+      "version": "Current official page; no edition displayed",
+      "locator": "precision observing discussion, extraction lines 120–134",
+      "candidate_crosswalk": "S03 / CR10",
+      "reviewer_observation": "Keeping stars on the same detector pixels and guiding are controls described in the specialized precision context.",
+      "scope_conditions_exceptions": "This is a transferable control analogy, not evidence that the target is an exoplanet or that all investigations must avoid deliberate dithers.",
+      "retrieval": {
+        "source_id": "E03",
+        "requested_url": "https://aavso.org/exoplanet-photometry/",
+        "started_at_utc": "2026-10-10T08:00:00.808457+00:00",
+        "response_url": "https://aavso.org/exoplanet-photometry/",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E03.html",
+        "bytes": 181749,
+        "sha256": "95e10cc6fa0b00475f9b5864e543455050b61e71050ec260ab6fc83ff330ebca",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:00.909234+00:00"
+      },
+      "local_note": "sources/E03.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E04",
+      "title": "IRAF ccdproc documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "retrieved_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "version": "IRAF 2.18; ccdred task",
+      "locator": "Parameters and Description; extraction lines 18–55, 70–81, 128–144",
+      "candidate_crosswalk": "S04 / CR02 / RV02",
+      "reviewer_observation": "The named yes/no switches, required inputs and subset matching agree with the proposal. Empty output replaces science inputs; dependent calibrations can still be processed in place when science outputs are named.",
+      "scope_conditions_exceptions": "These are task-specific defaults, not defaults of the unknown reducer. Separate copied inputs protect calibration files as well as science files.",
+      "retrieval": {
+        "source_id": "E04",
+        "requested_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+        "started_at_utc": "2026-10-10T08:00:00.809470+00:00",
+        "response_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E04.html",
+        "bytes": 62768,
+        "sha256": "b5fc72d5556055ad4df4db0c3b6208f30b2d2a08ef4d459d0dc8eb372171c453",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:00.986015+00:00"
+      },
+      "local_note": "sources/E04.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E05",
+      "title": "IRAF flatfields documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+      "retrieved_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+      "version": "IRAF 2.18; quadred Direct Imaging discussion",
+      "locator": "Direct Imaging, extraction lines 14–24",
+      "candidate_crosswalk": "S05 / CR11",
+      "reviewer_observation": "The manual distinguishes lamp response correction from illumination mismatch and gives blank-sky/lamp correction alternatives with different placements and requirements.",
+      "scope_conditions_exceptions": "Same-filter response and sufficiently suitable sky/lamp illumination are conditions; no universally superior flat is selected.",
+      "retrieval": {
+        "source_id": "E05",
+        "requested_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+        "started_at_utc": "2026-10-10T08:00:00.811174+00:00",
+        "response_url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E05.html",
+        "bytes": 23116,
+        "sha256": "e858d7237f70c7bb77c61b23e43faf807cf02055554a70af825dec7a91a13d41",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:00.953102+00:00"
+      },
+      "local_note": "sources/E05.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E06",
+      "title": "AstroImageJ official guide",
+      "url": "https://astroimagej.com/guides/aij/",
+      "retrieved_url": "https://astroimagej.com/guides/aij/",
+      "version": "Current unversioned guide, under construction; not a pinned historical build",
+      "locator": "Multi-Aperture / Data Processor / Astrometry Settings / Update Header; extraction lines 166–177, 541, 573–628",
+      "candidate_crosswalk": "S06 / CR03 / RV03",
+      "reviewer_observation": "Enabled Re-save Raw Science writes WCS-added data over original science FITS. Astrometry Settings can be reached from Data Processor or image display. Coordinates condition calculated astronomical metadata.",
+      "scope_conditions_exceptions": "The warning does not describe every AIJ workflow. Historical behavior needs the recovered version/settings; the final does not identify AIJ as the case reducer.",
+      "retrieval": {
+        "source_id": "E06",
+        "requested_url": "https://astroimagej.com/guides/aij/",
+        "started_at_utc": "2026-10-10T08:00:00.812734+00:00",
+        "response_url": "https://astroimagej.com/guides/aij/",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E06.html",
+        "bytes": 193567,
+        "sha256": "af552a350a9fb00ac195260a5f141dc487d181ce1eabb361f5997a8834955c49",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.019172+00:00"
+      },
+      "local_note": "sources/E06.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E07",
+      "title": "AstroImageJ official changelog",
+      "url": "https://astroimagej.com/releases/",
+      "retrieved_url": "https://astroimagej.com/releases/",
+      "version": "6.0.11.00, 10 September 2026; historical entries 6.0.0.00, 6.0.4.00, 6.0.4.02",
+      "locator": "entries at extraction lines 8–12, 225–256, 339–378",
+      "candidate_crosswalk": "S07 / CR04",
+      "reviewer_observation": "Historical entries substantiate multi-thread photometry uncertainty-column and WCS/TESS fixes. Current latest entry lists ImageJ 1.54s and Java 26.",
+      "scope_conditions_exceptions": "A fix is a history lead; it establishes neither an affected observatory build nor that a historical bug caused the reported pattern.",
+      "retrieval": {
+        "source_id": "E07",
+        "requested_url": "https://astroimagej.com/releases/",
+        "started_at_utc": "2026-10-10T08:00:00.909566+00:00",
+        "response_url": "https://astroimagej.com/releases/",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E07.html",
+        "bytes": 82471,
+        "sha256": "97ee2d1b1530f9ec07b8d2723ea245fcfae1d4707cc3181891757f3c78ab4c4b",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.012030+00:00"
+      },
+      "local_note": "sources/E07.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E08",
+      "title": "Astropy Time and Dates user guide",
+      "url": "https://docs.astropy.org/en/stable/time/index.html",
+      "retrieved_url": "https://docs.astropy.org/en/stable/time/index.html",
+      "version": "Astropy 8.0.1 stable documentation",
+      "locator": "Light Travel Time Corrections, extraction lines 2278–2305; Get and set values line 1923",
+      "candidate_crosswalk": "S09 / CR07 / RV04",
+      "reviewer_observation": "The worked barycentric operation uses a source coordinate and observer location, then adds light travel time to TDB. It does not require coordinates merely to read a BJD label.",
+      "scope_conditions_exceptions": "No source/site/time facts are known. String time formats can be parsed automatically; explicit provenance is an analysis recommendation, not a universal mandatory constructor argument.",
+      "retrieval": {
+        "source_id": "E08",
+        "requested_url": "https://docs.astropy.org/en/stable/time/index.html",
+        "started_at_utc": "2026-10-10T08:00:00.921276+00:00",
+        "response_url": "https://docs.astropy.org/en/stable/time/index.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E08.html",
+        "bytes": 459606,
+        "sha256": "f10b3f53fe8ecd3db441548b754a1d1867de9047d9ab5d11740d0bfda651aa22",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.120274+00:00"
+      },
+      "local_note": "sources/E08.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E09",
+      "title": "Eastman, Siverd and Gaudi: Achieving Better Than 1 Minute Accuracy in the Heliocentric and Barycentric Julian Dates",
+      "url": "https://arxiv.org/html/1005.4415",
+      "retrieved_url": "https://arxiv.org/html/1005.4415",
+      "version": "arXiv 1005.4415v3, 27 July 2010; journal publication 2010",
+      "locator": "abstract/introduction and recommended reporting discussion; extraction lines 37–57 and time-standard sections",
+      "candidate_crosswalk": "S08 / CR08",
+      "reviewer_observation": "The primary paper supports explicit time standards and separating site arrival times from barycentric corrections for precise timing.",
+      "scope_conditions_exceptions": "A published timing accuracy title is not an achieved case accuracy, nor a mandate for a particular correction before timestamps and endpoint are known.",
+      "retrieval": {
+        "source_id": "E09",
+        "requested_url": "https://arxiv.org/html/1005.4415",
+        "started_at_utc": "2026-10-10T08:00:00.953215+00:00",
+        "response_url": "https://arxiv.org/html/1005.4415",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E09.html",
+        "bytes": 206586,
+        "sha256": "2eea39af187b9ddab77100a28f68a3d27234583cc58c27a10d8bdb22803a6daa",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.018712+00:00"
+      },
+      "local_note": "sources/E09.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E10",
+      "title": "Osborn et al.: Atmospheric Scintillation in Astronomical Photometry",
+      "url": "https://arxiv.org/html/1506.06921",
+      "retrieved_url": "https://arxiv.org/html/1506.06921",
+      "version": "arXiv 1506.06921v1, 23 June 2015; MNRAS 452, 1707–1716; DOI 10.1093/mnras/stv1400",
+      "locator": "abstract and introduction, extraction lines 37–62",
+      "candidate_crosswalk": "S10 / CR12",
+      "reviewer_observation": "Atmospheric intensity fluctuation and image seeing are distinct; an average scintillation prescription does not reconstruct an individual night without atmospheric information.",
+      "scope_conditions_exceptions": "The original journal URL returned a web-tool Internal Error in this review; the primary author manuscript supplied the governing evidence. No case scintillation estimate was computed.",
+      "retrieval": {
+        "source_id": "E10",
+        "requested_url": "https://arxiv.org/html/1506.06921",
+        "started_at_utc": "2026-10-10T08:00:00.986129+00:00",
+        "response_url": "https://arxiv.org/html/1506.06921",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E10.html",
+        "bytes": 210195,
+        "sha256": "2853dce216a7fd4d02e0f1d6f0457eb85d6df0dfe579febcd697bb8daaf512c9",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.061639+00:00"
+      },
+      "local_note": "sources/E10.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E11",
+      "title": "ZTF Public Data Releases",
+      "url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "retrieved_url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "version": "Current official page; DR24 dated 22 January 2026; ZTF-3 policy separately",
+      "locator": "ZTF-3 overview and DR24 subsection, extraction lines 87–109",
+      "candidate_crosswalk": "S11 / CR05 / RV05",
+      "reviewer_observation": "DR24 explicitly ends public observations on 22 October 2025. The separate ZTF-3 policy describes a 60-day image window and annual light-curve processing.",
+      "scope_conditions_exceptions": "A release cutoff is not the same as target coverage or cadence. The critic stopped before the subsection supporting the exact date; the final correctly rejects that criticism.",
+      "retrieval": {
+        "source_id": "E11",
+        "requested_url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+        "started_at_utc": "2026-10-10T08:00:01.012148+00:00",
+        "response_url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E11.html",
+        "bytes": 51504,
+        "sha256": "1db40e9d71a5480f1cdc05f28d7711bb595ca619155a62d71b621ecda93f6527",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.382152+00:00"
+      },
+      "local_note": "sources/E11.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E12",
+      "title": "NASA/HEASARC TESS Data Products",
+      "url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "retrieved_url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "version": "Current official mission documentation; cadence depends on cycle/product",
+      "locator": "Target Pixel Files and Light Curves; extraction lines 26–35, 57–66",
+      "candidate_crosswalk": "S12 / CR06 / RV06",
+      "reviewer_observation": "Selected-target pixel products permit re-extraction; SPOC light curves provide SAP and corrected/systematics-processed flux with uncertainties. TESS pixels are approximately 21 arcseconds.",
+      "scope_conditions_exceptions": "A product description is not evidence of coverage, target suitability, independent lineage or usable angular resolution. No target query was executed.",
+      "retrieval": {
+        "source_id": "E12",
+        "requested_url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+        "started_at_utc": "2026-10-10T08:00:01.015835+00:00",
+        "response_url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E12.html",
+        "bytes": 46319,
+        "sha256": "ae6a6001f93a6284ac2c1896398f9c261f5ad026d71b9ddf208d9c402c14e1b0",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.256086+00:00"
+      },
+      "local_note": "sources/E12.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E13",
+      "title": "VanderPlas: Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/html/1703.09824",
+      "retrieved_url": "https://arxiv.org/html/1703.09824",
+      "version": "arXiv 1703.09824v1, 28 March 2017; ApJS publication 2018; DOI 10.3847/1538-4365/aab766",
+      "locator": "window/alias discussion and false-alarm/bootstrap sections; extraction lines 611–624, 644–649, 657–658",
+      "candidate_crosswalk": "S13 / CR13 / RV08",
+      "reviewer_observation": "A searched maximum differs from a single-frequency statistic. Ordinary value resampling does not represent correlated noise; false-alarm probability is not posterior probability of periodicity.",
+      "scope_conditions_exceptions": "The final leaves the dependence-aware null choice conditional on actual diagnostics, rather than treating a generic bootstrap as valid for this archive.",
+      "retrieval": {
+        "source_id": "E13",
+        "requested_url": "https://arxiv.org/html/1703.09824",
+        "started_at_utc": "2026-10-10T08:00:01.018786+00:00",
+        "response_url": "https://arxiv.org/html/1703.09824",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E13.html",
+        "bytes": 443996,
+        "sha256": "40896df85b85dbf8081a1e24fdaf66bad5f7089d9ce22ba5eccd91a41931cfff",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.103832+00:00"
+      },
+      "local_note": "sources/E13.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E14",
+      "title": "Photutils Aperture Photometry",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "retrieved_url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "version": "Photutils 3.0.0 stable guide",
+      "locator": "Apertures and Creating Aperture Objects; Performing Aperture Photometry; overlap; extraction lines 41–81, 120–154",
+      "candidate_crosswalk": "S14 / CR14 / RV07",
+      "reviewer_observation": "Background-subtracted input and exact-default/center/subpixel overlap choices match the final. Pixel apertures are defined directly; WCS is required for sky-aperture conversion.",
+      "scope_conditions_exceptions": "An aperture sum is not by itself a calibrated magnitude or rate. Rectangle and distortion-specific behavior would need the chosen API; no such geometry is prescribed here.",
+      "retrieval": {
+        "source_id": "E14",
+        "requested_url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+        "started_at_utc": "2026-10-10T08:00:01.019244+00:00",
+        "response_url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E14.html",
+        "bytes": 132587,
+        "sha256": "913011f654dac88fccfe9ec797c147ce9882062266262768d794fb2db1f6646d",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.112749+00:00"
+      },
+      "local_note": "sources/E14.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E15",
+      "title": "AAVSO VSX variability type definitions",
+      "url": "https://vsx.aavso.org/index.php?view=about.vartypes",
+      "retrieved_url": "https://vsx.aavso.org/index.php?view=about.vartypes",
+      "version": "Current official classification page; no version displayed",
+      "locator": "I. MAIN VARIABILITY GROUPS; extraction lines 42–79",
+      "candidate_crosswalk": "Reviewer additional primary evidence",
+      "reviewer_observation": "The registry distinguishes extrinsic eclipsing/rotational groups from intrinsic pulsating/eruptive groups.",
+      "scope_conditions_exceptions": "This establishes available physical alternatives, not the classification of any supplied target; no real-object record was queried.",
+      "retrieval": {
+        "source_id": "E15",
+        "requested_url": "https://vsx.aavso.org/index.php?view=about.vartypes",
+        "started_at_utc": "2026-10-10T08:00:01.061700+00:00",
+        "response_url": "https://vsx.aavso.org/index.php?view=about.vartypes",
+        "http_status": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E15.html",
+        "bytes": 146198,
+        "sha256": "65870762dfafb3117b3b91c1a6bdb04ad6579e8875ae1b710be64ca07c8c904c",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.212648+00:00"
+      },
+      "local_note": "sources/E15.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E16",
+      "title": "AAVSO: Variables—What Are They and Why Observe Them?",
+      "url": "https://archive.aavso.org/index.php/variables-what-are-they-why-observe-them",
+      "retrieved_url": "https://archive.aavso.org/index.php/variables-what-are-they-why-observe-them",
+      "version": "Current archived official educational page; no edition displayed",
+      "locator": "What Are Variable Stars? extraction lines 3–6",
+      "candidate_crosswalk": "Reviewer additional primary evidence",
+      "reviewer_observation": "The explanation connects stellar physical changes and geometric effects to changing received brightness.",
+      "scope_conditions_exceptions": "The reviewer uses this only to corroborate the omitted general mechanism opportunity, not to prescribe an exhaustive catalog or a winning explanation.",
+      "retrieval": {
+        "source_id": "E16",
+        "requested_url": "https://archive.aavso.org/index.php/variables-what-are-they-why-observe-them",
+        "started_at_utc": "2026-10-10T08:00:01.103916+00:00",
+        "response_url": "https://archive.aavso.org/index.php/variables-what-are-they-why-observe-them",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E16.html",
+        "bytes": 44515,
+        "sha256": "e7296eaf3622ebdfbd1bc6c9ba1f797bfc47e088dd23cbf26adfb5c6c05179fd",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.345774+00:00"
+      },
+      "local_note": "sources/E16.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E17",
+      "title": "Photutils PSF Photometry",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/psf.html",
+      "retrieved_url": "https://photutils.readthedocs.io/en/stable/user_guide/psf.html",
+      "version": "Photutils 3.0.0 stable guide",
+      "locator": "PSF Photometry Overview and model requirements; extraction lines 45–73",
+      "candidate_crosswalk": "Reviewer additional primary evidence",
+      "reviewer_observation": "Model fitting and grouping can address blends, with source position, integrated flux and model assumptions.",
+      "scope_conditions_exceptions": "This supports the conditional model-extraction alternative; it does not prove greater accuracy on the missing images.",
+      "retrieval": {
+        "source_id": "E17",
+        "requested_url": "https://photutils.readthedocs.io/en/stable/user_guide/psf.html",
+        "started_at_utc": "2026-10-10T08:00:01.112815+00:00",
+        "response_url": "https://photutils.readthedocs.io/en/stable/user_guide/psf.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E17.html",
+        "bytes": 112539,
+        "sha256": "e5f71fee0def8e58d9c1d50278245cdf426b9972cf22040fef47dca23c9fe6a6",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.217566+00:00"
+      },
+      "local_note": "sources/E17.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    },
+    {
+      "source_id": "E18",
+      "title": "Astropy Time API",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.time.Time.html",
+      "retrieved_url": "https://docs.astropy.org/en/stable/api/astropy.time.Time.html",
+      "version": "Astropy 8.0.1 stable documentation",
+      "locator": "Time constructor parameters, extraction lines 1429–1451; light_travel_time, lines 1869–1903",
+      "candidate_crosswalk": "Reviewer additional primary evidence",
+      "reviewer_observation": "format and scale are optional constructor parameters. light_travel_time produces a TimeDelta in TDB seconds and uses SkyCoord and an observatory location.",
+      "scope_conditions_exceptions": "Explicitly checking the time convention is still necessary scientifically; the inherited source-map phrasing that Time objects require format and scale overstates the API requirement.",
+      "retrieval": {
+        "source_id": "E18",
+        "requested_url": "https://docs.astropy.org/en/stable/api/astropy.time.Time.html",
+        "started_at_utc": "2026-10-10T08:00:01.120368+00:00",
+        "response_url": "https://docs.astropy.org/en/stable/api/astropy.time.Time.html",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R2-03/treatment-v1/evidence/retrieved/E18.html",
+        "bytes": 347256,
+        "sha256": "aff7f3bd3503060e25991b7915ef59048c6a605316a39ac364d3006930f482df",
+        "status": "retrieved",
+        "finished_at_utc": "2026-10-10T08:00:01.218165+00:00"
+      },
+      "local_note": "sources/E18.md",
+      "review_method": "Independently opened/searched governing primary passages using web source tool; supplementary raw capture by urllib. No candidate agreement/count/hash is used as semantic proof."
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/brief.md",
+      "bytes": 2705,
+      "sha256": "d9022f321772a5fe6bccbd2d7c33545b99b1db32eb5d06757af2fd723182257e",
+      "mtime_ns": 1791615432764996095,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-03/plan.md",
+      "bytes": 7042,
+      "sha256": "936dac13775ec07494773bcd507ecc0b6d1a70818017db30a7c79278eff9d6c2",
+      "mtime_ns": 1791615432765187968,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/terminal-science-freeze-root.json",
+      "bytes": 27245,
+      "sha256": "974b20a27c30538caf51149bb6cbe708988f00b1fb0e357e354a792f3a212e4a",
+      "mtime_ns": 1791618617400247320,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/inputs/brief.md",
+      "bytes": 2705,
+      "sha256": "d9022f321772a5fe6bccbd2d7c33545b99b1db32eb5d06757af2fd723182257e",
+      "mtime_ns": 1791615438124022008,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/assignment.md",
+      "bytes": 9043,
+      "sha256": "8fce3976c46040dd81e78ae085261047130c1c3b823e8958ccea5acf81ed4d25",
+      "mtime_ns": 1791615438913394509,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "1e50b0ed31c9a8b64172851c9491515f8b2a71ee31e0cfd3f6f2104cc2b8ccd2",
+      "mtime_ns": 1791615438912810263,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "7ff2ba36a99f6335439dbc9e8af3a8b67946cea81f08dd1ab0c15ca36d857c80",
+      "mtime_ns": 1791615438912241536,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "bytes": 21245,
+      "sha256": "b721a216ec05ba80500c067c264b8fa8d14c416b3956fb67ea3dc53dd1d46077",
+      "mtime_ns": 1791616240834975875,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S01.md",
+      "bytes": 1803,
+      "sha256": "3507e3c4885ce23ef4cb1ba49fbb6f0bdcc6c4d2f8f07bc4f75e23f93ac063dc",
+      "mtime_ns": 1791615826792208523,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S02.md",
+      "bytes": 1049,
+      "sha256": "3fbc6a7b71f2a7f23aa0c1f1544d9a48a07dc63fc892fdd1b1d4f60598de0ba6",
+      "mtime_ns": 1791615826792282904,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S03.md",
+      "bytes": 1003,
+      "sha256": "3fc2833b2ddb8219b09f5538de74103452fb370caa386e7a4d96a50d2f10adb1",
+      "mtime_ns": 1791615862193323839,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S04.md",
+      "bytes": 1440,
+      "sha256": "9c70d2673545e84eab2a40cbe0642ab2bd50f82166620489a90b1f6fe24216fc",
+      "mtime_ns": 1791615826793333837,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S05.md",
+      "bytes": 1218,
+      "sha256": "524683071d38d1ac899bb9385d16e19cbe24afb3fc768e2b0be06d232cfcb020",
+      "mtime_ns": 1791615826793457757,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S06.md",
+      "bytes": 1221,
+      "sha256": "0cb8b664646f095cc797d93efbc688e1d39a2b14ab50f49a5b6f5da502ee64c7",
+      "mtime_ns": 1791615826793544869,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S07.md",
+      "bytes": 1197,
+      "sha256": "c38fd5c3e6d1f3a95d0cd523f32302df4bc0f26a02ae931ef84d0d2236cfd74a",
+      "mtime_ns": 1791615826793621590,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S08.md",
+      "bytes": 1116,
+      "sha256": "a127c4b557c16f65437bee7d12978b026379f9d334ed0454fa2f414c7dbae0d5",
+      "mtime_ns": 1791615826793693041,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S09.md",
+      "bytes": 1207,
+      "sha256": "d32168394745d01644e8371deb00403b790e99a8a472853965e86e97abc461f1",
+      "mtime_ns": 1791615826793778443,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S10.md",
+      "bytes": 1216,
+      "sha256": "1e9a84fe2c11125c0fb2a6da4c61aeec1ae912fe7eeb6271367d26e19e52661c",
+      "mtime_ns": 1791615826793851553,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S11.md",
+      "bytes": 1331,
+      "sha256": "aa305b3220ace437c37b66acea7aa350187e35a05bb5b7c9daa80b59a6038f7f",
+      "mtime_ns": 1791615826793918909,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S12.md",
+      "bytes": 1220,
+      "sha256": "372fa8639054a28a589b9f1fe9f8dea3aef2b1998aae43f03740e181cad94579",
+      "mtime_ns": 1791615826793987680,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S13.md",
+      "bytes": 2189,
+      "sha256": "5253090d8b46e11f9e8b6cc8899f62746cc4fed7fea3240e5ad6dbbb941900b2",
+      "mtime_ns": 1791616240835391104,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S14.md",
+      "bytes": 1851,
+      "sha256": "735eb6209d348550bba3fa9f96ecf421bd905f828025e0bbe7d26803a27c2987",
+      "mtime_ns": 1791616004281459294,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/index.md",
+      "bytes": 1580,
+      "sha256": "d3408087b82135eb1851a2114aa822d97dd9f243a08646d2de3fef69783ef4ca",
+      "mtime_ns": 1791616240836184622,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/discovery.md",
+      "bytes": 15678,
+      "sha256": "eb09fcf675b5e9425b27d2e8b3b7b1c373fcb26f074b4e33215505412597e49f",
+      "mtime_ns": 1791615826791842884,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/draft.md",
+      "bytes": 35241,
+      "sha256": "b90223b5f2ad2dbe5c8b4dd30beac6572137a3d5d629c744d5f4a482e84c8e28",
+      "mtime_ns": 1791616240835898379,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7042,
+      "sha256": "936dac13775ec07494773bcd507ecc0b6d1a70818017db30a7c79278eff9d6c2",
+      "mtime_ns": 1791615867171017135,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "786de072a52dadef0c5f92bc9e291cdf840dde3b2f2d7e98913ac9fc65ec4c3a",
+      "mtime_ns": 1791615867171156729,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/native-goal-create.json",
+      "bytes": 483,
+      "sha256": "75585cbdf7bdbe8b7554f6fb516b6fdf569cc83f614a0b4b53f8f95792dfbbea",
+      "mtime_ns": 1791615457391167796,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/native-goal-completion.json",
+      "bytes": 812,
+      "sha256": "250f07ee10f7d39fb6f1fad3da61900a713103257c63a75fa3a08d8ea8c3cfba",
+      "mtime_ns": 1791616260498296981,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "cbbea4913b8bf9d81fe08411bbbe2b2d3456c3c468506ee566bad3237fcbab82",
+      "mtime_ns": 1791615438723942290,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/exact-activation-capture-v2-1.json",
+      "bytes": 7778,
+      "sha256": "10b247643e1dc55c27abe61d8c25e2a41a95316f430d97bd84c226cdb47579af",
+      "mtime_ns": 1791615438913611640,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "0475a42449a134233e12983e646a5131f98fd2c6301e63cce654cfa5f4a0763c",
+      "mtime_ns": 1791615438512316808,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "db5f5426fbab79c1e6df3b340ed3e12f2c865683b1ab8b58f3fe9ea347c0ca02",
+      "mtime_ns": 1791615438287153432,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/assignment.md",
+      "bytes": 11986,
+      "sha256": "6d8eae3067210cd818696f01b073ac66aa14ab760d2d058be647e1f437c52fee",
+      "mtime_ns": 1791616279172955778,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "83a2203c9c98e07fdbedb80704337a0fdd757f706632db44faaa2181884afe5f",
+      "mtime_ns": 1791616279172061026,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "d321bbf633f58094158aa6175dccdc8342cce1c86d8e0b301a05005b51539b16",
+      "mtime_ns": 1791616279171149172,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "bytes": 18298,
+      "sha256": "1b5993a69844d312d3a41a70fa551c70c4fa323c1ae510014effba3d803ac514",
+      "mtime_ns": 1791617065755755874,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR01.md",
+      "bytes": 1350,
+      "sha256": "b3bbf9b989f9f66eb3c953dde83c4a60d4c3f0b038c19fcf755a6f60d24bedda",
+      "mtime_ns": 1791617039399669987,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR02.md",
+      "bytes": 1325,
+      "sha256": "b804563241918dd283c31097f42ea5b784558bc63bfb2027d538e84ac7314e97",
+      "mtime_ns": 1791617039370808204,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR03.md",
+      "bytes": 1078,
+      "sha256": "6aeb64d6c956f8044e459423053e437468173a1a0910daf4fa60df8e2d7a564f",
+      "mtime_ns": 1791617039402098900,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR04.md",
+      "bytes": 1144,
+      "sha256": "9b849d75d3b84c299a9001043987b8b7121417a14a7aeb8f4930845fd172fae8",
+      "mtime_ns": 1791617039393354732,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR05.md",
+      "bytes": 1210,
+      "sha256": "0d8f76efb4fee53ae5c43a039fbe93c673ceb2e796f3adbcb8618828c875aaf8",
+      "mtime_ns": 1791617039418842452,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR06.md",
+      "bytes": 1160,
+      "sha256": "fa83735bca286a97aaf40e8bf833fe1dbfcfee69763fc462f64b6ad778b31aaf",
+      "mtime_ns": 1791617039406561930,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR07.md",
+      "bytes": 1351,
+      "sha256": "3bce25e27cc676b4dc1e414276f08a3db69605ac36455ba9d78603991a3986a7",
+      "mtime_ns": 1791617010973019507,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR08.md",
+      "bytes": 1221,
+      "sha256": "0b39f3521b6bde87c4bd04fc6844f518baaa4b050f170953c25b7b77fe2c3f15",
+      "mtime_ns": 1791617010992352604,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR09.md",
+      "bytes": 1201,
+      "sha256": "8fe5220bc9ffe4f9b8c828813bba1cb117e62fcc5e14b969eea35c542ddce468",
+      "mtime_ns": 1791617010993644235,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR10.md",
+      "bytes": 1174,
+      "sha256": "eda0a22f2be859076a4eb87604412739e9aeec64535d4856fb967daf1cd13265",
+      "mtime_ns": 1791617011012352784,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR11.md",
+      "bytes": 892,
+      "sha256": "4882b6bd6e50832a1963cfb457965d45817138959213ebddc8306ae532980185",
+      "mtime_ns": 1791617010999352667,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR12.md",
+      "bytes": 908,
+      "sha256": "61c8a61295329a9d9b9878c7b30722e8237eb73c9a855fd3491449800e636517",
+      "mtime_ns": 1791617011001769901,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR13.md",
+      "bytes": 1421,
+      "sha256": "77ec0354497b1230f3bf3ef36af34c557701ead23fa9f744dd06a98c77d2c40a",
+      "mtime_ns": 1791617011018352838,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR14.md",
+      "bytes": 1000,
+      "sha256": "6240ea8eee90adfd3d90debad1a74b2882b57fe113022eb29c3233bef4c676f2",
+      "mtime_ns": 1791617011029759703,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/index.md",
+      "bytes": 1523,
+      "sha256": "de5027a7e1cfc43fdfaaf0598e73e64c7eec9aa6cf6b6fc2775cc108cddb1a2e",
+      "mtime_ns": 1791617010939780946,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+      "bytes": 18311,
+      "sha256": "cd712100ab0671d12da14c94b56a2153ea5cda95a72bed316c5f4ca2a62b5206",
+      "mtime_ns": 1791617236836432369,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/native-goal-create.json",
+      "bytes": 471,
+      "sha256": "44e0c78a0d1f5fe93d939fb7db94ab69b2eaba28dbd24b783d4de655d3540454",
+      "mtime_ns": 1791616293789394128,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/native-goal-complete.json",
+      "bytes": 800,
+      "sha256": "5c78fbea9dfbc1f60f88da4ef758a2abb2d0cbd05d07ff8dbdd01a5c53a48baf",
+      "mtime_ns": 1791617259133092180,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "1666e40b8828e2ae72e7340e808d483244907bf815c65873538ae03f3ecff674",
+      "mtime_ns": 1791616278938225098,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/exact-activation-capture-v2-1.json",
+      "bytes": 7706,
+      "sha256": "0e05d836dd35f864dc8d1b78253d879f469aa305947aa6957e8e1947c8e044cb",
+      "mtime_ns": 1791616279173259396,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "f7ff820265de1d0263865b0fb995d751884dedd0428cc41d278f3d657dabb9d3",
+      "mtime_ns": 1791616278737118107,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "7d33248a770d30450a89d856b23367c9accab8347190ac27d8ab00f5edb6bf06",
+      "mtime_ns": 1791616278519107011,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md",
+      "bytes": 10290,
+      "sha256": "4358826a5ed34d960d5610598f16debe04eac73b6310480b83a51973ed397379",
+      "mtime_ns": 1791617370815665646,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "4c9a8bb3ddf4a35d18f30db9f3eed032d031f564b23f63f3b617fded4b6b0226",
+      "mtime_ns": 1791617370814655359,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/freeze.json",
+      "bytes": 6826,
+      "sha256": "f983806584b3a8a5b9fca72328d993031367186327048d105f5e861695808525",
+      "mtime_ns": 1791617370813626290,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/source-map.json",
+      "bytes": 63158,
+      "sha256": "2ea639d0ad2dd3dfb1d7ab7d6b2944a7cd341b0ebc27d4f2c25ce6a542bac432",
+      "mtime_ns": 1791618558855604395,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR01.md",
+      "bytes": 1285,
+      "sha256": "ce8c34b5a898865372ad57fa8be113b6a48ac170ae617ec9f2110c281521426a",
+      "mtime_ns": 1791618475686203563,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR02.md",
+      "bytes": 1303,
+      "sha256": "76fda25a30e7dbc9ed64568a2f0e50d2c891d69048ff16191a668ef848573dca",
+      "mtime_ns": 1791618475686270273,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR03.md",
+      "bytes": 1125,
+      "sha256": "6a092f49903c2971b39fbc0705fcf6e2994a5dc14fbfb02f9f85d042f724422e",
+      "mtime_ns": 1791618475686342056,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR04.md",
+      "bytes": 1162,
+      "sha256": "5cfdd778cc4d01000b79044ab0789713dfd2fea5042aa2f8baea4464474be7d2",
+      "mtime_ns": 1791618475686405312,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR05.md",
+      "bytes": 1195,
+      "sha256": "b5c307065adb6bda207b3f7452a563c7aebc8630cdacbe317dd206d962c9844a",
+      "mtime_ns": 1791618475686466298,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR06.md",
+      "bytes": 1154,
+      "sha256": "8c7ea73a0a305bfb69d454695e2ad91fd956007b861e4527d197edf712d87be7",
+      "mtime_ns": 1791618475686533178,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR07.md",
+      "bytes": 1251,
+      "sha256": "10f2ed6dc81e30d34af3f6ab77941b1449014c5f0333c64c15f779df86454ed0",
+      "mtime_ns": 1791618475686595040,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR08.md",
+      "bytes": 1235,
+      "sha256": "8b65b17abc38cfafee5102c8d7c5246668b62a60b21784308e206432c33b41cc",
+      "mtime_ns": 1791618475686660857,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR09.md",
+      "bytes": 1120,
+      "sha256": "f84ed9847afc073f42806b98904adede8561128e1fb18878099677227ad58877",
+      "mtime_ns": 1791618475686721054,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR10.md",
+      "bytes": 1079,
+      "sha256": "61f15994ce488619f15d4949115b52276317cd1653a867b3f097381a474e85c5",
+      "mtime_ns": 1791618475686796546,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR11.md",
+      "bytes": 944,
+      "sha256": "babe1d6145fecd049986de2bcf7eb6fc0fb7597a9412f3309da4c9813f53d8d7",
+      "mtime_ns": 1791618475686857439,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR12.md",
+      "bytes": 942,
+      "sha256": "afa9646962f0a0d872c47c905cbdee94742e8037115d9680e0f42368d0be4936",
+      "mtime_ns": 1791618475686941607,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR13.md",
+      "bytes": 1248,
+      "sha256": "f2803068290d52c615d05d57621e908bba9c96c9d6ef6b873b8b6c5ea770b004",
+      "mtime_ns": 1791618475687007275,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR14.md",
+      "bytes": 1069,
+      "sha256": "ab4e49b92ef4e07f3454b12bd1b0f249c8c96d18f4471104d589eb5a6cd40975",
+      "mtime_ns": 1791618475687100017,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV01.md",
+      "bytes": 1120,
+      "sha256": "610d321cb859a886e83bed2c38e54833b0fe23f716deb929ce9901b48a20073d",
+      "mtime_ns": 1791618475687164404,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV02.md",
+      "bytes": 1246,
+      "sha256": "1141f219b03482c7aca0d85ac6d699b87493353ea2bc085afe486ff88aa99236",
+      "mtime_ns": 1791618475687228853,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV03.md",
+      "bytes": 1336,
+      "sha256": "279546166806a3dcc11f97d78c2859cc2290e413c132a7257b96570437f4acfd",
+      "mtime_ns": 1791618475687291108,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV04.md",
+      "bytes": 1140,
+      "sha256": "f67581b560d5e8402873ea7f6d3329994942edf973437792e9b0cebd2f94e94b",
+      "mtime_ns": 1791618475687352828,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV05.md",
+      "bytes": 1227,
+      "sha256": "c58c3adc45c6ddef56e418bb026f5b857a8ee433ea5a1a3a2300fce2e28d6610",
+      "mtime_ns": 1791618475687415587,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV06.md",
+      "bytes": 1229,
+      "sha256": "cffb4c2a5d1a99be1d2ffb97f010554714f226ffe4c9d2e3a8e9383e68482ba6",
+      "mtime_ns": 1791618475687478522,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV07.md",
+      "bytes": 1190,
+      "sha256": "8d1b397a5c9f4f11f55ec6e12f849d5d65c44cfe0cb60c91bcc7636a0f0570b7",
+      "mtime_ns": 1791618475687540526,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV08.md",
+      "bytes": 1259,
+      "sha256": "52da0d99f441115d64e999072b1f9019e4e60a610e09d8f6fc80d3277359bed2",
+      "mtime_ns": 1791618475687608948,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S01.md",
+      "bytes": 1840,
+      "sha256": "59915cc070181707a26d4e81862c544774325476d99fb5c18cf7a27ba5c024e6",
+      "mtime_ns": 1791618475685162681,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S02.md",
+      "bytes": 1146,
+      "sha256": "fc74517392c982e2e40989182d2c23befc4dd7f1c162300905d34b959f99ad17",
+      "mtime_ns": 1791618475685266538,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S03.md",
+      "bytes": 1012,
+      "sha256": "5801dd4c38a7a3e8d8c89123e18df177a0e55d07b24a9e415525e0c5b4a048f0",
+      "mtime_ns": 1791618475685340096,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S04.md",
+      "bytes": 1485,
+      "sha256": "da1f1790a62979fe7329c0db3f46d5d33af63ca59a2c2a4e53de4497e22fdeb3",
+      "mtime_ns": 1791618475685463690,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S05.md",
+      "bytes": 1296,
+      "sha256": "d104020ec1f39c9eb27758f2dac71bfb83272256ae3f7b96883d2188ead68812",
+      "mtime_ns": 1791618475685543703,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S06.md",
+      "bytes": 1315,
+      "sha256": "3ec23c7066c8f109513161270901dbbfdf38a491bbc7bbfafe427489a32b5443",
+      "mtime_ns": 1791618475685606186,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S07.md",
+      "bytes": 1275,
+      "sha256": "c4236315ace2ca61064bff62125a0af298e3a10e4c70d411ee035116e39eb772",
+      "mtime_ns": 1791618475685666564,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S08.md",
+      "bytes": 1200,
+      "sha256": "43cfbcc82661ce9b21bb248aa4bf3d47a2bfb53105b48366cd6cc2642852b87a",
+      "mtime_ns": 1791618475685742907,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S09.md",
+      "bytes": 1277,
+      "sha256": "049e0f6f8f068095c123a2c2a231d6d7ada50f16c61651046c75e230f6e958f6",
+      "mtime_ns": 1791618475685809300,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S10.md",
+      "bytes": 1288,
+      "sha256": "a6c944bc5ec7bb87c0f2db00b805a2dc5db8a1ba32f01907c816cbea6768c7c1",
+      "mtime_ns": 1791618475685872228,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S11.md",
+      "bytes": 1352,
+      "sha256": "88e7c2e5af390dc6a9f3b64b2a941a7edf666afe40f7266c19762fa3196ebe12",
+      "mtime_ns": 1791618475685932900,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S12.md",
+      "bytes": 1331,
+      "sha256": "a7bf2f91685fa328189ff3654ec6c743c40e116be3cd9727fb3e40ac7485e3f0",
+      "mtime_ns": 1791618475685998473,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S13.md",
+      "bytes": 1889,
+      "sha256": "4f66e6b1c04a7fecb5ccf02081e599ac4d2cd1d1182daaf0735f9836d7cc8758",
+      "mtime_ns": 1791618475686062528,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S14.md",
+      "bytes": 1466,
+      "sha256": "19bb85aa84c30546a46e2376a504e68b7b6af136fc6a6cd430f4a99b7aee5410",
+      "mtime_ns": 1791618475686140434,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/index.md",
+      "bytes": 4390,
+      "sha256": "3cb5fcd1f9c835e6768b8da46daef66084ec79b540e2f6fa36a8b2dedbb4e2e0",
+      "mtime_ns": 1791618475687678665,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+      "bytes": 51832,
+      "sha256": "7d32d502c571d60812c43d26bc7e4c6d1ec9c061a9a971ce6c4bbe1bf12e0142",
+      "mtime_ns": 1791618536298645234,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/native-goal-create.json",
+      "bytes": 473,
+      "sha256": "8f7e72c80523b6197f614c11a73e3591b04df1230e3d3f678a5dda87b146f08f",
+      "mtime_ns": 1791617394208580365,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/native-goal-complete.json",
+      "bytes": 803,
+      "sha256": "0abdcbe5f03b9ebddf2788ae1f0ea496ae4136214b243e2ac37d204f8a66a1cf",
+      "mtime_ns": 1791618578608600191,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "13ee345bb089446238ccbc98bd8a759466801a89866d52c79e35705af8815012",
+      "mtime_ns": 1791617370620779798,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/exact-activation-capture-v2-1.json",
+      "bytes": 7718,
+      "sha256": "4434ee1e6afa06d9ab1a124ea413a7a57d98aa30f91111a90c6eb9158dc5f06e",
+      "mtime_ns": 1791617370815988489,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "cafea09bc0b00681c2002d8fe92b069e1ef3ea5ba446b9a1bce644fee0dab107",
+      "mtime_ns": 1791617370427769890,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "ba861648d7f3ee89fb088e9a8e8173a1c7b2dae0aadb4c4bcf63fb50810865a8",
+      "mtime_ns": 1791617370227786170,
+      "inspection": "FULL_READ",
+      "note": "Full original bytes read for assigned scope; not a semantic PASS based on the digest."
+    }
+  ],
+  "original_hashes_manifest": "evidence/original-inspected-hashes.json",
+  "original_preservation_check": "evidence/original-preservation-check.json",
+  "freeze_verification": {
+    "terminal_science_freeze_mismatches": [],
+    "meaning": "Identity verification only, not a semantic grade"
+  },
+  "scope_exclusions": [
+    "Other arms/results/history",
+    "ER11 rescore",
+    "Shared roster and other outcome/status files",
+    "Hidden activation backups/history",
+    "Candidate repair/feedback",
+    "Account changes/Git/publication",
+    "Nested delegation"
+  ],
+  "output_source_map": "source-map.json"
+}

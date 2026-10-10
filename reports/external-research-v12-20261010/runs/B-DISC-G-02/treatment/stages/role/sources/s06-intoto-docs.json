@@ -1,1 +1,20 @@
-{"depth_limit":"Docs index only; full layout/link/threshold spec sections NOT retrieved in this run","evidence_kind":"bounded-primary-excerpt","excerpt_observed":["in-toto Technical Specification (docs section)","Basic Demo (docs section)","Python Reference Implementation Docs (docs section)"],"id":"s06-intoto-docs","retrieval":"provider web_fetch GET, Status 200 OK, text/html; exact per-source UTC UNKNOWN within 2026-10-10T04:57:10Z/04:58:30Z window","supports":["in-toto framework/spec/demo/implementation existence; predicate-carrier role corroborated by SLSA+Sigstore pages"],"url":"https://in-toto.io/docs/","version":"UNKNOWN"}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "058415a0f38a36c347827a7cb0931602a4e0ec73a408acb7c2cfaea55edd7e4d",
+  "rawSHA256": "058415a0f38a36c347827a7cb0931602a4e0ec73a408acb7c2cfaea55edd7e4d",
+  "original_bytes": 637,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-02/treatment/stages/role/sources/s06-intoto-docs.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -268,25 +268,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A7-01",
-    "arm": "treatment",
-    "stage": "critic-finalizer",
-    "helper": "ER12_RUNTIME/helpers/topology-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "The native Goal is now **blocked**. The required gate tools were unavailable for three consecutive Goal turns: `check-input`, `freeze-review`, and `seal-final` are absent from the current PATH and tool catalog. The fresh Goal response was supplied to the seal attempt, which returned \u201ccommand not found.\u201d No official gate receipt or Goal completion is claimed.\n\nThe proposal and review artifacts remain saved: [final.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md>), [critique.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md>), and [stage-control.json](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json>). Manual integrity and artifact-structure checks passed; they do not replace the missing official gates.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7672ff0e-e0a8-4375-9778-2642452b71fe",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "The native Goal is now **blocked**. The required gate tools were unavailable for three consecutive Goal turns: `check-input`, `freeze-review`, and `seal-final` are absent from the current PATH and tool catalog. The fresh Goal response was supplied to the seal attempt, which returned \u201ccommand not found.\u201d No official gate receipt or Goal completion is claimed.\n\nThe proposal and review artifacts remain saved: [final.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md>), [critique.md](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/critique.md>), and [stage-control.json](<ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/stage-control.json>). Manual integrity and artifact-structure checks passed; they do not replace the missing official gates.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7672ff0e-e0a8-4375-9778-2642452b71fe",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "36c92d28a6bf6bae1c1d6b3e5b3a483bd5b8d06afbd7a99df0e1624347264394"
   }
 }

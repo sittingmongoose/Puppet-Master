@@ -1,8 +1,20 @@
-# S05 — PrusaSlicer 2.5.0 release
-
-- **Source:** [Release PrusaSlicer 2.5.0](https://github.com/prusa3d/PrusaSlicer/releases/tag/version_2.5.0)
-- **Version:** Tag version_2.5.0, commit ec2f533; release page says STEP import was introduced.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** Release summary.
-- **Observed operation:** Read only; binary not run.
-- **Applicability:** Establishes a product route from that release onward, not universal STEP fidelity.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+  "rawSHA256": "02d3548f20e8070faa591701a224d63c333d57f27d182372b43127577ec972bb",
+  "original_bytes": 487,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S05-prusaslicer-250.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

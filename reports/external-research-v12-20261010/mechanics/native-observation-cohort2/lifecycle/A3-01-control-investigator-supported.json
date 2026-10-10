@@ -1,0 +1,54 @@
+{
+  "frozen_identity": {
+    "slot": "A3-01",
+    "arm": "control",
+    "stage": "investigator",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-investigator-v1:ordinal:1",
+    "requestedProvider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requestedModel": "gpt-6-luna"
+  },
+  "receipts": [],
+  "same_original_goal_identity": "UNKNOWN",
+  "save_order_anchors": [
+    {
+      "position": 123,
+      "itemId": "turn-item:provider:codex:native-item:exec-d9ac5e02-bacb-4b51-9950-301bb0610ae3",
+      "path_line": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "host_updatedAt": "2026-10-10T04:01:54.369Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/6-page-2.json",
+      "source_sha256": "f7ecaf3cf7ac92ce6dd664675f877813ccf1c68ed627e8b9881f0f239a1faa66",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 126,
+      "itemId": "turn-item:provider:codex:native-item:exec-c236e363-ee15-4599-b08b-1d41d1c5bd6d",
+      "path_line": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/sources/index.md",
+      "host_updatedAt": "2026-10-10T04:02:03.012Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/6-page-2.json",
+      "source_sha256": "f7ecaf3cf7ac92ce6dd664675f877813ccf1c68ed627e8b9881f0f239a1faa66",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 197,
+      "itemId": "turn-item:provider:codex:native-item:exec-97a00663-fa88-42c3-b3e6-74b2de4473c5",
+      "path_line": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/source-map.json",
+      "host_updatedAt": "2026-10-10T04:05:43.399Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/6-page-2.json",
+      "source_sha256": "f7ecaf3cf7ac92ce6dd664675f877813ccf1c68ed627e8b9881f0f239a1faa66",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 199,
+      "itemId": "turn-item:provider:codex:native-item:exec-1b2342f1-3dab-493c-9b88-e5f5236b3eee",
+      "path_line": "ER12_RUNTIME/runs/A3-01/control/stages/investigator/sources/index.md",
+      "host_updatedAt": "2026-10-10T04:05:52.316Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/6-page-2.json",
+      "source_sha256": "f7ecaf3cf7ac92ce6dd664675f877813ccf1c68ed627e8b9881f0f239a1faa66",
+      "content_read_for_grade": false
+    }
+  ],
+  "science_before_complete": "UNKNOWN",
+  "no_science_grade": true
+}

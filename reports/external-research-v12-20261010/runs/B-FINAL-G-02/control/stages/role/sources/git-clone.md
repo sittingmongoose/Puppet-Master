@@ -1,12 +1,20 @@
-# Bounded primary-source evidence: Git clone
-
-- URL: https://git-scm.com/docs/git-clone/2.43.0
-- Version/applicability: official versioned Git 2.43.0 clone manual, directly matching the target.
-- Retrieved: 2026-10-10 05:20 UTC, via web.open on the official versioned manual; relevant options inspected in the returned page.
-- Locators and bounded paraphrases:
-  - “--sparse”: starts with top-level files in the working tree; `git sparse-checkout` can expand the working directory.
-  - “--filter”: requests a partial clone object subset; `blob:none` defers file contents until Git needs them.
-  - “--depth”: creates a shallow clone whose history is truncated to the given commit count.
-- Conditions/exceptions: these are separate clone controls. Sparse working-tree selection alone does not claim a bound on bytes transferred. A filter may defer blob transfer until later; shallow history omits commits and conflicts with `history_policy=full`.
-- Use: distinguish worktree sparsity, partial-clone blob filtering, and shallow history; omit history truncation and make no unmeasured network claim.
-- No Git command or test was executed for this case.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "3a7f3101f4117ae1b14bd958a8b7cdb99d879e5d17399f23c9a2f39462aa72ac",
+  "rawSHA256": "3a7f3101f4117ae1b14bd958a8b7cdb99d879e5d17399f23c9a2f39462aa72ac",
+  "original_bytes": 1161,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

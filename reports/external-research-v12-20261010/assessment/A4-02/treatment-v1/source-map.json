@@ -17,7 +17,7 @@
       "sha256": "de43294251e878a814fbc3e8985bece6418491ff0b1f8b192f6c7a6d86bcd4c2",
       "bytes": 1410043,
       "released_version_or_commit": "RFC 5545 September 2009",
-      "governing_locator": "\u00a7\u00a73.2.19,3.3.5,3.3.10,3.6.5,3.8.4.4,3.8.4.7,3.8.5.1,3.8.5.3",
+      "governing_locator": "§§3.2.19,3.3.5,3.3.10,3.6.5,3.8.4.4,3.8.4.7,3.8.5.1,3.8.5.3",
       "governing_conditions": "Serialized VEVENT recurrence, original UID/instance identity, floating versus venue-zoned time, UTC UNTIL for TZID DTSTART and EXDATE exclusion. VTIMEZONE covers every recurrence instance. This proves format meaning, not client conformance or refresh.",
       "independent_semantic_check": "SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -34,7 +34,7 @@
       "sha256": "8f927a79f695f80fdb70807e30ff2af975dafa73fd0a140cea5b7da385c41aee",
       "bytes": 1185624,
       "released_version_or_commit": "RFC 5546 December 2009",
-      "governing_locator": "\u00a73.2.5 CANCEL",
+      "governing_locator": "§3.2.5 CANCEL",
       "governing_conditions": "Organizer sends affected attendees a cancellation notice. Single-instance cancellation needs RECURRENCE-ID; whole-series cancellation omits it. This is a scheduling message, distinct from passive feed replacement.",
       "independent_semantic_check": "SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -51,7 +51,7 @@
       "sha256": "d8b97679de10acff40d5dc6c59ec76ebaed7329bc079a823a1100538588a9dbf",
       "bytes": 900560,
       "released_version_or_commit": "RFC 4791 March 2007",
-      "governing_locator": "\u00a78.2 especially \u00a78.2.1.3",
+      "governing_locator": "§8.2 especially §8.2.1.3",
       "governing_conditions": "CalDAV clients cache URI/ETag/data, compare server resources and fetch changes. CalDAV servers support ETags; client/server synchronization is a separate route from file/feed.",
       "independent_semantic_check": "SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -68,7 +68,7 @@
       "sha256": "b6af08a68ed7b8bc5e5e98360773a66b9145f26fa03c3b8db46a2d57d756a908",
       "bytes": 306409,
       "released_version_or_commit": "RFC 6578 March 2012",
-      "governing_locator": "\u00a7\u00a73.5.1\u20133.5.2,6.1; Appendix A",
+      "governing_locator": "§§3.5.1–3.5.2,6.1; Appendix A",
       "governing_conditions": "DAV sync tokens under a supported extension report changed/remapped/removed members. Empty-token initial sync requests current members. Token validity, collection level and access conditions apply.",
       "independent_semantic_check": "SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -255,7 +255,7 @@
       "sha256": "75ccd70af4323efa197503c4d923b7d553b949e42992531ca7ca476820dedaef",
       "bytes": 130140,
       "released_version_or_commit": "W3C WebSub Recommendation2026-06-02; dated URL https://www.w3.org/TR/2026/REC-websub-20260602/",
-      "governing_locator": "\u00a7\u00a72,5.1\u20135.3,6,7",
+      "governing_locator": "§§2,5.1–5.3,6,7",
       "governing_conditions": "Publisher notifies hub, verified reachable callback receives topic content; leases expire and require renewal. A protocol definition is no calendar-client adoption evidence.",
       "independent_semantic_check": "BOUNDED ANALOGY SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -422,7 +422,7 @@
       "bytes": 33681,
       "retrieval_interpretation": "Actual source received; immutable identity/governing context inspected",
       "released_version_or_commit": "calItemBase.js at immutable node3787e583daf7",
-      "governing_locator": "lines445\u2013468,551\u2013560; surrounding removed accessor",
+      "governing_locator": "lines445–468,551–560; surrounding removed accessor",
       "governing_conditions": "properties getter for mIsProxy merges parent then own Map (explicit overrides win). getProperty resolves local then parent; getParameterNames can fall back to parent. Tests call item.properties; removed overriding accessor unmasks real getter.",
       "independent_semantic_check": "GOVERNING DEFINITION/CALLER SUPPORTED",
       "inspection": "Governing surrounding primary text or definition/caller read; no downloaded code executed",
@@ -480,7 +480,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Concealed draft plan \u2014 Recurring rehearsal calendar distribution"
+          "heading": "# Concealed draft plan — Recurring rehearsal calendar distribution"
         },
         {
           "line": 3,
@@ -524,7 +524,7 @@
         },
         {
           "line": 43,
-          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
+          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
         },
         {
           "line": 47,
@@ -617,19 +617,19 @@
         },
         {
           "line": 9,
-          "heading": "### R01 \u2014 [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
+          "heading": "### R01 — [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
         },
         {
           "line": 13,
-          "heading": "### R02 \u2014 [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
+          "heading": "### R02 — [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
         },
         {
           "line": 17,
-          "heading": "### R03 \u2014 [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
+          "heading": "### R03 — [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
         },
         {
           "line": 21,
-          "heading": "### R04 \u2014 [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
+          "heading": "### R04 — [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
         },
         {
           "line": 25,
@@ -637,39 +637,39 @@
         },
         {
           "line": 27,
-          "heading": "### R05 \u2014 [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
+          "heading": "### R05 — [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
         },
         {
           "line": 31,
-          "heading": "### R06 \u2014 [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
+          "heading": "### R06 — [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
         },
         {
           "line": 35,
-          "heading": "### R07 \u2014 [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
+          "heading": "### R07 — [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
         },
         {
           "line": 39,
-          "heading": "### R08 \u2014 [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
+          "heading": "### R08 — [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
         },
         {
           "line": 43,
-          "heading": "### R09 \u2014 [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
+          "heading": "### R09 — [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
         },
         {
           "line": 47,
-          "heading": "### R10 \u2014 [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
+          "heading": "### R10 — [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
         },
         {
           "line": 51,
-          "heading": "### R11 \u2014 [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
+          "heading": "### R11 — [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
         },
         {
           "line": 55,
-          "heading": "### R12 \u2014 [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
+          "heading": "### R12 — [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
         },
         {
           "line": 59,
-          "heading": "### R13 \u2014 [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
+          "heading": "### R13 — [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
         },
         {
           "line": 63,
@@ -677,15 +677,15 @@
         },
         {
           "line": 65,
-          "heading": "### R14 \u2014 [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
+          "heading": "### R14 — [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
         },
         {
           "line": 69,
-          "heading": "### R15 \u2014 [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
+          "heading": "### R15 — [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
         },
         {
           "line": 73,
-          "heading": "### R16 \u2014 [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
+          "heading": "### R16 — [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
         }
       ]
     },
@@ -707,7 +707,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Discovery record \u2014 recurring rehearsal calendar distribution"
+          "heading": "# Discovery record — recurring rehearsal calendar distribution"
         },
         {
           "line": 7,
@@ -761,7 +761,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Complete research proposal \u2014 recurring rehearsal calendar distribution"
+          "heading": "# Complete research proposal — recurring rehearsal calendar distribution"
         },
         {
           "line": 8,
@@ -773,35 +773,35 @@
         },
         {
           "line": 20,
-          "heading": "### Clause 1 \u2014 series, moved/cancelled instances, stable identity, time zones"
+          "heading": "### Clause 1 — series, moved/cancelled instances, stable identity, time zones"
         },
         {
           "line": 30,
-          "heading": "### Clause 2 \u2014 two distribution routes and an analogous publish/subscribe mechanism"
+          "heading": "### Clause 2 — two distribution routes and an analogous publish/subscribe mechanism"
         },
         {
           "line": 44,
-          "heading": "### Clause 3 \u2014 bind recurrence/refresh to exact operations and versions"
+          "heading": "### Clause 3 — bind recurrence/refresh to exact operations and versions"
         },
         {
           "line": 59,
-          "heading": "### Clause 4 \u2014 recurrence/time-zone issue/fix chain and season-update consequence"
+          "heading": "### Clause 4 — recurrence/time-zone issue/fix chain and season-update consequence"
         },
         {
           "line": 67,
-          "heading": "### Clause 5 \u2014 optional one-season downloadable snapshot"
+          "heading": "### Clause 5 — optional one-season downloadable snapshot"
         },
         {
           "line": 75,
-          "heading": "### Clause 6 \u2014 owner decisions"
+          "heading": "### Clause 6 — owner decisions"
         },
         {
           "line": 83,
-          "heading": "### Clause 7 \u2014 negative constraints"
+          "heading": "### Clause 7 — negative constraints"
         },
         {
           "line": 87,
-          "heading": "### Clause 8 \u2014 coherent evidence-backed proposal and validation reporting"
+          "heading": "### Clause 8 — coherent evidence-backed proposal and validation reporting"
         },
         {
           "line": 91,
@@ -827,7 +827,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Concealed draft plan \u2014 Recurring rehearsal calendar distribution"
+          "heading": "# Concealed draft plan — Recurring rehearsal calendar distribution"
         },
         {
           "line": 3,
@@ -871,7 +871,7 @@
         },
         {
           "line": 43,
-          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
+          "heading": "### 8. Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation."
         },
         {
           "line": 47,
@@ -930,7 +930,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Critic evidence index \u2014 A4-02-treatment"
+          "heading": "# Critic evidence index — A4-02-treatment"
         },
         {
           "line": 7,
@@ -960,7 +960,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Independent critic review \u2014 A4-02-treatment"
+          "heading": "# Independent critic review — A4-02-treatment"
         },
         {
           "line": 6,
@@ -972,11 +972,11 @@
         },
         {
           "line": 14,
-          "heading": "### F1 \u2014 Material incomplete: Outlook refresh guidance is not separated by web operation"
+          "heading": "### F1 — Material incomplete: Outlook refresh guidance is not separated by web operation"
         },
         {
           "line": 21,
-          "heading": "### F2 \u2014 Minor locator/wording: add the iPhone subscription-alert control to the reminder evidence"
+          "heading": "### F2 — Minor locator/wording: add the iPhone subscription-alert control to the reminder evidence"
         },
         {
           "line": 28,
@@ -1077,7 +1077,7 @@
         },
         {
           "line": 7,
-          "heading": "## Reviser primary-source rechecks \u2014 2026-10-10"
+          "heading": "## Reviser primary-source rechecks — 2026-10-10"
         },
         {
           "line": 17,
@@ -1085,19 +1085,19 @@
         },
         {
           "line": 19,
-          "heading": "### R01 \u2014 [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
+          "heading": "### R01 — [RFC 5545: iCalendar](https://www.rfc-editor.org/rfc/rfc5545)"
         },
         {
           "line": 23,
-          "heading": "### R02 \u2014 [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
+          "heading": "### R02 — [RFC 5546: iTIP](https://www.rfc-editor.org/rfc/rfc5546)"
         },
         {
           "line": 27,
-          "heading": "### R03 \u2014 [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
+          "heading": "### R03 — [RFC 4791: CalDAV](https://www.rfc-editor.org/rfc/rfc4791)"
         },
         {
           "line": 31,
-          "heading": "### R04 \u2014 [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
+          "heading": "### R04 — [RFC 6578: WebDAV Collection Synchronization](https://www.rfc-editor.org/rfc/rfc6578)"
         },
         {
           "line": 35,
@@ -1105,39 +1105,39 @@
         },
         {
           "line": 37,
-          "heading": "### R05 \u2014 [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
+          "heading": "### R05 — [Google Calendar: Create and manage a public calendar](https://support.google.com/calendar/answer/37083?hl=en)"
         },
         {
           "line": 41,
-          "heading": "### R06 \u2014 [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
+          "heading": "### R06 — [Google Calendar: Subscribe to someone else's calendar](https://support.google.com/calendar/answer/37100?hl=en)"
         },
         {
           "line": 45,
-          "heading": "### R07 \u2014 [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
+          "heading": "### R07 — [Google Calendar: Import events](https://support.google.com/calendar/answer/37118?hl=en)"
         },
         {
           "line": 49,
-          "heading": "### R08 \u2014 [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
+          "heading": "### R08 — [Google Calendar API v3: Events resource](https://developers.google.com/workspace/calendar/api/v3/reference/events) and [Recurring events guide](https://developers.google.com/workspace/calendar/api/guides/recurringevents)"
         },
         {
           "line": 53,
-          "heading": "### R09 \u2014 [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
+          "heading": "### R09 — [Microsoft Support: Import or subscribe to an Outlook.com calendar](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web)"
         },
         {
           "line": 57,
-          "heading": "### R10 \u2014 [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
+          "heading": "### R10 — [Apple Support: Add a read-only subscription calendar on iPhone](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios) and [Subscribe/manage alerts and refresh on Mac](https://support.apple.com/en-il/guide/calendar/icl32362/mac)"
         },
         {
           "line": 61,
-          "heading": "### R11 \u2014 [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
+          "heading": "### R11 — [Nextcloud 35 User Manual: Calendar](https://docs.nextcloud.com/server/stable/user_manual/en/groupware/calendar.html)"
         },
         {
           "line": 65,
-          "heading": "### R12 \u2014 [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
+          "heading": "### R12 — [Nextcloud 35 Administration Manual: Calendar/CalDAV](https://docs.nextcloud.com/server/stable/admin_manual/groupware/calendar.html)"
         },
         {
           "line": 69,
-          "heading": "### R13 \u2014 [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
+          "heading": "### R13 — [W3C WebSub Recommendation](https://www.w3.org/TR/websub/)"
         },
         {
           "line": 73,
@@ -1145,15 +1145,15 @@
         },
         {
           "line": 75,
-          "heading": "### R14 \u2014 [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
+          "heading": "### R14 — [Mozilla Bugzilla 1595332: Location not preserved when modifying recurring event in remote calendar](https://bugzilla.mozilla.org/show_bug.cgi?id=1595332)"
         },
         {
           "line": 79,
-          "heading": "### R15 \u2014 [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
+          "heading": "### R15 — [Immutable Mozilla changeset 3787e583daf7](https://hg.mozilla.org/comm-central/raw-rev/3787e583daf7)"
         },
         {
           "line": 83,
-          "heading": "### R16 \u2014 [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
+          "heading": "### R16 — [Google Calendar: Use Google Calendar in different time zones](https://support.google.com/calendar/answer/37064?hl=en)"
         }
       ]
     },
@@ -1175,7 +1175,7 @@
       "heading_locators": [
         {
           "line": 1,
-          "heading": "# Complete research proposal \u2014 recurring rehearsal calendar distribution"
+          "heading": "# Complete research proposal — recurring rehearsal calendar distribution"
         },
         {
           "line": 8,
@@ -1191,35 +1191,35 @@
         },
         {
           "line": 33,
-          "heading": "### Clause 1 \u2014 series, moved/cancelled instances, stable identity, time zones"
+          "heading": "### Clause 1 — series, moved/cancelled instances, stable identity, time zones"
         },
         {
           "line": 43,
-          "heading": "### Clause 2 \u2014 two distribution routes and an analogous publish/subscribe mechanism"
+          "heading": "### Clause 2 — two distribution routes and an analogous publish/subscribe mechanism"
         },
         {
           "line": 57,
-          "heading": "### Clause 3 \u2014 bind recurrence/refresh to exact operations and versions"
+          "heading": "### Clause 3 — bind recurrence/refresh to exact operations and versions"
         },
         {
           "line": 73,
-          "heading": "### Clause 4 \u2014 recurrence/time-zone issue/fix chain and season-update consequence"
+          "heading": "### Clause 4 — recurrence/time-zone issue/fix chain and season-update consequence"
         },
         {
           "line": 81,
-          "heading": "### Clause 5 \u2014 optional one-season downloadable snapshot"
+          "heading": "### Clause 5 — optional one-season downloadable snapshot"
         },
         {
           "line": 89,
-          "heading": "### Clause 6 \u2014 owner decisions"
+          "heading": "### Clause 6 — owner decisions"
         },
         {
           "line": 97,
-          "heading": "### Clause 7 \u2014 negative constraints"
+          "heading": "### Clause 7 — negative constraints"
         },
         {
           "line": 101,
-          "heading": "### Clause 8 \u2014 coherent evidence-backed proposal and validation reporting"
+          "heading": "### Clause 8 — coherent evidence-backed proposal and validation reporting"
         },
         {
           "line": 105,

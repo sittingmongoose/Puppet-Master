@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-eval-D-R2-01-treatment-full-v1",
+  "title": "ER12 independent full D-R2-01 treatment",
+  "role": "review",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "xhigh",
+      "serviceTier": "default"
+    }
+  },
+  "task": "Independent semantic assessment of ONE completed ER12 full pipeline. Create one actual native Goal <4000chars referencing this bounded assignment; complete after saving. No nesteddelegation, candidate feedback/repair, account changes, Git/publication, other arms/results/history or ER11 rescore. Read FULL ER12_RUNTIME/assessment/RUBRIC-v1.md, original frozen ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md and plan.md, and ER12_RUNTIME/runs/D-R2-01/treatment/terminal-science-freeze-root.json. Read FULL original authored discovery.md, draft.md, critique.md, final.md, all stage source-map.json, all critique dispositions/checks if present, complete per-stage assignment/input-map/freeze and all authored source evidence. Ordinary final is stages/reviser/final.md; A7 treatment final is stages/critic-finalizer/final.md; A2 treatment retained final is stages/investigator/final/final.md with its complete frozen handoff/critic-package. Follow actual maps; report missing/incomplete rather than guess. Inspect ALL SIX rubric axes separately: original obligations/negative constraints; consequential source claims exact subject/operation/version/default/unit/type/domain/exceptions; useful unfamiliar discovery, competing and analogous approaches, implementation/history and opportunity breadth; wrong criticism/corrections/rejections and exact plan dispositions; supported meaning preserved discovery/draft/critique/final; meaningful proposed versus executed validation and oracle applicability. Independently retrieve governing primary evidence for consequential recommendations, corrections and source conditions; hashes/counts/agreements are not semantic proof. Honest unresolved external choices can pass after necessary investigation; vacuous caution cannot. Remaining MATERIAL error/omission/unsupported consequential decision requires source-backed FAIL; PASS_WITH_LIMITATIONS only for no material remaining issue. Do not invent extra obligations, repairs or nonexistent deployments. Original stages may contain explicitly corrected defects: distinguish final qualification from lineage defect, preserve both. Native/T3/protocol/time/effective/billing require actual evidence or UNKNOWN; source judgment remains separate. Finite45minute review envelope including saving, finish earlier when full declared scope complete; report unassessed axes if capped rather than guess. Write complete assessment.md, assessment.json, independent navigable source-map/evidence under ER12_RUNTIME/assessment/D-R2-01/treatment-v1 only: all6axes and every exact plan clause, criticism dispositions, supported source locators, useful discoveries/alternatives, material findings/limits/unknowns, original inspected hashes. Preserve original source freeze unchanged. Save full judgment before native completion and report result+paths. Register unique pm-mail reviewer identity where applicable. Root has reserved this unique assessment path and checked coordination ownership; do not read the shared roster or other outcome/status labels. Check only your own inbox."
+}

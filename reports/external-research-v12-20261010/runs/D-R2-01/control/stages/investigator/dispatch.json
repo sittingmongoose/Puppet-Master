@@ -1,0 +1,64 @@
+{
+  "captured_at_utc": "2026-10-10T06:56:59.859Z",
+  "requested_at_utc": "2026-10-10T06:56:58.170Z",
+  "clientRequestId": "er12ref-D-R2-01-control-investigator-v1",
+  "args": {
+    "clientRequestId": "er12ref-D-R2-01-control-investigator-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference D-R2-01-control investigator",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 investigator stage, run D-R2-01-control: execute ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n\nROOT EXACT GOAL BINDING GUARD v1 — PRE-INPUT\nBefore ANY case/source reading or inference, activate ONE actual native Goal with this EXACT frozen objective: \"ER12 investigator stage, run D-R2-01-control: execute ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nImmediately pass its EXACT unmodified COMPLETE fresh native create_goal response (or an immediately obtained native get_goal response) as ONE --json argument to:\npython3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R2-01/control/stages/investigator --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'\nThe quoted response slot is runtime native data, never literal placeholder JSON. Use structured argv or correct shell quoting; preserve every response field. If activation is unavailable or the gate fails, STOP before any case/source reading or inference. Preserve the exact diagnostic and original failure; never create a second/replacement Goal or repair the objective. Save before completing the SAME Goal. Original route, deadlines, scope, science and lifecycle remain binding. Response provenance/freshness cannot be independently proved by this checker. This is common symmetric future mechanics, not technique or source assistance.\n\nEXACT ACTIVATION CAPTURE v2.1 — COMMON PRE-INPUT MECHANICS\nThis body implements the existing v1 ONE Goal activation instruction; execute it once, not as a second activation after that prose. Before scientific input, execute this body once. Stop on failure/unsupported; no second Goal. Original substantive assignment, route, deadlines, scope and science remain binding.\n```javascript\n// functions.exec body. Root substitutes only \"ER12_RUNTIME/runs/D-R2-01/control/stages/investigator\" with JSON.stringify(knownStageDir).\nconst stageDir = \"ER12_RUNTIME/runs/D-R2-01/control/stages/investigator\";\nconst q = s => \"'\" + s.replaceAll(\"'\", \"'\\\\''\") + \"'\";\nconst guard = \"ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py\";\nconst readObjective = \"import json,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); assert not (p.parent/'native-goal-create.json').exists(); f=json.loads(p.read_text()); o=f['native_goal_objective']; assert isinstance(o,str) and 0<len(o)<4000; print(json.dumps(o,ensure_ascii=False))\";\nif (typeof tools.exec_command !== \"function\" || typeof tools.create_goal !== \"function\") throw Error(\"STOP: native tools unsupported\");\nconst read = await tools.exec_command({cmd: \"python3 -B -c \" + q(readObjective) + \" \" + q(stageDir + \"/freeze.json\"), max_output_tokens: 6000});\nif (read.exit_code !== 0 || read.session_id) throw Error(\"STOP: objective read failed: \" + read.output);\nconst objective = JSON.parse(read.output);\nif (typeof objective !== \"string\" || !objective.length) throw Error(\"STOP: objective is not a string\");\n// One native call. No retry, replacement, extraction, transcription, normalization or fallback.\nconst response = await tools.create_goal({objective});\nif (!response || typeof response !== \"object\" || Array.isArray(response)) throw Error(\"STOP: unsupported native response\");\nconst receipt = JSON.stringify(response);\nconst save = \"import os,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); fd=os.open(str(p),os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o444); f=os.fdopen(fd,'w',encoding='utf-8'); f.write(sys.argv[2]); f.close()\";\nconst checked = await tools.exec_command({cmd: \"python3 -B -c \" + q(save) + \" \" + q(stageDir + \"/native-goal-create.json\") + \" \" + q(receipt) + \" && python3 -B \" + q(guard) + \" --stage-dir \" + q(stageDir) + \" --json \" + q(receipt), max_output_tokens: 1500});\nif (checked.exit_code !== 0 || checked.session_id) throw Error(\"STOP: save/binding failed; preserve original receipt/diagnostic; no second Goal: \" + checked.output);\ntext({activation_binding_checked: true, receipt_path: stageDir + \"/native-goal-create.json\", provenance_and_freshness: \"UNKNOWN beyond checker\"});\n\n```\nSave required stage outputs before completing the same Goal. Source/native provenance/freshness remain UNKNOWN beyond checker.\n"
+  },
+  "raw_response": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-01-control-investigator-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-01-control-investigator-v1",
+          "status": "running",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        }
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "56adda0b44f1d6d3a645337e0fa63bf8907996b79440506071598c50c3bf92ac"
+  },
+  "returned": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-01-control-investigator-v1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "f295a426481727d224f00f8c52b46aaaad65817e682d777cb125c2fd5a76b82c"
+  }
+}

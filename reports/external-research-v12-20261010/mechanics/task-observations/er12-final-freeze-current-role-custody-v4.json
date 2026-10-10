@@ -1,0 +1,33 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "observed_at_utc": "2026-10-10T08:33:59.476Z",
+      "actual_response": {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6.1-sol"
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "3c967ae7be8284bb8bc5e454290f452f641d4d581bb70fc1f52d5dba7f18e34e",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/task-observations/er12-final-freeze-current-role-custody-v4.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

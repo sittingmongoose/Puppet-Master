@@ -1,0 +1,1205 @@
+{
+  "schema_version": "er12-independent-full-pipeline-assessment-v1",
+  "review_id": "D-R1-01/control-v1",
+  "case_id": "ER12-D-R1-01-FRESH",
+  "assigned_arm": "control",
+  "assessment_saved_utc": "2026-10-10T07:32:28.684464+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_reason": "All six semantic axes were fully assessed. Useful discovery, actual comparable implementation evidence, bounded source conditions, preserved obligations and a meaningful later pilot remain in the final. No remaining material scientific error, material omission or unsupported consequential decision is established. Minor wording/provenance/retrieval limits and honest external inputs are explicit. This is not a certification that the original full-hour request or all native/protocol conditions were fulfilled.",
+  "overall_request_completion": "NOT_FULLY_FULFILLED: original 60-minute requirement unmet",
+  "coverage": {
+    "axes_assessed": 6,
+    "axes_unassessed": [],
+    "exact_plan_clauses": 54,
+    "clause_dispositions": "clause-coverage.json",
+    "every_exact_plan_clause_assessed": true
+  },
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "The hypothetical boundary, coincident supplier/cooling confounding, intact-looking versus measured integrity distinction, useful current-film alternatives, and controlled later pilot are preserved. No empirical cooperative result, food experiment, additive, production seal setting, safe shelf life, compliance or sale-readiness claim is supplied. Owner/laboratory gaps are tied to specific decisions they prevent. The full 60-minute requirement is not fulfilled and is recorded as a separate time/delivery shortfall, not erased by this source qualification. All 54 sentence-sized original plan clauses have independent dispositions.",
+      "stage_locators": [
+        "reviser/final.md:8",
+        "reviser/final.md:18",
+        "reviser/final.md:102",
+        "reviser/final.md:152",
+        "reviser/final.md:228"
+      ],
+      "primary_evidence": [
+        "E009",
+        "E010",
+        "E011",
+        "E012",
+        "E013"
+      ],
+      "material_remaining_findings": []
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "All 15 authored identities were independently rechecked against primary journal, author-affiliated institutional, PubMed or official FDA evidence to the retrieved scope. Exact subjects, operations, units, constructions, product/model domains, version dates and exceptions are in the independent source map. Research-study values are not cooperative defaults or recommendations. Specific limits include S003 percentage denominator, Film 3 restriction for S012 thresholds, dry-basis moisture in S006, LLDPE sealant in S013, alternative PE/PP pouches in S014, and S004 declared MAP. No transferred value drives the proposed local endpoint, setting or winner. Historical FDA physical context and the current still-draft January 2025 guidance are kept separate from legal/safety proof.",
+      "stage_locators": [
+        "reviser/final.md:22",
+        "reviser/final.md:24",
+        "reviser/final.md:32",
+        "reviser/final.md:209"
+      ],
+      "primary_evidence": [
+        "E001",
+        "E002",
+        "E003",
+        "E004",
+        "E005",
+        "E006",
+        "E007",
+        "E008",
+        "E009",
+        "E010",
+        "E011",
+        "E012",
+        "E013",
+        "E014",
+        "E015"
+      ],
+      "material_remaining_findings": []
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, alternatives and implementation/history breadth",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "The pipeline does substantive discovery beyond routine cautions: neat PLA versus PLA/CNC cracker trials; CNF/wax/lignin functional-layer bottle closures with a failed CNF-only control; film versus sealed-package transmission; commercial snack-pouch dimensions/materials/seams; solid versus liquid seal-contamination outcomes; a formulation-dependent failed rice-cracker shelf model; and oxidation-versus-moisture headspace tradeoffs. Alternatives include supplier diligence, same-film cooling/packing and seal assurance, actual storage controls, smaller logged lots, conditional resizing and inventory duration. These are tied to mechanisms, feasibility and observed-result redirects. Authenticated supplier corrective-action or commercial maintenance history remains unavailable, but actual implemented laboratory comparisons and adverse controls meet the original unsuccessful OR maintenance-heavy inquiry. The original does not require a named commercial deployment.",
+      "stage_locators": [
+        "investigator/discovery.md:17",
+        "investigator/draft.md:28",
+        "reviser/final.md:28",
+        "reviser/final.md:72",
+        "reviser/final.md:86"
+      ],
+      "primary_evidence": [
+        "E003",
+        "E004",
+        "E006",
+        "E007",
+        "E008",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "material_remaining_findings": []
+    },
+    {
+      "id": 4,
+      "name": "Criticism, corrections, rejections and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "F1 identifies a real full-hour shortfall; missing minutes alone do not establish a particular material scientific omission. F2 fairly flags unknown case/vendor history but overstates the original disjunctive implementation requirement by demanding authenticated named commercial maintenance/corrective-action records. F3 correctly warns that a candidate film with qualified new sealing estimates a package-system effect; final arm D explicitly corrects the attribution and retains optional technically valid matched closures or a larger factorial. F4 correctly retains meaningful external inputs. Rejections of datasheet-only procurement, universal aw/shelf-life transfer, visual integrity proof, single-change attribution, production settings, texture-to-safety inference, unsupported headspace changes and additives are appropriate. Every exact original clause, not only the candidate tables, is adjudicated in clause-coverage.json.",
+      "stage_locators": [
+        "critic/critique.md:11",
+        "critic/critique.md:18",
+        "critic/critique.md:26",
+        "critic/critique.md:33",
+        "reviser/final.md:64",
+        "reviser/final.md:219",
+        "reviser/final.md:244"
+      ],
+      "primary_evidence": [
+        "E003",
+        "E004",
+        "E007",
+        "E008",
+        "E010",
+        "E011",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "material_remaining_findings": []
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved across discovery, draft, critique and final",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "Discovery initially carries S001-S011; the draft expands evidence with S012-S015, no-film options, destructive sampling and the decision rule. The final retains all 15 exact source identities and the substantive mechanisms, practical alternatives, unsuccessful examples, limits, owner decisions and proposed/executed distinction. F3 is an explicit corrected lineage defect, not a remaining final defect. S002 is narrowed to a literature lead without dropping the moisture-gradient mechanism or relevant observations; the final overstates what can be inferred about original investigator access. S003 denominator wording remains inherited despite correctly qualified direct recheck notes. F2 acceptance is conservative self-labeling rather than removal of supported implementation evidence. Hash/source-ID preservation identifies the lineage; independent source reasoning establishes supported meaning.",
+      "stage_locators": [
+        "investigator/discovery.md:7",
+        "investigator/draft.md:28",
+        "critic/critique.md:52",
+        "reviser/final.md:22",
+        "reviser/final.md:64",
+        "reviser/final.md:215"
+      ],
+      "primary_evidence": [
+        "E002",
+        "E003",
+        "E007",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "material_remaining_findings": []
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "COMPLETE",
+      "source_result": "QUALIFIED_WITH_LIMITATIONS",
+      "assessment": "Executed work is source searching, literature comparison and recorded rechecks only; no cooperative food/package/sensory/microbial test, calculation, simulation, vendor contact or qualification is claimed. Proposed pilot uses independent bake-batch blocks, within-batch randomization, controlled common monitored distribution-relevant exposure, pack-out versus storage moisture/aw, separate package-integrity observations and blind customer-relevant texture measures. Three batches are a screening repeatability proposal, not a power claim. Destructive tests use sacrificial packs; reopening is not repeated sealed-storage validation. Owner-defined useful effect, duration, integrity and cost/burden limits plus between-batch uncertainty govern advancement. Instrument limits and no-lab screening limits are explicit. Published critical aw, modeled duration, R², film-barrier figures and seal strength cannot act as the local texture, integrity or safety oracle. A separate qualified safety assessment precedes broader release claims.",
+      "stage_locators": [
+        "reviser/final.md:59",
+        "reviser/final.md:66",
+        "reviser/final.md:68",
+        "reviser/final.md:70",
+        "reviser/final.md:94",
+        "reviser/final.md:213"
+      ],
+      "primary_evidence": [
+        "E001",
+        "E005",
+        "E006",
+        "E009",
+        "E010",
+        "E011",
+        "E012",
+        "E013",
+        "E014",
+        "E015"
+      ],
+      "material_remaining_findings": []
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "category": "quantitative_wording_and_source_condition",
+      "material": false,
+      "stage_locators": [
+        "reviser/final.md:24",
+        "reviser/final.md:35",
+        "investigator/source-map.json:ER12-S003",
+        "critic/source-map.json:ER12-S003",
+        "reviser/source-map.json:ER12-S003"
+      ],
+      "finding": "Inherited source maps describe approximately 25% increased transfer relative to film-only behavior; final text/table say a 25% transfer increase. The independently opened author-affiliated abstract instead describes regular seals as approximately 25% of TOTAL transfer. The critic/reviser direct-recheck fields themselves preserve the total-transfer wording without reconciling the inherited wording.",
+      "primary_evidence": [
+        "E003"
+      ],
+      "context_and_uncertainty": "An indexed British Library deposited research summary also surfaced authored highlights saying increase up to 25%, alongside the total-transfer abstract wording. Direct library fetch timed out; publisher full body was unavailable (FULL API 401). Thus the exact full-paper normalization/range remains unresolved. Do not invent a universal recalculated percentage or silently edit the frozen science.",
+      "materiality_rationale": "No package-ingress calculation, numerical decision threshold, procurement winner, safe life or setting uses the percentage. The consequence actually recommended is qualitative whole-package/closure testing, independently supported by S004 and S012 as well. This is a real precision/source-locator limitation, not an established material unsupported decision."
+    },
+    {
+      "id": "L2",
+      "category": "overstrict_criticism_and_disposition",
+      "material": false,
+      "stage_locators": [
+        "critic/critique.md:18",
+        "reviser/final.md:222",
+        "reviser/final.md:236"
+      ],
+      "finding": "F2 and its final acceptance classify authenticated named commercial production/maintenance records as necessary to satisfy the original history inquiry.",
+      "primary_evidence": [
+        "E004",
+        "E007",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "context_and_uncertainty": "The original says implementation OR production history and unsuccessful OR maintenance-heavy reports. The pipeline has actual implemented lab packaging/sealing comparisons, a failed CNF-only control and adverse/limited seal outcomes, plus measured commercial package constructions and a failed model. Named line maintenance and the hypothetical cooperative records are absent.",
+      "materiality_rationale": "Reject the critic material-failure classification; retain the useful practical limit. The final does not remove the completed inquiry or impose a nonexistent successful deployment. It remains a bounded research proposal with vendor-history diligence for later procurement."
+    },
+    {
+      "id": "L3",
+      "category": "historical_source_access_provenance",
+      "material": false,
+      "stage_locators": [
+        "reviser/final.md:22",
+        "reviser/final.md:209",
+        "reviser/source-map.json:reviser_review/direct_primary_source_rechecks/ER12-S002"
+      ],
+      "finding": "Final wording that neither investigator nor critic independently verified S002 is stronger than the evidence. The original investigator notes claim publisher-preview/PubMed review; critic fetch failure does not establish that the original investigator had no evidence.",
+      "primary_evidence": [
+        "E002"
+      ],
+      "context_and_uncertainty": "Original historical access is self-reported, without an independent raw request trace. This reviewer retrieved PubMed abstract and primary indexed publisher preview, verifying the mechanism, exact oven/core temperatures and outcome distinction.",
+      "materiality_rationale": "The final retains rather than deletes the bounded moisture-gradient lead, uses no transferred condition, and proposes relevant measurements. This is a provenance wording limitation, not a remaining false causal recommendation."
+    },
+    {
+      "id": "L4",
+      "category": "abbreviated_study_conditions",
+      "material": false,
+      "stage_locators": [
+        "reviser/final.md:34",
+        "reviser/final.md:36",
+        "reviser/final.md:37",
+        "reviser/final.md:39",
+        "reviser/final.md:40"
+      ],
+      "finding": "Some table shorthand obscures exact study conditions: 44 MAP means declared MAP (S004); S012 thresholds apply to selected Film 3, not every one of four films; S006 8% moisture is dry basis and the CNC arm is 1 wt%; S013 LLDPE identifies the sealant, not an all-LLDPE stack; S014 PE/PP denotes alternative pouch materials, not a specified laminate.",
+      "primary_evidence": [
+        "E004",
+        "E006",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "materiality_rationale": "Independent notes retain the exact subjects/units. The final prohibits transfer and selects no study threshold, recipe, production setting or commercial candidate. These are bounded completeness/wording limitations; none supports a materially different cooperative decision."
+    },
+    {
+      "id": "L5",
+      "category": "retrieval_and_external_inputs",
+      "material": false,
+      "finding": "Some primary full methods are unavailable (notably S001-S003, S005, S008, S013 and S015 to the reviewer). Exact S003 environmental ranges, actual cooperative formulation/film/lots/sealer/storage/texture/cost and laboratory availability remain unknown. Primary abstracts/previews are not represented as full methods.",
+      "primary_evidence": [
+        "E001",
+        "E002",
+        "E003",
+        "E005",
+        "E008",
+        "E013",
+        "E015"
+      ],
+      "materiality_rationale": "Useful primary inquiry has been done. Final uses the unavailable detail as a bounded lead/context and defers numerical choices after specifying what information and measurements are needed. No vacuous caution is substituted for discovery."
+    },
+    {
+      "id": "L6",
+      "category": "organizational_metadata",
+      "material": false,
+      "stage_locators": [
+        "critic/input-map.json",
+        "reviser/final.md:3",
+        "reviser/final.md:238"
+      ],
+      "finding": "The critic input/source mapping names critic/sources, but that directory is absent; checks are embedded in critic/source-map.json, so no separate critique source notes/disposition file can be assumed. Final header still says Stage: investigator. Final no-input-opened wording is imprecise because authorized copied brief/revealed plan were required inputs.",
+      "primary_evidence": [],
+      "materiality_rationale": "Original authored notes and embedded checks are present and were fully assessed. These observations do not establish a missing final, lost scientific evidence or unauthorized sealed-input access."
+    }
+  ],
+  "corrected_lineage_defects": [
+    {
+      "id": "F3",
+      "status": "CORRECTED_IN_FINAL",
+      "draft_issue": "Film arm with its own seal/process qualification could be attributed too narrowly to film barrier.",
+      "final_qualification": "Arm D explicitly estimates whole-package-system effect; matched technically valid closure or larger film-by-seal/process factorial needed for narrower attribution.",
+      "locator": "reviser/final.md:64"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "F1",
+      "original_locator": "critic/critique.md:11",
+      "original_classification": "material incomplete",
+      "final_disposition": "accept_material_incomplete",
+      "reviewer_disposition": "ACCEPT_TIME_SHORTFALL; DO_NOT_INFER_SOURCE_FAILURE",
+      "reviewer_reason": "The original full-hour obligation is unfulfilled. About 26 minutes was available investigator time, not independently measured research time. Source coverage must be judged semantically; no specific remaining material scientific omission follows solely from occupancy.",
+      "evidence": [
+        "stage freeze deadlines",
+        "terminal-science-freeze-root.json",
+        "investigator native activation/completion artifacts"
+      ],
+      "final_locator": "reviser/final.md:221"
+    },
+    {
+      "id": "F2",
+      "original_locator": "critic/critique.md:18",
+      "original_classification": "material incomplete with external records unresolved",
+      "final_disposition": "accept_material_incomplete",
+      "reviewer_disposition": "PARTLY_ACCEPT_PRACTICAL_LIMIT; REJECT_ADDED_MATERIAL_OBLIGATION",
+      "reviewer_reason": "No authenticated named commercial maintenance/corrective-action history is available. However the original permits implementation or production history and unsuccessful or maintenance-heavy reports. Actual completed sources disclose implemented packaging/sealing and unsuccessful outcomes. Do not manufacture a mandatory commercial deployment/log or adopt a candidate self-grade as independent judgment.",
+      "evidence": [
+        "E004",
+        "E007",
+        "E012",
+        "E013",
+        "E014",
+        "C020",
+        "C039",
+        "C042"
+      ],
+      "final_locator": "reviser/final.md:222"
+    },
+    {
+      "id": "F3",
+      "original_locator": "critic/critique.md:26",
+      "original_classification": "material incomplete/design interpretation",
+      "final_disposition": "accept_and_amend",
+      "reviewer_disposition": "ACCEPT_CORRECTION; FINAL_QUALIFIED",
+      "reviewer_reason": "Original candidate film with construction-specific seal qualification could confound film-only attribution. Final explicitly makes arm D a combined system contrast and offers matched valid closures or a larger film-by-seal/process design for narrower attribution. Retained procurement comparison is useful; defect is corrected lineage, not remaining final error.",
+      "evidence": [
+        "E003",
+        "E012",
+        "E013",
+        "reviser/final.md:64"
+      ],
+      "final_locator": "reviser/final.md:223"
+    },
+    {
+      "id": "F4",
+      "original_locator": "critic/critique.md:33",
+      "original_classification": "honestly unresolved external inputs",
+      "final_disposition": "accept_unresolved_external_inputs",
+      "reviewer_disposition": "ACCEPT",
+      "reviewer_reason": "Unprovided formulation, constructions, batch mapping, cooling/storage, endpoint, cost and lab access prevent qualification and diagnosis. The final preserves both the dependencies and what a modest pilot can still learn.",
+      "evidence": [
+        "C025",
+        "C026",
+        "C027",
+        "C029"
+      ],
+      "final_locator": "reviser/final.md:224"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "topic": "Internal moisture gradients and endpoint dependence",
+      "use": "Separate pack-out/within-piece condition from external package ingress; define the customer texture endpoint rather than borrowing aw.",
+      "evidence": [
+        "E001",
+        "E002",
+        "E009",
+        "E015"
+      ],
+      "limits": "Biscuit checking differs from crispness; product-specific temperatures/thresholds do not transfer."
+    },
+    {
+      "topic": "Finished package versus nominal film",
+      "use": "Record geometry/area/fill/headspace/seams and test full qualified packages; visual appearance is insufficient.",
+      "evidence": [
+        "E003",
+        "E004"
+      ],
+      "limits": "Percentage denominator/ranges unresolved; market survey cannot diagnose this case."
+    },
+    {
+      "topic": "Competing material families with failed controls",
+      "use": "PLA/CNC versus neat PLA and CNF/wax multilayers are meaningful alternative leads if measured barrier need justifies diligence. CNF-only failure is a useful unsuccessful implementation.",
+      "evidence": [
+        "E006",
+        "E007"
+      ],
+      "limits": "Comparator films and laboratory bottle closure are not cooperative incumbent pouch qualification, availability or food-contact approval."
+    },
+    {
+      "topic": "Solid versus liquid contamination and strength versus hermeticity",
+      "use": "Investigate snack fragments, equipment/closure geometry and distinct integrity endpoints rather than borrow a universal seal rule.",
+      "evidence": [
+        "E012",
+        "E013"
+      ],
+      "limits": "Exact particle, film, dwell and geometry govern results; no production setting prescribed."
+    },
+    {
+      "topic": "Formulation-dependent model failure",
+      "use": "Moisture-isotherm/barrier predictions need measured local validation; good isotherm fit is not good shelf-life oracle.",
+      "evidence": [
+        "E005",
+        "E014"
+      ],
+      "limits": "Critical aw and modeled/validated durations belong to the source product."
+    },
+    {
+      "topic": "Oxidation versus moisture headspace tradeoff",
+      "use": "Defer MAP/headspace moisture intervention without formulation and oxidation evidence; retain it as an analogous conditional alternative.",
+      "evidence": [
+        "E008"
+      ],
+      "limits": "Model assumptions and potato-chip geometry do not establish a cooperative benefit."
+    }
+  ],
+  "meaningful_alternatives": [
+    "Current-film measured cooling/packing",
+    "Current-film qualified seal assurance",
+    "Characterized material plus qualified closure as system contrast",
+    "Measured common storage/climate control",
+    "Smaller traceable pilot lots",
+    "Conditional inventory duration/FIFO",
+    "Conditional resizing with area/fill/headspace/opening/cost/waste tradeoffs",
+    "Exploratory PLA/CNC and CNF/wax leads after barrier need",
+    "Conditional MAP/headspace approach only if oxidation is actually limiting"
+  ],
+  "validation": {
+    "executed": [
+      "Literature and primary/official-source searches and comparisons, as reported in authored artifacts",
+      "Critic and reviser direct-recheck records to their declared retrieved scope",
+      "Independent reviewer primary-source retrieval and semantic applicability assessment"
+    ],
+    "not_executed_in_candidate": [
+      "food or package experiment",
+      "sensory or microbiological test",
+      "laboratory measurement",
+      "manufacturing or sealing qualification",
+      "product-specific calculation or permeability computation",
+      "shelf-life model or simulation",
+      "vendor contact"
+    ],
+    "proposed_design": {
+      "blocks": "At least three independent bake batches as initial repeatability screen, not a power claim",
+      "assignment": "Randomize comparable portions to arms within each batch; trace pouch to batch, film/roll/operator/time/storage unit",
+      "arms": [
+        "A current film/current documented routine",
+        "B current film/defined measured cooling-packing practice",
+        "C current film/qualified seal-assurance routine",
+        "D identified candidate with qualified closure; combined package-system effect"
+      ],
+      "controls": "Common monitored storage based on actual distribution; hold recipe/bake/portion/fill/geometry/handling constant except intentional arm change; larger factorial for interactions if justified",
+      "observations": [
+        "Pack-out and subsequent moisture/aw at controlled temperature, gradients if feasible",
+        "Blind customer-defined texture, optional calibrated fracture/acoustic methods",
+        "Separate package-integrity outcome and process/climate/history logs"
+      ],
+      "destructive_sampling": "Distinct sacrificial packs at measures/timepoints; never open-reseal and call it continuous sealed storage",
+      "decision_rule": "Before unblinding define target, useful improvement, duration/exposure, acceptable integrity, cost/material/maintenance burden; advance least disruptive arm only with consistent meaningful improvement across batches and no worse integrity. Inadequate precision triggers repeat/narrow, not winner.",
+      "specialist_and_access": "Qualified safety workstream remains separate. No-lab logged blind sensory screening cannot measure aw/WVTR/leak size or safety."
+    },
+    "oracle_applicability": "No published aw, CMC, modeled date, R², peel strength or nominal WVTR is a sufficient oracle for this uncharacterized cooperative snack. Use local endpoint/instrument repeatability and actual integrity/safety protocols.",
+    "unknowns": [
+      "Sample count and intervals pending baseline variability/access",
+      "Actual distribution profile",
+      "Customer meaningful difference and texture measure",
+      "Qualified integrity protocol and safety assessment for actual construction/product"
+    ]
+  },
+  "separate_lanes": {
+    "delivery": {
+      "status": "FINAL_PRESENT",
+      "ordinary_final": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md",
+      "content_full_inspection": true,
+      "complete_original_request_fulfilled": false,
+      "reason": "The original full 60-minute research window was not fulfilled; independent semantic source judgment is qualified separately."
+    },
+    "native": {
+      "status": "PARTIAL_ARTIFACT_EVIDENCE; INDEPENDENT_RUNTIME_PROVENANCE_UNKNOWN",
+      "investigator": {
+        "activation_epoch": 1791613663,
+        "completion_epoch": 1791614891,
+        "artifact_status": "complete",
+        "artifact_timeUsedSeconds": 1227,
+        "artifact_tokensUsed": 328712,
+        "provenance": "Saved response and exact-objective guard; guard explicitly does not independently prove origin."
+      },
+      "critic": {
+        "activation_epoch": 1791614949,
+        "artifact_status": "active activation saved; no completion receipt in mapped packet",
+        "terminal_native_status": "UNKNOWN"
+      },
+      "reviser": {
+        "activation_epoch": 1791615288,
+        "completion_epoch": 1791615719,
+        "artifact_status": "complete embedded in source map",
+        "artifact_timeUsedSeconds": 431,
+        "artifact_tokensUsed": 163039,
+        "provenance": "Embedded responses; guard states provenance_independently_proved false."
+      },
+      "one_goal_only_and_all_save_ordering": "UNKNOWN from bounded packet; no independent runtime history audited"
+    },
+    "t3": {
+      "status": "ROOT_REPORTED_COMPLETED",
+      "basis": "Terminal science freeze says root observed final T3 task completed with no pending task at 2026-10-10T07:04:00.573839Z. This is a root-recorded observation, distinct from native completion proof.",
+      "live_runtime_independent_check": "NOT_PERFORMED: outside assigned frozen semantic review"
+    },
+    "time": {
+      "status": "ORIGINAL_FULL_60_MINUTES_NOT_FULFILLED",
+      "whole_prepared_utc": "2026-10-10T06:23:54.759Z",
+      "whole_deadline_utc": "2026-10-10T07:23:54.759Z",
+      "root_freeze_utc": "2026-10-10T07:04:00.573839Z",
+      "root_observed_elapsed_seconds": 2405.814839,
+      "elapsed_semantics": "Prepared-to-root-freeze wall interval, not effective scientific work or inference time. Investigator activation-to-deadline was approximately 26m12s available; saved native elapsed is about 20m28s. Neither certifies research occupancy.",
+      "stage_caps_seconds": {
+        "investigator": 1800,
+        "critic": 720,
+        "reviser": 1080
+      },
+      "effective_science_or_provider_inference_time": "UNKNOWN"
+    },
+    "effective_runtime": {
+      "requested_route": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "serviceTier": "default",
+        "runtime_mode": "full-access"
+      },
+      "effective_model_provider_options_tier": "UNKNOWN: requested fields and root report are not independent effective-runtime attestation"
+    },
+    "billing": {
+      "status": "UNKNOWN",
+      "reason": "Native token counters are not billed tokens, invoices, inference cost, throughput or savings. No comparison to another result or arm is made."
+    },
+    "protocol": {
+      "reviewer": "Unique mailbox registered; only own inbox checked (empty). No delegation, candidate assistance/repair, account changes, Git/publication, other-arm/result/history inspection or ER11 work. All writes confined to reserved control-v1.",
+      "candidate": "Scoped science packet shows mapped assignments, frozen inputs and plan reveal. Exact prior recipe/budget-lock authorization, absence of unseen assistance, runtime provenance and all save-before-native-completion ordering are UNKNOWN without full traces. No unauthorized assistance is established.",
+      "missing_mapped_path": "critic/sources directory absent; actual critic checks/dispositions embedded in source-map and final."
+    }
+  },
+  "unknowns": [
+    "Original 60-minute research occupancy was not achieved; effective science/inference duration is unknown",
+    "S003 full-paper normalization and exact environmental ranges",
+    "Original investigator S002 access trace and request-level timestamps",
+    "Unprovided actual cooperative formulation, prior/current/candidate construction, batch linkage, seal equipment and cooling/storage/distribution records",
+    "Owner-defined texture endpoint, meaningful difference, duration, cost/waste/operator burden and laboratory availability",
+    "Commercial supplier corrective-action/maintenance history beyond published laboratory/market evidence",
+    "Independent candidate native receipt origin, critic native completion, effective runtime/model/tier, billed tokens and cost",
+    "Exact prior release/budget-lock authorization and unseen-assistance audit beyond the bounded frozen science packet"
+  ],
+  "source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "sources": [
+    {
+      "id": "E001",
+      "candidate_source_id": "ER12-S001",
+      "title": "Arimi et al. — Crackerbread mechanical/acoustic crispness",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0963996910001572",
+      "doi": "10.1016/j.foodres.2010.05.004",
+      "version": "Food Research International 43(6), 2010, 1650–1655",
+      "retrieval": "Publisher indexed preview independently retrieved; direct abstract URL returned 403.",
+      "locator": "Abstract; Introduction. Independent publisher result contains complete critical-aw statement and simultaneous acquisition method.",
+      "subject_operation": "Crackerbread equilibrated over dimensionless aw 0.113–0.98; 5 mm probe on Instron; simultaneous force/acoustic acquisition.",
+      "conditions": "Critical aw 0.51–0.59 belongs to that product and measurement method. Acoustic variables were more responsive near that endpoint; this is not a universal snack threshold.",
+      "assessment": "Supports defining the cooperative's valued texture and calibrating an instrumental proxy; no case threshold is selected.",
+      "limits": "Publisher full methods not retrieved; a 2010 statement about standardization does not itself audit every 2026 method.",
+      "evidence_refs": [
+        "turn9search1",
+        "turn5view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E001.md"
+    },
+    {
+      "id": "E002",
+      "candidate_source_id": "ER12-S002",
+      "title": "Bedas et al. — Biscuit water distribution, checking and breakage",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31279129/",
+      "additional_urls": [
+        "https://www.sciencedirect.com/science/article/pii/S0308814619311811"
+      ],
+      "doi": "10.1016/j.foodchem.2019.125078",
+      "version": "Food Chemistry 299 (2019), 125078; PubMed PMID 31279129",
+      "retrieval": "Primary authors' abstract in PubMed independently opened; publisher indexed preview independently retrieved, including temperature subsection. Direct publisher open returned 403.",
+      "locator": "PubMed Abstract, lines 239–242; publisher preview 'Temperature at the heart of the product during baking, cooling and storage' and Conclusions.",
+      "subject_operation": "Round thick versus thinner pierced rectangular biscuits; Karl Fischer/NIR moisture observations and 15-day checking/breakage counting.",
+      "conditions": "Oven setpoint 210 °C; outlet core 120 ± 6 °C round and 136 ± 9 °C rectangular. Geometry/process differ together; checking is a fracture outcome, not an interchangeable crispness endpoint.",
+      "assessment": "Supports gradients and recording cooling/product geometry. Candidate appropriately avoids a transferable cooling rule.",
+      "limits": "Full methods not retrieved. Original investigator source access is self-reported; critic failure does not prove the investigator saw no preview.",
+      "evidence_refs": [
+        "turn5view1",
+        "turn15search0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E002.md"
+    },
+    {
+      "id": "E003",
+      "candidate_source_id": "ER12-S003",
+      "title": "Reinas et al. — Seals and package permeability",
+      "url": "https://ciencia.ucp.pt/en/publications/a-quantitative-approach-to-assess-the-contribution-of-seals-to-th/",
+      "additional_urls": [
+        "https://repositorio.ucp.pt/entities/publication/546b3848-594e-411e-9336-7baaea41ea4e",
+        "https://api.elsevier.com/content/article/PII:S2214289416300011?httpAccept=text/xml"
+      ],
+      "doi": "10.1016/j.fpsl.2016.01.003",
+      "version": "Food Packaging and Shelf Life 7 (2016), 34–40; publisher PII S2214289416300011",
+      "retrieval": "Author-affiliated institutional abstract independently opened; publisher metadata independently fetched. Full publisher article unavailable; unauthenticated FULL view returned 401.",
+      "locator": "Institutional Abstract lines 25–28. Publisher metadata DOI/title/PII confirm identity, not the scientific result.",
+      "subject_operation": "Moisture/oxygen transfer through PA/PE and PVDC-coated PET/PE films and thermosealed packages of differing size/seal length.",
+      "conditions": "Abstract describes regular-seal contribution as approximately 25% of total mass transfer; exact environmental ranges absent. Random leaks and consistently weak seals are distinct.",
+      "assessment": "Whole-package and seal testing is supported. Relative-to-film wording in all carried maps differs from the checked abstract; see L1. No proposed calculation, threshold or film selection uses that percentage.",
+      "limits": "Full-body denominator/ranges not verified. Library deposit metadata surfaced 'increase up to 25%' wording, but direct access timed out; that is recorded as surrounding-context uncertainty, not a separate verified governing result.",
+      "evidence_refs": [
+        "turn1view0",
+        "turn11search9"
+      ],
+      "local_evidence": [
+        "network/s003-elsevier-xml.txt",
+        "network/crossref-s003.txt",
+        "network/s003-final-context-attempts.json"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E003.md"
+    },
+    {
+      "id": "E004",
+      "candidate_source_id": "ER12-S004",
+      "title": "Schmackler et al. — Market snack-package survey",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/cite.202300110",
+      "doi": "10.1002/cite.202300110",
+      "version": "Chemie Ingenieur Technik 96(3), 2024, 329–339; first published 2023-11-28",
+      "retrieval": "Primary publisher full text independently opened and examined at methods, results and contextual calculation.",
+      "locator": "§§2.1–2.2; §§3.2–3.4; package dimensions/material section; Conclusions.",
+      "subject_operation": "108 market packages bought in Munich December 2022–February 2023; about 23 °C storage/testing; gas/aw/dimension measurements and three T-peel strips per pack.",
+      "conditions": "44 packages declared MAP; some had poor retained low oxygen. Pouches 40–84 µm, seams 0.6–1.9 cm; mostly metallized multilayer BOPP. Actual purchased-package age/RH histories unknown. Defect explanation includes calculations, not leak diagnosis for each sample.",
+      "assessment": "Supports construction/seam/history inquiry and a real commercial implementation comparator. Candidate correctly treats seal causality as hypothesized. 'Had MAP' should be 'declared MAP'.",
+      "limits": "Mixed cross-sectional products cannot diagnose the cooperative or isolate construction from production history.",
+      "evidence_refs": [
+        "turn0view1",
+        "turn4view3"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E004.md"
+    },
+    {
+      "id": "E005",
+      "candidate_source_id": "ER12-S005",
+      "title": "Sugiyono et al. — Corn-cracker critical-moisture prediction",
+      "url": "https://journal.ipb.ac.id/jtip/article/view/7682",
+      "doi": "10.6066/jtip.2013.24.2.129",
+      "version": "Jurnal Teknologi dan Industri Pangan 24(2), 2013; displayed publication 2013-12-27",
+      "retrieval": "Primary university journal page and abstract independently opened.",
+      "locator": "Abstract lines 52–54; article metadata.",
+      "subject_operation": "60% corn flour/40% glutinous rice formulation; sorption fit called Hasley in the source; critical-moisture prediction in metallized plastic.",
+      "conditions": "366 days at 30 °C/75% RH versus 150 days at 30 °C/85% RH are source model outputs.",
+      "assessment": "Useful environmental/model comparator, not measured cooperative shelf life. Candidate preserves prediction status.",
+      "limits": "Abstract does not specify a transferable detailed layer stack; no case model was run.",
+      "evidence_refs": [
+        "turn4view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E005.md"
+    },
+    {
+      "id": "E006",
+      "candidate_source_id": "ER12-S006",
+      "title": "Karkhanis et al. — Blown PLA/CNC cracker packaging",
+      "url": "https://research.fs.usda.gov/treesearch/62686",
+      "additional_urls": [
+        "https://research.fs.usda.gov/download/treesearch/62686.pdf"
+      ],
+      "doi": "10.1016/j.fpsl.2021.100689",
+      "version": "Food Packaging and Shelf Life 29 (2021), 100689; publisher PDF hosted by USDA",
+      "retrieval": "Primary USDA abstract and full paper PDF independently retrieved; governing methods/results examined.",
+      "locator": "PDF §§2.1–2.2, §3.2, Table 4; abstract.",
+      "subject_operation": "Saltine crackers in neat PLA versus PLA/1 wt% CNC blown films; moisture-time observations at 25 °C.",
+      "conditions": "Moisture uses dry basis; study's CMC is 8%. Table 4 reports hours to endpoint, with films not reaching it at tested RH up to 50% and roughly 40% longer times with CNC above that. It compares CNC to neat PLA, not to the incumbent cooperative film.",
+      "assessment": "Useful unfamiliar material lead with explicit comparator and endpoint limits; not a commercial equivalence or safety claim.",
+      "limits": "Candidate leaves moisture basis and CNC loading implicit; benign here because neither is transferred into the pilot. Qualification/cost/availability remain external.",
+      "evidence_refs": [
+        "turn4view2",
+        "turn12view0",
+        "turn12view2"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E006.md"
+    },
+    {
+      "id": "E007",
+      "candidate_source_id": "ER12-S007",
+      "title": "Pasquier et al. — Renewable CNF/wax multilayer demonstration",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9815692/",
+      "additional_urls": [
+        "https://pubs.acs.org/doi/10.1021/acsami.2c07579"
+      ],
+      "doi": "10.1021/acsami.2c07579",
+      "version": "ACS Applied Materials & Interfaces 14(26), 2022, 30236–30245; original article mirrored in PMC",
+      "retrieval": "ACS indexed original text independently retrieved; public PMC HTML independently fetched with urllib and experimental passage inspected.",
+      "locator": "Results and Discussion dry-food experiment; Figure 5 and its adjacent paragraphs.",
+      "subject_operation": "Commercial crackers in glass bottles closed with CNF, CNF/wax/CNF or functionalized multilayer films and original synthetic-film control.",
+      "conditions": "One-week 80% RH challenge; compression and moisture measurements. Wax multilayers retained fracture features similarly to the control; CNF-only did not. This is a laboratory bottle closure, not a production pouch.",
+      "assessment": "Supports both an unfamiliar barrier concept and an unsuccessful implemented control. It directly bears on the critique's excessive history requirement.",
+      "limits": "Does not prove pouch sealability, production maintenance, current availability or food-contact qualification.",
+      "evidence_refs": [
+        "turn9search0"
+      ],
+      "local_evidence": [
+        "network/s007-pmc.txt",
+        "network/retrieval-record.json"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E007.md"
+    },
+    {
+      "id": "E008",
+      "candidate_source_id": "ER12-S008",
+      "title": "Del Nobile — Potato-chip headspace modeling",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0260877400001187",
+      "doi": "10.1016/S0260-8774(00)00118-7",
+      "version": "Journal of Food Engineering 47(3), 2001, 211–215",
+      "retrieval": "Primary publisher indexed abstract/introduction/materials preview independently retrieved; direct open failed.",
+      "locator": "Introduction; Materials; Abstract.",
+      "subject_operation": "Modeled 65 g chips, 400 cm² exposed area, 1,435 cm³ headspace; PP/metallized-PP laminate versus laminated PVDC-coated PE films; nitrogen/water-vapor headspace alternatives.",
+      "conditions": "Increasing initial headspace water vapor can help when rancidity limits acceptance and hurt when moisture-driven quality loss limits it. Published percentages are model predictions; target formulation is unknown.",
+      "assessment": "Supports retaining a conditional alternative and deferring it until oxidation matters. Candidate does not recommend humidifying packages.",
+      "limits": "Full model/environmental conditions not reverified; cannot transfer quantitative gains.",
+      "evidence_refs": [
+        "turn8search0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E008.md"
+    },
+    {
+      "id": "E009",
+      "candidate_source_id": "ER12-S009",
+      "title": "FDA — Water Activity (aw) in Foods",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-technical-guides/water-activity-aw-foods",
+      "version": "Inspection Technical Guide 39, dated 1984-04-16",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Definition, Sorption Behavior and Measurement Equipment, lines 72–101.",
+      "subject_operation": "Dimensionless aw; equilibrium RH in percent divided by 100; food-specific constant-temperature sorption relation and measurement equilibration.",
+      "conditions": "Ambient RH does not simply equal product aw before equilibrium. Temperature and composition affect the measurement/relation.",
+      "assessment": "Supports separate moisture/aw observations at controlled temperature. Historical regulatory statements are excluded from present compliance advice.",
+      "limits": "Historical method context, not a current instrument specification or case safety determination.",
+      "evidence_refs": [
+        "turn2view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E009.md"
+    },
+    {
+      "id": "E010",
+      "candidate_source_id": "ER12-S010",
+      "title": "FDA — Low-moisture RTE sanitation draft",
+      "url": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/draft-guidance-industry-establishing-sanitation-programs-low-moisture-ready-eat-human-foods-and",
+      "version": "January 2025 draft; docket FDA-2024-D-2604; page still displays draft/not-for-implementation",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Draft status and Overview lines 62–89.",
+      "subject_operation": "Chips/crackers included among low-moisture RTE examples; sanitation, environmental monitoring, investigation and corrective actions.",
+      "conditions": "Guidance is draft and non-binding; it is not proof of legal compliance or safe sale.",
+      "assessment": "Supports the separate safety workstream and the original negative boundaries.",
+      "limits": "The actual cooperative hazards, formulation and applicable controls remain unassessed.",
+      "evidence_refs": [
+        "turn2view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E010.md"
+    },
+    {
+      "id": "E011",
+      "candidate_source_id": "ER12-S011",
+      "title": "FDA — Salmonella persistence",
+      "url": "https://www.fda.gov/animal-veterinary/animal-health-literacy/get-facts-about-salmonella",
+      "version": "Current displayed FDA public-information page; explicit revision ID UNKNOWN",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Characteristics of Salmonella, line 74.",
+      "subject_operation": "General persistence under freezing/drying.",
+      "conditions": "Drying usually inhibits growth without killing Salmonella; persistence in dry environments is possible.",
+      "assessment": "Supports the narrow inference that low moisture/crisp texture does not prove pathogen absence.",
+      "limits": "General organism information, not snack challenge data or proof of contamination.",
+      "evidence_refs": [
+        "turn2view2"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E011.md"
+    },
+    {
+      "id": "E012",
+      "candidate_source_id": "ER12-S012",
+      "title": "Ilhan et al. — Solid contamination and LDPE-based seal strength",
+      "url": "https://onlinelibrary.wiley.com/doi/full/10.1002/pts.2567",
+      "doi": "10.1002/pts.2567",
+      "version": "Packaging Technology and Science 34(7), 2021, 413–421; first published 2021-03-17",
+      "retrieval": "Primary publisher full text independently opened; complete governing method/result sections examined.",
+      "locator": "§§2.1–2.2.4; §§3.4–3.6.",
+      "subject_operation": "Four 50 µm PE-based films; hot tack/T-peel; conditioned 24 h at 23 °C/50% RH; varied bar geometry, material, coffee/sugar contamination and dwell.",
+      "conditions": "Threshold experiment uses selected Film 3, at 0.5 s: about 10 g/m² coffee versus 2 g/m² sugar. At 1 s, 4 g/m² did not significantly alter strength. Strength and hermeticity are distinct; grooves can create weak gap regions.",
+      "assessment": "Supports recording crumbs and closure/process conditions, and the system-level interpretation of arm D. Candidate correctly bars transfer to production settings.",
+      "limits": "Candidate omits the threshold's Film 3 restriction in its table, but prescribes no threshold. Unknown snack fragments/material cannot inherit the result.",
+      "evidence_refs": [
+        "turn3view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E012.md"
+    },
+    {
+      "id": "E013",
+      "candidate_source_id": "ER12-S013",
+      "title": "Delle Cese et al. — Liquid contamination, LLDPE sealant pouches",
+      "url": "https://repository.rit.edu/japr/vol9/iss1/5/",
+      "version": "Journal of Applied Packaging Research 9(1), 2017, Article 5; DOI not shown",
+      "retrieval": "Primary institutional journal abstract independently opened.",
+      "locator": "Abstract lines 22–28.",
+      "subject_operation": "HFFS T-point joining fin/end seams; four film layers at that junction; LLDPE sealant with control, salt-water and oil contamination.",
+      "conditions": "Within tested combinations, 140 °C/0.3 s reported optimal. Salt water had lower Phase-1 hermeticity pass rate, while strength categories did not differ over 14 days; ambient/refrigerated difference not statistically established.",
+      "assessment": "Useful contrasting endpoint/material evidence; no universal contamination or seal-setting rule follows.",
+      "limits": "LLDPE is the sealant identification, not proof of an all-LLDPE film stack. Candidate abbreviated pouch wording should be read with its map.",
+      "evidence_refs": [
+        "turn4view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E013.md"
+    },
+    {
+      "id": "E014",
+      "candidate_source_id": "ER12-S014",
+      "title": "Sirpatrawan — Rice-cracker model validation",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1745-4557.2009.00247.x",
+      "doi": "10.1111/j.1745-4557.2009.00247.x",
+      "version": "Journal of Food Quality 32(2), 2009, 224–239; first published 2009-04-02",
+      "retrieval": "Primary full text independently opened at alternate DOI path after /full path timed out.",
+      "locator": "Methods: Product/Package Characteristics, Sensory Cutoff, Experimental Shelf-life; Table 2 and model-validation discussion.",
+      "subject_operation": "Two formulations, separate PE and PP pouch materials; 20 g portions, impulse sealing, six replications, 30 °C/75% or 85% RH; ten-person trained panel and daily aw.",
+      "conditions": "Fat 1.87%/21.09%, initial moisture 4.12%/2.28%; cutoffs 0.43 ± 0.01/0.39 ± 0.02. Model validation R² 0.90/0.51; second product's duration overpredicted. Isotherm fit R² 0.98 is a different quantity.",
+      "assessment": "Supports product-specific texture oracles, replication and model-validation limits. Candidate correctly distinguishes the poor shelf-life fit from transferability.",
+      "limits": "PE/PP in the final table means alternative pouch materials; it should not be read as a laminate. No case cutoff is justified.",
+      "evidence_refs": [
+        "turn7view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E014.md"
+    },
+    {
+      "id": "E015",
+      "candidate_source_id": "ER12-S015",
+      "title": "Hough et al. — Consumer texture and biscuit aw",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1745-4603.2001.tb01034.x",
+      "doi": "10.1111/j.1745-4603.2001.tb01034.x",
+      "version": "Journal of Texture Studies 32(1), April 2001, 57–74; site displays online first-publication 2007-01-30",
+      "retrieval": "Primary publisher abstract independently opened.",
+      "locator": "Abstract lines 111–115; issue date lines 205–209.",
+      "subject_operation": "Four commercial biscuit types; trained and consumer panels; molar crispness and fracture-noise criteria.",
+      "conditions": "Ideal aw differs by product; crisp-to-noncrisp transition is gradual and criterion-dependent, with an acceptability-correlation outlier.",
+      "assessment": "Supports an owner/customer-defined texture endpoint rather than copying another snack's aw.",
+      "limits": "Full methods not independently retrieved; online-display date and issue date are distinct and preserved.",
+      "evidence_refs": [
+        "turn10view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E015.md"
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/brief.md",
+      "bytes": 2684,
+      "sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md",
+      "bytes": 7045,
+      "sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/terminal-science-freeze-root.json",
+      "bytes": 10884,
+      "sha256": "89bf0da4c4c86524a08c1307e772cfe0375b7c11ba5b096712340b6daf87870d",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/inputs/brief.md",
+      "bytes": 2684,
+      "sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "f6a79175e1eb81d7a30337788337c5cfce6f9041a40bae50083ce9629194fdec",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "f2e1d17d6758f20e50d8cb46988175190852ddfef0e292f187c0009816fded35",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "489b28eb9126df8e97bab8871c9240bb116981865cb04d012abfe1bb38b26ad0",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/source-map.json",
+      "bytes": 28069,
+      "sha256": "0ad826840c715cb2a3391ed64c57eb7b209e70ceaa7b607e63a5b68abb4e6ba6",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "24fc188143249312a02ffac407da2559b507ef58e77d99326ba3d565ff2c8869",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "b0edab4766fcc11fc0c4ec89d4c0cb79e38c3d6f7cc8275a72d931c673233842",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "feec8a3219edb4037ec6cb0cd22780de91eb5faaae12ccf4ce66530174f6dbaf",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/source-map.json",
+      "bytes": 37747,
+      "sha256": "2a7395715b798a08b9deda70923cdf88a7bee611028bfb473371d2996383baa0",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "96349576945c8fd5000d10430b0da36e76311884e1e3ce7f04ea5ccde270efd0",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "59a5b610127a68ef61c5bfd635802642a1a1a238104270b404964488a395b029",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/freeze.json",
+      "bytes": 4092,
+      "sha256": "8a9450631b6a5d675eb240918d959fd9c3b2202a7fad4259cfa90a493a43f820",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/source-map.json",
+      "bytes": 49738,
+      "sha256": "08112ddc1407c84e1e5d34114a478d90510fe0411ebed12dd46c96da92fa4ee0",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/discovery.md",
+      "bytes": 11524,
+      "sha256": "271be7e03473992f8d62cab24813f97afdbd403c3164f533e7e42bf99dff6e02",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/draft.md",
+      "bytes": 36422,
+      "sha256": "da1001bbace3b0de74ac11ad2a8203628b108333315625a3515ef7155cc16231",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 7045,
+      "sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "e8e32637560e854492ac0d1c7aae0add27eeae24304f7ac57e08d81db8b33424",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/reveal-receipt.json",
+      "bytes": 412,
+      "sha256": "10d319a301a5333db3f6818f55008b134783c4271c2bdbae11dd96dbd3f4cd67",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/critique.md",
+      "bytes": 9508,
+      "sha256": "412613b6bb91b15d44cf0774b4e97dc74ce663c80d87e954d0e48a6414f38212",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md",
+      "bytes": 49086,
+      "sha256": "6d75191a3ba013567d877194f7e369b36456eb8411674aa3a06d1211071cfc90",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S001.md",
+      "bytes": 815,
+      "sha256": "91e4d4134d7ab667232eb6400cc975e9fd4d0656dcf0a9eda59819c3e3c2765e",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S002.md",
+      "bytes": 1135,
+      "sha256": "e47b38c6f6f920b4f7b812aa84fc29c7d8cc3b1896e65a7d4b04e0c1051aab92",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S003.md",
+      "bytes": 1010,
+      "sha256": "3332f7dfaf72a948c49f73a1f71b07b93b2e8e5a92ed1703f51a7a0e3482cd74",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S004.md",
+      "bytes": 1101,
+      "sha256": "9f19bf37dee4a5a724ccbd2786259f76790c40d1e7396a10e35b46449da6292f",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S005.md",
+      "bytes": 707,
+      "sha256": "3f9cabb3f82ecf9d8fd1afc9b3078d91807caac730db562768c874f2bb8b50da",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S006.md",
+      "bytes": 964,
+      "sha256": "3ed4ea3037c7e3708ebbc6ff03356489eab0e007e549276ad7d55708b6d36a21",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S007.md",
+      "bytes": 895,
+      "sha256": "c3d219d6a107ba0ab3552cf7983d510b0be7825579e79b14ac3176db56e663b6",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S008.md",
+      "bytes": 915,
+      "sha256": "9d8b951decddf04d48bfe68fe64694fdae408d60b04a94b568c5ae1a4df68a76",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S009.md",
+      "bytes": 779,
+      "sha256": "f13bbdefab5139189afc6f52e14ed4dea5b5210a6aa3a7fbb744e26f10afce87",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S010.md",
+      "bytes": 804,
+      "sha256": "bae67b50c12a1fc9c549b90002b04217a5a35cb8011025684f354c09b0ed2b4b",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S011.md",
+      "bytes": 594,
+      "sha256": "b84d884e8d83c9fffb4d31e38d8d992e6c31e0721b94945636ef7629655487e1",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S012.md",
+      "bytes": 1025,
+      "sha256": "d3078b0afe1b0c5355456c6b738478bd6bd3c80ea547dc3f7097cfb2ec90fbdb",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S013.md",
+      "bytes": 981,
+      "sha256": "417da4cab7c841cc46e7460b503370ea8b14bf6ddbfac50e9fd4a40f8114e264",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S014.md",
+      "bytes": 1173,
+      "sha256": "716a8a80384055840c2403d5d88ad2d7936cfd322854fb918374e808f0095368",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S015.md",
+      "bytes": 986,
+      "sha256": "b99f139eeada99373764a8cad0be262319bd2d9c9420897d7a166862d3e1ce6f",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/index.md",
+      "bytes": 2257,
+      "sha256": "c54f3c702c562d82bbacf626a2e12e292bb330e35c331a0b0d4580334a349dd9",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/sources/index.md",
+      "bytes": 4184,
+      "sha256": "815a4ff4a5ed8dc207251e2cdc62f4eac80dd0e24be66dcc6d216cae2d05070f",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/native-goal-activation.json",
+      "bytes": 479,
+      "sha256": "af0ffaad673d34f3b5b08315276cd07d8572366259033b96b6524e90e55db522",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/native-goal-completion.json",
+      "bytes": 810,
+      "sha256": "7e7c0a4c75c5786df21d53b1b4a16ad26227e76682dc338a062e102673d0ce6f",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/native-goal-activation.json",
+      "bytes": 468,
+      "sha256": "b7ece9bffd7bcff46dd3e783b797580bf8b24c78f4730001f51a0f3ce7d819e4",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "464eb089b3ecfe06b33c8b98cbf3449e58e1649423391c01fd36087ecf101608",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "dc4bb23418e88605d1c6616b3a273a22c46de17ef5595cd5bd306e566a59abb0",
+      "inspection": "full text/JSON content reviewed; hash identifies original only, not semantic proof"
+    }
+  ],
+  "original_freeze_preservation": {
+    "manifest": "original-inspected-hashes.json",
+    "terminal_artifact_mismatches": [],
+    "brief_run_copy_exact": true,
+    "plan_revealed_copy_exact": true,
+    "mapped_missing_paths": [
+      "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/sources"
+    ],
+    "semantic_proof_note": "Hashes and source-ID counts establish identity/preservation only, not source correctness."
+  },
+  "review_envelope": {
+    "native_goal_created_utc": "2026-10-10T07:04:23Z",
+    "deadline_utc": "2026-10-10T07:49:23Z",
+    "cap_seconds": 2700,
+    "axes_capped_or_unassessed": [],
+    "science_scope_complete": true,
+    "native_goal_completion": "Pending until complete judgment saved and checked; see reviewer-native-completion.json for subsequent actual receipt."
+  },
+  "method": "Single independent reviewer; full original mapped text and authored evidence; governing primary retrieval to declared scope; no candidate feedback/repair or cross-arm judgment; source semantics separated from delivery/native/protocol/time/effective/billing."
+}

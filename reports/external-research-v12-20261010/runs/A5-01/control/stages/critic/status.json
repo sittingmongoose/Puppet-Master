@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "**Critic stage complete.** The native Goal was directly observed as active and then complete: `threadId` `01a12415-3f65-7fc1-9069-bcf56b4dc478`. Usage was 148,564 tokens over 6m15s; Goal provider/model provenance is recorded as UNKNOWN.\n\nThe review covers all eight obligations and preserves the optional transcript and listening-copy scope. It flags that the 20.05 release history explicitly references issue #29, while the investigator’s source map says no release link was confirmed; and that the BagIt layout does not specify how the authoritative sidecar records receive fixity coverage. The history links the ASCII-support change to #29, though that does not prove end-to-end compatibility; BagIt distinguishes payload manifests from optional tag manifests. ([release history](https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt), [RFC 8493](https://www.rfc-editor.org/rfc/rfc8493/))\n\n- [critique.md](ER12_RUNTIME/runs/A5-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/critic/sources/index.md)\n\nThe source map parsed successfully, and the artifact check confirmed the exact frozen objective and required files. No product validation was run. No nested agents or parent history were used.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a76fb103-6b2d-45ac-9f05-ded958616159",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "**Critic stage complete.** The native Goal was directly observed as active and then complete: `threadId` `01a12415-3f65-7fc1-9069-bcf56b4dc478`. Usage was 148,564 tokens over 6m15s; Goal provider/model provenance is recorded as UNKNOWN.\n\nThe review covers all eight obligations and preserves the optional transcript and listening-copy scope. It flags that the 20.05 release history explicitly references issue #29, while the investigator’s source map says no release link was confirmed; and that the BagIt layout does not specify how the authoritative sidecar records receive fixity coverage. The history links the ASCII-support change to #29, though that does not prove end-to-end compatibility; BagIt distinguishes payload manifests from optional tag manifests. ([release history](https://raw.githubusercontent.com/MediaArea/BWFMetaEdit/master/History_GUI.txt), [RFC 8493](https://www.rfc-editor.org/rfc/rfc8493/))\n\n- [critique.md](ER12_RUNTIME/runs/A5-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/control/stages/critic/sources/index.md)\n\nThe source map parsed successfully, and the artifact check confirmed the exact frozen objective and required files. No product validation was run. No nested agents or parent history were used.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a76fb103-6b2d-45ac-9f05-ded958616159",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "82d35f7ed6b367240b1ee2c35efa7f7a1fa10eb25d670514f9710336488b4f30",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A5-01/control/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

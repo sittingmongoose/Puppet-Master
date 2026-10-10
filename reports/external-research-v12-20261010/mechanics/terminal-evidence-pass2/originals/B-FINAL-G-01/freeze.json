@@ -1,0 +1,61 @@
+{
+  "native_goal_objective": "ER12 B-FINAL-G-01/treatment: execute ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "prepared_at_utc": "2026-10-10T04:02:11.000000+00:00",
+  "frozen_at_utc": "2026-10-10T04:02:11.517412+00:00",
+  "deadline_utc": "2026-10-10T04:17:11.000000+00:00",
+  "writing_start_utc": "2026-10-10T04:12:11.000000+00:00",
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/assignment.md",
+      "sha256": "22b67443a769550a84b6dc2e9e444c83b2a1d890878a88b721d735a7392419ef",
+      "bytes": 1810
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/input-map.json",
+      "sha256": "1238fd6c2bfcae3453c971f28d4e30a7e5bc35e12765b912b7b586db203d17de",
+      "bytes": 626
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/fixture.json",
+      "sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+      "bytes": 1652
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/manifest.json",
+      "sha256": "b5ef2cef29e5f924f79d05cb4cbacd2cb0d0df209bc7430d1a52321690010bb6",
+      "bytes": 624
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/assignment.md",
+      "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d",
+      "bytes": 5043
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S1.md",
+      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92",
+      "bytes": 944
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/S2.md",
+      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92",
+      "bytes": 795
+    },
+    {
+      "path": "ER12_RUNTIME/runs/B-FINAL-G-01/inputs/corpus/index.json",
+      "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732",
+      "bytes": 1281
+    }
+  ],
+  "request_sha256": "d4174092084a75a6ab13ffdf2bc244a93c84813d7f09acc328f2b3e8d99fcebc",
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+    "options": {
+      "mode": "yolo",
+      "thought": "max"
+    }
+  },
+  "protocol": "role-v1; advisory leaf controls",
+  "time_contract": "900 seconds absolute including setup/startup/tools/retries/writing/delivery; final 300 seconds writing",
+  "native_goal_status": "UNKNOWN until directly observed"
+}

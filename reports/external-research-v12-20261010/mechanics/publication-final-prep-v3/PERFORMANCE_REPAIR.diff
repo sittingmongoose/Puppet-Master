@@ -1,0 +1,93 @@
+--- v2/prepare.py
++++ v3/prepare.py
+@@ -205,14 +205,20 @@
+ 
+ def global_inventory(core, runtime, frozen, args):
+     """Finite ownership selection after the root quiet freeze; no source semantics."""
+-    files={}; deps=[]; hash_records=[]
++    files={}; deps=[]; hash_records=[]; digests={}
++    def dependency_sha(p):
++        # Read once per original path during finite selection. Original end-of-build
++        # SHA checks still re-read EVERY selected input and refuse mutations.
++        p=Path(p);key=str(p)
++        if key not in digests:digests[key]=sha(p.read_bytes())
++        return digests[key]
+     def add(p, pub=None):
+         if not p.is_file(): return
+         require(not p.is_symlink(), 'selected symlink')
+         pub=pub or str(p.relative_to(runtime));pub=relpath(pub)
+         require(pub not in files or files[pub]['original_path']==str(p), 'selected collision')
+-        b=p.read_bytes()
+-        files[pub]={'public_path':pub,'original_path':str(p),'source_path':str(p),'sha256':sha(b),'bytes':len(b),'kind':'native_host' if 'host' in p.parts and p.suffix=='.json' else 'owned'}
++        h=dependency_sha(p)
++        files[pub]={'public_path':pub,'original_path':str(p),'source_path':str(p),'sha256':h,'bytes':p.stat().st_size,'kind':'native_host' if 'host' in p.parts and p.suffix=='.json' else 'owned'}
+     def tree(d):
+         if not d.exists():return
+         require(not d.is_symlink(),'selected directory symlink')
+@@ -261,7 +267,7 @@
+                 q=Path(loc.removeprefix('ER12_RUNTIME/'));q=q if q.is_absolute() else runtime/q
+                 if q.is_relative_to(runtime) and q.is_file() and not set(q.relative_to(runtime).parts)&EXCLUDED:
+                     strict = bool(re.fullmatch(r'methods/[CD]-R[12]/RECIPE_LOCK\.json',r['public_path']) and pointer.startswith('/frozen_implementation/'))
+-                    hash_records.append(pin_record(r['public_path'],pointer,row,sha(q.read_bytes()),strict));add(q)
++                    hash_records.append(pin_record(r['public_path'],pointer,row,dependency_sha(q),strict));add(q)
+                 else:
+                     strict = bool(re.fullmatch(r'methods/[CD]-R[12]/RECIPE_LOCK\.json',r['public_path']) and pointer.startswith('/frozen_implementation/'))
+                     hash_records.append(pin_record(r['public_path'],pointer,row,None,strict))
+@@ -397,19 +403,19 @@
+         if native_envelope(pub,obj):
+             result=encode(normalize({'schema':'er12.public-native-lifecycle.v1',
+                 'actual_lifecycle_metadata':extract_meta(obj),'original_capture_sha256':sha(b),
+-                'private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/prior-public/'+pub,
++                'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub,
+                 'omitted_activity_message_bodies':True,'omitted_source_coverage':U},clean))
+             save(public,pub,result)
+             projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                 'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited native envelope metadata projection',
+-                'private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/prior-public/'+pub})
++                'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub})
+         else:
+             projected=nested_native_projection(obj)
+             if projected!=obj:
+                 result=encode(normalize(projected,clean));save(public,pub,result)
+                 projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                     'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited embedded native envelope metadata projection',
+-                    'private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/prior-public/'+pub})
++                    'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub})
+ 
+     # Authored portable implementations override capture-directory heuristics, as finalize does.
+     for v,n,checks in [('materialize-v2',21,236),('materialize-v3',33,194)]:
+@@ -442,7 +448,7 @@
+             d=json.loads(b); observations=[]
+             for r in d.get('reads',[]) if isinstance(d,dict) else []:
+                 observations.append({'actual_lifecycle_metadata':ns['extract_meta'](r.get('raw')),'observed_at':r.get('at_utc',r.get('at',U))})
+-            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
++            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
+             result=encode(normalize(projected,clean)); reason='actual native lifecycle projection; full messages private'
+         elif reason:
+             summaries=[];urls=[];selectors=[]
+@@ -451,14 +457,14 @@
+                 summaries.append({'authored_source_map':mp,'source_id':row.get('id',row.get('source_id',U)),'existing_authored_summary_fields':rr})
+                 urls += [v for v in row.values() if isinstance(v,str) and v.startswith(('https://','http://'))]
+                 selectors += [{k:v} for k,v in row.items() if re.search('locator|selector|line|anchor',k)]
+-            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
++            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
+             result=encode(normalize(projected,clean));omissions.append({'public_path':pub,**normalize(projected,clean)})
+         elif pub in recipe_pins: result=b
+         else:
+             try: obj=json.loads(b);result=encode(normalize(nested_native_projection(obj),clean))
+             except (ValueError,UnicodeDecodeError): result=clean(b.decode()).encode()
+         save(public,pub,result)
+-        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v2/'+args.output_name+'/private/originals/'+pub})
++        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub})
+     def jw(p,d): save(public,p,encode(normalize(d,clean)))
+     # Preserve historical editions before replacing current projections (already archived above).
+     current={'RESULTS.json','mechanics/SCIENTIFIC_PROGRESS.json','provenance/selected-checkpoint.json','README.md'}
+@@ -485,7 +491,7 @@
+         p=relpath(r['public_path']); require(p in selected or p in old,'selected dependency absent: '+p)
+         dependencies.append({**r,'public_sha256':sha((public/p).read_bytes()),'available':True})
+     jw('provenance/SELECTED_INPUT_DEPENDENCIES.json',{'dependencies':dependencies,'original_hash_namespace':'frozen selected original SHA','public_hash_namespace':'sanitized projection SHA','complete_root_inventory':True})
+-    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v2/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
++    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v3/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
+     jw('provenance/FINAL_NAVIGATION.json',{'counts':counts,'results':'RESULTS.json','progress':'mechanics/SCIENTIFIC_PROGRESS.json','methodmap':'provenance/FINAL_METHOD_CASE_VERSION_MAP.json','whitelist':'provenance/FINAL_WHITELIST.json','dependencies':'provenance/SELECTED_INPUT_DEPENDENCIES.json','lineage':'provenance/FINAL_PRIVACY_AND_LINEAGE.json','analysis':next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve()),'historical_editions':'historical/pre-final/'})
+     analysis_rel=next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve())
+     save(public,'README.md',public_readme(counts,analysis_rel).encode())

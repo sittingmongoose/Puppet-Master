@@ -1,0 +1,714 @@
+{
+  "schema_version": "er12-exact-plan-clause-coverage-v1",
+  "review_id": "D-R1-01/control-v1",
+  "extraction": "Sentence-sized clauses preserving exact text (bullet markers omitted); headings, case metadata and BEGIN/END delimiters are structural. Every nonstructural original plan sentence is covered. Original plan bytes remain authoritative.",
+  "clause_count": 54,
+  "clauses": [
+    {
+      "id": "C001",
+      "plan_line": 9,
+      "section": "Concealed prospective design record",
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "PROTOCOL_LIMIT",
+      "independent_judgment": "The packet records discovery before plan reveal, with a matching discovery hash and reveal receipt. Absolute concealment before authorized reveal cannot be proven without runtime access traces. This is release metadata, not an added scientific obligation.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/reveal-receipt.json",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:9"
+    },
+    {
+      "id": "C002",
+      "plan_line": 9,
+      "section": "Concealed prospective design record",
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "PRESERVED_CONTEXT",
+      "independent_judgment": "The original request and design opportunities remain frozen; review uses them as obligations, not a completed answer.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:228",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:9"
+    },
+    {
+      "id": "C003",
+      "plan_line": 9,
+      "section": "Concealed prospective design record",
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "PRESERVED_CONTEXT",
+      "independent_judgment": "The plan is not treated as empirical evidence or an answer key. The candidate supplies its own proposal and cited studies.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:18",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:9"
+    },
+    {
+      "id": "C004",
+      "plan_line": 9,
+      "section": "Concealed prospective design record",
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No predetermined method/winner is imported; baseline-first sequencing and conditional practical arms are reasoned proposals.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:49",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:9"
+    },
+    {
+      "id": "C005",
+      "plan_line": 9,
+      "section": "Concealed prospective design record",
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "PRESERVED_CONTEXT",
+      "independent_judgment": "Synthetic authoring status is kept distinct from later literature review and from future empirical validation.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:213",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:9"
+    },
+    {
+      "id": "C006",
+      "plan_line": 13,
+      "section": "Exact original request and clauses",
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "VERIFIED_TEXT",
+      "independent_judgment": "The embedded original brief and separately frozen brief were inspected in full. Their substantive clauses govern this review.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:102",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:13"
+    },
+    {
+      "id": "C007",
+      "plan_line": 13,
+      "section": "Exact original request and clauses",
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "SATISFIED_WITH_TIME_SHORTFALL",
+      "independent_judgment": "Original obligations remain visible; later critique does not replace the request. F1/F2 self-labels are independently adjudicated below.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:215",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:13"
+    },
+    {
+      "id": "C008",
+      "plan_line": 25,
+      "section": "Project situation",
+      "exact_clause": "A small food cooperative wants to study why a dry baked snack sometimes loses its crisp texture in sealed sample bags.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Study question is answered with alternative moisture/texture mechanisms and a later discriminating pilot; no mechanism is asserted as established.",
+      "primary_evidence_ids": [
+        "E001",
+        "E009",
+        "E015"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:20",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:25"
+    },
+    {
+      "id": "C009",
+      "plan_line": 25,
+      "section": "Project situation",
+      "exact_clause": "The cooperative changed both the bag supplier and the cooling routine in the same month.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Coincident supplier/cooling changes are explicitly confounded. Batch/date/roll/process records are proposed recovery, not a known natural experiment.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:53",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:25"
+    },
+    {
+      "id": "C010",
+      "plan_line": 25,
+      "section": "Project situation",
+      "exact_clause": "Some returned samples have poor texture even though the bag looks intact.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Intact appearance is a reported observation only, neither proof of integrity nor verified failure; complete-package observations are separate.",
+      "primary_evidence_ids": [
+        "E003",
+        "E004",
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:8",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:25"
+    },
+    {
+      "id": "C011",
+      "plan_line": 25,
+      "section": "Project situation",
+      "exact_clause": "A supplier has offered another film, but the cooperative would rather understand the evidence before ordering a pilot batch.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No purchase is executed or selected; exact construction and qualification must precede a candidate comparison. Lower-cost current-film routes retained.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:10",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:25"
+    },
+    {
+      "id": "C012",
+      "plan_line": 25,
+      "section": "Project situation",
+      "exact_clause": "The scenario is hypothetical, and no food or package tests have been supplied.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Hypothetical/no supplied tests is explicit. Study numbers are literature-attributed, not invented cooperative data.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:18",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:25"
+    },
+    {
+      "id": "C013",
+      "plan_line": 29,
+      "section": "Request",
+      "exact_clause": "Use the full 60-minute research window to prepare a research proposal about moisture and texture changes across packaging and handling.",
+      "disposition": "NOT_FULFILLED_TIME",
+      "independent_judgment": "The full 60-minute research requirement was not met. Stage deadlines and terminal freeze are earlier; about 26 minutes available is not actual research duration. Recorded separately from semantic source qualification.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:124",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:29"
+    },
+    {
+      "id": "C014",
+      "plan_line": 29,
+      "section": "Request",
+      "exact_clause": "Explain plausible mechanisms, compare genuinely useful alternatives, and investigate the history and operating details of comparable implementations.",
+      "disposition": "SATISFIED_WITH_LIMITS",
+      "independent_judgment": "Nonexclusive mechanisms, substantive alternatives and actual published operating examples are investigated. Commercial maintenance records remain externally unavailable; the original does not require a named commercial deployment.",
+      "primary_evidence_ids": [
+        "E002",
+        "E003",
+        "E004",
+        "E006",
+        "E007",
+        "E008",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:28",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:29"
+    },
+    {
+      "id": "C015",
+      "plan_line": 29,
+      "section": "Request",
+      "exact_clause": "Give us a later controlled pilot design and a reasoned provisional path, with uncertainty visible.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Conditional baseline-first sequence, four randomized practical arms, alternative redirects and an uncertainty-sensitive decision rule form a controlled later proposal.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:57",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:29"
+    },
+    {
+      "id": "C016",
+      "plan_line": 29,
+      "section": "Request",
+      "exact_clause": "This is a research proposal, not a production packaging specification.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No production specification, seal setpoint, release decision or numerical condition is selected for the cooperative.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:4",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:29"
+    },
+    {
+      "id": "C017",
+      "plan_line": 33,
+      "section": "Requirements to preserve",
+      "exact_clause": "Separate texture retention, package integrity, and food safety; an improvement in one does not establish the others.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Texture, package integrity and food safety are explicitly independent endpoints/workstreams. No one endpoint validates another.",
+      "primary_evidence_ids": [
+        "E010",
+        "E011",
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:26",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:33"
+    },
+    {
+      "id": "C018",
+      "plan_line": 34,
+      "section": "Requirements to preserve",
+      "exact_clause": "Compare a packaging-material or seal intervention with a cooling or storage-practice intervention and a useful option that does not require changing film.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Material/system arm D, current-film seal arm C and cooling arm B are compared; storage, duration and conditional resizing provide useful film-retaining options.",
+      "primary_evidence_ids": [
+        "E003",
+        "E006",
+        "E007",
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:61",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:34"
+    },
+    {
+      "id": "C019",
+      "plan_line": 35,
+      "section": "Requirements to preserve",
+      "exact_clause": "Consider initial product moisture, equilibration, ambient humidity, seal variation, and handling history rather than assuming nominal film barrier performance determines shelf behavior.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Initial moisture/aw, controlled measurement temperature, redistribution, RH/T, seals and handling are explicit hypotheses and logging/measurement fields.",
+      "primary_evidence_ids": [
+        "E001",
+        "E002",
+        "E003",
+        "E009",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:68",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:35"
+    },
+    {
+      "id": "C020",
+      "plan_line": 36,
+      "section": "Requirements to preserve",
+      "exact_clause": "Investigate implementation or production history, including what changed simultaneously and what comparable reports disclose about actual package construction and conditions.",
+      "disposition": "SATISFIED_WITH_LIMITS",
+      "independent_judgment": "Published implementations and market construction history are actually examined; simultaneous case changes are not causal evidence. Unknown supplier/line records are disclosed after useful inquiry, not substituted for all inquiry.",
+      "primary_evidence_ids": [
+        "E004",
+        "E006",
+        "E007",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:28",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:36"
+    },
+    {
+      "id": "C021",
+      "plan_line": 37,
+      "section": "Requirements to preserve",
+      "exact_clause": "Propose a pilot comparison with meaningful observations, traceable batches, confounder control, and a decision rule; distinguish proposed testing from searches or calculations actually executed.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Independent bake-batch blocks, within-batch randomization, common monitored exposure, destructive sampling and a pre-agreed decision rule distinguish later tests from literature searches. F3 corrected system attribution is explicit.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:59",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:37"
+    },
+    {
+      "id": "C022",
+      "plan_line": 41,
+      "section": "Boundaries",
+      "exact_clause": "Do not declare a safe shelf life, food-safety compliance, or sale readiness from the supplied anecdote or a film data sheet.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No safe shelf-life, compliance or sale-readiness conclusion is made; screening is explicitly insufficient for these claims.",
+      "primary_evidence_ids": [
+        "E010",
+        "E011"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:100",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:41"
+    },
+    {
+      "id": "C023",
+      "plan_line": 42,
+      "section": "Boundaries",
+      "exact_clause": "Do not perform food experiments, recommend ingredient additives, or prescribe a production seal setting in this assignment.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No food experiment or ingredient additive is carried out/recommended, and literature seal settings are explicitly excluded from cooperative transfer.",
+      "primary_evidence_ids": [
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:157",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:42"
+    },
+    {
+      "id": "C024",
+      "plan_line": 43,
+      "section": "Boundaries",
+      "exact_clause": "Do not invent sensory results, moisture values, storage conditions, or a verified package failure.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No case sensory/moisture/storage/failure number is invented. Literature conditions are clearly source-specific and no proposed test is called executed.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:160",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:43"
+    },
+    {
+      "id": "C025",
+      "plan_line": 47,
+      "section": "Still unresolved",
+      "exact_clause": "We have not specified ingredients, bag construction, seal equipment, cooling duration, storage distribution, batch records, packaging dimensions, or the texture measure customers value.",
+      "disposition": "HONEST_EXTERNAL_INPUT",
+      "independent_judgment": "All listed case inputs are absent and their consequences are explained: no endpoint, formulation-specific sorption, film qualification, representative challenge or attribution is yet possible.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:165",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:47"
+    },
+    {
+      "id": "C026",
+      "plan_line": 47,
+      "section": "Still unresolved",
+      "exact_clause": "The cooperative has not committed to laboratory access.",
+      "disposition": "HONEST_EXTERNAL_INPUT",
+      "independent_judgment": "Laboratory access is a feasibility gate; no assumed lab commitment. A logged blind sensory screen is feasible but cannot supply aw/WVTR/leak/safety measurements.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:168",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:47"
+    },
+    {
+      "id": "C027",
+      "plan_line": 47,
+      "section": "Still unresolved",
+      "exact_clause": "State what these gaps prevent and what a modest pilot could still learn.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Gaps are linked to decisions prevented. A modest pilot can rank local practical alternatives under measured conditions without diagnosing the returns or declaring general shelf stability.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:171",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:47"
+    },
+    {
+      "id": "C028",
+      "plan_line": 53,
+      "section": "Research question and incompleteness",
+      "exact_clause": "How could a feasible study discriminate moisture present at packing from moisture transfer or closure problems during storage, without confusing texture performance with safety assurance?",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Pack-out moisture/aw and possible gradients distinguish starting condition; later moisture/texture and package-integrity measures test ingress/closure. Safety remains separate.",
+      "primary_evidence_ids": [
+        "E002",
+        "E003",
+        "E009",
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:232",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:53"
+    },
+    {
+      "id": "C029",
+      "plan_line": 55,
+      "section": "Research question and incompleteness",
+      "exact_clause": "The endpoint, batch availability, acceptable texture change, storage regime, and cost ceiling remain undecided.",
+      "disposition": "HONEST_EXTERNAL_INPUT",
+      "independent_judgment": "Endpoint, batch availability, useful difference, exposure and costs are explicitly owner decisions. Their absence is not filled by transferred study values.",
+      "primary_evidence_ids": [
+        "E001",
+        "E014",
+        "E015"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:191",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:55"
+    },
+    {
+      "id": "C030",
+      "plan_line": 55,
+      "section": "Research question and incompleteness",
+      "exact_clause": "A strong research proposal can sequence characterization before a material trial, but should retain useful alternatives and show how observed evidence would redirect that sequence.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Characterization precedes any trial; current-film paths, material, storage, inventory and size remain available. The observation-to-next-step table shows meaningful redirection.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:72",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:55"
+    },
+    {
+      "id": "C031",
+      "plan_line": 59,
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Investigate different barrier constructions, closure consistency, cooling and packing practices, storage controls, and smaller pilot lots with explicit handling records.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Different constructions and qualified closures are supported by actual sources; cooling/storage/logged small lots are retained without turning exploratory films into ready commercial products.",
+      "primary_evidence_ids": [
+        "E003",
+        "E004",
+        "E006",
+        "E007",
+        "E012",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:234",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:59"
+    },
+    {
+      "id": "C032",
+      "plan_line": 59,
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Retaining the present film while stabilizing process variation is useful if the material comparison would otherwise be confounded.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Arms B/C retain current film; supplier/cooling confounding supports stabilizing process before attributing a material effect.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:62",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:59"
+    },
+    {
+      "id": "C033",
+      "plan_line": 59,
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Package resizing or altered inventory duration may be practical alternatives, but their cost and limitations require inquiry.",
+      "disposition": "SATISFIED_CONDITIONAL",
+      "independent_judgment": "Resizing and inventory are investigated as conditional alternatives with area/fill/headspace/opening/cost/waste effects; unprovided prices/usage remain owner inquiry.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:88",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:59"
+    },
+    {
+      "id": "C034",
+      "plan_line": 59,
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "No film, process, or endpoint is supplied as the winning choice.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "There is no named winning film, process or numerical texture threshold. Advancement depends on observed local outcomes and owner limits.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:96",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:59"
+    },
+    {
+      "id": "C035",
+      "plan_line": 63,
+      "section": "Mechanism opportunity",
+      "exact_clause": "Consider gradients and moisture transfer, redistribution inside a sealed package, seal pathways, temperature history, and changes in texture.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Gradients, within-piece/headspace redistribution, external transfer, seams, temperature and handling coexist as hypotheses; checking is bounded as a related fracture outcome.",
+      "primary_evidence_ids": [
+        "E002",
+        "E003",
+        "E008",
+        "E009"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:20",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:63"
+    },
+    {
+      "id": "C036",
+      "plan_line": 63,
+      "section": "Mechanism opportunity",
+      "exact_clause": "Nominal permeability or barrier data need a stated relationship to actual package geometry and operating conditions.",
+      "disposition": "SATISFIED_WITH_WORDING_LIMIT",
+      "independent_judgment": "Whole-package ingress is related to build, gauge, test conditions, area, fill, headspace and closure; L1 percentage denominator remains unresolved but is not used in a quantitative decision.",
+      "primary_evidence_ids": [
+        "E003",
+        "E004"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:24",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:63"
+    },
+    {
+      "id": "C037",
+      "plan_line": 63,
+      "section": "Mechanism opportunity",
+      "exact_clause": "The intact appearance of a bag does not establish its performance.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Visual intactness is explicitly insufficient evidence of either sound performance or actual failure.",
+      "primary_evidence_ids": [
+        "E003",
+        "E004",
+        "E013"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:178",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:63"
+    },
+    {
+      "id": "C038",
+      "plan_line": 63,
+      "section": "Mechanism opportunity",
+      "exact_clause": "Ask what observations would discriminate alternative mechanisms and whether they can coexist.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Pack-out versus later changes, integrity clustering, storage dependence and texture-only changes have discriminating observations/redirects. Nonexclusive mechanisms and interaction limits are explicit.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:76",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:63"
+    },
+    {
+      "id": "C039",
+      "plan_line": 67,
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Investigate relevant implementation records that specify film structure, package construction, product class, initial condition, seals, storage exposure, and outcome measurement.",
+      "disposition": "SATISFIED_WITH_LIMITS",
+      "independent_judgment": "The evidence table actually examines film/package construction, products, starting conditions where reported, seal methods, exposure and outcome methods. Missing source/case fields remain unknown; no universal setting is transferred.",
+      "primary_evidence_ids": [
+        "E004",
+        "E006",
+        "E007",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:32",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:67"
+    },
+    {
+      "id": "C040",
+      "plan_line": 67,
+      "section": "Implementation and history opportunity",
+      "exact_clause": "A supplier story may lack comparison conditions.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Datasheet/vendor claims are insufficient; complete construction, test conditions, references and operational burden are needed before qualification.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:45",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:67"
+    },
+    {
+      "id": "C041",
+      "plan_line": 67,
+      "section": "Implementation and history opportunity",
+      "exact_clause": "The coincident supplier and cooling changes are a future records-recovery opportunity, not an existing natural experiment with a known result.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Record recovery is prospective; concurrent changes are explicitly confounded and no historical result is invented.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:53",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:67"
+    },
+    {
+      "id": "C042",
+      "plan_line": 67,
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Seek reports of unsuccessful or maintenance-heavy implementations as well as claimed improvements; this record supplies no named successful precedent.",
+      "disposition": "SATISFIED_WITH_LIMITS",
+      "independent_judgment": "The disjunctive unsuccessful OR maintenance-heavy inquiry is met by real implemented CNF-only failed protection and adverse/limited seal outcomes, plus failed model validation. Named commercial maintenance history is absent, but not an original mandatory deployment condition; F2 overstates the obligation.",
+      "primary_evidence_ids": [
+        "E007",
+        "E012",
+        "E013",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:41",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:67"
+    },
+    {
+      "id": "C043",
+      "plan_line": 71,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "A proposed later pilot could use traceable batches with independently documented packing and storage conditions, compare selected material or process factors, and monitor appropriate texture and moisture-related observations.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Traceable blocks, independently documented process/storage, randomized material/process arms and separate texture/moisture observations are proposed, not executed.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:59",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:71"
+    },
+    {
+      "id": "C044",
+      "plan_line": 71,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Explain feasible replication, destructive versus repeated observations, instrumentation limits, and the stage at which a specialist safety assessment is separately required.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Three independent batches are an initial repeatability screen, not a power claim. Sacrificial packs, repeatable noninvasive records, instrument calibration/access limits and separate safety review are explained.",
+      "primary_evidence_ids": [
+        "E001",
+        "E015",
+        "E010",
+        "E011"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:66",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:71"
+    },
+    {
+      "id": "C045",
+      "plan_line": 71,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "A permeability calculation or literature comparison executed during the hour must show assumptions and must not be described as measured shelf-life validation.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Executed work is literature search/review and comparison only. Assumptions/conditions of borrowed predictions are stated; no case permeability computation or measured shelf-life validation is claimed.",
+      "primary_evidence_ids": [
+        "E005",
+        "E006",
+        "E008",
+        "E014"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:209",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:71"
+    },
+    {
+      "id": "C046",
+      "plan_line": 73,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "PRESERVED_CONTEXT",
+      "independent_judgment": "Synthetic input preparation is original authoring context, not a prohibition on subsequent assigned research.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:18",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:73"
+    },
+    {
+      "id": "C047",
+      "plan_line": 73,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "PRESERVED_CONTEXT",
+      "independent_judgment": "No empirical case search/test/result existed at authoring. Later literature investigation is not represented as authoring-time or cooperative performance validation.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:213",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:73"
+    },
+    {
+      "id": "C048",
+      "plan_line": 73,
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "SATISFIED_WITH_PROVENANCE_LIMIT",
+      "independent_judgment": "Each stage describes searches/rechecks versus inherited notes and future tests; historical access is self-reported, not independently proven. S002 wording conflates critic failure with investigator access; L3.",
+      "primary_evidence_ids": [
+        "E002"
+      ],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:209",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:73"
+    },
+    {
+      "id": "C049",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "NOT_FULFILLED_TIME_SCOPE_ASSESSED",
+      "independent_judgment": "The full hour was not used. The substantive evidence, mechanism, alternatives, history and validation scope is nevertheless independently assessed rather than inferred from short occupancy.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:124",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    },
+    {
+      "id": "C050",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "Baseline-first provisional choices are justified; no predetermined or literature-derived winner is asserted.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:14",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    },
+    {
+      "id": "C051",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "It requests no product build.",
+      "disposition": "SATISFIED",
+      "independent_judgment": "No product build, deployment or manufacturing is requested or performed in this packet; this review adds none.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:213",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    },
+    {
+      "id": "C052",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "VERIFIED_FREEZE",
+      "independent_judgment": "Original brief and plan are unchanged; run brief and revealed plan match exact original bytes and terminal root artifact hashes. Hash equality supports preservation only, not semantic correctness.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/reveal-receipt.json",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    },
+    {
+      "id": "C053",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "disposition": "PROTOCOL_UNKNOWN",
+      "independent_judgment": "Mapped reveal receipt reports discovery freeze before plan release. Exact prior recipe/budget authorization and absence of outside designer feedback cannot be proven from the bounded science packet. No improper assistance is evidenced; no broad protocol PASS inferred.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/plan-reveal.json",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    },
+    {
+      "id": "C054",
+      "plan_line": 77,
+      "section": "Scope and release boundary",
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "PROTOCOL_UNKNOWN",
+      "independent_judgment": "Neither input readiness nor the final asserts that paired-release prerequisites have been satisfied. The final no-input-opened wording is imprecise because authorized copies were required inputs; no sealed-source misuse inferred.",
+      "primary_evidence_ids": [],
+      "stage_locator": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md:238",
+      "original_plan_locator": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md:77"
+    }
+  ],
+  "material_scientific_clause_omissions": [],
+  "time_not_fulfilled": [
+    "C013",
+    "C049"
+  ],
+  "protocol_unknown": [
+    "C001",
+    "C053",
+    "C054"
+  ]
+}

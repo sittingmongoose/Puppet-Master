@@ -1,88 +1,50 @@
----
-c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
-SPDX-License-Identifier: curl
-Title: CURLOPT_RESUME_FROM
-Section: 3
-Source: libcurl
-See-also:
-  - CURLOPT_INFILESIZE (3)
-  - CURLOPT_RANGE (3)
-  - CURLOPT_RESUME_FROM_LARGE (3)
-Protocol:
-  - All
-Added-in: 7.1
----
-
-# NAME
-
-CURLOPT_RESUME_FROM - offset to resume transfer from
-
-# SYNOPSIS
-
-~~~c
-#include <curl/curl.h>
-
-CURLcode curl_easy_setopt(CURL *handle, CURLOPT_RESUME_FROM, long from);
-~~~
-
-# DESCRIPTION
-
-Pass a long as parameter. It contains the offset in number of bytes that you
-want the transfer to start from. Set this option to 0 to make the transfer
-start from the beginning (effectively disabling resume). For FTP, set this
-option to -1 to make the transfer start from the end of the target file
-(useful to continue an interrupted upload).
-
-When doing uploads with FTP, the resume position is where in the local/source
-file libcurl should try to resume the upload from and it then appends the
-source file to the remote target file.
-
-HTTP uploads using POST or PUT cannot be resumed. curl_easy_perform(3) returns
-CURLE_BAD_FUNCTION_ARGUMENT when this option is set to a non-zero value for
-such an upload.
-
-If you need to resume a transfer beyond the 2GB limit, use
-CURLOPT_RESUME_FROM_LARGE(3) instead.
-
-# DEFAULT
-
-0, not used
-
-# %PROTOCOLS%
-
-# EXAMPLE
-
-~~~c
-int main(void)
 {
-  CURL *curl = curl_easy_init();
-  if(curl) {
-    CURLcode result;
-    long size_of_file = 6789;
-
-    curl_easy_setopt(curl, CURLOPT_URL, "ftp://example.com");
-
-    /* resume upload at byte index 200 */
-    curl_easy_setopt(curl, CURLOPT_RESUME_FROM, 200L);
-
-    /* ask for upload */
-    curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
-
-    /* set total data amount to expect */
-    curl_easy_setopt(curl, CURLOPT_INFILESIZE, size_of_file);
-
-    /* Perform the request */
-    result = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
-  }
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://github.com/curl/curl/blob/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+    "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md"
+  ],
+  "source_urls": [
+    "https://github.com/curl/curl/blob/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
+    "https://raw.githubusercontent.com/curl/curl/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md"
+  ],
+  "version": [
+    {
+      "version": "master at reviewer retrieval; exact commit UNKNOWN; documented Added-in 7.1"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        "capture lines 13, 25, 30–45"
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/B-DISC-M-01/control-v1/source-map.json",
+      "source_id": "curl-resume",
+      "existing_authored_summary_fields": {
+        "version": "master at reviewer retrieval; exact commit UNKNOWN; documented Added-in 7.1"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        "capture lines 13, 25, 30–45"
+      ]
+    }
+  ],
+  "raw_sha256": "7867237725086dfffc7dcb6f690576a9b3c1a1124c738b07bbcfef701a5788d7",
+  "rawSHA256": "7867237725086dfffc7dcb6f690576a9b3c1a1124c738b07bbcfef701a5788d7",
+  "original_bytes": 2095,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/B-DISC-M-01/control-v1/sources/curl-resume.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }
-~~~
-
-# %AVAILABILITY%
-
-# RETURN VALUE
-
-curl_easy_setopt(3) returns a CURLcode indicating success or error.
-
-CURLE_OK (0) means everything was OK, non-zero means an error occurred, see
-libcurl-errors(3).

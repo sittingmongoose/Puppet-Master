@@ -10,7 +10,7 @@
   "sources": [
     {
       "id": "O01",
-      "title": "Odoo 18.0 \u2014 Process receipts and deliveries with barcodes",
+      "title": "Odoo 18.0 — Process receipts and deliveries with barcodes",
       "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/receipts_deliveries.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified on page.",
       "locator": "Barcode app; Scan barcodes for receipts; Validating the delivery; full page.",
@@ -21,7 +21,7 @@
     },
     {
       "id": "O02",
-      "title": "Odoo 18.0 \u2014 Operation types and commands",
+      "title": "Odoo 18.0 — Operation types and commands",
       "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/operation_types.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
       "locator": "Use barcodes for inventory operations and commands; Receipts WHIN warning.",
@@ -32,7 +32,7 @@
     },
     {
       "id": "O03",
-      "title": "Odoo 18.0 \u2014 Product and location barcodes",
+      "title": "Odoo 18.0 — Product and location barcodes",
       "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/software.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
       "locator": "Barcode nomenclature; Barcode lookup; Configure product barcode.",
@@ -43,7 +43,7 @@
     },
     {
       "id": "O04",
-      "title": "Odoo 18.0 \u2014 Barcodes for lot and serial numbers",
+      "title": "Odoo 18.0 — Barcodes for lot and serial numbers",
       "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/setup/serial_numbers_lots.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
       "locator": "Mandatory and optional scanning; damaged vendor lot/serial label tip.",
@@ -54,7 +54,7 @@
     },
     {
       "id": "O05",
-      "title": "Odoo 18.0 \u2014 Default barcode nomenclature",
+      "title": "Odoo 18.0 — Default barcode nomenclature",
       "url": "https://www.odoo.com/documentation/18.0/applications/inventory_and_mrp/barcode/operations/barcode_nomenclature.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
       "locator": "Default barcode nomenclature; rule matching and custom rules.",
@@ -65,7 +65,7 @@
     },
     {
       "id": "O06",
-      "title": "Odoo 18.0 \u2014 Connect a printer / barcode scanner",
+      "title": "Odoo 18.0 — Connect a printer / barcode scanner",
       "url": "https://www.odoo.com/documentation/18.0/applications/general/iot/devices/printer.html",
       "version_or_commit": "Versioned Odoo documentation: 18.0; product patch/build is not specified.",
       "locator": "Barcode scanner issues: scanner detected as keyboard; characters individually; incorrect keyboard layout.",
@@ -76,7 +76,7 @@
     },
     {
       "id": "S01",
-      "title": "Snipe-IT \u2014 Asset Tags",
+      "title": "Snipe-IT — Asset Tags",
       "url": "https://snipe-it.readme.io/docs/asset-tags",
       "version_or_commit": "Rolling official documentation; page has no release binding. Current repository release context is v8.8.0 (commit 2c466fa), separately recorded as S04.",
       "locator": "Unique asset tag; auto-incrementing IDs; prefix; Length of Asset Tags.",
@@ -87,7 +87,7 @@
     },
     {
       "id": "S02",
-      "title": "Snipe-IT \u2014 Asset Labels",
+      "title": "Snipe-IT — Asset Labels",
       "url": "https://snipe-it.readme.io/docs/asset-labels",
       "version_or_commit": "Rolling official documentation; no release version shown. Page indicates an update six months before access; current release context Snipe-IT v8.8.0 is separately S04.",
       "locator": "1D and 2D labels; QR; USB/Bluetooth scanner; barcode setting.",
@@ -98,7 +98,7 @@
     },
     {
       "id": "S03",
-      "title": "Snipe-IT \u2014 Importing Assets",
+      "title": "Snipe-IT — Importing Assets",
       "url": "https://snipe-it.readme.io/docs/importing-assets",
       "version_or_commit": "Rolling official documentation; no release version shown.",
       "locator": "Mapping Asset Fields; ID; Asset Tag; Serial.",
@@ -120,7 +120,7 @@
     },
     {
       "id": "S05",
-      "title": "Snipe-IT issue #19515 \u2014 QR Code Text missing in New Label Engine",
+      "title": "Snipe-IT issue #19515 — QR Code Text missing in New Label Engine",
       "url": "https://github.com/grokability/snipe-it/issues/19515",
       "version_or_commit": "Issue reports Snipe-IT v8.7.1; opened 2026-08-18; closed 2026-09-23 after fix commit c1d1cd1.",
       "locator": "Description; Snipe-IT Version; linked PR and close activity.",
@@ -131,7 +131,7 @@
     },
     {
       "id": "S06",
-      "title": "Snipe-IT PR #19633 \u2014 code diff for QR text transfer",
+      "title": "Snipe-IT PR #19633 — code diff for QR text transfer",
       "url": "https://github.com/grokability/snipe-it/pull/19633/files",
       "version_or_commit": "Commit 1e0fc8c (change), merged commit c1d1cd1 on 2026-09-17 into develop; fix appears in v8.8.0.",
       "locator": "SettingsController.php transition logic and labels-new-engine view diff.",
@@ -142,7 +142,7 @@
     },
     {
       "id": "S07",
-      "title": "Snipe-IT PR #19679 \u2014 1D barcode support for Zebra template",
+      "title": "Snipe-IT PR #19679 — 1D barcode support for Zebra template",
       "url": "https://github.com/grokability/snipe-it/pull/19679",
       "version_or_commit": "Commit df2c3d8, merged 2026-09-23 into develop; included in v8.8.0 release notes.",
       "locator": "PR description and merge metadata.",
@@ -164,7 +164,7 @@
     },
     {
       "id": "G02",
-      "title": "GS1 \u2014 Redirection: from scan to content",
+      "title": "GS1 — Redirection: from scan to content",
       "url": "https://ref.gs1.org/docs/2024/redirection-from-scan-to-content",
       "version_or_commit": "Official GS1 guidance, copyright 2024; no point version shown.",
       "locator": "Pages 1-3: organizational split, redirects, domain ownership, analytics, 303 recommendation.",
@@ -197,7 +197,7 @@
     },
     {
       "id": "Z01",
-      "title": "ZXing PR #1681 \u2014 update GS1 AIs to 2023 spec",
+      "title": "ZXing PR #1681 — update GS1 AIs to 2023 spec",
       "url": "https://github.com/zxing/zxing/pull/1681",
       "version_or_commit": "Commit 557b5fc; merged 2023-09-04; milestone 3.5.3.",
       "locator": "Conversation description, compatibility note, milestone.",
@@ -219,7 +219,7 @@
     },
     {
       "id": "Z03",
-      "title": "ZXing PR #1839 \u2014 preserve QRCodeMultiReader symbology identifier",
+      "title": "ZXing PR #1839 — preserve QRCodeMultiReader symbology identifier",
       "url": "https://github.com/zxing/zxing/pull/1839",
       "version_or_commit": "Commit 34588d8; merged 2024-08-02.",
       "locator": "Background/change/technical details.",
@@ -241,10 +241,10 @@
     },
     {
       "id": "S08",
-      "title": "Snipe-IT \u2014 Managing Assets",
+      "title": "Snipe-IT — Managing Assets",
       "url": "https://snipe-it.readme.io/docs/managing-assets",
       "version_or_commit": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
-      "locator": "Best Practices \u2014 Checking out assets to non-people.",
+      "locator": "Best Practices — Checking out assets to non-people.",
       "access_utc": "2026-10-10T05:15:00Z",
       "observed_operation": "Snipe-IT says asset checkouts can target a location or another asset but discourages non-person targets because they cannot be accountable for damage/loss.",
       "governing_condition_default_exception": "This is stated best-practice guidance, not a technical prohibition; location checkout remains possible.",
@@ -252,7 +252,7 @@
     },
     {
       "id": "S09",
-      "title": "Snipe-IT \u2014 Overview",
+      "title": "Snipe-IT — Overview",
       "url": "https://snipe-it.readme.io/docs/overview",
       "version_or_commit": "Rolling official documentation; no release version shown; accessed 2026-10-10.",
       "locator": "Assets; Asset Tags; Checkin/Checkout.",

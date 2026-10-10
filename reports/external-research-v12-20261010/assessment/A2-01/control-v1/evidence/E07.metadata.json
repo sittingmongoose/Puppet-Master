@@ -1,22 +1,20 @@
 {
-  "id": "E07",
-  "url": "https://github.com/getodk/collect/commit/0bc6cde",
-  "access_started_utc": "2026-10-10T04:55:53.243400+00:00",
-  "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
-  "candidate_ids": [
-    "S07",
-    "C07"
-  ],
-  "http_status": 200,
-  "effective_url": "https://github.com/getodk/collect/commit/0bc6cde",
-  "raw_path": "evidence/E07.html",
-  "raw_sha256": "7fa500883b0f0be483fa635a99e0be57d28d04f4ea3c88422839b01c9f603cb8",
-  "text_path": "evidence/E07.txt",
-  "text_sha256": "a2565c4c9b68ae3b4b0c57c035b7c35002f0138f51ac4d2aa621c4d7094b1873",
-  "response_headers": {
-    "Date": "Sat, 10 Oct 2026 04:55:53 GMT",
-    "Content-Type": "text/html; charset=utf-8",
-    "ETag": "W/\"173385609ec72cd3570908bc06f9e0de\""
-  },
-  "access_finished_utc": "2026-10-10T04:55:53.848625+00:00"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "fd7ce952a22d63f68ff70c9fe004ffcfa914bbf039ae5be38e245256e199af64",
+  "rawSHA256": "fd7ce952a22d63f68ff70c9fe004ffcfa914bbf039ae5be38e245256e199af64",
+  "original_bytes": 860,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A2-01/control-v1/evidence/E07.metadata.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

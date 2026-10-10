@@ -1,0 +1,366 @@
+{
+  "schema_version": "er12-independent-source-map-v1",
+  "review_id": "D-R1-01/control-v1",
+  "scope": "Only frozen D-R1-01/control",
+  "independence": "Records were written from independent primary-source retrieval and original artifacts. Candidate agreement, hashes and counts are not semantic proof.",
+  "sources": [
+    {
+      "id": "E001",
+      "candidate_source_id": "ER12-S001",
+      "title": "Arimi et al. — Crackerbread mechanical/acoustic crispness",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0963996910001572",
+      "doi": "10.1016/j.foodres.2010.05.004",
+      "version": "Food Research International 43(6), 2010, 1650–1655",
+      "retrieval": "Publisher indexed preview independently retrieved; direct abstract URL returned 403.",
+      "locator": "Abstract; Introduction. Independent publisher result contains complete critical-aw statement and simultaneous acquisition method.",
+      "subject_operation": "Crackerbread equilibrated over dimensionless aw 0.113–0.98; 5 mm probe on Instron; simultaneous force/acoustic acquisition.",
+      "conditions": "Critical aw 0.51–0.59 belongs to that product and measurement method. Acoustic variables were more responsive near that endpoint; this is not a universal snack threshold.",
+      "assessment": "Supports defining the cooperative's valued texture and calibrating an instrumental proxy; no case threshold is selected.",
+      "limits": "Publisher full methods not retrieved; a 2010 statement about standardization does not itself audit every 2026 method.",
+      "evidence_refs": [
+        "turn9search1",
+        "turn5view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E001.md"
+    },
+    {
+      "id": "E002",
+      "candidate_source_id": "ER12-S002",
+      "title": "Bedas et al. — Biscuit water distribution, checking and breakage",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31279129/",
+      "additional_urls": [
+        "https://www.sciencedirect.com/science/article/pii/S0308814619311811"
+      ],
+      "doi": "10.1016/j.foodchem.2019.125078",
+      "version": "Food Chemistry 299 (2019), 125078; PubMed PMID 31279129",
+      "retrieval": "Primary authors' abstract in PubMed independently opened; publisher indexed preview independently retrieved, including temperature subsection. Direct publisher open returned 403.",
+      "locator": "PubMed Abstract, lines 239–242; publisher preview 'Temperature at the heart of the product during baking, cooling and storage' and Conclusions.",
+      "subject_operation": "Round thick versus thinner pierced rectangular biscuits; Karl Fischer/NIR moisture observations and 15-day checking/breakage counting.",
+      "conditions": "Oven setpoint 210 °C; outlet core 120 ± 6 °C round and 136 ± 9 °C rectangular. Geometry/process differ together; checking is a fracture outcome, not an interchangeable crispness endpoint.",
+      "assessment": "Supports gradients and recording cooling/product geometry. Candidate appropriately avoids a transferable cooling rule.",
+      "limits": "Full methods not retrieved. Original investigator source access is self-reported; critic failure does not prove the investigator saw no preview.",
+      "evidence_refs": [
+        "turn5view1",
+        "turn15search0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E002.md"
+    },
+    {
+      "id": "E003",
+      "candidate_source_id": "ER12-S003",
+      "title": "Reinas et al. — Seals and package permeability",
+      "url": "https://ciencia.ucp.pt/en/publications/a-quantitative-approach-to-assess-the-contribution-of-seals-to-th/",
+      "additional_urls": [
+        "https://repositorio.ucp.pt/entities/publication/546b3848-594e-411e-9336-7baaea41ea4e",
+        "https://api.elsevier.com/content/article/PII:S2214289416300011?httpAccept=text/xml"
+      ],
+      "doi": "10.1016/j.fpsl.2016.01.003",
+      "version": "Food Packaging and Shelf Life 7 (2016), 34–40; publisher PII S2214289416300011",
+      "retrieval": "Author-affiliated institutional abstract independently opened; publisher metadata independently fetched. Full publisher article unavailable; unauthenticated FULL view returned 401.",
+      "locator": "Institutional Abstract lines 25–28. Publisher metadata DOI/title/PII confirm identity, not the scientific result.",
+      "subject_operation": "Moisture/oxygen transfer through PA/PE and PVDC-coated PET/PE films and thermosealed packages of differing size/seal length.",
+      "conditions": "Abstract describes regular-seal contribution as approximately 25% of total mass transfer; exact environmental ranges absent. Random leaks and consistently weak seals are distinct.",
+      "assessment": "Whole-package and seal testing is supported. Relative-to-film wording in all carried maps differs from the checked abstract; see L1. No proposed calculation, threshold or film selection uses that percentage.",
+      "limits": "Full-body denominator/ranges not verified. Library deposit metadata surfaced 'increase up to 25%' wording, but direct access timed out; that is recorded as surrounding-context uncertainty, not a separate verified governing result.",
+      "evidence_refs": [
+        "turn1view0",
+        "turn11search9"
+      ],
+      "local_evidence": [
+        "network/s003-elsevier-xml.txt",
+        "network/crossref-s003.txt",
+        "network/s003-final-context-attempts.json"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E003.md"
+    },
+    {
+      "id": "E004",
+      "candidate_source_id": "ER12-S004",
+      "title": "Schmackler et al. — Market snack-package survey",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/cite.202300110",
+      "doi": "10.1002/cite.202300110",
+      "version": "Chemie Ingenieur Technik 96(3), 2024, 329–339; first published 2023-11-28",
+      "retrieval": "Primary publisher full text independently opened and examined at methods, results and contextual calculation.",
+      "locator": "§§2.1–2.2; §§3.2–3.4; package dimensions/material section; Conclusions.",
+      "subject_operation": "108 market packages bought in Munich December 2022–February 2023; about 23 °C storage/testing; gas/aw/dimension measurements and three T-peel strips per pack.",
+      "conditions": "44 packages declared MAP; some had poor retained low oxygen. Pouches 40–84 µm, seams 0.6–1.9 cm; mostly metallized multilayer BOPP. Actual purchased-package age/RH histories unknown. Defect explanation includes calculations, not leak diagnosis for each sample.",
+      "assessment": "Supports construction/seam/history inquiry and a real commercial implementation comparator. Candidate correctly treats seal causality as hypothesized. 'Had MAP' should be 'declared MAP'.",
+      "limits": "Mixed cross-sectional products cannot diagnose the cooperative or isolate construction from production history.",
+      "evidence_refs": [
+        "turn0view1",
+        "turn4view3"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E004.md"
+    },
+    {
+      "id": "E005",
+      "candidate_source_id": "ER12-S005",
+      "title": "Sugiyono et al. — Corn-cracker critical-moisture prediction",
+      "url": "https://journal.ipb.ac.id/jtip/article/view/7682",
+      "doi": "10.6066/jtip.2013.24.2.129",
+      "version": "Jurnal Teknologi dan Industri Pangan 24(2), 2013; displayed publication 2013-12-27",
+      "retrieval": "Primary university journal page and abstract independently opened.",
+      "locator": "Abstract lines 52–54; article metadata.",
+      "subject_operation": "60% corn flour/40% glutinous rice formulation; sorption fit called Hasley in the source; critical-moisture prediction in metallized plastic.",
+      "conditions": "366 days at 30 °C/75% RH versus 150 days at 30 °C/85% RH are source model outputs.",
+      "assessment": "Useful environmental/model comparator, not measured cooperative shelf life. Candidate preserves prediction status.",
+      "limits": "Abstract does not specify a transferable detailed layer stack; no case model was run.",
+      "evidence_refs": [
+        "turn4view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E005.md"
+    },
+    {
+      "id": "E006",
+      "candidate_source_id": "ER12-S006",
+      "title": "Karkhanis et al. — Blown PLA/CNC cracker packaging",
+      "url": "https://research.fs.usda.gov/treesearch/62686",
+      "additional_urls": [
+        "https://research.fs.usda.gov/download/treesearch/62686.pdf"
+      ],
+      "doi": "10.1016/j.fpsl.2021.100689",
+      "version": "Food Packaging and Shelf Life 29 (2021), 100689; publisher PDF hosted by USDA",
+      "retrieval": "Primary USDA abstract and full paper PDF independently retrieved; governing methods/results examined.",
+      "locator": "PDF §§2.1–2.2, §3.2, Table 4; abstract.",
+      "subject_operation": "Saltine crackers in neat PLA versus PLA/1 wt% CNC blown films; moisture-time observations at 25 °C.",
+      "conditions": "Moisture uses dry basis; study's CMC is 8%. Table 4 reports hours to endpoint, with films not reaching it at tested RH up to 50% and roughly 40% longer times with CNC above that. It compares CNC to neat PLA, not to the incumbent cooperative film.",
+      "assessment": "Useful unfamiliar material lead with explicit comparator and endpoint limits; not a commercial equivalence or safety claim.",
+      "limits": "Candidate leaves moisture basis and CNC loading implicit; benign here because neither is transferred into the pilot. Qualification/cost/availability remain external.",
+      "evidence_refs": [
+        "turn4view2",
+        "turn12view0",
+        "turn12view2"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E006.md"
+    },
+    {
+      "id": "E007",
+      "candidate_source_id": "ER12-S007",
+      "title": "Pasquier et al. — Renewable CNF/wax multilayer demonstration",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9815692/",
+      "additional_urls": [
+        "https://pubs.acs.org/doi/10.1021/acsami.2c07579"
+      ],
+      "doi": "10.1021/acsami.2c07579",
+      "version": "ACS Applied Materials & Interfaces 14(26), 2022, 30236–30245; original article mirrored in PMC",
+      "retrieval": "ACS indexed original text independently retrieved; public PMC HTML independently fetched with urllib and experimental passage inspected.",
+      "locator": "Results and Discussion dry-food experiment; Figure 5 and its adjacent paragraphs.",
+      "subject_operation": "Commercial crackers in glass bottles closed with CNF, CNF/wax/CNF or functionalized multilayer films and original synthetic-film control.",
+      "conditions": "One-week 80% RH challenge; compression and moisture measurements. Wax multilayers retained fracture features similarly to the control; CNF-only did not. This is a laboratory bottle closure, not a production pouch.",
+      "assessment": "Supports both an unfamiliar barrier concept and an unsuccessful implemented control. It directly bears on the critique's excessive history requirement.",
+      "limits": "Does not prove pouch sealability, production maintenance, current availability or food-contact qualification.",
+      "evidence_refs": [
+        "turn9search0"
+      ],
+      "local_evidence": [
+        "network/s007-pmc.txt",
+        "network/retrieval-record.json"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E007.md"
+    },
+    {
+      "id": "E008",
+      "candidate_source_id": "ER12-S008",
+      "title": "Del Nobile — Potato-chip headspace modeling",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0260877400001187",
+      "doi": "10.1016/S0260-8774(00)00118-7",
+      "version": "Journal of Food Engineering 47(3), 2001, 211–215",
+      "retrieval": "Primary publisher indexed abstract/introduction/materials preview independently retrieved; direct open failed.",
+      "locator": "Introduction; Materials; Abstract.",
+      "subject_operation": "Modeled 65 g chips, 400 cm² exposed area, 1,435 cm³ headspace; PP/metallized-PP laminate versus laminated PVDC-coated PE films; nitrogen/water-vapor headspace alternatives.",
+      "conditions": "Increasing initial headspace water vapor can help when rancidity limits acceptance and hurt when moisture-driven quality loss limits it. Published percentages are model predictions; target formulation is unknown.",
+      "assessment": "Supports retaining a conditional alternative and deferring it until oxidation matters. Candidate does not recommend humidifying packages.",
+      "limits": "Full model/environmental conditions not reverified; cannot transfer quantitative gains.",
+      "evidence_refs": [
+        "turn8search0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E008.md"
+    },
+    {
+      "id": "E009",
+      "candidate_source_id": "ER12-S009",
+      "title": "FDA — Water Activity (aw) in Foods",
+      "url": "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations/inspection-technical-guides/water-activity-aw-foods",
+      "version": "Inspection Technical Guide 39, dated 1984-04-16",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Definition, Sorption Behavior and Measurement Equipment, lines 72–101.",
+      "subject_operation": "Dimensionless aw; equilibrium RH in percent divided by 100; food-specific constant-temperature sorption relation and measurement equilibration.",
+      "conditions": "Ambient RH does not simply equal product aw before equilibrium. Temperature and composition affect the measurement/relation.",
+      "assessment": "Supports separate moisture/aw observations at controlled temperature. Historical regulatory statements are excluded from present compliance advice.",
+      "limits": "Historical method context, not a current instrument specification or case safety determination.",
+      "evidence_refs": [
+        "turn2view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E009.md"
+    },
+    {
+      "id": "E010",
+      "candidate_source_id": "ER12-S010",
+      "title": "FDA — Low-moisture RTE sanitation draft",
+      "url": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/draft-guidance-industry-establishing-sanitation-programs-low-moisture-ready-eat-human-foods-and",
+      "version": "January 2025 draft; docket FDA-2024-D-2604; page still displays draft/not-for-implementation",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Draft status and Overview lines 62–89.",
+      "subject_operation": "Chips/crackers included among low-moisture RTE examples; sanitation, environmental monitoring, investigation and corrective actions.",
+      "conditions": "Guidance is draft and non-binding; it is not proof of legal compliance or safe sale.",
+      "assessment": "Supports the separate safety workstream and the original negative boundaries.",
+      "limits": "The actual cooperative hazards, formulation and applicable controls remain unassessed.",
+      "evidence_refs": [
+        "turn2view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E010.md"
+    },
+    {
+      "id": "E011",
+      "candidate_source_id": "ER12-S011",
+      "title": "FDA — Salmonella persistence",
+      "url": "https://www.fda.gov/animal-veterinary/animal-health-literacy/get-facts-about-salmonella",
+      "version": "Current displayed FDA public-information page; explicit revision ID UNKNOWN",
+      "retrieval": "Official primary page independently opened.",
+      "locator": "Characteristics of Salmonella, line 74.",
+      "subject_operation": "General persistence under freezing/drying.",
+      "conditions": "Drying usually inhibits growth without killing Salmonella; persistence in dry environments is possible.",
+      "assessment": "Supports the narrow inference that low moisture/crisp texture does not prove pathogen absence.",
+      "limits": "General organism information, not snack challenge data or proof of contamination.",
+      "evidence_refs": [
+        "turn2view2"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E011.md"
+    },
+    {
+      "id": "E012",
+      "candidate_source_id": "ER12-S012",
+      "title": "Ilhan et al. — Solid contamination and LDPE-based seal strength",
+      "url": "https://onlinelibrary.wiley.com/doi/full/10.1002/pts.2567",
+      "doi": "10.1002/pts.2567",
+      "version": "Packaging Technology and Science 34(7), 2021, 413–421; first published 2021-03-17",
+      "retrieval": "Primary publisher full text independently opened; complete governing method/result sections examined.",
+      "locator": "§§2.1–2.2.4; §§3.4–3.6.",
+      "subject_operation": "Four 50 µm PE-based films; hot tack/T-peel; conditioned 24 h at 23 °C/50% RH; varied bar geometry, material, coffee/sugar contamination and dwell.",
+      "conditions": "Threshold experiment uses selected Film 3, at 0.5 s: about 10 g/m² coffee versus 2 g/m² sugar. At 1 s, 4 g/m² did not significantly alter strength. Strength and hermeticity are distinct; grooves can create weak gap regions.",
+      "assessment": "Supports recording crumbs and closure/process conditions, and the system-level interpretation of arm D. Candidate correctly bars transfer to production settings.",
+      "limits": "Candidate omits the threshold's Film 3 restriction in its table, but prescribes no threshold. Unknown snack fragments/material cannot inherit the result.",
+      "evidence_refs": [
+        "turn3view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E012.md"
+    },
+    {
+      "id": "E013",
+      "candidate_source_id": "ER12-S013",
+      "title": "Delle Cese et al. — Liquid contamination, LLDPE sealant pouches",
+      "url": "https://repository.rit.edu/japr/vol9/iss1/5/",
+      "version": "Journal of Applied Packaging Research 9(1), 2017, Article 5; DOI not shown",
+      "retrieval": "Primary institutional journal abstract independently opened.",
+      "locator": "Abstract lines 22–28.",
+      "subject_operation": "HFFS T-point joining fin/end seams; four film layers at that junction; LLDPE sealant with control, salt-water and oil contamination.",
+      "conditions": "Within tested combinations, 140 °C/0.3 s reported optimal. Salt water had lower Phase-1 hermeticity pass rate, while strength categories did not differ over 14 days; ambient/refrigerated difference not statistically established.",
+      "assessment": "Useful contrasting endpoint/material evidence; no universal contamination or seal-setting rule follows.",
+      "limits": "LLDPE is the sealant identification, not proof of an all-LLDPE film stack. Candidate abbreviated pouch wording should be read with its map.",
+      "evidence_refs": [
+        "turn4view0"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E013.md"
+    },
+    {
+      "id": "E014",
+      "candidate_source_id": "ER12-S014",
+      "title": "Sirpatrawan — Rice-cracker model validation",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1745-4557.2009.00247.x",
+      "doi": "10.1111/j.1745-4557.2009.00247.x",
+      "version": "Journal of Food Quality 32(2), 2009, 224–239; first published 2009-04-02",
+      "retrieval": "Primary full text independently opened at alternate DOI path after /full path timed out.",
+      "locator": "Methods: Product/Package Characteristics, Sensory Cutoff, Experimental Shelf-life; Table 2 and model-validation discussion.",
+      "subject_operation": "Two formulations, separate PE and PP pouch materials; 20 g portions, impulse sealing, six replications, 30 °C/75% or 85% RH; ten-person trained panel and daily aw.",
+      "conditions": "Fat 1.87%/21.09%, initial moisture 4.12%/2.28%; cutoffs 0.43 ± 0.01/0.39 ± 0.02. Model validation R² 0.90/0.51; second product's duration overpredicted. Isotherm fit R² 0.98 is a different quantity.",
+      "assessment": "Supports product-specific texture oracles, replication and model-validation limits. Candidate correctly distinguishes the poor shelf-life fit from transferability.",
+      "limits": "PE/PP in the final table means alternative pouch materials; it should not be read as a laminate. No case cutoff is justified.",
+      "evidence_refs": [
+        "turn7view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E014.md"
+    },
+    {
+      "id": "E015",
+      "candidate_source_id": "ER12-S015",
+      "title": "Hough et al. — Consumer texture and biscuit aw",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1745-4603.2001.tb01034.x",
+      "doi": "10.1111/j.1745-4603.2001.tb01034.x",
+      "version": "Journal of Texture Studies 32(1), April 2001, 57–74; site displays online first-publication 2007-01-30",
+      "retrieval": "Primary publisher abstract independently opened.",
+      "locator": "Abstract lines 111–115; issue date lines 205–209.",
+      "subject_operation": "Four commercial biscuit types; trained and consumer panels; molar crispness and fracture-noise criteria.",
+      "conditions": "Ideal aw differs by product; crisp-to-noncrisp transition is gradual and criterion-dependent, with an acceptability-correlation outlier.",
+      "assessment": "Supports an owner/customer-defined texture endpoint rather than copying another snack's aw.",
+      "limits": "Full methods not independently retrieved; online-display date and issue date are distinct and preserved.",
+      "evidence_refs": [
+        "turn10view1"
+      ],
+      "access_date": "2026-10-10",
+      "exact_web_request_utc": "UNKNOWN: web tool did not expose request UTC",
+      "default": "N/A: research observations, not software/service defaults",
+      "independent_check": true,
+      "reviewer_evidence_path": "evidence/E015.md"
+    }
+  ],
+  "original_artifact_manifest": "original-inspected-hashes.json",
+  "exact_clause_dispositions": "clause-coverage.json",
+  "evidence_index": "evidence/index.md",
+  "primary_evidence_capture_note": "Navigable bounded reviewer notes carry primary URLs and section locators. Available public network captures retain original retrieval metadata. Full publisher text blocked or not checked is explicitly labeled; no credential or account change occurred."
+}

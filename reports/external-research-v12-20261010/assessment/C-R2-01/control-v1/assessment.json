@@ -1,0 +1,3660 @@
+{
+  "assessment_version": "control-v1",
+  "rubric_version": "ER12 independent rubric v1",
+  "case_id": "ER12-C-R2-01-FRESH",
+  "slot_id": "C-R2-01",
+  "arm": "control",
+  "source_judgment": "FAIL",
+  "source_judgment_basis": "M1 is a remaining material original-plan omission. Correct primary claims and corrected earlier defects do not cure absent comparative scope.",
+  "final_artifact": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+  "delivery_judgment": "COMPLETE_ARTIFACT_SET",
+  "coverage_judgment": "ALL_SIX_AXES_FULLY_ASSESSED",
+  "unassessed_axes": [],
+  "reviewer_identity": "codex-er12-c-r2-01-control-v1-review",
+  "review_started_at_utc": "2026-10-10T06:25:50Z",
+  "review_saved_at_utc": "2026-10-10T06:50:05.688723+00:00",
+  "review_deadline_utc": "2026-10-10T07:10:50Z",
+  "review_envelope_minutes": 45,
+  "review_elapsed_seconds_at_save": 1455.7,
+  "review_capped": false,
+  "review_native_goal": {
+    "active_receipt": "ER12_RUNTIME/assessment/C-R2-01/control-v1/reviewer-native-goal-active.json",
+    "thread_id": "01a1247c-fc3c-7512-9121-b2f9923ad915",
+    "objective_chars": 987,
+    "completion_receipt": "ER12_RUNTIME/assessment/C-R2-01/control-v1/reviewer-native-goal-completion.json",
+    "save_before_completion": true,
+    "status_at_judgment_save": "active; complete only after output verification"
+  },
+  "method": {
+    "independent_primary_retrieval": true,
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "account_changes": false,
+    "git_or_publication": false,
+    "other_arms_results_history_or_ER11_access": false,
+    "original_source_modification": false,
+    "pm_mail": "Unique reviewer registered; only own inbox checked; roster/other outcome labels not read.",
+    "hashes_not_semantic_proof": true
+  },
+  "axes": [
+    {
+      "id": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "finding": "Material issue present: M1. All original brief context/outcomes/boundaries and unresolved inputs are addressed in the final except the explicit plan reversibility comparison. Original 60-minute request is separately not demonstrated as elapsed time; early-completion stage mechanics are disclosed. Final excludes heat/solvents/destructive collection sampling/removal, archival-advertising safety and lifetime extrapolation.",
+      "finding_ids": [
+        "M1"
+      ],
+      "limits": [
+        "L3",
+        "L4"
+      ],
+      "support": [
+        "exact_plan_clause_audit",
+        "lineage:G7",
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Consequential source claims: subject, operation, version, defaults, units, type, domain and exceptions",
+      "coverage": "ASSESSED_FULL",
+      "finding": "No remaining material scientific claim error found. Independently verified governing primary study/specification conditions, including print-model scope, RH-cycle method, permanent adhesion, ribbon/curved-surface qualifications, local seasonal monitoring and HDPE-specific evidence. Candidate maps have minor dates/operation precision issues. Numeric 15-min/six-coupon/12-week choices are proposed operational choices, not borrowed source defaults.",
+      "finding_ids": [],
+      "limits": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "support": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E07",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "finding": "Discovery is substantive: drying restraint/moisture transients, delayed ink co-solvent curl, printer-specific housing systems, low-energy sleeve interface, mechanical retention and observation-first practice. Records requests discriminate simultaneous supply/printer changes and identify lot/formulation/work-instruction history. Final preserves the monitoring alternative and technical breadth, but does not substantively carry the requested reversibility comparison/mechanical evaluation through its decision study (M1). No requirement for a brand winner or unidentified supplier history is invented.",
+      "finding_ids": [
+        "M1"
+      ],
+      "limits": [
+        "L5"
+      ],
+      "support": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E07",
+        "E08",
+        "E09",
+        "lineage:G4"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "finding": "All four criticisms have explicit final dispositions and were independently adjudicated. I-1 is a useful contingent clarification rather than proof that original brief required a sleeve factorial; I-2/I-4 corrections are sound; I-3 uncertainty was appropriate for mapped packets. No empirical product rejection or fabricated tested result. However the Plan meaningful-alternatives Covered disposition overstates reversibility coverage (M1). Full exact-clause ledger independently records this rather than accepting stage labels.",
+      "finding_ids": [
+        "M1"
+      ],
+      "limits": [
+        "L4"
+      ],
+      "support": [
+        "critic_dispositions",
+        "exact_plan_clause_audit",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Supported meaning preserved through discovery/draft/critique/final",
+      "coverage": "ASSESSED_FULL",
+      "finding": "Core conditional mechanisms, system/history records, separate endpoints, monitoring, consent/unknowns and proposed-only status survive. Original commercial-pulp and unsupported-duration/sleeve-scope issues are corrected or qualified. Discovery’s conditional coupon-heating permission is excluded in the final. Mechanical-attachment comparison substance is compressed and required reversibility remains unoperationalized (M1); agreement and stable hashes do not cure this.",
+      "finding_ids": [
+        "M1"
+      ],
+      "limits": [
+        "L2"
+      ],
+      "support": [
+        "lineage",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "finding": "Proposed validation is largely discriminating: compatible staged contrasts, sleeve strata, reference/unprinted/bare controls, repeated measurements at conditioned reference, independent outcomes and predeclared owner gates. No actual case performance was tested. Six coupons do not certify rare failures; seasonal monitoring does not validate adhesion; 12 weeks is a cap with an inconclusive outcome. Reversibility has no prospective comparison/oracle in the final despite the exact plan requirement (M1). Other material identities/thresholds legitimately remain external after necessary desk investigation.",
+      "finding_ids": [
+        "M1"
+      ],
+      "limits": [
+        "L3"
+      ],
+      "support": [
+        "validation_audit",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ]
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "M1",
+      "severity": "material omission",
+      "remaining_in_final": true,
+      "title": "Required reversibility comparison is asserted covered but absent from the final decision study",
+      "exact_obligation": "Compare reversibility and annotation preservation as well as apparent adhesion.",
+      "obligation_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 59,
+        "line_end": 59,
+        "section": "Meaningful useful alternatives"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 32,
+          "section": "Owner decisions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 64,
+          "section": "Study, measurements and decision gates"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 106,
+          "line_end": 107,
+          "section": "Plan dispositions"
+        }
+      ],
+      "prior_supported_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 34,
+          "line_end": 39,
+          "section": "Readability and alternatives"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 72,
+          "line_end": 72,
+          "section": "Separate usability mock-up"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/discovery.md",
+          "line_start": 1,
+          "line_end": 1,
+          "section": "Alternatives and history that discriminate causes"
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ],
+      "observation": "The final names replaceability and whether mechanical retention is workable as owner choices, and cites NARA’s permanent/difficult-to-remove adhesive. Its prospective measurements/gates nevertheless contain only dimensions, bond failure, readability, identity and contact risk. It supplies neither a comparison of reversibility nor an explicit prospective reversibility question/assessment for the candidate and retain-current/nonadhesive options. Reversibility appears as a claimed covered gate only in the clause register. A bond peel measurement and spontaneous lift/ooze recording do not themselves compare whether a label/retention method can be undone while preserving the sleeve and original information.",
+      "materiality": "This is an explicit original plan criterion for choosing among attachment approaches, not an invented requirement to use a reversible adhesive or remove collection labels. NARA’s specification values permanent attachment whereas the NMS guidance distinguishes secure attachment from reversibility. An option can meet the final’s stated bond/legibility gates while leaving that requested tradeoff unassessed. The decision study therefore cannot support its claim that all exact plan clauses are covered.",
+      "external_choice_distinction": "The owner may still decide whether replacement/removability is required, and no universal reversibility threshold or performance test is required now. The missing element is the requested research comparison and how that unresolved requirement bears on choosing an approach. Merely leaving replaceability open does not perform that comparison.",
+      "lineage": "The investigator discovered removable loop/tag/insert/secondary-enclosure options and a separate mock-up with visibility, retrieval, snagging, handling and misassociation checks. The final retains an environmental alternative well, but compresses mechanical retention to a tag citation and claimed mock-up in the register; it does not preserve the substantive alternative evaluation. The earlier draft itself only weakly operationalized reversibility, so this is both an unresolved plan omission and a loss of supported alternative substance.",
+      "conclusion": "Source-backed FAIL for full-pipeline qualification. No candidate repair or feedback was provided.",
+      "materiality_inference": "This is a reviewer inference from the explicit plan criterion, the complete final measurement/gate text, and primary guidance/specification distinctions. No actual sleeve or product was observed to fail."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "minor source metadata",
+      "text": "All stage maps describe S05/S06 as having no displayed date. Independent official pages show S05 Page details 2021-02-05, and S06 a 2018 publication/catalog/ISBN plus Page details 2025-12-02. This does not overturn the environmental or paper-mechanics claim.",
+      "evidence_ids": [
+        "E05",
+        "E06"
+      ]
+    },
+    {
+      "id": "L2",
+      "kind": "minor operation precision / retained lineage",
+      "text": "The carried S07 maps conflate 24-hour peel and loop tack as 24-hour peel/tack. Primary methods distinguish delayed peel from loop tack. The final does not use these numerical findings and explicitly preserves its own retrieval uncertainty.",
+      "evidence_ids": [
+        "E07"
+      ]
+    },
+    {
+      "id": "L3",
+      "kind": "proposal applicability",
+      "text": "The final is a research proposal with no actual case specimens, product identities, supplier records, environmental trace or acceptable failure limits. These honestly remain external prerequisites; they are not additional failures.",
+      "evidence_ids": []
+    },
+    {
+      "id": "L4",
+      "kind": "timing / protocol separate from science",
+      "text": "The original brief’s full 60-minute duration was not demonstrated. Archived native/T3 timestamps describe a shorter completed staged pipeline; exact effective research occupancy is UNKNOWN. Staged assignments also expressly permit early completion. Do not convert this into a semantic falsehood or billing/speed claim.",
+      "evidence_ids": []
+    },
+    {
+      "id": "L5",
+      "kind": "discovery breadth",
+      "text": "No case-specific product reformulation or implementation failure report can be established for unidentified supplies. The proposal gives substantive dated specifications, paper manufacturing/process mechanisms and future batch-record leads. Unknown products do not justify inventing a winner, history, lifetime or deployment.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E08"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Actual store stock/adhesive/printer/sleeve identity and condition, humidity history, failure denominator, acceptable failure rate, annotation-copy/replaceability authority and resources.",
+    "An informative coupon exposure/duration and reversibility criterion for the eventual identified system; no actual material performance or lifetime is known.",
+    "Independent authentication/freshness of candidate native receipts and exact pre-input call order; full original tool traces were not in mapped science packet and no history was accessed.",
+    "Effective provider/model/reasoning/service tier beyond requested-route/archived T3 identity fields; effective inference/research occupancy, retries/queue attribution, billable usage and cost.",
+    "Recipe-wide sealing/release authority or state of other C inputs, arms, assessments, outcome labels or ER11; deliberately not read or inferred."
+  ],
+  "exact_original_brief_clause_audit": [
+    {
+      "exact_text": "A volunteer collection store uses printed paper labels on inert sleeves.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Labels remain on sleeves; neither polymer nor adhesive is assumed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 10,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 85,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P08",
+      "id": "C1"
+    },
+    {
+      "exact_text": "A few batches have curled or detached after months in a room with variable humidity.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_QUALIFIED",
+      "assessment": "Curl/detachment, denominator and measured exposure are distinguished; anecdote is not causal proof.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 20,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 30,
+          "line_end": 40,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E05"
+      ],
+      "plan_clause_id": "P09",
+      "id": "C2"
+    },
+    {
+      "exact_text": "Staff remember changing both the label stock and printer around the same time.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Simultaneous stock/printer changes treated as confounding; only reconstructable contrasts are proposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 28,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 48,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P10",
+      "id": "C3"
+    },
+    {
+      "exact_text": "Some labels have handwritten annotations that must remain readable.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_OWNER_DEPENDENCY",
+      "assessment": "Handwritten information remains a distinct endpoint; originals kept; copied records require authority.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 60,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P11",
+      "id": "C4"
+    },
+    {
+      "exact_text": "We want a research proposal before altering the labeling practice across the collection.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Research and small approved pilot precede any wider change.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 10,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 64,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P12",
+      "id": "C5"
+    },
+    {
+      "exact_text": "The setting and anecdote are invented for this case; no specimen or monitoring data are supplied.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No fabricated specimen/environment/performance result.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 6,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 119,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P13",
+      "id": "C6"
+    },
+    {
+      "exact_text": "Use a full 60-minute research window to develop a proposal for investigating the curling and attachment problem.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 13,
+        "line_end": 13,
+        "section": null
+      },
+      "candidate_disposition": "Retain timing uncertainty, I-3",
+      "independent_status": "TIME_NOT_DEMONSTRATED_SEPARATE",
+      "assessment": "Native/T3 archive shows a shorter staged run. Final does not claim 60 elapsed minutes. Exact effective occupancy/provenance UNKNOWN; stage assignments permit early finish. This is not the basis of source FAIL.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 74,
+          "line_end": 74,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 91,
+          "line_end": 91,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P14",
+      "id": "R1"
+    },
+    {
+      "exact_text": "Explain plausible mechanisms, useful alternatives, and how manufacturing or implementation history could help separate material behavior from application practice.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 13,
+        "line_end": 13,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "MATERIAL_PARTIAL",
+      "assessment": "Mechanisms and history are substantive; useful monitoring alternative present. Required later reversibility/attachment comparison is missing and mechanical evaluation substance is compressed (M1).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 77,
+          "line_end": 77,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ],
+      "plan_clause_id": "P15",
+      "id": "R2"
+    },
+    {
+      "exact_text": "Recommend a bounded later study and a defensible decision process rather than a collection-wide fix.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 13,
+        "line_end": 13,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_M1",
+      "assessment": "Bounded staged study and predeclared gates are useful, but the requested reversibility decision criterion is not actually compared.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 34,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ],
+      "plan_clause_id": "P16",
+      "id": "R3"
+    },
+    {
+      "exact_text": "Treat dimensional stability, attachment reliability, and continued readability as distinct outcomes.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 17,
+        "line_end": 17,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Separate dimensional, bond and print/handwriting outcomes/gates; no composite score.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 12,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 56,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P17",
+      "id": "Q1"
+    },
+    {
+      "exact_text": "Compare changing paper or adhesive with at least one useful attachment or environmental-practice alternative, including retaining current materials while improving monitoring if appropriate.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 18,
+        "line_end": 18,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_SCOPE_LIMIT",
+      "assessment": "A material-system contrast is compared with retain-current/local monitoring, satisfying the at-least-one alternative minimum. Mechanical mock-up claimed but not substantively described; P31/P33 assessed separately.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 95,
+          "line_end": 95,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E05",
+        "E09"
+      ],
+      "plan_clause_id": "P18",
+      "id": "Q2"
+    },
+    {
+      "exact_text": "Consider interactions among humidity cycling, printing, adhesive application, sleeve material, and the simultaneous supply changes; do not assume the adhesive alone is responsible.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 19,
+        "line_end": 19,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_CONDITIONALLY",
+      "assessment": "Conditional hypotheses and staged/blocked feasible interactions; omitted factors explicitly unresolved; adhesive alone not diagnosed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 18,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E07"
+      ],
+      "plan_clause_id": "P19",
+      "id": "Q3"
+    },
+    {
+      "exact_text": "Include implementation history and material specifications as research leads while distinguishing accelerated tests from ordinary storage experience.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 20,
+        "line_end": 20,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Product/revision/lot/process/work-instruction records; ordinary and model/accelerated exposure separated.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 52,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "plan_clause_id": "P20",
+      "id": "Q4"
+    },
+    {
+      "exact_text": "Propose controls, observation duration, failure recording, and a way to preserve annotations; identify proposed validation separately from any executed desk analysis.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 21,
+        "line_end": 21,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_EXTERNAL_INPUTS",
+      "assessment": "Controls/schedule/failure fields and annotation preservation are specific. Duration adequately qualified as planning cap pending informative exposure; all performance work proposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 38,
+          "line_end": 64,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 115,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P21",
+      "id": "Q5"
+    },
+    {
+      "exact_text": "Do not recommend solvents, heat, destructive sampling, or removal of labels from collection objects in this assignment.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_FINAL_CORRECTED_LINEAGE",
+      "assessment": "Final explicitly excludes heat and prohibited collection interventions. Discovery’s conditional coupon-heating permission exceeded the assignment boundary and is not retained.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 38,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 52,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 99,
+          "line_end": 99,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P22",
+      "id": "B1"
+    },
+    {
+      "exact_text": "Do not name a stock or adhesive as conservation-safe solely because it is advertised as archival.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 26,
+        "line_end": 26,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No stock/adhesive conservation-safety endorsement from advertising; specifications limited by scope.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 19,
+          "line_end": 19,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 100,
+          "line_end": 100,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04"
+      ],
+      "plan_clause_id": "P23",
+      "id": "B2"
+    },
+    {
+      "exact_text": "Do not promise lifetime durability or convert an accelerated test into a storage lifetime without justified assumptions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 27,
+        "line_end": 27,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No lifetime promise or accelerated-to-years conversion; model studies not transferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 19,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 52,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 101,
+          "line_end": 101,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P24",
+      "id": "B3"
+    },
+    {
+      "exact_text": "The stock, adhesive, print process, sleeve composition, humidity history, affected proportion, and acceptable failure rate are not yet known.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 31,
+        "line_end": 31,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_EXTERNAL_INPUTS",
+      "assessment": "All named unknowns remain visible in identity, records, census and owner gates; no guess.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 6,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P25",
+      "id": "U1"
+    },
+    {
+      "exact_text": "We have not said whether labels are replaceable or whether annotations may be copied.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 31,
+        "line_end": 31,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_OWNER_DEPENDENCY",
+      "assessment": "Replaceability/copy authority explicitly open; do not copy if unauthorized.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 103,
+          "line_end": 103,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P26",
+      "id": "U2"
+    },
+    {
+      "exact_text": "Make these decision dependencies visible.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+        "line_start": 31,
+        "line_end": 31,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_M1",
+      "assessment": "Most dependencies visible. Reversibility is mentioned only by register; its comparative research decision remains unfulfilled.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 106,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "plan_clause_id": "P27",
+      "id": "U3"
+    }
+  ],
+  "exact_plan_clause_audit": [
+    {
+      "id": "P01",
+      "exact_text": "Keep this file outside the candidate-facing research packet.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "No other sealed input read; released plan only",
+      "independent_status": "RELEASE_FRAMING",
+      "assessment": "The concealed-plan instruction governs initial release, not a product requirement. Investigator assignment requires brief-only discovery and single-use reveal; receipt records release after substantive discovery. Independent access/transcript provenance is not proved.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 113,
+          "line_end": 113,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P02",
+      "exact_text": "It preserves the authored request and open design opportunities.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "CONTEXT_PRESERVED",
+      "assessment": "Plan is source/design opportunities; final gives a proposal, not an answer key or claimed case result.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 10,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P03",
+      "exact_text": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "CONTEXT_PRESERVED",
+      "assessment": "No predetermined study/result is inferred from the plan.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 10,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P04",
+      "exact_text": "Nothing here selects an eventual research method.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No advance brand/chemistry or method winner is selected.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 77,
+          "line_end": 77,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 107,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P05",
+      "exact_text": "No empirical validation has been executed in authoring this case.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 9,
+        "line_end": 9,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Synthetic case authoring did not perform validation; final distinguishes its later desk work.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 112,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P06",
+      "exact_text": "The original brief follows verbatim between the delimiters.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 13,
+        "line_end": 13,
+        "section": null
+      },
+      "candidate_disposition": "Released plan repeats original brief",
+      "independent_status": "IDENTITY_VERIFIED",
+      "assessment": "Released plan equals original frozen plan and repeats original brief bytes; equality is identity evidence only.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 81,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P07",
+      "exact_text": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 13,
+        "line_end": 13,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "MATERIAL_PARTIAL",
+      "assessment": "Original clauses independently audited. Most retained, but P33 missing comparison cannot be replaced by Covered labels; original full-hour requirement is separately reported.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 91,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "id": "P08",
+      "exact_text": "A volunteer collection store uses printed paper labels on inert sleeves.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Labels remain on sleeves; neither polymer nor adhesive is assumed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 10,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 85,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P09",
+      "exact_text": "A few batches have curled or detached after months in a room with variable humidity.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_QUALIFIED",
+      "assessment": "Curl/detachment, denominator and measured exposure are distinguished; anecdote is not causal proof.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 20,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 30,
+          "line_end": 40,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E05"
+      ]
+    },
+    {
+      "id": "P10",
+      "exact_text": "Staff remember changing both the label stock and printer around the same time.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Simultaneous stock/printer changes treated as confounding; only reconstructable contrasts are proposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 28,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 48,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P11",
+      "exact_text": "Some labels have handwritten annotations that must remain readable.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_OWNER_DEPENDENCY",
+      "assessment": "Handwritten information remains a distinct endpoint; originals kept; copied records require authority.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 60,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P12",
+      "exact_text": "We want a research proposal before altering the labeling practice across the collection.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Research and small approved pilot precede any wider change.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 10,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 64,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P13",
+      "exact_text": "The setting and anecdote are invented for this case; no specimen or monitoring data are supplied.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 25,
+        "line_end": 25,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No fabricated specimen/environment/performance result.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 6,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 119,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P14",
+      "exact_text": "Use a full 60-minute research window to develop a proposal for investigating the curling and attachment problem.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 29,
+        "line_end": 29,
+        "section": null
+      },
+      "candidate_disposition": "Retain timing uncertainty, I-3",
+      "independent_status": "TIME_NOT_DEMONSTRATED_SEPARATE",
+      "assessment": "Native/T3 archive shows a shorter staged run. Final does not claim 60 elapsed minutes. Exact effective occupancy/provenance UNKNOWN; stage assignments permit early finish. This is not the basis of source FAIL.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 74,
+          "line_end": 74,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 91,
+          "line_end": 91,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P15",
+      "exact_text": "Explain plausible mechanisms, useful alternatives, and how manufacturing or implementation history could help separate material behavior from application practice.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 29,
+        "line_end": 29,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "MATERIAL_PARTIAL",
+      "assessment": "Mechanisms and history are substantive; useful monitoring alternative present. Required later reversibility/attachment comparison is missing and mechanical evaluation substance is compressed (M1).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 77,
+          "line_end": 77,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ]
+    },
+    {
+      "id": "P16",
+      "exact_text": "Recommend a bounded later study and a defensible decision process rather than a collection-wide fix.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 29,
+        "line_end": 29,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_M1",
+      "assessment": "Bounded staged study and predeclared gates are useful, but the requested reversibility decision criterion is not actually compared.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 34,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "id": "P17",
+      "exact_text": "Treat dimensional stability, attachment reliability, and continued readability as distinct outcomes.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 33,
+        "line_end": 33,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Separate dimensional, bond and print/handwriting outcomes/gates; no composite score.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 12,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 56,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P18",
+      "exact_text": "Compare changing paper or adhesive with at least one useful attachment or environmental-practice alternative, including retaining current materials while improving monitoring if appropriate.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 34,
+        "line_end": 34,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_SCOPE_LIMIT",
+      "assessment": "A material-system contrast is compared with retain-current/local monitoring, satisfying the at-least-one alternative minimum. Mechanical mock-up claimed but not substantively described; P31/P33 assessed separately.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 95,
+          "line_end": 95,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E05",
+        "E09"
+      ]
+    },
+    {
+      "id": "P19",
+      "exact_text": "Consider interactions among humidity cycling, printing, adhesive application, sleeve material, and the simultaneous supply changes; do not assume the adhesive alone is responsible.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 35,
+        "line_end": 35,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_CONDITIONALLY",
+      "assessment": "Conditional hypotheses and staged/blocked feasible interactions; omitted factors explicitly unresolved; adhesive alone not diagnosed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 18,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E07"
+      ]
+    },
+    {
+      "id": "P20",
+      "exact_text": "Include implementation history and material specifications as research leads while distinguishing accelerated tests from ordinary storage experience.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 36,
+        "line_end": 36,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Product/revision/lot/process/work-instruction records; ordinary and model/accelerated exposure separated.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 52,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E05"
+      ]
+    },
+    {
+      "id": "P21",
+      "exact_text": "Propose controls, observation duration, failure recording, and a way to preserve annotations; identify proposed validation separately from any executed desk analysis.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 37,
+        "line_end": 37,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_EXTERNAL_INPUTS",
+      "assessment": "Controls/schedule/failure fields and annotation preservation are specific. Duration adequately qualified as planning cap pending informative exposure; all performance work proposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 38,
+          "line_end": 64,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 115,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P22",
+      "exact_text": "Do not recommend solvents, heat, destructive sampling, or removal of labels from collection objects in this assignment.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 41,
+        "line_end": 41,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_FINAL_CORRECTED_LINEAGE",
+      "assessment": "Final explicitly excludes heat and prohibited collection interventions. Discovery’s conditional coupon-heating permission exceeded the assignment boundary and is not retained.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 38,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 52,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 99,
+          "line_end": 99,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P23",
+      "exact_text": "Do not name a stock or adhesive as conservation-safe solely because it is advertised as archival.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 42,
+        "line_end": 42,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No stock/adhesive conservation-safety endorsement from advertising; specifications limited by scope.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 19,
+          "line_end": 19,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 100,
+          "line_end": 100,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "id": "P24",
+      "exact_text": "Do not promise lifetime durability or convert an accelerated test into a storage lifetime without justified assumptions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 43,
+        "line_end": 43,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No lifetime promise or accelerated-to-years conversion; model studies not transferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 19,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 52,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 101,
+          "line_end": 101,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P25",
+      "exact_text": "The stock, adhesive, print process, sleeve composition, humidity history, affected proportion, and acceptable failure rate are not yet known.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 47,
+        "line_end": 47,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_EXTERNAL_INPUTS",
+      "assessment": "All named unknowns remain visible in identity, records, census and owner gates; no guess.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 6,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P26",
+      "exact_text": "We have not said whether labels are replaceable or whether annotations may be copied.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 47,
+        "line_end": 47,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_OWNER_DEPENDENCY",
+      "assessment": "Replaceability/copy authority explicitly open; do not copy if unauthorized.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 38,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 103,
+          "line_end": 103,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P27",
+      "exact_text": "Make these decision dependencies visible.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 47,
+        "line_end": 47,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_M1",
+      "assessment": "Most dependencies visible. Reversibility is mentioned only by register; its comparative research decision remains unfulfilled.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 106,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P28",
+      "exact_text": "What minimum evidence would discriminate material incompatibility, application variation, and environmental cycling sufficiently to justify a controlled labeling-practice study?",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 53,
+        "line_end": 53,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_CONDITIONALLY",
+      "assessment": "Baseline/history/monitoring identify necessary evidence, then compatible staged contrasts distinguish varied causes only.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 52,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P29",
+      "exact_text": "Annotation handling permissions, material identities, reversibility requirements, and access to controlled exposure are unresolved.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 55,
+        "line_end": 55,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "PARTIAL_WITH_M1",
+      "assessment": "Permissions, material identity and chamber/resource access are practical gates. Reversibility requirement is listed as covered but not made a substantive research comparison.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 106,
+          "line_end": 106,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "id": "P30",
+      "exact_text": "The available hour should support a coherent research rationale and later study, not complete aging experiments or authorize changes to the collection.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 55,
+        "line_end": 55,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "SUBSTANCE_COVERED_TIME_SEPARATE",
+      "assessment": "Coherent later rationale; no aging experiments or authority for collection change claimed. Full-hour compliance separately not demonstrated.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 74,
+          "line_end": 74,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 119,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P31",
+      "exact_text": "Investigate more stable paper constructions, different attachment strategies, printer or application changes, mechanical label retention, and environmental monitoring or modest storage-practice changes.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 59,
+        "line_end": 59,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "PARTIAL_WITH_M1",
+      "assessment": "Stable-stock construction/processing and print/application leads remain conditional; monitoring is detailed. Mechanical retention is reduced to a tag citation, owner question and claimed mock-up without the prior concrete alternative checks.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 107,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09"
+      ]
+    },
+    {
+      "id": "P32",
+      "exact_text": "Current labels with improved traceability are a useful temporary option if substitution risks exceed the evidence.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 59,
+        "line_end": 59,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Retain-current enhanced traceability/monitoring is the explicit fallback when evidence/prerequisites do not justify substitution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 10,
+          "line_end": 10,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 40,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 64,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E05"
+      ]
+    },
+    {
+      "id": "P33",
+      "exact_text": "Compare reversibility and annotation preservation as well as apparent adhesion.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 59,
+        "line_end": 59,
+        "section": null
+      },
+      "candidate_disposition": "Covered; nonadhesive mock-up and monitoring remain alternatives (final line 107)",
+      "independent_status": "MATERIAL_OMISSION",
+      "assessment": "Annotation preservation and adhesion are considered, but no reversibility comparison is provided in the final study/gates. P33 is expressly required and cannot be satisfied by unknown replaceability or the Covered register (M1).",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 32,
+          "line_end": 32,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 56,
+          "line_end": 64,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 107,
+          "line_end": 107,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "id": "P34",
+      "exact_text": "No brand, chemistry, or method is chosen in advance.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 59,
+        "line_end": 59,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No predetermined brand/chemistry/method winner; candidate selection waits for evidence.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 46,
+          "line_end": 46,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 77,
+          "line_end": 77,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P35",
+      "exact_text": "Develop hypotheses about moisture-related dimensional changes, stresses within layered labels, printing effects, interfacial adhesion, and sleeve interactions.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 63,
+        "line_end": 63,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Moisture, layered-label/interface, print, sleeve and application hypotheses separated and qualified.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 20,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E07"
+      ]
+    },
+    {
+      "id": "P36",
+      "exact_text": "Separate curling of the paper itself from bond failure.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 63,
+        "line_end": 63,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Curl and bond failure independently measured and recorded.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 12,
+          "line_end": 12,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 58,
+          "line_end": 59,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P37",
+      "exact_text": "The simultaneous printer and stock changes create attribution ambiguity; a proposal should identify possible interactions and a realistic way to investigate them rather than assert which one dominates.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 63,
+        "line_end": 63,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_CONDITIONALLY",
+      "assessment": "Concurrent change recognized; reconstructable stock-by-printer contrasts and limits stated; no dominant cause asserted.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 28,
+          "line_end": 30,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 48,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P38",
+      "exact_text": "Look for relevant technical descriptions and conservation or implementation reports that include material identity, substrate, application, storage exposure, and observed failures.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 67,
+        "line_end": 67,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_LIMITS",
+      "assessment": "Primary paper/interface descriptions and dated housing specifications provide identities/methods/exposure/failure mechanisms. Conservation guidance is contextual. Actual store implementation report cannot exist in this synthetic unidentified case; future records explicitly requested.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 30,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E07",
+        "E08",
+        "E09"
+      ]
+    },
+    {
+      "id": "P39",
+      "exact_text": "Production history may reveal changes within an apparently unchanged stock name.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 67,
+        "line_end": 67,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_AS_FUTURE_LEAD",
+      "assessment": "Revision/lot/formulation/purchase records requested; unchanged name not proof of same construction. No invented supplier history.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 26,
+          "line_end": 32,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "id": "P40",
+      "exact_text": "Investigate staff batch records and printing practice as future evidence.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 67,
+        "line_end": 67,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_AS_FUTURE_LEAD",
+      "assessment": "Staff/operator/work instruction and printer/media/maintenance records specified.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 28,
+          "line_end": 30,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P41",
+      "exact_text": "Accelerated exposure records offer a research opportunity only if the proposed transfer assumptions and missing ordinary-storage evidence are stated.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 67,
+        "line_end": 67,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_QUALIFIED",
+      "assessment": "No accelerated storage-life transfer is proposed. Exposure conditions must be selected from local record/instructions and declared; ordinary evidence is presently missing.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 40,
+          "line_end": 52,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ]
+    },
+    {
+      "id": "P42",
+      "exact_text": "A later non-collection coupon study could separate stock, printing, application, and exposure factors in a manageable staged design.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 71,
+        "line_end": 71,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_CONDITIONALLY",
+      "assessment": "Manageable staged noncollection contrasts; historical feasibility limits and omitted-factor uncertainty explicit. No universal factorial obligation imposed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P43",
+      "exact_text": "Specify how curling, detachment, and legibility would be recorded; consider repeated observations, batch effects, conditioning, and handling.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 71,
+        "line_end": 71,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Repeated timepoints, lot/stratum fields, reference conditioning, independent curl/lift/legibility measures and coupon-only handling.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 48,
+          "line_end": 64,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P44",
+      "exact_text": "A proposal should choose feasible endpoints and duration from evidence rather than invent lifetime claims.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 71,
+        "line_end": 71,
+        "section": null
+      },
+      "candidate_disposition": "Covered with planning-cap qualification, final line 110",
+      "independent_status": "COVERED_QUALIFIED",
+      "assessment": "Measurements have source/mechanism rationale; twelve-week duration is candid planning maximum, not supported adequacy. Inconclusive/extension rules plus feasibility gate are useful; exact informative horizon honestly pending product/exposure.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 46,
+          "line_end": 52,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ]
+    },
+    {
+      "id": "P45",
+      "exact_text": "A sketch of factor structure or a hypothetical failure table produced during the hour is executed desk work only; no adhesive, paper, or annotation-preservation performance has been tested.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 71,
+        "line_end": 71,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Written factor structure and literature checking are desk work, not tested material/annotation performance.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 111,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P46",
+      "exact_text": "Authoring status: only synthetic input files have been prepared.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 73,
+        "line_end": 73,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "CONTEXT_PRESERVED",
+      "assessment": "Synthetic authoring status recognized, not confused with subsequent investigator desk research.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 6,
+          "line_end": 6,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 112,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P47",
+      "exact_text": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 73,
+        "line_end": 73,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "CONTEXT_PRESERVED",
+      "assessment": "No empirical case authoring/field validation invented. Subsequent literature search distinguished.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 112,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P48",
+      "exact_text": "Future researchers must state the actual extent of any work they execute.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 73,
+        "line_end": 73,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED_WITH_PROVENANCE_LIMIT",
+      "assessment": "All stages declare executed source/desk work versus unexecuted performance. Not a complete tool-history audit; actual stage retrieval traces beyond artifacts UNKNOWN.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 115,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P49",
+      "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "SUBSTANCE_PARTIAL_TIME_SEPARATE",
+      "assessment": "Core discovery/reasoning/history/validation scope substantively present; reversibility gap remains. Archived pipeline elapsed time shorter than one hour; no paired speed/billing conclusion.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 64,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 91,
+          "line_end": 113,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P50",
+      "exact_text": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "Reasoned conditional choices; no winner asserted.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 46,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 77,
+          "line_end": 77,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P51",
+      "exact_text": "It requests no product build.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "COVERED",
+      "assessment": "No product build or nonexistent implementation required or produced.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 113,
+          "line_end": 119,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P52",
+      "exact_text": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "IDENTITY_VERIFIED",
+      "assessment": "Original frozen brief/plan, candidate brief and released plan match their frozen digests; all inspected original files checked unchanged at saving. Identity is not semantic proof.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 113,
+          "line_end": 113,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P53",
+      "exact_text": "C inputs remain sealed until the recipe freeze.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "No other C inputs inspected; no release status inferred",
+      "independent_status": "RELEASE_FRAMING_UNKNOWN",
+      "assessment": "Only this case’s reveal receipt inspected. Recipe-wide sealing/release authority and other C inputs are outside this review and UNKNOWN; no assertion inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 113,
+          "line_end": 113,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    },
+    {
+      "id": "P54",
+      "exact_text": "Input readiness does not assert that those release conditions have been satisfied.",
+      "original_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 77,
+        "line_end": 77,
+        "section": null
+      },
+      "candidate_disposition": "Covered/qualified in final clause register",
+      "independent_status": "RELEASE_FRAMING_PRESERVED",
+      "assessment": "Readiness is not treated as release authorization; no inference about unrelated campaign state.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 113,
+          "line_end": 113,
+          "section": null
+        }
+      ],
+      "evidence_ids": []
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "I-1",
+      "critic_classification": "material incomplete",
+      "final_disposition": "Accept",
+      "independent_disposition": "Reasonable clarification/design strengthening; categorical materiality is conditional on multiple relevant sleeve surfaces, not an obligation to vary every factor.",
+      "analysis": "The original draft already specified spare same-lot or documented matching sleeves and discussed sleeve identity; it could hold a verified substrate fixed. It did not make a multi-sleeve stratum/scope rule explicit. The final adds blocks, no pooling, single-stratum applicability and explicit uncovered strata. This is valid and does not establish a sleeve cause or require an unsupported universal matrix.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 63,
+          "line_end": 75,
+          "section": null
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 44,
+          "line_end": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 72,
+          "line_end": 72,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E07"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "I-2",
+      "critic_classification": "material incomplete",
+      "final_disposition": "Accept and amend",
+      "independent_disposition": "Accepted in bounded form.",
+      "analysis": "The primary paper methods do not justify a 12-week label-system durability or discriminating horizon. The original draft called its 12 weeks exploratory but lacked the final’s explicit cap/adequacy distinction and inconclusive/extension rule. The final states the sources do not establish adequate duration, retains 12 weeks only as a feasibility-approved planning maximum, and gives informative-exposure/nonresponse/lot-conflict limits. Matrix scale is staged; no assumed volunteer resource limit is imposed. Remaining duration/cap choice is honestly external, not a material scientific error.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 61,
+          "line_end": 75,
+          "section": null
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 46,
+          "line_end": 52,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 73,
+          "line_end": 73,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "I-3",
+      "critic_classification": "honestly unresolved external input",
+      "final_disposition": "Retain uncertainty",
+      "independent_disposition": "Appropriate for the mapped critic/reviser packet. Reviewer can corroborate additional archived timing facts without rewriting their science.",
+      "analysis": "Critic/reviser input maps omit investigator activation receipts and timing assignment; the final accurately avoids asserting full-window compliance. This assessment has independently read the original assignment/freeze and stored native receipts, which corroborate the quoted stage deadline and a reported 928-second Goal. Receipt provenance/effective occupancy remains limited. Time is reported separately; retaining uncertainty is not a false criticism or a science repair.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 113,
+          "line_end": 113,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/critique.md",
+          "line_start": 1,
+          "line_end": 1,
+          "section": "I-3"
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 74,
+          "line_end": 74,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 91,
+          "line_end": 91,
+          "section": null
+        }
+      ],
+      "evidence_ids": [],
+      "remaining_material_issue": false
+    },
+    {
+      "id": "I-4",
+      "critic_classification": "minor locator/wording",
+      "final_disposition": "Accept",
+      "independent_disposition": "Correct and non-material.",
+      "analysis": "S01 used laboratory sheets prepared from commercial pulps, not finished commercially manufactured sheets. Final wording accurately restores the exact experimental subject. Original imprecision remains in discovery/draft lineage and does not invalidate the qualified final claim.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/discovery.md",
+          "line_start": 1,
+          "line_end": 1,
+          "section": "Paper dimensions and curl"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+          "line_start": 16,
+          "line_end": 16,
+          "section": null
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 16,
+          "line_end": 16,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+          "line_start": 75,
+          "line_end": 75,
+          "section": null
+        }
+      ],
+      "evidence_ids": [
+        "E01"
+      ],
+      "remaining_material_issue": false
+    }
+  ],
+  "lineage_assessment": [
+    {
+      "id": "G1",
+      "meaning": "Conditional moisture-cycle/restraint mechanism",
+      "status": "preserved and wording corrected",
+      "discovery": "Paper movement and study cycle separated from case prescription",
+      "draft": "Same bounded mechanism, commercial-pulp wording imprecise",
+      "critique": "I-4 precision correction",
+      "final": "Exact laboratory-sheet subject; no cycle/default/lifetime transfer",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "id": "G2",
+      "meaning": "Ink co-solvent migration and print dependence",
+      "status": "preserved",
+      "discovery": "Conditional inkjet/model-ink lead",
+      "draft": "No assumption about actual printer or bond mechanism",
+      "critique": "Primary PDF checked",
+      "final": "Two grades/60 wt% model/one-week scope retained; no handwriting or bond diagnosis",
+      "evidence_ids": [
+        "E02"
+      ]
+    },
+    {
+      "id": "G3",
+      "meaning": "Sleeve interface and system-specific label specifications",
+      "status": "preserved with explicit strata",
+      "discovery": "Polymer/treatment/application identity and HDPE lead",
+      "draft": "Matching sleeves but no explicit multi-stratum rule",
+      "critique": "I-1 identified scope/design clarification",
+      "final": "Separate sleeve blocks/strata; unknown history and omitted effects stay unresolved",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E07"
+      ]
+    },
+    {
+      "id": "G4",
+      "meaning": "Nonadhesive retention alternatives and reversibility comparison",
+      "status": "material scope omission remains (M1)",
+      "discovery": "Slip-in card/pocket, removable loop/tag on outer sleeve or secondary enclosure; mock-up criteria",
+      "draft": "Detailed nonadhesive option and distinct usability mock-up; reversibility only weakly specified",
+      "critique": "Accepted alternatives and did not detect the reversibility gap",
+      "final": "Tag citation, owner-workability question and claimed mock-up survive; comparison/prospective criteria and reversibility assessment do not",
+      "evidence_ids": [
+        "E09",
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "id": "G5",
+      "meaning": "Retain current materials with traceability/monitoring",
+      "status": "preserved substantively",
+      "discovery": "Observation-first alternative",
+      "draft": "Local loggers, 15-min example, monthly failure record and year seasonal context",
+      "critique": "CCI condition checked",
+      "final": "Same qualified monitoring and no room setpoint/control intervention",
+      "evidence_ids": [
+        "E05"
+      ]
+    },
+    {
+      "id": "G6",
+      "meaning": "Study duration and feasibility",
+      "status": "qualified final; earlier unsupported horizon retained as lineage",
+      "discovery": "12-week exploratory screen; 12-month seasonal observation",
+      "draft": "Potential full matrix/six replicates, no adequacy rationale",
+      "critique": "I-2 requests rationale or stopping/feasibility rule",
+      "final": "Planning cap only; no-failure/inadequate-exposure/conflict inconclusive; staged feasible contrasts",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ]
+    },
+    {
+      "id": "G7",
+      "meaning": "Heat boundary",
+      "status": "corrected lineage defect; no remaining final heat recommendation",
+      "discovery": "Step 4 conditionally allows a separately justified coupon test that heats coupons, though brief prohibits recommending heat in this assignment",
+      "draft": "B1 says no heat is proposed",
+      "critique": "Does not call out discovery’s broader heat permission",
+      "final": "Explicitly says this proposal includes no heat at line 52",
+      "evidence_ids": [],
+      "boundary_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+        "line_start": 41,
+        "line_end": 41,
+        "section": null
+      }
+    },
+    {
+      "id": "G8",
+      "meaning": "Annotations and actual validation status",
+      "status": "preserved and consent made explicit",
+      "discovery": "Keep originals, linked images/transcription proposed, copying permission not assumed",
+      "draft": "Independent print/handwritten endpoints; coupon-only operations",
+      "critique": "No case performance execution found",
+      "final": "If copying not authorized, do not copy; no original label alteration; all case validation remains proposed",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    }
+  ],
+  "validation_audit": [
+    {
+      "name": "Dimensional/curl outcomes",
+      "proposed": "Length/width in known directions, fixed support/photo scale, baseline/weekly/cycle/end at reference conditioning",
+      "executed": "None on case/coupons",
+      "oracle": "Separate owner-defined dimensional limits; same units/reference; paired stock/print/exposure contrasts where feasible",
+      "applicability": "Study models motivate the mechanism and measurement only; do not transfer their test cycles or lifetime.",
+      "evidence_ids": [
+        "E01",
+        "E02"
+      ]
+    },
+    {
+      "name": "Attachment",
+      "proposed": "Edge/corner lift in mm, detachment, ooze/transfer/tear/failure plane; coupon peel with angle/rate/geometry/conditioning",
+      "executed": "None",
+      "oracle": "Owner security/failure criteria by condition/lot/sleeve; no borrowed NARA threshold",
+      "applicability": "NARA 90° procurement weight test and S07 peel/tack concern different operations/materials. No bond result proves reversibility.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E07"
+      ]
+    },
+    {
+      "name": "Readability/annotations",
+      "proposed": "Separate print/handwriting image scores, authorized double-checked transcription; relevant scan/abrasion coupon checks",
+      "executed": "No annotation imaging/transcription/test",
+      "oracle": "Owner authority and acceptable legibility/identity gates, with linked originals; no copying if unauthorized",
+      "applicability": "NARA printed/scannable labels do not validate this handwriting.",
+      "evidence_ids": [
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "name": "Ordinary environmental monitoring",
+      "proposed": "Calibrated local/reference loggers, 15-min example, monthly failure census, seasonal 12 months",
+      "executed": "No logger data/deployment or failures counted",
+      "oracle": "Local patterns/denominators and failure dates inform hypotheses, not causation proof",
+      "applicability": "CCI year preference is seasonal transmission context; cannot certify adhesive duration.",
+      "evidence_ids": [
+        "E05"
+      ]
+    },
+    {
+      "name": "Factor attribution and duration",
+      "proposed": "Identity/history and sleeve feasibility gates; selected balanced stock/printer/application/exposure contrasts; six exploratory coupons/condition over lots when available; 12-week planning maximum",
+      "executed": "Written design only; no empirical or statistical validation",
+      "oracle": "Only infer varied factors; inadequate exposure, no failure or conflicting strata/lots at cap is inconclusive; owner approves any extension",
+      "applicability": "No known actual products/capacity/exposure; feasibility and informative duration remain honest dependencies.",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ]
+    },
+    {
+      "name": "Mechanical alternatives / reversibility",
+      "proposed": "Final cites a tag and asserts a mechanical mock-up in the clause register; no substantive final reversibility comparison or retained mock-up criteria",
+      "executed": "None",
+      "oracle": "Missing for required reversibility comparison (M1); replaceability is an external owner choice but not an executed/proposed comparison",
+      "applicability": "NMS object-tag guidance is an analogy, and permanent NARA adhesion is a different objective; neither supplies sleeve performance automatically.",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E09"
+      ]
+    },
+    {
+      "name": "Desk review and integrity",
+      "proposed": "Not a material-performance oracle",
+      "executed": "Authored literature/specification review and proposal; administrative reveal digest; this reviewer independently retrieved primary evidence and checked freezes",
+      "oracle": "Exact scope/claim comparison against actual primary conditions, not hash/count/critic agreement",
+      "applicability": "No nonexistent deployment, aging study, product build or empirical trial is demanded.",
+      "evidence_ids": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "E01",
+      "candidate_source_id": "S01",
+      "title": "Changes in the macro and nano-structure of paper during moisture cycling",
+      "exact_url": "https://link.springer.com/article/10.1007/s10570-023-05626-6",
+      "version_or_release": "Version of record 2023-12-20; Cellulose 31, 2743–2764 (March 2024); DOI 10.1007/s10570-023-05626-6",
+      "source_locator": "Abstract; Experimental: sample sheet preparation and hygroexpansion measurements; Results: restrained/free drying; E01.txt lines 19, 48–71, 91–108, 183–185",
+      "exact_subject": "Non-directional laboratory sheets prepared from four commercial softwood pulps, with varying refining, pressing and drying restraint",
+      "independently_observed_operation": "Read publisher methods/results independently. Four RH cycles 50→20→90→50%, 23 °C, ≥24 h at each level; ≥5 strain specimens and ≥4 moisture-ratio specimens per paper.",
+      "governing_conditions_defaults_exceptions": "Study measurements, not a label/storage default. Restrained-drying sheets showed irreversible shrinkage; freely dried sheets less so. No label adhesive/sleeve test and no storage-life conversion.",
+      "applicability": "Supports conditional dimensional-change and manufacturing-history hypotheses. Does not diagnose the case or justify its coupon duration.",
+      "assessment": "Final claim supported; earlier commercial-pulp-sheet wording clarified correctly.",
+      "direct_https_retrieval": {
+        "id": "E01",
+        "requested_url": "https://link.springer.com/article/10.1007/s10570-023-05626-6",
+        "final_url": "https://link.springer.com/article/10.1007/s10570-023-05626-6?error=cookies_not_supported&code=5aa978df-4ffe-4f87-b232-f65b396c917c",
+        "accessed_at_utc": "2026-10-10T06:28:10.359642+00:00",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E01.html",
+        "sha256": "05f6465e2c2cd51b11122ce2fdf8b4fb2cd6a194124521e45620d0c3bd1c1b18",
+        "bytes": 369191,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E01.txt",
+        "text_lines": 296
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E01.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E01.txt",
+          "sha256": "7b97a96c90f903f487727ffd4804479872e1a0a7105c7e7bbae8fd2fbc305943"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "candidate_source_id": "S02",
+      "title": "Long term curl of printing paper due to ink solvent migration",
+      "exact_url": "https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf",
+      "version_or_release": "Published article; online 2023-12-20; Materials & Design 237 (2024), 112593; DOI 10.1016/j.matdes.2023.112593",
+      "source_locator": "PDF pp. 2, 7–10, 12–14; §§1.2, 2.1–2.2, 3.2–3.3, 4.1–4.3; E02.txt lines 303–434, 474–618",
+      "exact_subject": "Two industrial office-paper grades, sized/unsized; model ink, not the store’s unidentified printing system",
+      "independently_observed_operation": "Read primary PDF methods/results. One-sided spray of approximately 10 g/m² of 60 wt% glycerol/40 wt% water; pure-water comparison; curl and through-thickness glycerol through 168 h, with storage at 23 °C/50% RH.",
+      "governing_conditions_defaults_exceptions": "Short-term 10 sheets/grade; long-term figures 3 sheets/grade. Migration and curl continued after one week; results do not establish another printer technology, bond behavior or lifetime.",
+      "applicability": "Conditional print/process mechanism and ordinary versus model-test distinction are sound; source cannot support a universal 12-week endpoint.",
+      "assessment": "Final model/process qualification supported. Surrounding paper also discusses structural and roll-set curl; these are additional leads, not extra case obligations.",
+      "direct_https_retrieval": {
+        "id": "E02",
+        "requested_url": "https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf",
+        "final_url": "https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf",
+        "accessed_at_utc": "2026-10-10T06:28:10.361866+00:00",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E02.pdf",
+        "sha256": "3a995ea5b063dbcc681ab220fdd375a6be0b20712b491083e7b18d5fcb0bf1ed",
+        "bytes": 8296526,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E02.txt",
+        "text_lines": 731
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E02.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E02.txt",
+          "sha256": "b68f797bbeade5095fe9980a33b9014ba53d7e54695d8e90724a6aeffa00490f"
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "candidate_source_id": "S03",
+      "title": "NARA RXC laser-print pressure-sensitive label specification",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf",
+      "version_or_release": "October 2015; revision note identifies a new specification",
+      "source_locator": "PDF pp. 1–3, Scope, II.1.B Adhesive, II.2 Bond Strength, Other Label Properties, Workmanship, QC; E03.txt lines 6–44, 52–70, 119–134",
+      "exact_subject": "Procured laser-print paper/acrylic-adhesive labels for paper/board/plastic/metal housings and metal furniture",
+      "independently_observed_operation": "Read all three pages and visually checked p.1. Printer/toner/configuration are procurement-selected. The specified 90° modified ASTM D2860/D2860M-04 Procedure B uses 1×2.5 in sample supporting 200 g for 10 min.",
+      "governing_conditions_defaults_exceptions": "Explicitly excludes direct application to documents/records. Adhesive is permanent and difficult to remove. Bond, print/scanner readability, flatness and lot QC are distinct; no case default.",
+      "applicability": "Correctly used as a system/specification lead rather than a safety certification. Permanence establishes why attachment success is not a reversibility comparison.",
+      "assessment": "Final factual claim supported; evidence relevant to M1.",
+      "direct_https_retrieval": {
+        "id": "E03",
+        "requested_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf",
+        "final_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf",
+        "accessed_at_utc": "2026-10-10T06:28:10.363758+00:00",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E03.pdf",
+        "sha256": "9877da2bbcb45b42b8b12e79d8557028e983fbc8fc78976b3f0b7442044b1a46",
+        "bytes": 138903,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E03.txt",
+        "text_lines": 138
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E03.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E03.txt",
+          "sha256": "bde91699780b2b66e2fce89219fc1f6780eaacde91c7906b0dbcc569a05151c4"
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "candidate_source_id": "S04",
+      "title": "NARA RXC thermal-transfer pressure-sensitive label specification",
+      "exact_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf",
+      "version_or_release": "October 2015 revision of May 2013, previously reformatted September 2010",
+      "source_locator": "PDF pp. 1–3, Scope/curved-surface note, II.1, II.2, II.3.B, QC/revision note; E04.txt lines 6–45, 53–60, 111–116",
+      "exact_subject": "Specified thermal-transfer label systems for housings/furniture; polyester or polypropylene film face stock/acrylic adhesive/polyester liner",
+      "independently_observed_operation": "Read all three pages and visually checked p.1. Polypropylene preferred for curved substrates, either film for flat surfaces. Hard-resin ribbon required; wax/wax-resin excluded. Same 200 g/10 min/1×2.5 in/90° bond criterion.",
+      "governing_conditions_defaults_exceptions": "Printer/ribbon/configuration selected in procurement; adhesive permanent and difficult to remove. Does not establish conservation safety, handwriting performance or compatibility with the case sleeve.",
+      "applicability": "Supports process/material/version-history inquiry, not a product selection or borrowed test threshold.",
+      "assessment": "Final claim supported; permanence also relevant to M1.",
+      "direct_https_retrieval": {
+        "id": "E04",
+        "requested_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf",
+        "final_url": "https://www.archives.gov/files/preservation/storage/pdf/label-stock-thermal-transfer.pdf",
+        "accessed_at_utc": "2026-10-10T06:28:10.365323+00:00",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E04.pdf",
+        "sha256": "3882bc45a54b960c44c6c95c5f4234e2575b8c2218a0441ef1c12c67012aa3d2",
+        "bytes": 138334,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E04.txt",
+        "text_lines": 121
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E04.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E04.txt",
+          "sha256": "f59e783a632c70af97c7d094b19555d07ded3eec3465da87d180fa72000b839a"
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "candidate_source_id": "S05",
+      "title": "CCI Incorrect relative humidity",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html",
+      "version_or_release": "Official live page; visible Page details date 2021-02-05; not a numbered released edition",
+      "source_locator": "Detect, web-methods.txt source lines 297–315; Respond/Recover, web-checks.txt and web-conditions.txt; Page details lines 444–446",
+      "exact_subject": "Collection/environment risk assessment and monitoring; not label-adhesive durability",
+      "independently_observed_operation": "Independently opened official text via web tool. RH is local and changes over time; recording near collections and multiple locations recommended. Full-year preference concerns seasonal transmission into cases/cabinets; brief monitoring can answer other questions.",
+      "governing_conditions_defaults_exceptions": "No universal RH target or adhesive-life duration follows. Existing damage need not identify current RH causation; changing established controls requires risk evidence.",
+      "applicability": "Supports retain-current/local-monitoring alternative and qualified seasonal observation, not the 12-week screen or case diagnosis.",
+      "assessment": "Substantive final claims supported. Candidate maps omit a displayed page date (minor).",
+      "direct_https_retrieval": {
+        "id": "E05",
+        "requested_url": "https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html",
+        "accessed_at_utc": "2026-10-10T06:28:10.367494+00:00",
+        "error": "The read operation timed out"
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt"
+      ],
+      "successful_access_method": "Independent web tool opened official primary/institutional page; direct HTTPS capture failed as logged.",
+      "web_access_utc": {
+        "lower_bound": "2026-10-10T06:25:50Z",
+        "upper_bound": "2026-10-10T06:32:10Z",
+        "exact_second": "UNKNOWN; tool did not expose a timestamp"
+      },
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+          "sha256": "55d30d2aee378fcd0a04e98d6d02014cf1ac1721f4eecb72294c535986add0f7"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt",
+          "sha256": "90e4ec08fbc1ea04ebadd889140581db7050e054d8bb3ca19ac984cc92e91a93"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "candidate_source_id": "S06",
+      "title": "CCI Caring for paper objects",
+      "exact_url": "https://www.canada.ca/en/conservation-institute/services/preventive-conservation/guidelines-collections/paper-objects.html",
+      "version_or_release": "Government of Canada/CCI 2018 publication; Cat. CH57-4/6-11-2018E-PDF; ISBN 978-0-660-28010-3; Page details 2025-12-02",
+      "source_locator": "Relative humidity fluctuations, web-methods.txt source lines 500–521; publication metadata, web-conditions.txt lines 643–657",
+      "exact_subject": "Paper objects with differing media, layers and restraint, not an adhesive-label/synthetic-sleeve experiment",
+      "independently_observed_operation": "Independently read official RH section and surrounding recommendations/publication details. Differential moisture response and restraint can produce stress and cockling; single sheets and layered structures differ.",
+      "governing_conditions_defaults_exceptions": "Object-specific conservation guidance; published sensitivity examples are not automatic label acceptance criteria.",
+      "applicability": "Contextual support for separate dimensions/restraint; candidate final does not rely on S06 for a new decisive conclusion.",
+      "assessment": "Context supported; candidate claim of no displayed edition date is inaccurate metadata, minor.",
+      "direct_https_retrieval": {
+        "id": "E06",
+        "requested_url": "https://www.canada.ca/en/conservation-institute/services/preventive-conservation/guidelines-collections/paper-objects.html",
+        "accessed_at_utc": "2026-10-10T06:28:10.368996+00:00",
+        "error": "The read operation timed out"
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt"
+      ],
+      "successful_access_method": "Independent web tool opened official primary/institutional page; direct HTTPS capture failed as logged.",
+      "web_access_utc": {
+        "lower_bound": "2026-10-10T06:25:50Z",
+        "upper_bound": "2026-10-10T06:32:10Z",
+        "exact_second": "UNKNOWN; tool did not expose a timestamp"
+      },
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+          "sha256": "55d30d2aee378fcd0a04e98d6d02014cf1ac1721f4eecb72294c535986add0f7"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt",
+          "sha256": "90e4ec08fbc1ea04ebadd889140581db7050e054d8bb3ca19ac984cc92e91a93"
+        }
+      ]
+    },
+    {
+      "id": "E07",
+      "candidate_source_id": "S07",
+      "title": "Modified Acrylate Pressure-Sensitive Adhesives for Low-Surface-Energy Substrate and Adhesion Mechanism Models",
+      "exact_url": "https://pubmed.ncbi.nlm.nih.gov/40362914/",
+      "version_or_release": "Polymers 17(9), 1130; published 2025-04-22; DOI 10.3390/polym17091130; PMCID PMC12073116",
+      "source_locator": "Independent full-text PMC mirror: https://pmc.ncbi.nlm.nih.gov/articles/PMC12073116/ ; Abstract, §§2.4–2.5, §3.5, Conclusions, COI; E07.txt lines 61–70, 108–116, 366–382",
+      "exact_subject": "HHTPB-modified acrylic PSA tapes on HDPE in controlled laboratory adhesion tests",
+      "independently_observed_operation": "Retrieved article independently through direct HTTPS PMC after web challenge. PET-backed adhesive approximately 25 g/m²; peel 150×25 mm at 300 mm/min after 20 min/24 h, five passes of 2 kg roller, triplicate means; loop tack a separate 125×25 mm test.",
+      "governing_conditions_defaults_exceptions": "Abstract reports 24 h peel 4.88 N/25 mm and loop tack 8.14 N/25 mm at 20 °C and decreasing peel with temperature. Loop tack is not a 24-hour peel test. Industry co-author disclosed. No conservation/long-storage proof.",
+      "applicability": "Valid conditional surface/interface lead. Final’s unverified-by-reviser qualification is honest, even though this reviewer could verify the primary article. Detailed results are not used to choose a material.",
+      "assessment": "Final supported; carried maps’ phrase 24-hour peel/tack compresses distinct operations (minor lineage/source-map issue).",
+      "independent_primary_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12073116/",
+      "identity_same_article_basis": "Same DOI, title and PMID; no silent source-ID rebinding.",
+      "direct_https_retrieval": {
+        "id": "E07",
+        "requested_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12073116/",
+        "final_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12073116/",
+        "accessed_at_utc": "2026-10-10T06:28:10.370695+00:00",
+        "http_status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E07.html",
+        "sha256": "bb8de5c299ad04796f8959bc007014bee70974637c3cb828ad6bc94dbf46c4af",
+        "bytes": 214867,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E07.txt",
+        "text_lines": 462
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E07.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E07.txt",
+          "sha256": "a458dd76039f9dc79d9601ac19c67b70cec2ac91103555fe12c951b31bda39cb"
+        }
+      ]
+    },
+    {
+      "id": "E08",
+      "candidate_source_id": "S08",
+      "title": "SPNHC Labeling Natural History Collections",
+      "exact_url": "https://spnhc.org/labeling-natural-history-collections/",
+      "version_or_release": "Web post dated 2025-03-26; contextual field report contains historical references and 2015 communications",
+      "source_locator": "Attaching Labels, Outstanding Materials Questions, Decision Making, Future Research; web-methods.txt lines 246–257; web-conditions.txt lines 269–333",
+      "exact_subject": "Natural-history label components, attachment approaches and gaps; institutional authored synthesis, not primary comparative performance data",
+      "independently_observed_operation": "Independently opened SPNHC text via web tool. It separates mechanical/adhesive attachment and flags print/adhesive/plastic aging and standards applicability. It includes outdated-ribbon and discontinued-test-tape history as research leads.",
+      "governing_conditions_defaults_exceptions": "Do not import fluid/cold collection conditions, solvent procedures, longevity assertions, or summarized standards into this dry-store proposal without primary evidence.",
+      "applicability": "Candidate’s limited component/gap use is supported. Richer history exists, but no obligation to adopt these out-of-domain procedures.",
+      "assessment": "Contextual final claim supported; no performance guarantee inferred.",
+      "direct_https_retrieval": {
+        "id": "E08",
+        "requested_url": "https://spnhc.org/labeling-natural-history-collections/",
+        "accessed_at_utc": "2026-10-10T06:28:10.372700+00:00",
+        "error": "HTTP Error 406: Not Acceptable"
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt"
+      ],
+      "successful_access_method": "Independent web tool opened official primary/institutional page; direct HTTPS capture failed as logged.",
+      "web_access_utc": {
+        "lower_bound": "2026-10-10T06:25:50Z",
+        "upper_bound": "2026-10-10T06:32:10Z",
+        "exact_second": "UNKNOWN; tool did not expose a timestamp"
+      },
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-methods.txt",
+          "sha256": "55d30d2aee378fcd0a04e98d6d02014cf1ac1721f4eecb72294c535986add0f7"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/web-conditions.txt",
+          "sha256": "90e4ec08fbc1ea04ebadd889140581db7050e054d8bb3ca19ac984cc92e91a93"
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "candidate_source_id": "S09",
+      "title": "National Museums Scotland Object labelling",
+      "exact_url": "https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling",
+      "version_or_release": "Institutional live training page; visibly undated, copyright 2026. Dynamic structured dateModified is not treated as a scholarly edition date.",
+      "source_locator": "Adding a label: secure/reversible/safe/visible; When not to label; E09.txt lines 11–27, 42–45",
+      "exact_subject": "Museum object identification guidance; Tyvek tag suggested for fragile or loan objects",
+      "independently_observed_operation": "Independently retrieved complete institutional page directly via HTTPS after web-tool timeout. Checked reversibility, security, visibility/minimal movement, and qualified tag option.",
+      "governing_conditions_defaults_exceptions": "Context-specific analogy, not proof of a sleeve retention design or conservation-safe product. Other page solvent-based procedures are outside this assignment and were not adopted.",
+      "applicability": "Supports a bounded mechanical mock-up and distinct reversibility/security considerations. Candidate final acknowledges only the tag lead; it does not supply the plan’s reversibility comparison.",
+      "assessment": "Tag claim supported; primary institutional guidance supports materiality of M1 without imposing its object-labelling methods on sleeves.",
+      "direct_https_retrieval": {
+        "id": "E09",
+        "requested_url": "https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling",
+        "final_url": "https://www.nms.ac.uk/our-impact/national-work/training-and-guidance-for-museums/collections-care/object-labelling",
+        "accessed_at_utc": "2026-10-10T06:28:10.374525+00:00",
+        "http_status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "raw_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E09.html",
+        "sha256": "90d779a5a0a8743ee3cefcd9beb1e0328db15c560f157378cf19e954568ec872",
+        "bytes": 185920,
+        "text_file": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E09.txt",
+        "text_lines": 65
+      },
+      "independent_evidence_files": [
+        "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E09.txt"
+      ],
+      "successful_access_method": "Independent direct HTTPS capture plus semantic reading of relevant surrounding primary text.",
+      "hashes": [
+        {
+          "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/E09.txt",
+          "sha256": "003f6ae4a601bd5c9a33b530550559411efb1ea839dc3f95ea6f461a4f9c15d3"
+        }
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Conditional moisture-cycle/restraint mechanism",
+      "status": "preserved and wording corrected",
+      "evidence_ids": [
+        "E01"
+      ]
+    },
+    {
+      "discovery": "Ink co-solvent migration and print dependence",
+      "status": "preserved",
+      "evidence_ids": [
+        "E02"
+      ]
+    },
+    {
+      "discovery": "Sleeve interface and system-specific label specifications",
+      "status": "preserved with explicit strata",
+      "evidence_ids": [
+        "E03",
+        "E04",
+        "E07"
+      ]
+    },
+    {
+      "discovery": "Nonadhesive retention alternatives and reversibility comparison",
+      "status": "material scope omission remains (M1)",
+      "evidence_ids": [
+        "E09",
+        "E03",
+        "E04"
+      ]
+    },
+    {
+      "discovery": "Retain current materials with traceability/monitoring",
+      "status": "preserved substantively",
+      "evidence_ids": [
+        "E05"
+      ]
+    },
+    {
+      "discovery": "Study duration and feasibility",
+      "status": "qualified final; earlier unsupported horizon retained as lineage",
+      "evidence_ids": [
+        "E01",
+        "E02",
+        "E05"
+      ]
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/control/run.json",
+      "bytes": 582,
+      "sha256": "a78d56e46180cee41b749e59b3f8176076cb415be5b4c4b7f4dc05fd43678004",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "a78d56e46180cee41b749e59b3f8176076cb415be5b4c4b7f4dc05fd43678004",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/inputs/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/critique.md",
+      "bytes": 13934,
+      "sha256": "f402aad5cf170c28b5b9544ff922d732bb648c961f32b70d5859435ab808bdd7",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f402aad5cf170c28b5b9544ff922d732bb648c961f32b70d5859435ab808bdd7",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "22e33491ef2cd2f0df105a73a16f66ab63f9e508e2dbf5af97f6f49d18163639",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "22e33491ef2cd2f0df105a73a16f66ab63f9e508e2dbf5af97f6f49d18163639",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "ac510a089083eeacaec390e324470857b5e097f1f6cb23c07e2ad3088f9024ac",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "ac510a089083eeacaec390e324470857b5e097f1f6cb23c07e2ad3088f9024ac",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "a77acddeaa5b055822fbdcf747f6925cc6e4e93578b0e124532e2f6e29154022",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a77acddeaa5b055822fbdcf747f6925cc6e4e93578b0e124532e2f6e29154022",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "64b70a9e051e2afd05acfd78bf5a7f2451fbe464c16c60e7430c8cb064a008a9",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "64b70a9e051e2afd05acfd78bf5a7f2451fbe464c16c60e7430c8cb064a008a9",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "eab2afda19679eca2b2587365b34a67a74b62e915c1c2ea2308f3d0e5c3c29c0",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "eab2afda19679eca2b2587365b34a67a74b62e915c1c2ea2308f3d0e5c3c29c0",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_activation.json",
+      "bytes": 467,
+      "sha256": "cd41e35e754e4f0b50b98376e519dbf8dc3c6e40366f2ca51a9c859ad1f28462",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "cd41e35e754e4f0b50b98376e519dbf8dc3c6e40366f2ca51a9c859ad1f28462",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_binding_guard.txt",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_completion.json",
+      "bytes": 796,
+      "sha256": "1c2ba94d72346afe083c6e4625291cc99a2b4473e961b9d92b603fd501d7f4fe",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "1c2ba94d72346afe083c6e4625291cc99a2b4473e961b9d92b603fd501d7f4fe",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "2cfd4fa39ebcb92312254b28b843c2e39711e47473a3c26bacab408caf52b031",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "2cfd4fa39ebcb92312254b28b843c2e39711e47473a3c26bacab408caf52b031",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "d3cc4bf0426f950be5c3e52ecc3b1e9ed33f738879db747c3ea46123eb6d1a3c",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d3cc4bf0426f950be5c3e52ecc3b1e9ed33f738879db747c3ea46123eb6d1a3c",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/source-map.json",
+      "bytes": 11857,
+      "sha256": "73cb990cad87a0b6d19ed143d5c847ba507a42592e77383b8b4439bd7eb53268",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "73cb990cad87a0b6d19ed143d5c847ba507a42592e77383b8b4439bd7eb53268",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/sources/INDEX.md",
+      "bytes": 2319,
+      "sha256": "01ea8b9b7c008d71c5fa48966cacd495112cbd823c62c1bbb36fdf317238af32",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "01ea8b9b7c008d71c5fa48966cacd495112cbd823c62c1bbb36fdf317238af32",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/status.json",
+      "bytes": 3728,
+      "sha256": "0119e0094358d4725fa26498f424d35ed958ea3f2acba29d3c986bb4c5b92991",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "0119e0094358d4725fa26498f424d35ed958ea3f2acba29d3c986bb4c5b92991",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 14715,
+      "sha256": "e85c7be9c7e519237bdccd247f9c892fb058adcfc6a0df2d8556c224eced1ac0",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "e85c7be9c7e519237bdccd247f9c892fb058adcfc6a0df2d8556c224eced1ac0",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "a0942fac7a43beab1354bc11fedf6c13de5f5c2b41111bb2e10ab654c1bf3500",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "a0942fac7a43beab1354bc11fedf6c13de5f5c2b41111bb2e10ab654c1bf3500",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+      "bytes": 30735,
+      "sha256": "944f6ed7784b67c842bb8224d831b437962e93f302a528eaca1ab7ebcf34b493",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "944f6ed7784b67c842bb8224d831b437962e93f302a528eaca1ab7ebcf34b493",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "098a34e74c75be0262b28a56498552e5d3e413b2db237c73e39a78713ce7c3b4",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "098a34e74c75be0262b28a56498552e5d3e413b2db237c73e39a78713ce7c3b4",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "0d11fa933235bd1d53e86c83dd12fee79841aab17f645e1cb6952f500ee9c631",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "0d11fa933235bd1d53e86c83dd12fee79841aab17f645e1cb6952f500ee9c631",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "041806d95e357489cd7d86e0899775f13b4316eaa88498e1bf87bcc28ffab21f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "041806d95e357489cd7d86e0899775f13b4316eaa88498e1bf87bcc28ffab21f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "d879ac27d9e505f894e4b522cf2b9d8570408e57cc5946a974c5b5246729b3cd",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d879ac27d9e505f894e4b522cf2b9d8570408e57cc5946a974c5b5246729b3cd",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-activation.json",
+      "bytes": 479,
+      "sha256": "b9517310d84deaec14dced26a406349dc4a9fcd7481c55c2c1b2fb9ca252a37e",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "b9517310d84deaec14dced26a406349dc4a9fcd7481c55c2c1b2fb9ca252a37e",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-binding-guard.txt",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-completion.json",
+      "bytes": 808,
+      "sha256": "a9cc6b6dcfb2dd4e0de247533e64bc7be62d1c73f3d5803c050a4c12089e7c50",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cc6b6dcfb2dd4e0de247533e64bc7be62d1c73f3d5803c050a4c12089e7c50",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/plan-release-receipt.json",
+      "bytes": 412,
+      "sha256": "9cd11b85d72f29f9617e9b30d422808d62ccf37bdc9fb9f5707d1a42bbe664e3",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "9cd11b85d72f29f9617e9b30d422808d62ccf37bdc9fb9f5707d1a42bbe664e3",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "52b2f39c81c576743f5e592ec9f95b057849c034db0890bfd3c8ca2e40119169",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "52b2f39c81c576743f5e592ec9f95b057849c034db0890bfd3c8ca2e40119169",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "e0532aca479527209dccae49fa06adf38a249aa077a302da93f127c118699dee",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "e0532aca479527209dccae49fa06adf38a249aa077a302da93f127c118699dee",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "51660a9d23e445a0cc5b03a01d4868a28203b5e456c18ceb8f2d76e1d51f00d8",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "51660a9d23e445a0cc5b03a01d4868a28203b5e456c18ceb8f2d76e1d51f00d8",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 12885,
+      "sha256": "273408ce6205481baaae3bf7e4a21bf8c8f1c37b639420b0162c956f3842099b",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "273408ce6205481baaae3bf7e4a21bf8c8f1c37b639420b0162c956f3842099b",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/sources/INDEX.md",
+      "bytes": 3205,
+      "sha256": "91fab66dfff5a60c37f99b7aa93a95ed0eaf21dd42acf7ee467e744b09fa0ab8",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "91fab66dfff5a60c37f99b7aa93a95ed0eaf21dd42acf7ee467e744b09fa0ab8",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/status.json",
+      "bytes": 4248,
+      "sha256": "4aafb94369ca6b9f5473e521b4e82280d29402c7baca6a8184a87a81a38dbd79",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "4aafb94369ca6b9f5473e521b4e82280d29402c7baca6a8184a87a81a38dbd79",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "4991c7488c75fa63aacbab75cf408be0d7b7b9c8f4c8a56b096ba6d4f310dff3",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "4991c7488c75fa63aacbab75cf408be0d7b7b9c8f4c8a56b096ba6d4f310dff3",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "d2ed5d449239789f5bcef38e3a895a05c800c8bfa9d394f52457face735678c9",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d2ed5d449239789f5bcef38e3a895a05c800c8bfa9d394f52457face735678c9",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+      "bytes": 23514,
+      "sha256": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/freeze.json",
+      "bytes": 4093,
+      "sha256": "e1e1aedce961eb659415f86bb64617a26622bc15e7de61134203e1bc241df83a",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "e1e1aedce961eb659415f86bb64617a26622bc15e7de61134203e1bc241df83a",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "6b0aa927adcf726c166a6cc8aeb9f2b7fd1a4db7b6bf2c5bc7c8f4900455ad00",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "6b0aa927adcf726c166a6cc8aeb9f2b7fd1a4db7b6bf2c5bc7c8f4900455ad00",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "0ac6ada8f6c8ea535028279d260bb1749b118630eeb98200a70ad232ba6ec9bf",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "0ac6ada8f6c8ea535028279d260bb1749b118630eeb98200a70ad232ba6ec9bf",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json",
+      "bytes": 528,
+      "sha256": "182c7b37c8b4441eaee7e1bc61cabe3b178d381e086d52342ce75b708f2dd443",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "182c7b37c8b4441eaee7e1bc61cabe3b178d381e086d52342ce75b708f2dd443",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json",
+      "bytes": 857,
+      "sha256": "542d2289c5178e2a8421296878a0ace13bf2efd45480182f3d6132df02d5f744",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "542d2289c5178e2a8421296878a0ace13bf2efd45480182f3d6132df02d5f744",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "5cd6f40d7d739a5f0aaeda0b0097a9f7cda4549b103dd7b1ed86db051b2725da",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "5cd6f40d7d739a5f0aaeda0b0097a9f7cda4549b103dd7b1ed86db051b2725da",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "1fc4935ca4d7e0dbaa2b4ceeda7b0911704f3ebf9797a688e9267883f1fded35",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "1fc4935ca4d7e0dbaa2b4ceeda7b0911704f3ebf9797a688e9267883f1fded35",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 22068,
+      "sha256": "f28a5a3b8694b9521bce81f2a64ce812896ed32f01b7d7c9592c96089d131536",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f28a5a3b8694b9521bce81f2a64ce812896ed32f01b7d7c9592c96089d131536",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md",
+      "bytes": 3057,
+      "sha256": "2e543f41adf4e8e101a6502881e84a2e091aebf7bdc7f87fa5f497a1c2ab1929",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "2e543f41adf4e8e101a6502881e84a2e091aebf7bdc7f87fa5f497a1c2ab1929",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/terminal-science-freeze-root.json",
+      "bytes": 8617,
+      "sha256": "7fd35858498837be1ce327d3d06d03021b2ec74f3f98c61a48d2157d0ea7c1cf",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "7fd35858498837be1ce327d3d06d03021b2ec74f3f98c61a48d2157d0ea7c1cf",
+      "unchanged_from_initial_hash": true
+    }
+  ],
+  "original_hash_manifest": "ER12_RUNTIME/assessment/C-R2-01/control-v1/original-artifact-hashes.json",
+  "freeze_verification": {
+    "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/freeze-integrity-check.json",
+    "checks": 32,
+    "mismatches": 0,
+    "role": "Identity only"
+  },
+  "missing_artifacts": [],
+  "authored_source_evidence_note": "Actual stage sources directories contain only their fully inspected INDEX.md files. No original raw captures or separate critique-disposition/check files are present. Critique source checks are in its complete source-map and critique; final dispositions are in final.md. No missing raw capture is invented as a required performance test.",
+  "native_judgment": {
+    "receipt_status": "ARCHIVED_ACTIVATION_AND_COMPLETION_RECEIPTS_PRESENT_ALL_THREE_STAGES",
+    "stages": [
+      {
+        "stage": "investigator",
+        "activation_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-activation.json",
+        "completion_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-completion.json",
+        "archived_statuses": [
+          "active",
+          "complete"
+        ],
+        "thread_id": "01a1245b-50ac-76f3-b213-e92049148654",
+        "same_thread_and_objective": true,
+        "matches_frozen_objective": true,
+        "reported_created_at_utc": "2026-10-10T05:49:14+00:00",
+        "reported_completed_at_utc": "2026-10-10T06:04:42+00:00",
+        "reported_time_used_seconds": 928,
+        "reported_tokens_used": 199588,
+        "stage_deadline_utc": "2026-10-10T06:18:45.409Z",
+        "whole_deadline_utc": "2026-10-10T06:48:45.213Z",
+        "basis": "Actual archived receipt bytes inspected, not this reviewer observing the original native calls. Guards explicitly say provenance_independently_proved=false.",
+        "native_response_authenticity_and_pre_input_call_order": "UNKNOWN without original tool-event trace",
+        "effective_research_occupancy": "UNKNOWN",
+        "billed_tokens_or_cost": "UNKNOWN"
+      },
+      {
+        "stage": "critic",
+        "activation_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_activation.json",
+        "completion_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_completion.json",
+        "archived_statuses": [
+          "active",
+          "complete"
+        ],
+        "thread_id": "01a1246a-7330-7553-b8a5-4486b8f3f8c3",
+        "same_thread_and_objective": true,
+        "matches_frozen_objective": true,
+        "reported_created_at_utc": "2026-10-10T06:05:39+00:00",
+        "reported_completed_at_utc": "2026-10-10T06:14:10+00:00",
+        "reported_time_used_seconds": 510,
+        "reported_tokens_used": 109693,
+        "stage_deadline_utc": "2026-10-10T06:17:17.201Z",
+        "whole_deadline_utc": "2026-10-10T06:48:45.213Z",
+        "basis": "Actual archived receipt bytes inspected, not this reviewer observing the original native calls. Guards explicitly say provenance_independently_proved=false.",
+        "native_response_authenticity_and_pre_input_call_order": "UNKNOWN without original tool-event trace",
+        "effective_research_occupancy": "UNKNOWN",
+        "billed_tokens_or_cost": "UNKNOWN"
+      },
+      {
+        "stage": "reviser",
+        "activation_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json",
+        "completion_receipt": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json",
+        "archived_statuses": [
+          "active",
+          "complete"
+        ],
+        "thread_id": "01a12473-639b-7483-af44-f748d9f2b58c",
+        "same_thread_and_objective": true,
+        "matches_frozen_objective": true,
+        "reported_created_at_utc": "2026-10-10T06:15:18+00:00",
+        "reported_completed_at_utc": "2026-10-10T06:24:59+00:00",
+        "reported_time_used_seconds": 581,
+        "reported_tokens_used": 118942,
+        "stage_deadline_utc": "2026-10-10T06:33:03.158Z",
+        "whole_deadline_utc": "2026-10-10T06:48:45.213Z",
+        "basis": "Actual archived receipt bytes inspected, not this reviewer observing the original native calls. Guards explicitly say provenance_independently_proved=false.",
+        "native_response_authenticity_and_pre_input_call_order": "UNKNOWN without original tool-event trace",
+        "effective_research_occupancy": "UNKNOWN",
+        "billed_tokens_or_cost": "UNKNOWN"
+      }
+    ],
+    "independent_original_call_provenance": "UNKNOWN"
+  },
+  "t3_judgment": {
+    "basis": "ER12_RUNTIME/runs/C-R2-01/control/terminal-science-freeze-root.json",
+    "archived_final_task_status": "completed",
+    "archived_hasPendingChildRuns": false,
+    "observed_at_utc": "2026-10-10T06:25:32.395986+00:00",
+    "separate_from_native_proof": true
+  },
+  "protocol_judgment": {
+    "documented_assignments_and_reveal": "Consistent with three-stage control and frozen discovery→single-use exact-plan reveal. All 32 frozen identity checks match. Mechanical guard additions do not constitute source science assistance in inspected records.",
+    "unauthorized_source_assistance": "NOT_OBSERVED; complete enforcement/history proof UNKNOWN",
+    "nested_candidate_delegation": "No nested work indicated in authored packet; full enforcement UNKNOWN",
+    "reviewer_protocol": "COMPLIANT_WITH_BOUNDED_ASSIGNMENT"
+  },
+  "time_judgment": {
+    "original_full_60_minute_request": "NOT_DEMONSTRATED as elapsed full hour; candidate final makes no compliance claim",
+    "documented_stage_contract": "Fixed absolute caps plus express finish-early-when-complete instruction",
+    "reported_pipeline_interval": "First investigator prepare 2026-10-10T05:48:45.409Z → root final-task freeze 2026-10-10T06:25:32.395986+00:00 (~36 min 47 sec), archive-bound, not effective inference time",
+    "within_stage_caps_by_archived_receipts": true,
+    "effective_time": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "paired_latency_or_savings_claim": "NONE; other arm not inspected; no pair qualified from this source-FAIL attempt"
+  }
+}

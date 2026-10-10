@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A6-01",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. Saved the complete proposal, provenance map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal preserves all eight obligations and records dispositions for C1\u2013C4. Product and feed validation remain `NOT_RUN`; proposed checks are labeled accordingly. The source map parsed successfully.\n\nThe one native Goal was created from the frozen objective, observed active, then confirmed complete after the outputs were saved. Goal ID: `01a1240b-a02f-70b2-acac-e78afc390a8c`; elapsed time: 7m 10s; reported usage: 204,215 tokens. Provider, model, and reasoning effort were not exposed by the native Goal tool and are recorded as `UNKNOWN`.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:921677f1-b1d9-41e3-ba13-9194359f835b",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. Saved the complete proposal, provenance map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal preserves all eight obligations and records dispositions for C1\u2013C4. Product and feed validation remain `NOT_RUN`; proposed checks are labeled accordingly. The source map parsed successfully.\n\nThe one native Goal was created from the frozen objective, observed active, then confirmed complete after the outputs were saved. Goal ID: `01a1240b-a02f-70b2-acac-e78afc390a8c`; elapsed time: 7m 10s; reported usage: 204,215 tokens. Provider, model, and reasoning effort were not exposed by the native Goal tool and are recorded as `UNKNOWN`.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:921677f1-b1d9-41e3-ba13-9194359f835b",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "7ae655c53375efa829259dc12a12d584b95efb71eb1de303040684c67d86bd6a"
   }
 }

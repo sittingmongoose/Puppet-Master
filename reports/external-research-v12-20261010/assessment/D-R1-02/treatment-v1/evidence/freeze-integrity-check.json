@@ -1,0 +1,208 @@
+{
+  "checked_at_utc": "2026-10-10T07:03:46.093738+00:00",
+  "purpose": "Identity and preservation check only; not semantic proof",
+  "checks": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/critique.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/source-map.json",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/sources/index.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/discovery.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/draft.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/source-map.json",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/sources/index.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/source-map.json",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/sources/index.md",
+      "terminal_hash_matches": true,
+      "terminal_bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/inputs/brief.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/assignment.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/input-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/inputs/brief.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/assignment.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/input-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/discovery.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/draft.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/source-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/plan-reveal.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/inputs/brief.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/assignment.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/input-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/discovery.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/draft.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/source-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/plan-reveal.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/critique.md",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/source-map.json",
+      "present": true,
+      "freeze_hash_matches": true,
+      "freeze_bytes_matches": true
+    }
+  ]
+}

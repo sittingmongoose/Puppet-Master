@@ -6633,112 +6633,87 @@
         }
       ]
     },
-    "mechanics/STAGE_OVERRUN_ENFORCEMENT.json": [
-      {
-        "observed_at_utc": "2026-10-10T04:39:41.748Z",
-        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
-        "original_status": {
-          "content": [
-            {
-              "type": "text",
-              "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+    "mechanics/STAGE_OVERRUN_ENFORCEMENT.json": {
+      "schema": "er12.public-native-lifecycle.v1",
+      "actual_lifecycle_metadata": [
+        {
+          "observed_at_utc": "2026-10-10T04:39:41.748Z",
+          "original_status": {
+            "structured_content_metadata": [
+              {
+                "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
+                "status": "running",
+                "hasPendingChildRuns": false,
+                "latestTerminalStatus": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
+              "status": "running",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna"
             }
-          ],
-          "structuredContent": {
-            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
-            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
-            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1",
-            "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
-            "status": "running",
-            "workState": "working",
-            "hasPendingChildRuns": false,
-            "latestTerminalRunId": null,
-            "latestTerminalStatus": null,
-            "latestTerminalSummary": null,
-            "latestTerminalResultContextTransferId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "summary": null,
-            "resultContextTransferId": null,
-            "waitTimedOut": false
           },
-          "isError": false
-        },
-        "request": {
-          "message": "The original critic deadline has expired. Stop further source research or scientific inference now. Preserve all existing artifacts, save the complete critique and source map possible from work already performed, disclose any unassessed scope and actual overrun, then complete the ORIGINAL native Goal and return. No extra task, fresh Goal, reset clock or added allowance. This is operational enforcement only; no evaluation feedback.",
-          "mode": "steer"
-        },
-        "actual_response": {
-          "content": [
-            {
-              "type": "text",
-              "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1\",\"messageId\":\"message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A7-01-control-critic-deadline-stop-v1\",\"runId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1\",\"status\":\"running\",\"delivery\":\"steered\"}"
+          "actual_response": {
+            "structured_content_metadata": [
+              {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1",
+                "status": "running"
+              }
+            ],
+            "structuredContent": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1",
+              "status": "running"
             }
-          ],
-          "structuredContent": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-critic-v1",
-            "messageId": "message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A7-01-control-critic-deadline-stop-v1",
-            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-critic-v1:ordinal:1",
-            "status": "running",
-            "delivery": "steered"
-          },
-          "isError": false
+          }
         },
-        "limit": "preserve source diagnostic; original deadline remains; overrun charged and timely/protocol recorded separately"
-      },
-      {
-        "observed_at_utc": "2026-10-10T04:39:42.087Z",
-        "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
-        "original_status": {
-          "content": [
-            {
-              "type": "text",
-              "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+        {
+          "observed_at_utc": "2026-10-10T04:39:42.087Z",
+          "original_status": {
+            "structured_content_metadata": [
+              {
+                "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
+                "status": "running",
+                "hasPendingChildRuns": false,
+                "latestTerminalStatus": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna"
+              }
+            ],
+            "structuredContent": {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
+              "status": "running",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna"
             }
-          ],
-          "structuredContent": {
-            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
-            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
-            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1",
-            "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
-            "status": "running",
-            "workState": "working",
-            "hasPendingChildRuns": false,
-            "latestTerminalRunId": null,
-            "latestTerminalStatus": null,
-            "latestTerminalSummary": null,
-            "latestTerminalResultContextTransferId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "summary": null,
-            "resultContextTransferId": null,
-            "waitTimedOut": false
           },
-          "isError": false
-        },
-        "request": {
-          "message": "The original critic deadline has expired. Stop further source research or scientific inference now. Preserve all existing artifacts, save the complete critique and source map possible from work already performed, disclose any unassessed scope and actual overrun, then complete the ORIGINAL native Goal and return. No extra task, fresh Goal, reset clock or added allowance. This is operational enforcement only; no evaluation feedback.",
-          "mode": "steer"
-        },
-        "actual_response": {
-          "content": [
-            {
-              "type": "text",
-              "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1\",\"messageId\":\"message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A2-01-control-critic-deadline-stop-v1\",\"runId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1\",\"status\":\"running\",\"delivery\":\"steered\"}"
+          "actual_response": {
+            "structured_content_metadata": [
+              {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1",
+                "status": "running"
+              }
+            ],
+            "structuredContent": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1",
+              "status": "running"
             }
-          ],
-          "structuredContent": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-critic-v1",
-            "messageId": "message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A2-01-control-critic-deadline-stop-v1",
-            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-critic-v1:ordinal:1",
-            "status": "running",
-            "delivery": "steered"
-          },
-          "isError": false
-        },
-        "limit": "preserve source diagnostic; original deadline remains; overrun charged and timely/protocol recorded separately"
-      }
-    ],
+          }
+        }
+      ],
+      "omitted_activity_message_bodies": true,
+      "original_json_value_sha256": "513d933ffca2cfd85b15aef95bf4294bcd4f3227e43183637cff685ee8f88b10"
+    },
     "mechanics/PROGRESS_COUNT_POLICY.json": {
       "saved_utc": "2026-10-10T04:38:17.677494+00:00",
       "full_final_task": "R0/A1/A3-A6/A8 reviser; A7treatment critic-finalizer; A2treatment ORIGINAL investigator retained-final after critic, not latest child critic",

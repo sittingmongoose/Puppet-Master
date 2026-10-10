@@ -1,0 +1,33 @@
+{
+  "at_utc": "2026-10-10T06:07:32.058517+00:00",
+  "root_full_read": [
+    "join.py",
+    "README.md",
+    "checks.py"
+  ],
+  "original_offline_checks": {
+    "status": "PASS",
+    "checks": [
+      "incomplete evaluator excludes existing judgment bytes",
+      "absent, unstarted, unassessed remain separate",
+      "retained A2 original and A7 finalizer",
+      "unknown telemetry never becomes zero or billing",
+      "both-source-pass paired latency is survivorship, eligibility separate",
+      "semantic FAIL unchanged despite quiet delivery; pair excluded",
+      "conflicting schema labels are unknown, never regraded",
+      "incomplete candidate checkpoint does not relabel launched queue arm unstarted"
+    ],
+    "count": 8,
+    "temporary_fixture_cleanup": true
+  },
+  "tests_repeated_by_root": false,
+  "rows": 80,
+  "known_source_judgments": 56,
+  "unknown_protocol_fields_preserved": true,
+  "historical_accounting_snapshot_only": "2026-10-10T05:43:10.489164+00:00",
+  "source_judgments_regraded": false,
+  "native_meters_summed": false,
+  "read_errors": [],
+  "code_sha256": "a4e9f933b2260eeb12e6a4ad857289c7d92e884e20b66592a1b88ba2ac4ae4f8",
+  "limits": "Table captures earlier mutable root checkpoint; freeze exact input snapshot for final use. Need separately evidenced host-deadline/protocol dispositions; inferred timely PASS not supplied by utility. No provider billing qualification."
+}

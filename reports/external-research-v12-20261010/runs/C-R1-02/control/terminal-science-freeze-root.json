@@ -64,25 +64,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "C-R1-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The one native Goal was activated and completed; its exact responses are saved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json). The completion response reports 113,662 tokens and 513 seconds; provider/model provenance is unknown.\n\nThe complete proposal is in [final.md](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md). The preserved 12-source map and navigable [source index](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md) are also saved. They record the S02 reporting ambiguity against the [publisher article](https://www.internationaljournalssrg.org/IJCE/paper-details?Id=747) and the S10 unit wording on the [EPA page](https://www.epa.gov/caddis/metals).\n\nThe investigator\u2019s 60-minute completion status remains unknown; no workshop sampling, pilot, permit review, or waste determination is claimed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:de67496c-e04e-4d0c-9f7f-a379c414d6cf",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The one native Goal was activated and completed; its exact responses are saved in [native-goal-activation.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/native-goal-completion.json). The completion response reports 113,662 tokens and 513 seconds; provider/model provenance is unknown.\n\nThe complete proposal is in [final.md](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md). The preserved 12-source map and navigable [source index](ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/sources/index.md) are also saved. They record the S02 reporting ambiguity against the [publisher article](https://www.internationaljournalssrg.org/IJCE/paper-details?Id=747) and the S10 unit wording on the [EPA page](https://www.epa.gov/caddis/metals).\n\nThe investigator\u2019s 60-minute completion status remains unknown; no workshop sampling, pilot, permit review, or waste determination is claimed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:de67496c-e04e-4d0c-9f7f-a379c414d6cf",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "25304bb709400984169786ecabbd45a5b994dede6a657b093680f68c22429c84"
   }
 }

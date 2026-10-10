@@ -1,0 +1,530 @@
+{
+  "schema": "er12-independent-source-map-v1",
+  "slot": "D-R1-01",
+  "arm": "treatment",
+  "review": "treatment-v1",
+  "created_utc": "2026-10-10T07:30:31.205886+00:00",
+  "scope": "Independent evidence for the ONE original frozen treatment pipeline; no other arm or assessment inspected",
+  "sources": [
+    {
+      "id": "I01",
+      "title": "Arimi et al., Crackerbread activity and crispiness",
+      "version_or_release": "Food Research International 43(6), 1650–1655 (2010), DOI 10.1016/j.foodres.2010.05.004",
+      "exact_url": "https://repository.must.ac.ke/handle/123456789/243?show=full",
+      "candidate_source_or_check_ids": [
+        "S01",
+        "C13",
+        "R04"
+      ],
+      "primary_locator": "Institutional record abstract and file description in web-batch-05.txt",
+      "governing_conditions_units_type_domain_exceptions": "Crackerbread; aw is dimensionless. Equilibrated aw 0.113–0.98; 5 mm cylindrical puncture probe; simultaneous mechanical/acoustic signals; critical interval 0.51–0.59.",
+      "independent_judgment": "Supports the bounded comparator and product/method specificity at final line 27; does not support a cooperative threshold.",
+      "observed_operation": "Direct open/HTTPS timed out; independently retrieved primary institutional record through indexed search output.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-05.txt",
+          "bytes": 28952,
+          "sha256": "6afa559936256ef9ed567b0586948e9dbd84bb2059f4e27327b71c2b71db39c2"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+          "bytes": 5593,
+          "sha256": "9df33878d35bf56a6535832207bd55f0695c3af5ad96ee164b6574ec98c4bb4e"
+        }
+      ],
+      "limits": "Full methods were not independently obtained. The repository labels its linked PDF as Abstract; calling that link a full-text route in R04 is a minor access-description issue.",
+      "subject_type": "Product-specific mechanical/acoustic texture study",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I02",
+      "title": "Hough et al., sensory texture of commercial biscuits",
+      "version_or_release": "Journal of Texture Studies 32(1), 57–74 (2001), DOI 10.1111/j.1745-4603.2001.tb01034.x",
+      "exact_url": "https://bibliotecadigital.exactas.uba.ar/collection/paper/document/paper_00224901_v32_n1_p57_Hough",
+      "candidate_source_or_check_ids": [
+        "S02",
+        "C06"
+      ],
+      "primary_locator": "Institutional abstract",
+      "governing_conditions_units_type_domain_exceptions": "Four commercial biscuits; trained and consumer panels; molar crispness and sound respond differently; ideal aw differs by biscuit.",
+      "independent_judgment": "Supports endpoint selection rather than a general aw acceptance value.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.html",
+          "bytes": 56959,
+          "sha256": "1c46ba2760968eef506ba85759a1b8a11e98290d82cf71571c0fb036f2672e80"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.txt",
+          "bytes": 8396,
+          "sha256": "40d016e4c6ea0dc743fd925fd7dd5a1e09162482e6ab7e73421c8d5a728aac34"
+        }
+      ],
+      "limits": "Abstract-level verification; no cooperative sensory data exist.",
+      "subject_type": "Product-specific sensory endpoint study",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I03",
+      "title": "Esveld et al., water sorption in cereal crackers",
+      "version_or_release": "Journal of Food Engineering 109(2), 311–320 (2012), DOI 10.1016/j.jfoodeng.2011.08.023",
+      "exact_url": "https://www.sciencedirect.com/science/article/pii/S0260877411004687",
+      "candidate_source_or_check_ids": [
+        "S03",
+        "C07"
+      ],
+      "primary_locator": "Publisher abstract and Highlights in web-batch-07.txt",
+      "governing_conditions_units_type_domain_exceptions": "Fine/coarse cracker morphology, SPI-NMR profiles, differing vapor conductivity/local sorption. Effective diffusivity description is restricted for small/dry samples in the source.",
+      "independent_judgment": "Supports product-specific internal moisture dynamics; no transferable transport rate is used in the final.",
+      "observed_operation": "Direct source returned 403; primary publisher abstract/Highlights retrieved through indexed output.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-07.txt",
+          "bytes": 38450,
+          "sha256": "c09b7845830e9d350bca50c1fb972eb033723a1444bad66a2031d10f7da1487e"
+        }
+      ],
+      "limits": "Full methods unavailable; final relies only on bounded morphology evidence.",
+      "subject_type": "Cracker moisture-transport model and measurement study",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I04",
+      "title": "Baele et al., cookie and milk-powder packaging comparison",
+      "version_or_release": "Packaging Technology and Science 34(5), 303–318 (2021), DOI 10.1002/pts.2561",
+      "exact_url": "https://biblio.ugent.be/publication/8713140",
+      "candidate_source_or_check_ids": [
+        "S04",
+        "C04",
+        "R10"
+      ],
+      "primary_locator": "Institutional abstract",
+      "governing_conditions_units_type_domain_exceptions": "Cookie flowpacks PP / acryl-coated PVdC-PP / metallized PP; reported WVTR 5 / 4.2 / 0.4 g m^-2 day^-1; storage 22 C, 50% RH. Separate powder result: PA/EVOH/PA/PE compromised at 70–90% RH. WVTR test conditions absent from abstract.",
+      "independent_judgment": "Final line 42 correctly separates products and refuses cross-study WVTR matching or a transferred shelf-life conclusion.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.html",
+          "bytes": 43796,
+          "sha256": "072e55756575d36ab5466753dadc03ff57ee375a666815ce8dcfe8316e50201c"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.txt",
+          "bytes": 8573,
+          "sha256": "3cd1cb85f38490478e069598d6e1a0365c2e17dcf8e6feb3a590782023ce4bd8"
+        }
+      ],
+      "limits": "Restricted full text; complete pouch/seal details and WVTR measurement conditions not established.",
+      "subject_type": "Two separately conditioned dry-food package comparisons",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I05",
+      "title": "Balestra et al., differently packed sunflower-oil biscuits",
+      "version_or_release": "Journal of Food Science and Technology 56(10), 4714–4721 (2019), DOI 10.1007/s13197-019-03918-z",
+      "exact_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6801301/",
+      "candidate_source_or_check_ids": [
+        "S05",
+        "C02",
+        "R02"
+      ],
+      "primary_locator": "Materials and methods: formulation, materials, experimental conditions, texture; Abstract and Results",
+      "governing_conditions_units_type_domain_exceptions": "One production batch randomly divided; metalized OPP/paper, PLA/paper and OPP-EVA-POA/paper; mean pack 300 g, 1078 cm^2; 21 packs/material, seven destructive timepoints, three packs/timepoint; 35 C/50% RH, 105 days. Texture measured by three-point bending; no significant between-material textural impact despite hydration differences.",
+      "independent_judgment": "Final line 43 is supported. Lack of a significant difference is not equivalence or proof that moisture never affects texture; the final does not make those inferences.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.html",
+          "bytes": 157731,
+          "sha256": "8670e901bb0cd873557b757e247370563b034241d9eb672c48eec574b3c7620e"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.txt",
+          "bytes": 36058,
+          "sha256": "823880e09b8731a013f4a457c57717ac7408c04be06d29934dbd35a24760c41c"
+        }
+      ],
+      "limits": "Comparator formulation and thermal-abuse storage differ; original study is single-batch and does not establish cooperative between-batch repeatability.",
+      "subject_type": "Controlled food-package comparison, not safety validation",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I06",
+      "title": "Jo et al., active LDPE zipper bags",
+      "version_or_release": "Foods 11(12), 1704 (2022-06-10), DOI 10.3390/foods11121704",
+      "exact_url": "https://www.mdpi.com/2304-8158/11/12/1704",
+      "candidate_source_or_check_ids": [
+        "S06",
+        "C03",
+        "R03"
+      ],
+      "primary_locator": "Primary authored journal PDF sections 2.1–2.2, 2.5–2.9 and 3.1–3.3",
+      "governing_conditions_units_type_domain_exceptions": "Active film 40–45 micrometers; bag 25 x 30.5 cm; continuous-band heat sealer. Commercial control 25 x 30 cm. Film-coupon gravimetric mass flux measured at 25 C/50% RH; paper calls it permeability. Reported relative reduction approximately 21%; storage through 20 days; significant moisture-content difference only in shortbread results.",
+      "independent_judgment": "Final line 44 correctly bounds the result and describes different snack responses. Coupon results do not validate zipper/seal performance or justify procurement for this case.",
+      "observed_operation": "MDPI direct retrieval blocked; independently downloaded/read the original authored journal PDF from its indexed mirror and checked DOI/header/sections.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.pdf",
+          "bytes": 2427576,
+          "sha256": "1d59fcaafffb737cce2a0d75538adccbaad54ce206c27028fb6cc5b427cff994"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.txt",
+          "bytes": 130187,
+          "sha256": "869839caae8c98455e79410938ec758cbcf60da39ebf88e506f02f0f851abee9"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-09.txt",
+          "bytes": 30786,
+          "sha256": "73d80806349ed27ee4a000e1307d6857a4477e6a27c6680f4661011ff4851a85"
+        }
+      ],
+      "limits": "Publisher direct access unavailable. PDF text has overlapping duplicated layers; visible published-header content and relevant results agree. Mass flux is not a normalized intrinsic permeability coefficient; final does not import its absolute flux as a specification.",
+      "subject_type": "Film-coupon transmission measurement plus snack storage comparator",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I07",
+      "title": "Le-Bail et al., BRICE checking and breakage project",
+      "version_or_release": "Cereal Foods World 64(6) proceedings (2019), project begun 2015",
+      "exact_url": "https://www.cerealsgrains.org/publications/cfw/2019/November-December/Documents/CFW-64-6-0078.pdf",
+      "candidate_source_or_check_ids": [
+        "S07",
+        "C08"
+      ],
+      "primary_locator": "BRICE abstract: PDF index 110 (page 111 in a one-based reader), printed A110",
+      "governing_conditions_units_type_domain_exceptions": "Round/thick vs thinner rectangular pierced biscuits; 15-day checking observations; Karl Fischer and NIR center/surface water mapping; checking appears within 1–2 days.",
+      "independent_judgment": "Supports geometry and moisture-gradient investigation. Checking/breakage is an analogous mechanism, not a measured crispness threshold or cooperative cooling setting.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.pdf",
+          "bytes": 1046683,
+          "sha256": "58b3e2ba7cdca306bcc86b1a961a76be0e83c2676a2c0b624dd28c1c6215a793"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.txt",
+          "bytes": 662763,
+          "sha256": "a32818930074e7c9e9794c2b017ba22a1e8f09c3a4634c12ef1851b13272c401"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-09.txt",
+          "bytes": 30786,
+          "sha256": "73d80806349ed27ee4a000e1307d6857a4477e6a27c6680f4661011ff4851a85"
+        }
+      ],
+      "limits": "Conference abstract; no detailed cooling-line setpoint or maintenance costs. Original page 110 locator uses zero-based web indexing; printed A110 remains navigable.",
+      "subject_type": "Industry-collaborative biscuit checking study",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I08",
+      "title": "Ilhan et al., seal integrity review",
+      "version_or_release": "Packaging Technology and Science 34(6), 321–337 (2021), DOI 10.1002/pts.2564",
+      "exact_url": "https://repository.tudelft.nl/record/uuid:923a6fa2-112d-4088-be4a-8a68caa03c07",
+      "candidate_source_or_check_ids": [
+        "S08",
+        "C09"
+      ],
+      "primary_locator": "Institutional abstract; publisher Abstract/Introduction; factors sections",
+      "governing_conditions_units_type_domain_exceptions": "Factors grouped as process parameters, material properties, contaminants and further processes. Materials/process window and handling affect sealing; no specific cooperative defect is identified.",
+      "independent_judgment": "Supports keeping material, seal-process and later handling explanations open and treating changed sealability as a package-system factor.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.html",
+          "bytes": 30366,
+          "sha256": "22e55300800f7c32ff1393487fb73395c8151fc3f9c121ea414afcd0a458c240"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.txt",
+          "bytes": 3899,
+          "sha256": "325385d11dec2616d523519eb07cc6ae6e05073cc94234b20fa838eef843ecb2"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-07.txt",
+          "bytes": 38450,
+          "sha256": "c09b7845830e9d350bca50c1fb972eb033723a1444bad66a2031d10f7da1487e"
+        }
+      ],
+      "limits": "Review evidence supports mechanisms and inquiry, not a validated production setpoint.",
+      "subject_type": "Flexible food-package heat-seal review",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I09",
+      "title": "ASTM F2096 gross-leak bubble method",
+      "version_or_release": "ASTM F2096-11(2019), DOI 10.1520/F2096-11R19; catalog Active",
+      "exact_url": "https://store.astm.org/f2096-11r19.html",
+      "candidate_source_or_check_ids": [
+        "S11",
+        "C12",
+        "R07"
+      ],
+      "primary_locator": "Official Scope 1.1–1.3 and Significance 5.1–5.5",
+      "governing_conditions_units_type_domain_exceptions": "Gross leaks, internal pressurization, destructive package entry; stated 250 micrometer / 81% sensitivity. Scope 1.2: sensitivity not evaluated for nonporous packaging or other porous materials beyond spunbonded polyolefin.",
+      "independent_judgment": "The final at line 96 expressly preserves the nonporous qualification. The original S11/C12 summaries omitted it; final qualification resolves that lineage weakness.",
+      "observed_operation": "Web opens timed out; independent direct HTTPS retrieval succeeded and complete catalog scope was read.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.html",
+          "bytes": 292063,
+          "sha256": "a9f000567a9ce4c3a3597e97b44b63e87b8da2fb5d9fe611513f98b6ea381dcc"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.txt",
+          "bytes": 9786,
+          "sha256": "dfba348eca334691ed096f3dc845fab9cfa3bee11678fce074546b50c691cdfc"
+        }
+      ],
+      "limits": "Catalog summary only; no normative execution or actual-package sensitivity validation.",
+      "subject_type": "Gross-leak method, not WVTR, shelf life or safety oracle",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I10",
+      "title": "ASTM F2095 flexible-package pressure decay",
+      "version_or_release": "ASTM F2095-07(2021), DOI 10.1520/F2095-07R21; catalog Active",
+      "exact_url": "https://store.astm.org/f2095-07r21.html",
+      "candidate_source_or_check_ids": [
+        "R09"
+      ],
+      "primary_locator": "Official Scope 1.1–1.4, Significance 5.1–5.5",
+      "governing_conditions_units_type_domain_exceptions": "Nonporous flexible pouches and foil-sealed trays, empty or solid contents; seals/surfaces must not contact water, oils or other liquid. Destructive gas-entry connection. Scope sensitivity >=1e-4 standard cubic centimeters/second, volume dependent; measurement is pressure and requires calibration/verification.",
+      "independent_judgment": "A conditional alternative is supportable. Final line 96 leaves scope applicability open; R09 preserves liquid-contact and volume conditions. No particular snack bag is declared suitable.",
+      "observed_operation": "Independent direct HTTPS success after web-open timeouts.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.html",
+          "bytes": 301757,
+          "sha256": "01f5bbc9e9e561f5be60ac2183dd61bdd4ef2fa69e04b768b43654f6a6e2be2b"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.txt",
+          "bytes": 11339,
+          "sha256": "1baf02845f4e1b5c8088d3d67c964a95d8c6a9aa78355e570176736870f2e224"
+        }
+      ],
+      "limits": "Catalog scope only; no actual-format validation. R09 uses > from significance text, while scope includes equality; no case threshold is based on that wording.",
+      "subject_type": "Pressure-decay leak method",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I11",
+      "title": "ASTM F88/F88M seal strength",
+      "version_or_release": "ASTM F88/F88M-23, DOI 10.1520/F0088_F0088M-23; catalog Active",
+      "exact_url": "https://store.astm.org/f0088_f0088m-23.html",
+      "candidate_source_or_check_ids": [
+        "S10",
+        "C11",
+        "R06"
+      ],
+      "primary_locator": "Official Scope 1.1–1.5 and Significance 4.1–4.2",
+      "governing_conditions_units_type_domain_exceptions": "Force to separate a sealed test strip and failure mode; flexible-flexible/rigid/semi-rigid interfaces; fixture/bending affects measurement; consistent technique required.",
+      "independent_judgment": "Final line 100 correctly treats this as supplemental seal-process information rather than whole-package leak clearance.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.html",
+          "bytes": 321844,
+          "sha256": "ed46a1431f80adb0c59c718c3063dab39cbfbe55fed461c74caaf4d943434182"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.txt",
+          "bytes": 13085,
+          "sha256": "d45beed21a146348a8a04eff475c8a6f02fd82e1c89c12852e9fb14c36cc9edb"
+        }
+      ],
+      "limits": "No normative test run or process capability established.",
+      "subject_type": "Mechanical sealed-strip strength measurement",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I12",
+      "title": "ASTM F1249 film water-vapor transmission",
+      "version_or_release": "ASTM F1249-25, DOI 10.1520/F1249-25; catalog Active, updated 2025-11-10",
+      "exact_url": "https://store.astm.org/f1249-25.html",
+      "candidate_source_or_check_ids": [
+        "S09",
+        "C10",
+        "R08"
+      ],
+      "primary_locator": "Official Scope 1.1 / Note 1 and Significance 5.1–5.3",
+      "governing_conditions_units_type_domain_exceptions": "Flexible films/sheets up to 3 mm; WVTR in mass/area/time, permeance, and homogeneous-material permeability coefficient are distinct quantities. Comparative use needs agreed sampling, standardization, conditions and criteria; thickness/pressure scaling is not universally valid.",
+      "independent_judgment": "Supports matched-condition film testing and caution about geometry/scaling. Final line 100 does not substitute it for package seal, texture or safety measurements.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.html",
+          "bytes": 295332,
+          "sha256": "b0f97430f1f6b4b5d3a6a6276eb8255962cfe4a0bb5e9b7cfac8f50856095605"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.txt",
+          "bytes": 10005,
+          "sha256": "65d9d460c5f10650bb57002152fe0946d023a6e4cf88b22d010be022ba0290f6"
+        }
+      ],
+      "limits": "No normative test executed, supplier report supplied, or moisture/shelf-life calculation made.",
+      "subject_type": "Film/sheet transmission method",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I13",
+      "title": "ASTM F2338 vacuum decay",
+      "version_or_release": "ASTM F2338-24, DOI 10.1520/F2338-24; catalog Active, updated 2024-11-14",
+      "exact_url": "https://store.astm.org/f2338-24.html",
+      "candidate_source_or_check_ids": [
+        "R05"
+      ],
+      "primary_locator": "Official Scope 1.1.4 / 1.2.5 / 1.3, Significance 5.2–5.3",
+      "governing_conditions_units_type_domain_exceptions": "Flexible nonporous packages included; pressure rise in evacuated chamber; reported sensitivity tied to specified product-package populations. Accept/reject limits derive from non-leaking controls, leaking packages and calibrated simulated leaks.",
+      "independent_judgment": "Supports final lines 96–98 as a candidate after format validation and calibrated controls. No universal sensitivity or cooperative pass result is claimed.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.html",
+          "bytes": 322839,
+          "sha256": "9930d8f0982bb775e674068057980668e891e937c27ca0ce5a529e9db75f7f16"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.txt",
+          "bytes": 13855,
+          "sha256": "dbdfdd33c1467f28960867fd42021ef6ba5b4bec52b081d1dcd5d8b5da281520"
+        }
+      ],
+      "limits": "Catalog qualification is not actual-format validation or evidence of affordable laboratory access.",
+      "subject_type": "Package vacuum-decay leak detection",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I14",
+      "title": "Vercelino Alves et al., biscuit material/sealing",
+      "version_or_release": "Journal of Plastic Film & Sheeting 15(1), 57–71 (1999), DOI 10.1177/875608799901500107",
+      "exact_url": "https://journals.sagepub.com/doi/10.1177/875608799901500107",
+      "candidate_source_or_check_ids": [
+        "S12",
+        "C01",
+        "R01"
+      ],
+      "primary_locator": "Publisher abstract in web-batch-06.txt",
+      "governing_conditions_units_type_domain_exceptions": "Six wrapper structures, nine retail biscuit types/six manufacturers/three machine types; material WVTR 38 C/90% RH. Metallized BOPP structures 0.5–1.0 g m^-2 day^-1, others 2.3–4.0; impaired rollpack/horizontal transverse seals; measured whole-package transfer 1.1–3.0 times film-area estimates.",
+      "independent_judgment": "Final line 41 is accurate. Source supports impaired seals rather than an independently specified in-service acceptance failure or a cooperative machine fix.",
+      "observed_operation": "Direct publisher access failed; governing publisher abstract independently retrieved through indexed output.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-06.txt",
+          "bytes": 31829,
+          "sha256": "ae02a93dcaff5c7ad26e582ccec8efe9f0eaf464482de93417d5a712f763b77c"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+          "bytes": 5593,
+          "sha256": "9df33878d35bf56a6535832207bd55f0695c3af5ad96ee164b6574ec98c4bb4e"
+        }
+      ],
+      "limits": "Restricted full text; no maintenance-cost/history or cooperative causality established.",
+      "subject_type": "Retail package/system comparison",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I15",
+      "title": "Aucejo et al., water and EVOH",
+      "version_or_release": "Food Science and Technology International 6(2), 159–164 (2000), DOI 10.1177/108201320000600211",
+      "exact_url": "https://journals.sagepub.com/doi/10.1177/108201320000600211",
+      "candidate_source_or_check_ids": [
+        "S13",
+        "C05"
+      ],
+      "primary_locator": "Publisher abstract in web-batch-06.txt",
+      "governing_conditions_units_type_domain_exceptions": "Water transport in four EVOH grades, continuous-flow/gravimetric methods, 23 +/-2 C; water permeability roughly constant at aw 0.3–0.75 and increases up to two orders above 0.75. Ethylene content matters.",
+      "independent_judgment": "Final line 31 uses the water-permeability subject correctly and makes identified EVOH a prerequisite; it is not an oxygen-transmission or unidentified-film diagnosis.",
+      "observed_operation": "Independent publisher abstract retrieval through indexed output; direct publisher retrieval blocked.",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-06.txt",
+          "bytes": 31829,
+          "sha256": "ae02a93dcaff5c7ad26e582ccec8efe9f0eaf464482de93417d5a712f763b77c"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+          "bytes": 5593,
+          "sha256": "9df33878d35bf56a6535832207bd55f0695c3af5ad96ee164b6574ec98c4bb4e"
+        }
+      ],
+      "limits": "Full methods restricted; no layer construction or exposure for the cooperative known.",
+      "subject_type": "Condition-specific water permeability of EVOH copolymers",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I16",
+      "title": "Hagenloch, snack-cracker cooling model",
+      "version_or_release": "Western Michigan University Honors Thesis 2700; defense 2016-04-19",
+      "exact_url": "https://scholarworks.wmich.edu/honors_theses/2700/",
+      "candidate_source_or_check_ids": [
+        "S14"
+      ],
+      "primary_locator": "Repository Abstract and Comments",
+      "governing_conditions_units_type_domain_exceptions": "Model variables include temperature, cracker depth and line speed; sponsor-proprietary manuscript body unavailable.",
+      "independent_judgment": "Final lines 30 and 45 preserve the operational leads without importing settings or claiming the model was run for this case.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.html",
+          "bytes": 31294,
+          "sha256": "340757ed56e90420486bdbb7cf1dd5ef9e46b69082b6a8cb41d41100259c2fec"
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.txt",
+          "bytes": 2634,
+          "sha256": "8622c9a7b39c890947600379b18a900089297e716febfd1b35207a7be4d84de3"
+        }
+      ],
+      "limits": "Accessible abstract, not a disclosed full cooling implementation.",
+      "subject_type": "Implementation/model lead",
+      "production_default": "N/A; no cooperative production setting is established"
+    },
+    {
+      "id": "I17",
+      "title": "NIST/SEMATECH experimental-design handbook",
+      "version_or_release": "Online handbook sections 5.3.3.2 and 5.3.3.3.1; no dated release claimed",
+      "exact_url": "https://www.itl.nist.gov/div898/handbook/pri/section3/pri332.htm",
+      "candidate_source_or_check_ids": [],
+      "primary_locator": "Randomized block designs; two-level full factorial designs",
+      "governing_conditions_units_type_domain_exceptions": "Control important nuisance factors within homogeneous blocks, randomize remaining variation; full factorial combinations separate factor effects and interactions.",
+      "independent_judgment": "Independent methodological support for the proposed batch blocks and four package/handling combinations; does not supply a power guarantee or required batch count.",
+      "observed_operation": "Independent primary-source retrieval and semantic reading",
+      "source_access_utc": "2026-10-10; exact HTTPS intervals in direct-retrievals*.json, web-result save times in evidence-manifest.json",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-11.txt",
+          "bytes": 11633,
+          "sha256": "9d159171d1b0bae4184bc97850abebef0977dfdd2d3c4be874ed72f32dc184f3"
+        }
+      ],
+      "limits": "Reviewer evidence only; not retrospectively attributed to candidate searches or validation.",
+      "subject_type": "Experimental-design governing reference",
+      "production_default": "N/A; no cooperative production setting is established"
+    }
+  ],
+  "original_artifact_hash_manifest": "original-inspected-hashes.json",
+  "evidence_index": "evidence/index.md",
+  "identity_warning": "Hashes prove bytes/identity only. Judgments below rest on source meaning, operation and applicability."
+}

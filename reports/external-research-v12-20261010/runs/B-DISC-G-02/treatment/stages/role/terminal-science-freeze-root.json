@@ -100,25 +100,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-DISC-G-02",
-    "arm": "treatment",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-treatment-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-treatment-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Complete. Native Goal `goal-01a1242b-ab1e-76d1-be3e-054d7bbb20a6` activated once (active) and completed after all saves, same ID, verified at 05:01:02Z against a 05:11:04Z deadline.\n\nDeliverables in `ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/`:\n- [discovery.md](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md) \u2014 779 words (700\u20131000): 4-item shortlist (SLSA provenance, Sigstore+Rekor, in-toto layout, TUF channel) with failure boundaries; 2 implementation leads; SLSA v1.0\u2192v1.2 historical lead; tradeoff table; 3 discriminating tests; capabilities-vs-choices; uncertainty + next step.\n- [source-map.json](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/source-map.json) \u2014 6 sources across 4 orgs, URL/version/locator, retrieval window, conditions, applicability, proposed-vs-executed.\n- `sources/s01\u2013s06.json` \u2014 bounded excerpts; all JSON validated.\n- [native-goal-receipt.json](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/native-goal-receipt.json) \u2014 exact activation receipt.\n\nRetrieval: 6 primary pages, all HTTP 200, no failures; TUF/in-toto depth limited to overview/index, documented as unresolved rather than invented. No provider CLI, delegation, cross-arm contact, or input modification.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:29dcbb58-58f9-48e6-a81d-caff0267082d",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "muse-spark-1.3-contributor",
-    "summary": "Complete. Native Goal `goal-01a1242b-ab1e-76d1-be3e-054d7bbb20a6` activated once (active) and completed after all saves, same ID, verified at 05:01:02Z against a 05:11:04Z deadline.\n\nDeliverables in `ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/`:\n- [discovery.md](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md) \u2014 779 words (700\u20131000): 4-item shortlist (SLSA provenance, Sigstore+Rekor, in-toto layout, TUF channel) with failure boundaries; 2 implementation leads; SLSA v1.0\u2192v1.2 historical lead; tradeoff table; 3 discriminating tests; capabilities-vs-choices; uncertainty + next step.\n- [source-map.json](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/source-map.json) \u2014 6 sources across 4 orgs, URL/version/locator, retrieval window, conditions, applicability, proposed-vs-executed.\n- `sources/s01\u2013s06.json` \u2014 bounded excerpts; all JSON validated.\n- [native-goal-receipt.json](ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/native-goal-receipt.json) \u2014 exact activation receipt.\n\nRetrieval: 6 primary pages, all HTTP 200, no failures; TUF/in-toto depth limited to overview/index, documented as unresolved rather than invented. No provider CLI, delegation, cross-arm contact, or input modification.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:29dcbb58-58f9-48e6-a81d-caff0267082d",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "f3d6f7f439e43a2b68e627a9c6f7dfa61b1a2645e3d1e960fb117d5978890df4"
   }
 }

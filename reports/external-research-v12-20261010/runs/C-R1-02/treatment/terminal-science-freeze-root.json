@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "C-R1-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. [final.md](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md) contains the full proposal and audits all 24 released-plan clauses. I accepted C1\u2019s metadata correction and retained all 12 source IDs in the [source map](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md).\n\nThe one native Goal used the exact assigned objective and is complete. Its exact [activation response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-completion.json) are preserved. Reported usage: 154,742 tokens over 662 seconds (~11 minutes). Actual provider provenance and UTC-formatted native timestamps are recorded as UNKNOWN.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5cab5a8d-b84c-4c69-93ec-c722bc203dc1",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. [final.md](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md) contains the full proposal and audits all 24 released-plan clauses. I accepted C1\u2019s metadata correction and retained all 12 source IDs in the [source map](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/sources/index.md).\n\nThe one native Goal used the exact assigned objective and is complete. Its exact [activation response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/native-goal-completion.json) are preserved. Reported usage: 154,742 tokens over 662 seconds (~11 minutes). Actual provider provenance and UTC-formatted native timestamps are recorded as UNKNOWN.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:5cab5a8d-b84c-4c69-93ec-c722bc203dc1",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "cd02fb06dbc785ed33e1fa92cd5a22c6519e9ad0fa3c456f30311805445890c3"
   }
 }

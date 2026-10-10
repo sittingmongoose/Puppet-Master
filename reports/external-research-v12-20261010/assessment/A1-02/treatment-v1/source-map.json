@@ -19,19 +19,19 @@
       "title": "RFC 5545 iCalendar",
       "version_or_commit": "RFC 5545, September 2009, with R02/R03 for verified errata",
       "locators": [
-        "\u00a73.2.19",
-        "\u00a73.2.20",
-        "\u00a73.3.5",
-        "\u00a73.3.6",
-        "\u00a73.3.10",
-        "\u00a73.6.1",
-        "\u00a73.6.5",
-        "\u00a73.8.4.4",
-        "\u00a73.8.4.7",
-        "\u00a73.8.5.1\u2013.3",
-        "\u00a73.8.8.1\u2013.2"
+        "§3.2.19",
+        "§3.2.20",
+        "§3.3.5",
+        "§3.3.6",
+        "§3.3.10",
+        "§3.6.1",
+        "§3.6.5",
+        "§3.8.4.4",
+        "§3.8.4.7",
+        "§3.8.5.1–.3",
+        "§3.8.8.1–.2"
       ],
-      "governing_conditions": "UID is TEXT and identifies the component; RECURRENCE-ID defaults to DATE-TIME, matches master value type/local form, and identifies the original slot. EXDATE wins over RRULE/RDATE inclusions; duplicates collapse; an unsynchronized DTSTART/rule is undefined. INTERVAL is positive and defaults to 1. COUNT includes DTSTART; COUNT and UNTIL are mutually exclusive; UNTIL for TZID DATE-TIME DTSTART is UTC DATE-TIME and is inclusive. Missing recurrence fields derive from DTSTART. A matching VTIMEZONE must cover recurrence instances. Folds use the first instant; gaps use the preceding offset. DTEND gives exact recurrence duration; DURATION gives nominal duration, with day/week components differing across transitions. \u00a73.2.20 preserves unknown VALUE-type data; generic readers may ignore extension properties. New VEVENTs need UID/DTSTAMP and, without METHOD, DTSTART.",
+      "governing_conditions": "UID is TEXT and identifies the component; RECURRENCE-ID defaults to DATE-TIME, matches master value type/local form, and identifies the original slot. EXDATE wins over RRULE/RDATE inclusions; duplicates collapse; an unsynchronized DTSTART/rule is undefined. INTERVAL is positive and defaults to 1. COUNT includes DTSTART; COUNT and UNTIL are mutually exclusive; UNTIL for TZID DATE-TIME DTSTART is UTC DATE-TIME and is inclusive. Missing recurrence fields derive from DTSTART. A matching VTIMEZONE must cover recurrence instances. Folds use the first instant; gaps use the preceding offset. DTEND gives exact recurrence duration; DURATION gives nominal duration, with day/week components differing across transitions. §3.2.20 preserves unknown VALUE-type data; generic readers may ignore extension properties. New VEVENTs need UID/DTSTAMP and, without METHOD, DTSTART.",
       "applicability": "Governs the offline interchange design. Product subset, raw-byte preservation, upsert keys, tombstones and UI input rejection are product decisions. The earlier skip-gap text must be read with R03 and the later computed-time paragraph.",
       "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
       "note": "evidence/R01.md"
@@ -51,10 +51,10 @@
       "version_or_commit": "Official verified-errata rendering; EID 4271",
       "locators": [
         "#btn_4271",
-        "\u00a73.3.10, correction and report",
-        "R02.txt lines 2595\u20132634"
+        "§3.3.10, correction and report",
+        "R02.txt lines 2595–2634"
       ],
-      "governing_conditions": "EID 4271 is marked Verified. Corrected recurrence handling distinguishes invalid calendar dates, which are ignored/not counted, from nonexistent local times, which follow \u00a73.3.5.",
+      "governing_conditions": "EID 4271 is marked Verified. Corrected recurrence handling distinguishes invalid calendar dates, which are ignored/not counted, from nonexistent local times, which follow §3.3.5.",
       "applicability": "Independent official rendering corroborates R03. It corrects original discovery/draft gap behavior; it is not execution evidence for any library.",
       "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
       "note": "evidence/R02.md"
@@ -75,9 +75,9 @@
       "locators": [
         "Errata-ID and status",
         "Section 3.3.10: original, corrected text, notes",
-        "R03.txt lines 75\u2013169"
+        "R03.txt lines 75–169"
       ],
-      "governing_conditions": "The corrected rule excludes invalid dates from the recurrence count but handles nonexistent local recurrence times under \u00a73.3.5. Notes identify a contradictory later RFC paragraph and name major-client behavior; those notes are not a current interoperability test.",
+      "governing_conditions": "The corrected rule excludes invalid dates from the recurrence count but handles nonexistent local recurrence times under §3.3.5. Notes identify a contradictory later RFC paragraph and name major-client behavior; those notes are not a current interoperability test.",
       "applicability": "Confirms critic F1 and final amendment. urllib retrieved the redirected official errata.rfc-editor.org endpoint successfully; web open of the legacy URL returned Internal Error. Both access outcomes are recorded.",
       "observation": "Independent read-only HTTP retrieval and semantic inspection of relevant surrounding primary context; no downloaded code executed.",
       "note": "evidence/R03.md"
@@ -96,10 +96,10 @@
       "title": "RFC 5546 iTIP",
       "version_or_commit": "RFC 5546, December 2009",
       "locators": [
-        "\u00a73.2.5 CANCEL",
-        "\u00a73.7.1",
-        "\u00a74.4.3",
-        "R04.txt lines 1647\u20131760 and 5807 onward"
+        "§3.2.5 CANCEL",
+        "§3.7.1",
+        "§4.4.3",
+        "R04.txt lines 1647–1760 and 5807 onward"
       ],
       "governing_conditions": "VEVENT CANCEL is an organizer scheduling notice to affected attendees. UID identifies a series; cancelling one instance requires RECURRENCE-ID, while whole-series cancellation omits it. The cancellation sequence increases; message/component and attendee constraints govern the transaction.",
       "applicability": "A useful analogy for original-slot addressing; its notification and organizer obligations do not turn offline snapshot editing into an invitation cancellation.",
@@ -124,7 +124,7 @@
         "Instance-specific fields",
         "Modify or delete instances",
         "Cancellation PUT example",
-        "R05.txt lines 2960\u20133108"
+        "R05.txt lines 2960–3108"
       ],
       "governing_conditions": "An instance has recurringEventId and originalStartTime; the original start identifies the scheduled slot even after a move. The guide retrieves an instance then sends an authorized PUT to update it; cancellation sets status=cancelled on that instance. Ordinary instance listing and recurrence-master listing have different defaults.",
       "applicability": "Supports the operation-level comparison and rejection of new UID/current-start identity. It does not establish .ics representation or unconditional notification; see R16.",
@@ -147,7 +147,7 @@
       "locators": [
         "Properties: originalStart, seriesMasterId, type, cancelledOccurrences",
         "Relationships: exceptionOccurrences, instances",
-        "R06.txt lines 759\u2013764, 933\u2013942, 982\u2013984, 1017\u20131019, 1109\u20131128"
+        "R06.txt lines 759–764, 933–942, 982–984, 1017–1019, 1109–1128"
       ],
       "governing_conditions": "originalStart is DateTimeOffset in UTC for a recurring occurrence/exception, not a single instance. seriesMasterId is a String. Read-only type distinguishes singleInstance/occurrence/exception/seriesMaster. cancelledOccurrences holds occurrenceId strings on a master and requires $select/GET master ID. exceptionOccurrences needs $select/$expand on the master; exception and instance relationships omit cancelled instances. Event ID can change on a container move unless the ImmutableId preference is used.",
       "applicability": "Comparator only: provider IDs and UTC field shape do not replace UID/typed RID. Retrieval selectors are conditions on provider diagnostics; no Graph integration is proposed.",
@@ -170,7 +170,7 @@
       "locators": [
         "Description",
         "Permissions and HTTP request",
-        "R07.txt lines 477\u2013489 and 561\u2013573"
+        "R07.txt lines 477–489 and 561–573"
       ],
       "governing_conditions": "POST /events/{id}/cancel lets the meeting organizer cancel and send a cancellation message; an occurrence can be targeted by its occurrence event ID. Attendee invocation returns HTTP 400. The action moves the item to Deleted Items and supports an optional custom comment.",
       "applicability": "Confirms the explicit Graph messaging and permission comparison, without granting account access or guaranteeing offline file behavior.",
@@ -193,7 +193,7 @@
       "locators": [
         "HTTP request",
         "Response / ErrorOccurrenceCrossingBoundary",
-        "R08.txt lines 599\u2013611 and 792\u2013805"
+        "R08.txt lines 599–611 and 792–805"
       ],
       "governing_conditions": "PATCH updates the event object at its ID. Outlook recurrence exceptions cannot move to/before the previous occurrence day or to/after the next occurrence day; the API can return HTTP 400 ErrorOccurrenceCrossingBoundary. Updating a master with multiple attendees and separately modified instances can emit separate notifications.",
       "applicability": "Confirms the provider-specific restriction. It cannot be used to forbid an otherwise legal file-only move across a date boundary; the final keeps this distinction.",
@@ -217,7 +217,7 @@
         "Description",
         "Required query parameters",
         "Prefer: outlook.timezone",
-        "R09.txt lines 479\u2013483, 555\u2013597, 627\u2013629"
+        "R09.txt lines 479–483, 555–597, 627–629"
       ],
       "governing_conditions": "A seriesMaster instance request returns occurrences and exceptions in the required startDateTime/endDateTime range. Query bounds are ISO 8601 Strings. Response start/end times default to UTC; the optional Prefer header changes the response zone.",
       "applicability": "Supports range-based retrieval as a comparator. It does not license replacing the recurring schedule with the preview interval or converting iCalendar RID to a Graph ID.",
@@ -263,7 +263,7 @@
       "locators": [
         "README Features",
         "README RFC coverage",
-        "R11.txt lines 1580\u20131613"
+        "R11.txt lines 1580–1613"
       ],
       "governing_conditions": "README claims nested-tree preservation, byte-faithful editing including line endings/folds, forgiving parsing, strict building/validation, recurrence expansion and offsets from calendar-owned rules. These are project claims at the current unpinned repository state.",
       "applicability": "A useful distinct architecture lead; no immutable candidate artifact or implementation conformance is established. The final accurately retains the lead and its uncertainty.",
@@ -285,7 +285,7 @@
       "version_or_commit": "Tagged v7.3.0 CHANGES.rst, 2026-08-19; commit SHA not independently pinned",
       "locators": [
         "7.3.0 Bug fixes",
-        "Raw CHANGES.rst lines 44\u201357",
+        "Raw CHANGES.rst lines 44–57",
         "Issue #1445, #1526, #313, #1633 entries"
       ],
       "governing_conditions": "The unknown/X-property escaping fix applies to values without a VALUE parameter. URI parameters were lost on jCal conversion due to a positional-argument bug. Vendor-prefixed TZIDs were resolved instead of treated as naive. The TZID/RDATE DATE offset fix applies under use_pytz; default zoneinfo was unaffected. These are package/history-specific conditions.",
@@ -309,7 +309,7 @@
       "locators": [
         "Crate description",
         "Modules and re-exports",
-        "R13.txt lines 335\u2013379"
+        "R13.txt lines 335–379"
       ],
       "governing_conditions": "Overview documents a parsing library, exports LineReader/PropertyParser/IcalParser, and carries an old README version/install example. It does not alone expose the field-validity warning; R15 is the precise governing locator.",
       "applicability": "The archived parser is a legitimate historical syntax-layer alternative, not proof of recurrence/timezone support. A stale README banner is not evidence of the actual selected dependency version.",
@@ -353,7 +353,7 @@
       "version_or_commit": "ical 0.11.0 parser module docs",
       "locators": [
         "Warning",
-        "R15.txt lines 342\u2013345"
+        "R15.txt lines 342–345"
       ],
       "governing_conditions": "IcalParser/VcardParser parse content and uppercase case-insensitive fields; they do not check field validity.",
       "applicability": "Precise supplementary primary locator for the candidate parser-validation claim. Final characterization is supported, while the original source locator was less precise.",
@@ -376,7 +376,7 @@
       "locators": [
         "sendNotifications/sendUpdates parameters",
         "status cancelled-exception conditions",
-        "R16.txt lines 2943\u20132974 and 3586\u20133600"
+        "R16.txt lines 2943–2974 and 3586–3600"
       ],
       "governing_conditions": "sendUpdates is a String with all, externalOnly and none notification choices; deprecated sendNotifications defaults false and warns some email can still occur. Cancelled exceptions are retained for the parent lifetime and only id/recurringEventId/originalStartTime are guaranteed populated; other cancelled events have a different deletion/sync lifetime.",
       "applicability": "Independent condition check of the blanket provider-messaging sentence. Google status update and Graph /cancel have distinct notification contracts. This does not alter the final offline recommendation or the accurate operation table.",
@@ -388,24 +388,24 @@
     {
       "id": "K01",
       "claim": "Series identity and move identity",
-      "candidate_locator": "C1; final lines 36\u201340",
-      "primary_locator": "R01 \u00a73.8.4.4/.7; R05 instance fields",
+      "candidate_locator": "C1; final lines 36–40",
+      "primary_locator": "R01 §3.8.4.4/.7; R05 instance fields",
       "condition_and_applicability": "UID is component identity; typed RID refers to original scheduled start even after a move. Source-document namespace is local product design; SEQUENCE stays revision metadata.",
       "judgment": "SUPPORTED"
     },
     {
       "id": "K02",
       "claim": "Detached override, existing exception merge",
-      "candidate_locator": "C1/C2; final lines 40\u201342, 53",
-      "primary_locator": "R01 \u00a73.8.4.4; R04 \u00a73.7.1",
+      "candidate_locator": "C1/C2; final lines 40–42, 53",
+      "primary_locator": "R01 §3.8.4.4; R04 §3.7.1",
       "condition_and_applicability": "Same UID/original RID; edit the existing keyed exception and preserve unrelated owning-component data; fail on duplicates/conflicts.",
       "judgment": "SUPPORTED_PROPOSAL"
     },
     {
       "id": "K03",
       "claim": "Recurrence algebra and cancellation",
-      "candidate_locator": "C2; final lines 51\u201356",
-      "primary_locator": "R01 \u00a73.8.5.1/.3",
+      "candidate_locator": "C2; final lines 51–56",
+      "primary_locator": "R01 §3.8.5.1/.3",
       "condition_and_applicability": "DTSTART/RRULE/RDATE inclusion, EXDATE precedence, inclusion deduplication, retain anchor DTSTART; compatible typed original-slot exclusion.",
       "judgment": "SUPPORTED"
     },
@@ -413,39 +413,39 @@
       "id": "K04",
       "claim": "Cancel moved exception using EXDATE plus removed active override",
       "candidate_locator": "C2; final line 56, critique U1",
-      "primary_locator": "R01 \u00a73.8.5.1; R04 \u00a73.2.5",
+      "primary_locator": "R01 §3.8.5.1; R04 §3.2.5",
       "condition_and_applicability": "Local tombstone/disclosed omission is a product proposal; no primary source or run here proves every consumer. Final retains uncertainty and a test/defer choice.",
       "judgment": "HONEST_UNRESOLVED"
     },
     {
       "id": "K05",
       "claim": "No future/range edit or iTIP message",
-      "candidate_locator": "C2; final lines 57\u201358",
-      "primary_locator": "R01 \u00a73.8.4.4; R04 \u00a73.2.5",
+      "candidate_locator": "C2; final lines 57–58",
+      "primary_locator": "R01 §3.8.4.4; R04 §3.2.5",
       "condition_and_applicability": "RANGE affects multiple occurrences; METHOD:CANCEL is organizer/attendee scheduling. Neither is the requested single offline operation.",
       "judgment": "SUPPORTED"
     },
     {
       "id": "K06",
       "claim": "Zone authority and local recurrence",
-      "candidate_locator": "C3; final lines 62\u201364",
-      "primary_locator": "R01 \u00a73.2.19, \u00a73.6.5, \u00a73.8.5.3",
+      "candidate_locator": "C3; final lines 62–64",
+      "primary_locator": "R01 §3.2.19, §3.6.5, §3.8.5.3",
       "condition_and_applicability": "Resolve file TZID to preserved matching VTIMEZONE covering the series; derive UTC instants rather than fix weekly UTC; no host-zone fallback.",
       "judgment": "SUPPORTED"
     },
     {
       "id": "K07",
       "claim": "Fold/gap policy and count",
-      "candidate_locator": "C3; final lines 64\u201366; matrix line 147",
-      "primary_locator": "R01 \u00a73.3.5 and later \u00a73.3.10; R02/R03 EID 4271",
+      "candidate_locator": "C3; final lines 64–66; matrix line 147",
+      "primary_locator": "R01 §3.3.5 and later §3.3.10; R02/R03 EID 4271",
       "condition_and_applicability": "First fold occurrence; imported/generated gaps use pre-gap offset; invalid dates still ignored. Rejecting a new entered gap destination is explicitly product policy.",
       "judgment": "SUPPORTED_CORRECTION"
     },
     {
       "id": "K08",
       "claim": "Duration semantics",
-      "candidate_locator": "C3; final lines 68\u201374; matrix 148",
-      "primary_locator": "R01 \u00a73.3.6 and \u00a73.8.5.3",
+      "candidate_locator": "C3; final lines 68–74; matrix 148",
+      "primary_locator": "R01 §3.3.6 and §3.8.5.3",
       "condition_and_applicability": "Master DTEND implies exact recurring duration; DURATION retains nominal form (day/week components can vary elapsed length); existing override explicit form/meaning retained.",
       "judgment": "SUPPORTED_CORRECTION"
     },
@@ -453,14 +453,14 @@
       "id": "K09",
       "claim": "Weekly grammar default and end constraints",
       "candidate_locator": "C6; final lines 119, 125",
-      "primary_locator": "R01 \u00a73.3.10",
+      "primary_locator": "R01 §3.3.10",
       "condition_and_applicability": "WEEKLY, positive INTERVAL default 1, at most one matching BYDAY; optional COUNT xor UNTIL, COUNT includes DTSTART, TZID DTSTART UNTIL UTC DATE-TIME. Missing end bound is unbounded.",
       "judgment": "SUPPORTED_CONDITIONAL_PROPOSAL"
     },
     {
       "id": "K10",
       "claim": "Google single-instance operation",
-      "candidate_locator": "C4; final lines 80\u201383",
+      "candidate_locator": "C4; final lines 80–83",
       "primary_locator": "R05 Modify/delete and originalStartTime; R16 parameters",
       "condition_and_applicability": "Retrieve then authorized update of instance; status=cancelled marks cancellation. Provider IDs/status do not determine .ics syntax.",
       "judgment": "SUPPORTED"
@@ -492,15 +492,15 @@
     {
       "id": "K14",
       "claim": "Unknown value types versus unknown properties",
-      "candidate_locator": "C5; final lines 87\u201389",
-      "primary_locator": "R01 \u00a73.2.20 and \u00a73.8.8.1/.2; frozen brief negative constraint",
+      "candidate_locator": "C5; final lines 87–89",
+      "primary_locator": "R01 §3.2.20 and §3.8.8.1/.2; frozen brief negative constraint",
       "condition_and_applicability": "RFC preservation mandate concerns unknown VALUE type data; broader raw properties/parameters/folds preservation is this product contract.",
       "judgment": "SUPPORTED_CORRECTION"
     },
     {
       "id": "K15",
       "claim": "Idempotence and round-trip",
-      "candidate_locator": "C5; final lines 91\u201393",
+      "candidate_locator": "C5; final lines 91–93",
       "primary_locator": "Local design grounded in R01 identity; R12 implementation history",
       "condition_and_applicability": "Stable source-document/UID/typed RID upserts, input/export hashes, no silent conflict overwrite. Hashes are provenance, not semantic proof; byte identity distinct from meaning.",
       "judgment": "SUPPORTED_PROPOSAL"
@@ -533,7 +533,7 @@
       "id": "K19",
       "claim": "Implementation history conditions",
       "candidate_locator": "C5; final line 101",
-      "primary_locator": "R12 7.3.0 Bug fixes, lines 44\u201357",
+      "primary_locator": "R12 7.3.0 Bug fixes, lines 44–57",
       "condition_and_applicability": "Unknown/X escaping fix: without VALUE parameter. TZID/RDATE offset bug: use_pytz only, default zoneinfo unaffected. Different language/package; motivates tests, not Rust defect.",
       "judgment": "SUPPORTED_WITH_MINOR_SUMMARY_LIMIT"
     },
@@ -548,7 +548,7 @@
     {
       "id": "K21",
       "claim": "Unsupported inputs and validation status",
-      "candidate_locator": "C6; final 119\u2013154",
+      "candidate_locator": "C6; final 119–154",
       "primary_locator": "Frozen brief/plan; R01 scope conditions",
       "condition_and_applicability": "Specific unsupported/conflict outcome without partial DB/export changes; implementations/client tests all explicitly not run; table gives prospective observables rather than results.",
       "judgment": "SUPPORTED"

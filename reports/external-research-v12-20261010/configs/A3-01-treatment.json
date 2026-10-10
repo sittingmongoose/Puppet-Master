@@ -20,8 +20,8 @@
   "runtime_mode": "full-access",
   "method_id": "A3",
   "stage_prompt_deltas": {
-    "critic": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on \u201cnot supported,\u201d \u201call,\u201d \u201conly,\u201d \u201cnever,\u201d or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
-    "reviser": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on \u201cnot supported,\u201d \u201call,\u201d \u201conly,\u201d \u201cnever,\u201d or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review."
+    "critic": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
+    "reviser": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review."
   },
   "helper_version": "ER12_RUNTIME/helpers/er12-screen-v1/VERSION.json"
 }

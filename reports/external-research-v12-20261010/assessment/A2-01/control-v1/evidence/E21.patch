@@ -1,217 +1,77 @@
-From 0bc6cdefe1b49256218726e3fb0059498e450378 Mon Sep 17 00:00:00 2001
-From: David Wright <AUTHORIZED_PROVIDER_INSTANCE>
-Date: Tue, 29 Jun 2021 17:48:17 +0100
-Subject: [PATCH] CursorLoaderFactory etc for #4589
-
----
- .../FormResubmissionTest.java                 | 106 ++++++++++++++++++
- .../android/support/TestDependencies.java     |  11 +-
- .../android/support/pages/MainMenuPage.java   |   6 +-
- .../android/dao/CursorLoaderFactory.java      |  23 ++--
- 4 files changed, 135 insertions(+), 11 deletions(-)
- create mode 100644 collect_app/src/androidTest/java/org/odk/collect/android/feature/instancemanagement/FormResubmissionTest.java
-
-diff --git a/collect_app/src/androidTest/java/org/odk/collect/android/feature/instancemanagement/FormResubmissionTest.java b/collect_app/src/androidTest/java/org/odk/collect/android/feature/instancemanagement/FormResubmissionTest.java
-new file mode 100644
-index 00000000000..54b27f7a8a2
---- /dev/null
-+++ b/collect_app/src/androidTest/java/org/odk/collect/android/feature/instancemanagement/FormResubmissionTest.java
-@@ -0,0 +1,106 @@
-+package org.odk.collect.android.feature.instancemanagement;
-+
-+import android.Manifest;
-+
-+import androidx.annotation.NonNull;
-+import androidx.annotation.Nullable;
-+import androidx.test.ext.junit.runners.AndroidJUnit4;
-+import androidx.test.rule.GrantPermissionRule;
-+
-+import org.junit.Rule;
-+import org.junit.Test;
-+import org.junit.rules.RuleChain;
-+import org.junit.runner.RunWith;
-+import org.odk.collect.android.RecordedIntentsRule;
-+import org.odk.collect.android.openrosa.HttpCredentialsInterface;
-+import org.odk.collect.android.openrosa.HttpPostResult;
-+import org.odk.collect.android.support.CollectTestRule;
-+import org.odk.collect.android.support.StubOpenRosaServer;
-+import org.odk.collect.android.support.TestDependencies;
-+import org.odk.collect.android.support.TestRuleChain;
-+import org.odk.collect.android.support.pages.MainMenuPage;
-+import org.odk.collect.android.support.pages.SendFinalizedFormPage;
-+
-+import java.io.File;
-+import java.net.URI;
-+import java.util.List;
-+
-+import timber.log.Timber;
-+
-+@RunWith(AndroidJUnit4.class)
-+public class FormResubmissionTest {
-+
-+    public static final String TEXT_FORM_NAME = "One Question";
-+    public static final String TEXT_FORM_XML = "one-question.xml";
-+    public static final String TEXT_QUESTION = "what is your age";
-+    public static final String TEXT_ANSWER = "123";
-+
-+    private boolean noHttpPostResult;
-+
-+    private final StubOpenRosaServer server = new StubOpenRosaServer() {
-+        @NonNull
-+        @Override
-+        public HttpPostResult uploadSubmissionAndFiles(@NonNull File submissionFile,
-+                                                       @NonNull List<File> fileList,
-+                                                       @NonNull URI uri,
-+                                                       @Nullable HttpCredentialsInterface credentials,
-+                                                       long contentLength) throws Exception {
-+            if (noHttpPostResult) {
-+                int timeOutMs = 1000;
-+                int timeOuts = 60 * 60;
-+                Timber.i("sleeping for %s sec", timeOutMs * timeOuts / 1000);
-+                for (int timeOut = 1; timeOut <= timeOuts; timeOut++) {
-+                    Thread.sleep(timeOutMs);
-+                    Timber.i("slept for %s ms", timeOut * timeOutMs);
-+                }
-+            }
-+
-+            return super.uploadSubmissionAndFiles(submissionFile,
-+                    fileList,
-+                    uri,
-+                    credentials,
-+                    contentLength);
-+        }
-+    };
-+
-+    private final CollectTestRule rule = new CollectTestRule();
-+
-+    @Rule
-+    public RuleChain chain = TestRuleChain.chain(new TestDependencies(server))
-+            .around(GrantPermissionRule.grant(Manifest.permission.GET_ACCOUNTS))
-+            .around(new RecordedIntentsRule())
-+            .around(rule);
-+
-+    @Test
-+    public void whenFailedFormCannotBeEdited_ServerAcceptsResubmission() {
-+        noHttpPostResult = true;
-+        MainMenuPage mainMenuPage = rule.startAtMainMenu()
-+                .setServer(server.getURL())
-+                .copyForm(TEXT_FORM_XML)
-+                .startBlankForm(TEXT_FORM_NAME)
-+                .answerQuestion(TEXT_QUESTION, TEXT_ANSWER)
-+                .swipeToEndScreen()
-+                .clickSaveAndExit()
-+                .clickSendFinalizedForm(1)
-+                .clickOnForm(TEXT_FORM_NAME)
-+                .clickSendSelected()
-+//               clickOnText("CANCEL")
-+                .pressBack(new MainMenuPage())
-+                .clickViewSentForm(0)
-+                .assertTextDoesNotExist(TEXT_FORM_NAME)
-+                .pressBack(new MainMenuPage());
-+        noHttpPostResult = false;
-+        mainMenuPage
-+                .clickEditSavedForm(1)
-+                .assertTextDoesNotExist(TEXT_FORM_NAME)
-+                .pressBack(new MainMenuPage())
-+                .clickSendFinalizedForm(1)
-+                .clickOnForm(TEXT_FORM_NAME)
-+                .clickSendSelected()
-+                .clickOK(new SendFinalizedFormPage())
-+                .pressBack(new MainMenuPage())
-+                .clickViewSentForm(1)
-+                .assertText(TEXT_FORM_NAME);
-+    }
-+
-+}
-diff --git a/collect_app/src/androidTest/java/org/odk/collect/android/support/TestDependencies.java b/collect_app/src/androidTest/java/org/odk/collect/android/support/TestDependencies.java
-index 99bb526e0e4..e10405a0b8b 100644
---- a/collect_app/src/androidTest/java/org/odk/collect/android/support/TestDependencies.java
-+++ b/collect_app/src/androidTest/java/org/odk/collect/android/support/TestDependencies.java
-@@ -24,7 +24,6 @@ public class TestDependencies extends AppDependencyModule {
- 
-     private final CallbackCountingTaskExecutorRule countingTaskExecutorRule = new CallbackCountingTaskExecutorRule();
- 
--    public final StubOpenRosaServer server = new StubOpenRosaServer();
-     public final TestScheduler scheduler = new TestScheduler();
-     public final FakeGoogleApi googleApi = new FakeGoogleApi();
-     public final FakeGoogleAccountPicker googleAccountPicker = new FakeGoogleAccountPicker();
-@@ -35,6 +34,16 @@ public class TestDependencies extends AppDependencyModule {
-             new CountingTaskExecutorIdlingResource(countingTaskExecutorRule)
-     );
- 
-+    public final StubOpenRosaServer server;
-+
-+    public TestDependencies(StubOpenRosaServer server) {
-+        this.server = server;
-+    }
-+
-+    public TestDependencies() {
-+        this(new StubOpenRosaServer());
-+    }
-+
-     @Override
-     public OpenRosaHttpInterface provideHttpInterface(MimeTypeMap mimeTypeMap, UserAgentProvider userAgentProvider) {
-         return server;
-diff --git a/collect_app/src/androidTest/java/org/odk/collect/android/support/pages/MainMenuPage.java b/collect_app/src/androidTest/java/org/odk/collect/android/support/pages/MainMenuPage.java
-index 1788afcdda8..cdd43f0d404 100644
---- a/collect_app/src/androidTest/java/org/odk/collect/android/support/pages/MainMenuPage.java
-+++ b/collect_app/src/androidTest/java/org/odk/collect/android/support/pages/MainMenuPage.java
-@@ -187,7 +187,11 @@ public OkDialog clickGetBlankFormWithError() {
-     }
- 
-     public ViewSentFormPage clickViewSentForm(int formCount) {
--        onView(withText(getTranslatedString(R.string.view_sent_forms_button, formCount))).perform(click());
-+        String text = formCount < 1
-+                ? getTranslatedString(R.string.view_sent_forms_button)
-+                .replace(" (%s)", "")
-+                : getTranslatedString(R.string.view_sent_forms_button, formCount);
-+        onView(withText(text)).perform(click());
-         return new ViewSentFormPage().assertOnPage();
-     }
- 
-diff --git a/collect_app/src/main/java/org/odk/collect/android/dao/CursorLoaderFactory.java b/collect_app/src/main/java/org/odk/collect/android/dao/CursorLoaderFactory.java
-index dfcd7bcc661..0d23f1e5923 100644
---- a/collect_app/src/main/java/org/odk/collect/android/dao/CursorLoaderFactory.java
-+++ b/collect_app/src/main/java/org/odk/collect/android/dao/CursorLoaderFactory.java
-@@ -20,6 +20,13 @@ public CursorLoaderFactory(CurrentProjectProvider currentProjectProvider) {
-         this.currentProjectProvider = currentProjectProvider;
-     }
- 
-+    public CursorLoader createSentInstancesCursorLoader(String sortOrder) {
-+        String selection = DatabaseInstanceColumns.STATUS + " =? ";
-+        String[] selectionArgs = {Instance.STATUS_SUBMITTED};
-+
-+        return getInstancesCursorLoader(selection, selectionArgs, sortOrder);
-+    }
-+
-     public CursorLoader createSentInstancesCursorLoader(CharSequence charSequence, String sortOrder) {
-         CursorLoader cursorLoader;
-         if (charSequence.length() == 0) {
-@@ -38,20 +45,18 @@ public CursorLoader createSentInstancesCursorLoader(CharSequence charSequence, S
-         return cursorLoader;
-     }
- 
--    public CursorLoader createSentInstancesCursorLoader(String sortOrder) {
--        String selection = DatabaseInstanceColumns.STATUS + " =? ";
--        String[] selectionArgs = {Instance.STATUS_SUBMITTED};
--
--        return getInstancesCursorLoader(selection, selectionArgs, sortOrder);
--    }
--
-     public CursorLoader createUnsentInstancesCursorLoader(String sortOrder) {
--        String selection = DatabaseInstanceColumns.STATUS + " !=? ";
--        String[] selectionArgs = {Instance.STATUS_SUBMITTED};
-+        String selection = DatabaseInstanceColumns.STATUS + " !=? " +
-+                "and " + DatabaseInstanceColumns.STATUS + " !=? ";
-+        String[] selectionArgs = {
-+                Instance.STATUS_SUBMITTED,
-+                Instance.STATUS_SUBMISSION_FAILED
-+        };
- 
-         return getInstancesCursorLoader(selection, selectionArgs, sortOrder);
-     }
- 
-+    //2021-06 Not updated as not testable?
-     public CursorLoader createUnsentInstancesCursorLoader(CharSequence charSequence, String sortOrder) {
-         CursorLoader cursorLoader;
-         if (charSequence.length() == 0) {
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://github.com/getodk/collect/commit/0bc6cde.patch"
+  ],
+  "source_urls": [
+    "https://github.com/getodk/collect/commit/0bc6cde.patch"
+  ],
+  "version": [
+    {
+      "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+      "subject_operation": "Read-only source-code witness for E07",
+      "conditions": "Full patch read; UI test uses StubOpenRosaServer, simulated unavailable response, failed-item edit exclusion and later resend. Single-argument loader filter excludes failed status."
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Entire patch"
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+      "subject_operation": "Read-only source-code witness for E07",
+      "conditions": "Full patch read; UI test uses StubOpenRosaServer, simulated unavailable response, failed-item edit exclusion and later resend. Single-argument loader filter excludes failed status."
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/retrieval-manifest.json",
+      "source_id": "E21",
+      "existing_authored_summary_fields": {}
+    },
+    {
+      "authored_source_map": "assessment/A2-01/control-v1/source-map.json",
+      "source_id": "E21",
+      "existing_authored_summary_fields": {
+        "version": "0bc6cdefe1b49256218726e3fb0059498e450378",
+        "subject_operation": "Read-only source-code witness for E07",
+        "conditions": "Full patch read; UI test uses StubOpenRosaServer, simulated unavailable response, failed-item edit exclusion and later resend. Single-argument loader filter excludes failed status."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        {
+          "path": "evidence/E21.txt",
+          "lines": [
+            1,
+            218
+          ],
+          "section": "Entire patch"
+        }
+      ]
+    }
+  ],
+  "raw_sha256": "f8d97d1c6edf6a776049f2955cc343421c2b2c99305b2d578ab112974b3a37b9",
+  "rawSHA256": "f8d97d1c6edf6a776049f2955cc343421c2b2c99305b2d578ab112974b3a37b9",
+  "original_bytes": 10100,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A2-01/control-v1/evidence/E21.patch",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

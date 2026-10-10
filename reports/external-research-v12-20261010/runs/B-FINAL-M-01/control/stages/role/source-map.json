@@ -70,7 +70,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "lines 16-28",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "retry count is additional to initial attempt; target default list includes timeout and listed HTTP codes; FTP condition is inapplicable to HTTPS; Retry-After honored",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"
@@ -81,7 +81,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-all-errors.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "lines 15-20, 30-36",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "broad retry may duplicate data; HTTP status default behavior requires explicit failure handling",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"
@@ -92,7 +92,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/retry-max-time.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "lines 16-21",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "prevents a retry from starting after timer limit; an already-started request may exceed it",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"
@@ -103,7 +103,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/max-time.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "lines 17-25",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "per-transfer maximum resets on each retry; not process-wide deadline",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"
@@ -114,7 +114,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/fail-with-body.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "lines 16-25",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "HTTP response code 400 or greater yields error 22 while body remains available",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"
@@ -125,7 +125,7 @@
       "url": "https://github.com/curl/curl/blob/curl-8_10_1/docs/cmdline-opts/write-out.md",
       "version": "official curl/curl source tag curl-8_10_1",
       "locator": "num_retries lines 125-130; response_code lines 154-156; time_total lines 222-224",
-      "retrieval_utc_window": "2026-10-10T04:18:36Z\u201304:19:40Z",
+      "retrieval_utc_window": "2026-10-10T04:18:36Z–04:19:40Z",
       "retrieval_operation": "web search and direct HTTPS opens of official curl/curl source pages tagged curl-8_10_1",
       "conditions_exceptions_applicability": "per-transfer metadata; process-wide elapsed time should be measured by supervisor",
       "evidence_file": "sources/curl-8.10.1-reference-notes.md"

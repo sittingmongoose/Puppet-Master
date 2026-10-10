@@ -1,0 +1,115 @@
+{
+  "version": "materialize-v3",
+  "scope": [
+    "R0",
+    "A1",
+    "A1+A8"
+  ],
+  "activation_capture_versions": [
+    "exact-v1",
+    "exact-capture-v21"
+  ],
+  "files": [
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "sha256": "d60077e6451c1a15fc6dc56396b1ee2f361de7cfdc52b1bdce1294897d9c818e",
+      "bytes": 945
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "sha256": "0a58d80ff288253c9cbbce15ec03a25ab5f4dc0c4c6cdd42e7ef3faedb8f2deb",
+      "bytes": 4645
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "bytes": 23592
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "bytes": 5187
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "bytes": 1229
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "bytes": 284
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "sha256": "1ba74a47636a5351bf3337d9733a8cdf470313377638b22ad83d2d1d168fce90",
+      "bytes": 10477
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "sha256": "f3f3bda6151468f2a4a1362a51dc21a5d5593ab50a8705986a043594f2bc00c6",
+      "bytes": 242
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "bytes": 394
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503
+    },
+    {
+      "relative_path": "sources/methods/A8/critic_prompt_delta.txt",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398
+    },
+    {
+      "relative_path": "sources/methods/A8/reviser_prompt_delta.txt",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715
+    }
+  ],
+  "finite_dependency_closure": true
+}

@@ -1,0 +1,217 @@
+{
+  "scope": "Two explicitly declared support mechanics after finite 309-task tree audit; no repeated full-tree scan",
+  "records": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "declaration": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-actual-custody-repair-v3",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6.1-sol"
+        },
+        "actual_response": {
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-actual-custody-repair-v3",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T08:19:43.752Z",
+                "updatedAt": "2026-10-10T08:27:08.341Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6.1-sol",
+                  "requestedAt": "2026-10-10T08:19:43.755Z",
+                  "startedAt": "2026-10-10T08:19:44.524Z",
+                  "completedAt": "2026-10-10T08:27:00.311Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T08:19:43.755Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-actual-custody-repair-v3",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T08:19:43.752Z",
+              "updatedAt": "2026-10-10T08:27:08.341Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "requestedAt": "2026-10-10T08:19:43.755Z",
+                "startedAt": "2026-10-10T08:19:44.524Z",
+                "completedAt": "2026-10-10T08:27:00.311Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-actual-custody-repair-v3:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T08:19:43.755Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        },
+        "terminal_task_status": {
+          "structured_content_metadata": [
+            {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-actual-custody-repair-v3",
+              "status": "completed",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol"
+            }
+          ],
+          "structuredContent": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-actual-custody-repair-v3",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol"
+          }
+        }
+      },
+      {
+        "declaration": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6.1-sol"
+        },
+        "actual_response": {
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T08:28:13.241Z",
+                "updatedAt": "2026-10-10T08:33:59.375Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6.1-sol",
+                  "requestedAt": "2026-10-10T08:28:13.243Z",
+                  "startedAt": "2026-10-10T08:28:13.971Z",
+                  "completedAt": "2026-10-10T08:33:50.454Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T08:28:13.243Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T08:28:13.241Z",
+              "updatedAt": "2026-10-10T08:33:59.375Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "requestedAt": "2026-10-10T08:28:13.243Z",
+                "startedAt": "2026-10-10T08:28:13.971Z",
+                "completedAt": "2026-10-10T08:33:50.454Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-final-freeze-current-role-custody-v4:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T08:28:13.243Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        },
+        "terminal_task_status": {
+          "structured_content_metadata": [
+            {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+              "status": "completed",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol"
+            }
+          ],
+          "structuredContent": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-final-freeze-current-role-custody-v4",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol"
+          }
+        }
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "ca8aa7ac542eec921ca4cd27eaf993f4afe57961abbc6e0d1953df6c4da42d19"
+  },
+  "known_owned_tasks": 311,
+  "quiet": true,
+  "root_active_asof": true
+}

@@ -16,7 +16,7 @@
     {
       "axis": "original_obligations_and_negative_constraints",
       "status": "MOSTLY_MET_WITH_SEPARATE_SEMANTIC_FAILURES",
-      "evidence": "discovery.md lines 3\u201348; shared assignment Required output",
+      "evidence": "discovery.md lines 3–48; shared assignment Required output",
       "assessment": "959 whitespace-separated words (926 regex words), four diverse mechanisms, two named inspectable implementation leads, one exact edition/date lead, comparison, three questions/tests, uncertainties and next step. Bounded to one <=20 KB plain-text note, offline edits, deletion and undo. No whole-product specification or universal winner. Observed artifacts show no scope expansion; hidden tool behavior is UNKNOWN."
     },
     {
@@ -40,7 +40,7 @@
     {
       "axis": "compact_tradeoffs_and_capabilities_versus_product_input",
       "status": "PRESENT_BUT_SEMANTICALLY_PARTIAL",
-      "evidence": "discovery.md lines 27\u201344; F1/F2",
+      "evidence": "discovery.md lines 27–44; F1/F2",
       "assessment": "Comparison covers offline operation, history, undo and conflict handling. User choice between automatic reconciliation and conflict resolution is left open; undo granularity and retention are recognized decisions. The diffsync history variant and generalized half-duplex claim materially distort the comparison."
     },
     {
@@ -83,9 +83,9 @@
           "url": "https://neil.fraser.name/writing/sync/",
           "version": "January 2009",
           "sections": [
-            "\u00a72 Differential Synchronization Overview, failed-patch paragraph and example",
-            "\u00a73 Dual Shadow Method, checksum/reinitialization paragraph",
-            "\u00a74 Guaranteed Delivery Method, packet loss, edit stack, backup shadow; Asymmetry"
+            "§2 Differential Synchronization Overview, failed-patch paragraph and example",
+            "§3 Dual Shadow Method, checksum/reinitialization paragraph",
+            "§4 Guaranteed Delivery Method, packet loss, edit stack, backup shadow; Asymmetry"
           ],
           "evidence_file": "primary-evidence/p4.md"
         }
@@ -118,7 +118,7 @@
           "url": "https://neil.fraser.name/writing/sync/",
           "version": "January 2009",
           "sections": [
-            "\u00a71 Conventional Strategies, three-step server exchange and changes-during-flight condition"
+            "§1 Conventional Strategies, three-step server exchange and changes-during-flight condition"
           ],
           "evidence_file": "primary-evidence/p4.md"
         },
@@ -127,8 +127,8 @@
           "url": "https://www.gnu.org/software/diffutils/manual/diffutils.html#diff3-Merging",
           "version": "GNU Diffutils 3.12, 12 January 2025",
           "sections": [
-            "\u00a78 Merging From a Common Ancestor",
-            "\u00a78.3 Generating the Merged Output Directly"
+            "§8 Merging From a Common Ancestor",
+            "§8.3 Generating the Merged Output Directly"
           ],
           "evidence_file": "primary-evidence/p5.md"
         }

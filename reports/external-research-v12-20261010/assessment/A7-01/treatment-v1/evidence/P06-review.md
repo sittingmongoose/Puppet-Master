@@ -1,15 +1,20 @@
-# P06 — Prusa supported file formats
-
-[Governing primary source](https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1)
-
-**Version:** PrusaSlicer 2.9 legacy help context; exact build UNKNOWN
-
-**Locator:** 3MF/STL/STEP/OBJ/AMF sections; web lines 359–376
-
-**Independent assessment:** Confirms STEP triangulation, the preferred 3MF format, STL ASCII/binary support and the OBJ material/texture exception. These are product-specific documentation facts, not an executed import test.
-
-**Evidence captures:**
-
-- [P06-prusa-formats.html](P06-prusa-formats.html) — SHA-256 `de5dd26db1efb176dfe88e3c1536cb008e6800688c53e711c8f52a8b1bdb43e8`
-- [web-official-docs.json](web-official-docs.json) — SHA-256 `4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3`
-- [web-additional-primary.json](web-additional-primary.json) — SHA-256 `41eeca0a853e1a4f05c388263826bc2eaae4f2c58555992b4dd881cb505cf2a5`
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0d775d9993dd3106c13912b2263b4d9146fbc407c3abd50302ddefb9c259083b",
+  "rawSHA256": "0d775d9993dd3106c13912b2263b4d9146fbc407c3abd50302ddefb9c259083b",
+  "original_bytes": 928,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P06-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

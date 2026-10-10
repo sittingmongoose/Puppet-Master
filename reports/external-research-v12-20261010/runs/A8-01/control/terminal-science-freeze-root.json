@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A8-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. The full proposal, source map and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight plan clauses, explicitly sources the restore rehearsal from the existing offsite copy, and records each critic finding\u2019s disposition. Rechecks covered the BagIt specification, OCFL\u2019s version-directory wording, and the path issue\u2019s distinction between the reporter\u2019s destination and a later Linux reproduction. ([RFC 8493](https://www.rfc-editor.org/rfc/rfc8493), [OCFL v1.1](https://ocfl.io/1.1.0/spec/), [issue #51](https://github.com/LibraryOfCongress/bagit-python/issues/51))\n\nExactly one native Goal was created with the frozen objective. The Goal tool returned **complete**; its completion result reported 100,450 tokens used and 239 seconds elapsed. Unexposed provenance and activation fields are marked UNKNOWN in the artifact.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:c51642ad-494c-41f8-bcc9-09d611b9db4e",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. The full proposal, source map and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/control/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight plan clauses, explicitly sources the restore rehearsal from the existing offsite copy, and records each critic finding\u2019s disposition. Rechecks covered the BagIt specification, OCFL\u2019s version-directory wording, and the path issue\u2019s distinction between the reporter\u2019s destination and a later Linux reproduction. ([RFC 8493](https://www.rfc-editor.org/rfc/rfc8493), [OCFL v1.1](https://ocfl.io/1.1.0/spec/), [issue #51](https://github.com/LibraryOfCongress/bagit-python/issues/51))\n\nExactly one native Goal was created with the frozen objective. The Goal tool returned **complete**; its completion result reported 100,450 tokens used and 239 seconds elapsed. Unexposed provenance and activation fields are marked UNKNOWN in the artifact.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:c51642ad-494c-41f8-bcc9-09d611b9db4e",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "4d14e98f4b68acca7bd93df67a0475fcf9a2670c327a05b3f8eb67ad14a32ef5"
   }
 }

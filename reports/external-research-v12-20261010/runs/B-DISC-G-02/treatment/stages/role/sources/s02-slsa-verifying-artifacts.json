@@ -1,1 +1,20 @@
-{"evidence_kind":"bounded-primary-excerpt","excerpt_observed":["Verification SHOULD include the following steps:","Ensuring that the builder identity is one of those in the map of trusted builder id's to SLSA level.","Verifying the signature on the provenance envelope.","Ensuring that the values for `buildType` and `externalParameters` in the provenance match the expected values.","Any unrecognized `externalParameters` SHOULD cause verification to fail."],"id":"s02-slsa-verifying-artifacts","retrieval":"provider web_fetch GET, Status 200 OK, text/html; exact per-source UTC UNKNOWN within 2026-10-10T04:57:10Z/04:58:30Z window","supports":["builder-identity check","signature check","buildType/externalParameters expectation match"],"url":"https://slsa.dev/spec/v1.0/verifying-artifacts","version":"SLSA 1.0"}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "1fbf02623ad1d4a5393853a9e33185dee449cabbdd1113caa93b9302a8bbd788",
+  "rawSHA256": "1fbf02623ad1d4a5393853a9e33185dee449cabbdd1113caa93b9302a8bbd788",
+  "original_bytes": 815,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-02/treatment/stages/role/sources/s02-slsa-verifying-artifacts.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

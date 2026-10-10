@@ -1,23 +1,88 @@
-# S1 primary evidence: rsync(1)
-
-- URL: https://download.samba.org/pub/rsync/rsync.1
-- Version/scope: live upstream manual, unpinned; the assignment targets rsync 3.2.7 on both peers. The page accessed here does not establish the deployed peer versions.
-- Input snapshot: setup-worker retrieval at 2026-10-10 03:54:10 UTC, as recorded in the listed corpus.
-- Role retrieval: 2026-10-10 04:02:41–04:04:30 UTC window; exact per-call timestamps unavailable. Operation: opened the exact primary URL with web access, then used find/open to inspect the locators below. The retrieved page was current/live at access time.
-
-## Published statements and conditions
-
-- **USAGE (source trailing slash):** examples distinguish copying a directory by name from copying its contents. A trailing slash on the source avoids an extra directory level at the destination.
-- **--delete:** removes extraneous files on the receiving side, only in synchronized directories. The manual requires recursive or directory transfer and warns that a whole directory must be selected rather than shell-expanded individual filenames. Excluded files are normally also protected from deletion. Sender-side I/O errors automatically disable deletion unless --ignore-errors is enabled; this is not a rollback guarantee.
-- **--delete-excluded:** ordinary include/exclude rules become sender-side-only unless explicitly qualified to affect the receiver too; this removes their usual receiver-protection effect.
-- **Dry run:** --dry-run makes no changes and is commonly paired with verbose or itemized output. Itemized output is expected to match a later run except when source/destination trees change externally or system calls fail.
-- **Filters:** default exclude rules hide from the sender and protect at the receiver. A leading slash anchors a pattern to the transfer root; a trailing *** can match a directory and its contents.
-- **--delay-updates:** updated files are held until transfer end and renamed into place in rapid succession. The manual describes this as an attempt to make updates closer to atomic, not a whole-directory transaction.
-
-Locators checked in the live manual: “USAGE” (lines 63–74); “--delete” (975–982); “--delete-excluded” (1000–1006); “--dry-run” (910–915); “FILTER RULES WHEN DELETING” (1816–1824); “FILTER RULES IN DEPTH” and “PATTERN MATCHING RULES” (1835–1871); “--delay-updates” (1548–1557).
-
-## Applicability and inference
-
-The source statements support the replacement section’s rsync option semantics. The root-anchored /local-notes/*** filter is a proposed application of the manual’s anchoring and *** matching rules. That protection depends on local-notes being at the root of the effective transfer path and no later rule overriding it. Stage isolation, human preview approval, rechecking, incomplete-state handling, explicit publication, and the three checks are product proposals/inferences, not behavior promised by rsync or observations from an executed run.
-
-No rsync command, local fixture probe, application test, or destructive operation was executed. Actual 3.2.7 peer output, path mapping, filter ordering, preview race handling, and product lifecycle evidence remain outstanding.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://download.samba.org/pub/rsync/rsync.1"
+  ],
+  "source_urls": [
+    "https://download.samba.org/pub/rsync/rsync.1"
+  ],
+  "version": [
+    {
+      "version": "Live upstream manual, unpinned; target both peers are rsync 3.2.7 per the assignment, but deployed versions are unverified.",
+      "conditions_and_exceptions": [
+        "Deletion is limited to synchronized receiving-side directories and requires recursive or directory transfer.",
+        "Ordinary excludes protect receiver matches unless --delete-excluded or sender-only rule modifiers alter that behavior.",
+        "A root-anchored filter assumes local-notes is at the effective transfer root and no later rule overrides it.",
+        "Dry-run/itemized output may diverge after external source/destination changes or system-call failures.",
+        "The live page is unpinned; exact 3.2.7 behavior and peer versions need endpoint verification.",
+        "Sender-side I/O errors normally disable deletion unless --ignore-errors is enabled; this safeguard is not rollback."
+      ]
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        "USAGE: trailing source slash and directory contents",
+        "--delete: receiving-side scope and exclude behavior",
+        "--delete-excluded: effect on default filter rules",
+        "--dry-run: no-change preview and output caveat",
+        "FILTER RULES WHEN DELETING",
+        "FILTER RULES IN DEPTH and PATTERN MATCHING RULES",
+        "--delay-updates: delayed per-file rename behavior"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "Live upstream manual, unpinned; target both peers are rsync 3.2.7 per the assignment, but deployed versions are unverified.",
+      "conditions_and_exceptions": [
+        "Deletion is limited to synchronized receiving-side directories and requires recursive or directory transfer.",
+        "Ordinary excludes protect receiver matches unless --delete-excluded or sender-only rule modifiers alter that behavior.",
+        "A root-anchored filter assumes local-notes is at the effective transfer root and no later rule overrides it.",
+        "Dry-run/itemized output may diverge after external source/destination changes or system-call failures.",
+        "The live page is unpinned; exact 3.2.7 behavior and peer versions need endpoint verification.",
+        "Sender-side I/O errors normally disable deletion unless --ignore-errors is enabled; this safeguard is not rollback."
+      ]
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-FINAL-G-01/control/stages/role/source-map.json",
+      "source_id": "S1",
+      "existing_authored_summary_fields": {
+        "version": "Live upstream manual, unpinned; target both peers are rsync 3.2.7 per the assignment, but deployed versions are unverified.",
+        "conditions_and_exceptions": [
+          "Deletion is limited to synchronized receiving-side directories and requires recursive or directory transfer.",
+          "Ordinary excludes protect receiver matches unless --delete-excluded or sender-only rule modifiers alter that behavior.",
+          "A root-anchored filter assumes local-notes is at the effective transfer root and no later rule overrides it.",
+          "Dry-run/itemized output may diverge after external source/destination changes or system-call failures.",
+          "The live page is unpinned; exact 3.2.7 behavior and peer versions need endpoint verification.",
+          "Sender-side I/O errors normally disable deletion unless --ignore-errors is enabled; this safeguard is not rollback."
+        ]
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        "USAGE: trailing source slash and directory contents",
+        "--delete: receiving-side scope and exclude behavior",
+        "--delete-excluded: effect on default filter rules",
+        "--dry-run: no-change preview and output caveat",
+        "FILTER RULES WHEN DELETING",
+        "FILTER RULES IN DEPTH and PATTERN MATCHING RULES",
+        "--delay-updates: delayed per-file rename behavior"
+      ]
+    }
+  ],
+  "raw_sha256": "b35c190453f8f628a14f9a8bae5f0bd0f95d505d27d7972afcd4c2fd6e2ebbb1",
+  "rawSHA256": "b35c190453f8f628a14f9a8bae5f0bd0f95d505d27d7972afcd4c2fd6e2ebbb1",
+  "original_bytes": 3247,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-G-01/control/stages/role/sources/S1-primary-evidence.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

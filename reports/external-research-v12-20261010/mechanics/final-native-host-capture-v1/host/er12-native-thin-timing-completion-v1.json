@@ -1,0 +1,112 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "declaration": {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-native-thin-timing-completion-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol"
+      },
+      "actual_response": {
+        "structured_content_metadata": [
+          {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-native-thin-timing-completion-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T05:41:47.181Z",
+              "updatedAt": "2026-10-10T05:43:09.097Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "requestedAt": "2026-10-10T05:41:47.184Z",
+                "startedAt": "2026-10-10T05:41:47.872Z",
+                "completedAt": "2026-10-10T05:42:48.909Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:41:47.184Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        ],
+        "structuredContent": {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-native-thin-timing-completion-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T05:41:47.181Z",
+            "updatedAt": "2026-10-10T05:43:09.097Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "requestedAt": "2026-10-10T05:41:47.184Z",
+              "startedAt": "2026-10-10T05:41:47.872Z",
+              "completedAt": "2026-10-10T05:42:48.909Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-native-thin-timing-completion-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T05:41:47.184Z"
+            }
+          ],
+          "nextPosition": 0,
+          "hasMore": true
+        }
+      },
+      "terminal_task_status": {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-native-thin-timing-completion-v1",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-native-thin-timing-completion-v1",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6.1-sol"
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "69d08391e3928d3e32cc22a832bfa70e416ca4fd4f97a8636f416af0cc065e4a",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/final-native-host-capture-v1/host/er12-native-thin-timing-completion-v1.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

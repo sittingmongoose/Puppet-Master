@@ -1,0 +1,33 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "observed_at_utc": "2026-10-10T07:24:32.317Z",
+      "actual_response": {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-02-control-reviser-v1",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-02-control-reviser-v1",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "c08155bc3ab07bad85c05ed8283c2f8b599b5c005e67a0c400533a7e60731c34",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/task-observations/er12ref-D-R2-02-control-reviser-v1.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

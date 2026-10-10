@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-10T07:06:49.819758+00:00",
+  "full_source_read": true,
+  "full_README_and_checks_read": true,
+  "package_hash_mismatches": [],
+  "prior_checks": 15,
+  "rerun": false,
+  "status": "REQUIRES_BOUNDED_MECHANICAL_REPAIR",
+  "findings": [
+    "real missing-final lacks final-role task, attempt_terminal latency aliases final-role latency; test fixture had final-role task",
+    "native blocked failure and scientific delivery must remain separate; actual delivered final requires root frozen delivery evidence"
+  ],
+  "replacement_task": "er12-final-accounting-reader-repair-v2",
+  "science_regrade": false,
+  "campaign_extraction_run": false
+}

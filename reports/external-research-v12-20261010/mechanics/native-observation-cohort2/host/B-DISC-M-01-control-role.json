@@ -1,0 +1,87 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "request": {
+        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1"
+      },
+      "raw": {
+        "structured_content_metadata": [
+          {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T03:54:56.275Z",
+              "updatedAt": "2026-10-10T04:06:20.650Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T03:54:56.276Z",
+                "startedAt": "2026-10-10T03:54:57.810Z",
+                "completedAt": "2026-10-10T04:04:58.416Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T03:54:56.276Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        ],
+        "structuredContent": {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T03:54:56.275Z",
+            "updatedAt": "2026-10-10T04:06:20.650Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "requestedAt": "2026-10-10T03:54:56.276Z",
+              "startedAt": "2026-10-10T03:54:57.810Z",
+              "completedAt": "2026-10-10T04:04:58.416Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T03:54:56.276Z"
+            }
+          ],
+          "nextPosition": 0,
+          "hasMore": true
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "12946135c18b1450e92bf48463911e9cfde0767b1a2fa896b33cc7bf4a36da13",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-observation-cohort2/host/B-DISC-M-01-control-role.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

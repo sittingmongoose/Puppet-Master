@@ -1,0 +1,693 @@
+{
+  "schema": "ER12-independent-review-source-map-v1",
+  "case_id": "D-R1-02",
+  "arm": "control",
+  "reviewer": "codex-er12-dr102-control-v1",
+  "independence": "This map was authored by the assessment reviewer after independent retrieval; candidate maps are inspected lineage, not substituted for evidence.",
+  "retrieval_window_utc": [
+    "2026-10-10T06:59:00Z",
+    "2026-10-10T07:08:33Z"
+  ],
+  "final_artifact": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "ISO 5348:2021, Mechanical mounting of accelerometers",
+      "url": "https://www.iso.org/standard/78160.html",
+      "version_or_date": "Edition 3; January 2021; official metadata reports confirmation in 2026",
+      "primary_locator": "Official abstract and lifecycle",
+      "subject_operation_and_type": "Mounting guidance for contacting accelerometers and velocity transducers.",
+      "governing_conditions_defaults_units_exceptions": "Mount response/fidelity depends on coupling; several environmental/alignment influences are outside the standard scope.",
+      "independent_semantic_judgment": "Bounded mount-audit use is supported; no cart compliance or prescribed mount is established.",
+      "access_and_limits": "Official abstract/metadata only; paid full standard not inspected. Independent vendor sources also support the mechanism.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-05.json"
+      ]
+    },
+    {
+      "source_id": "S02",
+      "title": "TE Connectivity, Guidelines for Adhesive Mounting Accelerometers",
+      "url": "https://www.te.com/content/dam/te-com/documents/sensors/global/guidelines-adhesive-mounting-accelerometers-app-note.pdf",
+      "version_or_date": "Copyright 2017; no further revision identified",
+      "primary_locator": "One-page application note, mounting guidance",
+      "subject_operation_and_type": "Vendor adhesive mounting guidance.",
+      "governing_conditions_defaults_units_exceptions": "Coupling stiffness and layer thickness affect mounted response; clean flat interfaces and adhesive temperature limits depend on the actual assembly.",
+      "independent_semantic_judgment": "Supports characterization, not prescribing adhesive or temperatures for an unidentified cart logger.",
+      "access_and_limits": "Full official one-page PDF parsed by web tool; direct Python request returned 403.",
+      "evidence_files": [
+        "evidence/web-03.json"
+      ]
+    },
+    {
+      "source_id": "S03",
+      "title": "Endevco TP312, Guide to Adhesively Mounting Accelerometers",
+      "url": "https://www.endevco.com/contentStore/mktgContent/endevco/dlm_uploads/2019/02/TP312.pdf",
+      "version_or_date": "TP312; no explicit revision observed; URL directory is not a release date",
+      "primary_locator": "PDF pp. 2–5, purpose/background and mount comparisons",
+      "subject_operation_and_type": "Vendor experiments on specific transducers and mounts.",
+      "governing_conditions_defaults_units_exceptions": "Sinusoidal/random testing; high-g shock excluded. Models and mounting mass/stiffness, temperature and amplitude constrain results.",
+      "independent_semantic_judgment": "Mount dynamics and fixture comparison are justified; frequencies and adhesives are not cart specifications.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/S03.pdf",
+        "evidence/S03.txt",
+        "evidence/web-03.json"
+      ]
+    },
+    {
+      "source_id": "S04",
+      "title": "Malekjafarian et al., Railway Track Monitoring Using Train Measurements: An Experimental Case Study",
+      "url": "https://www.mdpi.com/2076-3417/9/22/4859",
+      "version_or_date": "Applied Sciences 2019, 9(22), 4859; DOI 10.3390/app9224859",
+      "primary_locator": "Abstract; §§2.1, 4, 5.3, 6; publisher PDF",
+      "subject_operation_and_type": "Sixty non-powered bogie passes over two months on a 6-km route, compared with a Track Recording Vehicle.",
+      "governing_conditions_defaults_units_exceptions": "Specific ±15 g accelerometer, 500 Hz acquisition and 5 Hz GPS; speed selection/scaling, low-speed exclusion, position mismatch and unmeasured mass/temperature constrain results.",
+      "independent_semantic_judgment": "Supports repeated comparisons and context controls; values and thresholds are not transferable cart settings.",
+      "access_and_limits": "Publisher landing open failed; complete official publisher-hosted PDF downloaded and relevant sections inspected. PDF URL: https://mdpi-res.com/d_attachment/applsci/applsci-09-04859/article_deploy/applsci-09-04859.pdf",
+      "evidence_files": [
+        "evidence/S04.pdf",
+        "evidence/S04.txt",
+        "evidence/web-07.json"
+      ]
+    },
+    {
+      "source_id": "S05",
+      "title": "Balouchi, Bevan and Formston, Development of railway track condition monitoring from multi-train in-service vehicles",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/00423114.2020.1755045",
+      "version_or_date": "Online 22 April 2020; Vehicle System Dynamics 59(9), 1397–1417 (2021); DOI 10.1080/00423114.2020.1755045",
+      "primary_locator": "Trials, discrete-fault detection, Figures 7 and 9; track-quality and conclusion sections",
+      "subject_operation_and_type": "In-cab railway demonstrator compared with Network Rail measurement train.",
+      "governing_conditions_defaults_units_exceptions": "Run 36 explicitly recaptures the same known fault as Run 25; GNSS antenna offset affects alignment. Vertical correspondence exceeds lateral; developed speed compensation was not applied in these trials.",
+      "independent_semantic_judgment": "C1 incorrectly excludes the discrete repeat result. Final rejection is supported; this example does not validate cart detection, new-run ground truth, or universal accuracy.",
+      "access_and_limits": "Direct publisher open returned 403. Governing passages retrieved in extensive indexed excerpts from the primary publisher, not a secondary paraphrase; author-institution metadata corroborates identity. No unrestricted full-PDF access claimed.",
+      "evidence_files": [
+        "evidence/web-02.json",
+        "evidence/web-12.json"
+      ]
+    },
+    {
+      "source_id": "S06",
+      "title": "Tsunashima et al., Development and Operation of Track Condition Monitoring System Using In-Service Train",
+      "url": "https://www.mdpi.com/2076-3417/13/6/3835",
+      "version_or_date": "Applied Sciences 2023, 13(6), 3835; 17 March 2023; DOI 10.3390/app13063835",
+      "primary_locator": "§§2.1, 2.3, 3.2, 3.3, 7",
+      "subject_operation_and_type": "Regional-rail carbody monitoring history, GNSS and curvature/map position correction.",
+      "governing_conditions_defaults_units_exceptions": "October 2020–August 2022; inspection/software interruptions. Sections disagree on gap start. Same train used; selected analysis left speed uncorrected. Curve geometry and GNSS accuracy limit interpretation.",
+      "independent_semantic_judgment": "Final preserves the source inconsistency and vehicle/context limits; history is useful without becoming cart performance evidence.",
+      "access_and_limits": "Complete official publisher PDF downloaded; relevant full sections inspected. URL: https://mdpi-res.com/d_attachment/applsci/applsci-13-03835/article_deploy/applsci-13-03835.pdf?version=1691324931",
+      "evidence_files": [
+        "evidence/S06.pdf",
+        "evidence/S06.txt",
+        "evidence/web-08.json"
+      ]
+    },
+    {
+      "source_id": "S07",
+      "title": "Mihăilescu et al., Experimental Study of Wheel-to-Rail Interaction Using Acceleration Sensors for Continuous Rail Transport Comfort Evaluation",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10574946/",
+      "version_or_date": "Sensors 2023; accepted 22 September 2023; PMC10574946",
+      "primary_locator": "§§2.2–2.4, Table 2, empty/loaded tests and discussion",
+      "subject_operation_and_type": "Axle/body sensors and amplification hardware in specific tank-wagon runs.",
+      "governing_conditions_defaults_units_exceptions": "19.2 kS/s is a hardware capability; exports show 0.02 s steps while discussion says 50 ms/20 Hz. Empty/loaded runs used 125/110 km/h, respectively.",
+      "independent_semantic_judgment": "Final correctly preserves cadence inconsistency and load/speed confounding; neither rate is a cart capability or pure load effect.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-05.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "S08",
+      "title": "Jauregui-Correa et al., Method for predicting dynamic loads for a health monitoring system for subway tracks",
+      "url": "https://www.frontiersin.org/journals/mechanical-engineering/articles/10.3389/fmech.2022.858424/full",
+      "version_or_date": "Frontiers in Mechanical Engineering 8, 858424; 14 September 2022; DOI 10.3389/fmech.2022.858424",
+      "primary_locator": "Experimental procedure; EMD results discussing fixed strain-gauge locality",
+      "subject_operation_and_type": "1:10 inclined rail rig: optical speed, MEMS motion, strain and rail-gap trigger.",
+      "governing_conditions_defaults_units_exceptions": "MEMS 1594 Hz and strain 2400 Hz describe this rig; fixed strain coverage is local. Sensor paths and scale differ from the cart.",
+      "independent_semantic_judgment": "C2 is supported; final synchronized-reference pattern and null-reference qualification are appropriate. Upstream maps incorrectly name Romero Navarrete as author; final title/DOI and reviser verification identify the actual source.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-07.json"
+      ]
+    },
+    {
+      "source_id": "S09",
+      "title": "STMicroelectronics LSM6DSM datasheet",
+      "url": "https://www.st.com/resource/en/datasheet/lsm6dsm.pdf",
+      "version_or_date": "DocID028165 Rev 7, September 2017; revision history 29 September 2017",
+      "primary_locator": "§10.5 Tables 30–31, p.63; §10.7 Tables 36–38, p.65",
+      "subject_operation_and_type": "Exact register bit definitions for the LSM6DSM fourth FIFO data set.",
+      "governing_conditions_defaults_units_exceptions": "TIMER_PEDO_FIFO_EN is bit 7, default 0. DEC_DS4_FIFO occupies bits 5:3; 000 disables and 001 stores without decimation. Thus FIFO_CTRL4 = 0x08 selects 001, not 000.",
+      "independent_semantic_judgment": "Formal default supports a configuration audit. It contradicts S11’s explanation for the reported 0x08 configuration; no cart register recommendation is justified.",
+      "access_and_limits": "Official full PDF downloaded after timeout using query URL; actual p.65 register table visually inspected. Retry provenance preserved in S09-retry.json.",
+      "evidence_files": [
+        "evidence/S09.pdf",
+        "evidence/S09.txt",
+        "evidence/S09-page65.png",
+        "evidence/web-04.json"
+      ]
+    },
+    {
+      "source_id": "S10",
+      "title": "STMicroelectronics AN4987, LSM6DSM: always-on 3D accelerometer and 3D gyroscope",
+      "url": "https://www.st.com/resource/en/application_note/dm00352102-lsm6dsm-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf",
+      "version_or_date": "AN4987 Rev 5; revision 14 August 2018",
+      "primary_locator": "§3.7, printed pp.13–14, accelerometer filtering chain; FIFO timestamp section",
+      "subject_operation_and_type": "Device-specific analog/digital filtering and timestamp handling.",
+      "governing_conditions_defaults_units_exceptions": "Analog anti-alias behavior depends on performance mode, ODR and configuration; digital filters and timestamp data-set arrangement require exact settings. Units and settings belong to this device only.",
+      "independent_semantic_judgment": "Final’s configuration dependence is supported, with no inference about the unspecified logger. Carried p.12–14 locator is slightly broad.",
+      "access_and_limits": "Official PDF parsed via web tool; independent direct PDF download timed out.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-05.json"
+      ]
+    },
+    {
+      "source_id": "S11",
+      "title": "ST Community, LSM6DSM timestamp in FIFO occasionally incorrect",
+      "url": "https://community.st.com/mems-sensors-48/lsm6dsm-timestamp-in-fifo-occasionally-incorrect-166217?fid=48&tid=166217",
+      "version_or_date": "Question 17 June 2026; accepted moderator reply 6 July 2026",
+      "primary_locator": "Question register configuration and Federica Bossi’s accepted answer",
+      "subject_operation_and_type": "A support exchange about a 208 Hz, continuous FIFO report with 25 µs timestamp units.",
+      "governing_conditions_defaults_units_exceptions": "Question reports FIFO_CTRL2 = 0x80 and FIFO_CTRL4 = 0x08. Reply describes 0x08 as DEC_DS4_FIFO = 000; the governing datasheet instead gives 001. Answer is tentative, not a confirmed silicon defect or erratum.",
+      "independent_semantic_judgment": "Discovery’s “traced” wording is overstated and the carried explanation is unreliable. Final merely identifies a configuration-specific report and does not prescribe its alleged fix; this is a non-material retained lineage/source limitation.",
+      "access_and_limits": "First-party community report and attributed moderator answer inspected; answer correctness tested against formal manufacturer register definitions.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "S12",
+      "title": "Liu et al., Research on vibration fatigue of sensor bracket in a metro bogie based on the pseudo excitation method",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1350630722010135",
+      "version_or_date": "Engineering Failure Analysis 145, 107046; March 2023; DOI 10.1016/j.engfailanal.2022.107046",
+      "primary_locator": "Abstract; failure-mode analysis and field-test publisher excerpts",
+      "subject_operation_and_type": "Specific C-shaped bogie sensor bracket under metro wheel/rail excitation.",
+      "governing_conditions_defaults_units_exceptions": "Particular sensor mass, bolt assembly and bracket mode near 61 Hz; rail corrugation, local stress and measured excitation condition this finding.",
+      "independent_semantic_judgment": "Bounded bracket-resonance analogue is supported; no cart frequency, fatigue, or defect follows.",
+      "access_and_limits": "Publisher landing did not open; primary publisher indexed abstract and relevant section excerpts independently retrieved. Full article unavailable.",
+      "evidence_files": [
+        "evidence/web-02.json",
+        "evidence/web-14.json"
+      ]
+    },
+    {
+      "source_id": "S13",
+      "title": "Siemens Mobility takes part in Network Rail trials to predict rough rides",
+      "url": "https://news.siemens.co.uk/news/siemens-mobility-takes-part-in-network-rail-trials-to-predict-rough-rides",
+      "version_or_date": "Siemens UK press release, 22 April 2022",
+      "primary_locator": "Trial description and operational-status paragraphs",
+      "subject_operation_and_type": "Vendor account of GSM-R platform trial on 80 South Western Railway trains.",
+      "governing_conditions_defaults_units_exceptions": "Six-month trial at about one month of operational testing; multivendor project. Page supplies early vendor claims, not independently measured performance metrics.",
+      "independent_semantic_judgment": "Implementation context is useful; final does not adopt vendor success as validation.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "I14",
+      "title": "NI, Anti-Aliasing Filters and Their Usage Explained",
+      "url": "https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/anti-aliasing-filters-and-their-usage-explained..html",
+      "version_or_date": "Updated 27 January 2026",
+      "primary_locator": "Nyquist/analog filter discussion",
+      "subject_operation_and_type": "Acquisition fundamentals: frequencies beyond the usable sampled band can fold into it.",
+      "governing_conditions_defaults_units_exceptions": "An analog filter before digitization and practical transition-band margin matter; a generic rate cannot establish the unknown sensor/logger passband.",
+      "independent_semantic_judgment": "Independent corroboration for auditing bandwidth/filtering; not a new obligation or cart sampling prescription.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-14.json"
+      ]
+    },
+    {
+      "source_id": "I15",
+      "title": "NIST/SEMATECH e-Handbook, Choosing a sampling plan",
+      "url": "https://www.itl.nist.gov/div898/handbook/ppc/section3/ppc333.htm",
+      "version_or_date": "Live official handbook; retrieved 10 October 2026; no edition date inferred",
+      "primary_locator": "Objectives → precision → distribution → information → practicality workflow",
+      "subject_operation_and_type": "Choosing sample size for specified measurement objectives.",
+      "governing_conditions_defaults_units_exceptions": "Precision, response distribution and prior variability information govern count; practicality limits the design.",
+      "independent_semantic_judgment": "Supports C4’s endpoint-conditional planning. A numeric cart count would require information the brief withholds.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-10.json",
+        "evidence/web-12.json"
+      ]
+    },
+    {
+      "source_id": "I16",
+      "title": "NIST/SEMATECH e-Handbook, Two-level full factorial designs",
+      "url": "https://www.itl.nist.gov/div898/handbook/pri/section3/pri3331.htm",
+      "version_or_date": "Live official handbook; retrieved 10 October 2026; no edition date inferred",
+      "primary_locator": "Two-level design matrix, replication and factor interpretation",
+      "subject_operation_and_type": "Factorial comparisons of defined factors/levels.",
+      "governing_conditions_defaults_units_exceptions": "Runs cross the selected levels; replication is additional. A compound load condition is not independent variation of its components.",
+      "independent_semantic_judgment": "Supports interpreting the final speed × load-configuration screen without separately attributing mass versus placement. This does not demand a product or new field experiment.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-15.json"
+      ]
+    }
+  ],
+  "consequential_claims": [
+    {
+      "claim_id": "Q01",
+      "claim": "Mount change can alter response; attribution requires matched characterization",
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S12"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 85
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 93
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 128,
+          "line_end": 128
+        }
+      ],
+      "assessment": "Supported mechanism hypothesis, not an established cause."
+    },
+    {
+      "claim_id": "Q02",
+      "claim": "Repeat-pass / reference / speed context is useful across documented deployments",
+      "sources": [
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 94,
+          "line_end": 96
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 134,
+          "line_end": 134
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 138,
+          "line_end": 138
+        }
+      ],
+      "assessment": "Supported design pattern with explicit vehicle/route/measurement limits."
+    },
+    {
+      "claim_id": "Q03",
+      "claim": "S05 repeated the same known fault; C1 should be rejected",
+      "sources": [
+        "S05"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 95,
+          "line_end": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 156,
+          "line_end": 156
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 162,
+          "line_end": 162
+        }
+      ],
+      "assessment": "Supported discrete-result locator; no transferable accuracy."
+    },
+    {
+      "claim_id": "Q04",
+      "claim": "Load comparison and effective sampling cadence require original settings/files",
+      "sources": [
+        "S07"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 97,
+          "line_end": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 136,
+          "line_end": 136
+        }
+      ],
+      "assessment": "Supported confounding and unresolved internal source discrepancy."
+    },
+    {
+      "claim_id": "Q05",
+      "claim": "A local reference null cannot clear persistent cart events",
+      "sources": [
+        "S08"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 98,
+          "line_end": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 112,
+          "line_end": 113
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 147,
+          "line_end": 147
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 157,
+          "line_end": 157
+        }
+      ],
+      "assessment": "Supported locality; engineering escalation remains external."
+    },
+    {
+      "claim_id": "Q06",
+      "claim": "Unknown logger configuration must be recovered before interpretation",
+      "sources": [
+        "S09",
+        "S10",
+        "S11",
+        "I14"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 87,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 99,
+          "line_end": 99
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 130,
+          "line_end": 130
+        }
+      ],
+      "assessment": "Formal device/acquisition principles support audit; S11 explanation has a retained minor error and is not an actionable cart fix."
+    },
+    {
+      "claim_id": "Q07",
+      "claim": "Bracket resonance and early commercial trials provide bounded history",
+      "sources": [
+        "S12",
+        "S13"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 100,
+          "line_end": 100
+        }
+      ],
+      "assessment": "Supported analogue/context; no cart diagnosis or vendor performance endorsement."
+    },
+    {
+      "claim_id": "Q08",
+      "claim": "Replication must be tied to the endpoint and capped with explicit uncertainty",
+      "sources": [
+        "I15"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 159,
+          "line_end": 159
+        }
+      ],
+      "assessment": "Reasoned conditional design, not empirical proof; numeric count legitimately remains open."
+    },
+    {
+      "claim_id": "Q09",
+      "claim": "Speed × combined load screen cannot isolate mass from placement",
+      "sources": [
+        "S07",
+        "I16"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 136,
+          "line_end": 136
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 160,
+          "line_end": 160
+        }
+      ],
+      "assessment": "Explicit final limitation prevents causal overinterpretation."
+    },
+    {
+      "claim_id": "Q10",
+      "claim": "Detection, location, diagnosis and safety authorization remain separate",
+      "sources": [],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 83
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 146,
+          "line_end": 150
+        }
+      ],
+      "assessment": "Original requirement satisfied by design distinctions; no independent safety oracle has been executed."
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "relative_path": "evidence/S03.pdf",
+      "bytes": 265118,
+      "sha256": "295b84bb942efcdc7272830a304cd788cb3cc23a2f6f43cd6ccc0ddba6761e0f",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.532682+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S03.txt",
+      "bytes": 33092,
+      "sha256": "44e31e677a74391f5e6a9d190c2c72cab12e49d9e0841ea15acc7f4320e79c6c",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.585316+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S04.pdf",
+      "bytes": 11538372,
+      "sha256": "005a0da2e70891abeb253a9cf0e41331d4e649c7f6c4bed02d5927dfcd337b7b",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.601265+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S04.txt",
+      "bytes": 132706,
+      "sha256": "e46977de5beced510cff7cb5e3e991901d0000aa4055cc3024063bbc7c790a3a",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.799317+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S06.pdf",
+      "bytes": 3249154,
+      "sha256": "16c143d32797af8e0895bc872d60170c396cded15708f730b6d801372312ed70",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.700643+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S06.txt",
+      "bytes": 83524,
+      "sha256": "532633dbfc0b1568541ff87012ccc207c7aa759f3888caab964e6538d28655c5",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:42.987318+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S09-page65.png",
+      "bytes": 162672,
+      "sha256": "8135e92013d360c96a20fa8ef66a4d22be984bdcc178511e7bb2c2cb99c35a69",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:20.047973+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S09-retry.json",
+      "bytes": 406,
+      "sha256": "121ddede8fb2cf6ab9bccce049fe001b496a630291b2832598201a82cbca2f06",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:20.051959+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S09.pdf",
+      "bytes": 1992420,
+      "sha256": "ee481465b676eacc31575dbc2f1144c1dc3f7d963c10bcadc3ab50abe4eb4f7a",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:19.420886+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/S09.txt",
+      "bytes": 387147,
+      "sha256": "868ddc63ecdf0fe2f5fb300172d0c611805f90994fa71ed6bccbc0ddffd3b9d2",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:19.755971+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/retrieval-manifest.json",
+      "bytes": 3432,
+      "sha256": "b4e93795f1f79b6795edc7d9bd4bad3e44bc44de90b2ea550b264d7d47e530e9",
+      "captured_or_derived_at_utc": "2026-10-10T07:02:12.331483+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-01.json",
+      "bytes": 35243,
+      "sha256": "760affcf67489a2d29eb77b39409e628d0cab83ea3c8d9b72a32899ba23073e3",
+      "captured_or_derived_at_utc": "2026-10-10T06:59:51.505817+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-02.json",
+      "bytes": 35826,
+      "sha256": "8775acd0f110bfd90e4384fae5161b6ecd1b9ce1b861e5c0c34bf0b9785c180e",
+      "captured_or_derived_at_utc": "2026-10-10T06:59:59.102901+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-03.json",
+      "bytes": 23885,
+      "sha256": "e0d4d870a0da5c85cdb5a90a0fd3a0b4ac8d5d51083253b68789769939ae0136",
+      "captured_or_derived_at_utc": "2026-10-10T07:00:18.159494+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-04.json",
+      "bytes": 18467,
+      "sha256": "e03a35cc06515e55959c41f734e1e965657d07ad03d951838565d49d7b58abd3",
+      "captured_or_derived_at_utc": "2026-10-10T07:00:26.399921+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-05.json",
+      "bytes": 29953,
+      "sha256": "2a000308a0f9146054571de6de08baf8662c109bf3a738d1689e8a1978c57381",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:00.598531+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-06.json",
+      "bytes": 27373,
+      "sha256": "28216abfa6f8977d22b8d3988895d15ff1a4b66fa5d07dcb66e7e5cd569f837c",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:15.783890+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-07.json",
+      "bytes": 33488,
+      "sha256": "2221aed6237369c91bc105ffc388855a71aca919df2c0c92b6422df78796e50c",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:41.928950+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-08.json",
+      "bytes": 38067,
+      "sha256": "5790bb4886eb851cd8f4f80c56eb649206d174922540f5d11733a99f99a2fd24",
+      "captured_or_derived_at_utc": "2026-10-10T07:01:52.299183+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-09-register-screenshot.json",
+      "bytes": 83,
+      "sha256": "ced66dbbd571f1d7f6dfff9d9a3bfaedefa65c2cd8a26861402fed27b6a3daa7",
+      "captured_or_derived_at_utc": "2026-10-10T07:02:41.666447+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-10.json",
+      "bytes": 33760,
+      "sha256": "18995637ddb148efcd502bea1816413d56870791ae8e7083036716c8846c1bbc",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:18.794609+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-11.json",
+      "bytes": 582,
+      "sha256": "699c24c338ce3a7a63bff5a05bbad9cc3a2aadaed4573f4f44fb20847e58372f",
+      "captured_or_derived_at_utc": "2026-10-10T07:03:55.770004+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-12.json",
+      "bytes": 40383,
+      "sha256": "dacd8e31aa4dd45ed5c8ccb48722449bea6a652076a49d2abd3ecd8c03841582",
+      "captured_or_derived_at_utc": "2026-10-10T07:04:12.467309+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-13.json",
+      "bytes": 35229,
+      "sha256": "6cd9c0be3cec3566ff7ab9516d0fb5398d0cff4a0199f27fd5eef698f88cf77a",
+      "captured_or_derived_at_utc": "2026-10-10T07:04:38.555577+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-14.json",
+      "bytes": 38111,
+      "sha256": "3509ab7d36ccea701694c0b712fdae992bfa2619fbf57ac324a13d8a17946768",
+      "captured_or_derived_at_utc": "2026-10-10T07:05:24.581903+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    },
+    {
+      "relative_path": "evidence/web-15.json",
+      "bytes": 4379,
+      "sha256": "cb832c7ff9ef9a9c95c557c37e943fe65875cfaa475bfea71650dea0e3eaf35f",
+      "captured_or_derived_at_utc": "2026-10-10T07:08:44.682957+00:00",
+      "role": "Primary retrieval capture or PDF/text/visual derivative; consult source records for access limitations. Error-only captures and manifests are retrieval provenance, not scientific proof."
+    }
+  ],
+  "original_inspected_hashes_file": "inspected-artifacts.json",
+  "freeze_verification_file": "freeze-verification.json",
+  "uncertainties": [
+    "No physical cart, logger, track or raw measurements were available.",
+    "S01 full standard, S05 unrestricted full article and S12 full article were not accessible; bounded governing passages were retrieved as specified.",
+    "Source-map agreement, artifact counts and hashes do not establish scientific correctness."
+  ]
+}

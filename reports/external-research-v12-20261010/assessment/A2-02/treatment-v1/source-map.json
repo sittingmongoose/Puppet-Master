@@ -8,7 +8,7 @@
       "title": "IIIF Presentation API 3.0",
       "url": "https://iiif.io/api/presentation/3.0/",
       "version_or_commit": "Presentation API 3.0.0",
-      "governing_locator": "\u00a73.2 id/width/height; \u00a73.4 annotations/items; \u00a73.5 motivation; \u00a75.3 Canvas; \u00a75.5 Annotation Page",
+      "governing_locator": "§3.2 id/width/height; §3.4 annotations/items; §3.5 motivation; §5.3 Canvas; §5.5 Annotation Page",
       "independent_observation": "A Canvas is a stable page/view coordinate frame rather than an image-pixel or viewport identity. Canvas dimensions are unitless positive integers; image dimensions are pixels. Canvas IDs use HTTP(S) without fragments; selectors may identify parts. Painting and non-painting pages have different placement, and derived transcription uses supplementing. The proposal correctly separates these resources from authoring and storage. These rules support correcting the URL/pixel draft assumption, with geometry/version mapping still local.",
       "retrieval": {
         "id": "S01",
@@ -35,7 +35,7 @@
       "title": "Presentation API 3 change log",
       "url": "https://iiif.io/api/presentation/3.0/change-log/",
       "version_or_commit": "Presentation API 3.0.0 companion changelog",
-      "governing_locator": "\u00a71.2.13; \u00a71.2.14; \u00a71.3.3",
+      "governing_locator": "§1.2.13; §1.2.14; §1.3.3",
       "independent_observation": "The documented v2 otherContent/AnnotationList transition to v3 Annotation Pages and annotations/items, plus changed context and language forms, supports deliberate version adapters rather than relabeling JSON. It does not certify viewer compatibility or a lossless converter. The final makes those boundaries explicit.",
       "retrieval": {
         "id": "S02",
@@ -89,7 +89,7 @@
       "title": "W3C Web Annotation Data Model",
       "url": "https://www.w3.org/TR/annotation-model/",
       "version_or_commit": "W3C Recommendation, 2017-02-23",
-      "governing_locator": "\u00a73.2.4 Embedded Textual Body; \u00a74.1 Specific Resources; \u00a74.2.1 Fragment Selector",
+      "governing_locator": "§3.2.4 Embedded Textual Body; §4.1 Specific Resources; §4.2.1 Fragment Selector",
       "independent_observation": "TextualBody and SpecificResource/FragmentSelector provide a reusable body-target representation. Selector value is a string; type is FragmentSelector; conformsTo identifies its fragment syntax. A model does not provide editing, durable institutional storage, or every viewer feature. The proposed plain-text/rectangle subset is defensible, not independently runtime validated.",
       "retrieval": {
         "id": "S04",
@@ -116,7 +116,7 @@
       "title": "IIIF Image API 3.0",
       "url": "https://iiif.io/api/image/3.0/",
       "version_or_commit": "Image API 3.0.0",
-      "governing_locator": "\u00a71.1; \u00a74.1 region; \u00a74.2 size; \u00a75.2 profile/dimensions; \u00a75.3 Sizes; \u00a76; \u00a77.1 CORS; \u00a77.3; \u00a78 Authentication",
+      "governing_locator": "§1.1; §4.1 region; §4.2 size; §5.2 profile/dimensions; §5.3 Sizes; §6; §7.1 CORS; §7.3; §8 Authentication",
       "independent_observation": "Request features, advertised sizes/profile, dimensions and access conditions govern image delivery. Limited/static services need not provide arbitrary crops/sizes; CORS support is recommended and authentication belongs in a separate access workflow. Rights, service availability and collection behavior cannot be inferred from an identifier. The final calls for provider-specific intake and keeps image masters remote.",
       "retrieval": {
         "id": "S05",
@@ -143,8 +143,8 @@
       "title": "IIIF Content State API 1.0",
       "url": "https://iiif.io/api/content-state/1.0/",
       "version_or_commit": "Content State API 1.0.0",
-      "governing_locator": "\u00a71.1; \u00a72.1; \u00a72.2.1\u20132.2.5; \u00a73.1\u20133.7; \u00a74",
-      "independent_observation": "The API transfers a described IIIF resource/view into a compatible client. Canvas or region state needs enough Manifest context, and clients choose supported transfer mechanisms. This is distinct from maintaining a scholar\u2019s note collection. The final\u2019s separation of view links and annotation bundles is correct; its shorthand is not a claim that arbitrary W3C annotations can never have bodies.",
+      "governing_locator": "§1.1; §2.1; §2.2.1–2.2.5; §3.1–3.7; §4",
+      "independent_observation": "The API transfers a described IIIF resource/view into a compatible client. Canvas or region state needs enough Manifest context, and clients choose supported transfer mechanisms. This is distinct from maintaining a scholar’s note collection. The final’s separation of view links and annotation bundles is correct; its shorthand is not a claim that arbitrary W3C annotations can never have bodies.",
       "retrieval": {
         "id": "S06",
         "requested_url": "https://iiif.io/api/content-state/1.0/",
@@ -225,7 +225,7 @@
       "url": "https://github.com/ProjectMirador/mirador-annotations/blob/f2e80c7c8400f7802d4e89d88956ecdaa2546d64/README.md",
       "version_or_commit": "README pinned to f2e80c7c8400f7802d4e89d88956ecdaa2546d64",
       "governing_locator": "README opening; Persisting Annotations; Installing",
-      "independent_observation": "The original plugin is a Mirador 3 authoring extension and explicitly excludes Mirador 4. It lists geometric/text tools and both server and local-storage adapters. The final\u2019s old-plugin boundary is supported. Its server-necessity wording should be read as institutional/shared persistence, since browser-local persistence is an explicit alternative.",
+      "independent_observation": "The original plugin is a Mirador 3 authoring extension and explicitly excludes Mirador 4. It lists geometric/text tools and both server and local-storage adapters. The final’s old-plugin boundary is supported. Its server-necessity wording should be read as institutional/shared persistence, since browser-local persistence is an explicit alternative.",
       "retrieval": {
         "id": "S09",
         "requested_url": "https://github.com/ProjectMirador/mirador-annotations/blob/f2e80c7c8400f7802d4e89d88956ecdaa2546d64/README.md",
@@ -306,7 +306,7 @@
       "url": "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md",
       "version_or_commit": "Universal Viewer v4.4.4 manual",
       "governing_locator": "downloadDialogue.downloadCurrentViewEnabled/downloadWholeImageHighResEnabled/downloadWholeImageLowResEnabled; footerPanel.downloadEnabled; configuration hierarchy",
-      "independent_observation": "All three documented boolean image-download options default to true. They concern image retrieval UI, not annotation export, rights or every deployment. The final identifies the correct operation. Raw source lines 481\u2013497 and 525\u2013529 provide stable file locators distinct from rendered GitHub line numbers.",
+      "independent_observation": "All three documented boolean image-download options default to true. They concern image retrieval UI, not annotation export, rights or every deployment. The final identifies the correct operation. Raw source lines 481–497 and 525–529 provide stable file locators distinct from rendered GitHub line numbers.",
       "retrieval": {
         "id": "S12",
         "requested_url": "https://github.com/UniversalViewer/universalviewer/blob/v4.4.4/manual/CONFIG.md",
@@ -360,7 +360,7 @@
       "url": "https://guides.iiif.io/using_iiif_resources/",
       "version_or_commit": "Live IIIF community guide; no released version",
       "governing_locator": "Tools for viewing Manifests; Mirador; Universal Viewer Export/Import",
-      "independent_observation": "The guide supports a qualified practical comparison and Manifest-URL handoff examples, including themed-UI variation. It is not versioned first-party viewer capability evidence and does not establish lack of annotation support. The final accepts that attribution limit and does not use the guide\u2019s stale Content State development status.",
+      "independent_observation": "The guide supports a qualified practical comparison and Manifest-URL handoff examples, including themed-UI variation. It is not versioned first-party viewer capability evidence and does not establish lack of annotation support. The final accepts that attribution limit and does not use the guide’s stale Content State development status.",
       "retrieval": {
         "id": "S14",
         "requested_url": "https://guides.iiif.io/using_iiif_resources/",
@@ -387,7 +387,7 @@
       "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/package.json",
       "version_or_commit": "MAE source package at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70; package 1.0.87",
       "governing_locator": "name/version/description; peerDependencies; dependencies; devDependencies",
-      "independent_observation": "Independent package inspection confirms the React 18 and MUI 5 lineage and a development Mirador alias to an ARVEST package. This strengthens the final\u2019s compatibility caution without proving a working or failing runtime combination. Package name/version differ from generic README examples; no exact MAE installation is selected in the final.",
+      "independent_observation": "Independent package inspection confirms the React 18 and MUI 5 lineage and a development Mirador alias to an ARVEST package. This strengthens the final’s compatibility caution without proving a working or failing runtime combination. Package name/version differ from generic README examples; no exact MAE installation is selected in the final.",
       "retrieval": {
         "id": "E15",
         "requested_url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/package.json",
@@ -437,7 +437,7 @@
       "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/package.json",
       "version_or_commit": "Universal Viewer v4.4.4 package.json",
       "governing_locator": "version; dependencies @iiif/presentation-3 and @iiif/manifold",
-      "independent_observation": "Package version is 4.4.4 and dependencies include Presentation 3 processing machinery. This is an implementation lead, not proof of complete v3 annotation handling. The final\u2019s provider/client test requirement remains valid.",
+      "independent_observation": "Package version is 4.4.4 and dependencies include Presentation 3 processing machinery. This is an implementation lead, not proof of complete v3 annotation handling. The final’s provider/client test requirement remains valid.",
       "retrieval": {
         "id": "E17",
         "requested_url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/package.json",
@@ -461,8 +461,8 @@
       "title": "W3C Media Fragments URI 1.0 Recommendation, 2012-09-25",
       "url": "https://www.w3.org/TR/media-frags/",
       "version_or_commit": "W3C Media Fragments URI 1.0 Recommendation, 2012-09-25",
-      "governing_locator": "\u00a74.2.2 Spatial Dimension; \u00a76.1.2; \u00a76.3.3",
-      "independent_observation": "Spatial xywh supplies x/y position and width/height, with pixel default or percent units. Percentage representation can preserve relative location under resampling but cannot restore changed content/geometry. General media-fragment support does not establish actual IIIF-client support; the final\u2019s conditional wording and client tests avoid that overclaim.",
+      "governing_locator": "§4.2.2 Spatial Dimension; §6.1.2; §6.3.3",
+      "independent_observation": "Spatial xywh supplies x/y position and width/height, with pixel default or percent units. Percentage representation can preserve relative location under resampling but cannot restore changed content/geometry. General media-fragment support does not establish actual IIIF-client support; the final’s conditional wording and client tests avoid that overclaim.",
       "retrieval": {
         "id": "E18",
         "requested_url": "https://www.w3.org/TR/media-frags/",
@@ -489,7 +489,7 @@
       "url": "https://github.com/UniversalViewer/universalviewer/releases/tag/v4.4.3",
       "version_or_commit": "Universal Viewer v4.4.3; 25f8f3aff1b8a039241e830cb48fac36e6853c21",
       "governing_locator": "Release title and body warning",
-      "independent_observation": "The project explicitly says this release contains a merge error and should not be used. This supports the final\u2019s pinning caution, not any annotation-specific diagnosis.",
+      "independent_observation": "The project explicitly says this release contains a merge error and should not be used. This supports the final’s pinning caution, not any annotation-specific diagnosis.",
       "retrieval": {
         "id": "E19",
         "requested_url": "https://github.com/UniversalViewer/universalviewer/releases/tag/v4.4.3",
@@ -515,8 +515,8 @@
       "title": "Universal Viewer v4.4.4 raw CONFIG.md",
       "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/manual/CONFIG.md",
       "version_or_commit": "Universal Viewer v4.4.4 raw CONFIG.md",
-      "governing_locator": "Raw file lines 17\u201321; 473\u2013529",
-      "independent_observation": "Independent raw retrieval verifies the candidate\u2019s three true image-download defaults and override hierarchy. Nearby confinedImageSize, min/max width and runtime selection determine which options appear; true configuration defaults are not unconditional download success.",
+      "governing_locator": "Raw file lines 17–21; 473–529",
+      "independent_observation": "Independent raw retrieval verifies the candidate’s three true image-download defaults and override hierarchy. Nearby confinedImageSize, min/max width and runtime selection determine which options appear; true configuration defaults are not unconditional download success.",
       "retrieval": {
         "id": "E20",
         "requested_url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/manual/CONFIG.md",
@@ -591,7 +591,7 @@
       "url": "https://raw.githubusercontent.com/ProjectMirador/mirador/v4.2.6/package.json",
       "version_or_commit": "Mirador v4.2.6 package.json",
       "governing_locator": "version and peerDependencies",
-      "independent_observation": "The concrete release accepts React 18 or 19 but specifies newer MUI major ranges. Compared with MAE\u2019s older source package this supports investigation of the exact dependency set, not a simple blanket assertion that Mirador 4 and MAE either always work or always fail.",
+      "independent_observation": "The concrete release accepts React 18 or 19 but specifies newer MUI major ranges. Compared with MAE’s older source package this supports investigation of the exact dependency set, not a simple blanket assertion that Mirador 4 and MAE either always work or always fail.",
       "retrieval": {
         "id": "E23",
         "requested_url": "https://raw.githubusercontent.com/ProjectMirador/mirador/v4.2.6/package.json",
@@ -615,7 +615,7 @@
       "title": "MAE LocalStorageAdapter.js at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
       "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/src/annotationAdapter/LocalStorageAdapter.js",
       "version_or_commit": "MAE LocalStorageAdapter.js at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
-      "governing_locator": "create/update/delete/get/all methods, raw lines 21\u201376",
+      "governing_locator": "create/update/delete/get/all methods, raw lines 21–76",
       "independent_observation": "This implementation creates and updates AnnotationPage JSON using browser localStorage. It establishes a real local persistence mechanism in the source, contradicting a literal universal server requirement. Context in the final already preserves local storage as an option and distinguishes it from a shared institutional store; the overbroad table wording is a limitation, not a material architectural decision.",
       "retrieval": {
         "id": "E24",
@@ -641,7 +641,7 @@
       "url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/src/annotationAdapter/AnnototAdapter.js",
       "version_or_commit": "MAE AnnototAdapter.js at a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70",
       "governing_locator": "constructor; annotationPageId; create/update/delete/get/all",
-      "independent_observation": "This adapter writes annotation records to its configured endpoint and queries pages by Canvas ID. It does not alter image masters by itself. Its catch-and-refetch behavior is not a strong success oracle: proposed testing must inspect actual stored results, as the final\u2019s save/reopen/export/import comparison calls for.",
+      "independent_observation": "This adapter writes annotation records to its configured endpoint and queries pages by Canvas ID. It does not alter image masters by itself. Its catch-and-refetch behavior is not a strong success oracle: proposed testing must inspect actual stored results, as the final’s save/reopen/export/import comparison calls for.",
       "retrieval": {
         "id": "E25",
         "requested_url": "https://raw.githubusercontent.com/ARVEST-APP/mirador-annotation-editor/a0eb08d7c7e0c1b2e409b39dbb2a573e6bd9ad70/src/annotationAdapter/AnnototAdapter.js",
@@ -665,7 +665,7 @@
       "title": "Universal Viewer v4.4.4 DownloadDialogue.tsx",
       "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/src/content-handlers/iiif/extensions/uv-openseadragon-extension/DownloadDialogue.tsx",
       "version_or_commit": "Universal Viewer v4.4.4 DownloadDialogue.tsx",
-      "governing_locator": "isDownloadOptionAvailable raw lines 238\u2013324; individual options 661\u2013709",
+      "governing_locator": "isDownloadOptionAvailable raw lines 238–324; individual options 661–709",
       "independent_observation": "Runtime availability also depends on selected external resources, service/profile and dimensions. Level-0/no-service cases restrict options; current-view depends on paging and limits. The final claims documented defaults only and requires service checks, so this source condition does not reveal an unconditional-download error.",
       "retrieval": {
         "id": "E26",
@@ -690,7 +690,7 @@
       "title": "Universal Viewer v4.4.4 IIIFContentHandler.ts",
       "url": "https://raw.githubusercontent.com/UniversalViewer/universalviewer/v4.4.4/src/content-handlers/iiif/IIIFContentHandler.ts",
       "version_or_commit": "Universal Viewer v4.4.4 IIIFContentHandler.ts",
-      "governing_locator": "imports; load() and loadManifest() raw lines 303\u2013322",
+      "governing_locator": "imports; load() and loadManifest() raw lines 303–322",
       "independent_observation": "IIIF input loading delegates to the pinned manifold library. The code provides a concrete input-processing lead but does not prove all annotation features or v2/v3 round trips. No downloaded code was executed.",
       "retrieval": {
         "id": "E27",

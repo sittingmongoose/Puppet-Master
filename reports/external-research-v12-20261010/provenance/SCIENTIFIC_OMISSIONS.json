@@ -8419,18 +8419,19 @@
       "slot": "A4-02",
       "arm": "control",
       "snapshot_task": {
-        "key": "er12-eval-A4-02-control-full-v1",
-        "slot": "A4-02",
-        "arm": "control",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A4-02-control-full-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "62eac16110635f5dfc4502c54c566613e76da3fa0c8aa7cdc691fc0a990b97c0"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8440,18 +8441,19 @@
       "slot": "A6-02",
       "arm": "control",
       "snapshot_task": {
-        "key": "er12-eval-A6-02-control-full-v1",
-        "slot": "A6-02",
-        "arm": "control",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A6-02-control-full-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "99c76db69bb7f6a8cab747d697b676abe8dd0f3f06795f9df5f5b7bf715a3bdf"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8461,18 +8463,19 @@
       "slot": "A6-02",
       "arm": "treatment",
       "snapshot_task": {
-        "key": "er12-eval-A6-02-treatment-full-v1",
-        "slot": "A6-02",
-        "arm": "treatment",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-A6-02-treatment-full-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "5d7ee6f533da66b1d7e1367574b1216513cb08221b187da40c7792bea4515584"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8482,18 +8485,19 @@
       "slot": "B-FINAL-G-02",
       "arm": "control",
       "snapshot_task": {
-        "key": "er12-eval-B-FINAL-G-02-control-v1",
-        "slot": "B-FINAL-G-02",
-        "arm": "control",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-G-02-control-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "d9c43ed08113078321b6ded087c2993699b7a0ed8b7a6123834b150f9f6f7db6"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8503,18 +8507,19 @@
       "slot": "B-FINAL-G-02",
       "arm": "treatment",
       "snapshot_task": {
-        "key": "er12-eval-B-FINAL-G-02-treatment-v1",
-        "slot": "B-FINAL-G-02",
-        "arm": "treatment",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-G-02-treatment-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "ea6811614ff7f8b8c370603d2a8b9c4abfd979b12c5e172cc5ac0c9733f9bd0b"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8524,18 +8529,19 @@
       "slot": "B-FINAL-M-02",
       "arm": "control",
       "snapshot_task": {
-        "key": "er12-eval-B-FINAL-M-02-control-v1",
-        "slot": "B-FINAL-M-02",
-        "arm": "control",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-M-02-control-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "abc754f968b143010039aff56955efe0e4d38e66dbb32196fabfb45c6495dcb5"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,
@@ -8545,18 +8551,19 @@
       "slot": "B-FINAL-M-02",
       "arm": "treatment",
       "snapshot_task": {
-        "key": "er12-eval-B-FINAL-M-02-treatment-v1",
-        "slot": "B-FINAL-M-02",
-        "arm": "treatment",
-        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1",
-        "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1",
-        "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-B-FINAL-M-02-treatment-v1:ordinal:1",
-        "status": "running",
-        "hasPendingChildRuns": false,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6.1-sol",
-        "latestTerminalStatus": null,
-        "latestTerminalRunId": null
+        "schema": "er12.public-native-lifecycle.v1",
+        "actual_lifecycle_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "latestTerminalStatus": null
+          }
+        ],
+        "omitted_activity_message_bodies": true,
+        "original_json_value_sha256": "b6204591e30aefd073f0990a48a76d566da3da966155753ca7eeb1ffd27b9d4e"
       },
       "state": "SOURCE_PENDING",
       "source_judgment": null,

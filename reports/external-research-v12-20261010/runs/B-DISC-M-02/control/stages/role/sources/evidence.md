@@ -1,50 +1,260 @@
-# B-DISC-M-02 bounded source evidence
-
-Retrieval window: 2026-10-10T04:38Z, approximate; the web tool did not expose per-page UTC timestamps. Operation was web search followed by direct open of the listed primary documentation/paper pages. Summaries below preserve locators and conditions; they are not full-page copies.
-
-1. **Restic design, v0.18.1**  
-   URL: https://restic.readthedocs.io/en/v0.18.1/design.html  
-   Locator: Backups and Deduplication; Threat Model.  
-   Evidence summary: documents a 64-byte Rabin window, 512 KiB to 8 MiB blobs, roughly 1 MiB average, and re-use after arbitrary-position inserts/removals. Threat section says 0.18.0 randomized chunks into packs to make per-file chunk-size mapping harder; says observed sizes/access patterns remain risks and a password change does not change master data keys.  
-   Applicability limit: one implementation and version; not a product recommendation or proof of all CDC security.
-
-2. **Restic references, v0.19.1 stable**  
-   URL: https://restic.readthedocs.io/en/stable/100_references.html  
-   Locator: Keys, Encryption and MAC; config and masterkey descriptions.  
-   Evidence summary: random nonce authenticated encryption; multiple repository password key files can avoid re-encrypting stored data when changing password.  
-   Applicability limit: password rewrap differs from content-master-key rotation; cited behavior is restic-specific.
-
-3. **Borg security, 2.0.0b26.dev82**  
-   URL: https://borgbackup.readthedocs.io/en/latest/internals/security.html  
-   Locator: Stored chunk sizes; buzhash and buzhash64; Secret key usage against fingerprinting.  
-   Evidence summary: fixed chunker is available; secret seed/key influence Buzhash boundaries; keyed ID generation uses a secret id_key; stored chunk sizes are not hidden.  
-   Applicability limit: beta documentation is mutable; match source code and exact release before transferring assumptions.
-
-4. **Kopia encryption documentation**  
-   URL: https://kopia.io/docs/advanced/encryption/  
-   Locator: format blob, encryptedBlockFormat, ContentFormat struct.  
-   Evidence summary: envelope encryption separates passphrase-derived keys from repository content configuration; format fields expose hash, encryption, HMAC secret, master key, and splitter. The example contains buildVersion v0.3.0; the page itself notes last modified 2023-03-21.  
-   Applicability limit: example version is not asserted as current product version or default configuration; used only as an inspectable architecture lead.
-
-5. **FastCDC, USENIX ATC 2016**  
-   URL: https://www.usenix.org/conference/atc16/technical-sessions/presentation/xia  
-   Locator: abstract / paper summary; proceedings citation, pages 101-114.  
-   Evidence summary: combines simplified hash judgment, skipping sub-minimum cut points, and normalization; authors report about 10x faster than the best open-source Rabin CDC tested with nearly the same dedup ratio.  
-   Applicability limit: authors' benchmark setup; not a device-level performance claim.
-
-6. **Alexeev, Percival, Zhang, Chunking Attacks on File Backup Services using CDC, March 2025 preprint**  
-   URL: https://arxiv.org/abs/2504.02095  
-   Locator: abstract; sections 1, 2.1-2.2, 3.2-3.3, 5.1-5.2.  
-   Evidence summary: analyzes parameter extraction for specific Tarsnap, Borg, and Restic constructions and post-parameter size leakage; assumes server-side size observation and, for many attacks, known or chosen plaintext. It explicitly ties attacks to implementation/model assumptions.  
-   Applicability limit: preprint and version-specific attack constructions; do not transfer an attack result to a different keyed algorithm without review.
-
-7. **Bellare, Keelveedhi, Ristenpart, Message-Locked Encryption, EUROCRYPT 2013**  
-   URL: https://iacr.org/archive/eurocrypt2013/78810294/78810294.pdf  
-   Locator: sections 1.1-1.2.  
-   Evidence summary: defines message-locked encryption; describes convergent encryption as deriving a key from a message and notes identical messages yield the same ciphertext, enabling deduplication.  
-   Applicability limit: formal MLE constructions/security definitions are not a validation of an arbitrary product implementation; cross-user sharing is outside this assignment.
-
-**Retrieval failure:** Opening https://eprint.iacr.org/2025/532.pdf returned the web tool's raw response Internal Error (). The arXiv HTML record above was opened as the alternate primary preprint page. No technical claim is based on the failed PDF request.
-
-**Executed checks:** listed pages opened, subject to the recorded PDF retrieval failure. No local corpus, code implementation, benchmark, restore, or key-rotation experiment was executed.  
-**Proposed checks:** the three tests in discovery.md; not executed.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://arxiv.org/abs/2504.02095",
+    "https://borgbackup.readthedocs.io/en/latest/internals/security.html",
+    "https://iacr.org/archive/eurocrypt2013/78810294/78810294.pdf",
+    "https://kopia.io/docs/advanced/encryption/",
+    "https://restic.readthedocs.io/en/stable/100_references.html",
+    "https://restic.readthedocs.io/en/v0.18.1/design.html",
+    "https://www.usenix.org/conference/atc16/technical-sessions/presentation/xia"
+  ],
+  "source_urls": [
+    "https://arxiv.org/abs/2504.02095",
+    "https://borgbackup.readthedocs.io/en/latest/internals/security.html",
+    "https://iacr.org/archive/eurocrypt2013/78810294/78810294.pdf",
+    "https://kopia.io/docs/advanced/encryption/",
+    "https://restic.readthedocs.io/en/stable/100_references.html",
+    "https://restic.readthedocs.io/en/v0.18.1/design.html",
+    "https://www.usenix.org/conference/atc16/technical-sessions/presentation/xia"
+  ],
+  "version": [
+    {
+      "version": "restic documentation v0.18.1",
+      "conditions_exceptions": "Specific version documents Rabin CDC parameters and 0.18.0 pack randomization; side-channel claims are scoped to its threat model.",
+      "applicability": "Evidence for a concrete Rabin baseline and historical mitigation; not universal CDC behavior."
+    },
+    {
+      "version": "restic documentation v0.19.1 stable",
+      "conditions_exceptions": "Password key files can change without re-encrypting stored data; this does not imply content master-key rotation.",
+      "applicability": "Illustrates distinction between credential rewrap and content-key rotation."
+    },
+    {
+      "version": "Borg documentation 2.0.0b26.dev82 as titled at retrieval",
+      "conditions_exceptions": "Beta/live documentation; stored chunk sizes are explicitly visible; exact implementation must be pinned before reuse.",
+      "applicability": "Inspectable keyed-Buzhash and keyed-ID design lead."
+    },
+    {
+      "version": "Live docs; page says last modified 2023-03-21; embedded sample buildVersion v0.3.0",
+      "conditions_exceptions": "Embedded example version is not asserted to be current or a default.",
+      "applicability": "Architecture lead for envelope separation and repository metadata."
+    },
+    {
+      "version": "USENIX ATC '16 proceedings, 2016, pp. 101-114",
+      "conditions_exceptions": "Throughput and ratio are reported for the paper's benchmark setup.",
+      "applicability": "Primary research evidence for FastCDC tradeoff, not a device-level prediction."
+    },
+    {
+      "version": "March 2025 author preprint, arXiv:2504.02095",
+      "conditions_exceptions": "Attacks depend on specific construction, version, visibility, and known/chosen-plaintext assumptions; preprint status.",
+      "applicability": "Threat-model evidence for parameter extraction and chunk-size leakage."
+    },
+    {
+      "version": "EUROCRYPT 2013 paper",
+      "conditions_exceptions": "Formal MLE constructions/security definitions are not a validation of an arbitrary product scheme.",
+      "applicability": "Evidence for deterministic message-derived encryption and its deduplication purpose."
+    }
+  ],
+  "selector": [
+    {
+      "locator": [
+        "Backups and Deduplication",
+        "Threat Model"
+      ]
+    },
+    {
+      "locator": [
+        "Keys, Encryption and MAC",
+        "config and masterkey descriptions"
+      ]
+    },
+    {
+      "locator": [
+        "Stored chunk sizes",
+        "buzhash and buzhash64",
+        "Secret key usage against fingerprinting"
+      ]
+    },
+    {
+      "locator": [
+        "format blob",
+        "encryptedBlockFormat",
+        "ContentFormat struct"
+      ]
+    },
+    {
+      "locator": [
+        "abstract",
+        "paper summary"
+      ]
+    },
+    {
+      "locator": [
+        "abstract",
+        "sections 1, 2.1-2.2, 3.2-3.3, 5.1-5.2"
+      ]
+    },
+    {
+      "locator": [
+        "sections 1.1-1.2"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "version": "restic documentation v0.18.1",
+      "conditions_exceptions": "Specific version documents Rabin CDC parameters and 0.18.0 pack randomization; side-channel claims are scoped to its threat model.",
+      "applicability": "Evidence for a concrete Rabin baseline and historical mitigation; not universal CDC behavior."
+    },
+    {
+      "version": "restic documentation v0.19.1 stable",
+      "conditions_exceptions": "Password key files can change without re-encrypting stored data; this does not imply content master-key rotation.",
+      "applicability": "Illustrates distinction between credential rewrap and content-key rotation."
+    },
+    {
+      "version": "Borg documentation 2.0.0b26.dev82 as titled at retrieval",
+      "conditions_exceptions": "Beta/live documentation; stored chunk sizes are explicitly visible; exact implementation must be pinned before reuse.",
+      "applicability": "Inspectable keyed-Buzhash and keyed-ID design lead."
+    },
+    {
+      "version": "Live docs; page says last modified 2023-03-21; embedded sample buildVersion v0.3.0",
+      "conditions_exceptions": "Embedded example version is not asserted to be current or a default.",
+      "applicability": "Architecture lead for envelope separation and repository metadata."
+    },
+    {
+      "version": "USENIX ATC '16 proceedings, 2016, pp. 101-114",
+      "conditions_exceptions": "Throughput and ratio are reported for the paper's benchmark setup.",
+      "applicability": "Primary research evidence for FastCDC tradeoff, not a device-level prediction."
+    },
+    {
+      "version": "March 2025 author preprint, arXiv:2504.02095",
+      "conditions_exceptions": "Attacks depend on specific construction, version, visibility, and known/chosen-plaintext assumptions; preprint status.",
+      "applicability": "Threat-model evidence for parameter extraction and chunk-size leakage."
+    },
+    {
+      "version": "EUROCRYPT 2013 paper",
+      "conditions_exceptions": "Formal MLE constructions/security definitions are not a validation of an arbitrary product scheme.",
+      "applicability": "Evidence for deterministic message-derived encryption and its deduplication purpose."
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "restic_design_0_18_1",
+      "existing_authored_summary_fields": {
+        "version": "restic documentation v0.18.1",
+        "conditions_exceptions": "Specific version documents Rabin CDC parameters and 0.18.0 pack randomization; side-channel claims are scoped to its threat model.",
+        "applicability": "Evidence for a concrete Rabin baseline and historical mitigation; not universal CDC behavior."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "restic_references_0_19_1",
+      "existing_authored_summary_fields": {
+        "version": "restic documentation v0.19.1 stable",
+        "conditions_exceptions": "Password key files can change without re-encrypting stored data; this does not imply content master-key rotation.",
+        "applicability": "Illustrates distinction between credential rewrap and content-key rotation."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "borg_security_2_0_beta",
+      "existing_authored_summary_fields": {
+        "version": "Borg documentation 2.0.0b26.dev82 as titled at retrieval",
+        "conditions_exceptions": "Beta/live documentation; stored chunk sizes are explicitly visible; exact implementation must be pinned before reuse.",
+        "applicability": "Inspectable keyed-Buzhash and keyed-ID design lead."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "kopia_encryption_docs",
+      "existing_authored_summary_fields": {
+        "version": "Live docs; page says last modified 2023-03-21; embedded sample buildVersion v0.3.0",
+        "conditions_exceptions": "Embedded example version is not asserted to be current or a default.",
+        "applicability": "Architecture lead for envelope separation and repository metadata."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "fastcdc_usenix_2016",
+      "existing_authored_summary_fields": {
+        "version": "USENIX ATC '16 proceedings, 2016, pp. 101-114",
+        "conditions_exceptions": "Throughput and ratio are reported for the paper's benchmark setup.",
+        "applicability": "Primary research evidence for FastCDC tradeoff, not a device-level prediction."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "cdc_attacks_preprint_2025",
+      "existing_authored_summary_fields": {
+        "version": "March 2025 author preprint, arXiv:2504.02095",
+        "conditions_exceptions": "Attacks depend on specific construction, version, visibility, and known/chosen-plaintext assumptions; preprint status.",
+        "applicability": "Threat-model evidence for parameter extraction and chunk-size leakage."
+      }
+    },
+    {
+      "authored_source_map": "runs/B-DISC-M-02/control/stages/role/source-map.json",
+      "source_id": "mle_eurocrypt_2013",
+      "existing_authored_summary_fields": {
+        "version": "EUROCRYPT 2013 paper",
+        "conditions_exceptions": "Formal MLE constructions/security definitions are not a validation of an arbitrary product scheme.",
+        "applicability": "Evidence for deterministic message-derived encryption and its deduplication purpose."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": [
+        "Backups and Deduplication",
+        "Threat Model"
+      ]
+    },
+    {
+      "locator": [
+        "Keys, Encryption and MAC",
+        "config and masterkey descriptions"
+      ]
+    },
+    {
+      "locator": [
+        "Stored chunk sizes",
+        "buzhash and buzhash64",
+        "Secret key usage against fingerprinting"
+      ]
+    },
+    {
+      "locator": [
+        "format blob",
+        "encryptedBlockFormat",
+        "ContentFormat struct"
+      ]
+    },
+    {
+      "locator": [
+        "abstract",
+        "paper summary"
+      ]
+    },
+    {
+      "locator": [
+        "abstract",
+        "sections 1, 2.1-2.2, 3.2-3.3, 5.1-5.2"
+      ]
+    },
+    {
+      "locator": [
+        "sections 1.1-1.2"
+      ]
+    }
+  ],
+  "raw_sha256": "a25e2634d921bcafad3a7e3780a20e9d34603383f5985765a7cc460ec5938757",
+  "rawSHA256": "a25e2634d921bcafad3a7e3780a20e9d34603383f5985765a7cc460ec5938757",
+  "original_bytes": 4788,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-M-02/control/stages/role/sources/evidence.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

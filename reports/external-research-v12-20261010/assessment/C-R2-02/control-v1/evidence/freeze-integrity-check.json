@@ -1,0 +1,225 @@
+[
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+    "freeze_sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+    "observed_sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/source-map.json",
+    "freeze_sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+    "observed_sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/sources/index.md",
+    "freeze_sha256": "c61b6b805c84a9058ab1a09338406d119aba26b815f7d356d5f2c8f4fc9cf06f",
+    "observed_sha256": "c61b6b805c84a9058ab1a09338406d119aba26b815f7d356d5f2c8f4fc9cf06f",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+    "freeze_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "observed_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+    "freeze_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "observed_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/revealed-plan.md",
+    "freeze_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "observed_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+    "freeze_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "observed_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/sources/index.md",
+    "freeze_sha256": "407e34da210e34490d07439d816f9d4f964f0ff1cd27dc752e6070e5a6dc84b0",
+    "observed_sha256": "407e34da210e34490d07439d816f9d4f964f0ff1cd27dc752e6070e5a6dc84b0",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+    "freeze_sha256": "e3c499622ab6c485dfea7d83f8eb37b5f40a1ec3551baab46e6b623512f4ed63",
+    "observed_sha256": "e3c499622ab6c485dfea7d83f8eb37b5f40a1ec3551baab46e6b623512f4ed63",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/source-map.json",
+    "freeze_sha256": "05112887abf571242a32bdd9289ea560bcbff43702fbedf77f29a4a3454207e5",
+    "observed_sha256": "05112887abf571242a32bdd9289ea560bcbff43702fbedf77f29a4a3454207e5",
+    "match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/sources/index.md",
+    "freeze_sha256": "40784096e05532132a24e43595518ffbb98769a711dcc4db2c3e4f9824c923bc",
+    "observed_sha256": "40784096e05532132a24e43595518ffbb98769a711dcc4db2c3e4f9824c923bc",
+    "match": true
+  },
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/inputs/brief.md",
+    "freeze_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "observed_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "match": true
+  },
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md",
+    "freeze_sha256": "96c8546afea8488e50e3f49feded75707b94b58324bbe3eb9276a824edaed9dd",
+    "observed_sha256": "96c8546afea8488e50e3f49feded75707b94b58324bbe3eb9276a824edaed9dd",
+    "match": true
+  },
+  {
+    "stage": "investigator",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/input-map.json",
+    "freeze_sha256": "f2c8156da0b3b8e70490d37ba713c987ed056fc9dc97086def570143a31f0597",
+    "observed_sha256": "f2c8156da0b3b8e70490d37ba713c987ed056fc9dc97086def570143a31f0597",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/inputs/brief.md",
+    "freeze_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "observed_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/assignment.md",
+    "freeze_sha256": "cb023973f5f3151275603e39a62a44978073cf82f47697688a4ee68e53dcb532",
+    "observed_sha256": "cb023973f5f3151275603e39a62a44978073cf82f47697688a4ee68e53dcb532",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/input-map.json",
+    "freeze_sha256": "466603eef29f2cddfe88f7f7d92e396c8444f8805e6c2e62027b2f36e059c041",
+    "observed_sha256": "466603eef29f2cddfe88f7f7d92e396c8444f8805e6c2e62027b2f36e059c041",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+    "freeze_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "observed_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+    "freeze_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "observed_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+    "freeze_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "observed_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/revealed-plan.md",
+    "freeze_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "observed_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "match": true
+  },
+  {
+    "stage": "critic",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+    "freeze_sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+    "observed_sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/inputs/brief.md",
+    "freeze_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "observed_sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md",
+    "freeze_sha256": "964613791bf5b7340a9df2cb431b4513cea7e4be4b2182184b8691e9c56fc246",
+    "observed_sha256": "964613791bf5b7340a9df2cb431b4513cea7e4be4b2182184b8691e9c56fc246",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/input-map.json",
+    "freeze_sha256": "e2d1660783998a1dcf72cac7a058909534880d136b5ad7ecff37aff2b21fa632",
+    "observed_sha256": "e2d1660783998a1dcf72cac7a058909534880d136b5ad7ecff37aff2b21fa632",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+    "freeze_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "observed_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+    "freeze_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "observed_sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+    "freeze_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "observed_sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/revealed-plan.md",
+    "freeze_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "observed_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+    "freeze_sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+    "observed_sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+    "freeze_sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+    "observed_sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+    "match": true
+  },
+  {
+    "stage": "reviser",
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/source-map.json",
+    "freeze_sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+    "observed_sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+    "match": true
+  },
+  {
+    "original": "brief.md",
+    "copy": "inputs/brief.md",
+    "byte_equal": true
+  },
+  {
+    "original": "plan.md",
+    "copy": "stages/investigator/revealed-plan.md",
+    "byte_equal": true
+  }
+]

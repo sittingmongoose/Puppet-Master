@@ -1,9 +1,20 @@
-# S04 — Prusa supported file formats
-
-- **Source:** [Supported file formats](https://help.prusa3d.com/article/supported-file-formats_1772?product=cw1)
-- **Version:** PrusaSlicer 2.9 legacy documentation context; exact executable build not stated.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** 3MF, STL, STEP, OBJ, AMF sections.
-- **Observed operation:** Read only; no import performed.
-- **Relevant rules:** 3MF is the preferred project format; ASCII and binary STL are supported; STEP is triangulated during import; OBJ material/texture information is ignored on import.
-- **Applicability:** Product-specific guidance; recheck the exact selected receiving release.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+  "rawSHA256": "27168f078229656e170146e8fe9220c982fb84dfe28e3cc9fa0a712efb1f77c4",
+  "original_bytes": 693,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S04-prusa-formats.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

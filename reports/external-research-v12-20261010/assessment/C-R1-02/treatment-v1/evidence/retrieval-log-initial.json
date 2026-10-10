@@ -131,8 +131,8 @@
       "Cache-Control": "max-age=14400",
       "cf-cache-status": "REVALIDATED",
       "Server-Timing": "cfCacheStatus;desc=\"REVALIDATED\"",
-      "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=GUwDBYam5n6ZjENJTcLms52Yqbfs%2FGcrfDXzjbaeEBnnWKlhhKoLkB%2FWPxCN%2Fp2TIrt4NoDUcAuriioTbB%2BQukLfdNgR6g24vLnEgWARBlF9C2x%2FsNDvV1tnkRQhbBI%3D\"}]}",
-      "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+      "Report-To": "{\"group\": \"cf-nel\", \"max_age\": 604800, \"endpoints\": [{\"url\": \"https://a.nel.cloudflare.com/report/v4?s=GUwDBYam5n6ZjENJTcLms52Yqbfs%2FGcrfDXzjbaeEBnnWKlhhKoLkB%2FWPxCN%2Fp2TIrt4NoDUcAuriioTbB%2BQukLfdNgR6g24vLnEgWARBlF9C2x%2FsNDvV1tnkRQhbBI%3D\"}]}",
+      "Nel": "{\"report_to\": \"cf-nel\", \"success_fraction\": 0.0, \"max_age\": 604800}",
       "CF-RAY": "a4836886aa541d63-EWR",
       "alt-svc": "h3=\":443\"; ma=86400"
     }
@@ -172,12 +172,12 @@
       "x-robots-tag": "none",
       "x-xss-protection": "1; mode=block",
       "strict-transport-security": "max-age=15552000; includeSubDomains; preload",
-      "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=t%2FDRDctlZU7aYVbQy40KwSRO%2BE6lIHRfdWOZwUnnhk2s%2Fb64C%2FGjOXXo5pZbRFk7EFdG6qxJTnWQTidKEQEtM9uqEMZpwDwFAs6twWCdh7lvbNlHoeTyQPp6Tx5xbSWBOw%3D%3D\"}]}",
+      "Report-To": "{\"group\": \"cf-nel\", \"max_age\": 604800, \"endpoints\": [{\"url\": \"https://a.nel.cloudflare.com/report/v4?s=t%2FDRDctlZU7aYVbQy40KwSRO%2BE6lIHRfdWOZwUnnhk2s%2Fb64C%2FGjOXXo5pZbRFk7EFdG6qxJTnWQTidKEQEtM9uqEMZpwDwFAs6twWCdh7lvbNlHoeTyQPp6Tx5xbSWBOw%3D%3D\"}]}",
       "x-dc": "gcp-us-central1,gcp-us-central1",
       "x-request-id": "03e851e9-a450-4f93-b807-95ebe428da4d-1791448834",
       "server": "cloudflare",
       "Accept-Ranges": "bytes",
-      "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.01,\"max_age\":604800}",
+      "Nel": "{\"report_to\": \"cf-nel\", \"success_fraction\": 0.01, \"max_age\": 604800}",
       "cf-cache-status": "HIT",
       "CF-RAY": "a48368879a40bdee-EWR",
       "alt-svc": "h3=\":443\"; ma=86400"
@@ -215,8 +215,8 @@
       "Cache-Control": "max-age=14400",
       "cf-cache-status": "MISS",
       "Server-Timing": "cfCacheStatus;desc=\"MISS\"",
-      "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=pQTkrvi8XzhuoEMN%2FKlK6pswIK%2BmFMNj7jLoTkrf5auh7tK3zrvwpwJLJfGBDJaQABPzbiG43Hl4plVQw7TcJlhu3KRwcB8fOr6h3iP9Ptsbr9o6sX4HEP2eeq%2BdAfc%3D\"}]}",
-      "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+      "Report-To": "{\"group\": \"cf-nel\", \"max_age\": 604800, \"endpoints\": [{\"url\": \"https://a.nel.cloudflare.com/report/v4?s=pQTkrvi8XzhuoEMN%2FKlK6pswIK%2BmFMNj7jLoTkrf5auh7tK3zrvwpwJLJfGBDJaQABPzbiG43Hl4plVQw7TcJlhu3KRwcB8fOr6h3iP9Ptsbr9o6sX4HEP2eeq%2BdAfc%3D\"}]}",
+      "Nel": "{\"report_to\": \"cf-nel\", \"success_fraction\": 0.0, \"max_age\": 604800}",
       "CF-RAY": "a4836889387a0fcf-EWR",
       "alt-svc": "h3=\":443\"; ma=86400"
     }

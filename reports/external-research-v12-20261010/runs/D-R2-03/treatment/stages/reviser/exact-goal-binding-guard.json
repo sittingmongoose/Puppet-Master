@@ -1,0 +1,39 @@
+{
+  "version": "exact-goal-binding-guard-v1",
+  "stageDir": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser",
+  "backupDir": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/.goal-guard-backup-f58324bd9d2c4a7b82889bc8adf9199c",
+  "command": "python3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'",
+  "args": {
+    "clientRequestId": "er12-composite-D-R2-03-treatment-reviser-A1-A8-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference D-R2-03-treatment reviser",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n\nROOT EXACT GOAL BINDING GUARD v1 — PRE-INPUT\nBefore ANY case/source reading or inference, activate ONE actual native Goal with this EXACT frozen objective: \"ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nImmediately pass its EXACT unmodified COMPLETE fresh native create_goal response (or an immediately obtained native get_goal response) as ONE --json argument to:\npython3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'\nThe quoted response slot is runtime native data, never literal placeholder JSON. Use structured argv or correct shell quoting; preserve every response field. If activation is unavailable or the gate fails, STOP before any case/source reading or inference. Preserve the exact diagnostic and original failure; never create a second/replacement Goal or repair the objective. Save before completing the SAME Goal. Original route, deadlines, scope, science and lifecycle remain binding. Response provenance/freshness cannot be independently proved by this checker. This is common symmetric future mechanics, not technique or source assistance.\n"
+  },
+  "root_only_integration": true,
+  "dispatch_performed": false,
+  "idempotent": false,
+  "v1_marker_sha256": "cafea09bc0b00681c2002d8fe92b069e1ef3ea5ba446b9a1bce644fee0dab107",
+  "original_sha256": {
+    "request.json": "ac6546ffd3b220bf26dd6c487816997fef852018d07e02f353c3c2d9352d8d95",
+    "freeze.json": "aca0605f1f7a9b9546dba68cba18d0b8812cbc0b9e6a76d3f1eee8e0f364c963",
+    "input-map.json": "4c9a8bb3ddf4a35d18f30db9f3eed032d031f564b23f63f3b617fded4b6b0226",
+    "assignment.md": "385df57643100af6fd9381e75e8e0347747bb7c32a2ddcb0044149c263e9e09a"
+  },
+  "updated_sha256": {
+    "request.json": "d52e9720b19ab648cda733e16eda1e6bed569257a56738f45cf90c780f54c057",
+    "freeze.json": "e3eb372f52d249285ea28b8c60f1049f87c9da7349ab3c93782a5bef671ab960",
+    "input-map.json": "4c9a8bb3ddf4a35d18f30db9f3eed032d031f564b23f63f3b617fded4b6b0226",
+    "assignment.md": "433dabd35dc94b7feedd5565b50bd953277eeb3169372b1d06ab2fc416e8f3ad"
+  }
+}

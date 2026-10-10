@@ -1,9 +1,20 @@
-# S03 — Fusion: Export designs
-
-- **Exact URL:** https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN
-- **Released version/commit:** Live Fusion help page; no exact product build/version stated.
-- **Locator:** Export format list and tips, especially 3MF/STEP and associativity (lines 21-61).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open/find of Autodesk Fusion help; no design was exported.
-- **Governing condition/default/exception:** Fusion lists 3MF and STEP exports; 3MF is described as surface data including vertices, triangles, units, colors and textures. The help says exported designs do not maintain associativity with the original Fusion design.
-- **Applicability:** Fusion workflow only; does not define all STEP protocols or receiver behavior.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "53e7a5da7917c92724cb4a287bc5e4aa1017f7a9fd80f259e3236ac660131e6d",
+  "rawSHA256": "53e7a5da7917c92724cb4a287bc5e4aa1017f7a9fd80f259e3236ac660131e6d",
+  "original_bytes": 815,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S03-fusion-export.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

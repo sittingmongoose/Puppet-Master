@@ -1,1396 +1,582 @@
 {
-  "basis": "immutable cohort4 checkpoint and exact whitelists",
-  "planned_slots": 40,
-  "planned_logical_arms": 80,
-  "started_logical_arms": 72,
-  "completed_role_deliveries": 24,
-  "completed_full_final_deliveries": 37,
-  "completed_independent_judgments": 60,
-  "source_grade_from_completion": false,
-  "campaign_complete": false,
+  "counts": {
+    "attempts": 80,
+    "delivered_original_finals": 79,
+    "original_source_judgments": 79,
+    "unassessed": 1,
+    "source_labels": {
+      "PASS_WITH_LIMITATIONS": 56,
+      "FAIL": 23
+    },
+    "missing_attempt": {
+      "slot": "D-R1-03",
+      "arm": "treatment",
+      "disposition": "MISSING_PRE_INPUT_GUARD_FAILURE",
+      "assessment_state": "UNASSESSED"
+    }
+  },
   "logical_arms": [
     {
       "slot": "A1-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A1-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A1-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A1-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A2-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A2-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A2-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A2-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A3-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A3-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A3-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A3-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A4-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A4-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A4-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A4-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A5-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A5-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A5-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A5-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A6-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A6-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A6-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A6-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A7-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A7-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic-finalizer",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A7-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A7-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic-finalizer",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A8-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A8-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A8-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "A8-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-G-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-G-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-G-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-G-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-M-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-M-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-M-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-APPL-M-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-G-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-G-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-G-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-G-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-M-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-M-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-M-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-DISC-M-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-G-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-G-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-G-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-G-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-M-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-M-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "FAIL",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "FAIL"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-M-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "B-FINAL-M-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "role",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R1-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R1-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R1-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R1-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
+      "source_judgment": "PASS_WITH_LIMITATIONS",
       "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
-      "source_judgment": "PASS_WITH_LIMITATIONS"
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R2-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": true,
-      "assessment_state": "SOURCE_PENDING",
-      "source_judgment": null
+      "source_judgment": "FAIL",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R2-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R2-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "reviser",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "C-R2-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "completed",
-          "hasPendingChildRuns": false
-        },
-        {
-          "stage": "critic",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-01",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-01",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-02",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-02",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-03",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-03",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "UNKNOWN",
+      "assessment_state": "UNASSESSED",
+      "delivery_disposition": "MISSING_PRE_INPUT_GUARD_FAILURE"
     },
     {
       "slot": "D-R1-04",
       "arm": "control",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     },
     {
       "slot": "D-R1-04",
       "arm": "treatment",
-      "checkpoint_stage_statuses": [
-        {
-          "stage": "investigator",
-          "status": "running",
-          "hasPendingChildRuns": false
-        }
-      ],
-      "quiet_final_in_whitelist": false,
-      "assessment_state": "ACTIVE_OR_NOT_QUIET_FINAL_EXCLUDED",
-      "source_judgment": null
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-01",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-01",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-02",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-03",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-03",
+      "arm": "treatment",
+      "source_judgment": "FAIL",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-04",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
+    },
+    {
+      "slot": "D-R2-04",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment_state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "delivery_disposition": "DELIVERED"
     }
-  ]
+  ],
+  "source_grade_from_completion": false,
+  "basis": "root-final immutable original whitelist"
 }

@@ -1,0 +1,959 @@
+{
+  "schema": "ER12-independent-source-map-v1",
+  "case": "D-R1-04",
+  "arm": "treatment",
+  "reviewer": "codex-er12-d-r1-04-treatment-v1",
+  "independent_sources": [
+    {
+      "id": "E01",
+      "candidate_id": "S01",
+      "judgment": "SUPPORTED",
+      "subject": "General rain-garden routing and underdrain distinction",
+      "operation": "Official educational mechanism and maintenance guidance; no site measurement",
+      "locator": "How does a rain garden work? / Why would I need an underdrain? / What maintenance is needed; independent text lines 16–27",
+      "conditions": "A configured underdrain can return filtered water to a storm sewer; without one water can enter native soil. One-to-two-day drainage is a general statement, not this site's criterion.",
+      "unit": "day; neither site dimensions nor published removal percentages adopted",
+      "type": "Educational guidance; underdrained versus non-underdrained systems",
+      "default": "No local default established",
+      "exceptions": "Unknown site configuration and jurisdiction; no local benefit inferred",
+      "local_file": "evidence/primary/S01.txt",
+      "final_lines": [
+        27,
+        29,
+        33
+      ],
+      "title": "Rain gardens (bioretention) 101",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S01",
+        "url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+        "resolved_url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+        "access_utc": "2026-10-10T06:58:39.375877+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S01.html",
+        "bytes": 33180,
+        "sha256": "c54d7063ad54f9c334ccace9475f20d98dd002a9b0ae8b7e4ef8d246889516f8",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S01.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "499033ad630cafead8b5cc44dd97ead40acc347068c730dbed5b24ab13dcf47b"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S01.txt"
+      ]
+    },
+    {
+      "id": "E02",
+      "candidate_id": "S02",
+      "judgment": "SUPPORTED",
+      "subject": "Capacity-conditioned high-flow bypass",
+      "operation": "MPCA overview; water-quantity treatment and surrounding permit context",
+      "locator": "Water quantity treatment; text lines 56–62; permit applicability text lines 21–24",
+      "conditions": "An offline curb cut at the intended maximum ponding elevation can let excess gutter flow pass once the cell fills. Source distinguishes online flow paths and erosion/short-circuiting concerns.",
+      "unit": "No prescribed site dimensions or event-size threshold",
+      "type": "Offline versus online bypass",
+      "default": "Minnesota recommendations do not establish governing rules for unidentified site",
+      "exceptions": "Observed bypass at the hypothetical opening is not proof of intended design; recover plans and event context",
+      "local_file": "evidence/primary/S02.txt",
+      "final_lines": [
+        19,
+        109,
+        110
+      ],
+      "title": "Overview for bioretention",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S02",
+        "url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+        "resolved_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+        "access_utc": "2026-10-10T06:58:39.377623+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S02.html",
+        "bytes": 62427,
+        "sha256": "72f8e714743480fa8e329f89554a8c2f081588be6de080d4088cb2361843c872",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S02.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "7d563e45d592d80fe0ec59d2113adac48aee59155ab43dd46e8e8246d4c7a692"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 110
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S02.txt"
+      ]
+    },
+    {
+      "id": "E03",
+      "candidate_id": "S03",
+      "judgment": "SUPPORTED",
+      "subject": "Curb-cut capture and conditional routing alternatives",
+      "operation": "EPA Green Streets Handbook February 2021, Ch. 4.4 and design-context note",
+      "locator": "Printed pp. 4-1, 4-6–4-7; PDF zero-based p45; text lines 1671–1674 and 1878–1963",
+      "conditions": "Placement in the gutter flow path, grading toward the feature, and steep-slope berm/runnel examples are conditional. Grated cuts and trench drains address specific debris/access situations.",
+      "unit": "Handbook includes dimensions, but final adopts none",
+      "type": "Concentrated curb/gutter flow versus sheet flow; conceptual design examples",
+      "default": "No chosen design or software-sizing operation",
+      "exceptions": "Guidance directs designers to local requirements; source does not justify modifying this curb",
+      "local_file": "evidence/primary/S03.txt",
+      "final_lines": [
+        19,
+        21,
+        65
+      ],
+      "title": "Green Streets Handbook",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+      "version": "EPA Green Streets Handbook, February 2021",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S03",
+        "url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+        "resolved_url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+        "access_utc": "2026-10-10T06:58:39.385163+00:00",
+        "status_code": 200,
+        "content_type": "application/pdf",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S03.pdf",
+        "bytes": 10131822,
+        "sha256": "96a6aac899885fbde9fc9f931e2837422388a2ef76528ea907f69a12e1186d34",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S03.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "2a76d8aaf6f8ca069ea57c6f0a0e43af22db4726816c4dfe0149d7f1dc8978ac"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 65
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S03.txt"
+      ]
+    },
+    {
+      "id": "E04",
+      "candidate_id": "S04",
+      "judgment": "SUPPORTED_WITH_CONTEXT",
+      "subject": "Maintenance, compaction/debris hypotheses, and 48-hour inspection",
+      "operation": "MPCA O&M page, post-construction schedule and troubleshooting",
+      "locator": "Independent text lines 101–159 and 225–245; web source post-construction table and common problems",
+      "conditions": "Later semiannual ponding checks are 48 hours after rain when ground is not frozen; deep sumps may pond. Troubleshooting identifies sediment/clogging as possible, not exclusive, causes. Mulch and debris may obstruct flow.",
+      "unit": "48 hours; first-year table includes storms >0.5 inches, not adopted as site event threshold",
+      "type": "Inspection schedule versus symptom/possible-cause table",
+      "default": "No universal local compliance threshold",
+      "exceptions": "Frozen ground and deep-sump conditions; local design and drain configuration unknown",
+      "local_file": "evidence/primary/S04.txt",
+      "final_lines": [
+        29,
+        33,
+        41,
+        43,
+        111
+      ],
+      "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S04",
+        "url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+        "resolved_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+        "access_utc": "2026-10-10T06:58:39.387335+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S04.html",
+        "bytes": 67702,
+        "sha256": "ed213a6d06b638cb9a2a6987fa96e1b4bafa8f7b44604028b46a04b95c6a4d3c",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S04.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "285e75d3a78a997bc4ad7a5754b86c257409806ba4e3737abe364fe3884577b2"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S04.txt"
+      ]
+    },
+    {
+      "id": "E05",
+      "candidate_id": "S05",
+      "judgment": "SUPPORTED",
+      "subject": "Records-first inspection and drawdown observation",
+      "operation": "EPA road/parking-lot runoff O&M technical memorandum, 2016",
+      "locator": "Printed pp.7–10; text Inspection and Assessment, Infiltration Rates, and records paragraph around lines 328–383, 471–475",
+      "conditions": "Standing water at 48 hours is an example prompting further evaluation. Inspection cadence depends on drainage area, use/activity and rainfall. Level observations and design/maintenance records support staged assessment.",
+      "unit": "hour/day observation intervals, not a universal infiltration-rate oracle",
+      "type": "Visual screening and qualified assessment",
+      "default": "No site-specific criterion",
+      "exceptions": "Recession alone cannot isolate infiltration in an unknown system with drain/overflow/storage terms",
+      "local_file": "evidence/primary/S05.txt",
+      "final_lines": [
+        33,
+        53,
+        74,
+        97,
+        111
+      ],
+      "title": "Operation and Maintenance of Green Infrastructure Receiving Runoff from Roads and Parking Lots: Technical Memorandum",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf",
+      "version": "EPA road/parking-lot runoff O&M technical memorandum, 2016",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S05",
+        "url": "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf",
+        "resolved_url": "https://www.epa.gov/sites/default/files/2016-11/documents/final_gi_maintenance_508.pdf",
+        "access_utc": "2026-10-10T06:58:39.389555+00:00",
+        "status_code": 200,
+        "content_type": "application/pdf",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S05.pdf",
+        "bytes": 9305486,
+        "sha256": "3cb0d542d58c4dd736e7f1e5dd67a70d6e7edf57ca3480f77f91bc3c1865cb32",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S05.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "02253f3762085b7743c71dabd96d96b1fbfb535c7efd420cb933bf4ab8852a17"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 53
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S05.txt"
+      ]
+    },
+    {
+      "id": "E06",
+      "candidate_id": "S06",
+      "judgment": "SUPPORTED",
+      "subject": "Different levels of BMP assessment",
+      "operation": "Official MPCA four-level assessment summary",
+      "locator": "Levels 1–4 and credit caveat; independent text lines 4–48",
+      "conditions": "Visual inspection, capacity tests, synthetic-runoff tests and monitoring have distinct outputs and effort. Visual inspection supplies no numerical performance data for credit.",
+      "unit": "Candidate does not adopt source table's effort multipliers or monitoring durations",
+      "type": "Qualitative screening versus quantitative assessment",
+      "default": "No mandatory test sequence inferred",
+      "exceptions": "Agency consultation needed for regulatory use; current pilot cannot certify hydrologic or pollutant performance",
+      "local_file": "evidence/primary/S06.txt",
+      "final_lines": [
+        53,
+        63,
+        88,
+        104
+      ],
+      "title": "Assessing the performance of stormwater Best Management Practices (BMPs)",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S06",
+        "url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+        "resolved_url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+        "access_utc": "2026-10-10T06:58:39.391592+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S06.html",
+        "bytes": 34235,
+        "sha256": "8921737219ebe221ba13038acdd6de0c1d218d9d651b5944e9300464f8eaedf0",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S06.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "1629b2e7cdef6bf0ff7f85c2a2ed783c47c24e889cd4c95e62075177b0fba3d7"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 53
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S06.txt"
+      ]
+    },
+    {
+      "id": "E07",
+      "candidate_id": "S07",
+      "judgment": "SUPPORTED",
+      "subject": "Pretreatment selection conditions",
+      "operation": "Official MPCA article independently retrieved by web tool; direct HTTP body was CAPTCHA",
+      "locator": "Pretreatment compatibility/applicability and definitions; web lines 91–106, 147–162",
+      "conditions": "Pretreatment filter strips need shallow distributed sheet flow; concentrated flow is unsuitable for that type. Forebays are associated with channelized flow; screens with leaves/large debris. Space, topography, downstream practice and maintenance matter.",
+      "unit": "No device size or quantitative removal rating adopted",
+      "type": "Pretreatment, not a standalone treatment BMP",
+      "default": "Examples assume no overriding limitations",
+      "exceptions": "Candidate does not select a device for an unmeasured curb opening",
+      "local_file": "evidence/web-specific-1.json",
+      "final_lines": [
+        51,
+        66
+      ],
+      "title": "Overview and methods of pretreatment",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/overview_and_methods_of_pretreatment",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S07",
+        "url": "https://stormwater.pca.state.mn.us/overview_and_methods_of_pretreatment",
+        "resolved_url": "https://validate.perfdrive.com/?ssa=3affd951-e667-4791-9308-361523ff5ce3&ssb=09600231684&ssc=https%3A%2F%2Fstormwater.pca.state.mn.us%2Foverview_and_methods_of_pretreatment&ssi=5a5c2b0a-dkd2-4b67-9fbe-878159be5d74&ssk=AUTHORIZED_PROVIDER_INSTANCE&ssm=54692267660911093104000117568200&ssn=9688a3caf0154462767341ac5f024da4ada54cd63e59-87a8-4176-bd689e&sso=8f26a5c3-d716152f4da14fc169251d6d55b99a36b23407e69def0e7a&ssp=49232082381791683432179163533927513&ssq=17792471551992017980015519330132880394952&ssr=NjguMjM4LjI1NS4zMQ==&sst=python-requests/2.32.5&ssu=&ssv=&ssw=&ssx=eyJ1em14IjoiN2ZjMDAwMTgyZjMyYTQtNmM0Mi00NzQ3LWIyY2EtNTZlNTJiMGUzZmZmMS0xNzkxNjE1NTE5ODIxMC0wMDhhMzdjNDBlNGNmYjRhY2E1MTAiLCJfX3V6bWYiOiI3ZjkwMDA0Y2Q2M2U1OS04N2E4LTQxNzYtYjVjMy1kNzE2MTUyZjRkYTExLTE3OTE2MTU1MTk4MjEwLTAwMzBkMzBjZTMxZTYwZDI3MGQxMCIsInJkIjoic3RhdGUubW4udXMifQ==",
+        "access_utc": "2026-10-10T06:58:39.629803+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S07.html",
+        "bytes": 15084,
+        "sha256": "6eae1099b98acfa004454a2e0112b6b7e8ab6325ef100dfabf009911480e92ea",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S07.txt",
+        "usable_source_content": false,
+        "reason": "HTTP 200 body is a Radware CAPTCHA page, not the MPCA article. Independent web retrieval provided article text; see ../web-specific-1.json and ../web-specific-2.json.",
+        "extracted_text_sha256": "ddccf5e09deb6761105473e8acee90af8fb03707085cf074da7e6737f836f2fa"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/web-specific-1.json",
+        "evidence/web-specific-2.json"
+      ],
+      "retrieval_limit": "Direct HTTP response is a CAPTCHA page, despite HTTP 200. Governing conditions were independently read from web tool primary-page content; the CAPTCHA text is not evidence."
+    },
+    {
+      "id": "E08",
+      "candidate_id": "S08",
+      "judgment": "SUPPORTED_BOUNDED_SUMMARY",
+      "subject": "UMN five-configuration pretreatment test and maintenance comparison",
+      "operation": "Independent official project-summary retrieval; actual linked full report attempted but blocked",
+      "locator": "Project overview, Research findings, Reports and Presentations; independent text lines 8–34",
+      "conditions": "Named grass/rock inlets, Bunker/Turret and shallow sump were tested; capture differed by test intensity. Simulated overflow reduced sump gross-solid retention. Maintenance comparison is within these configurations.",
+      "unit": "Candidate uses qualitative comparisons; no study percentages transferred",
+      "type": "Pretreatment test evidence, not natural-event whole-garden performance guarantee",
+      "default": "No product preference at the hypothetical site",
+      "exceptions": "Full report not inspected; reported report number 586 not independently confirmed from blocked record",
+      "local_file": "evidence/primary/S08.txt",
+      "final_lines": [
+        51,
+        66
+      ],
+      "title": "Capture of gross solids and sediment by pretreatment practices for bioretention",
+      "publisher": "University of Minnesota Water Resources Center / St. Anthony Falls Laboratory project",
+      "url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S08",
+        "url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+        "resolved_url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+        "access_utc": "2026-10-10T06:58:39.646754+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S08.html",
+        "bytes": 57186,
+        "sha256": "bffce48ac9e92df33c6af09e4f17c78eb5361df807d84fc2cd1db344041563c5",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S08.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "2a02e7f6dd17efc54ca8413d49c838277cd5ab7252e2b8d0fff8155cb48299ef"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S08.txt"
+      ],
+      "retrieval_limit": "Official project summary supports only the bounded qualitative claims. Linked full report record https://hdl.handle.net/11299/201607 redirected to the UMN repository and returned HTTP 403; report not read. Exact report number and full methods are not independently certified.",
+      "additional_evidence": [
+        "evidence/primary/S08-report-record.json"
+      ]
+    },
+    {
+      "id": "E09",
+      "candidate_id": "S09",
+      "judgment": "SUPPORTED",
+      "subject": "Groundwater/media boundary and inlet-maintenance mechanisms",
+      "operation": "EPA 841-B-23-002 November 2023 handbook, Ch.3.1 and 14.2",
+      "locator": "Printed pp.3-2–3-3 and 14-4–14-5; text lines 531–539, 795–806, 5663–5692",
+      "conditions": "Groundwater interaction with media reduces available void space for capture; high seasonal/year-round groundwater is a context for noninfiltration approaches. Inlet guidance addresses grading, damage, grit/leaves/debris.",
+      "unit": "2-foot design separation occurs in source but final does not prescribe it",
+      "type": "National guidance and conditional system boundary",
+      "default": "Local specifications must be consulted",
+      "exceptions": "No measured groundwater, slow-drawdown diagnosis, local rule or retrofit follows from this passage",
+      "local_file": "evidence/primary/S09.txt",
+      "final_lines": [
+        31,
+        143
+      ],
+      "title": "Designing Holistic Bioretention for Performance and Longevity (Bioretention Design Handbook)",
+      "publisher": "U.S. Environmental Protection Agency, EPA 841-B-23-002",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+      "version": "EPA 841-B-23-002, Bioretention Design Handbook, November 2023",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S09",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "resolved_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "access_utc": "2026-10-10T06:58:39.672556+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S09.html",
+        "bytes": 332608,
+        "sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S09.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "b85bffe48fcb09ef176e4fdc9f5610e6443f4f12721f360c6a17c73a5755e167"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 31
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 143
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S09.txt"
+      ]
+    },
+    {
+      "id": "E10",
+      "candidate_id": "S10",
+      "judgment": "SUPPORTED_WITH_RETRIEVAL_LIMIT",
+      "subject": "Event and antecedent-media-storage study; five-minute method",
+      "operation": "Independently queried official publisher-indexed article and version notes; direct retrieval blocked",
+      "locator": "Water 2026 18(18):2320; DOI 10.3390/w18182320; Abstract, §2.1–2.5, §4.1 and Conclusions; indexed methods in web-specific-1.json",
+      "conditions": "Three wet seasons at two contrasting roof-fed Beijing systems. Storage metrics and response depend on loading, media depth and drainage boundaries. §2.3 explicitly uses 5-minute rainfall records and maximum 30-minute intensity.",
+      "unit": "5 min and 30 min method units verified; no performance number adopted",
+      "type": "Two engineered field cases with different outflow accounting, not a local oracle",
+      "default": "No prescribed rainfall interval for the hypothetical pilot",
+      "exceptions": "Index-retrieved primary text verified relevant passage; no full direct article/raw-data audit. Final omission is a reviewer-access qualification, not proof earlier method claim was false.",
+      "local_file": "evidence/web-specific-1.json",
+      "final_lines": [
+        45,
+        145
+      ],
+      "title": "Dynamic Media Storage Links Antecedent Soil Moisture to Runoff Retention in Field-Scale Bioretention Systems",
+      "publisher": "Water, 2026, 18(18), 2320",
+      "url": "https://doi.org/10.3390/w18182320",
+      "version": "Water 2026, 18(18), 2320; DOI 10.3390/w18182320; publisher Version of Record notes dated 2026-09-16",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S10",
+        "url": "https://doi.org/10.3390/w18182320",
+        "resolved_url": "https://www.mdpi.com/2073-4441/18/18/2320",
+        "access_utc": "2026-10-10T06:58:39.769614+00:00",
+        "status_code": 403,
+        "content_type": "text/html",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S10.html",
+        "bytes": 402,
+        "sha256": "045dd4ae38c02079be92c1d4856334eefe2fd0135d7115a20b96dd75a872ceb5",
+        "usable_source_content": false
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 145
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/web-specific-1.json",
+        "evidence/web-s10-method.json",
+        "evidence/web-context-2.json"
+      ],
+      "retrieval_limit": "Direct publisher HTTP response 403 and web full-page rate-limit; official publisher-indexed abstract/method sections accessed. Section 2.3 independently confirms five-minute weather data and maximum 30-minute intensity. No full-paper/raw-data replication claimed."
+    },
+    {
+      "id": "E11",
+      "candidate_id": "S11",
+      "judgment": "SUPPORTED",
+      "subject": "SWMM 5.2 LID layer representation and water balance",
+      "operation": "EPA user's manual Version 5.2, February 2022",
+      "locator": "§3.4.8 printed pp.91–92, Figure3-13/Table3-3; text lines 2849–2908; §3.4.1 surface runoff text lines 2643–2652",
+      "conditions": "LID properties are per-unit-area; a moisture balance tracks layer transfers/storage. Bioretention Cell and Rain Garden are distinct software types; optional storage/drain layers should not be presumed for every rain garden.",
+      "unit": "Per-unit-area parameterization; no executed model or chosen units/defaults",
+      "type": "Parameterized simulator, not site measurement",
+      "default": "No modeling configuration or version default selected in final",
+      "exceptions": "Real rainfall/catchment/geometry/media/drain inputs are absent; schematic balances do not establish site performance",
+      "local_file": "evidence/primary/S11.txt",
+      "final_lines": [
+        55,
+        68,
+        129,
+        136
+      ],
+      "title": "Storm Water Management Model (SWMM) User's Manual, Version 5.2",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+      "version": "EPA SWMM User's Manual Version 5.2, February 2022",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S11",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+        "resolved_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+        "access_utc": "2026-10-10T06:58:39.828552+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S11.html",
+        "bytes": 578543,
+        "sha256": "13c0bea08a151084152a4c25ac1bd1e00e2a8b930d41712bc6a680b30b3aa35f",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S11.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "b08e4079d3b4a98245fe4edcaaf78362bedfe1b30e55520de6752bc28a9b7548"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 129
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S11.txt"
+      ]
+    },
+    {
+      "id": "E12",
+      "candidate_id": "S12",
+      "judgment": "SUPPORTED",
+      "subject": "Specific SWMM v5.2.4 release corrections",
+      "operation": "Independent EPA-maintained tagged release record",
+      "locator": "Build5.2.4 (Aug2023), tag v5.2.4 commit7952ca8; Engine Updates2–3,6–8; text lines32–42",
+      "conditions": "Changes affect LID underdrain input checking, fluxes in Bioretention/Permeable Pavement/Infiltration Trench, depressed-gutter street transect/slope and inclined-throat curb-inlet head.",
+      "unit": "Version/commit identifiers, not physical site quantities",
+      "type": "Software correction history",
+      "default": "Final makes no latest-version or universal-fix assertion",
+      "exceptions": "Does not diagnose physical rain-garden capture or justify a model run without inputs",
+      "local_file": "evidence/primary/S12.txt",
+      "final_lines": [
+        55,
+        144
+      ],
+      "title": "EPA SWMM repository release v5.2.4",
+      "publisher": "U.S. EPA-maintained Stormwater-Management-Model repository",
+      "url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+      "version": "USEPA release tag v5.2.4; Build 5.2.4, August 2023; commit 7952ca8",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S12",
+        "url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+        "resolved_url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+        "access_utc": "2026-10-10T06:58:39.893921+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S12.html",
+        "bytes": 200874,
+        "sha256": "ebd515218558b7e2a1c0e3ff8438f620f15263a687abe6c47578e9ee278ed1b8",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S12.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "6e398c48e98f6d61b68b8f3a1b713c7eafef3703f6042a1cce43a830a03d5d3c"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 144
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S12.txt"
+      ]
+    }
+  ],
+  "original_artifacts_manifest": "evidence/inspected-artifacts.json",
+  "freeze_integrity": "evidence/freeze-integrity.json",
+  "evidence_index": "evidence/index.md",
+  "evidence_files": [
+    {
+      "path": "evidence/artifact-verification.json",
+      "bytes": 709,
+      "sha256": "d9a034552d636e04991c444930b645d5e41614c69a2322f1d0530ebf8dbd9136"
+    },
+    {
+      "path": "evidence/freeze-integrity.json",
+      "bytes": 4198,
+      "sha256": "66889c312ab57b2ab78373001d7ee91543cef990a11148119e1151ec64520fd5"
+    },
+    {
+      "path": "evidence/independent-claim-checks.json",
+      "bytes": 12464,
+      "sha256": "572ab6a8926bb6592375dee11c4a5d55ae4958a7303087d11df2f2f9a4bde0da"
+    },
+    {
+      "path": "evidence/index.md",
+      "bytes": 10218,
+      "sha256": "9d1dd9fa99e5595cb1784f179c04cf0d28c41cd6973162dfdc3c31df229bbe1c"
+    },
+    {
+      "path": "evidence/inspected-artifacts.json",
+      "bytes": 47198,
+      "sha256": "017262a868221707acd5ba22901eb1f2553f22c43a1e68d85feabb5df8bd6c39"
+    },
+    {
+      "path": "evidence/original-inventory.json",
+      "bytes": 28211,
+      "sha256": "d9851671c255d6cec8e2f0b1b7b285215199f03b6e2f2b5e59ee5bfd17f4fb0c"
+    },
+    {
+      "path": "evidence/primary/S01.html",
+      "bytes": 33180,
+      "sha256": "c54d7063ad54f9c334ccace9475f20d98dd002a9b0ae8b7e4ef8d246889516f8"
+    },
+    {
+      "path": "evidence/primary/S01.txt",
+      "bytes": 5714,
+      "sha256": "499033ad630cafead8b5cc44dd97ead40acc347068c730dbed5b24ab13dcf47b"
+    },
+    {
+      "path": "evidence/primary/S02.html",
+      "bytes": 62427,
+      "sha256": "72f8e714743480fa8e329f89554a8c2f081588be6de080d4088cb2361843c872"
+    },
+    {
+      "path": "evidence/primary/S02.txt",
+      "bytes": 17210,
+      "sha256": "7d563e45d592d80fe0ec59d2113adac48aee59155ab43dd46e8e8246d4c7a692"
+    },
+    {
+      "path": "evidence/primary/S03.pdf",
+      "bytes": 10131822,
+      "sha256": "96a6aac899885fbde9fc9f931e2837422388a2ef76528ea907f69a12e1186d34"
+    },
+    {
+      "path": "evidence/primary/S03.txt",
+      "bytes": 427058,
+      "sha256": "2a76d8aaf6f8ca069ea57c6f0a0e43af22db4726816c4dfe0149d7f1dc8978ac"
+    },
+    {
+      "path": "evidence/primary/S04.html",
+      "bytes": 67702,
+      "sha256": "ed213a6d06b638cb9a2a6987fa96e1b4bafa8f7b44604028b46a04b95c6a4d3c"
+    },
+    {
+      "path": "evidence/primary/S04.txt",
+      "bytes": 22016,
+      "sha256": "285e75d3a78a997bc4ad7a5754b86c257409806ba4e3737abe364fe3884577b2"
+    },
+    {
+      "path": "evidence/primary/S05.pdf",
+      "bytes": 9305486,
+      "sha256": "3cb0d542d58c4dd736e7f1e5dd67a70d6e7edf57ca3480f77f91bc3c1865cb32"
+    },
+    {
+      "path": "evidence/primary/S05.txt",
+      "bytes": 69752,
+      "sha256": "02253f3762085b7743c71dabd96d96b1fbfb535c7efd420cb933bf4ab8852a17"
+    },
+    {
+      "path": "evidence/primary/S06.html",
+      "bytes": 34235,
+      "sha256": "8921737219ebe221ba13038acdd6de0c1d218d9d651b5944e9300464f8eaedf0"
+    },
+    {
+      "path": "evidence/primary/S06.txt",
+      "bytes": 3573,
+      "sha256": "1629b2e7cdef6bf0ff7f85c2a2ed783c47c24e889cd4c95e62075177b0fba3d7"
+    },
+    {
+      "path": "evidence/primary/S07.html",
+      "bytes": 15084,
+      "sha256": "6eae1099b98acfa004454a2e0112b6b7e8ab6325ef100dfabf009911480e92ea"
+    },
+    {
+      "path": "evidence/primary/S07.txt",
+      "bytes": 727,
+      "sha256": "ddccf5e09deb6761105473e8acee90af8fb03707085cf074da7e6737f836f2fa"
+    },
+    {
+      "path": "evidence/primary/S08-report-record.html",
+      "bytes": 7981,
+      "sha256": "07c8c71435f7014056b1486069c9929c614d3e9fb9d7ebcf38bc475f1016189b"
+    },
+    {
+      "path": "evidence/primary/S08-report-record.json",
+      "bytes": 490,
+      "sha256": "9dcabbc5845aede6160ad669a7e652fd0c35cbbf1c47c0edd2aa7a1e5dcabd26"
+    },
+    {
+      "path": "evidence/primary/S08.html",
+      "bytes": 57186,
+      "sha256": "bffce48ac9e92df33c6af09e4f17c78eb5361df807d84fc2cd1db344041563c5"
+    },
+    {
+      "path": "evidence/primary/S08.txt",
+      "bytes": 6579,
+      "sha256": "2a02e7f6dd17efc54ca8413d49c838277cd5ab7252e2b8d0fff8155cb48299ef"
+    },
+    {
+      "path": "evidence/primary/S09.html",
+      "bytes": 332608,
+      "sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f"
+    },
+    {
+      "path": "evidence/primary/S09.txt",
+      "bytes": 326058,
+      "sha256": "b85bffe48fcb09ef176e4fdc9f5610e6443f4f12721f360c6a17c73a5755e167"
+    },
+    {
+      "path": "evidence/primary/S10.html",
+      "bytes": 402,
+      "sha256": "045dd4ae38c02079be92c1d4856334eefe2fd0135d7115a20b96dd75a872ceb5"
+    },
+    {
+      "path": "evidence/primary/S11.html",
+      "bytes": 578543,
+      "sha256": "13c0bea08a151084152a4c25ac1bd1e00e2a8b930d41712bc6a680b30b3aa35f"
+    },
+    {
+      "path": "evidence/primary/S11.txt",
+      "bytes": 556613,
+      "sha256": "b08e4079d3b4a98245fe4edcaaf78362bedfe1b30e55520de6752bc28a9b7548"
+    },
+    {
+      "path": "evidence/primary/S12.html",
+      "bytes": 200874,
+      "sha256": "ebd515218558b7e2a1c0e3ff8438f620f15263a687abe6c47578e9ee278ed1b8"
+    },
+    {
+      "path": "evidence/primary/S12.txt",
+      "bytes": 2298,
+      "sha256": "6e398c48e98f6d61b68b8f3a1b713c7eafef3703f6042a1cce43a830a03d5d3c"
+    },
+    {
+      "path": "evidence/primary/retrieval-manifest.json",
+      "bytes": 11222,
+      "sha256": "d8d026db478e7d0a57f3a94e6a948340b5b794b368fc39cf5fe11cca8da66bb3"
+    },
+    {
+      "path": "evidence/reviewer-goal-active.json",
+      "bytes": 1206,
+      "sha256": "03b4c27fee82e23d9275c8509ae268de68952916e41d5c216bc5a5f7ccc7693b"
+    },
+    {
+      "path": "evidence/reviewer-goal-precompletion.json",
+      "bytes": 1207,
+      "sha256": "a90f7af532259cbddbd69fa862db570598f86be512f5576228945b24df7ee55d"
+    },
+    {
+      "path": "evidence/web-context-1.json",
+      "bytes": 33418,
+      "sha256": "08ba4cae8eb120438f9e0439c12fe7019e39bfed850ba50775f8d73b78e67e77"
+    },
+    {
+      "path": "evidence/web-context-2.json",
+      "bytes": 32242,
+      "sha256": "6929a14acf4d6e2f4eace68845c2af9da5dea71831e9e9a18dd2b48189acdc66"
+    },
+    {
+      "path": "evidence/web-find-1.json",
+      "bytes": 29836,
+      "sha256": "6c9cff9972e334080c7712f4d290e0ac87805cf96c12b4fffa5da15034441f8b"
+    },
+    {
+      "path": "evidence/web-open-1.json",
+      "bytes": 34036,
+      "sha256": "4998d9e34410b6699c12b9cea1a5da1b5d9467e6d07bd16e2b8e5e5f5a210c01"
+    },
+    {
+      "path": "evidence/web-s08-report.json",
+      "bytes": 239,
+      "sha256": "3d65ebacf3e4f60b1727c59862967f14278f3dc7b3f282e5573b86f06db05af9"
+    },
+    {
+      "path": "evidence/web-s10-method.json",
+      "bytes": 30259,
+      "sha256": "ed1b9858ee2d5e21a74a5359aa1b7f2e24799653cee01e620f58ee4514b359be"
+    },
+    {
+      "path": "evidence/web-specific-1.json",
+      "bytes": 35810,
+      "sha256": "69706a84b313f0111cac4e4639c35cf42f07290abebeb8ae49e559392840d1f7"
+    },
+    {
+      "path": "evidence/web-specific-2.json",
+      "bytes": 35350,
+      "sha256": "b95ee5b026758e6789b70810faecafff9037ce3532bb7d8c1a40a9c73b1834f8"
+    }
+  ],
+  "claim_navigation": "E01–E12 correspond to original stable S01–S12 identities; all conclusions/conditions are reviewer judgments. Primary-response access failures are explicitly distinguished from usable source content.",
+  "no_semantic_proof_from_hashes": true,
+  "assessment_artifact_verification": "evidence/artifact-verification.json"
+}

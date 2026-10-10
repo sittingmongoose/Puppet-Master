@@ -1,0 +1,588 @@
+{
+  "recorded_at_utc": "2026-10-10T06:34:37.922666+00:00",
+  "scope": "Only assigned treatment pipeline and original frozen rubric/brief/plan; inventory is not a claim of semantic inspection",
+  "files": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "mtime_ns": 1791611325191076044
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "mtime_ns": 1791611325191265637
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/control/run.json",
+      "bytes": 584,
+      "sha256": "361da78769b80b19fe850adf3277268195d702ec5df1a26d03a155fadc4ee5d3",
+      "mtime_ns": 1791611327201384605
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "mtime_ns": 1791611327201154994
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.goal-guard-backup-cd1d01a0d4514e259b27621455c5bc4b/assignment.md",
+      "bytes": 7421,
+      "sha256": "d0e81e8e375af125ea4ef38ccea189427dfcbaad779b71d0c21c8d1bbfc73b58",
+      "mtime_ns": 1791612702206182031
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.goal-guard-backup-cd1d01a0d4514e259b27621455c5bc4b/freeze.json",
+      "bytes": 6025,
+      "sha256": "944dd517452ff441a0096e4e4ace965abce39b1687ad1c207c683ae928d3946e",
+      "mtime_ns": 1791612702206025958
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.goal-guard-backup-cd1d01a0d4514e259b27621455c5bc4b/input-map.json",
+      "bytes": 1497,
+      "sha256": "8a1fc0791da8188dcba616246a459b2efe02b68c81920e479011973282b412ae",
+      "mtime_ns": 1791612702206122160
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.goal-guard-backup-cd1d01a0d4514e259b27621455c5bc4b/request.json",
+      "bytes": 1651,
+      "sha256": "1da8cfe5fa09fb84cb2d4f6884196376d7b965e0bb1c11f65c74114ebb3bdfe5",
+      "mtime_ns": 1791612702205918624
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.invocation-backup-220d0eba72444987ab6ccb1e9a420b2f/assignment.md",
+      "bytes": 6713,
+      "sha256": "60d83e37eda17ed9326f4697755a05e6bf9bab7a970d099f91f7cdce822c0b7b",
+      "mtime_ns": 1791612702003147565
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.invocation-backup-220d0eba72444987ab6ccb1e9a420b2f/freeze.json",
+      "bytes": 5937,
+      "sha256": "095a8608cbcdd2cd9fe2f8a8a8de8536301e74a2740b0395a99baa2698c93b2a",
+      "mtime_ns": 1791612702002979038
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.invocation-backup-220d0eba72444987ab6ccb1e9a420b2f/input-map.json",
+      "bytes": 1497,
+      "sha256": "8a1fc0791da8188dcba616246a459b2efe02b68c81920e479011973282b412ae",
+      "mtime_ns": 1791612702002990448
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/.invocation-backup-220d0eba72444987ab6ccb1e9a420b2f/request.json",
+      "bytes": 931,
+      "sha256": "d37e36e603012f61f6ab6150a101c1115c995207833920e929511917e7dab417",
+      "mtime_ns": 1791612702002861884
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/assignment.md",
+      "bytes": 8932,
+      "sha256": "56fa1229f48ec1f638730a3321622ef8de6a9b97b3f1174c997da44705bf6ec6",
+      "mtime_ns": 1791612702208740449
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/critique.md",
+      "bytes": 19826,
+      "sha256": "0f9d9299fc2ff6c6a81e0bfc88038682b9ba803c52f36491e21e5cdc573d62c7",
+      "mtime_ns": 1791613247208579032
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/dispatch.json",
+      "bytes": 6608,
+      "sha256": "eef111baeb9ff934ad0638f9182f7f2749c9f12fc7f54d7702483a6401895c77",
+      "mtime_ns": 1791612702941995141
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "1d112f365bf023db244128e74e7501864b8da7749b2727b9a8b1f5e3b8822564",
+      "mtime_ns": 1791612702208919954
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "387c25cb4a86889a990fbc59b2f3bc10c4b6c2ae99dd4f1b3e0212ca284960ac",
+      "mtime_ns": 1791612702207834343
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "8a1fc0791da8188dcba616246a459b2efe02b68c81920e479011973282b412ae",
+      "mtime_ns": 1791612702208290519
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "aea89f5a2f37c1541889c1a36f412dcd89fa7de3229ffe92a9d76e1e3904469c",
+      "mtime_ns": 1791612702004424908
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 530,
+      "sha256": "31c09cd14e89268ec6a09be069a648db0bdc9ced9be49b4c13527a011cf3d84d",
+      "mtime_ns": 1791613247209958879
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 801,
+      "sha256": "1836e5586783f70a561c42948bbecba92ed6124f1c26d88eaa2def3e3249c8fb",
+      "mtime_ns": 1791613331223377303
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/request.json",
+      "bytes": 3170,
+      "sha256": "c117863c78ca17204d8acd68530754dab82aa526d3cc9656f13c5158923a71ce",
+      "mtime_ns": 1791612702207336747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "b63b74b3ea658681ca2a507ceff086ed246fcf46b5fa4cb52b00e831bc3ee923",
+      "mtime_ns": 1791612701788113827
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/source-map.json",
+      "bytes": 16980,
+      "sha256": "746ac98c5f91daee73e881814d3a1a29753a270e4cbf079d717a7eac9e985007",
+      "mtime_ns": 1791613303520024892
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S01-loc-index.md",
+      "bytes": 908,
+      "sha256": "5533a37cbfbbbf589a0fce4f5b98d781e61846aa93e6c42f2e78cb51020cbc9e",
+      "mtime_ns": 1791613247209110614
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S02-loc-700-713.md",
+      "bytes": 1200,
+      "sha256": "82000149bc438be3f38502fe472d83102c57e6f0826eaa78e5cd09a297d6de1f",
+      "mtime_ns": 1791613247209215719
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S03-loc-700-703.md",
+      "bytes": 976,
+      "sha256": "966ea1d5c9aa57b2c2c2ac93342706439a20cc2832746c673cb215e162e45b40",
+      "mtime_ns": 1791613247209312012
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S04-lindner-hygroexpansion.md",
+      "bytes": 861,
+      "sha256": "53a947df86dd23f658c8e668b4f28450855cbbe23a2c824fcd659615d278ad9a",
+      "mtime_ns": 1791613247209404459
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S05-de-ruvo-1973.md",
+      "bytes": 912,
+      "sha256": "0d6790fe274710cd4b27f730dfd8be18f5ea58e97311c6c1351df0fdf241a0f1",
+      "mtime_ns": 1791613247209493753
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S06-maass-hirn-2024.md",
+      "bytes": 991,
+      "sha256": "f2036987460b084538013b03129c446a27eb085eadf8b76e103841fe50d1cad5",
+      "mtime_ns": 1791613247209584383
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S07-nara-paper-guidance.md",
+      "bytes": 1092,
+      "sha256": "9a7cf57c9fe5c67ea0b21b8c78fdd36a4dd5fcddeaf0f3e19fcaab3fe3202762",
+      "mtime_ns": 1791613247209675174
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S08-canon-printer-manual.md",
+      "bytes": 790,
+      "sha256": "64a87b6c0e97e27079ffb2fc8baceb305dcbcc591d17c0644542382682b706de",
+      "mtime_ns": 1791613247209764290
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S09-jstage-paper-history.md",
+      "bytes": 953,
+      "sha256": "70c89de248c071a7339bf0f44478efd4ebf9101d1bc4480ca2506f28fab01022",
+      "mtime_ns": 1791613247209865822
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/index.md",
+      "bytes": 1762,
+      "sha256": "1a1e984f65f1818f8d4472c10c08958a2006ab9efdd05c87f25ad22cfe78a83a",
+      "mtime_ns": 1791613247208965413
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/status.json",
+      "bytes": 5199,
+      "sha256": "20b5650d95c8b86bcf969dab1456144c4328eb27e0bd54a2ca47dbb5c5da9c19",
+      "mtime_ns": 1791613355750441220
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.goal-guard-backup-d9a94ee7c57c49b99b3f1904c80de754/assignment.md",
+      "bytes": 4448,
+      "sha256": "b4fc31f968cbee9b267fc7742f1a2b2a685f5a3784608090a24d141b05842381",
+      "mtime_ns": 1791611327729595553
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.goal-guard-backup-d9a94ee7c57c49b99b3f1904c80de754/freeze.json",
+      "bytes": 4300,
+      "sha256": "6b2b769715bbe2d48c398abca8d04798607b0811f56b0919ab79b14245bd1960",
+      "mtime_ns": 1791611327729452399
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.goal-guard-backup-d9a94ee7c57c49b99b3f1904c80de754/input-map.json",
+      "bytes": 797,
+      "sha256": "3a5f2a8c5e0031afb5c38e644249d15a19478ee70dd51bdecaccbb0ed9077150",
+      "mtime_ns": 1791611327729531713
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.goal-guard-backup-d9a94ee7c57c49b99b3f1904c80de754/request.json",
+      "bytes": 1687,
+      "sha256": "60582474e8908300809d018f0af3d18a4eff25789af7a2c8910692683726c9ae",
+      "mtime_ns": 1791611327729313594
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.invocation-backup-0593e93b05f14e4a80980441b182b147/assignment.md",
+      "bytes": 3728,
+      "sha256": "59728221ec693f37dec658e9dfc66c98ec6fca331da2442de43767a3bbd45dbc",
+      "mtime_ns": 1791611327546903917
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.invocation-backup-0593e93b05f14e4a80980441b182b147/freeze.json",
+      "bytes": 4212,
+      "sha256": "251f80e9f203ef23390bbdc7bc5cb9f13fdba2ffc59c739d55ff8584528636c2",
+      "mtime_ns": 1791611327546770003
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.invocation-backup-0593e93b05f14e4a80980441b182b147/input-map.json",
+      "bytes": 797,
+      "sha256": "3a5f2a8c5e0031afb5c38e644249d15a19478ee70dd51bdecaccbb0ed9077150",
+      "mtime_ns": 1791611327546843868
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/.invocation-backup-0593e93b05f14e4a80980441b182b147/request.json",
+      "bytes": 955,
+      "sha256": "8c72842744166e12bba2d96f49ae1af75e0300ca90e4235c54bdf0903a55938b",
+      "mtime_ns": 1791611327546650827
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "152016a8f449ce09f43756bf5e1164f78962bf2694414d186a90c5a8ffec7701",
+      "mtime_ns": 1791611327732497711
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/discovery.md",
+      "bytes": 12638,
+      "sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "mtime_ns": 1791611998810240339
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 6734,
+      "sha256": "01980288a4d6e7e1d09d6d2fb7b6c58a44ea7047fba5b4b298a8c8f1efbab6a6",
+      "mtime_ns": 1791611328697900198
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/draft.md",
+      "bytes": 27883,
+      "sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "mtime_ns": 1791612634970484527
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "3c941acfe687467903e398a3f6b7c1925d28551fa3efbccaca9a9e92cb67f705",
+      "mtime_ns": 1791611327732661989
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "24163b7dec75463860a3271d5ab0211f0c1a464f3a32b890bab52ff98a2faafc",
+      "mtime_ns": 1791611327731212565
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "3a5f2a8c5e0031afb5c38e644249d15a19478ee70dd51bdecaccbb0ed9077150",
+      "mtime_ns": 1791611327731718840
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "6171c5221cb4c6aa293f21bdd1e8f73b60d5a325f3deb6ca5cc74b6464c98894",
+      "mtime_ns": 1791611327548175893
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/native-goal-activation.json",
+      "bytes": 483,
+      "sha256": "20e8aad2abbcb3e4e04c54ec8004cabf28f5eb86edad919dc12b533c0813fd17",
+      "mtime_ns": 1791611998808500965
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/native-goal-completion.json",
+      "bytes": 813,
+      "sha256": "4241b1f24a1fe170eae1eeb50c4a1c6700595b2458c22782fb0d18376e014401",
+      "mtime_ns": 1791612650761291415
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/native-goal-gate.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791611998808703917
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/plan-release-record.json",
+      "bytes": 399,
+      "sha256": "43eccd6bb5e641c79317895b6fbaa599f44bde51136d7504cd095fdce8ed8279",
+      "mtime_ns": 1791612280021559634
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "ab58a22182e4f8ae0e15ccdb8fde9ea1cb646d6df4df313d9fafb8c4494baf19",
+      "mtime_ns": 1791612062280740177
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/request.json",
+      "bytes": 3224,
+      "sha256": "546b47216cba7075a97ebf3843404df36f980ea5d7922660bdf20520d40c5da4",
+      "mtime_ns": 1791611327730709195
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "mtime_ns": 1791612062280617465
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "c46f4aeda7f9272779daa6a3b2968f1514e4fd0c1f59d7ec1c778d17d56c2d05",
+      "mtime_ns": 1791611327348402363
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/source-map.json",
+      "bytes": 12441,
+      "sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "mtime_ns": 1791612634970117335
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S01-loc-index.md",
+      "bytes": 1001,
+      "sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "mtime_ns": 1791611998808857040
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S02-loc-700-713.md",
+      "bytes": 1696,
+      "sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "mtime_ns": 1791611998808996374
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S03-loc-700-703.md",
+      "bytes": 1385,
+      "sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "mtime_ns": 1791612514181787583
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S04-lindner-hygroexpansion.md",
+      "bytes": 1187,
+      "sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "mtime_ns": 1791611998809287244
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S05-de-ruvo-1973.md",
+      "bytes": 1410,
+      "sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "mtime_ns": 1791611998809413701
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S06-maass-hirn-2024.md",
+      "bytes": 1206,
+      "sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "mtime_ns": 1791612029722492484
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S07-nara-paper-guidance.md",
+      "bytes": 1185,
+      "sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "mtime_ns": 1791611998809660554
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S08-canon-printer-manual.md",
+      "bytes": 992,
+      "sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "mtime_ns": 1791611998809794916
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S09-jstage-paper-history.md",
+      "bytes": 1259,
+      "sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "mtime_ns": 1791611998809917167
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 1377,
+      "sha256": "72c4498ae2f111cd16a450cee4dd42dfb61af1f2dce3fe4ae34ebf7855027d28",
+      "mtime_ns": 1791611998810069292
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/status.json",
+      "bytes": 5153,
+      "sha256": "52209565f9516a77e3dc2d2dbff7c36f38fa51f3b06db4637a854bccc8a6029a",
+      "mtime_ns": 1791612701275615715
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.goal-guard-backup-b51fdc7ef4344b5981bf0878dd8c4e40/assignment.md",
+      "bytes": 5720,
+      "sha256": "12c08c6c1833d9f6a8dc534e52cc13032654836af00d31841bfadd99a156f56d",
+      "mtime_ns": 1791613356649953977
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.goal-guard-backup-b51fdc7ef4344b5981bf0878dd8c4e40/freeze.json",
+      "bytes": 6825,
+      "sha256": "2d161ed63d968a9a06972f4c782d56704f594119c03cecbaa2a3644b7da88f23",
+      "mtime_ns": 1791613356649789966
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.goal-guard-backup-b51fdc7ef4344b5981bf0878dd8c4e40/input-map.json",
+      "bytes": 1820,
+      "sha256": "fb8f6c9cb6935d0d94937b0e9f3099a927427268f5ace58a4bb1f4747a4cac74",
+      "mtime_ns": 1791613356649888019
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.goal-guard-backup-b51fdc7ef4344b5981bf0878dd8c4e40/request.json",
+      "bytes": 1657,
+      "sha256": "7596b057a5ebbec3106c022168e2c02da6f2d0f381c713ff46b454a97df1803b",
+      "mtime_ns": 1791613356649656795
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.invocation-backup-76957d7382224530be8a1ab271cdeaf4/assignment.md",
+      "bytes": 5010,
+      "sha256": "80a8c7180d20f83a73faa5fdeafc9ca03454df0ede596ebc3105677b1f4492c4",
+      "mtime_ns": 1791613356446410414
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.invocation-backup-76957d7382224530be8a1ab271cdeaf4/freeze.json",
+      "bytes": 6737,
+      "sha256": "0594da7beb62606f5b550d5d7da585ec61890d48ae42b9a196a6cadf3d5a2827",
+      "mtime_ns": 1791613356446150914
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.invocation-backup-76957d7382224530be8a1ab271cdeaf4/input-map.json",
+      "bytes": 1820,
+      "sha256": "fb8f6c9cb6935d0d94937b0e9f3099a927427268f5ace58a4bb1f4747a4cac74",
+      "mtime_ns": 1791613356446286896
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/.invocation-backup-76957d7382224530be8a1ab271cdeaf4/request.json",
+      "bytes": 935,
+      "sha256": "058a5e1a2c68f56bc77a66d97d57c183be845860ac822f38ed02e5b395d95404",
+      "mtime_ns": 1791613356445950041
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md",
+      "bytes": 7234,
+      "sha256": "ed39aaa9e8f8d93468c13d684d275b92710c2d42bad4291d81e340ac82eac1c7",
+      "mtime_ns": 1791613356653436116
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 6629,
+      "sha256": "f88325a82f2ebe5b270072528b731ef95360500b8e5070f6f3640031f83137f9",
+      "mtime_ns": 1791613357411848656
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "3d872222fccb3a122b44afb0eac2eb01bc22033a5fc573ec400c18ba28f75296",
+      "mtime_ns": 1791613356653623650
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/final.md",
+      "bytes": 30845,
+      "sha256": "b514999acbca58187f86e29f477a030e06d8b85dda84f8a84493fd490f4d7376",
+      "mtime_ns": 1791613885753814234
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/freeze.json",
+      "bytes": 6825,
+      "sha256": "2678963c86cca697cc7d58aff52e0447f2472187ee12ead475da11f07d2e40d9",
+      "mtime_ns": 1791613356652123093
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/goal-binding.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791613866592661282
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "fb8f6c9cb6935d0d94937b0e9f3099a927427268f5ace58a4bb1f4747a4cac74",
+      "mtime_ns": 1791613356652794842
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "40720d8b025bd4b1c9c8dff2e9ddf918042e9a4dce73255b6310b5db9abcfeb9",
+      "mtime_ns": 1791613356448721795
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 473,
+      "sha256": "529fc57fa7148dc12b99d8974ae2d09bd7527aced0c4dabccc8b81f17fd1b104",
+      "mtime_ns": 1791613866592553177
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "5642b480604a06d99ac4736017b6f65ee6432862e211014c2077b5ff0599ff16",
+      "mtime_ns": 1791613939810453072
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/native-goal-preterminal.json",
+      "bytes": 480,
+      "sha256": "13e245e49479a156fb720572c485585d7fb61b7f655054e754cc82931b4fbd15",
+      "mtime_ns": 1791613939665804920
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/request.json",
+      "bytes": 3179,
+      "sha256": "5c77febbf7d3a69ee7b25ec112b1a43350a0a1e29df69195f05044d063b7ba5c",
+      "mtime_ns": 1791613356651374273
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "d4e18f6ef0af29f17eb61a5a799aaff0ea05f8de1f3da4bfe140078ee9437394",
+      "mtime_ns": 1791613356244651880
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/source-map.json",
+      "bytes": 21631,
+      "sha256": "37318bd9e725d9e6f67c63208338770e189e9ee4487cf534b7865ae91a48823b",
+      "mtime_ns": 1791613904334639355
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S10-loc-700-714.md",
+      "bytes": 1649,
+      "sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944",
+      "mtime_ns": 1791613866592785320
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 2049,
+      "sha256": "7ad86656713914fdf5ec5951adeedaa4c5ea9f41c7ee6b0579181f62be59f302",
+      "mtime_ns": 1791613866592877709
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 13098,
+      "sha256": "f12bceab273cd2d8269618a822050d73685b504a8bee1a2db9c00df359ec0316",
+      "mtime_ns": 1791613987777347735
+    }
+  ]
+}

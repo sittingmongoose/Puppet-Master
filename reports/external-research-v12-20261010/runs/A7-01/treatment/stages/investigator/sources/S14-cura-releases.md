@@ -1,8 +1,20 @@
-# S14 — Cura release index
-
-- **Source:** [UltiMaker Cura releases](https://github.com/Ultimaker/Cura/releases)
-- **Version:** Retrieved release list includes stable 5.13.0 and pre-release 5.14.0-alpha.0.
-- **Access:** 2026-10-10T04:18:00Z, read-only web open.
-- **Locator:** Release list near the top of the page.
-- **Observed operation:** Read only; no releases installed or run.
-- **Applicability:** Version selection snapshot for the date accessed; choose an exact stable build for a pilot and rerun this check when selecting the matrix.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+  "rawSHA256": "e8a371d01cd31e35774b1c370ef3ac601b29bfd9ad630f5f981076553c38cc35",
+  "original_bytes": 544,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S14-cura-releases.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

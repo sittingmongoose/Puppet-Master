@@ -1,0 +1,27 @@
+{
+  "status": "REPAIRED_OFFLINE",
+  "review_scope": "mechanical accounting only",
+  "campaign_extraction_run": false,
+  "findings": [
+    {
+      "id": "terminal-latency-final-role-alias",
+      "disposition": "repaired",
+      "change": "Distinct complete owned task terminal latency; absent final role no longer suppresses failed investigator terminal",
+      "validation": "missing-final exactshape investigator-only terminal is 29 seconds; incomplete intervals remain UNKNOWN"
+    },
+    {
+      "id": "blocked-erases-delivered-interval",
+      "disposition": "repaired",
+      "change": "Raw final-role host interval and delivery attestation separate from native/source/protocol classifications",
+      "validation": "blocked plus root-delivered preserves delivery proxy and original protocol INVALID"
+    }
+  ],
+  "preserved": "Complete prior-v1 package; original 15 assertions; original extractor pin; root native separation; cumulative max/latest identity dedup; queue/start/created lifetimes; heterogeneous judgments",
+  "delivery_contract": "Exactly 80 unique declared arms; JSON metadata only; whole-manifest rejection on malformed/mismatch; no science bodies or pointer dereference",
+  "limits": [
+    "Science hashes and original task_status/science-freeze pointers are root attestations, not reader-verified proof",
+    "Exact file creation/delivery latency remains UNKNOWN; requested-to-quiet final timing is labelled proxy",
+    "No campaign extraction performed; root must supply frozen checkpoint/captures after all quiet"
+  ],
+  "frozen_D1_D2_files": "not written or extracted"
+}

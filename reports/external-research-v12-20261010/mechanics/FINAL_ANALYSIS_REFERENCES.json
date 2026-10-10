@@ -1,0 +1,187 @@
+{
+  "schema": "er12.final-authored-analysis-references.v1",
+  "references": [
+    {
+      "path": "ER12_RUNTIME/analysis/AB-synthesis-v1/analysis.md",
+      "sha256": "4d052fe8507fa5b76c9d534f706935a8e16d708d981c163ce433019eff470a26",
+      "bytes": 34656
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/analysis.md",
+      "sha256": "b166b6dc478c8a8e81ab59e9b0f59f283353dcc0daf2bfa1a0aca246e5cae6c9",
+      "bytes": 53706
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/index.json",
+      "sha256": "4b4c02583c9ec6787c312d101a7f510a4047c9cc501d8ec6442908ddd5b73fa9",
+      "bytes": 18629
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/ROOT_REVIEW.json",
+      "sha256": "3c7daeb687bbd0a8e46c8fec51c595d28b3c132edd3f8100bbdf5c5582d63de7",
+      "bytes": 856
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/final-owned-tree-audit-v1/SUMMARY.json",
+      "sha256": "ba314b89c089e27fb5fdb21a7357ca0fd0a573202810e10a7a4d622d949b68df",
+      "bytes": 435
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/results-table-final/ROOT_VERIFICATION.json",
+      "sha256": "5f183151d9c3b2fa1579266e085ec377bd50fc71d3d1b706bbbdadee066a804b",
+      "bytes": 691
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/accounting-extractor-final-v2/ROOT_VERIFICATION.json",
+      "sha256": "755e443bd6907554770f683cbb361d0492b59eb3043b1aa9ea610dfd5b1ac8b8",
+      "bytes": 766
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v2/ROOT_VERIFICATION.json",
+      "sha256": "3311aa73ea3c3c37e30869e1c8aa8382e5c71df2e3ed3cd6f9e504f1b88678ce",
+      "bytes": 762
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/cleanup-final-prep-v2/ROOT_VERIFICATION.json",
+      "sha256": "95933b2397cf0e5617c4883e32236b2b1d116b9a3a62e7f43835d5065e0f4d4b",
+      "bytes": 1616
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/root-request.json",
+      "sha256": "6c624f4e306fc687219e8362377d78c839b0b6c615c83f3be0f553b99b3166f9",
+      "bytes": 4258
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/root-request.rejected-role.json",
+      "sha256": "75e6ee9f78d27c74d0a969b6c30b72a246dfc1ad50dee3875604eb82b6ce3687",
+      "bytes": 4256
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/root-admission-error.json",
+      "sha256": "6fcac676e847b60db32bf9e2a840458b1fca9255ddf81dccb297c676e58b77bd",
+      "bytes": 401
+    }
+  ],
+  "historical_CD_draft_19_judgments_preserved": true,
+  "no_candidate_feedback": true,
+  "final_actual_result_references": [
+    {
+      "path": "ER12_RUNTIME/analysis/FINAL/analysis.md",
+      "sha256": "c4a0c99d725ee0b2e3bd4319eb8566b2c338df6af8a94d1c25f71417bd810768",
+      "bytes": 28747
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/FINAL/analysis-data.json",
+      "sha256": "79167fc40fefd2686cd3205ce8df44fc00fab40d97676f8855aafcba6e165a94",
+      "bytes": 4860
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/FINAL/original-judgment-counts.json",
+      "sha256": "8b9d1aa3bbaef143fd201ab280b3d66986ff074d1238c1e079e5645f56c131da",
+      "bytes": 38097
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/FINAL_SCIENCE_FREEZE.json",
+      "sha256": "b0011bdd8292387cf777fd80d9d910a35e0eddb3b3ad5c1fa0585cfc2a186286",
+      "bytes": 2388661
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/results-table-final-v2/join_final.py",
+      "sha256": "31033faf469a181d3c9e777aee6ca8e8bb34446ac4b97ca5f195edebc13f40e9",
+      "bytes": 17826
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/results-table-final-v2/README.md",
+      "sha256": "f0b60b4658984105acb1bcfe06a771bada0d8f22189b4212cae814cc19ae5a96",
+      "bytes": 899
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/results-table-final-v2/ROOT_VERIFICATION.json",
+      "sha256": "507b070dbfb4bbb505a4cdc61d5b2d31937199792c54126d4b31454544537bb6",
+      "bytes": 711
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/ROOT_VERIFICATION.json",
+      "sha256": "d337e8c4aefd6a5383d5caad611bb847bcf5cb04529297879af877b28400a96c",
+      "bytes": 726
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/freeze.py",
+      "sha256": "951de2316b491ceb370d6a89a269f6251ac688f5058d14cf8812b72fa0b280dc",
+      "bytes": 31154
+    }
+  ],
+  "publisher_repair_references": [
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v3/prepare.py",
+      "sha256": "463bfc36acb08e01f87067224d5260141bbd653b9a137e17578ffdcec77cde44",
+      "bytes": 44512
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v3/ROOT_REPAIR.json",
+      "sha256": "8376b3e14dbbf675ecb65e099ac968e7f94876ebeb31bdf4c70f9ae75f9988c7",
+      "bytes": 665
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v3/PERFORMANCE_REPAIR.diff",
+      "sha256": "a2ea856cf70e7f5545623713adeb12acdbfb12ed85c5d64141ef537bcfa38c81",
+      "bytes": 11490
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v3/ROOT_VERIFICATION.json",
+      "sha256": "c53fc9971389c80f2b6a2910dc7c2bb14ed118e133fca3b251385db35368a546",
+      "bytes": 634
+    }
+  ],
+  "publisher_role_config_references": [
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v4/prepare.py",
+      "sha256": "27af19bfb19deb9519a1f303a1933f09ff11e9c5f275b48aa967481d2a4a1c09",
+      "bytes": 45094
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v4/ROLE_CONFIG_REPAIR.diff",
+      "sha256": "84eb20599eb16f4fd1b52b03d628dc7b97ab4a13d83420108b8d5fe5eec5fef6",
+      "bytes": 13041
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v4/ROLE_CONFIG_REPAIR.json",
+      "sha256": "7ba4aa724d78caf10ac290ff093504969ef13cf125e745bac38eb9660397f8ea",
+      "bytes": 652
+    }
+  ],
+  "capsule_baseline_repair_references": [
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v5/prepare.py",
+      "sha256": "c51cde525da5072055e559cfb3d1cb30ac103229b09faf36586c3c28bf9f5642",
+      "bytes": 45445
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v5/CURRENT_CAPSULE_BASELINE.json",
+      "sha256": "db4a2fe9ec8f495a83f6ad3e7601c4628d28754bd444c9e47e0069251ce242b5",
+      "bytes": 518305
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v5/CAPSULE_BASELINE_REPAIR.diff",
+      "sha256": "bc6789e8b1a96ead2197bc682ee93fb3d34bd78889b2920ea89fbfe407969c98",
+      "bytes": 11741
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v5/ROOT_CAPSULE_REVIEW.json",
+      "sha256": "2e70530e9d9fc2c794f80528eee2ccfd9eb715181e1541076399865b404a1b85",
+      "bytes": 517
+    }
+  ],
+  "malformed_namespace_repair_references": [
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v6/prepare.py",
+      "sha256": "97bfdbb611593102080b4f556e9b1e06fe378ce75f24f7648e4bbdcb9178ebd8",
+      "bytes": 45784
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v6/MALFORMED_NAMESPACE_REPAIR.diff",
+      "sha256": "d4dcb9182f3f0ed60d629230a8bf0c8770ffb452628c5be131134fa4ef8b426f",
+      "bytes": 10387
+    }
+  ]
+}

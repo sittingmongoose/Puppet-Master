@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A3-01",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. Saved the full recommendation, source map, and evidence index:\n\n- [final.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md)\n\nThe final maps every S1\u2013S6 clause, dispositions all critic findings, and keeps app-specific behavior unresolved where the schema or deployed build is unknown. Documentation and release-history review was performed; no application tests, build, installation, or benchmark was run.\n\nThe native Goal was created with the frozen objective and is now **complete** (thread `01a1240e-3105-75a0-9bcf-55014555aa35`; 240,181 tokens used; 9m54s elapsed). Actual provider/model provenance and native ISO timestamp fields were unavailable and are marked UNKNOWN in the artifacts.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:70f618e8-a49c-4cb1-a8ab-686dfe450dd2",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. Saved the full recommendation, source map, and evidence index:\n\n- [final.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/sources/index.md)\n\nThe final maps every S1\u2013S6 clause, dispositions all critic findings, and keeps app-specific behavior unresolved where the schema or deployed build is unknown. Documentation and release-history review was performed; no application tests, build, installation, or benchmark was run.\n\nThe native Goal was created with the frozen objective and is now **complete** (thread `01a1240e-3105-75a0-9bcf-55014555aa35`; 240,181 tokens used; 9m54s elapsed). Actual provider/model provenance and native ISO timestamp fields were unavailable and are marked UNKNOWN in the artifacts.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:70f618e8-a49c-4cb1-a8ab-686dfe450dd2",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "0bfd27776e72185f5dc6c7f5e98709238245fea8863be2740257cd5e050623bd"
   }
 }

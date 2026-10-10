@@ -1,0 +1,27 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "at_utc": "2026-10-10T04:53:52.407Z",
+      "actual_response": {
+        "structured_content_metadata": [
+          {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
+            "status": "running"
+          }
+        ],
+        "structuredContent": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
+          "status": "running"
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "a80cba7f9c2386642ad0c23c0149d4125016013ca8eecf1feb4d455d450f8bc5",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/A7_GATE_INVOCATION_INCIDENT.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

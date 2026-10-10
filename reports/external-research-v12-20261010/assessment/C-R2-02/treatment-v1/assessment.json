@@ -1,0 +1,1703 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "case_id": "C-R2-02",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "delivery": "COMPLETE_ORDINARY_REVISER_FINAL_PRESENT",
+  "coverage": "ALL_SIX_AXES_AND_ALL_EXACT_PLAN_TEXT_ASSESSED",
+  "material_remaining_findings": [],
+  "basis": "No remaining material error, omission or unsupported consequential final decision was demonstrated. Corrected and ambiguous lineage issues remain recorded; they are not converted into current final failures. This is one-arm source qualification, not comparative performance evidence.",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "assessment": "P1-P18 and administrative clauses independently traced to the original frozen text. The final supplies a prospective study protocol, all required retrieval alternatives, identity/provenance protection, owner decisions, and explicit boundaries. No corpus, city, report list, effect estimate, application or finished review is invented. Public-only and no-author-contact constraints are retained. Hidden execution compliance is not certified from prose alone.",
+      "evidence": [
+        "original brief/plan",
+        "final.md:3-110",
+        "P1-P18 register"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and exact applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independently checked every governing authored URL and context for reporting methods, search behavior, registered/type-coded metadata, library scope, screening threshold/export defaults, release fixes and report methods. Current final claims have correct subject/operation/domain and do not join download or OA counts to search-index coverage. Minor omitted optional-route details and edition provenance are L1-L2, not a remaining unsupported consequential choice.",
+      "evidence": [
+        "E001-E024",
+        "final.md:61-112"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, history and opportunity breadth",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Substantive mechanisms compare vocabulary/controlled terms and multiple indexes, citation graph connectivity, direct municipal/repository metadata and tailored expert/manual curation. Optional active learning is distinguished from discovery. A real bilingual mixed-route INSPQ implementation and predecessor methods establish collection history; actual ASReview fixes establish separate screening-state history. These are useful discoveries, not generic caution. Local route yields and actual reports remain unknown because no jurisdiction/eligibility scope was supplied. L1-L2 limit detail but do not erase the opportunity coverage.",
+      "evidence": [
+        "E001-E009",
+        "E014-E019",
+        "final.md:45-112"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections, rejections and exact dispositions",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All six selected claims, seven ordinary findings and beyond-cap risks were independently adjudicated. Most source-scope clarifications are supported. The critic sometimes labels optional precision/history extensions material too strongly and removes a plausible ranking hypothesis as if unsupportedness established falsehood; final changes do not narrow the original scope or discard a supported route. Every criticism receives an explicit disposition. Exact original clauses are recorded here, including administrative passages beyond the candidate P1-P18 register.",
+      "evidence": [
+        "criticism_dispositions",
+        "exact_plan_clauses",
+        "final.md:114-157"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning across discovery, draft, critique and final",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS",
+      "assessment": "Discovery route mechanisms, curator bias, controlled/free vocabulary, source conditions, public-only access, three-level identity, immutable raw fields, owner decisions, non-recall proxy and proposed/executed distinction survive into a self-contained final. It extends pair and rejected-record audits and method history. The original general-review ranking inference is no longer asserted; stopped-at-relevance is clarified rather than erased; the 404 observation stays scoped to its original URL. Optional ASReview, conventional screening, public indexes and expert/manual routes remain compatible. No material supported option or negative constraint is lost.",
+      "evidence": [
+        "full discovery.md",
+        "full draft.md",
+        "full critique.md",
+        "full final.md",
+        "inherited-map equality"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "FULLY_ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The plan proposes complementary route comparisons under fixed scope, reproducible probabilistic samples/weights, rejected-record re-screening, double adjudication, unblocked-pair sampling and separate cost denominators. These discriminate retrieval, screening and identity problems. The all-pairs design can be sampled without materializing N(N-1)/2 pairs; with pi=n_h/N_h, sum(N_h*ybar_h) estimates a finite relation count, not missing studies. Expert/audit sets, union overlap, known items, tool dashboard estimates, hashes and reviewer agreement are not claimed as full-corpus truth. All empirical pilot actions remain unrun; desk-document access is reported but original tool traces are absent (L3).",
+      "evidence": [
+        "final.md:90-104",
+        "final.md:170-178",
+        "E001",
+        "E002",
+        "E003",
+        "E009"
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_plan_clauses": [
+    {
+      "id": "P1",
+      "title": "Situation",
+      "exact_original_text": "A university group is preparing an evidence collection about urban heat interventions. Their first search returned many general reviews and few local observational studies, although a collaborator remembers several municipal reports. Titles in the working list sometimes differ between repositories, and the team is unsure which items are duplicates. There is no supplied search export or known complete reference set. This is a synthetic planning situation, not a request to conclude whether an intervention works.",
+      "status": "COVERED",
+      "independent_disposition": "Synthetic motivating observations are retained; no supplied export, remembered-item list, gold standard or effectiveness conclusion is invented.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:3; 17; 140",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P2",
+      "title": "Request",
+      "exact_original_text": "Use the 60-minute research window to propose an evidence-discovery study that can tell us how to improve coverage without losing the identity and provenance of individual studies. Explain retrieval and screening mechanisms, compare useful routes, and investigate the implementation history of related collection efforts. Provide a reproducible pilot protocol rather than an application or a finished review.",
+      "status": "COVERED",
+      "independent_disposition": "Complete prospective pilot includes retrieval mechanisms, screening, complementary routes, non-destructive identity and actual collection/tool history. The 60-minute window is an envelope, not a required minimum occupancy.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:43; 61; 106; 141",
+      "primary_evidence_ids": [
+        "E001",
+        "E002",
+        "E003",
+        "E004",
+        "E019"
+      ]
+    },
+    {
+      "id": "P3",
+      "title": "Three outcomes",
+      "exact_original_text": "Distinguish discovery coverage, screening workload, and correct study identity; increased record counts alone do not establish improvement.",
+      "status": "COVERED",
+      "independent_disposition": "Separate discovery, screening and identity metric families. Raw records are process counts; studies/documents, effort denominators and pair relations remain distinct.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:7; 98; 102; 142",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P4",
+      "title": "Alternatives",
+      "exact_original_text": "Compare terminology or database search changes with citation or repository-based discovery and a useful manual or expert-curated alternative.",
+      "status": "COVERED",
+      "independent_disposition": "Controlled/free-text and public-index changes, citations, finite repositories and an internal specialist/expert hand-search are compared by mechanisms, yield and effort; none is chosen as superior.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:58; 61; 143",
+      "primary_evidence_ids": [
+        "E001",
+        "E002",
+        "E003",
+        "E005",
+        "E006",
+        "E007"
+      ]
+    },
+    {
+      "id": "P5",
+      "title": "Reports/versions/titles/geography",
+      "exact_original_text": "Address reports, multiple versions, ambiguous titles, and geographic terminology without treating every similar title as a duplicate.",
+      "status": "COVERED",
+      "independent_disposition": "Source rows, document versions and underlying studies are linked separately. Raw/normalized titles, local names, identifiers and uncertain relations are retained; title similarity alone never merges studies.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:76; 90; 144",
+      "primary_evidence_ids": [
+        "E002",
+        "E008"
+      ]
+    },
+    {
+      "id": "P6",
+      "title": "Disclosure",
+      "exact_original_text": "Explain what a prior search strategy or collection implementation would need to disclose for its claimed coverage to be informative here.",
+      "status": "COVERED",
+      "independent_disposition": "Source/platform/date/field/query/limits, route counts, stop extent, citation seeds, eligibility, deduplication and versions are specified. Comparator counts are not local-report coverage.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:104; 108; 145",
+      "primary_evidence_ids": [
+        "E001",
+        "E004",
+        "E019"
+      ]
+    },
+    {
+      "id": "P7",
+      "title": "Audit/provenance/uncertainty/status",
+      "exact_original_text": "Propose an auditable sampling and comparison design, provenance recording, and uncertainty treatment; label searches or desk checks actually executed separately from future validation.",
+      "status": "COVERED",
+      "independent_disposition": "Probabilistic record samples and a finite pair frame, seed/probability records, rejection re-screening, immutable provenance and unresolved/unassessed states are explicit; candidate source research is separated from unrun validation.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:90; 92; 170; 146",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P8",
+      "title": "No invented recall/effectiveness",
+      "exact_original_text": "Do not claim a comprehensive systematic review, calculate recall against an invented complete corpus, or infer intervention effectiveness from search yield.",
+      "status": "PRESERVED",
+      "independent_disposition": "No complete corpus, effectiveness result or comprehensive review is asserted. Alternate-route audit denominator is explicitly conditional.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:3; 96; 164; 147",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P9",
+      "title": "Access boundary",
+      "exact_original_text": "Do not scrape restricted services, use private accounts, contact authors, or create a search product.",
+      "status": "PRESERVED_WITH_EXECUTION_LIMIT",
+      "independent_disposition": "Proposal and authored execution reports preserve public-only access, no authors/private accounts/restricted scraping/product. No full candidate tool transcript is supplied, so hidden execution cannot be certified.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:70; 148; 172; 174",
+      "primary_evidence_ids": [
+        "E006"
+      ]
+    },
+    {
+      "id": "P10",
+      "title": "Keep ambiguity",
+      "exact_original_text": "Do not delete ambiguous records merely to make the collection look cleaner.",
+      "status": "PRESERVED",
+      "independent_disposition": "Ambiguous records stay visible with reversible links; raw records are immutable.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:84; 88; 149",
+      "primary_evidence_ids": [
+        "E008"
+      ]
+    },
+    {
+      "id": "P11",
+      "title": "Owner decisions",
+      "exact_original_text": "The intervention scope, languages, jurisdictions, date limits, review inclusion rules, access routes, and time available for later screening are undecided. We want the proposal to identify which decisions must precede a meaningful coverage comparison and which can be tested provisionally.",
+      "status": "COVERED",
+      "independent_disposition": "Eligibility/intervention/design/geography/languages/dates/access/version rules and capacity are fixed for comparison; feasibility, query variants, training and workload can be provisional under shared scope. No external owner choice is silently decided.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:45; 150",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P12",
+      "title": "Question without corpus",
+      "exact_original_text": "Can a bounded discovery experiment reveal meaningful missed evidence and manageable identity handling when no complete ground-truth corpus exists?",
+      "status": "COVERED",
+      "independent_disposition": "The design can reveal observed eligible additions and conditional misses among alternate-route finds. It does not claim a population miss rate.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:96; 151",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P13",
+      "title": "Scope first without evasion",
+      "exact_original_text": "The unit of evidence, definition of useful local evidence, screening capacity, and scope boundaries remain open. A defensible proposal may stage the scope decision first, but must still explain the substantive discovery alternatives and how later observations would choose between them.",
+      "status": "COVERED",
+      "independent_disposition": "Scope preparation precedes a concrete mechanism/route/cost/identity comparison; owner uncertainty does not replace substantive discovery.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:45; 61; 92; 152",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "P14",
+      "title": "Alternatives/bias/no winner",
+      "exact_original_text": "Consider revised controlled and free-text vocabulary, multiple public indexes, citation following, municipal repository exploration, and a small manually curated reference exercise. An expert-produced seed list can be useful but may inherit the expert's geographic and language preferences. A scope-narrowing exercise may be more valuable than expanding searches indiscriminately. No search route or deduplication procedure is prespecified as superior.",
+      "status": "COVERED",
+      "independent_disposition": "Multiple public indexes, controlled/free words, citations, portals and manual curation remain compatible. Curator geography/language biases and possible scope narrowing are preserved.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:58; 61; 153",
+      "primary_evidence_ids": [
+        "E001",
+        "E003",
+        "E005",
+        "E006"
+      ]
+    },
+    {
+      "id": "P15",
+      "title": "Mechanisms/proxy",
+      "exact_original_text": "Investigate indexing coverage, term mismatch, citation connectivity, repository metadata, and the distinction between a document version and an independent study. Ask how each route could expose different missingness and how screening rules interact with yield. A coverage proxy should state what it measures; overlap between routes is not automatically true recall or completeness.",
+      "status": "COVERED",
+      "independent_disposition": "Indexing and term mismatch, citation connectivity, repository metadata and record/version/study identity are distinguished. Screening yield and overlap are not mistaken for true recall.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:61; 76; 96; 154",
+      "primary_evidence_ids": [
+        "E002",
+        "E005",
+        "E007",
+        "E008"
+      ]
+    },
+    {
+      "id": "P16",
+      "title": "History",
+      "exact_original_text": "Look for public search histories and evidence-collection implementation descriptions with query dates, database boundaries, inclusion rules, version handling, and changes over time. An older implementation may differ because repositories, terms, and indexing changed. The remembered municipal reports can motivate future provenance checks but are not a hidden reference set or a supplied list of winning sources.",
+      "status": "COVERED_WITH_NONMATERIAL_PROVENANCE_LIMIT",
+      "independent_disposition": "Real INSPQ methods from 2008-2009 and the 2021 update, plus screening-state release changes, are investigated. Dates, source sets, criteria and reporting detail are compared descriptively. Exact English correction incorporation remains unresolved; basic translated-edition relation is better supported than the final suggests.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:106; 110; 112; 155",
+      "primary_evidence_ids": [
+        "E004",
+        "E014",
+        "E015",
+        "E016",
+        "E017",
+        "E019",
+        "E020",
+        "E021"
+      ]
+    },
+    {
+      "id": "P17",
+      "title": "Prospective versus actual validation",
+      "exact_original_text": "A later pilot could prerecord a provisional scope, run several discovery routes, retain route provenance, sample screened and rejected records, and examine independently identified useful additions. Specify how manual adjudication would handle versions and uncertain identity, and how workload and misses would be estimated with limited coverage. Searches actually run during the hour must be logged with dates and limitations; the final proposal must not present a planned multi-route experiment as executed or a union of found records as complete ground truth.",
+      "status": "COVERED",
+      "independent_disposition": "Scope prerecording, route returns, accepted/rejected probability audits, adjudication, workload and conditional misses are proposed. Source desk checks are reported as executed; no collection pilot or union-based recall is claimed.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:92; 170; 156",
+      "primary_evidence_ids": [
+        "E001",
+        "E002"
+      ]
+    },
+    {
+      "id": "P18",
+      "title": "Full-session/release scope",
+      "exact_original_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design. The proposal may contain reasoned provisional choices, but the case provides no predetermined winner. It requests no product build. Preserve brief.md and plan.md exactly for later paired freezes. C inputs remain sealed until the recipe freeze. Input readiness does not assert that those release conditions have been satisfied.",
+      "status": "COVERED",
+      "independent_disposition": "No predetermined winner or product. The broad method research and coherent later pilot are present; original plan bytes equal the released copy and discovery matches the reveal hash. Release mechanics are not inferred solely from semantic agreement.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:3; 43; 137; 157",
+      "primary_evidence_ids": []
+    }
+  ],
+  "administrative_and_authoring_clauses": [
+    {
+      "id": "A0",
+      "title": "Case identity and metadata",
+      "exact_original_text": "# Missing local studies in a small evidence collection\n\nCase ID: ER12-C-R2-02-FRESH\nSlot ID: C-R2-02\nDomain: scholarly information retrieval",
+      "status": "PRESERVED",
+      "independent_disposition": "This assigned case identity appears in the original and final. Metadata is not a separate scientific result."
+    },
+    {
+      "id": "A1",
+      "title": "Concealed prospective design record",
+      "exact_original_text": "Keep this file outside the candidate-facing research packet. It preserves the authored request and open design opportunities. It is not a completed research proposal, a source list, a result, or an evaluation answer key. Nothing here selects an eventual research method. No empirical validation has been executed in authoring this case.",
+      "status": "AUTHORITY_PRESERVED; PRE-REVEAL_ACCESS_UNKNOWN",
+      "independent_disposition": "The record is prospective source lineage, not an answer key selecting a method. Discovery and draft preserve that distinction. The stored reveal records a single-use release after discovery; absence of pre-reveal access is not independently provable without the tool trace."
+    },
+    {
+      "id": "A2",
+      "title": "Exact original clauses and delimiters",
+      "exact_original_text": "The original brief follows verbatim between the delimiters. These bytes define the original obligations; later clarification must not silently replace them.",
+      "status": "SEMANTICALLY_PRESERVED; BYTES_IDENTIFIED",
+      "independent_disposition": "Every original requirement/boundary is independently assessed as P1-P11. Final retains text meaning; its heading-level/Markdown formatting differs despite its reproduced-verbatim label. Frozen original bytes are unchanged."
+    },
+    {
+      "id": "A3",
+      "title": "Authoring status",
+      "exact_original_text": "Authoring status: only synthetic input files have been prepared. No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case. Future researchers must state the actual extent of any work they execute.",
+      "status": "PRESERVED",
+      "independent_disposition": "The synthetic authoring status does not assert empirical topic execution. Final explicitly says no topic records, pilot, screening or effectiveness validation were collected."
+    },
+    {
+      "id": "A4",
+      "title": "Administrative release conditions",
+      "exact_original_text": "Preserve brief.md and plan.md exactly for later paired freezes. C inputs remain sealed until the recipe freeze. Input readiness does not assert that those release conditions have been satisfied.",
+      "status": "ORIGINALS_UNCHANGED; CAMPAIGN_RELEASE_UNKNOWN",
+      "independent_disposition": "Original frozen brief/plan and terminal science match their saved hashes at review. No campaign-wide release state was inspected or inferred; that would exceed this one-pipeline assignment."
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "SCW-1",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:24",
+      "subject": "Clarify alternate-route audit membership",
+      "independent_disposition": "Accept clarification; no demonstrated contradiction of the original sentence",
+      "reason": "The adjacent original sentence already asks for baseline overlap. A route-unique-only denominator would force that overlap to zero; this is a nearby bad reading, not proof the draft actually chose it. Final explicitly includes all eligible alternate-route finds including overlap.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:96; 120",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "SCW-2",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:36",
+      "subject": "Reviewer-hour denominator",
+      "independent_disposition": "Retain ambiguity; accept dual accounting",
+      "reason": "Original obligations require distinct screening workload but do not dictate that screening-only or end-to-end time be the sole denominator. Final measures both and avoids choosing a route on a misleading partial-cost view.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:102; 121",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "SCW-3",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:48",
+      "subject": "OpenAlex fulltext scope",
+      "independent_disposition": "Amend without asserting absence",
+      "reason": "Search fields are supported. Downloadable-content Boolean flags and corpus/OA counts do not define search-index coverage, so C* universal coverage remains unproved. Final preserves search capability and correctly separates download availability.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:67; 122",
+      "primary_evidence_ids": [
+        "E005",
+        "E011",
+        "E012",
+        "E013"
+      ]
+    },
+    {
+      "id": "SCW-4",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:60",
+      "subject": "Crossref report population",
+      "independent_disposition": "Retain supported population; fix citation span",
+      "reason": "Registered/deposited metadata and type matching support C. The all-city-report C* fails the represented/type-coded condition. Final retains supplement use and removes OpenAlex from the Crossref citation.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:68; 123",
+      "primary_evidence_ids": [
+        "E006",
+        "E007"
+      ]
+    },
+    {
+      "id": "SCW-5",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:72",
+      "subject": "Zotero library boundary",
+      "independent_disposition": "Retain",
+      "reason": "Official documentation explicitly restricts duplicate detection to one library and excludes separate group-library cross-matching. Human candidate adjudication is appropriate; final does not equate flags with study identity.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:86; 124",
+      "primary_evidence_ids": [
+        "E008"
+      ]
+    },
+    {
+      "id": "SCW-6",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:84",
+      "subject": "INSPQ grey stopping",
+      "independent_disposition": "Accept narrower wording; do not infer no rule",
+      "reason": "The primary methods describe a qualitative relevance cue. A numerical/predeclared cap is not stated; missing mention cannot prove one never existed. Final reports the cue and bounds the absence statement to the passage.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:108; 125",
+      "primary_evidence_ids": [
+        "E004"
+      ]
+    },
+    {
+      "id": "O1",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:104",
+      "subject": "Unflagged pair frame",
+      "independent_disposition": "Accept; material audit-design incompleteness corrected",
+      "reason": "The draft never defines the pair universe/blocks, so a reported missed-link rate would be ambiguous. Final declares all unordered retrieved-record pairs, priority-based strata, flagged status, outside-block sampling and n_h/N_h probabilities. Estimates remain conditional on the retrieved pair universe.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:90; 129",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "O2",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:105",
+      "subject": "End-to-end effort",
+      "independent_disposition": "Accept useful extension; original severity qualified",
+      "reason": "End-to-end cost affects route choice, but it is not an extra explicit original mandate. Calling a screening-only comparison inherently materially wrong overstates the evidence. Final reporting both costs is supported and causes no loss of the screening-workload requirement.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:102; 130",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "O3",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:106",
+      "subject": "INSPQ change history",
+      "independent_disposition": "Accept history extension; exact comparator not mandatory",
+      "reason": "Draft had one collection snapshot plus real screening-tool changes. That leaves a collection-history opportunity underdeveloped; it does not prove the brief specifically required a 2009-vs-2021 pair. The final retrieves the actual predecessor and describes differences without a causal trend or winner.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:110; 112; 131",
+      "primary_evidence_ids": [
+        "E004",
+        "E014",
+        "E015",
+        "E016",
+        "E017",
+        "E019"
+      ]
+    },
+    {
+      "id": "O4",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:107",
+      "subject": "Audit-set ambiguity",
+      "independent_disposition": "Same clarification as SCW-1; not a second proven error",
+      "reason": "Original context supports baseline overlap already; final makes membership explicit. No independent-gold-standard claim is added.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:96; 132",
+      "primary_evidence_ids": []
+    },
+    {
+      "id": "O5",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:108",
+      "subject": "General-review ranking inference",
+      "independent_disposition": "Qualify critic; accept removal of untested inference",
+      "reason": "Citation contribution creates a plausible general-review-bias hypothesis, but documentation does not establish the type-specific effect. Its cap also does not prove absence of that bias. Final removes the unsupported factual implication while retaining ranking conditions.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:67; 122; 133",
+      "primary_evidence_ids": [
+        "E005"
+      ]
+    },
+    {
+      "id": "O6",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:109",
+      "subject": "Crossref source range",
+      "independent_disposition": "Accept minor cleanup",
+      "reason": "S005 is OpenAlex; S006-S007 support Crossref. This was a locator issue, not wrong metadata mechanics.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:123; 134",
+      "primary_evidence_ids": [
+        "E006",
+        "E007"
+      ]
+    },
+    {
+      "id": "O7",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:110",
+      "subject": "Failed predecessor URL",
+      "independent_disposition": "Amend; preserve failed attempt identity",
+      "reason": "Reviewer also observed HTTP 404 at the original URL and retrieved the alternate official PDF. Failure establishes access-at-URL only. Basic translated-edition provenance is available; exact incorporation of corrections is unresolved.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:110; 125; 135",
+      "primary_evidence_ids": [
+        "E018",
+        "E019",
+        "E020",
+        "E021"
+      ]
+    },
+    {
+      "id": "SCW_NOT_RUN",
+      "critic_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md:18",
+      "subject": "PRISMA-S applicability; ASReview stopping; broader cost statement",
+      "independent_disposition": "Ordinary review assessed all three",
+      "reason": "The selected-claim cap did not excuse ordinary assessment. Reporting guidance is adapted, ASReview remains an optional post-retrieval aid with unset threshold, and cost scopes are split. No extra output narrows the pilot.",
+      "final_locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:73; 102; 104",
+      "primary_evidence_ids": [
+        "E001",
+        "E009"
+      ]
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "D1",
+      "stage": "investigator draft",
+      "classification": "AUDIT_DESIGN_INCOMPLETENESS",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:62",
+      "finding": "Random unflagged-pair audit lacked an explicit pair universe and blocking frame.",
+      "final_status": "CORRECTED at final.md:90",
+      "source_basis": "Original P5/P7/P17 auditable identity design; direct draft/final comparison."
+    },
+    {
+      "id": "D2",
+      "stage": "investigator draft",
+      "classification": "AMBIGUOUS_DENOMINATOR; NOT_A_PROVEN_FALSE_ESTIMAND",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:84",
+      "finding": "Reviewer-hours did not specify screening-only versus end-to-end effort.",
+      "final_status": "CLARIFIED at final.md:102",
+      "source_basis": "Original coverage/workload distinction; not an added universal cost obligation."
+    },
+    {
+      "id": "D3",
+      "stage": "investigator draft",
+      "classification": "AMBIGUOUS_MEMBERSHIP; CONTEXT_ALREADY_SUPPORTED_OVERLAP",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:80",
+      "finding": "Independent alternate-route audit wording could be misread as route-unique only, although the next sentence counts baseline overlap.",
+      "final_status": "CLARIFIED at final.md:96",
+      "source_basis": "Direct logical reading against P12/P17; not proof the draft intended an erroneous denominator."
+    },
+    {
+      "id": "D4",
+      "stage": "investigator draft",
+      "classification": "UNTESTED_TYPE_SPECIFIC_INFERENCE",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:50",
+      "finding": "Citation-weighted ranking may favor general reviews was a plausible but untested type-specific inference, not documented behavior.",
+      "final_status": "REMOVED/QUALIFIED at final.md:67",
+      "source_basis": "E005 establishes score components and cap, not review-type effect or its absence."
+    },
+    {
+      "id": "D5",
+      "stage": "investigator draft",
+      "classification": "HISTORY_OPPORTUNITY_UNDERDEVELOPED",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:94",
+      "finding": "A single INSPQ strategy snapshot and ASReview release history did not compare collection method evolution.",
+      "final_status": "EXTENDED with actual predecessor at final.md:110-112",
+      "source_basis": "P16; E004/E019. The exact pair was an opportunity, not a predetermined mandatory method."
+    },
+    {
+      "id": "D6",
+      "stage": "investigator/critic",
+      "classification": "MINOR_SCOPE_WORDING_AND_LOCATOR",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md:50; 94",
+      "finding": "Crossref source range included OpenAlex; fixed stop boundary phrasing needed to preserve the actual subjective relevance cue.",
+      "final_status": "CORRECTED at final.md:123; 125",
+      "source_basis": "E006/E007 and E004. No all-grey coverage or no-stopping-rule claim survives."
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "NONMATERIAL_SOURCE_DETAIL",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:67",
+      "finding": "Optional OpenAlex route conditions are incompletely enumerated. Official semantic search is title/abstract-embedding based and capped at 50/query; works queries default to core and opt into expansion with corpus. Wildcards require search.exact, and downloadable content has key/meter conditions.",
+      "evidence_ids": [
+        "E005",
+        "E011",
+        "E012",
+        "E022",
+        "E023",
+        "E024"
+      ],
+      "why_not_material": "Final labels semantic exploratory, declares source/rank/cap/request capture and common scope, forbids exhaustive top-N claims, and supplies a separate municipal/manual route. It does not claim full OpenAlex coverage, actual yield, superiority, or an executable wildcard recipe. These details refine later source choice; they do not contradict its current proposal."
+    },
+    {
+      "id": "L2",
+      "kind": "NONMATERIAL_EDITION_PROVENANCE",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:110",
+      "finding": "The final leaves the basic 2009/2012 English/French relationship more uncertain than necessary. The English PDF acknowledges translation, supplies both ISBNs and a Q3 2012 legal deposit. The 2021-labelled English update also has a 2023 legal deposit. Catalogue dates therefore need not conflict with underlying report dates.",
+      "evidence_ids": [
+        "E004",
+        "E019",
+        "E020",
+        "E021"
+      ],
+      "why_not_material": "The actual historical search periods, sources and criteria are correctly reported and no coverage trend is inferred. Exact correction incorporation and detailed edition chronology can still honestly remain unknown. This is source-version detail, not a consequential method error."
+    },
+    {
+      "id": "L3",
+      "kind": "EXECUTION_EVIDENCE_LIMIT",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/search-log.md",
+      "finding": "All authored source notes/logs are present, but no raw candidate source-open or tool-trace archive is supplied. Source documents independently corroborate claims, not historical execution/order. Some exact query times are explicitly unknown; a log interval before 05:55 does not cover later source observations at 05:56-05:57.",
+      "evidence_ids": [],
+      "why_not_material": "The proposal neither presents empirical topic execution nor depends on a claimed pilot result. Historical access/order and protocol compliance remain qualified separately rather than converted into scientific truth."
+    },
+    {
+      "id": "L4",
+      "kind": "MINOR_WORDING",
+      "locator": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md:9",
+      "finding": "The reproduced-verbatim label is not byte-literal: heading levels and Markdown spacing differ. All original obligation/negative-constraint words and meaning are retained.",
+      "evidence_ids": [],
+      "why_not_material": "Original frozen files are unchanged and authoritative; formatting does not alter the proposed study or an exact clause disposition."
+    }
+  ],
+  "unknowns": [
+    "Candidate native receipt provenance and exact pre-input activation/read order are not independently attested.",
+    "Effective service tier/reasoning options, token billing, invoice cost, provider inference time and savings are UNKNOWN. Returned provider/model identifiers do not prove all requested options took effect.",
+    "Complete candidate tool activity, unauthorized hidden assistance, historical public-only access and SCW selection-before-fetch order are UNKNOWN without the execution trace; no violation is invented.",
+    "Campaign release state, other arms and paired source comparability were not read or scored.",
+    "Actual eligible interventions/designs/outcomes, jurisdictions, languages, dates, source permissions, report/version rules, screening capacity and remembered reports remain legitimate owner decisions.",
+    "Actual local-study discovery yield, workload, screening error, identity-link accuracy and unseen-study coverage are unmeasured.",
+    "Exact fulltext search-index boundary and exact English incorporation of French report corrections remain unresolved; neither is substituted with unsupported equality.",
+    "No empirical topic search or pilot executed by this reviewer; independent work was primary-document retrieval and semantic/method assessment."
+  ],
+  "useful_discoveries": [
+    {
+      "finding": "Bilingual scientific/grey collection strategy and historical predecessor are real implemented comparators with separate method conditions, not a benchmark corpus.",
+      "source_ids": [
+        "E004",
+        "E019"
+      ]
+    },
+    {
+      "finding": "Deposited/type-coded Crossref report metadata and query-ranked OpenAlex offer complementary bounded routes; direct portals and curated hand-search target different missingness.",
+      "source_ids": [
+        "E003",
+        "E005",
+        "E006",
+        "E007"
+      ]
+    },
+    {
+      "finding": "Zotero candidate detection operates within one library and does not certify underlying studies; preserve records/versions and manually adjudicate.",
+      "source_ids": [
+        "E002",
+        "E008"
+      ]
+    },
+    {
+      "finding": "ASReview has a user-chosen unset stopping threshold and concrete state-retention release fixes; optional screening and export/reopen checks remain separate from retrieval.",
+      "source_ids": [
+        "E009",
+        "E014",
+        "E015",
+        "E016",
+        "E017"
+      ]
+    },
+    {
+      "finding": "Reviewer found additional prospective source conditions: semantic result cap and core/expansion default; these are independent evidence notes, not candidate feedback or repairs.",
+      "source_ids": [
+        "E022",
+        "E023"
+      ]
+    }
+  ],
+  "competing_and_analogous_approaches": [
+    "controlled/free-text vocabulary and alternative public indexes",
+    "backward/forward citation following",
+    "finite direct municipal/repository search",
+    "internal specialist/expert curated seed and hand-search",
+    "conventional screening versus optional active-learning prioritization",
+    "scope narrowing before expansion"
+  ],
+  "native_and_runtime": {
+    "pipeline_stages": [
+      {
+        "stage": "investigator",
+        "evidence_basis": "Stored exact response files and dispatch receipt, not an independently attested provider/tool transcript",
+        "native_activation_response": {
+          "goal": {
+            "threadId": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+            "objective": "ER12 investigator stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791611359,
+            "updatedAt": 1791611359
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "native_completion_response": {
+          "goal": {
+            "threadId": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+            "objective": "ER12 investigator stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 189696,
+            "timeUsedSeconds": 715,
+            "createdAt": 1791611359,
+            "updatedAt": 1791612074
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread": true,
+        "independent_native_provenance": "UNKNOWN; guard explicitly false",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "T3_returned_provider_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "native_timestamp_semantics": "UNKNOWN; numeric values preserved without conversion",
+        "requested_at_utc": "2026-10-10T05:48:49.146Z",
+        "dispatch_captured_at_utc": "2026-10-10T05:48:50.832Z",
+        "deadline_utc": "2026-10-10T06:18:49.146Z"
+      },
+      {
+        "stage": "critic",
+        "evidence_basis": "Stored exact response files and dispatch receipt, not an independently attested provider/tool transcript",
+        "native_activation_response": {
+          "goal": {
+            "threadId": "01a12467-2171-7702-b034-90507a6ad30d",
+            "objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791612121,
+            "updatedAt": 1791612121
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "native_completion_response": {
+          "goal": {
+            "threadId": "01a12467-2171-7702-b034-90507a6ad30d",
+            "objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 288910,
+            "timeUsedSeconds": 1426,
+            "createdAt": 1791612121,
+            "updatedAt": 1791613547
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread": true,
+        "independent_native_provenance": "UNKNOWN; guard explicitly false",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "T3_returned_provider_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "native_timestamp_semantics": "UNKNOWN; numeric values preserved without conversion",
+        "requested_at_utc": "2026-10-10T06:01:39.867Z",
+        "dispatch_captured_at_utc": "2026-10-10T06:01:41.122Z",
+        "deadline_utc": "2026-10-10T06:30:49.146Z"
+      },
+      {
+        "stage": "reviser",
+        "evidence_basis": "Stored exact response files and dispatch receipt, not an independently attested provider/tool transcript",
+        "native_activation_response": {
+          "goal": {
+            "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+            "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791613640,
+            "updatedAt": 1791613640
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "native_completion_response": {
+          "goal": {
+            "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+            "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 254584,
+            "timeUsedSeconds": 643,
+            "createdAt": 1791613640,
+            "updatedAt": 1791614284
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "objective_matches_freeze": true,
+        "same_thread": true,
+        "independent_native_provenance": "UNKNOWN; guard explicitly false",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "T3_returned_provider_model": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        },
+        "effective_reasoning_effort": "UNKNOWN",
+        "effective_service_tier": "UNKNOWN",
+        "billing": "UNKNOWN",
+        "native_timestamp_semantics": "UNKNOWN; numeric values preserved without conversion",
+        "requested_at_utc": "2026-10-10T06:27:08.212Z",
+        "dispatch_captured_at_utc": "2026-10-10T06:27:09.678Z",
+        "deadline_utc": "2026-10-10T06:48:48.875Z"
+      }
+    ],
+    "T3_final_evidence": "terminal-science-freeze-root.json reports completed/result_available/no pending child run for the reviser; this remains root-captured task evidence, distinct from native provenance",
+    "method_protocol_status": "NO_DOCUMENTED_VIOLATION_IDENTIFIED; full trace-dependent compliance UNKNOWN",
+    "time_status": "Root freeze at 2026-10-10T06:38:28.137382+00:00 precedes final whole deadline 2026-10-10T06:48:48.875Z. All listed science mtimes precede that freeze. These are artifact/task observations, not provider inference or billing time.",
+    "billing_or_speed_comparison": "UNKNOWN; no other arm was inspected and no savings/comparative speed claim is made"
+  },
+  "review_protocol": {
+    "native_goal_thread_id": "01a12488-d337-71b3-9bfe-e00611c41b7a",
+    "native_goal_created_once": true,
+    "review_start_utc": "2026-10-10T06:38:45Z",
+    "review_deadline_utc": "2026-10-10T07:23:45Z",
+    "saved_at_utc": "2026-10-10T06:52:57.394693+00:00",
+    "goal_status_at_save": "ACTIVE; complete only after all artifacts are saved",
+    "no_delegation": true,
+    "candidate_feedback_or_repair": false,
+    "account_changes": false,
+    "git_or_publication": false,
+    "other_arms_results_history_or_roster_read": false,
+    "scope_directory": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1",
+    "scope_completed_utc": "2026-10-10T06:52:57.394693+00:00",
+    "post_save_terminal_observation": {
+      "goal": {
+        "threadId": "01a12488-d337-71b3-9bfe-e00611c41b7a",
+        "objective": "Independently assess exactly one completed ER12 full pipeline: C-R2-02 treatment. Read the full rubric, original frozen brief and plan, terminal-science-freeze-root, all authored stages and source maps, assignments/input maps/freezes, critique dispositions/checks and authored source evidence. Follow actual maps, identify missing records without guessing. Assess all six rubric axes and every exact plan clause; independently retrieve governing primary evidence for consequential claims, recommendations and corrections. Distinguish corrected lineage defects from remaining final issues. No delegation, candidate feedback/repair, account changes, Git/publication, other arms/results/history, shared roster/status labels, or ER11 rescore. Preserve original freeze. Within a finite 45-minute envelope including saving, write complete assessment.md, assessment.json and independent navigable source-map/evidence exclusively under ER12_RUNTIME/assessment/C-R2-02/treatment-v1. Record inspected hashes, source-backed material findings, limits/unknowns and any unassessed axes if capped. Save the full judgment before completing this native Goal; report result and paths.",
+        "status": "complete",
+        "tokensUsed": 227443,
+        "timeUsedSeconds": 886,
+        "createdAt": 1791614325,
+        "updatedAt": 1791615212
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "judgment_saved_before_native_completion": true,
+    "terminal_metadata_appended_utc": "2026-10-10T06:53:57.323084+00:00"
+  },
+  "original_artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/inputs/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md",
+      "bytes": 8932,
+      "sha256": "ac6fe6855e595fab11b253c16d15b390dc249edf77bfc78f60852e46b6376156",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md",
+      "bytes": 22806,
+      "sha256": "6e0928ce6ae1caa0fa80d2facd24298702df0421c43cf1afab3d9e0816a95908",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/dispatch.json",
+      "bytes": 6608,
+      "sha256": "e28cc91e7df3a4e820db0500a5282cf5a869e34ca4ad51a198e3f9cc57bf213a",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "761d05f910f6426414c200747388e76cd02fedf70409c4e34824b5365ca6fb65",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "8c5a009ed797a3c10f391c1b753bdb806ec934878cd8db85766fdb0a9259d3b3",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/goal-binding-guard.json",
+      "bytes": 52,
+      "sha256": "18045c8d0b63332cef1c4258e599be3a0120d40bf3eeae74a5445c28c42c8b1a",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "2d3201962c7e5eb0d26228837371ea632f249e4147dee5b83b6c7af27e03b000",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "9a9f2eb5d79dfcb370adf07e814f83a08aa65f8fc76aeacb0dff8b2317c4e325",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 471,
+      "sha256": "2e2332cd7096916839b413807ae170947e0ed073bdab466699c81ff95ea8cb3d",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "3c78e1fcddb383f1abe150d567829e2548be1badb4b9cfc0a42cb1dd7a048193",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-preterminal.json",
+      "bytes": 479,
+      "sha256": "355dacc3d2c49511d1708b1e65207ac723dbbf13e41dac909387d567f7d628c4",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/request.json",
+      "bytes": 3170,
+      "sha256": "c319509d71db0a717dc02a06eacad1376b589dab5afc494d9c7a7d0c2dc8976c",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "a0a09f9680b80aaf692cc289565a0614142cf94e0886571c52aa6a8880637f23",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/source-map.json",
+      "bytes": 20219,
+      "sha256": "3120518a6443e82d22323186bd932c4fc654c47f9b5e625dace1855380e19459",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/status.json",
+      "bytes": 4997,
+      "sha256": "caa165a47de7b6b6ef43070a49b95783d6e265455fe6d071331b2d15cd018783",
+      "inspection": "BYTES_HASHED_ONLY; outcome label not used for scientific assessment"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "1fba09a96879e5b0702bccb6ff0e248f74c8c815b8cac4a9ca17e4f2be0f8c2e",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/discovery.md",
+      "bytes": 18956,
+      "sha256": "462d79eec60b698f2ee8f8924fb263102da696b69873b3bc7ecbae2aa338caf1",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 6734,
+      "sha256": "28d02bc14934bdac8ef3bf3cc0a727e7aebbb51b825eb949b027b062dfde324d",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md",
+      "bytes": 30848,
+      "sha256": "9fd6fcc7221ee9fa3f65b42fd90c393f55d1d391b00dfb4e111bbe4d7c8659fc",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "966a97ed8ee8c8820501b3455ca538b55fad4b658f03db72a7fe9163943531ae",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "baeda85194a2d03fc334a2dadc2d17d14649418a9f30ca368ba5b0ff8f3bfe07",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "2d4b6a257311909f9ff22b29b434bbefd65ea5f5259d371726b579576016832d",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "8b8fe0dfeb016e9d3c6b5db117bd3a0f266896b686f33d3c1de61db200805f5f",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_activation.json",
+      "bytes": 483,
+      "sha256": "f58e7449e46efe3ab1d9bd65975326f9929294f928ef255001f61e16caae8af7",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_binding_guard.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_completion.json",
+      "bytes": 812,
+      "sha256": "ab4b72f1bd48419d7670b1ae16e52a29692e69df44cb96fcd495f9d1572b47aa",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "985435147417b6b395168fce018726aaf5e48f28d498babdc39f32d8ed1b17bb",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/request.json",
+      "bytes": 3224,
+      "sha256": "491cf8e9bf87b3d87fd4ab17d2da1a1397dc9170d97ba93856786e150b94be2d",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "0668f0799088215148f8489f5e48e709c84b2c3536de8fa4816b4bd41f9bc5d5",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/source-map.json",
+      "bytes": 12907,
+      "sha256": "c950639df85956ae2482912ae95dbf19d57f304c6e661a4811d8674afaec5c41",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 2220,
+      "sha256": "a6faad122e0cc80af14d9c5da64bc5e7bc4a70262d2594527a2a057b5705e896",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/search-log.md",
+      "bytes": 2505,
+      "sha256": "7869133f05e0f151c54563e0358e46978dcae9ad310f525c70738651e086f14a",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/status.json",
+      "bytes": 6101,
+      "sha256": "1ea880c16a650504958f4803309cf507cb670facdea7a606029aec940266a65f",
+      "inspection": "BYTES_HASHED_ONLY; outcome label not used for scientific assessment"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md",
+      "bytes": 7234,
+      "sha256": "175e8faec118252001fe580fe47126b4d475b2475f70d20e54f774d36ac25af0",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 6629,
+      "sha256": "fb16882b10790c42f29c4d4d842cc52397b07a285551972fb5cb2d426de0977b",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "6bb09ed97c9d65ff2dfc51423ba47fcd62f9ac789e28e1da62d30ab357e02131",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md",
+      "bytes": 38691,
+      "sha256": "f1a2f8b3d89f100790bc66d5bef4b36877ea9891a03c6c8134694c0f61294ef0",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/freeze.json",
+      "bytes": 6825,
+      "sha256": "660bc17e13146d1cac86caf7e631b00b445f4043697d94fefeabcce14a5b5a57",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "850163203d304ba07c4b2850459c0eb688aa99679677e6a0be6ea2decbdbf968",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "21983f74962b57aad469474489434d3bc58e0e41d7fd31479a332f4157d391f6",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 532,
+      "sha256": "383bfb5f174df7dd95892d9f43a168bd34c70ec30b1d5267b6ae1ae25d85a24c",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-binding-guard.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "00d09469cd4d6e5dc9196cea2295ac88c0eaf733991fef1a69486572e907d21b",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-preterminal.json",
+      "bytes": 480,
+      "sha256": "26000b2649819fee3e7d430cfa38e58d86703e59f11ce2d1dcca1b5a4c32f532",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/request.json",
+      "bytes": 3179,
+      "sha256": "4884fe053ce09ada47fc10ed2e73c22ca0404c9c44504f9597f53361271c1fd9",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "81af7b99f147e0c0a8162d984700cf2038d756c7bdecef222aabab50933c9273",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/source-map.json",
+      "bytes": 52870,
+      "sha256": "2162ef2b5cb77cf8b1cdec171fa9d399f23e69caf6cb87b0924d18f3c3aab835",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 4411,
+      "sha256": "64c1db65ea92c863407cde9d9c2f52f4d07abc0f0aa7837b8e62a49b3e9064c1",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7730,
+      "sha256": "80e70668eab482148201a14b9bb33b5e8eb22c3726674d2939eb7ed99bde4493",
+      "inspection": "FULL_BYTES_READ; authored science/maps/assignments read semantically; repeated administrative JSON decoded programmatically"
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "E001",
+      "requested_url": "https://doi.org/10.1186/s13643-020-01542-z",
+      "retrieval_started_utc": "2026-10-10T06:41:41.135605+00:00",
+      "status": 200,
+      "resolved_url": "https://link.springer.com/article/10.1186/s13643-020-01542-z?error=cookies_not_supported&code=d46f6773-3469-442e-938e-a6507ee68fd1",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "etag": "W/\"bba2eedb43332561e471c02d1c612ece\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E001.html",
+      "bytes": 718205,
+      "sha256": "bbfa3e306d8427d7e2c8d90cb87c033d4fbc9b323754db02e0e66f391aabacfb",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.643174+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E001.txt",
+      "text_sha256": "a7a5cdad8d13b0b3e9d8404cae43a3b402ea4a89eb9db00d9b2c3900b8c8d285",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "PRISMA-S, Systematic Reviews 10:39, published 2021-01-26, DOI 10.1186/s13643-020-01542-z",
+      "locator": "Introduction; Items 1, 4, 5, 8, 11, 13-16; local text lines 122-166, 196-210, 242-305",
+      "independent_semantic_observation": "Reporting guidance spans evidence-synthesis searches; database/platform, web extent, citation bases/direction, exact strategies, dates, prior strategies and deduplication disclosure support replay. It is reporting guidance, not a retrieval algorithm or oracle.",
+      "primary": true
+    },
+    {
+      "id": "E002",
+      "requested_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "retrieval_started_utc": "2026-10-10T06:41:41.136956+00:00",
+      "status": 200,
+      "resolved_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Sat, 10 Oct 2026 03:37:47 GMT",
+        "ETag": "W/\"1791603467-gzip\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E002.html",
+      "bytes": 372750,
+      "sha256": "ec451a2b9d443b96459529247d93bb5b413ff468ae817c5b3c3d6d7604b4403e",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.719581+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E002.txt",
+      "text_sha256": "a2f0b6323c03cd929db8f5978e527a0b88f8ad5f389dc9fa356c3a758d1263ab",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Cochrane Handbook v6.5.1; Chapter 4 updated March 2025",
+      "locator": "Sections 4.4.11 and 4.6.1-4.6.4; local text lines 476-483, 498-532",
+      "independent_semantic_observation": "Known-item and citation checks test adequacy, not an unknown universe. Search-development stopping methods have limited evaluation, especially in scarce evidence. Distinguish reports from studies and preserve secondary reports. Cochrane conduct requirements are not automatically extra requirements of this pilot; no author contact is imported.",
+      "primary": true
+    },
+    {
+      "id": "E003",
+      "requested_url": "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+      "retrieval_started_utc": "2026-10-10T06:41:41.138208+00:00",
+      "status": 200,
+      "resolved_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/chapter04-tech-supplonlinepdfv65270924",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "Last-Modified": "Wed, 09 Apr 2025 06:59:52 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E003.pdf",
+      "bytes": 1946872,
+      "sha256": "da93cb6506e0253016be8153140b2d50c0d265a658692d4e6d88a962684c75d6",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E003.txt",
+      "text_sha256": "c057759df6ad11dad367995bd340fd140027d0d4a518d4187171d024b6a9661c",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.593599+00:00",
+      "version_or_commit": "Cochrane Chapter 4 technical supplement v6.5, September 2024; 121-page PDF",
+      "locator": "Grey literature, printed pp.14-15 / zero-based PDF p.13; local text lines 582-620",
+      "independent_semantic_observation": "Grey discovery has no single gold-standard search method. Finite effort, source diversity, tailored government/organizational repositories and a complementary manual route are supported; Google Scholar alone is not a completeness oracle.",
+      "primary": true
+    },
+    {
+      "id": "E004",
+      "requested_url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:41.139366+00:00",
+      "status": 200,
+      "resolved_url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "ETag": "\"6aa9517b-595978\"",
+        "Last-Modified": "Tue, 15 Sep 2026 14:08:59 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E004.pdf",
+      "bytes": 5855608,
+      "sha256": "6c8af6f9d259c3410b024e1f5e4f747c40cada7b214fb40e58397c446d1d2daf",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E004.txt",
+      "text_sha256": "05850d9b2642954a88e9e61bb1449051002a7b1c7383243bf27f27bdea89bdb7",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.240665+00:00",
+      "version_or_commit": "Report labeled November 2021 / 2021 Update; hosted English translated artifact legal deposit Q2 2023, ISBN 978-2-550-94581-9; 176 pages",
+      "locator": "Front matter zero-based PDF pp.0-1; Appendix 1 printed pp.126-128 / zero-based PDF pp.139-141; local text lines 6592-6680",
+      "independent_semantic_observation": "Verify the scholarly and grey streams separately. Database search had no geographical restriction; later selection required Quebec-applicable climate/context. The 4,487 retrieved and 985 removed figures are scholarly records. Grey stopping was qualitative relevance. Descriptive implementation evidence supports the pilot, not a coverage trend.",
+      "primary": true
+    },
+    {
+      "id": "E005",
+      "requested_url": "https://help.openalex.org/api/searching/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.140759+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/api/searching/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E005.html",
+      "bytes": 53520,
+      "sha256": "2b7e13eaf234632428e9d5887411a5be2f6b69011a1dc0dfaba6d9e72999dda1",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.289699+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E005.txt",
+      "text_sha256": "d471183183cc0e32373a0c1d18d3f841fae5c9154c81c4e28c8c10e482bdb8e6",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable official OpenAlex search documentation; displayed update 2026-10-03",
+      "locator": "What gets searched; exact search; wildcards; relevance; semantic; local text lines 21-49, 83-115",
+      "independent_semantic_observation": "Works text/keyword search and capped citation contribution are supported. No source establishes an automatic general-review preference. Fulltext.search combines title/abstract/full text and keywords; it is not synonymous with downloadable fulltext. Wildcards require the exact form. Optional route suitability remains prospective.",
+      "primary": true
+    },
+    {
+      "id": "E006",
+      "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.142482+00:00",
+      "status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "content_type": "text/html",
+      "headers": {
+        "Content-Type": "text/html",
+        "last-modified": "Tue, 06 Oct 2026 18:04:15 GMT",
+        "etag": "\"6a6b95e5d9ebbf59273743c98a390e42\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E006.html",
+      "bytes": 70823,
+      "sha256": "7fa3b2fcca9134b850c9f433516e4bedbf44b304d0cc914ecb615c72962875f8",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.232824+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E006.txt",
+      "text_sha256": "f60a905e817d8ba83d9902f3ca6143e9484f0e78a1d339688463391fa36472f0",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable Crossref REST documentation; displayed update 2020-04-08",
+      "locator": "REST overview and endpoint table; local text lines 302-326",
+      "independent_semantic_observation": "Public REST metadata derives from registered member/trusted records; /works lists Crossref-registered items and needs no signup. Unrepresented municipal reports are outside its scope. Copyright can apply to deposited abstracts.",
+      "primary": true
+    },
+    {
+      "id": "E007",
+      "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.232908+00:00",
+      "status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "content_type": "text/html",
+      "headers": {
+        "Content-Type": "text/html",
+        "last-modified": "Tue, 06 Oct 2026 18:04:15 GMT",
+        "etag": "\"98164d3145c741d3985f5d424bfa331e\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E007.html",
+      "bytes": 80507,
+      "sha256": "cc8b853e69296d9868affc0894ab3cb1787c138399d5373ce82639181fd59326",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.329859+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E007.txt",
+      "text_sha256": "8208387e5a0a73cdb8bc24290ada623f55c96174fd270beccb5644e779981eab",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable Crossref filter reference; displayed update 2025-10-16",
+      "locator": "Approved-date filters and exact-value/type filters; local text lines 353-354, 399-425",
+      "independent_semantic_observation": "Type filtering selects existing metadata carrying the requested /types value. Approved-date filters apply to dissertation, standard and report. These are not document-discovery guarantees for absent or miscoded reports.",
+      "primary": true
+    },
+    {
+      "id": "E008",
+      "requested_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "retrieval_started_utc": "2026-10-10T06:41:41.289807+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"121061601337f66eada66db67ba4c622\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E008.html",
+      "bytes": 244442,
+      "sha256": "9c02371cfab294a3831915375a08c7905546378989332aac7a36f3bff04cc1de",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.647593+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E008.txt",
+      "text_sha256": "ba2b1267e869f62c1888409c2368d39ccf7453a3d287b0b0f00cc62aafbddded",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Official Zotero documentation, mutable main branch; no historical source commit independently established",
+      "locator": "Finding Duplicates and Merging Duplicates; local text lines 143-157",
+      "independent_semantic_observation": "Title/DOI/ISBN checks and conditional year/creator comparisons generate candidates within one library. Separate group libraries do not cross-match. False positives cannot currently be marked non-duplicates. Merging retains tags/collections, but this does not establish underlying-study identity.",
+      "primary": true
+    },
+    {
+      "id": "E009",
+      "requested_url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+      "retrieval_started_utc": "2026-10-10T06:41:41.329933+00:00",
+      "status": 200,
+      "resolved_url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"a71c9d489604559df7d1f487c1b172c8\"",
+        "Last-Modified": "Thu, 18 Jun 2026 21:14:02 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E009.html",
+      "bytes": 32647,
+      "sha256": "699edcf55c266e1fc3eec74fdeb2c7d94e0bc606337b69a5d2390ab4449837f7",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.426272+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E009.txt",
+      "text_sha256": "39c4d4a92aa92799c6336188b77bc762387130d7815b24fe3affedc7f2782436",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "ASReview LAB stable docs labeled 3.0.8",
+      "locator": "Stop screening, Export dataset, label table and export order; local text lines 78-94, 108-154",
+      "independent_semantic_observation": "At version 3.0.8 the consecutive-irrelevance threshold is unset by default and prompts a human when reached. Ideal threshold is unresolved. Export preserves labels and unseen records; RIS export requires RIS input. This is post-retrieval prioritization, not discovery or proof of recall.",
+      "primary": true
+    },
+    {
+      "id": "E010",
+      "requested_url": "https://github.com/asreview/asreview/releases",
+      "retrieval_started_utc": "2026-10-10T06:41:41.426352+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"f753d0bd7299b5b97109cc1475e6379c\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E010.html",
+      "bytes": 462433,
+      "sha256": "ac7c8ac0e67730373ff824b2b88ad1d0e1b16c6239cc492bced820f55a673292",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.154589+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E010.txt",
+      "text_sha256": "625065a6af18948800709c0bce47e084c30945be0cdeaf7a1aa64daa0b42bf66",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable aggregate ASReview release page; individual versions independently checked as E014-E017",
+      "locator": "Specific v3.0.5-v3.0.8 entries; independently checked direct tag pages",
+      "independent_semantic_observation": "Release history is maintainer evidence for specific changes, not evidence that the pilot was executed or state faults cannot remain.",
+      "primary": true
+    },
+    {
+      "id": "E011",
+      "requested_url": "https://help.openalex.org/data/works/attributes/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.647673+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/data/works/attributes/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E011.html",
+      "bytes": 50831,
+      "sha256": "cb793208f095403e9502a55bd4be4c75a72f43d07ec3503814c376d17041fba3",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.738676+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E011.txt",
+      "text_sha256": "66df994e0ad9f011a2a4fb5dc444d64f0ea76306fc93be10142075747367f465",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable OpenAlex works dictionary; displayed update 2026-10-07",
+      "locator": "has_content, has_fulltext, content_urls and is_xpac; web lines 198-216",
+      "independent_semantic_observation": "has_content is a per-format Boolean object; has_fulltext is a derived Boolean for downloadable content. These do not define search-index coverage. Default works queries exclude expansion records. Query-source boundaries matter.",
+      "primary": true
+    },
+    {
+      "id": "E012",
+      "requested_url": "https://help.openalex.org/access/fulltext/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.719662+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/access/fulltext/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E012.html",
+      "bytes": 47875,
+      "sha256": "62e9e3fe5bac6218c0b7151fbaf3d0058695a126e84f3b9efe376cf1e47881f4",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.830108+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E012.txt",
+      "text_sha256": "299ef805a3c4fa73b2e448c4bcb19274a91f307bfbb8ecbc9591602338ad388d",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable OpenAlex Fulltext documentation; displayed update 2026-09-18",
+      "locator": "Overview; downloadable-works filters; Licensing; local text lines 21-44 and 123-127",
+      "independent_semantic_observation": "Cached PDFs/XML are a subset; content downloads need a key and are metered. Source copyright remains. These conditions apply to downloads, not by themselves to text-search indexing.",
+      "primary": true
+    },
+    {
+      "id": "E013",
+      "requested_url": "https://help.openalex.org/data/works/open-access/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.738742+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/data/works/open-access/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E013.html",
+      "bytes": 41521,
+      "sha256": "be2f4b8e0c40dc97978cdcacc1f558e07fd09abafcaeb6f9e1bcca9b1aabea37",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.823342+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E013.txt",
+      "text_sha256": "1e99b950c423e268732d9b3b0804f2ee9c6257329e01df811fe9ad2b9add694c",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "Mutable OpenAlex OA dictionary; displayed update 2026-08-11",
+      "locator": "OA definition and taxonomy; local text lines 27-43",
+      "independent_semantic_observation": "Free-to-read full text defines OA here. Approximate corpus/OA counts are contextual and are not a fulltext search-index denominator.",
+      "primary": true
+    },
+    {
+      "id": "E014",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.8",
+      "retrieval_started_utc": "2026-10-10T06:41:41.823438+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.8",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"b9a09ce3bdff287499c2e7a7fa07a09a\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E014.html",
+      "bytes": 200823,
+      "sha256": "d09e5c84ef55451651671f4b5f87645dd0d7dc9af0e3b33b33e18187123ee43e",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.259656+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E014.txt",
+      "text_sha256": "2e3923a8bcc15108cf4624f37885a897fd8223c6792283153dce6a3099c9cc48",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "ASReview v3.0.8, d3e863c",
+      "locator": "Release v3.0.8, What Changed; web lines 157-170",
+      "independent_semantic_observation": "Saved last_ranking record_id serialization correction (numpy becoming SQLite BLOB) is the exact maintainer-described fix; no broader guarantee follows.",
+      "primary": true
+    },
+    {
+      "id": "E015",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.5",
+      "retrieval_started_utc": "2026-10-10T06:41:41.830206+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.5",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"98f8cf937de41657f968d0f0a5eba5e8\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E015.html",
+      "bytes": 202073,
+      "sha256": "d6d194e5621a745c6c62412ae7d38d7e9e726b6f19ef6e4651fd6640d94fbdd3",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.196532+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E015.txt",
+      "text_sha256": "171cf78450755de35cf8471ec1ca836da257c308e85395bc40fa658e6b1fb4ad",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "ASReview v3.0.5, 516290b",
+      "locator": "Release v3.0.5, What Changed; web lines 155-173",
+      "independent_semantic_observation": "Maintainer notes describe decision-change migration, retry-safe project import and a Windows filename-export fix. These are screening-state implementation changes.",
+      "primary": true
+    },
+    {
+      "id": "E016",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.6",
+      "retrieval_started_utc": "2026-10-10T06:41:42.154668+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.6",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"2b3141e6393aaa1dac197b31ba9ad2fc\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E016.html",
+      "bytes": 200302,
+      "sha256": "5d0e2aea4c65ebdda86237e81dcc5d9217596140839dc3fdd7f6b3b044be4134",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.549315+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E016.txt",
+      "text_sha256": "09a5ce2db8722856fc2bd31dfd1d7c8caa563ea8c4ea547e97dd7b75150e8ec5",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "ASReview v3.0.6, f1d388e",
+      "locator": "Release v3.0.6, What Changed; web lines 155-170",
+      "independent_semantic_observation": "Maintainer describes avoidance of database-locked OperationalError.",
+      "primary": true
+    },
+    {
+      "id": "E017",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.7",
+      "retrieval_started_utc": "2026-10-10T06:41:42.196622+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.7",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"4c46db9ee8d98d5e46657cd14d329733\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E017.html",
+      "bytes": 200921,
+      "sha256": "942c7bd16cb563b8ebaa7748e36c5869b3fec3266bc07b56b81236119ecd2ccc",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.569904+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E017.txt",
+      "text_sha256": "28317e261bc4ef0802b23d2bf7c8bbaed7d0cc6f9bb38482fc5af1b56178e76f",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")",
+      "version_or_commit": "ASReview v3.0.7, 05b68eb",
+      "locator": "Release v3.0.7, What Changed; web lines 155-172",
+      "independent_semantic_observation": "Maintainer describes dropped ranking-table behavior when add_last_ranking faces lock; this is not coverage evidence.",
+      "primary": true
+    },
+    {
+      "id": "E018",
+      "requested_url": "https://www.inspq.qc.ca/pdf/publications/1513_UrbanHeatIslandMitigationStrategies.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:42.242307+00:00",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.334090+00:00",
+      "version_or_commit": "No file; independent HTTP 404 at obsolete predecessor URL",
+      "locator": "Exact attempted URL; retrieval-index.json",
+      "independent_semantic_observation": "404 is a property of this access attempt. It proves neither predecessor absence nor lack of method history.",
+      "primary": true
+    },
+    {
+      "id": "E019",
+      "requested_url": "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:42.259743+00:00",
+      "status": 200,
+      "resolved_url": "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "ETag": "\"6aa9515e-174bd0\"",
+        "Last-Modified": "Tue, 15 Sep 2026 14:08:30 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E019.pdf",
+      "bytes": 1526736,
+      "sha256": "9e3c5712b0086243da2705b4abe2066569dc673ff5eb02f49092ccbed11f5263",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E019.txt",
+      "text_sha256": "56a09a7437fbeff2b6aadb5373eaffc386545c625efe6c0983c703cd9f975c1f",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.620521+00:00",
+      "version_or_commit": "Report cover July 2009; English translated artifact legal deposit Q3 2012, French ISBN 978-2-550-56805-6 and English ISBN 978-2-550-65608-1; 93 pages",
+      "locator": "Front matter and acknowledgments; methodology printed p.3 / zero-based PDF p.18; Appendix 1 printed p.75 / zero-based PDF p.90; local text lines 14, 47-53, 94, 429-470, 3906-3970",
+      "independent_semantic_observation": "The predecessor describes Oct 2008-Jan 2009 searches, named sources and bibliography/government supplementation, bilingual terms, Quebec applicability and essentially 2000-2009 inclusion with pre-2000 exclusions. Front matter establishes English translation and 2012 legal deposit; exact incorporation of French corrections is not proven.",
+      "primary": true
+    },
+    {
+      "id": "E020",
+      "requested_url": "https://www.inspq.qc.ca/en/publications/1513",
+      "retrieval_started_utc": "2026-10-10T06:41:42.334245+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.394541+00:00",
+      "version_or_commit": "Official English catalogue, publication date 2012-08-14, ISBN 978-2-550-65608-1; web retrieval succeeded after plain HTTP 403",
+      "locator": "Official catalogue ISBN/publication fields; web lines 46-56",
+      "independent_semantic_observation": "The English catalogue date and ISBN agree with the English artifact 2012 deposit; the older cover reflects the underlying report date. Evidence persisted in web-catalogue-response.json.",
+      "primary": true,
+      "alternate_retrieval": {
+        "tool": "web.run",
+        "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/web-catalogue-response.json",
+        "status": "CONTENT_OBSERVED",
+        "access_utc": "UNKNOWN exact tool response time",
+        "review_clock_bounds_utc": {
+          "after": "2026-10-10T06:43:28Z",
+          "before": "2026-10-10T06:45:09Z"
+        },
+        "sha256": "1da18424b11ad456cd774e4ec63f5ea7033c94312d2375125c1c6b84f451c4b8",
+        "bytes": 11263
+      }
+    },
+    {
+      "id": "E021",
+      "requested_url": "https://www.inspq.qc.ca/publications/988",
+      "retrieval_started_utc": "2026-10-10T06:41:42.394601+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.450254+00:00",
+      "version_or_commit": "Official French catalogue, publication date 2009-08-28, correction notes 2009-10-26 and 2010-11-09; web retrieval succeeded after plain HTTP 403",
+      "locator": "Official catalogue correction notes and date/ISBN fields; web lines 32-44, 60-70",
+      "independent_semantic_observation": "French catalogue provides original date and subsequent correction notices. Exact English incorporation needs edition comparison; catalogue dates alone are not contradictory.",
+      "primary": true,
+      "alternate_retrieval": {
+        "tool": "web.run",
+        "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/web-catalogue-response.json",
+        "status": "CONTENT_OBSERVED",
+        "access_utc": "UNKNOWN exact tool response time",
+        "review_clock_bounds_utc": {
+          "after": "2026-10-10T06:43:28Z",
+          "before": "2026-10-10T06:45:09Z"
+        },
+        "sha256": "1da18424b11ad456cd774e4ec63f5ea7033c94312d2375125c1c6b84f451c4b8",
+        "bytes": 11263
+      }
+    },
+    {
+      "id": "E022",
+      "requested_url": "https://help.openalex.org/api/semantic-search/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.281547+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.357913+00:00",
+      "version_or_commit": "Mutable official OpenAlex semantic search guide; displayed update 2026-08-11",
+      "locator": "How it works; Limits; web lines 37-60",
+      "independent_semantic_observation": "Semantic search uses title/abstract embeddings and is limited to 50 results/query, 2,000 matching characters and one request/second. It supports most filters but has documented exclusions. The final labels it exploratory and forbids exhaustive top-N inference.",
+      "primary": true
+    },
+    {
+      "id": "E023",
+      "requested_url": "https://help.openalex.org/data/works/corpus/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.357959+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.412965+00:00",
+      "version_or_commit": "Mutable official OpenAlex corpus guide; displayed update 2026-09-18",
+      "locator": "Core, expansion, all; REST API; web lines 43-80",
+      "independent_semantic_observation": "Core is default; all opts into about 190M additional, lower-quality mainly dataset/single-repository records. This is a useful unenumerated pilot-source condition, not evidence that OpenAlex is unusable or a missing-report gold standard.",
+      "primary": true
+    },
+    {
+      "id": "E024",
+      "requested_url": "https://help.openalex.org/api/authentication/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.413011+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.468694+00:00",
+      "version_or_commit": "Mutable official OpenAlex authentication documentation, reviewed 2026-10-10",
+      "locator": "Authentication overview and individual hard limits; web lines 28-53",
+      "independent_semantic_observation": "Casual basic use is keyless; larger-scale usage has budgets and optional free keys. Downloads have their own conditions. No account operation was performed in this review.",
+      "primary": true
+    }
+  ],
+  "original_source_freeze_status": "ALL_11_TERMINAL_SCIENCE_HASHES_MATCH; original/released brief and plan byte equality verified; original paths untouched",
+  "missing_or_incomplete_packet": [
+    "No candidate raw source-capture/tool-trace archive was supplied; source notes/index/log were all read.",
+    "Critic sources directory exists and is empty; source evidence resides in its source-map.json and critique.md.",
+    "No separate criticism-disposition/check artifact is listed; all supplied dispositions and SCW checks are embedded in complete critique.md/final.md."
+  ],
+  "artifacts": {
+    "assessment_md": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/index.md",
+    "original_hashes": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/original-inspected-hashes.json"
+  },
+  "original_source_freeze_verification": {
+    "checked_at_utc": "2026-10-10T06:52:57.394693+00:00",
+    "terminal_science_entries": 11,
+    "all_matched": true,
+    "all_inventory_artifacts_unchanged": true
+  }
+}

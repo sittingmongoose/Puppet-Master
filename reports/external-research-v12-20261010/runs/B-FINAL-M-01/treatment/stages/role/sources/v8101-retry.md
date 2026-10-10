@@ -1,31 +1,20 @@
----
-c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
-SPDX-License-Identifier: curl
-Long: retry
-Arg: <num>
-Added: 7.12.3
-Help: Retry request if transient problems occur
-Category: curl
-Multi: single
-See-also:
-  - retry-max-time
-Example:
-  - --retry 7 $URL
----
-
-# `--retry`
-
-If a transient error is returned when curl tries to perform a transfer, it
-retries this number of times before giving up. Setting the number to 0
-makes curl do no retries (which is the default). Transient error means either:
-a timeout, an FTP 4xx response code or an HTTP 408, 429, 500, 502, 503 or 504
-response code.
-
-When curl is about to retry a transfer, it first waits one second and then for
-all forthcoming retries it doubles the waiting time until it reaches 10
-minutes which then remains delay between the rest of the retries. By using
---retry-delay you disable this exponential backoff algorithm. See also
---retry-max-time to limit the total time allowed for retries.
-
-curl complies with the Retry-After: response header if one was present to know
-when to issue the next retry (added in 7.66.0).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+  "rawSHA256": "d164104079fbac52eefc1147bfb1eb152bfbb1d883e6c0f963df25a4e7a505e2",
+  "original_bytes": 1088,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,0 +1,174 @@
+[
+  {
+    "id": "C-01",
+    "original_classification": "material incomplete",
+    "candidate_final_disposition": "Accept and amend",
+    "reviewer_disposition": "QUALIFY; the missing explicit paired-index comparison was a real undeveloped opportunity, but the exact plan says consider, not require a particular number of indexes. The final’s paired-index design is an admissible and source-supported elective pilot commitment; its attribution as an original mandatory clause is overstated. No winning index or coverage outcome is asserted.",
+    "remaining_material_issue": false,
+    "evidence": [
+      {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+        "line": 59,
+        "section_or_text": "Consider revised controlled"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+        "line": 16,
+        "section_or_text": "C-01 —"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 7,
+        "section_or_text": "The index comparison is a required factor"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 123,
+        "section_or_text": "C-01:"
+      }
+    ],
+    "primary_sources": [
+      "I06",
+      "I08",
+      "I02"
+    ],
+    "limitation": "L01"
+  },
+  {
+    "id": "C-02",
+    "original_classification": "material incomplete",
+    "candidate_final_disposition": "Accept and amend",
+    "reviewer_disposition": "VALID LINEAGE DEFECT, CORRECTED. Draft promises equal time while assigning C two blocks and D shared/unbounded preparation. Final gives D/A/B/C ten disjoint active minutes each and shared 5+15 overhead, including D preparation; C has two five-minute suboperations. Arithmetic and source text support the correction. This does not establish any measured efficiency.",
+    "remaining_material_issue": false,
+    "evidence": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+        "line": 5,
+        "section_or_text": "four routes under equal"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+        "line": 43,
+        "section_or_text": "41–53 min"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+        "line": 26,
+        "section_or_text": "C-02 —"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 57,
+        "section_or_text": "05–15 | Route D"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 60,
+        "section_or_text": "35–45 | Route C"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 63,
+        "section_or_text": "Each route receives ten active minutes"
+      }
+    ],
+    "primary_sources": []
+  },
+  {
+    "id": "C-03",
+    "original_classification": "material wrong",
+    "candidate_final_disposition": "Accept and correct",
+    "reviewer_disposition": "PARTLY VALID TRACEABILITY CRITICISM, OVERSTATED ORIGINAL OBLIGATION. Draft says Accepted for its own paraphrased multiple-index comparison without defining it; the final actually adds the comparison. Neither draft paraphrase nor critic may turn the original consider clause into an execution requirement. Final’s claim of three material alignment problems is therefore overbroad; the useful design itself remains permissible.",
+    "remaining_material_issue": false,
+    "evidence": [
+      {
+        "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+        "line": 59,
+        "section_or_text": "Consider revised controlled"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+        "line": 146,
+        "section_or_text": "multiple public indexes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+        "line": 34,
+        "section_or_text": "C-03 —"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 125,
+        "section_or_text": "C-03:"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 129,
+        "section_or_text": "three material alignment"
+      }
+    ],
+    "primary_sources": [],
+    "limitation": "L01"
+  },
+  {
+    "id": "C-04",
+    "original_classification": "minor locator/wording",
+    "candidate_final_disposition": "Accept and amend",
+    "reviewer_disposition": "VALID AMBIGUITY, CORRECTED IN OPERATIONAL FINAL. Official documentation distinguishes API generic search from website/scoped defaults. Final names modes and keeps them fixed within comparisons; R01 supplies field-specific conditions. Retained upstream S06 text is historical alongside explicit correction, not silently rebound.",
+    "remaining_material_issue": false,
+    "evidence": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+        "line": 42,
+        "section_or_text": "C-04 —"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 32,
+        "section_or_text": "OpenAlex has distinct search parameters"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 126,
+        "section_or_text": "C-04:"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/source-map.json",
+        "line": 180,
+        "section_or_text": "R01"
+      }
+    ],
+    "primary_sources": [
+      "I06"
+    ]
+  },
+  {
+    "id": "C-05",
+    "original_classification": "honestly unresolved external input",
+    "candidate_final_disposition": "Retain uncertainty",
+    "reviewer_disposition": "VALID BOUNDED UNCERTAINTY. Independently verified both source identities and indexed I17 method boundaries. I15 abstract supports U.S./peer-reviewed/WoS scope; its backward-citation/municipal-report particulars remain independently unverified. Full publisher bodies/supplements are inaccessible. No coverage/effect result or definitive winner relies on them.",
+    "remaining_material_issue": false,
+    "evidence": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+        "line": 48,
+        "section_or_text": "C-05 —"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 109,
+        "section_or_text": "Two prior urban-heat review examples"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 127,
+        "section_or_text": "C-05:"
+      }
+    ],
+    "primary_sources": [
+      "I15",
+      "I17"
+    ],
+    "limitation": "L03"
+  }
+]

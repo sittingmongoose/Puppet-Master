@@ -1,0 +1,91 @@
+{
+  "run_id": "D-R2-02-treatment",
+  "stage": "investigator",
+  "case_scope": "Supplied synthetic brief only; no case traces or route records supplied.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Recommended International Code of Practice for Packaging and Transport of Fresh Fruit and Vegetables",
+      "publisher": "Codex Alimentarius Commission / FAO-hosted official PDF",
+      "url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+      "released_version": "CAC/RCP 44-1995, Amendment 1-2004; official combined text, no later edition asserted",
+      "locator": "PDF pp. 152-156, sections 2.1-2.20; especially 2.13-2.19",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Opened and read the official PDF text at pp. 152-156. It advises pre-cooling when needed; checking air circulation and equipment; documenting small air-logger location in a likely warm zone; and gives an illustrative top/side/rear placement.",
+      "governing_condition_default_exception": "Recommendations are conditional on produce, equipment, mode, external conditions, volume, transit time, and commodity compatibility. It explicitly requires airflow under/around/through a load; pre-cooling if needed; mixed loads require compatibility; logger position is a warm-air sampling recommendation, not a product-temperature proxy.",
+      "applicability": "Primary transport/packaging mechanism and implementation-history anchor. Useful for measurement location and handling questions, not a binding local rule, safe limit, or proof of case-specific practice."
+    },
+    {
+      "id": "S2",
+      "title": "The role of post-harvest management in assuring the quality and safety of horticultural produce",
+      "publisher": "FAO-hosted postharvest reference",
+      "url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+      "released_version": "FAO web text; page presents chapter 3; publication/version date not stated on retrieved page",
+      "locator": "Sections 3.1-3.2 and 3.5-3.6, lines 5-8, 99-115, 127-137",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Opened the full text. It says packaging influences airflow, commodity rather than air temperature should be measured, loading/air spaces affect cooling, and mixed commodities can require compromise.",
+      "governing_condition_default_exception": "Advice is general postharvest guidance and commodity-specific; it does not establish this cooperative's product set or operating conditions.",
+      "applicability": "Supports product-versus-air distinction and need to measure initial/product state; not used for any numeric safety or quality threshold."
+    },
+    {
+      "id": "S3",
+      "title": "Section 6: Temperature and relative humidity control",
+      "publisher": "FAO-hosted postharvest manual chapter",
+      "url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+      "released_version": "Web chapter; cited underlying guidance includes Kader 1992; page edition date not stated",
+      "locator": "Sections on cooling and RH, especially lines 16-27 and 40-48",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Opened the full text. It describes conduction/convection/radiation/evaporation, shade and alternative cooling concepts; warns that liners can impede efficient cooling and that vent alignment matters.",
+      "governing_condition_default_exception": "Alternative methods and RH/temperature needs vary by commodity; ice/evaporative cooling are only appropriate for some products. Added package materials can slow cooling.",
+      "applicability": "Mechanism source for passive packaging/preconditioning alternatives and risks; no claim that any method fits unknown produce."
+    },
+    {
+      "id": "S4",
+      "title": "Real-Time Temperature and Humidity Measurements during the Short-Range Distribution of Perishable Food Products as a Tool for Supply-Chain Energy Improvements",
+      "publisher": "Processes (MDPI)",
+      "url": "https://doi.org/10.3390/pr10112286",
+      "released_version": "Processes 2022, 10(11), 2286; version of record published 4 November 2022 per publisher article-versions notes",
+      "locator": "Methods §§2.2-2.3 and sensor/load placement; reported five-stop short-range Portugal route and in-crate sensors; indexed full-text result",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Searched the exact title/DOI and read publisher-indexed result snippets and article-version notes. Opening the full article endpoint returned HTTP 429, so no full article page was read.",
+      "governing_condition_default_exception": "Reported route used a refrigerated van, 18 wireless T/RH sensors near diverse crate contents, five stops and roughly 4.5 hours; a vehicle setpoint and a single route do not isolate causal effects. Sensor readings near produce are not automatically product-core or quality readings.",
+      "applicability": "Comparable implementation history for contextualized route/stop/package measurement. Results do not predict this route or justify an intervention."
+    },
+    {
+      "id": "S5",
+      "title": "Thermal Management of Short-Range Distribution of Perishable Food Products Using Phase Change Materials in Packaging: Real-Time Field Data Acquisition",
+      "publisher": "Energies (MDPI)",
+      "url": "https://doi.org/10.3390/en16135191",
+      "released_version": "Energies 2023, 16(13), 5191; version of record published 5 July 2023; publisher notes list later HTML file updates",
+      "locator": "Methods §§2.1-2.4 and results/discussion; route, crate comparison, and sensor details retrieved from indexed publisher search result; Notes page confirms version history",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Read publisher Notes/version history and indexed publisher article snippets; direct full HTML fetch returned HTTP 429.",
+      "governing_condition_default_exception": "One orange-crate field route in Portugal, winter, 8:00-14:05, six stops, refrigeration switched off, ambient about 1-10°C; comparison was PCM alveoli vs empty alveoli, with small ventilated air sensors. PCM buffering is finite; authors call for future work on autonomy and amount under specific conditions. Index reports phase change not fully finished by journey end.",
+      "applicability": "Relevant passive-package field analogue showing both possible buffering and context/finite-autonomy limits. It does not prove core-temperature, quality, or powered-cooling benefits for this unknown product/route."
+    },
+    {
+      "id": "S6",
+      "title": "Artificial fruit for monitoring the thermal history of horticultural produce in the cold chain",
+      "publisher": "Journal of Food Engineering (Elsevier)",
+      "url": "https://doi.org/10.1016/j.jfoodeng.2017.07.012",
+      "released_version": "Journal of Food Engineering 215 (December 2017), pp. 51-60; DOI record/version of record",
+      "locator": "Abstract and study summary: prototype method and apple cooling comparison; search-indexed publisher result",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Read the publisher-indexed abstract and bibliographic result. Direct article fetch returned HTTP 403.",
+      "governing_condition_default_exception": "Prototype mimicked apple thermal response; compared with ten real apples during cooling, reporting cooling time within 5%; water-filled surrogates differed up to 16%. This is a specific surrogate/product and cooling test.",
+      "applicability": "Supports considering a crop-matched thermal surrogate for repeatable placement; does not validate an off-the-shelf/generic surrogate for unknown produce."
+    },
+    {
+      "id": "S7",
+      "title": "Adoption challenges of environmental monitoring practices: case study of temperature data loggers in selected Australian vegetable supply chains",
+      "publisher": "Applied Water Science / Springer Nature",
+      "url": "https://doi.org/10.1007/s13201-024-02300-5",
+      "released_version": "Applied Water Science 14, article 260 (2024); version of record published 23 November 2024",
+      "locator": "Results §§existing monitoring practices and adoption factors; full publisher article lines 245-277 and 282-304, 340",
+      "access_utc": "2026-10-10T06:58:32Z",
+      "observed_operation": "Opened and read publisher full-text page. Study reports purposively selected qualitative cases and interview-based analysis.",
+      "governing_condition_default_exception": "Three selected Australian vegetable chains; findings include logger cost/retrieval labor, mixed-crop compatibility, low sharing and responsibility/accountability barriers. These are reported contexts, not universal effects or cooperative-specific facts.",
+      "applicability": "Implementation-history comparator for including labor, data retrieval, ownership, and traceability cost in the pilot."
+    }
+  ]
+}

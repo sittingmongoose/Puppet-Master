@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a124af-7fe0-7b73-a5f0-b4c856ce2646",
+    "objective": "Independently assess only ER12 D-R2-01 control completed full pipeline under ER12_RUNTIME, following RUBRIC-v1 and original frozen brief/plan, terminal science freeze and actual stage maps. Inspect full authorized originals and source evidence, all six semantic axes and every exact plan clause; retrieve governing primary evidence for consequential claims, recommendations, corrections and conditions. No delegation, candidate feedback/repair, account changes, Git/publication, other arms/results/history or ER11 rescore. Preserve original freeze. Save complete assessment.md, assessment.json and independently navigable source-map/evidence only in assessment/D-R2-01/control-v1 within a finite 45-minute review envelope, then complete this Goal and report result and paths. Report missing scope or UNKNOWN without guessing.",
+    "status": "complete",
+    "tokensUsed": 249081,
+    "timeUsedSeconds": 1107,
+    "createdAt": 1791616861,
+    "updatedAt": 1791617968
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

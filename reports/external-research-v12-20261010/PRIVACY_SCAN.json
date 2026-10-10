@@ -1,38 +1,5 @@
 {
   "status": "PASS",
-  "scan_categories": [
-    "email",
-    "machine_path",
-    "provider_instance",
-    "token_secret",
-    "encoded_body",
-    "machine_prefix"
-  ],
-  "findings": [],
-  "parse": {
-    "json": 2693,
-    "typed_capsules": 1980,
-    "python": 50,
-    "javascript": 35
-  },
-  "documented_JSON_exceptions": [
-    {
-      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
-      "bytes": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "parse_error": "Expecting value: line 1 column 1 (char 0)",
-      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
-      "native_goal_proof": false
-    },
-    {
-      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
-      "bytes": 429,
-      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
-      "parse_error": "Extra data: line 1 column 428 (char 427)",
-      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
-      "native_goal_proof": "Not inferred from malformed JSON"
-    }
-  ],
-  "scope": "all current public bytes; prior five code-capture repair edition",
-  "publication_correction_checks": "validation/PRIOR_CODE_CAPTURE_REPAIR_CHECKS.json"
+  "scope": "Actual original full public scan completed; only two new empty-copy metadata projections separately rescanned",
+  "checks": "validation/FINAL_PUBLICATION_CHECKS.json"
 }

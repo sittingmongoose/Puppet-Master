@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-final-accounting-reader-repair-v2",
+  "title": "ER12 final accounting disposition repair",
+  "role": "general",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "medium",
+      "serviceTier": "default"
+    }
+  },
+  "task": "Mechanical accounting repair ONLY,8min. Create short actual native setup Goal; complete after saving. No nested delegation/host calls/Goal canary/science content/account/Git/live campaign extraction. Write ONLY ER12_RUNTIME/mechanics/accounting-extractor-final-v2/. Copy complete prior mechanics/accounting-extractor-final-v1 package, preserving all original code/checks/pins. Root reviewed full extract.py/README/checks: fifteen synthetic checks passed but two unresolved mechanical gaps: (1) arm attempt_terminal_latency_seconds aliases final-role candidate_latency, hence real D-R1-03 missing-final has UNKNOWN despite its actual terminal failed investigator; compute distinct first-request→latest owned quiet task terminal only with complete terminal host intervals, keep missing science delivery UNKNOWN and costs retained. Test actual missing final-role fixture, not synthetic final present. (2) native blocked status erases a delivered final's legacy host interval/delivery even when actual final exists; native/source/protocol/delivery must be separate. Preserve blocked failure classification and raw metadata interval; do not infer science delivery from quiet or native status. Add optional finite root-supplied frozen delivery manifest path (only read declared JSON, no science bodies) with exactly80 rows armId, disposition, final_task_id, final_path, sha256, observed_at, terminal original task_status pointer, actual root science-freeze pointer. Verify unique/malformed/mismatch metadata; science file hashes are root attestation, not proof verified by reader. Use delivery manifest only to mark observed delivered versus missing; actual metadata requested→quiet final is labelled delivery proxy not exact file creation timestamp. Keep actual native blocked/protocol invalid separate even for delivered source packages. No manifest => delivery UNKNOWN unless existing missing sidecar; legacy candidate_latency raw host interval preserved distinctly. Continue root native not aggregate, cumulative max/latest identity dedup, queue/start/created lifetimes, heterogeneous original judgments unchanged. Meaningful tests missing-final exactshape/blocked+root-delivered/no-manifest/mismatcheddeclaredtask/duplicate delivery rows plus retain all15tests unchanged adaptation references appropriately. Update README precise definitions/schema. READY/SHA/root-review-findings. Root later runs after allquiet frozen checkpoint/captures; do not run actual campaign now. Keep all D1/D2 frozen files untouched."
+}

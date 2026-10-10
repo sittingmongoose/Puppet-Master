@@ -1,0 +1,127 @@
+{
+  "frozen_identity": {
+    "slot": "B-APPL-M-02",
+    "arm": "treatment",
+    "stage": "role",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-02-treatment-role-v2:ordinal:1",
+    "requestedProvider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requestedModel": "muse-spark-1.3-contributor"
+  },
+  "receipts": [
+    {
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a12408-be8d-7483-8351-cba222ae181c",
+      "position": 6,
+      "host_updatedAt": "2026-10-10T04:18:35.594Z",
+      "tool": "create_goal",
+      "input": {
+        "objective": "ER12 B-APPL-M-02/treatment: execute ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal."
+      },
+      "output": {
+        "goal": {
+          "created_at_ms": 1791605915309,
+          "current_work": null,
+          "goal_id": "goal-01a12408-bead-76e2-8df3-105232e226e7",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective": "ER12 B-APPL-M-02/treatment: execute ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 0,
+          "session_id": "01a12408-1826-7000-96b2-571652a5ce8d",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791605915309
+        }
+      },
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/lifecycle/21-item-6.json",
+      "source_sha256": "9af2aab49eea52d8f6d0e5a9cecfb6feb87d660effb7928615b948af7899eafb"
+    },
+    {
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240b-52bb-7ea2-b902-feb32c96fcf7",
+      "position": 35,
+      "host_updatedAt": "2026-10-10T04:21:24.437Z",
+      "tool": "update_goal",
+      "input": {
+        "status": "complete"
+      },
+      "output": {
+        "goal": {
+          "created_at_ms": 1791605915309,
+          "current_work": null,
+          "goal_id": "goal-01a12408-bead-76e2-8df3-105232e226e7",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective": "ER12 B-APPL-M-02/treatment: execute ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 100,
+          "session_id": "01a12408-1826-7000-96b2-571652a5ce8d",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 1138622,
+          "updated_at_ms": 1791606084316
+        }
+      },
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/lifecycle/21-item-35.json",
+      "source_sha256": "8a54450f3d6a2aaa0cb1d1300e29537466a340738d80f4251d881153866d92e0"
+    }
+  ],
+  "same_original_goal_identity": true,
+  "save_order_anchors": [
+    {
+      "position": 18,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a12409-6c0b-7a53-9da8-ad3c4fc21b96",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/activation-receipt.json",
+      "host_updatedAt": "2026-10-10T04:19:19.781Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 28,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240a-d2dc-7811-a683-16a21e80ca78",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/verification.md",
+      "host_updatedAt": "2026-10-10T04:20:51.696Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 30,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240a-fae6-7c02-b75c-b878df43a8c2",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/source-map.json",
+      "host_updatedAt": "2026-10-10T04:21:01.887Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 31,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240b-23c7-7301-b79f-06432313499d",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/sources/S1-excerpts.md",
+      "host_updatedAt": "2026-10-10T04:21:12.392Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 32,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240b-23f1-7620-b8f5-147d28988381",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/sources/S2-excerpts.md",
+      "host_updatedAt": "2026-10-10T04:21:12.448Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 36,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-APPL-M-02-treatment-role-v2%253Aordinal%253A1%3A01a12408-22e7-7000-bf15-8d16a6441ae1%3A01a1240b-6a90-7590-b07c-6288659ff86c",
+      "path_line": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/completion-receipt.json",
+      "host_updatedAt": "2026-10-10T04:21:30.580Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/21-page-1.json",
+      "source_sha256": "a34147216216b606241a5341d6ed387d1d701893d7fd3747283ee604bb17406a",
+      "content_read_for_grade": false
+    }
+  ],
+  "science_before_complete": "OBSERVED_FILE_CHANGE_ORDER_ONLY",
+  "no_science_grade": true
+}

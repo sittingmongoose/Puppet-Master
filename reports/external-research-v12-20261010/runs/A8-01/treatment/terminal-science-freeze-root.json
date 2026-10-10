@@ -106,25 +106,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A8-01",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-A8-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. Saved the required outputs **before** completing the native Goal:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/sources/index.md)\n\nThe final covers all eight obligations, the exact plan clauses, all six SCW adjudications, and proposed versus executed validation. It corrects the OCFL inventory detail: root inventory required, per-version inventories recommended, and a sidecar required for each inventory present ([OCFL 1.1 specification](https://ocfl.io/1.1/spec/)). Product validation remains **NOT_RUN**.\n\nThe actual native Goal returned `complete` for thread `01a12413-623a-7e80-a231-e39436df6d60`. Final usage: 184,020 tokens; 461 seconds (7m 41s). Unavailable UTC timestamps are recorded as `UNKNOWN`.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:6755e5f1-0004-4aa1-8159-91ebc6b9d4fe",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. Saved the required outputs **before** completing the native Goal:\n\n- [final.md](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/sources/index.md)\n\nThe final covers all eight obligations, the exact plan clauses, all six SCW adjudications, and proposed versus executed validation. It corrects the OCFL inventory detail: root inventory required, per-version inventories recommended, and a sidecar required for each inventory present ([OCFL 1.1 specification](https://ocfl.io/1.1/spec/)). Product validation remains **NOT_RUN**.\n\nThe actual native Goal returned `complete` for thread `01a12413-623a-7e80-a231-e39436df6d60`. Final usage: 184,020 tokens; 461 seconds (7m 41s). Unavailable UTC timestamps are recorded as `UNKNOWN`.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:6755e5f1-0004-4aa1-8159-91ebc6b9d4fe",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "554c150b3548929fc11126eedbdc4cace3371266a3404476c5b433580ec1fc89"
   }
 }

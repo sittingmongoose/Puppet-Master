@@ -1,0 +1,148 @@
+{
+  "saved_at_utc": "2026-10-10T07:21:27.293642+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "original_60_minute_requirement": "UNMET separately",
+  "native_completion_status_at_save": "not yet requested",
+  "all_six_axes_assessed": true,
+  "exact_clause_count": 54,
+  "originals_unchanged": true,
+  "local_navigation_valid": true,
+  "artifact_manifest": [
+    {
+      "relative_path": "assessment.json",
+      "bytes": 114714,
+      "sha256": "624267e55ada151b2da4dbbd5155e901827ffa10f4028c8a9bf485e240880c11"
+    },
+    {
+      "relative_path": "assessment.md",
+      "bytes": 50492,
+      "sha256": "558353963d64ddac827157e0c2a3dd69367f9e9a051bb185d76fa50a6f3895e9"
+    },
+    {
+      "relative_path": "evidence/E01-epa-handbook.html",
+      "bytes": 332608,
+      "sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f"
+    },
+    {
+      "relative_path": "evidence/E01-epa-handbook.txt",
+      "bytes": 328709,
+      "sha256": "d0d6ee05b9876301a1c6fe1c8bd815cac21fd70c076d08412bf3a5aa83a4a8df"
+    },
+    {
+      "relative_path": "evidence/E02-mpca-om-web-render.txt",
+      "bytes": 28236,
+      "sha256": "fb92232e5ce04317050a05479d5de64efa21e247e22244f2cb164e410a034109"
+    },
+    {
+      "relative_path": "evidence/E03-mpca-overview-web-render.txt",
+      "bytes": 22385,
+      "sha256": "8a20b2f2ba49a23770aa17a066e0f1a58ad20a2f2ae699d33e3978e9d1bf5d3b"
+    },
+    {
+      "relative_path": "evidence/E04-mpca-compaction-web-render.txt",
+      "bytes": 34229,
+      "sha256": "b1c03afc93b848efe0bfacf61b963b59e3fefe95f35c9978fd7c277eb97f3112"
+    },
+    {
+      "relative_path": "evidence/E05-queens-record-web-render.txt",
+      "bytes": 5229,
+      "sha256": "28a9e47385404643eb6e124e5212b9028bf0778861b86e028f6ce1dfe7fd540b"
+    },
+    {
+      "relative_path": "evidence/E05-queens-record.html",
+      "bytes": 2328,
+      "sha256": "af1743206dc653d1e48304d896aa243be2755efd6ca1937752ee5f90cf72a52f"
+    },
+    {
+      "relative_path": "evidence/E05-queens-record.txt",
+      "bytes": 303,
+      "sha256": "3f8cd89f23500128eb0021db9ad954356429e41e4ef1cda93a8e6ea0a12366b6"
+    },
+    {
+      "relative_path": "evidence/E06-mpca-101-web-render.txt",
+      "bytes": 8710,
+      "sha256": "22c207169e71e9201244e9d02ec250091a21c07fb1a966c048b1b56b3a906f85"
+    },
+    {
+      "relative_path": "evidence/E07-epa-install-om.html",
+      "bytes": 76939,
+      "sha256": "c77e42267091acb88f6a6ec56a484fdff3c0429e10f5234b76c7aca7900814f2"
+    },
+    {
+      "relative_path": "evidence/E07-epa-install-om.txt",
+      "bytes": 18045,
+      "sha256": "7624fceea92a0ee1754281f0b7bf87c5b3a2b7929847b558cc65b0496b8f35f7"
+    },
+    {
+      "relative_path": "evidence/E08-mpca-assessment-web-render.txt",
+      "bytes": 6768,
+      "sha256": "cbac84ef9e0ccbe9cf27ecb0f2ef73f1cdf8d8b7496f0d7ba64657c3b81da585"
+    },
+    {
+      "relative_path": "evidence/E09-usgs-omaha.pdf",
+      "bytes": 3797847,
+      "sha256": "a8bae7ee1ba550574bea635ef11571514dcf4633108ad476f09fefd837de7407"
+    },
+    {
+      "relative_path": "evidence/E09-usgs-omaha.txt",
+      "bytes": 191110,
+      "sha256": "47a7ef951185d71b786649d1b55cbd0059ad6d51618d1f52357a881eb2ee196e"
+    },
+    {
+      "relative_path": "evidence/E10-usgs-madison.pdf",
+      "bytes": 5595112,
+      "sha256": "c16cd6eff785e5b7e1b11cee4c3ffb039d891abcf4ae49836b7cdcc96d6bff53"
+    },
+    {
+      "relative_path": "evidence/E10-usgs-madison.txt",
+      "bytes": 446342,
+      "sha256": "8e4f62e2c3507f623dd673bcacf221d848a5ccc79f8756723903bc900cf63422"
+    },
+    {
+      "relative_path": "evidence/README.md",
+      "bytes": 20393,
+      "sha256": "59f7e658b476f7e1ddc0540a17c5f2b85d21d270b65a100887f50b3151304b5d"
+    },
+    {
+      "relative_path": "evidence/freeze-integrity.json",
+      "bytes": 2131,
+      "sha256": "6ce84fc6cd510fbf73366a803e0170474d55c5881b21e0723470e7b073680ceb"
+    },
+    {
+      "relative_path": "evidence/inspected-originals.json",
+      "bytes": 17494,
+      "sha256": "4d42a8965023bf844794f0d0c69562864428ff85b4e528c02f958c43e9fa3fb5"
+    },
+    {
+      "relative_path": "evidence/lifecycle-records.json",
+      "bytes": 5416,
+      "sha256": "49ab9d0b5b7ed86076894bb0d9c255f3a567e47c9172060a0c56f8944726e87b"
+    },
+    {
+      "relative_path": "evidence/retrieval-manifest.json",
+      "bytes": 9215,
+      "sha256": "52fb2b0ddcdd8ad20154efe4f43d9cdce6955a295294d1808162e4766c8413ef"
+    },
+    {
+      "relative_path": "evidence/review-verification.json",
+      "bytes": 1065,
+      "sha256": "8d43333ad09a7c40e61e1819295e692c5ddf1e422b41d194b910a473feaf244b"
+    },
+    {
+      "relative_path": "evidence/reviewer-native-active.json",
+      "bytes": 1861,
+      "sha256": "cab98e29c2d61fb3a93f9dc7b9c6b075bf452a3cde6385546611229ffdbc042f"
+    },
+    {
+      "relative_path": "root-review-request.json",
+      "bytes": 3603,
+      "sha256": "b4bb6536ae7e3814cb771904a3d668a2e32a618aad70b5d4b12790c3c546b99e"
+    },
+    {
+      "relative_path": "source-map.json",
+      "bytes": 54820,
+      "sha256": "b6d004ac19832390e3203c0df00c02a68c31c822d7f201b3806af1555a47e068"
+    }
+  ],
+  "note": "This full judgment and independent evidence were saved and checked before requesting native Goal completion. Subsequent native completion response is a separate receipt, not an assessment revision."
+}

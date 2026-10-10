@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-investigator-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-investigator-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-investigator-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-investigator-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-investigator-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the assigned investigator stage. All three required files are saved:\n\n- [discovery.md](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/source-map.json)\n- [draft.md](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/draft.md)\n\nThe discovery hash matches the one-time reveal receipt. The draft covers all eight obligations, reconciles the released plan, and separates proposed checks from executed research. Research was read-only; no product validation, live station connection, or gateway change was performed.\n\nThe single native Goal was completed after the files were saved. Its returned thread ID is `01a1242b-0482-75a2-9ed4-8bd83ba9704f`; status is `complete`. The Goal object returned `createdAt: 1791608188`, `updatedAt: 1791609009`, `tokensUsed: 328395`, and `timeUsedSeconds: 820`. A separate activation timestamp and Goal-specific provider/model provenance were not exposed (UNKNOWN).",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e73b8059-78c6-4b8b-8e06-295d6949a00a",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the assigned investigator stage. All three required files are saved:\n\n- [discovery.md](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/discovery.md)\n- [source-map.json](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/source-map.json)\n- [draft.md](ER12_RUNTIME/runs/A8-02/treatment/stages/investigator/draft.md)\n\nThe discovery hash matches the one-time reveal receipt. The draft covers all eight obligations, reconciles the released plan, and separates proposed checks from executed research. Research was read-only; no product validation, live station connection, or gateway change was performed.\n\nThe single native Goal was completed after the files were saved. Its returned thread ID is `01a1242b-0482-75a2-9ed4-8bd83ba9704f`; status is `complete`. The Goal object returned `createdAt: 1791608188`, `updatedAt: 1791609009`, `tokensUsed: 328395`, and `timeUsedSeconds: 820`. A separate activation timestamp and Goal-specific provider/model provenance were not exposed (UNKNOWN).",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e73b8059-78c6-4b8b-8e06-295d6949a00a",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-investigator-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "8b2101670b5c6e7d41e5ed516b8e391099a18347a6569842cbb919c9e2506f20",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A8-02/treatment/stages/investigator/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

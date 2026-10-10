@@ -1,12 +1,20 @@
-# Evidence S2: ShareDB docs introduction
-
-- URL: https://share.github.io/sharedb/
-- Publisher: ShareDB project. Status: 200 OK. Retrieved: 2026-10-10 (UTC; exact time UNKNOWN).
-- Locator: Introduction page (complete response, not truncated).
-
-Verbatim excerpts (bounded):
-
-- "ShareDB is a full-stack library for realtime JSON document collaboration. It provides a Node.js server for coordinating and committing edits from multiple clients."
-- "The underlying conflict management is handled through Operational Transformation (OT)."
-- Features list includes: "Offline change syncing upon reconnection" and "Access to historic document versions".
-- Docs link onward to "ShareDB on GitHub" (github.com/share/sharedb) and a Document history page.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "f8e1b6af74a96053c013a05fe35fa127668f04cb684a7d87c06ad395d348c635",
+  "rawSHA256": "f8e1b6af74a96053c013a05fe35fa127668f04cb684a7d87c06ad395d348c635",
+  "original_bytes": 743,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-01/treatment/stages/role/sources/ev-02-sharedb-intro.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

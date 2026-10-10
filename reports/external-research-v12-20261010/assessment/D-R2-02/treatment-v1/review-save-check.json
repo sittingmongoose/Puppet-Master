@@ -1,0 +1,46 @@
+{
+  "verified_at_utc": "2026-10-10T08:04:46.160686+00:00",
+  "all_six_axes_assessed": true,
+  "exact_brief_clauses": 21,
+  "additional_exact_plan_clauses": 34,
+  "all_five_criticism_dispositions_present": true,
+  "all_original_inspected_hashes_unchanged": true,
+  "original_artifacts_manifest_count": 38,
+  "independent_capture_hashes_match": true,
+  "local_markdown_links_resolve": true,
+  "local_markdown_link_count": 128,
+  "consistent_json_source_judgment": true,
+  "no_remaining_material_finding": true,
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "native_goal_not_completed_until_after_this_saved_judgment": true,
+  "outputs": {
+    "assessment.md": {
+      "sha256": "a79058d0df7598ed7d29a019ef12ca9c2fee7ffd72422a14eced090ff99e2189",
+      "bytes": 56463
+    },
+    "assessment.json": {
+      "sha256": "cfc956732900631377cc2aedc16809b8e40f601d3d81e2eb9e4f4473a5d63488",
+      "bytes": 116236
+    },
+    "source-map.json": {
+      "sha256": "393d536b93f7eb3a54c101717669ea3cd9325c123a11dcbc37a6478e0876a079",
+      "bytes": 34539
+    },
+    "original-inspected-hashes.json": {
+      "sha256": "c1c55657bac544da62e20da3f2f2768b5fc756e262d59af347ef3ee2e4b7a18a",
+      "bytes": 12090
+    },
+    "freeze-integrity-check.json": {
+      "sha256": "70af5ea0da4e3ac8ff3369d2509d007de7cdbc7deb697165a60e7ed11981077e",
+      "bytes": 2376
+    },
+    "evidence/index.md": {
+      "sha256": "c1c340cd6fc7cc51773734be0c3f91ec856945cc55e6445907ca4bb9eaacc3d1",
+      "bytes": 5713
+    },
+    "evidence/primary-notes.md": {
+      "sha256": "bb5f21a93890cd9c72ccb70a42b73b8c5232f762143e88bc643537eba1b0225c",
+      "bytes": 9867
+    }
+  }
+}

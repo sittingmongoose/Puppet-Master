@@ -1,24 +1,20 @@
 {
-  "id": "E15",
-  "url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
-  "access_started_utc": "2026-10-10T04:55:54.113615+00:00",
-  "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
-  "candidate_ids": [
-    "S15",
-    "C13",
-    "R07"
-  ],
-  "http_status": 200,
-  "effective_url": "https://support.kobotoolbox.org/data_collection_kobocollect.html",
-  "raw_path": "evidence/E15.html",
-  "raw_sha256": "82788080344a48991119da279ab97952cf6ac4334a31638a5089ba8d7e351e47",
-  "text_path": "evidence/E15.txt",
-  "text_sha256": "88646df23993227f158315e84c40805ca64d7879413636c378d984b0496a8954",
-  "response_headers": {
-    "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
-    "Content-Type": "text/html; charset=utf-8",
-    "Last-Modified": "Tue, 06 Oct 2026 09:56:46 GMT",
-    "ETag": "W/\"6ac4c5de-ba5a\""
-  },
-  "access_finished_utc": "2026-10-10T04:55:54.284378+00:00"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "8a791913b848d8cbd53869e8f2c091fbfb89ac055dc63dee411c3c5f10e7c4f3",
+  "rawSHA256": "8a791913b848d8cbd53869e8f2c091fbfb89ac055dc63dee411c3c5f10e7c4f3",
+  "original_bytes": 938,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A2-01/control-v1/evidence/E15.metadata.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

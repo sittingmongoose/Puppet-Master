@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212"
+  ],
+  "source_urls": [
+    "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-02/treatment-v1/evidence/direct-retrieval-log.json",
+      "source_id": "S05-full",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "6bb1183df7dc89672c4655d1ec7eb860e624d254e90c9bedfee007c0764e9c7c",
+  "rawSHA256": "6bb1183df7dc89672c4655d1ec7eb860e624d254e90c9bedfee007c0764e9c7c",
+  "original_bytes": 2610016,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-02/treatment-v1/evidence/S05-full.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

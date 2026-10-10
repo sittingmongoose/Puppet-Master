@@ -1,0 +1,9 @@
+{
+  "status": "READY",
+  "scope": "mechanical preparation only",
+  "campaign_extraction_run": false,
+  "requires": "root frozen checkpoint/captures after all quiet",
+  "synthetic_checks": 15,
+  "package_sha256_manifest": "SHA256SUMS.json",
+  "manifest_sha256": "8b6fe12530db68ebb9ebcf17f1923e42dc544a00c77b20b939775f470d6b09e7"
+}

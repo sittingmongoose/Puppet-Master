@@ -1,0 +1,383 @@
+[
+  {
+    "evidence_id": "E01",
+    "candidate_source_id": "S01",
+    "governing_primary_url": "https://www.ars.usda.gov/is/np/CommercialStorage/CommercialStorage.pdf",
+    "version": "USDA-ARS Agriculture Handbook 66, revised February 2016",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "web open/find and surrounding primary PDF context",
+    "primary_locator": "PDF page index 20 (printed p.11), Initial Cooling Methods, lines 1013–1053; page index 22 (printed p.13), Forced-Air Cooling, lines 1060–1136",
+    "subject": "Initial produce cooling and package-dependent forced-air heat removal",
+    "quantity_unit_type": "Cooling operation; airflow/product diameter/package resistance; no case temperatures",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Commodity and package determine suitability. Highway trailers are distinguished from refrigerated ships/containers. Water contact and water-resistant packages constrain hydrocooling. Room-cooling exceptions include citrus and CA-stored apples.",
+    "governing_exceptions_and_limits": "General 2016 reference; not a test of the cooperative or a universal cooling prescription.",
+    "independent_semantic_result": "Supports separating initial field-heat removal from transport and checking starting state/airflow before purchase. The final uses these qualitative mechanisms without importing crop setpoints.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 24
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 50
+      }
+    ],
+    "capture_paths": [
+      "evidence/web05-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E02",
+    "candidate_source_id": "S02",
+    "governing_primary_url": "https://ask.ifas.ufl.edu/publication/HS1328",
+    "version": "HS1328 current HTML retrieved 2026-10-10; DOI 10.32473/EDIS-HS1328-2019; HTML metadata datePublished 2026-03-27, LAST_UPDATE 2026-10-02. Metadata is not a demonstrated scientific revision history.",
+    "access_utc": "2026-10-10T07:28:27.758323+00:00",
+    "retrieval_operation": "web open/find; independent HTTP 200 HTML retrieval",
+    "primary_locator": "Air Temperature vs. Product Temperature, lines 483–496; Temperature Recording and Tracking, lines 802–823; Preface",
+    "subject": "Cargo air, in-carton environment and product pulp; transport recorder placement",
+    "quantity_unit_type": "Different temperature measurands; date/time and mapped recorder locations, not interchangeable channels",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Air outside cartons changes faster than pulp or carton environment. Sensor range/accuracy/resolution/location matter. Wall placement can elevate readings; three recorder positions concern pallets in trailers/containers/railcars.",
+    "governing_exceptions_and_limits": "Guidance rather than case data. Candidate accurately says a visible revision date is not established; embedded metadata gives a more precise retrieval identity, not proof of a changed recommendation.",
+    "independent_semantic_result": "Supports paired, synchronized, mapped channels and logger metadata. Final does not turn the three-position layout into a universal requirement for a small route.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 16
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 75
+      }
+    ],
+    "capture_paths": [
+      "evidence/web05-governing.txt",
+      "evidence/S02-independent.html",
+      "evidence/S02-independent.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record"
+  },
+  {
+    "evidence_id": "E03",
+    "candidate_source_id": "S03",
+    "governing_primary_url": "https://research.wur.nl/en/publications/identifying-cooling-heterogeneity-during-precooling-and-refrigera/",
+    "version": "Food Control 165 (November 2024), 110672; DOI 10.1016/j.foodcont.2024.110672",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "web open of official university publication record; surrounding complete abstract read",
+    "primary_locator": "Official WUR author record, Abstract lines 26–29 and publication metadata lines 30–52",
+    "subject": "Air and fruit measurements in a commercial Greece–Switzerland citrus supply chain",
+    "quantity_unit_type": "108 sensors in one shipment; rear air/fruit in 30 further shipments; 24 h precooling",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Large refrigerated trailer and citrus; spatial variability; incomplete room precooling and middle-trailer reheating associated with insufficient pallet ventilation.",
+    "governing_exceptions_and_limits": "Abstract-level reviewer access; no case-specific causal estimate or quality/safety oracle.",
+    "independent_semantic_result": "The candidate accurately preserves the shipment scope, initial-cooling and ventilation findings, with no numeric benefit or crop target transferred.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 35
+      }
+    ],
+    "capture_paths": [
+      "evidence/web07-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E04",
+    "candidate_source_id": "S04",
+    "governing_primary_url": "https://www.mdpi.com/1996-1073/16/13/5191",
+    "version": "Energies 16(13) (2023), 5191; DOI 10.3390/en16135191. Publisher notes distinguish 5 July 2023 version of record and 6 July updated PDF; independently retrieved publisher-hosted PDF.",
+    "access_utc": "2026-10-10T07:29:11.514412+00:00",
+    "retrieval_operation": "Independent publisher-hosted PDF HTTP 200, pdftotext; full main text read. Candidate repository endpoint later timed out; its earlier web retrieval exposed the same publication.",
+    "primary_locator": "PDF pp.1,3–11: sections 2.1–2.4, Tables 1–3, Results/Discussion/Conclusions; publisher version notes",
+    "subject": "RT5HC PCM alveoli versus empty alveoli in orange crates; crate-area air stability",
+    "quantity_unit_type": "PP crate 600×400×90 mm; 48 oranges/set; PCM 5–6 °C; SHT30 air sensor ±0.3 °C; five-minute collection/transmission; times 08:00–14:05",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Winter insulated IVECO van, reefer off; crates held about 5 °C overnight, on floor near rear door/right wall; sunny 1–10 °C, six stops. Sensors sample surrounding air, not pulp. Four-reading moving average smooths peaks.",
+    "governing_exceptions_and_limits": "No measured delivered-quality endpoint. Conditioning state, thermal capacity/autonomy, route/crop/weather and reuse must be checked; fewer fluctuations are not quality or safety proof.",
+    "independent_semantic_result": "Supports a bounded PCM pilot candidate and event logging. Final correctly does not import a quality benefit or product-core result and retains abstract 8 h versus methods 08:00–14:05 discrepancy.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 26
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 52
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 87
+      }
+    ],
+    "capture_paths": [
+      "evidence/S04a-independent.pdf",
+      "evidence/S04a-independent.txt",
+      "evidence/direct-retrievals-2.json",
+      "evidence/web08-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "candidate_condition_issue": "Candidate S04 governing-condition records say about 48 oranges per crate; primary section 2.2 states 48 oranges per comparison set of crates. Reviewer does not silently repair the original maps."
+  },
+  {
+    "evidence_id": "E05",
+    "candidate_source_id": "S05",
+    "governing_primary_url": "https://www.sciencedirect.com/science/article/abs/pii/S0260877417303035",
+    "version": "Journal of Food Engineering 215 (December 2017), pp.51–60; DOI 10.1016/j.jfoodeng.2017.07.012",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "Primary publisher search-rendered abstract read; direct article open HTTP 403",
+    "primary_locator": "Publisher indexed Abstract and Introduction",
+    "subject": "Biomimetic artificial apple with shell/filling and integrated loggers",
+    "quantity_unit_type": "Cooling-time comparison: artificial apple within 5% of ten real apples; water simulators differ up to 16%",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Validation concerns an apple-like prototype during cooling; uniform geometry/sensor location enables repeatability. Air/surface temperatures react faster than fruit core.",
+    "governing_exceptions_and_limits": "Reviewer did not access full article. Cooling validation is not heating validation for another commodity, quality or safety proof.",
+    "independent_semantic_result": "A useful unfamiliar measurement alternative; final requires crop/transition-specific validation rather than treating an apple simulator as an oracle for unknown produce.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 66
+      }
+    ],
+    "capture_paths": [
+      "evidence/web03-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E06",
+    "candidate_source_id": "S06",
+    "governing_primary_url": "https://revista.sangregorio.edu.ec/index.php/REVISTASANGREGORIO/article/view/1251",
+    "version": "Revista San Gregorio 1(37) (2020); record date 2020-04-04, PDF publication line 2020-04-03",
+    "access_utc": "2026-10-10T07:28:28.453833+00:00",
+    "retrieval_operation": "Publisher indexed abstract plus independent publisher PDF HTTP 200; Abstract/Methods read",
+    "primary_locator": "Publisher abstract; downloaded PDF printed pp.61–64, Abstract and Methods",
+    "subject": "Air heat/moisture exchange during multi-drop dill/parsley transport",
+    "quantity_unit_type": "11 m³ truck body; air temperature/velocity/RH; empty-body heat calculation",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Specific Gazelle body and herb study; transported herbs plus later storage; air/empty-body calculations differ from loaded produce-core measurements.",
+    "governing_exceptions_and_limits": "Not a general food-safety or quality oracle; date and author-list metadata need care, without changing the bounded recommendation.",
+    "independent_semantic_result": "Supports recording openings, stops and humidity/temperature together. Final imports no heat-gain or microbiological numeric result.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 28
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 58
+      }
+    ],
+    "capture_paths": [
+      "evidence/S06-independent.pdf",
+      "evidence/S06-independent.txt",
+      "evidence/direct-retrievals.json",
+      "evidence/web04-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record"
+  },
+  {
+    "evidence_id": "E07",
+    "candidate_source_id": "S07",
+    "governing_primary_url": "https://www.fao.org/4/i0930e/i0930e00.htm",
+    "version": "FAO RAP Publication 2009/08; ISBN 978-92-5-106312-5",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "web open of official FAO record and full abstract",
+    "primary_locator": "Official publication title/metadata lines 2–24; Abstract lines 37–40",
+    "subject": "Reusable plastic-crate handling, cleaning, sanitization and returnable management",
+    "quantity_unit_type": "Management/handling guidance, no thermal performance quantity",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "RPC service providers and fresh produce handling chains; local crate construction/ownership/reuse cycle absent.",
+    "governing_exceptions_and_limits": "Official abstract only; no local crate history or measured thermal benefit.",
+    "independent_semantic_result": "Appropriate history lead; final does not claim the cooperative uses RPCs or that the guide proves thermal performance.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 39
+      }
+    ],
+    "capture_paths": [
+      "evidence/web02-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E08",
+    "candidate_source_id": "S08",
+    "governing_primary_url": "https://www.ukdr.uplb.edu.ph/journal-articles/5138/",
+    "version": "Philippine Journal of Crop Science 43(2) (August 2018), pp.47–55; university record 5138",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "web open of official university repository and full abstract",
+    "primary_locator": "Repository Abstract lines 25–29; issue metadata 30–68; availability line 70",
+    "subject": "Duck-cloth-wrapped single-crate evaporative cooler",
+    "quantity_unit_type": "54×36×30 cm crate in source; lettuce/rambutan/bitter gourd/eggplant; no result transferred",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Specific produce and setup; accessible record lacks full methods and governing weather/route details.",
+    "governing_exceptions_and_limits": "Full document explicitly unavailable there; not a proven local intervention or safety/shelf-life claim.",
+    "independent_semantic_result": "The final retains a screening lead requiring crop/climate/water/handling fit. It does not adopt the abstract’s shelf-life/weight-loss numbers for the cooperative.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 111
+      }
+    ],
+    "capture_paths": [
+      "evidence/web02-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E09",
+    "candidate_source_id": "S09",
+    "governing_primary_url": "https://www.sciencedirect.com/science/article/pii/S2666154324003764",
+    "version": "Journal of Agriculture and Food Research 18 (December 2024), 101339; DOI 10.1016/j.jafr.2024.101339",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "Primary publisher search-rendered abstract and official university metadata read; direct publisher open HTTP 403",
+    "primary_locator": "Publisher indexed Abstract/Highlights; KMITL repository record a471f939-3068-4037-9c50-bd2e567310ff",
+    "subject": "Wet-fabric evaporative cooling in a simulated Thai transport chamber",
+    "quantity_unit_type": "29–30 °C, 70–73% RH; 0.8–3.6 m/s inlet air; three-hour test, every-minute readings; hollow plastic balls as main load; separate lettuce mass loss",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Fixed climate and simulated airflow; approximately 3–4 °C air reduction in source, not a produce-core field effect.",
+    "governing_exceptions_and_limits": "Abstract-level access; surrogate/model agreement cannot validate this cooperative or prove product-core or quality improvement.",
+    "independent_semantic_result": "The map and final correctly distinguish surrogate thermal load and separate lettuce endpoint, and keep evaporation conditional on local crop/climate/water/airflow.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 54
+      }
+    ],
+    "capture_paths": [
+      "evidence/web04-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E10",
+    "candidate_source_id": "S10",
+    "governing_primary_url": "https://www.sciencedirect.com/science/article/abs/pii/S1537511017306797",
+    "version": "Biosystems Engineering 169 (May 2018), pp.115–125; DOI 10.1016/j.biosystemseng.2018.02.003",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "Primary publisher search-rendered abstract/context read; direct publisher and Empa accepted manuscript HTTP 403",
+    "primary_locator": "Publisher indexed Abstract/Highlights/Introduction; facility and conclusion section snippets",
+    "subject": "Commercial forced-air citrus precooling and fruit/carton/wrapping comparisons",
+    "quantity_unit_type": "40 pallets; three citrus types; 42% faster outflow cooling contrasts Nova/Opentop with similarly sized Eureka/Supervent",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Both fruit species and carton differ; inflow/outflow and wrapping change cooling; similarity in fruit size does not isolate package alone.",
+    "governing_exceptions_and_limits": "Full article not accessed. Carried S10 base description still uses broad package/fruit-size shorthand, but explicit final correction and recheck prevent consequential misapplication.",
+    "independent_semantic_result": "C03 is supported. Final accurately qualifies the cross-fruit/carton contrast and preserves useful airflow/wrapping findings without a local effect forecast.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 196
+      }
+    ],
+    "capture_paths": [
+      "evidence/web04-governing.txt",
+      "evidence/direct-retrievals.json"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  },
+  {
+    "evidence_id": "E11",
+    "candidate_source_id": "S11",
+    "governing_primary_url": "https://www.sciencedirect.com/science/article/pii/S1359431121006438",
+    "version": "Applied Thermal Engineering 195 (August 2021), 117204; DOI 10.1016/j.applthermaleng.2021.117204",
+    "access_utc": "UNKNOWN at per-request resolution",
+    "retrieval_operation": "Primary publisher search-rendered complete abstract and surrounding introduction/section snippets read; direct open HTTP 403",
+    "primary_locator": "Publisher indexed Abstract/Introduction/Charging facility/Charging process",
+    "subject": "PCM storage plates in integrated road–rail container, separately charged",
+    "quantity_unit_type": "Reported discharge up to 94.6 h; 40-ft ISO container and ten plates/1260 kg PCM in introduction; separate electrically powered charging plant",
+    "default": "No local default or numeric operating setpoint is established by this source.",
+    "domain_and_conditions": "Vehicle-scale real long-distance transport with four fresh produce kinds; passive container depends on upstream refrigeration/HTF charging.",
+    "governing_exceptions_and_limits": "Full methods not accessed; crop identities and detailed route conditions unresolved at the candidate’s abstract level, so no local prediction is justified.",
+    "independent_semantic_result": "Supports counting conditioning energy/infrastructure and autonomy; final does not transfer runtime, cost or energy percentages to crate inserts.",
+    "supports_final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 26
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "line": 52
+      }
+    ],
+    "capture_paths": [
+      "evidence/web09-governing.txt"
+    ],
+    "evidence_type": "independently retrieved primary publication or official institutional record",
+    "observed_access_window_utc": {
+      "start": "2026-10-10T07:24:47Z",
+      "end": "2026-10-10T07:30:40Z",
+      "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+    }
+  }
+]

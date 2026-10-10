@@ -1,0 +1,65 @@
+[
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/critique.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/discovery.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/draft.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/revealed-plan.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/final.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "check": "frozen original brief vs run input",
+    "matches": true
+  },
+  {
+    "check": "frozen plan vs revealed copy",
+    "matches": true
+  }
+]

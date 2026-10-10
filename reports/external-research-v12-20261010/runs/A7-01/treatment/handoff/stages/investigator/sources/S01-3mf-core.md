@@ -1,9 +1,20 @@
-# S01 — 3MF Core Specification
-
-- **Source:** [3MF Core Specification & Reference Guide](https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md)
-- **Version:** Published v1.4.0; change history says 2025-02-06. Commit hash not surfaced in retrieved page.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** §§1.1, 2.1, 3.1–3.4, 4.2, 5.1, 6.1–6.2.
-- **Observed operation:** Read specification prose. No local file or implementation was run.
-- **Relevant rules:** 3MF uses OPC ZIP packaging; optional package parts include core properties, PrintTicket, package thumbnail and object thumbnail. Unit default is millimeter; values include micron/mm/cm/in/ft/m. Components reference objects and carry transforms. Base-material names convey design intent for mapping to print materials; display color is for rendering, not a guarantee of printed color. PrintTicket is optional and consumer-environment-specific. Unsupported required extensions block processing; recommended extensions should prompt a warning, and producers should avoid requiring extensions unless key meaning depends on them. Model Description metadata is a defined field. Thumbnail is optional JPEG/PNG.
-- **Applicability:** Format-level rules only. A particular CAD/slicer may omit, ignore, hide, or alter optional fields or extensions.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+  "rawSHA256": "b89d7799963de7c317479a8aa7dac7d76a7028f2286c2ecd51d72c2778291158",
+  "original_bytes": 1356,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S01-3mf-core.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

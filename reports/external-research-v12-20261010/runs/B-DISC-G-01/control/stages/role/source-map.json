@@ -14,10 +14,17 @@
       "url": "https://automerge.org/docs/reference/documents/text/",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "Text, lines 58-61, 91-100, 146",
-      "source_statements": ["Collaborative string edits use splice; the example merges concurrent insert and replacement/deletion.", "Whole-string updateText derives splices; large intervals between updates may merge poorly."],
-      "conditions_exceptions": ["Docs recommend frequent updateText calls; this is not a measured guarantee for another adapter."],
+      "source_statements": [
+        "Collaborative string edits use splice; the example merges concurrent insert and replacement/deletion.",
+        "Whole-string updateText derives splices; large intervals between updates may merge poorly."
+      ],
+      "conditions_exceptions": [
+        "Docs recommend frequent updateText calls; this is not a measured guarantee for another adapter."
+      ],
       "applicability_inference": "Supports an offline sequence-CRDT candidate; choose operation granularity deliberately.",
-      "proposed_checks": ["Compare splice and whole-string adapter traces for concurrent insert/delete."],
+      "proposed_checks": [
+        "Compare splice and whole-string adapter traces for concurrent insert/delete."
+      ],
       "executed_checks": []
     },
     {
@@ -26,10 +33,17 @@
       "url": "https://automerge.org/docs/reference/documents/conflicts/",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "What is a Conflict?, lines 60-65, 92-112",
-      "source_statements": ["Concurrent text sequence insertions/deletions are preserved; equal-position inserts receive consistent order.", "Concurrent same-property/index writes expose a deterministic value while retaining other conflict values for inspection."],
-      "conditions_exceptions": ["Scalar/index conflict behavior differs from sequence text behavior; LWW order uses operation IDs, not wall-clock timestamps."],
-      "applicability_inference": "Use sequence operations for text and separately define whether users should see or resolve conflicts." ,
-      "proposed_checks": ["Run both merge directions for a same-anchor insert and delete trace."],
+      "source_statements": [
+        "Concurrent text sequence insertions/deletions are preserved; equal-position inserts receive consistent order.",
+        "Concurrent same-property/index writes expose a deterministic value while retaining other conflict values for inspection."
+      ],
+      "conditions_exceptions": [
+        "Scalar/index conflict behavior differs from sequence text behavior; LWW order uses operation IDs, not wall-clock timestamps."
+      ],
+      "applicability_inference": "Use sequence operations for text and separately define whether users should see or resolve conflicts.",
+      "proposed_checks": [
+        "Run both merge directions for a same-anchor insert and delete trace."
+      ],
       "executed_checks": []
     },
     {
@@ -38,10 +52,17 @@
       "url": "https://automerge.org/docs/reference/concepts/",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "Documents, Repositories, Sync Protocol, Storage Format; lines 67-77, 91-97",
-      "source_statements": ["Documents retain commit-like change history; repositories combine local storage and peer synchronization.", "The compact binary format can store edit history; repository compression accounts for concurrent reads and writes."],
-      "conditions_exceptions": ["No byte ceiling, deletion-retention window, or product-specific pruning guarantee is stated."],
-      "applicability_inference": "History aids inspectability but retained bytes need a product-scale measurement." ,
-      "proposed_checks": ["Measure persisted bytes for a 20 KB note under repeated edits/deletions and compaction."],
+      "source_statements": [
+        "Documents retain commit-like change history; repositories combine local storage and peer synchronization.",
+        "The compact binary format can store edit history; repository compression accounts for concurrent reads and writes."
+      ],
+      "conditions_exceptions": [
+        "No byte ceiling, deletion-retention window, or product-specific pruning guarantee is stated."
+      ],
+      "applicability_inference": "History aids inspectability but retained bytes need a product-scale measurement.",
+      "proposed_checks": [
+        "Measure persisted bytes for a 20 KB note under repeated edits/deletions and compaction."
+      ],
       "executed_checks": []
     },
     {
@@ -50,10 +71,17 @@
       "url": "https://docs.yjs.dev/api/document-updates",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "lines 1-15, 20-29, 70-83, 139-165",
-      "source_statements": ["Updates are commutative, associative and idempotent; state vectors can select missing differences.", "Merging update blobs removes duplicate information but does not garbage-collect deleted content; load a Y.Doc to reduce size."],
-      "conditions_exceptions": ["The update-only route does not perform deletion cleanup."],
-      "applicability_inference": "A second inspectable sequence-CRDT implementation with an explicit retained-deletion caveat." ,
-      "proposed_checks": ["Measure bytes before and after loading/compacting a document with deletions."],
+      "source_statements": [
+        "Updates are commutative, associative and idempotent; state vectors can select missing differences.",
+        "Merging update blobs removes duplicate information but does not garbage-collect deleted content; load a Y.Doc to reduce size."
+      ],
+      "conditions_exceptions": [
+        "The update-only route does not perform deletion cleanup."
+      ],
+      "applicability_inference": "A second inspectable sequence-CRDT implementation with an explicit retained-deletion caveat.",
+      "proposed_checks": [
+        "Measure bytes before and after loading/compacting a document with deletions."
+      ],
       "executed_checks": []
     },
     {
@@ -62,10 +90,16 @@
       "url": "https://share.github.io/sharedb/",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "Introduction and Features, lines 35-52",
-      "source_statements": ["A server coordinates/commits edits; conflict management uses OT type plugins; offline change syncing and historic versions are listed."],
-      "conditions_exceptions": ["No pending-operation queue limit or undo contract is stated."],
-      "applicability_inference": "Central relay plus OT merits a bounded stale-client reconnect test." ,
-      "proposed_checks": ["Reconnect after a long offline interval with deletes, inserts, and undo."],
+      "source_statements": [
+        "A server coordinates/commits edits; conflict management uses OT type plugins; offline change syncing and historic versions are listed."
+      ],
+      "conditions_exceptions": [
+        "No pending-operation queue limit or undo contract is stated."
+      ],
+      "applicability_inference": "Central relay plus OT merits a bounded stale-client reconnect test.",
+      "proposed_checks": [
+        "Reconnect after a long offline interval with deletes, inserts, and undo."
+      ],
       "executed_checks": []
     },
     {
@@ -74,10 +108,16 @@
       "url": "https://share.github.io/sharedb/types/",
       "version": "UNKNOWN; unversioned docs page",
       "locator": "OT Types, lines 42-50, 52-75",
-      "source_statements": ["ShareDB delegates transformation to OT types; json0 is the default; additional types must be registered on client and server."],
-      "conditions_exceptions": ["The page does not establish that the example rich-text type is the desired plain-text type."],
-      "applicability_inference": "Treat a text-compatible transform as an explicit dependency and product decision." ,
-      "proposed_checks": ["Select and test a plain-text OT type under stale operation rebasing."],
+      "source_statements": [
+        "ShareDB delegates transformation to OT types; json0 is the default; additional types must be registered on client and server."
+      ],
+      "conditions_exceptions": [
+        "The page does not establish that the example rich-text type is the desired plain-text type."
+      ],
+      "applicability_inference": "Treat a text-compatible transform as an explicit dependency and product decision.",
+      "proposed_checks": [
+        "Select and test a plain-text OT type under stale operation rebasing."
+      ],
       "executed_checks": []
     },
     {
@@ -86,10 +126,17 @@
       "url": "https://git-scm.com/docs/git-merge-file",
       "version": "Version selector includes 2.54.0 (2026-04-20), 2.55.0-2.56.0 with no manual changes; retrieved page is unpinned to a local binary.",
       "locator": "version history lines 175-189; DESCRIPTION lines 204-218; options lines 241-257",
-      "source_statements": ["Three-way merge combines changes from a common base; overlap in a line segment leaves marked conflicts for editing.", "Options can favor either side or union; the manual calls the behavior a minimal RCS merge clone."],
-      "conditions_exceptions": ["No local Git version or command execution was checked."],
-      "applicability_inference": "A simple diff3 baseline with explicit manual conflict handling and line-level overlap risk." ,
-      "proposed_checks": ["Compare repeated-line and same-line overlap cases in the release selected for evaluation."],
+      "source_statements": [
+        "Three-way merge combines changes from a common base; overlap in a line segment leaves marked conflicts for editing.",
+        "Options can favor either side or union; the manual calls the behavior a minimal RCS merge clone."
+      ],
+      "conditions_exceptions": [
+        "No local Git version or command execution was checked."
+      ],
+      "applicability_inference": "A simple diff3 baseline with explicit manual conflict handling and line-level overlap risk.",
+      "proposed_checks": [
+        "Compare repeated-line and same-line overlap cases in the release selected for evaluation."
+      ],
       "executed_checks": []
     }
   ],
@@ -102,8 +149,15 @@
     }
   ],
   "checks": {
-    "executed": ["Read mapped assignment and fixture.", "Retrieved official documentation pages listed above."],
-    "proposed_not_executed": ["Concurrent insert/delete convergence and merge-order test.", "Undo after sync while preserving the other user's edit.", "20 KB note history/deletion storage and stale-replica recovery measurement."]
+    "executed": [
+      "Read mapped assignment and fixture.",
+      "Retrieved official documentation pages listed above."
+    ],
+    "proposed_not_executed": [
+      "Concurrent insert/delete convergence and merge-order test.",
+      "Undo after sync while preserving the other user's edit.",
+      "20 KB note history/deletion storage and stale-replica recovery measurement."
+    ]
   },
   "evidence_file": "sources/evidence.md",
   "discovery_file": "discovery.md"

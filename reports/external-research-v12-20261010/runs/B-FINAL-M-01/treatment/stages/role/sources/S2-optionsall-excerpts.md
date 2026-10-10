@@ -1,19 +1,36 @@
-# S2 excerpts: curl option introduction history
-
-- URL: https://curl.se/docs/optionsall.html
-- Retrieved: 2026-10-10T04:20:06Z via HTTPS GET (operation: single curl fetch, HTTP 200, 37181 bytes)
-- Scope: maps CLI options to introduction versions for target curl 8.10.1. Introduction proves availability, not that every later semantic change was present; semantics verified against sources/v8101-*.md.
-
-## Cited rows (option: introduced in)
-
-- --retry: 7.12.3
-- --retry-all-errors: 7.71.0
-- --retry-connrefused: 7.52.0
-- --retry-delay: 7.12.3
-- --retry-max-time: 7.12.3
-- --fail: 4.0
-- --fail-early: 7.52.0
-- --fail-with-body: 7.76.0
-- --max-time: 4.0
-
-All options cited in the deliverable predate curl 8.10.1. Retry-After compliance for --retry is dated by the manual itself to 7.66.0 (see sources/S1-manpage-excerpts.md and sources/v8101-retry.md).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://curl.se/docs/optionsall.html"
+  ],
+  "source_urls": [
+    "https://curl.se/docs/optionsall.html"
+  ],
+  "version": [
+    {
+      "version_observed": "live introduction table"
+    }
+  ],
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-FINAL-M-01/treatment/stages/role/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version_observed": "live introduction table"
+      }
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "4135656c5bc3831bdf042b20fdc53acce96d96f43ca9a230f19ca275ea0ab65c",
+  "rawSHA256": "4135656c5bc3831bdf042b20fdc53acce96d96f43ca9a230f19ca275ea0ab65c",
+  "original_bytes": 850,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-01/treatment/stages/role/sources/S2-optionsall-excerpts.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

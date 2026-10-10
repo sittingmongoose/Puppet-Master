@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "status": "completed",
+  "data": {
+    "thread": {
+      "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+      "projectId": "5fdfe527-6a7b-4c8b-8900-f6557fd88cad",
+      "title": "ER12 reference A1-01-control investigator",
+      "effectiveStatus": "running",
+      "status": "running",
+      "activityRunStatus": "running",
+      "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
+      "activeRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
+      "provider": {
+        "instanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": [
+          {
+            "id": "reasoningEffort",
+            "value": "max"
+          },
+          {
+            "id": "serviceTier",
+            "value": "priority"
+          }
+        ]
+      },
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "branch": "t3/research/er12-campaign-execution",
+      "worktreePath": "ER12_RUNTIME/repository",
+      "hasPendingRequest": false,
+      "lastError": null,
+      "parentThreadId": "caa5cbf4-50a7-448a-8965-2eb9994c7ad7",
+      "relationshipToParent": "subagent",
+      "archived": false,
+      "settled": false,
+      "pinned": false,
+      "itemCount": 45,
+      "createdAt": "2026-10-10T03:54:16.748Z",
+      "updatedAt": "2026-10-10T03:56:04.787Z"
+    },
+    "runs": [
+      {
+        "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
+        "ordinal": 1,
+        "status": "running",
+        "queuePosition": null,
+        "requestedAt": "2026-10-10T03:54:16.750Z",
+        "startedAt": "2026-10-10T03:54:17.142Z",
+        "completedAt": null,
+        "userMessageId": "message:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1"
+      }
+    ],
+    "runsTotal": 1,
+    "queuedRuns": [],
+    "pendingRuntimeRequests": 0,
+    "messageCount": 3,
+    "subagentCount": 0,
+    "linkedPullRequest": null,
+    "pullRequests": [],
+    "projectionUpdatedAt": "2026-10-10T03:56:07.511Z"
+  },
+  "source": {
+    "adapter": "rpc",
+    "environmentId": "47363713-9592-474c-94b0-8191f32118eb",
+    "environmentLabel": "ubuntuserver",
+    "serverVersion": "0.0.46-nightly.20261010.2908",
+    "upstreamMethod": "orchestration.getThreadProjection"
+  },
+  "observedAt": "2026-10-10T03:56:07.668Z",
+  "revision": 1796345
+}

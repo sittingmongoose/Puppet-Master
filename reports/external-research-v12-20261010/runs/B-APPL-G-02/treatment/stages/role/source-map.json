@@ -1,1 +1,103 @@
-{"applicability":"All dispositions apply to systemd 257 [Timer] units on a Linux laptop (system manager), AccuracySec/RandomizedDelaySec at defaults unless stated. No service logs or hardware timing data were supplied; operational behavior beyond manual statements is marked as inference or missing evidence.","case_id":"ER12-B-APPL-G-02-FRESH","claim_citations":{"1":["P1 Persistent= (last-trigger stored; immediate trigger if >=1 missed elapse)","P1 Persistent= (subject to RandomizedDelaySec; systemctl clean --what=state)"],"2":["P1 Persistent= (only has an effect on OnCalendar= timers)","P1 Options (monotonic timers independent of wall-clock)","P1 Options (past-activation immediate elapse only OnBootSec/OnStartupSec)","P1 WakeSystem= (suspend CLOCK_BOOTTIME only, not power-off)"],"3":["P1 Description (already-active unit not restarted; no new instances)","P1 Description (RemainAfterExit=yes unsuitable for repetitive timers)"],"4":["P1 AccuracySec= (defaults 1min; window [configured, +AccuracySec])","P1 Options/OnCalendar (do not necessarily expire at precise time)"],"5":["P1 Options table (OnUnitInactiveSec relative to last deactivation of activated unit)","P1 Unit= (default same-name service)"],"6":["P2 Calendar Events (daily -> *-*-* 00:00:00)","P2 Calendar Events (systemd-analyze calendar validates/normalizes/computes next only)","P1 AccuracySec=/OnCalendar precision (claim 4 citations)","P1 OnCalendar (time-sync.target ordering; RTC warning; single activation after sleep)"]},"conditions_exceptions":"Persistent catch-up requires >=1 missed elapse, timer enabled/active at boot, timestamp file on disk; fires once per activation. OnUnitInactiveSec never elapses if target never deactivates; first post-boot elapse depends on recorded deactivation and service Type. AccuracySec window plus TimerSlackNSec/load bound start precision. Calendar scheduling requires correct realtime clock. No evidence was supplied for service Type/RemainAfterExit, Unit= identity, boot times, or clock-sync state.","corpus_inputs_read_only":[{"file":"corpus/S1.md","locator_sections":"Description; OnUnitInactiveSec; AccuracySec; RandomizedDelaySec; Persistent","source_id":"S1","title":"systemd timer manual source","url":"https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml","version":"Pinned upstream tag v257; target systemd 257"},{"file":"corpus/S2.md","locator_sections":"Parsing Time Spans; Calendar Events; calendar examples","source_id":"S2","title":"systemd time manual source","url":"https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml","version":"Pinned upstream tag v257; target systemd 257"}],"deliverables":["verification.md","source-map.json","sources/P1-systemd.timer-v257-excerpts.md","sources/P2-systemd.time-v257-excerpts.md","records/native-goal-activation.json","records/native-goal-completion.json"],"generated_at_utc":"2026-10-10T05:12Z","primary_retrievals":[{"local_evidence":"sources/P1-systemd.timer-v257-excerpts.md","locator_sections":"Description; Options (OnUnitInactiveSec, OnCalendar, AccuracySec, RandomizedDelaySec, Persistent, Unit, WakeSystem)","operation":"HTTPS GET via web_fetch and curl; excerpts saved, no code executed","retrieved_at_utc":"2026-10-10T05:10Z-05:11Z","source_id":"P1","status":"200 OK","url":"https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml","url_relation":"raw content of corpus-listed S1 blob URL","version":"Pinned upstream tag v257"},{"local_evidence":"sources/P2-systemd.time-v257-excerpts.md","locator_sections":"Calendar Events (shorthands, normalized forms, systemd-analyze calendar)","operation":"HTTPS GET via web_fetch and curl; excerpts saved, no code executed","retrieved_at_utc":"2026-10-10T05:10Z-05:11Z","source_id":"P2","status":"200 OK","url":"https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml","url_relation":"raw content of corpus-listed S2 blob URL","version":"Pinned upstream tag v257"}],"proposed_vs_executed":"Proposed: verify the six numbered claims against systemd 257 primary manuals with disposition, version/configuration, citation, corrected wording, exceptions, and two acceptance checks. Executed: exactly that; no deployment substitution, no architecture redesign, no input modification, no other cases/results/canon read.","retrieval_failures":[],"retrieval_policy_compliance":{"additional_primary_pages_beyond_listed_urls":0,"corpus_listed_urls_followed":2,"limit_additional_pages":8,"within_limit":true},"role":"Applicability/exception verification","slot_id":"B-APPL-G-02","unresolved_evidence":["Service unit Type=/RemainAfterExit= and Unit= identity (claims 3, 5)","Timer enablement/active state at boot and Persistent timestamp file presence (claims 1, 6)","Effective AccuracySec and TimerSlackNSec (claim 4)","Boot times, clock-sync/RTC state (claim 6)","Service logs / journal timestamps for operational confirmation (all claims)"]}
+{
+  "applicability": "All dispositions apply to systemd 257 [Timer] units on a Linux laptop (system manager), AccuracySec/RandomizedDelaySec at defaults unless stated. No service logs or hardware timing data were supplied; operational behavior beyond manual statements is marked as inference or missing evidence.",
+  "case_id": "ER12-B-APPL-G-02-FRESH",
+  "claim_citations": {
+    "1": [
+      "P1 Persistent= (last-trigger stored; immediate trigger if >=1 missed elapse)",
+      "P1 Persistent= (subject to RandomizedDelaySec; systemctl clean --what=state)"
+    ],
+    "2": [
+      "P1 Persistent= (only has an effect on OnCalendar= timers)",
+      "P1 Options (monotonic timers independent of wall-clock)",
+      "P1 Options (past-activation immediate elapse only OnBootSec/OnStartupSec)",
+      "P1 WakeSystem= (suspend CLOCK_BOOTTIME only, not power-off)"
+    ],
+    "3": [
+      "P1 Description (already-active unit not restarted; no new instances)",
+      "P1 Description (RemainAfterExit=yes unsuitable for repetitive timers)"
+    ],
+    "4": [
+      "P1 AccuracySec= (defaults 1min; window [configured, +AccuracySec])",
+      "P1 Options/OnCalendar (do not necessarily expire at precise time)"
+    ],
+    "5": [
+      "P1 Options table (OnUnitInactiveSec relative to last deactivation of activated unit)",
+      "P1 Unit= (default same-name service)"
+    ],
+    "6": [
+      "P2 Calendar Events (daily -> *-*-* 00:00:00)",
+      "P2 Calendar Events (systemd-analyze calendar validates/normalizes/computes next only)",
+      "P1 AccuracySec=/OnCalendar precision (claim 4 citations)",
+      "P1 OnCalendar (time-sync.target ordering; RTC warning; single activation after sleep)"
+    ]
+  },
+  "conditions_exceptions": "Persistent catch-up requires >=1 missed elapse, timer enabled/active at boot, timestamp file on disk; fires once per activation. OnUnitInactiveSec never elapses if target never deactivates; first post-boot elapse depends on recorded deactivation and service Type. AccuracySec window plus TimerSlackNSec/load bound start precision. Calendar scheduling requires correct realtime clock. No evidence was supplied for service Type/RemainAfterExit, Unit= identity, boot times, or clock-sync state.",
+  "corpus_inputs_read_only": [
+    {
+      "file": "corpus/S1.md",
+      "locator_sections": "Description; OnUnitInactiveSec; AccuracySec; RandomizedDelaySec; Persistent",
+      "source_id": "S1",
+      "title": "systemd timer manual source",
+      "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml",
+      "version": "Pinned upstream tag v257; target systemd 257"
+    },
+    {
+      "file": "corpus/S2.md",
+      "locator_sections": "Parsing Time Spans; Calendar Events; calendar examples",
+      "source_id": "S2",
+      "title": "systemd time manual source",
+      "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml",
+      "version": "Pinned upstream tag v257; target systemd 257"
+    }
+  ],
+  "deliverables": [
+    "verification.md",
+    "source-map.json",
+    "sources/P1-systemd.timer-v257-excerpts.md",
+    "sources/P2-systemd.time-v257-excerpts.md",
+    "records/native-goal-activation.json",
+    "records/native-goal-completion.json"
+  ],
+  "generated_at_utc": "2026-10-10T05:12Z",
+  "primary_retrievals": [
+    {
+      "local_evidence": "sources/P1-systemd.timer-v257-excerpts.md",
+      "locator_sections": "Description; Options (OnUnitInactiveSec, OnCalendar, AccuracySec, RandomizedDelaySec, Persistent, Unit, WakeSystem)",
+      "operation": "HTTPS GET via web_fetch and curl; excerpts saved, no code executed",
+      "retrieved_at_utc": "2026-10-10T05:10Z-05:11Z",
+      "source_id": "P1",
+      "status": "200 OK",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.timer.xml",
+      "url_relation": "raw content of corpus-listed S1 blob URL",
+      "version": "Pinned upstream tag v257"
+    },
+    {
+      "local_evidence": "sources/P2-systemd.time-v257-excerpts.md",
+      "locator_sections": "Calendar Events (shorthands, normalized forms, systemd-analyze calendar)",
+      "operation": "HTTPS GET via web_fetch and curl; excerpts saved, no code executed",
+      "retrieved_at_utc": "2026-10-10T05:10Z-05:11Z",
+      "source_id": "P2",
+      "status": "200 OK",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml",
+      "url_relation": "raw content of corpus-listed S2 blob URL",
+      "version": "Pinned upstream tag v257"
+    }
+  ],
+  "proposed_vs_executed": "Proposed: verify the six numbered claims against systemd 257 primary manuals with disposition, version/configuration, citation, corrected wording, exceptions, and two acceptance checks. Executed: exactly that; no deployment substitution, no architecture redesign, no input modification, no other cases/results/canon read.",
+  "retrieval_failures": [],
+  "retrieval_policy_compliance": {
+    "additional_primary_pages_beyond_listed_urls": 0,
+    "corpus_listed_urls_followed": 2,
+    "limit_additional_pages": 8,
+    "within_limit": true
+  },
+  "role": "Applicability/exception verification",
+  "slot_id": "B-APPL-G-02",
+  "unresolved_evidence": [
+    "Service unit Type=/RemainAfterExit= and Unit= identity (claims 3, 5)",
+    "Timer enablement/active state at boot and Persistent timestamp file presence (claims 1, 6)",
+    "Effective AccuracySec and TimerSlackNSec (claim 4)",
+    "Boot times, clock-sync/RTC state (claim 6)",
+    "Service logs / journal timestamps for operational confirmation (all claims)"
+  ]
+}

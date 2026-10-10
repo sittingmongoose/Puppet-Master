@@ -1,0 +1,132 @@
+{
+  "observed_at_utc": "2026-10-10T06:11:04.496Z",
+  "actual_catalog_projection": {
+    "inheritedProviderInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "parentThreadId": "caa5cbf4-50a7-448a-8965-2eb9994c7ad7",
+    "authorized_provider": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "displayName": "Codex · AUTHORIZED_PROVIDER_INSTANCE",
+      "driverKind": "codex",
+      "canRunChildTask": true,
+      "models": [
+        {
+          "id": "gpt-6.1-sol",
+          "label": "GPT-6.1-Sol",
+          "options": [
+            {
+              "id": "reasoningEffort",
+              "label": "Reasoning",
+              "type": "select",
+              "options": [
+                {
+                  "id": "low",
+                  "label": "Low",
+                  "isDefault": true
+                },
+                {
+                  "id": "medium",
+                  "label": "Medium"
+                },
+                {
+                  "id": "high",
+                  "label": "High"
+                },
+                {
+                  "id": "xhigh",
+                  "label": "Extra High"
+                },
+                {
+                  "id": "max",
+                  "label": "Max"
+                },
+                {
+                  "id": "ultra",
+                  "label": "Ultra"
+                }
+              ],
+              "currentValue": "low"
+            },
+            {
+              "id": "serviceTier",
+              "label": "Service Tier",
+              "type": "select",
+              "options": [
+                {
+                  "id": "default",
+                  "label": "Standard",
+                  "isDefault": true
+                },
+                {
+                  "id": "priority",
+                  "label": "Fast",
+                  "description": "2x speed, increased usage"
+                }
+              ],
+              "currentValue": "default"
+            }
+          ]
+        },
+        {
+          "id": "gpt-6-luna",
+          "label": "GPT-6-Luna",
+          "options": [
+            {
+              "id": "reasoningEffort",
+              "label": "Reasoning",
+              "type": "select",
+              "options": [
+                {
+                  "id": "low",
+                  "label": "Low"
+                },
+                {
+                  "id": "medium",
+                  "label": "Medium",
+                  "isDefault": true
+                },
+                {
+                  "id": "high",
+                  "label": "High"
+                },
+                {
+                  "id": "xhigh",
+                  "label": "Extra High"
+                },
+                {
+                  "id": "max",
+                  "label": "Max"
+                }
+              ],
+              "currentValue": "medium"
+            },
+            {
+              "id": "serviceTier",
+              "label": "Service Tier",
+              "type": "select",
+              "options": [
+                {
+                  "id": "default",
+                  "label": "Standard",
+                  "isDefault": true
+                },
+                {
+                  "id": "priority",
+                  "label": "Fast",
+                  "description": "1.5x speed"
+                }
+              ],
+              "currentValue": "default"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "projection_basis": "Exact selected authorized provider+requested models from live returned catalog; other provider/model rows deliberately excluded",
+  "mapping_basis": "same existing user-authorized routing instance; current shortened UI label AUTHORIZED_PROVIDER_INSTANCE; resolved session email/OAuth provenance UNKNOWN; no account/profile changes",
+  "private_not_GitHub_metadata": true,
+  "operational_errors_preserved": [
+    "First string check incorrectly expected full .com in shortened UI display label; corrected against exact existing label.",
+    "Attempt to save full catalog as one shell argument exceeded ARG_MAX; no provider dispatch or scientific input affected."
+  ]
+}

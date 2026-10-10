@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-investigator-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-investigator-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-investigator-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-investigator-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-investigator-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "**The assigned investigator stage is complete.** The required outputs are saved:\n\n- [Discovery](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md>)\n- [Complete reconciled proposal](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md>)\n\nThe reveal helper ran once. The frozen discovery hash matches its recorded hash, and the source map parses with six stable source IDs. The proposal distinguishes BagIt and OCFL requirements from recommendations and owner choices, and marks product checks and restore tests as **NOT_RUN** or proposed. Research covered [BagIt RFC 8493](https://www.rfc-editor.org/rfc/rfc8493.html), [OCFL 1.1](https://ocfl.io/1.1/spec/), and [PREMIS v3.0](https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf).\n\nThe native Goal was directly observed active, then completed after the outputs were saved. Elapsed Goal time: **5m 44s**.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cdb2b9a1-cd11-40ae-bd7b-4c17894a7e2e",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "**The assigned investigator stage is complete.** The required outputs are saved:\n\n- [Discovery](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/sources/index.md>)\n- [Released plan copy](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/revealed-plan.md>)\n- [Complete reconciled proposal](<ER12_RUNTIME/runs/A8-01/treatment/stages/investigator/draft.md>)\n\nThe reveal helper ran once. The frozen discovery hash matches its recorded hash, and the source map parses with six stable source IDs. The proposal distinguishes BagIt and OCFL requirements from recommendations and owner choices, and marks product checks and restore tests as **NOT_RUN** or proposed. Research covered [BagIt RFC 8493](https://www.rfc-editor.org/rfc/rfc8493.html), [OCFL 1.1](https://ocfl.io/1.1/spec/), and [PREMIS v3.0](https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf).\n\nThe native Goal was directly observed active, then completed after the outputs were saved. Elapsed Goal time: **5m 44s**.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:cdb2b9a1-cd11-40ae-bd7b-4c17894a7e2e",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-investigator-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "7ef29f841e15cb8e34486e56045a41846e79883012312d28c2d93239c22557b2",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A8-01/treatment/stages/investigator/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

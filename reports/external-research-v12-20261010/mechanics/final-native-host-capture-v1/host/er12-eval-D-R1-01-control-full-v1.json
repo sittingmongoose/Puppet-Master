@@ -1,0 +1,112 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "declaration": {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-D-R1-01-control-full-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6.1-sol"
+      },
+      "actual_response": {
+        "structured_content_metadata": [
+          {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-D-R1-01-control-full-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T07:04:02.441Z",
+              "updatedAt": "2026-10-10T07:35:05.167Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6.1-sol",
+                "requestedAt": "2026-10-10T07:04:02.443Z",
+                "startedAt": "2026-10-10T07:04:04.166Z",
+                "completedAt": "2026-10-10T07:34:40.245Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T07:04:02.443Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        ],
+        "structuredContent": {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-D-R1-01-control-full-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T07:04:02.441Z",
+            "updatedAt": "2026-10-10T07:35:05.167Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6.1-sol",
+              "requestedAt": "2026-10-10T07:04:02.443Z",
+              "startedAt": "2026-10-10T07:04:04.166Z",
+              "completedAt": "2026-10-10T07:34:40.245Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-eval-D-R1-01-control-full-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T07:04:02.443Z"
+            }
+          ],
+          "nextPosition": 0,
+          "hasMore": true
+        }
+      },
+      "terminal_task_status": {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-D-R1-01-control-full-v1",
+            "status": "completed",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6.1-sol"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-D-R1-01-control-full-v1",
+          "status": "completed",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6.1-sol"
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "1964698bd5e269952b81c220adf500c88b367e5d70f5d9c27d3e24f640f05b80",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/final-native-host-capture-v1/host/er12-eval-D-R1-01-control-full-v1.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

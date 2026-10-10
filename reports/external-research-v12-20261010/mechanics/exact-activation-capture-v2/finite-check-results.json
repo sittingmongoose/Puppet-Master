@@ -1,0 +1,69 @@
+{
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "additive preservation, readonly backups, hash dependency updates, idempotence",
+      "ok": true
+    },
+    {
+      "check": "direct functions.exec body with mock native tools and actual shell/unchanged checker",
+      "ok": true,
+      "details": {
+        "mock_native_only": true,
+        "full_json_single_argument": true,
+        "quotes_newlines_preserved": true,
+        "one_call_per_invocation": true,
+        "wrong_objective_refused": true,
+        "scientific_inputs_unread": true
+      }
+    },
+    {
+      "check": "used stage rejected after receipt",
+      "ok": true
+    },
+    {
+      "check": "common arm overlay: control",
+      "ok": true
+    },
+    {
+      "check": "common arm overlay: treatment",
+      "ok": true
+    },
+    {
+      "check": "dispatched rejected",
+      "ok": true
+    },
+    {
+      "check": "expired rejected without reset",
+      "ok": true
+    },
+    {
+      "check": "hash mismatch rejected",
+      "ok": true
+    },
+    {
+      "check": "D1 rejected",
+      "ok": true
+    },
+    {
+      "check": "C2 rejected",
+      "ok": true
+    },
+    {
+      "check": "nonmechanical dependency refused without reading content",
+      "ok": true
+    },
+    {
+      "check": "known treatment suffix omission refused by unchanged guard",
+      "ok": true
+    },
+    {
+      "check": "all six exact dependencies unchanged",
+      "ok": true
+    }
+  ],
+  "candidate_goals_created": 0,
+  "dispatches": 0,
+  "live_stages_opened": 0,
+  "scientific_inputs_opened": 0
+}

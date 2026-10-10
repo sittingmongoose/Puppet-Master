@@ -64,25 +64,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A2-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the A2-02-control reviser stage. One native Goal was activated and completed, with both responses preserved. Goal time: **7m 12s**.\n\n- [Complete proposal](ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md)\n- [Source map](ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md)\n- [Goal activation response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json) and [completion response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json)\n\nThe proposal addresses all eight plan clauses and dispositions C1\u2013C5. The fresh commit-history check confirms Mirador\u2019s badge fix merge is in the v4.2.4 history; [the compare result](https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9) supports that finding. No product validation was run. Artifact checks confirmed valid source-map JSON, 22 unique source IDs, and coverage of all eight clauses.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:49642297-20c8-47d0-b8ce-3c146c5f3437",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the A2-02-control reviser stage. One native Goal was activated and completed, with both responses preserved. Goal time: **7m 12s**.\n\n- [Complete proposal](ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md)\n- [Source map](ER12_RUNTIME/runs/A2-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A2-02/control/stages/reviser/sources/index.md)\n- [Goal activation response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-activation.json) and [completion response](ER12_RUNTIME/runs/A2-02/control/stages/reviser/goal-completion.json)\n\nThe proposal addresses all eight plan clauses and dispositions C1\u2013C5. The fresh commit-history check confirms Mirador\u2019s badge fix merge is in the v4.2.4 history; [the compare result](https://api.github.com/repos/ProjectMirador/mirador/compare/25c0b0e...73fafe9) supports that finding. No product validation was run. Artifact checks confirmed valid source-map JSON, 22 unique source IDs, and coverage of all eight clauses.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:49642297-20c8-47d0-b8ce-3c146c5f3437",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "6b9e316a6d19a14cf6804244876077c327d622550fee8ea3fc92afd988dd2975"
   }
 }

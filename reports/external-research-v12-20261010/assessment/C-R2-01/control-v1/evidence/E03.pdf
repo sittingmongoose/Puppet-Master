@@ -1,0 +1,38 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf"
+  ],
+  "source_urls": [
+    "https://www.archives.gov/files/preservation/storage/pdf/label-stock-laser-printer.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_lines": 138
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R2-01/control-v1/evidence/retrieval-log.json",
+      "source_id": "E03",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 138
+    }
+  ],
+  "raw_sha256": "9877da2bbcb45b42b8b12e79d8557028e983fbc8fc78976b3f0b7442044b1a46",
+  "rawSHA256": "9877da2bbcb45b42b8b12e79d8557028e983fbc8fc78976b3f0b7442044b1a46",
+  "original_bytes": 138903,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/C-R2-01/control-v1/evidence/E03.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.gov.uk/service-manual/user-research/find-user-research-participants"
+  ],
+  "source_urls": [
+    "https://www.gov.uk/service-manual/user-research/find-user-research-participants"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "text_lines": 259
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R2-04/control-v1/evidence/primary/retrieval-manifest.json",
+      "source_id": "S02",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "text_lines": 259
+    }
+  ],
+  "raw_sha256": "b23a61639c385f67d9095bcae680c7203a93b5d492754b7fe061ce3e571209fc",
+  "rawSHA256": "b23a61639c385f67d9095bcae680c7203a93b5d492754b7fe061ce3e571209fc",
+  "original_bytes": 18185,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R2-04/control-v1/evidence/primary/S02.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

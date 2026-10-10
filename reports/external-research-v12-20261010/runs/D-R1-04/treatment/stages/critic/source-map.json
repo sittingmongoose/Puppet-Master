@@ -1,0 +1,267 @@
+{
+  "run_id": "D-R1-04-treatment",
+  "stage": "critic",
+  "basis": "Independent review of the original treatment brief and exact revealed plan; source identities and IDs retained from the investigator map, with critic primary-source checks added below.",
+  "sources_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Rain gardens (bioretention) 101",
+      "url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "version_or_release": "Living online manual; no page revision date/version displayed in accessed page (© 2026 MPCA).",
+      "locator": "How does a rain garden work? and What maintenance is needed; page lines 62-91.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official page and reviewed the cited sections.",
+      "observed_findings": "Distinguishes underdrained from non-underdrained rain gardens; describes street-curb-cut routing, ponding and drainage, low-infiltration soils, monthly inlet inspection, debris/soil removal, and avoiding trampling/compaction.",
+      "governing_condition_default_exception": "General educational description; drainage route depends on whether an underdrain is present. The one-to-two-day drainage statement is guidance, not an identified site or local permit condition.",
+      "applicability": "Mechanism and inspection baseline. Does not identify this hypothetical garden's layers, drawdown criterion, site performance, or governing jurisdiction.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official MPCA page and reviewed its rain-garden mechanism, underdrain, drainage-time, and maintenance text.",
+        "locator": "Official page lines 62-91, especially 77-80 and 90-91.",
+        "observed_findings": "Confirms the underdrain/no-underdrain distinction, curb-cut routing, ponding then percolation or underdrain flow, a general one-to-two-day drainage statement, and routine inlet inspections.",
+        "governing_condition_default_exception": "Educational Minnesota manual guidance; its drainage statement is not a local requirement for this hypothetical site.",
+        "applicability": "Supports the draft's process distinctions and maintenance inquiry only; does not establish this garden's configuration or criterion."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Overview for bioretention",
+      "url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "version_or_release": "Living online manual; no page revision date/version displayed.",
+      "locator": "Water quantity treatment, lines 106-119.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official page and reviewed the high-flow bypass section.",
+      "observed_findings": "Describes offline and online bypass, curb-cut bypass after maximum ponding, the possibility of gutter bypass by design, erosion risk, and the risk of short-circuiting.",
+      "governing_condition_default_exception": "High-flow bypass is expected when inflow exceeds the design water-quality volume or cell capacity; online routes need erosion/short-circuit care.",
+      "applicability": "Supports treating bypass as an observation to interpret against as-builts and event context, not automatically a malfunction. Minnesota design recommendations may not govern the unspecified site.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official MPCA bioretention overview and reviewed the water-quantity/bypass section.",
+        "locator": "Official page lines 106-123, especially 111-119.",
+        "observed_findings": "Confirms high-flow bypass when cells fill, offline gutter bypass after maximum ponding, and erosion/short-circuiting considerations.",
+        "governing_condition_default_exception": "The described bypass is tied to design volume/cell capacity and flow-path configuration; the page is Minnesota guidance, not evidence of this site's intent.",
+        "applicability": "Supports interpreting observed pass-by against as-builts and event size rather than labeling it a defect."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Green Streets Handbook",
+      "url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+      "publisher": "U.S. Environmental Protection Agency",
+      "version_or_release": "February 2021 web edition.",
+      "locator": "Chapter 4, sections 4.4-4.5; PDF pp. 45-53, including curb cuts, pretreatment, bypass and underdrains.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official PDF and reviewed relevant text.",
+      "observed_findings": "Curb-cut placement in gutter flow path, grading toward practice, high-flow gutter bypass, low-profile berm/runnel as a site-dependent alternative, grates/trench drains, pretreatment for sediment/debris, bypass/overflow and underdrain tradeoffs.",
+      "governing_condition_default_exception": "Curb opening behavior depends on placement, slope, flow rate and practice capacity. Underdrains are a conditional management approach; local dewatering rules differ.",
+      "applicability": "Alternatives and mechanisms for a qualified partner to compare. Contains design examples and dimensions that are not adopted as prescriptions here.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official EPA February 2021 PDF and reviewed Chapter 4 curb-cut placement, grading, and bypass text.",
+        "locator": "PDF pp. 45-53; parsed text around lines 1792-1827 and 2034-2055.",
+        "observed_findings": "Confirms flow-path placement, grading toward the practice, bypass at capacity, and a site-dependent berm/runnel option for steep gutter lines.",
+        "governing_condition_default_exception": "These are design considerations conditioned on local flow and geometry; the handbook is guidance and gives dimensions that are not adopted in the proposal.",
+        "applicability": "Supports conditional alternatives for partner review, not a retrofit recommendation or local design."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+      "url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "version_or_release": "Living online manual; no page revision date/version displayed.",
+      "locator": "Post-Construction Phase O&M and common problems; lines 156-210.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official page and reviewed inspection schedule, maintenance cautions and symptom table.",
+      "observed_findings": "Recommends post-storm and routine checks of ponding, inlets/outlets/bypass, debris, sediment, vegetation and erosion; cautions against traffic/foot traffic compaction; lists leaves, sediment and plant debris as possible flow-path obstructions and surface sediment/loading as possible slow-drawdown causes.",
+      "governing_condition_default_exception": "Schedule varies by year of operation, season and site. First-year checks follow storms over 0.5 inches; later checks include semiannual 48-hour post-event checks when ground is not frozen; deep sumps may hold water.",
+      "applicability": "Useful condition checklist, not a mandatory standard for this unnamed site. The 48-hour observation is not asserted as a local compliance requirement.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official MPCA O&M page and checked its inspection table and common-problems table.",
+        "locator": "Official page lines 170-212, especially 178-182 and 200-212.",
+        "observed_findings": "Confirms first-year post-storm inspection entries, later semiannual checks at 48 hours after rain when ground is not frozen (with deep-sump caveat), debris-related flow obstruction, and standing water beyond 48 hours as a symptom associated with possible sediment/clogging.",
+        "governing_condition_default_exception": "Guidance schedule varies by operation stage and season; 48 hours is not a universal regulatory threshold and deep sumps can retain water.",
+        "applicability": "Supports conditional observation and maintenance review only; the draft states the locality caveat correctly."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "Operation and Maintenance of Green Infrastructure Receiving Runoff from Roads and Parking Lots: Technical Memorandum",
+      "url": "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf",
+      "publisher": "U.S. Environmental Protection Agency",
+      "version_or_release": "2016 technical memorandum; PDF is the EPA-hosted published edition.",
+      "locator": "Inspection and Assessment; pp. 7-12, especially lines 272-322 and 364-378; pretreatment discussion pp. 6-7.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened official PDF and reviewed inspection, drawdown and assessment sections.",
+      "observed_findings": "Inspection cadence depends on drainage area, land use, watershed activities and rain magnitude/intensity; staff gauges or repeated levels can track drawdown; records to gather include design specifications and past maintenance; standing water at 48 hours can trigger further investigation.",
+      "governing_condition_default_exception": "The memo frames 48 hours as an example investigation trigger and calls for site-specific criteria/qualified assessment; it is not a universal rule.",
+      "applicability": "Supports the records-first and low-impact observation proposal; does not diagnose this site's infiltration or establish local thresholds.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official EPA 2016 memorandum and checked inspection triggers, measurement approaches, and the records/assessment discussion.",
+        "locator": "PDF pp. 7-10; parsed text lines 272-300 and 368-378.",
+        "observed_findings": "Confirms that standing water at 48 hours is an example trigger for further evaluation; inspection frequency varies with drainage area, watershed activity, and rainfall; a staff gage or other level measure can track decline; design specifications and past maintenance are inputs to assessment.",
+        "governing_condition_default_exception": "The 48-hour language is an example for qualified further evaluation, not a site-specific or universal compliance standard.",
+        "applicability": "Supports the records-first and safe drawdown-observation proposal, not a diagnosis or required local threshold."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Assessing the performance of stormwater Best Management Practices (BMPs)",
+      "url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "version_or_release": "Living online manual; page notes underlying assessment manual was developed in 2010; no current page revision date displayed.",
+      "locator": "Levels 1-4 summary; lines 64-81.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official page and reviewed assessment level descriptions and effort/limitations.",
+      "observed_findings": "Visual inspection is quick/inexpensive but limited; capacity, simulated runoff and long-term monitoring add effort and answer different questions. Visual results do not establish numeric credits.",
+      "governing_condition_default_exception": "Owners seeking regulatory credit from testing must consult the responsible agency; effort/time table is a general planning aid.",
+      "applicability": "Supports phased observation then justified escalation. No assessment or performance test was executed.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:01Z",
+        "observed_operation": "Opened the official MPCA BMP-assessment page and reviewed its four-level summary.",
+        "locator": "Official page lines 64-81, especially 65-70.",
+        "observed_findings": "Confirms visual inspection, capacity tests, synthetic-runoff tests, and monitoring as distinct assessment levels; Level 1 does not yield numeric performance data.",
+        "governing_condition_default_exception": "Level choice depends on objective and effort; credit use requires agency consultation.",
+        "applicability": "Supports a staged observation then escalation plan and the draft's distinction between visual evidence and performance claims."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Overview and methods of pretreatment",
+      "url": "https://stormwater.pca.state.mn.us/overview_and_methods_of_pretreatment",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "version_or_release": "Living online manual; no page revision date/version displayed.",
+      "locator": "Pretreatment selection conditions, lines 149-175.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official page and reviewed pretreatment selection conditions.",
+      "observed_findings": "Selection depends on debris/pollutant, space, topography and receiving flow; filter strips are associated with sheet flow and small gardens, forebays with channelized flow, and screens with leaves/large debris.",
+      "governing_condition_default_exception": "Examples assume no overriding site limitations; no device is universally preferred.",
+      "applicability": "Frames alternatives for the city partner after flow type and access are known; it does not authorize or size a retrofit.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Opened the official MPCA pretreatment page and reviewed its applicability section.",
+        "locator": "Official page lines 147-162, especially 149-162.",
+        "observed_findings": "Confirms selection by site conditions and receiving flow; filter strips are indicated for sheet flow/small residential rain gardens, above-ground forebays for channelized flow, and screens for leaves/large debris.",
+        "governing_condition_default_exception": "Examples assume no overriding limitations; pretreatment is not a stand-alone treatment and must match the downstream practice and maintenance capacity.",
+        "applicability": "Supports the draft's conditional alternatives, not a device selection for this site."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Capture of gross solids and sediment by pretreatment practices for bioretention",
+      "url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+      "publisher": "University of Minnesota Water Resources Center / St. Anthony Falls Laboratory project",
+      "version_or_release": "Final report by A. Erickson and M. Hernick, SAFL Project Report No. 586, January 2019; 2022 research brief also listed by the official project page.",
+      "locator": "Project overview, tested practices and findings; lines 13-38; report links at lines 43-46.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the official UMN project page at the recorded access time and reviewed its project summary and listed report metadata. The full report text was not reviewed.",
+      "observed_findings": "Field tests compared grass-lined and rock-lined inlets, Rain Guardian Bunker/Turret and shallow sump. Reported capture varied between low/high intensity; overflow in tested sump reduced gross-solid capture; summary reports Bunker/Turret easier to maintain than grass/rock inlet.",
+      "governing_condition_default_exception": "Test method/intensity and device configurations bound results; this is pretreatment capture evidence, not full-garden field performance or product endorsement.",
+      "applicability": "Offers unfamiliar alternatives and maintenance tradeoffs for partner discussion; no result is transferred as expected local efficiency.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Opened the official University of Minnesota Water Resources Center project summary and reviewed tested configurations and findings; the full linked report was not downloaded or inspected.",
+        "locator": "Official project page lines 15-32 and report links at 43-46.",
+        "observed_findings": "Confirms five tested configurations; low/high-intensity results; reduced gross-solids capture in the tested shallow sump under overflow; and relative maintenance findings for Bunker/Turret versus grass/rock inlets.",
+        "governing_condition_default_exception": "Findings are bounded to the study's devices and test method; they do not establish whole-garden performance or product suitability here.",
+        "applicability": "The draft uses the results only as bounded comparison evidence, which is appropriate."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Designing Holistic Bioretention for Performance and Longevity (Bioretention Design Handbook)",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+      "publisher": "U.S. Environmental Protection Agency, EPA 841-B-23-002",
+      "version_or_release": "November 2023 edition.",
+      "locator": "Chapter 14, section 14.2, Inlets and Inspection and Maintenance Activities; PDF/text pages 14-4 and following, lines 8094-8128.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the EPA-hosted text edition and reviewed inlet maintenance guidance.",
+      "observed_findings": "Calls for clearing inlets/pretreatment to prevent occlusion, bypass, clogging and channelization; advises inspection during/after storms for grading or inlet damage and debris/sediment buildup.",
+      "governing_condition_default_exception": "The handbook itself states it is guidance and that site design must follow local conditions/rules; its example maintenance frequencies are not local requirements.",
+      "applicability": "Supports storm-time/after-event visual observations and event/history records. No proposed repair or design dimension is adopted.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Opened the official EPA handbook text and checked Chapter 14.2 inlet and maintenance passages.",
+        "locator": "EPA 841-B-23-002, Chapter 14.2, parsed text lines 8108-8124.",
+        "observed_findings": "Confirms checking for grading changes, inlet damage, erosion/sediment, leaves and debris that could block inflow, and clearing obstructions.",
+        "governing_condition_default_exception": "The handbook is guidance; inspection examples are not jurisdiction-specific requirements.",
+        "applicability": "Supports the draft's visual/history checklist and conditional maintenance inquiry."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Dynamic Media Storage Links Antecedent Soil Moisture to Runoff Retention in Field-Scale Bioretention Systems",
+      "url": "https://doi.org/10.3390/w18182320",
+      "publisher": "Water, 2026, 18(18), 2320",
+      "version_or_release": "Version of Record, published 2026-09-16; publisher notes page records original article/PDF upload on 2026-09-16.",
+      "locator": "Abstract and methods excerpt surfaced by publisher-indexed search result; title/abstract/methods. Publisher article URL: https://www.mdpi.com/2073-4441/18/18/2320; notes: https://www.mdpi.com/2073-4441/18/18/2320/notes.",
+      "access_utc": "2026-10-10T06:35:28Z",
+      "observed_operation": "At the recorded access time, publisher-indexed search output exposed the abstract and methods excerpt. Full article text was not verified in this pass.",
+      "observed_findings": "Study reports three wet seasons of monitoring at two contrasting roof-fed Beijing facilities and event variables including rainfall depth, duration, intensity and antecedent media storage. The abstract cautions that dynamic storage depends on hydraulic loading, media configuration and drainage pathways.",
+      "governing_condition_default_exception": "Two engineered systems in Beijing differ in media, hydraulic load, lining and drainage; conclusions are case-specific and the accessible abstract is the limit of review here.",
+      "applicability": "Used only to justify collecting event and antecedent conditions and to caution against transfer; no reported efficiency is used as a target or prediction.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Queried the DOI and official MDPI article/notes. Publisher-indexed output exposed the Version of Record metadata, abstract, and body excerpt; direct page opening through the web tool returned an internal error. The detailed five-minute rainfall method was not independently reverified beyond accessible indexed material.",
+        "locator": "Publisher article abstract and accessible methods/discussion excerpt; publisher version-notes page records the 2026-09-16 Version of Record.",
+        "observed_findings": "Confirms three wet seasons at two contrasting roof-fed Beijing systems and the paper's focus on event rainfall and antecedent media storage; it warns that interpretation depends on loading, media configuration, and drainage pathways.",
+        "governing_condition_default_exception": "Two contrasting engineered systems in Beijing; the study is case-specific and its numerical results are not transferable to this hypothetical street garden.",
+        "applicability": "Supports recording event/antecedent conditions and cautioning against transfer. The investigator source map openly limits its method claim to indexed abstract/methods material."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Storm Water Management Model (SWMM) User's Manual, Version 5.2",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+      "publisher": "U.S. Environmental Protection Agency",
+      "version_or_release": "User's Manual Version 5.2, listed by EPA in February 2022.",
+      "locator": "Section 3.4.8 LID Representation, around lines 5123-5155.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the EPA-hosted manual and reviewed the LID representation section.",
+      "observed_findings": "SWMM represents LID controls with parameterized layers and a water balance; the bioretention surface can store/run on water, soil/storage layers govern movement, and optional drains/overflow may be modeled.",
+      "governing_condition_default_exception": "Model output depends on supplied geometry, rainfall, layer properties, underdrain and flow boundary inputs; it is not a direct measurement.",
+      "applicability": "Optional future scenario model only after verified site inputs exist. No software was installed and no model was run.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Opened the official EPA SWMM 5.2 manual and reviewed the LID representation section.",
+        "locator": "Manual section 3.4.8, parsed text lines 5123-5170.",
+        "observed_findings": "Confirms layer-based LID representation and a moisture balance tracking movement/storage among layers, with surface, soil, storage, overflow, and optional underdrain pathways.",
+        "governing_condition_default_exception": "Model output depends on supplied model parameters, catchment, rainfall, and drainage configuration; it is not field measurement.",
+        "applicability": "Supports only the proposed future scenario model after verified inputs; no run was performed."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "EPA SWMM repository release v5.2.4",
+      "url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+      "publisher": "U.S. EPA-maintained Stormwater-Management-Model repository",
+      "version_or_release": "Build 5.2.4, August 2023; release commit 7952ca8.",
+      "locator": "Engine updates in the v5.2.4 release; release page lines 175-211.",
+      "access_utc": "2026-10-10T06:31:50Z",
+      "observed_operation": "Opened the release history and reviewed the tagged release and fixes.",
+      "observed_findings": "Release records corrected LID layer water-flux calculations, invalid-input checks for LID with underdrain, gutter slope, and effective hydraulic head for curb inlets with inclined throats.",
+      "governing_condition_default_exception": "These fixes matter to a future model using affected representations/parameters; the release page at access did not establish that v5.2.4 is the latest release in all distributions.",
+      "applicability": "If later modeling proceeds, confirm and pin the version used and preserve its change history; these software fixes do not establish or diagnose physical site behavior.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:44:24Z",
+        "observed_operation": "Opened the EPA-maintained GitHub release record for v5.2.4 and reviewed the tagged commit and engine updates.",
+        "locator": "Release page lines 153-184; tag commit 7952ca8 and Build 5.2.4 (Aug 2023).",
+        "observed_findings": "Confirms corrections to LID layer water-flux rates, underdrain invalid-input checking, depressed-gutter slope calculation, and effective hydraulic head for inclined-throat curb inlets.",
+        "governing_condition_default_exception": "These are specific changes in v5.2.4; the release page alone does not establish that this is the latest release in every distribution.",
+        "applicability": "Supports version pinning and source tracking, not a diagnosis of the site."
+      }
+    }
+  ],
+  "lineage_source_map": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+  "critic_review_metadata": {
+    "review_time_utc": "2026-10-10T06:44:01Z to 2026-10-10T06:44:24Z",
+    "scope": "Primary-source verification of consequential claims and limits in the investigator package.",
+    "goal_binding_guard": "Passed: {\"ok\": true, \"provenance_independently_proved\": false}",
+    "source_id_policy": "Original S01-S12 IDs, titles, and URLs preserved; critic notes are appended per ID without rebinding."
+  }
+}

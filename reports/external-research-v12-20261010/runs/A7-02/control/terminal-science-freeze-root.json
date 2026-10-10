@@ -64,25 +64,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A7-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The native Goal activated and completed under thread `01a12431-9358-7ae2-b7a1-c6ac55c35c6d`; the required artifacts were saved before completion.\n\n- [final.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md) contains the complete proposal, clause-by-clause plan dispositions, critique responses, and validation status.\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json) preserves 21 source IDs and records 13 direct primary-source rechecks and the observed Goal fields.\n- [sources/index.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md) provides the navigable source index.\n\nI accepted and corrected the S05 wording: its documentation page shows a 2025-12-12 update date, while no Zotero app release is pinned. ([Zotero bibliography documentation](https://www.zotero.org/support/creating_bibliographies)) Product, API, and end-to-end export checks remain **NOT_RUN**; proposed validations are labeled accordingly.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8dc22abd-0a06-4d9e-9f0d-46194773de80",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The native Goal activated and completed under thread `01a12431-9358-7ae2-b7a1-c6ac55c35c6d`; the required artifacts were saved before completion.\n\n- [final.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md) contains the complete proposal, clause-by-clause plan dispositions, critique responses, and validation status.\n- [source-map.json](ER12_RUNTIME/runs/A7-02/control/stages/reviser/source-map.json) preserves 21 source IDs and records 13 direct primary-source rechecks and the observed Goal fields.\n- [sources/index.md](ER12_RUNTIME/runs/A7-02/control/stages/reviser/sources/index.md) provides the navigable source index.\n\nI accepted and corrected the S05 wording: its documentation page shows a 2025-12-12 update date, while no Zotero app release is pinned. ([Zotero bibliography documentation](https://www.zotero.org/support/creating_bibliographies)) Product, API, and end-to-end export checks remain **NOT_RUN**; proposed validations are labeled accordingly.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8dc22abd-0a06-4d9e-9f0d-46194773de80",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "4f8927caf74fb206669a18db3bcd9d5c8ca143e6a53dd0989c9f5d1da22cc22a"
   }
 }

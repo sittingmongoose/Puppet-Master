@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-10T06:37:22.086573+00:00",
+  "status": "NOT_INTEGRATED_REAL_LAYOUT_INCOMPATIBILITY",
+  "full_sources_read": [
+    "overlay.py",
+    "activation-snippet-template.js",
+    "README.md",
+    "checks.py",
+    "finite-check-results.json"
+  ],
+  "pins_verified": true,
+  "D1_21_pins_unchanged": true,
+  "finding": "Existing real investigator freeze includes immutable brief path/SHA; later stages include immutable predecessor science path/SHA. v2 records() rejects any nonmechanical carried reference before dispatch. Synthetic checks omit real carried brief/predecessor metadata. No actual D2 stage/input access or candidate canary; do not use v2 unchanged.",
+  "required_repair": "Keep immutable nonmechanical records untouched as opaque metadata; never open/check their content in overlay, retain existing worker verification. Mechanically update ONLY changed assignment/request/input-map dependencies. Add exact real layout metadata fixtures with unopened content sentinels; preserve original v2."
+}

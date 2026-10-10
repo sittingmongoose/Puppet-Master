@@ -1,10 +1,20 @@
-# S04 — Microsoft Graph event resource
-
-- URL: https://learn.microsoft.com/en-us/graph/api/resources/event?view=graph-rest-1.0
-- Version: Microsoft Graph REST v1.0 event resource; live documentation.
-- Access observation: 2026-10-10T04:00:20Z.
-- Locators: properties `cancelledOccurrences`, `exceptionOccurrences`, `instances`, `originalStart`, `seriesMasterId`, `type`.
-
-**Observed operation/model.** Event `type` distinguishes `singleInstance`, `occurrence`, `exception`, and `seriesMaster`. `seriesMasterId` links to master. `originalStart` is UTC for an occurrence/exception. A master exposes `exceptionOccurrences` and `cancelledOccurrences` separately; `instances` includes ordinary and modified items, but omits canceled ones.
-
-**Conditions and applicability.** Graph's master lookups/select/expand and UTC API identity are provider conventions. The useful comparison is that current moved start and original recurrence position are distinct; ICS carries that via component UID/RID and zone-aware date-time, not Graph IDs or UTC-only `originalStart`.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "edf23322b0a248fe41a7643c4c6230268df008127cbbe43e74eda9561b9aa7fb",
+  "rawSHA256": "edf23322b0a248fe41a7643c4c6230268df008127cbbe43e74eda9561b9aa7fb",
+  "original_bytes": 1060,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S04-graph-event.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

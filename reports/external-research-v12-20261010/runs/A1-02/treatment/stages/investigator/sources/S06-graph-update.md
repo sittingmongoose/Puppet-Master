@@ -1,10 +1,20 @@
-# S06 — Microsoft Graph event update
-
-- URL: https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0
-- Version: Microsoft Graph REST v1.0 PATCH operation; live documentation.
-- Access observation: 2026-10-10T04:00:20Z.
-- Locators: property update notes; HTTP PATCH; occurrence-boundary response note.
-
-**Observed operation/condition.** PATCH updates a particular event object. Documentation notes a modified occurrence can be rejected with `ErrorOccurrenceCrossingBoundary`: Outlook disallows moving an occurrence to/before the previous occurrence's day or to/after the following occurrence's day. Updating a master with separately edited instances may cause notifications for master and instances.
-
-**Application.** This is Graph/Outlook operation behavior, not an iCalendar rule. It is relevant as a provider comparator and as a reason not to imply that API edit semantics transfer to file interchange.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "c46e1b810d67e88e82cb5038d5ff58e7f4e4f24964106f6803d68d22fdff7a50",
+  "rawSHA256": "c46e1b810d67e88e82cb5038d5ff58e7f4e4f24964106f6803d68d22fdff7a50",
+  "original_bytes": 928,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S06-graph-update.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

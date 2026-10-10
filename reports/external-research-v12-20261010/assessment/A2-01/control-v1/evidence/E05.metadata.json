@@ -1,24 +1,20 @@
 {
-  "id": "E05",
-  "url": "https://docs.getodk.org/central-api-submission-management/",
-  "access_started_utc": "2026-10-10T04:55:52.844027+00:00",
-  "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
-  "candidate_ids": [
-    "S05",
-    "C05",
-    "R03"
-  ],
-  "http_status": 200,
-  "effective_url": "https://docs.getodk.org/central-api-submission-management/",
-  "raw_path": "evidence/E05.html",
-  "raw_sha256": "3e2e4c1a31743f5bd3ae03e9e51dbcf1a375c5c1d23e09eda227f8bd0831c948",
-  "text_path": "evidence/E05.txt",
-  "text_sha256": "63fccc42365d45b14b87881f53d6e8239b03ab804742381d211b7763ac025d9e",
-  "response_headers": {
-    "Content-Type": "text/html; charset=utf-8",
-    "Last-Modified": "Sat, 22 Aug 2026 17:48:45 GMT",
-    "Date": "Sat, 10 Oct 2026 04:55:52 GMT",
-    "ETag": "\"40917eb9991fc2a0d9deb8d3b9aa8388\""
-  },
-  "access_finished_utc": "2026-10-10T04:55:53.420514+00:00"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "db23ffc95becbff78399fe51ce36dea2dbedd261c517817b55eda63ced75b299",
+  "rawSHA256": "db23ffc95becbff78399fe51ce36dea2dbedd261c517817b55eda63ced75b299",
+  "original_bytes": 943,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A2-01/control-v1/evidence/E05.metadata.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

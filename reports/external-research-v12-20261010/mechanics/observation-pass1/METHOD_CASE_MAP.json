@@ -1,0 +1,1898 @@
+{
+  "schema": "er12.method_case_map.v1",
+  "scope": "prospective mapping only; no case evaluation",
+  "prospective_queue": {
+    "path": "ER12_RUNTIME/packet/EXPERIMENT_QUEUE.json",
+    "snapshot": "raw/prospective-queue.snapshot.json",
+    "sha256": "16cdda0851551b12bb27b72004238d302c2b11468c05a0d87a9a25dc136d66f1"
+  },
+  "durable_queue": {
+    "path": "ER12_RUNTIME/mechanics/QUEUE.json",
+    "snapshot": "raw/durable-queue.snapshot.json",
+    "sha256": "047e991dd0cfc1cb328afea9a5e10f013ba0c81f7a0edff29cb4a2b7ead3e1c3",
+    "revision": 16,
+    "authority": "read-only; root owns updates"
+  },
+  "rows": [
+    {
+      "slot_id": "A1-01",
+      "track": "A",
+      "contrast_id": "A1",
+      "name": "Transferable stage budget",
+      "prospective_case_id": "ER12-A1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fixed 30/12/18",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A1-v1",
+        "description": "Three fresh Luna contexts; absolute phase boundaries at T0+30/T0+42/T0+60",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A1-01/brief.md",
+          "sha256": "505c23fb5b94201ac9ee19b23a559a1612cc265f0e019b8d90569e357869072d",
+          "bytes": 3091
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A1-01/plan.md",
+          "sha256": "7fa2ceee5be512708f8125956cd243bf887cae2c1ef1349b36d9ac1770c4595f",
+          "bytes": 2670
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "A1-01/control",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1"
+        },
+        {
+          "arm_id": "A1-01/treatment",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A1-01/control",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:16.541999+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A1-01-control-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1"
+          }
+        },
+        {
+          "arm_id": "A1-01/treatment",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:17.424943+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A1-01-treatment-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-investigator-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-treatment-investigator-v1:ordinal:1"
+          }
+        }
+      ]
+    },
+    {
+      "slot_id": "A1-02",
+      "track": "A",
+      "contrast_id": "A1",
+      "name": "Transferable stage budget",
+      "prospective_case_id": "ER12-A1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fixed 30/12/18",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A1-v1",
+        "description": "Three fresh Luna contexts; absolute phase boundaries at T0+30/T0+42/T0+60",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A1-02/brief.md",
+          "sha256": "40b8aba4c7352fb60b8744d134fe902d1cc9b88e1043eecb306cfd6c3428b4dc",
+          "bytes": 2879
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A1-02/plan.md",
+          "sha256": "e585d3899d830686e266298ad05246a0d9409ef106762c5fe85674321cf57258",
+          "bytes": 2413
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "A1-02/treatment",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-investigator-v1"
+        },
+        {
+          "arm_id": "A1-02/control",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-control-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-investigator-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A1-02/control",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:18.416611+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A1-02-control-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A1-02/treatment",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:17.626230+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A1-02-treatment-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A2-01",
+      "track": "A",
+      "contrast_id": "A2",
+      "name": "Retained investigator finalization",
+      "prospective_case_id": "ER12-A2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fresh reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A2-v1",
+        "description": "Retained investigator writes final after immutable fresh critic package",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A2-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A2-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A2-02",
+      "track": "A",
+      "contrast_id": "A2",
+      "name": "Retained investigator finalization",
+      "prospective_case_id": "ER12-A2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 fresh reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A2-v1",
+        "description": "Retained investigator writes final after immutable fresh critic package",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A2-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A2-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A3-01",
+      "track": "A",
+      "contrast_id": "A3",
+      "name": "Negative-claim freshness and exception check",
+      "prospective_case_id": "ER12-A3-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary full critique",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A3-v1",
+        "description": "Targeted governing-document and released-exception check within existing review budget",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A3-01/brief.md",
+          "sha256": "ce8e377b5dbae266b408c6793e2336e145bea2e143511444a246ceaf5841fac4",
+          "bytes": 2897
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A3-01/plan.md",
+          "sha256": "d490464e9066ef07d933d5e8fb1b91980c28695182e280fc0e0722837e7d2718",
+          "bytes": 2623
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "A3-01/treatment",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1"
+        },
+        {
+          "arm_id": "A3-01/control",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A3-01/control",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:55:47.298971+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A3-01-control-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-investigator-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-investigator-v1:ordinal:1"
+          }
+        },
+        {
+          "arm_id": "A3-01/treatment",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:55:46.467368+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A3-01-treatment-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-investigator-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-treatment-investigator-v1:ordinal:1"
+          }
+        }
+      ]
+    },
+    {
+      "slot_id": "A3-02",
+      "track": "A",
+      "contrast_id": "A3",
+      "name": "Negative-claim freshness and exception check",
+      "prospective_case_id": "ER12-A3-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary full critique",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A3-v1",
+        "description": "Targeted governing-document and released-exception check within existing review budget",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A3-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A3-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A4-01",
+      "track": "A",
+      "contrast_id": "A4",
+      "name": "Subject and operation applicability checking",
+      "prospective_case_id": "ER12-A4-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary source checking",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A4-v1",
+        "description": "Bind consequential limits/defaults to exact subject/operation/version/domain/exception",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A4-01/READY.json",
+          "sha256": "8dae343c4271af5a2ed5709ae558e1420529238365d0dab5824abc44c3f9c025",
+          "bytes": 290
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A4-01/brief.md",
+          "sha256": "486a9334b9ac3a036f3955522821424396a7cde74c3516f59ca821cc171e6e10",
+          "bytes": 3375
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A4-01/plan.md",
+          "sha256": "13c9e444018c0578380616e96b0a5df493431b8ba1148aec08fdb68c50b05c7f",
+          "bytes": 5986
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "A4-01/control",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-control-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-investigator-v1"
+        },
+        {
+          "arm_id": "A4-01/treatment",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-investigator-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A4-01/control",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:19.750857+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A4-01-control-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A4-01/treatment",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:20.742673+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A4-01-treatment-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A4-02",
+      "track": "A",
+      "contrast_id": "A4",
+      "name": "Subject and operation applicability checking",
+      "prospective_case_id": "ER12-A4-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary source checking",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A4-v1",
+        "description": "Bind consequential limits/defaults to exact subject/operation/version/domain/exception",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A4-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A4-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A5-01",
+      "track": "A",
+      "contrast_id": "A5",
+      "name": "Verify criticism before applying it",
+      "prospective_case_id": "ER12-A5-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary criticism disposition",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A5-v1",
+        "description": "Recheck consequential criticism before accepting a loss/restriction/new claim",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A5-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A5-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A5-02",
+      "track": "A",
+      "contrast_id": "A5",
+      "name": "Verify criticism before applying it",
+      "prospective_case_id": "ER12-A5-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary criticism disposition",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A5-v1",
+        "description": "Recheck consequential criticism before accepting a loss/restriction/new claim",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A5-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A5-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A6-01",
+      "track": "A",
+      "contrast_id": "A6",
+      "name": "Evidence-neighborhood batching",
+      "prospective_case_id": "ER12-A6-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary sequential source review",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A6-v1",
+        "description": "Group related verification questions by governing source and expand when necessary",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A6-01/READY.json",
+          "sha256": "ff7498e5d6ee7b37d4eb4cf87188eb5db473d7c5f173cb04b0dbcc699ddf0dd6",
+          "bytes": 290
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A6-01/brief.md",
+          "sha256": "ef82ee81df37c62d0db64103e2891322a1161eed74e0edbd5663f0da1bdbd14c",
+          "bytes": 3323
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/A6-01/plan.md",
+          "sha256": "8656d21b801ae5c4905cb19f08fb8b9262058c9916bbc257537bd35353e55d97",
+          "bytes": 5984
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "A6-01/treatment",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1"
+        },
+        {
+          "arm_id": "A6-01/control",
+          "stage": "investigator",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-investigator-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-investigator-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-investigator-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-investigator-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A6-01/control",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:22.418120+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A6-01-control-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A6-01/treatment",
+          "state": "RESERVED",
+          "reservation": {
+            "at": "2026-10-10T03:57:21.610384+00:00",
+            "stage": "investigator",
+            "request_id": "er12ref-A6-01-treatment-investigator-v1",
+            "route": "authorized_codex",
+            "model": "gpt-6-luna",
+            "effort": "max",
+            "tier": "priority"
+          },
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A6-02",
+      "track": "A",
+      "contrast_id": "A6",
+      "name": "Evidence-neighborhood batching",
+      "prospective_case_id": "ER12-A6-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 ordinary sequential source review",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A6-v1",
+        "description": "Group related verification questions by governing source and expand when necessary",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A6-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A6-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A7-01",
+      "track": "A",
+      "contrast_id": "A7",
+      "name": "Critic-finalizer topology",
+      "prospective_case_id": "ER12-A7-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 researcher/critic/reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A7-v1",
+        "description": "Fresh researcher then fresh critic-finalizer at 30/30 maximum",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A7-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A7-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A7-02",
+      "track": "A",
+      "contrast_id": "A7",
+      "name": "Critic-finalizer topology",
+      "prospective_case_id": "ER12-A7-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0 researcher/critic/reviser",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A7-v1",
+        "description": "Fresh researcher then fresh critic-finalizer at 30/30 maximum",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A7-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A7-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A8-01",
+      "track": "A",
+      "contrast_id": "A8",
+      "name": "New evidence-motivated approach",
+      "prospective_case_id": "ER12-A8-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A8-v1",
+        "description": "Freeze one distinct approach from primary methodological research or labeled original design",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A8-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A8-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "A8-02",
+      "track": "A",
+      "contrast_id": "A8",
+      "name": "New evidence-motivated approach",
+      "prospective_case_id": "ER12-A8-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "description": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "A8-v1",
+        "description": "Freeze one distinct approach from primary methodological research or labeled original design",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "A8-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "A8-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-DISC-M-01",
+      "track": "B",
+      "contrast_id": "DISC-muse_code",
+      "name": "Brief-only discovery",
+      "prospective_case_id": "ER12-B-DISC-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/assignment.md",
+          "sha256": "1839788fc6eb8ac5682436a8e26a0e0db0954fd80373ba2a6fea10dfa48dddf9",
+          "bytes": 2834
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-DISC-M-01/fixture.json",
+          "sha256": "bc1455ddda98858e994fda627d95672c06bd5421deb3c089deaeb57620b3feda",
+          "bytes": 1040
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "B-DISC-M-01/treatment",
+          "stage": "role",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-treatment-role-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1"
+        },
+        {
+          "arm_id": "B-DISC-M-01/control",
+          "stage": "role",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-DISC-M-01/control",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:55.596782+00:00",
+            "stage": "role",
+            "request_id": "er12-B-DISC-M-01-control-role-v1",
+            "requested_route": {
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "options": {
+                "reasoningEffort": "max",
+                "serviceTier": "priority"
+              }
+            }
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-control-role-v1:ordinal:1"
+          }
+        },
+        {
+          "arm_id": "B-DISC-M-01/treatment",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:50.831877+00:00",
+            "stage": "role",
+            "request_id": "er12-B-DISC-M-01-treatment-role-v1",
+            "requested_route": {
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "muse-spark-1.3-contributor",
+              "options": {
+                "reasoningEffort": "max"
+              }
+            }
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-M-01-treatment-role-v1:ordinal:1"
+          }
+        }
+      ]
+    },
+    {
+      "slot_id": "B-DISC-M-02",
+      "track": "B",
+      "contrast_id": "DISC-muse_code",
+      "name": "Brief-only discovery",
+      "prospective_case_id": "ER12-B-DISC-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-DISC-M-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-DISC-M-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-DISC-G-01",
+      "track": "B",
+      "contrast_id": "DISC-zcode",
+      "name": "Brief-only discovery",
+      "prospective_case_id": "ER12-B-DISC-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-DISC-G-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-DISC-G-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-DISC-G-02",
+      "track": "B",
+      "contrast_id": "DISC-zcode",
+      "name": "Brief-only discovery",
+      "prospective_case_id": "ER12-B-DISC-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-DISC-G-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-DISC-G-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-APPL-M-01",
+      "track": "B",
+      "contrast_id": "APPL-muse_code",
+      "name": "Applicability/exception verification",
+      "prospective_case_id": "ER12-B-APPL-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-APPL-M-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-APPL-M-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-APPL-M-02",
+      "track": "B",
+      "contrast_id": "APPL-muse_code",
+      "name": "Applicability/exception verification",
+      "prospective_case_id": "ER12-B-APPL-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-APPL-M-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-APPL-M-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-APPL-G-01",
+      "track": "B",
+      "contrast_id": "APPL-zcode",
+      "name": "Applicability/exception verification",
+      "prospective_case_id": "ER12-B-APPL-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/assignment.md",
+          "sha256": "b9fb54cc01d480b34f8a7bcbf82b765fa9c2f524f51b56f1fe96d83d2745588b",
+          "bytes": 3108
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S1.md",
+          "sha256": "0afe539d82198fc0f544482af3753bfbe0e0b0aa8112d7e51e1ec0b61754d335",
+          "bytes": 1065
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/S2.md",
+          "sha256": "7b4eb11ed633fac9ad76145cd6f64e88fbd5903a95c1929163ed0714786d018d",
+          "bytes": 963
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/corpus/index.json",
+          "sha256": "f3c2d29d96b36c6050c040d394bacc389990a50d353fa8838052fa6349a06edd",
+          "bytes": 1305
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/B-APPL-G-01/fixture.json",
+          "sha256": "3769783a77959a4303e88ce4f120a94850484d97827327d7bd097a08b823d6b9",
+          "bytes": 1664
+        }
+      ],
+      "already_started_arms": [
+        {
+          "arm_id": "B-APPL-G-01/control",
+          "stage": "role",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-control-role-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1"
+        },
+        {
+          "arm_id": "B-APPL-G-01/treatment",
+          "stage": "role",
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1",
+          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1"
+        }
+      ],
+      "durable_queue_snapshot_state": "ACTIVE",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-APPL-G-01/control",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:57.004999+00:00",
+            "stage": "role",
+            "request_id": "er12-B-APPL-G-01-control-role-v1",
+            "requested_route": {
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "options": {
+                "reasoningEffort": "max",
+                "serviceTier": "priority"
+              }
+            }
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-control-role-v1:ordinal:1"
+          }
+        },
+        {
+          "arm_id": "B-APPL-G-01/treatment",
+          "state": "RUNNING",
+          "reservation": {
+            "at": "2026-10-10T03:54:58.151933+00:00",
+            "stage": "role",
+            "request_id": "er12-B-APPL-G-01-treatment-role-v1",
+            "requested_route": {
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "options": {
+                "mode": "yolo",
+                "thought": "max"
+              }
+            }
+          },
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+          "returned_ids": {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+            "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+            "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1"
+          }
+        }
+      ]
+    },
+    {
+      "slot_id": "B-APPL-G-02",
+      "track": "B",
+      "contrast_id": "APPL-zcode",
+      "name": "Applicability/exception verification",
+      "prospective_case_id": "ER12-B-APPL-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-APPL-G-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-APPL-G-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-FINAL-M-01",
+      "track": "B",
+      "contrast_id": "FINAL-muse_code",
+      "name": "Criticism adjudication and complete bounded finalization",
+      "prospective_case_id": "ER12-B-FINAL-M-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-FINAL-M-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-FINAL-M-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-FINAL-M-02",
+      "track": "B",
+      "contrast_id": "FINAL-muse_code",
+      "name": "Criticism adjudication and complete bounded finalization",
+      "prospective_case_id": "ER12-B-FINAL-M-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "muse_code",
+        "model": "Muse 1.3 Contributor Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-FINAL-M-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-FINAL-M-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-FINAL-G-01",
+      "track": "B",
+      "contrast_id": "FINAL-zcode",
+      "name": "Criticism adjudication and complete bounded finalization",
+      "prospective_case_id": "ER12-B-FINAL-G-01-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-FINAL-G-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-FINAL-G-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "B-FINAL-G-02",
+      "track": "B",
+      "contrast_id": "FINAL-zcode",
+      "name": "Criticism adjudication and complete bounded finalization",
+      "prospective_case_id": "ER12-B-FINAL-G-02-FRESH",
+      "control": {
+        "provider": "codex_authorized",
+        "model": "Luna Max",
+        "input": "identical frozen role package to challenger"
+      },
+      "treatment": {
+        "provider": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "GLM 5.3 Flash Max",
+        "input": "identical frozen role package to Luna"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "B-FINAL-G-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "B-FINAL-G-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "C-R1-01",
+      "track": "C",
+      "contrast_id": "C-R1",
+      "name": null,
+      "prospective_case_id": "ER12-C-R1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R1",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "C-R1-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "C-R1-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "C-R1-02",
+      "track": "C",
+      "contrast_id": "C-R1",
+      "name": null,
+      "prospective_case_id": "ER12-C-R1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R1",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "C-R1-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "C-R1-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "C-R2-01",
+      "track": "C",
+      "contrast_id": "C-R2",
+      "name": null,
+      "prospective_case_id": "ER12-C-R2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R2",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "C-R2-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "C-R2-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "C-R2-02",
+      "track": "C",
+      "contrast_id": "C-R2",
+      "name": null,
+      "prospective_case_id": "ER12-C-R2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "SELECTED-R2",
+        "selection": "Handoff section 8; at least one Luna-only recipe"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "C-R2-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "C-R2-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R1-01",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "name": null,
+      "prospective_case_id": "ER12-D-R1-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R1-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R1-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R1-02",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "name": null,
+      "prospective_case_id": "ER12-D-R1-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R1-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R1-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R1-03",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "name": null,
+      "prospective_case_id": "ER12-D-R1-03-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R1-03/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R1-03/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R1-04",
+      "track": "D",
+      "contrast_id": "D-R1",
+      "name": null,
+      "prospective_case_id": "ER12-D-R1-04-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R1",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R1-04/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R1-04/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R2-01",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "name": null,
+      "prospective_case_id": "ER12-D-R2-01-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R2-01/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R2-01/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R2-02",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "name": null,
+      "prospective_case_id": "ER12-D-R2-02-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R2-02/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R2-02/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R2-03",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "name": null,
+      "prospective_case_id": "ER12-D-R2-03-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R2-03/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R2-03/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    },
+    {
+      "slot_id": "D-R2-04",
+      "track": "D",
+      "contrast_id": "D-R2",
+      "name": null,
+      "prospective_case_id": "ER12-D-R2-04-FRESH",
+      "control": {
+        "recipe": "R0",
+        "provider": "codex_authorized",
+        "model": "Luna Max"
+      },
+      "treatment": {
+        "recipe": "LOCKED-R2",
+        "selection": "Handoff section 8; fallback diagnostic must be labeled prospectively"
+      },
+      "prospective_status": "PLANNED_NOT_LAUNCHED",
+      "frozen_inputs": [],
+      "already_started_arms": [],
+      "durable_queue_snapshot_state": "PLANNED_NOT_LAUNCHED",
+      "durable_queue_arms": [
+        {
+          "arm_id": "D-R2-04/control",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        },
+        {
+          "arm_id": "D-R2-04/treatment",
+          "state": "PLANNED_NOT_LAUNCHED",
+          "reservation": null,
+          "task_id": null,
+          "returned_ids": null
+        }
+      ]
+    }
+  ]
+}

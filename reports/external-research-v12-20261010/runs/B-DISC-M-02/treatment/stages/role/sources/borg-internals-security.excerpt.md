@@ -1,12 +1,44 @@
-# Source evidence excerpt 2/4 — Borg 1.4.5 Internals + Security
-URLs: https://borgbackup.readthedocs.io/en/stable/internals.html and .../internals/security.html
-Retrieved: 2026-10-10T04:38–04:39Z via web_fetch (Status 200 each; ~10KB and ~23KB, truncated; full text in harness tool-output store, not copied here).
-Sections: Internals intro (chunker), Security "Attack model", "Structural Authentication", "Encryption", "Offline key security".
-
-Observed statements:
-- Internals: "Deduplication is performed globally across all data in the repository (multiple backups and even multiple hosts), both on data and file metadata, using Chunks created by the chunker using the Buzhash algorithm ('buzhash' chunker) or a simpler fixed block size algorithm ('fixed' chunker)." / "To actually perform the repository-wide deduplication, a hash of each chunk is checked against the chunks cache, which is a hash table of all chunks that already exist."
-- Attack model: client trusted, repository (server) untrusted incl. interactive MITM. Guarantees attacker cannot modify/rename/remove/add undetected, "recover plaintext data", or "recover definite (heuristics based on access patterns are possible) structural information such as the object graph". "When the above attack model is extended to include multiple clients independently updating the same repository, then Borg fails to provide confidentiality."
-- Structural Authentication: "The object ID in Borg is a MAC of the object's plaintext" (Horton principle; DAG anchored by manifest TAM since 1.0.9, CVE-2016-10099). "The primitive used for authentication is always the same primitive that is used for deriving the chunk ID, but they are always used with independent keys."
-- Encryption: "Encryption is currently based on the Encrypt-then-MAC construction"; "The actual encryption is currently always AES-256 in CTR mode"; "The authentication primitive is either HMAC-SHA-256 or BLAKE2b-256 in a keyed mode." Decrypt path asserts chunk-id equals AUTHENTICATOR(id_key, decompressed).
-- Offline key security: keys encrypted under a passphrase-derived 256-bit KEK ("PBKDF2-HMAC-SHA256 with a random 256 bit salt") into a base64 "keyblob" stored in key file or repo config (keyfile/repokey modes). "borg key migrate-to-repokey" converts Attic-era passphrase-mode repos; "Borg does not support 'passphrase' mode otherwise any more."
-Applicability: directly evidences Buzhash-CDC-vs-fixed choice, keyed chunk identity (MAC of plaintext under independent id_key), Encrypt-then-MAC, passphrase rotation via keyblob re-wrap, and the single-user confidentiality boundary (matches brief: cross-user sharing out of scope).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://borgbackup.readthedocs.io/en/stable/internals.html + https://borgbackup.readthedocs.io/en/stable/internals/security.html"
+  ],
+  "source_urls": [
+    "https://borgbackup.readthedocs.io/en/stable/internals.html + https://borgbackup.readthedocs.io/en/stable/internals/security.html"
+  ],
+  "version": [
+    {
+      "version": "Borg 1.4.5 docs (stable)"
+    }
+  ],
+  "selector": [
+    {
+      "locator": "internals.html intro (chunker/cache); security.html: Attack model, Structural Authentication, Encryption, Offline key security"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-DISC-M-02/treatment/stages/role/source-map.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {
+        "version": "Borg 1.4.5 docs (stable)"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "internals.html intro (chunker/cache); security.html: Attack model, Structural Authentication, Encryption, Offline key security"
+    }
+  ],
+  "raw_sha256": "9972c9d53641286a27c5adb8ac450402ac8ed5f79ab15e4ae50109028bbe36b7",
+  "rawSHA256": "9972c9d53641286a27c5adb8ac450402ac8ed5f79ab15e4ae50109028bbe36b7",
+  "original_bytes": 2662,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-M-02/treatment/stages/role/sources/borg-internals-security.excerpt.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

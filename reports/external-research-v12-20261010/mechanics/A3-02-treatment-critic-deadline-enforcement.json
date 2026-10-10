@@ -1,0 +1,58 @@
+{
+  "at_utc": "2026-10-10T05:14:15.224Z",
+  "slot": "A3-02",
+  "arm": "treatment",
+  "stage": "critic",
+  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+  "original_deadline": "2026-10-10T05:06:53.818Z",
+  "observation": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+          "status": "running",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        }
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "ba800e23e2eb4e35b2c3d8920a9a1fe0213e4d691235639d709472c04afcc1df"
+  },
+  "action": "same-run stop new research/save existing artifacts; deadline remains expired, all cost retained",
+  "message": "Original critic stage deadline 2026-10-10T05:06:53.818Z has expired; it remains unchanged. Stop new research now and save your existing complete critique/source map and exact limitations, without inventing unperformed checks or hiding unfinished scope. Preserve all earlier artifacts/errors and actual late save/Goal timing. No source feedback is supplied, no new/replacement Goal, nested help, restart or added allowance. Finish this same original native Goal and return the existing stage output promptly if the assigned work is actually saved; if incomplete or unsupported, explicitly preserve that diagnostic. Root will record the overrun as a protocol/time failure separately from independent semantic assessment.",
+  "response": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "structured_content_metadata": [
+          {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-critic-v1:ordinal:1",
+            "status": "running"
+          }
+        ],
+        "structuredContent": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-critic-v1",
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-critic-v1:ordinal:1",
+          "status": "running"
+        }
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "3c4c45d65669dea359b9d6c1bcaa65285249f40aa0af8e22821326c51fe69852"
+  }
+}

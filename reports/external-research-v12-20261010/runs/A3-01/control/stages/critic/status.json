@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the assigned critic stage. The native Goal reached **complete**; elapsed time was 560 seconds.\n\nSaved the required outputs:\n\n- [critique.md](ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/control/stages/critic/sources/index.md)\n\nThe critique identifies three material incompleteness points and one minor evidence-locator mismatch. No application tests or builds were run.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7ec9d5a6-e9cc-49c0-a13e-65b1c4897591",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the assigned critic stage. The native Goal reached **complete**; elapsed time was 560 seconds.\n\nSaved the required outputs:\n\n- [critique.md](ER12_RUNTIME/runs/A3-01/control/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-01/control/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-01/control/stages/critic/sources/index.md)\n\nThe critique identifies three material incompleteness points and one minor evidence-locator mismatch. No application tests or builds were run.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7ec9d5a6-e9cc-49c0-a13e-65b1c4897591",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "cce16c85e066aed8091634abf0df019f0805c2309040c63bd64f9122302058a7",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A3-01/control/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

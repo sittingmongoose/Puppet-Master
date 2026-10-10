@@ -118,25 +118,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-FINAL-G-02",
-    "arm": "control",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the single requested native Goal with the exact frozen objective. Its activation and completion responses are saved separately.\n\n- [Final section: 582-word replacement, 748 words total](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json)\n- [Activation receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json) \u00b7 [Completion receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json)\n- [Sparse-checkout evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md) \u00b7 [Clone evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md)\n\nThe section corrects cone-mode inclusions, distinguishes sparse checkout from blob filtering and shallow history, and retains recovery guidance and all six critique dispositions. It cites the [Git sparse-checkout manual](https://git-scm.com/docs/git-sparse-checkout/2.42.0) and [Git 2.43 clone manual](https://git-scm.com/docs/git-clone/2.43.0). No Git command or test was run; the three checks are prospective, and network transfer and runtime remain unmeasured.\n\nThe native Goal reports 94,780 tokens used and 250 seconds elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:228ce35e-7dd6-4ae9-98fd-9bee9d56e0a0",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the single requested native Goal with the exact frozen objective. Its activation and completion responses are saved separately.\n\n- [Final section: 582-word replacement, 748 words total](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/source-map.json)\n- [Activation receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-activation.json) \u00b7 [Completion receipt](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/native-goal-completion.json)\n- [Sparse-checkout evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-sparse-checkout.md) \u00b7 [Clone evidence](ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/sources/git-clone.md)\n\nThe section corrects cone-mode inclusions, distinguishes sparse checkout from blob filtering and shallow history, and retains recovery guidance and all six critique dispositions. It cites the [Git sparse-checkout manual](https://git-scm.com/docs/git-sparse-checkout/2.42.0) and [Git 2.43 clone manual](https://git-scm.com/docs/git-clone/2.43.0). No Git command or test was run; the three checks are prospective, and network transfer and runtime remain unmeasured.\n\nThe native Goal reports 94,780 tokens used and 250 seconds elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:228ce35e-7dd6-4ae9-98fd-9bee9d56e0a0",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "3956bcab28e5990f6f76604da6b426bbf1ee18e62ec2758eeb37fc3f736a5abf"
   }
 }

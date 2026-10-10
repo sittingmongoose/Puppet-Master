@@ -1,14 +1,66 @@
-# S05 — PREMIS Data Dictionary for Preservation Metadata v3.0
-
-- Official page: https://www.loc.gov/standards/premis/v3/index.html
-- Full document: https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf
-- Released version: PREMIS v3.0; Library of Congress page identifies the full data dictionary as updated November 2015.
-- Accessed: 2026-10-10T04:14:49Z.
-- Locators: data model overview; PDF §1.5.2 (fixity; pp. 58–60), event entity (§2; pp. 137–157), agent relationships and event outcomes; around PDF lines 2160–2190 and 4092–4210, 4261–4306.
-- Observed operation: Read official LOC page and PDF; no PREMIS serialization or validator was run.
-
-## Evidence and applicability
-
-PREMIS defines Objects, Events, Rights, and Agents. It treats a file's digest algorithm/value as fixity information; a later digest comparison can detect whether bytes changed since the earlier calculation. It says a fixity check and its date are recorded as an Event and its result as eventOutcome. Event records have mandatory identifier, type, and datetime, and relate to one or more Objects and optionally one or more Agents. The guidance also says some backup-copy actions may be recorded in system logs or audit trails rather than as PREMIS Event entities.
-
-A small gallery can borrow these distinctions in a readable CSV copy/restore log, without claiming the file is PREMIS-conformant or implementing an archival metadata system. This yields a record of who did what to which asset/version/copy and the result, while a checksum only reports bit-level equality against a reference.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.loc.gov/standards/premis/v3/index.html",
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "source_urls": [
+    "https://www.loc.gov/standards/premis/v3/index.html",
+    "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "PREMIS v3.0, Library of Congress page marks full document updated November 2015",
+      "governing_condition_default_exception": "PREMIS distinguishes Objects, Events, Rights, Agents; fixity records digest algorithm/value, while an observed check and its result/date are recorded as an Event/outcome. Event identifier, type and datetime are mandatory in the data model. Some backup-copy actions may instead be kept in system logs/audit trails.",
+      "applicability": "Design basis for a compact readable identity/custody log. The recommendation is PREMIS-inspired, not a claim of formal conformance or a new preservation platform."
+    }
+  ],
+  "selector": [
+    {
+      "locator": [
+        "data model overview",
+        "§1.5.2, pp. 58–60",
+        "§2 Event entity, pp. 137–157",
+        "event date/outcome and Agent/Object relationships"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "PREMIS v3.0, Library of Congress page marks full document updated November 2015",
+      "governing_condition_default_exception": "PREMIS distinguishes Objects, Events, Rights, Agents; fixity records digest algorithm/value, while an observed check and its result/date are recorded as an Event/outcome. Event identifier, type and datetime are mandatory in the data model. Some backup-copy actions may instead be kept in system logs/audit trails.",
+      "applicability": "Design basis for a compact readable identity/custody log. The recommendation is PREMIS-inspired, not a claim of formal conformance or a new preservation platform."
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/A8-01/treatment/stages/investigator/source-map.json",
+      "source_id": "S05",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "PREMIS v3.0, Library of Congress page marks full document updated November 2015",
+        "governing_condition_default_exception": "PREMIS distinguishes Objects, Events, Rights, Agents; fixity records digest algorithm/value, while an observed check and its result/date are recorded as an Event/outcome. Event identifier, type and datetime are mandatory in the data model. Some backup-copy actions may instead be kept in system logs/audit trails.",
+        "applicability": "Design basis for a compact readable identity/custody log. The recommendation is PREMIS-inspired, not a claim of formal conformance or a new preservation platform."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": [
+        "data model overview",
+        "§1.5.2, pp. 58–60",
+        "§2 Event entity, pp. 137–157",
+        "event date/outcome and Agent/Object relationships"
+      ]
+    }
+  ],
+  "raw_sha256": "f7f9b4d3046ad59f1594028ef63dd48cc1b7ab237ae0001ca672be7895dff912",
+  "rawSHA256": "f7f9b4d3046ad59f1594028ef63dd48cc1b7ab237ae0001ca672be7895dff912",
+  "original_bytes": 1588,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A8-01/treatment/stages/investigator/sources/S05-premis-3.0.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

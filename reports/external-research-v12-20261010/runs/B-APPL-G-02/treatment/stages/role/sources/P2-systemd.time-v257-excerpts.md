@@ -1,33 +1,44 @@
-# P2 excerpts: systemd.time(7), pinned tag v257
-
-URL: https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml
-Corpus locator URL: https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml
-Version: pinned upstream tag v257; target systemd 257
-Retrieved: 2026-10-10T05:10Z-05:11Z via web_fetch and curl HTTPS GET (same pinned-URL content)
-Operation: HTTPS GET of primary manual; excerpts only, bounded evidence
-
-## 1. daily shorthand normalization (claim 6)
-  <para>The following special expressions may be used as shorthands for longer normalized forms:</para>
-
-    <programlisting>    minutely → *-*-* *:*:00
-      hourly → *-*-* *:00:00
-       daily → *-*-* 00:00:00
-     monthly → *-*-01 00:00:00
-      weekly → Mon *-*-* 00:00:00
-      yearly → *-01-01 00:00:00
-   quarterly → *-01,04,07,10-01 00:00:00
-                      03-05 → *-03-05 00:00:00
-                     hourly → *-*-* *:00:00
-                      daily → *-*-* 00:00:00
-                  daily UTC → *-*-* 00:00:00 UTC
-                    monthly → *-*-01 00:00:00
-
-## 2. systemd-analyze calendar validates/normalizes, computes next (claim 6)
-      <para>Calendar events are used by timer units, see
-      <citerefentry><refentrytitle>systemd.timer</refentrytitle><manvolnum>5</manvolnum></citerefentry>
-      for details.</para>
-
-      <para>Use the <command>calendar</command> command of
-      <citerefentry><refentrytitle>systemd-analyze</refentrytitle><manvolnum>1</manvolnum></citerefentry> to validate
-      and normalize calendar time specifications for testing purposes. The tool also calculates when a specified
-      calendar event would occur next.</para>
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml"
+  ],
+  "source_urls": [
+    "https://raw.githubusercontent.com/systemd/systemd/v257/man/systemd.time.xml"
+  ],
+  "version": [
+    {
+      "version": "Pinned upstream tag v257"
+    }
+  ],
+  "selector": [
+    {
+      "locator_sections": "Calendar Events (shorthands, normalized forms, systemd-analyze calendar)"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-APPL-G-02/treatment/stages/role/source-map.json",
+      "source_id": "P2",
+      "existing_authored_summary_fields": {
+        "version": "Pinned upstream tag v257"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator_sections": "Calendar Events (shorthands, normalized forms, systemd-analyze calendar)"
+    }
+  ],
+  "raw_sha256": "ce8550574de7a0dfcbf39a6144dad138ae631aed17c7b28ef0ad94bdef3b770f",
+  "rawSHA256": "ce8550574de7a0dfcbf39a6144dad138ae631aed17c7b28ef0ad94bdef3b770f",
+  "original_bytes": 1697,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-APPL-G-02/treatment/stages/role/sources/P2-systemd.time-v257-excerpts.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

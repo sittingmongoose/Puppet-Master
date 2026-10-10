@@ -16,7 +16,7 @@
     "subject_operation": "Collect device-local Draft/Ready to send/Sent; opt-in edits of retained finalized/sent submissions",
     "conditions": "Off by default; settings.client_editable=true. Edits use the original form definition, are tracked in Central, and manually queued edits must be sent in order. A Central-side edit makes that submission no longer editable from Collect. Entities are not updated by these edits.",
     "judgment": "VERIFIED",
-    "applies_to": "Final lines 11,25,38,47\u201356,62,101 and inherited S01/C01/R01. Conditional product fit and correction option are supported.",
+    "applies_to": "Final lines 11,25,38,47–56,62,101 and inherited S01/C01/R01. Conditional product fit and correction option are supported.",
     "limits": "No deployed versions observed. Final prose compresses the Central-edit lockout, retained explicitly in inherited source-map S01. Queue visibility beyond the device is an inference/proposal, not built-in evidence."
   },
   {
@@ -36,7 +36,7 @@
     "subject_operation": "XForm identity/version and submission metadata",
     "conditions": "Form version is a string. instanceID is required and universally unique; timeStart/timeEnd are optional ISO 8601 form-entry timestamps. deprecatedID identifies the preceding submission; consolidation is server behavior. IDs use scheme:value.",
     "judgment": "VERIFIED",
-    "applies_to": "Final lines 71\u201381, S02/C02; separates site/visit/event, form definition, reported observation time, and unverified client clock.",
+    "applies_to": "Final lines 71–81, S02/C02; separates site/visit/event, form definition, reported observation time, and unverified client clock.",
     "limits": "Metadata is not proof of accurate device time, immutable audit history, or a correction display policy. Attachment IDs/digests are proposed application fields."
   },
   {
@@ -92,7 +92,7 @@
     "subject_operation": "CSV ZIP download and submission review/version workflow",
     "conditions": "ZIP includes root/repeat join CSVs and files/submission-instanceId directories. Filters affect exports. Edits create versions and Edited state. ODK Web Forms need connectivity to submit; Enketo offline queue auto-send needs the form open.",
     "judgment": "VERIFIED",
-    "applies_to": "Final 11,40\u201341,62; C-04 locator correction; inherited S04/C04/R02.",
+    "applies_to": "Final 11,40–41,62; C-04 locator correction; inherited S04/C04/R02.",
     "limits": "Ordinary CSV export is not an audit export of every correction; the final correctly proposes checking history/export and does not claim this test ran."
   },
   {
@@ -164,7 +164,7 @@
     "subject_operation": "Lost server response followed by editing failed local XML and retrying the same instance ID",
     "conditions": "A changed end timestamp can cause changed XML and server rejection. Maintainer analysis chooses failed-status edit exclusion rather than a blanket finalization lock. Discussion includes uncertainty and cancellation as another lead.",
     "judgment": "VERIFIED",
-    "applies_to": "Final 28,99\u2013101; S06/C06. Historical bounded example, not current deployment diagnosis.",
+    "applies_to": "Final 28,99–101; S06/C06. Historical bounded example, not current deployment diagnosis.",
     "limits": "Issue discussion is not a live reproduction or universal network guarantee."
   },
   {
@@ -509,7 +509,7 @@
     "subject_operation": "Multipart OpenRosa POST, including repeated attachment requests and explicit updates",
     "conditions": "Same-ID XML must stay identical across multipart/retry requests; changed XML or deleted submission returns 409. Explicit updates use deprecatedID, replace XML entirely, reject a stale predecessor, and carry media by filename reference.",
     "judgment": "VERIFIED",
-    "applies_to": "Independently checks final 25,49\u201352,91,99\u2013101 and E05 scope. Reinforces immutable retry and distinct corrections.",
+    "applies_to": "Independently checks final 25,49–52,91,99–101 and E05 scope. Reinforces immutable retry and distinct corrections.",
     "limits": "REST-create 409 is not the precise identical-payload Collect retry rule. No guaranteed success under every network failure is asserted."
   },
   {

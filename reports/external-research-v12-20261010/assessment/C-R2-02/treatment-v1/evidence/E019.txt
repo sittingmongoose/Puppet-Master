@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf"
+  ],
+  "source_urls": [
+    "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R2-02/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E019",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "56a09a7437fbeff2b6aadb5373eaffc386545c625efe6c0983c703cd9f975c1f",
+  "rawSHA256": "56a09a7437fbeff2b6aadb5373eaffc386545c625efe6c0983c703cd9f975c1f",
+  "original_bytes": 219145,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/C-R2-02/treatment-v1/evidence/E019.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

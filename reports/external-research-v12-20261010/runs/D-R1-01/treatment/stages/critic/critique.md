@@ -1,0 +1,59 @@
+# Independent critic review — ER12-D-R1-01-FRESH
+
+Run: D-R1-01-treatment  
+Stage: critic  
+Review window: 2026-10-10 06:43:50–06:47:49 UTC  
+Scope: the original brief, the exact released plan, and the complete investigator discovery, proposal, and source map named by input-map.json. No other candidates, campaign history, parent conversation, or unlisted case materials were read. No food/package experiment, case calculation, or validation was performed in this critic stage.
+
+## Overall assessment
+
+The investigator proposal is careful about the hypothetical boundary and is substantially responsive to the brief and released plan. It separates texture, integrity, and food safety; treats causes as hypotheses; gives multiple useful paths; and clearly distinguishes literature review from proposed pilot work. Independent checks of the material most consequential comparator claims found them consistent with the cited publisher, repository, and ASTM summaries, subject to the access limits below. I found no material factual error in those checked claims and no invented result for the cooperative.
+
+Three matters need explicit carry-forward. The present package does not yet close the full 60-minute requirement, the pilot’s package-integrity advancement gate remains qualitative, and the proposed three-batch floor has no stated design basis. These points do not justify narrowing the requested scope. The unresolved product, package, process, distribution, texture, and laboratory inputs are openly stated rather than silently guessed.
+
+## Findings
+
+| ID | Classification | Locator and evidence | Assessment |
+|---|---|---|---|
+| F-01 | Material incomplete in the investigator package; cross-stage closure remains possible | The brief asks for the full 60-minute research window ([brief.md](../../inputs/brief.md#L11-L13)); the released plan describes a full 60-minute research-and-proposal session ([revealed-plan.md](../investigator/revealed-plan.md#L75-L77)). The investigator’s disposition says its stage cannot consume the full hour and leaves work to later authorized stages ([draft.md](../investigator/draft.md#L90-L98)). Discovery records research access from 06:24–06:29 UTC; the source map was updated 06:39:33 UTC. | This is disclosed rather than misrepresented, and the run envelope still includes later stages. At this critic point, however, the exact original duration obligation is not yet shown as completed. The final reviser should continue substantive research/proposal work within the remaining authorized window and report actual work accurately. I cannot determine from this stage whether the complete run will satisfy the hour. |
+| F-02 | Material incomplete in the proposed pilot rule; package details are an external dependency | The pilot proposes a “suitable” package-level leak method, seal-strength sampling where appropriate, and advancement only with “no deterioration” in the separate integrity outcome ([draft.md](../investigator/draft.md#L68-L78)). It does not define the integrity measure, sampling/replication rule, or what result counts as deterioration. The actual bag format and laboratory access remain unknown ([draft.md](../investigator/draft.md#L86-L88)). | The rule is directionally useful but not yet operational for a later decision. Preserve the dependency on the actual package and validated method, then have the cooperative define an interpretable integrity criterion before the pilot. No numerical threshold can be justified from the supplied case. |
+| F-03 | Unsupported, low severity | “At least three independent batches” is called a “practical exploratory floor” ([draft.md](../investigator/draft.md#L62-L66)); no source or case variability supports that number. | The draft correctly says this is not a power guarantee and says replication should depend on baseline variability, meaningful effect, and capacity. Keep three batches as a provisional planning suggestion only; it should not be treated as evidence that the pilot can establish a stable effect. |
+| F-04 | Minor locator/wording | The S12 section calls the comparison “failed” and later calls it an “implementation failure” ([draft.md](../investigator/draft.md#L37-L47)). The SAGE publisher abstract reports impaired seal integrity for rollpack and horizontal-flowpack packages, especially at the transverse seal, and package transmission 1.1–3.0 times the calculated theoretical value; it reports good seal integrity for vertical-flowpack packages. It does not describe an acceptance specification or state that packages failed in use. | The substantive comparison is accurately summarized and is a useful negative comparator. “Impaired-seal comparison” would track the source more closely than “failed implementation,” which could overstate the evidence. This does not assert or diagnose a failure in the cooperative’s bags. |
+| F-05 | Honestly unresolved external evidence | The draft reports S01’s critical water-activity interval of 0.51–0.59 but explicitly says it is for one Crackerbread product and must not be transferred ([draft.md](../investigator/draft.md#L14-L22)). The upstream source map says only the institutional record/abstract and an indexed methods excerpt were available. The primary repository URL timed out during this critic review, so I could not independently verify the exact interval or full method. | No error is established. Because the number is presented only as a bounded comparator and the draft rejects using it as a snack threshold, the risk is limited. Keep the source limitation and non-transfer caveat; obtain the primary text if the number is used to drive a later decision. |
+| F-06 | Honestly unresolved external input, not an investigator error | The brief leaves recipe, bag construction, sealing equipment, cooling duration, storage distribution, batch records, dimensions, preferred texture measure, and laboratory access unspecified ([brief.md](../../inputs/brief.md#L29-L31)). The draft lists the same gaps and states what they prevent ([draft.md](../investigator/draft.md#L86-L88), [draft.md](../investigator/draft.md#L123-L129)). | These gaps prevent a film selection, transferable threshold, finalized replication, defined storage envelope, and safety/shelf-life conclusion. The draft appropriately keeps them open and explains what a modest pilot could still learn. |
+
+## Independent coverage check
+
+| Brief obligation | Critic assessment |
+|---|---|
+| Explain plausible mechanisms across packaging and handling | Covered as hypotheses: external vapor transfer, initial moisture and internal redistribution, seal pathways, humidity/temperature, and handling. No cause is attributed to the cooperative. |
+| Compare a material or seal path, practice path, and useful no-film option | Covered through material/package-system, current-film integrity, no-film cooling/storage, and optional resizing or shorter inventory. The option limits and missing owner inputs are visible. |
+| Preserve initial state, equilibration, humidity, seals, and history | Covered in the mechanism discussion and record-recovery/pilot observations. The draft correctly says nominal film WVTR cannot represent a whole package and handling history by itself. |
+| Investigate comparable implementation/production detail and simultaneous changes | Covered with S04–S07 and S12 comparators, including actual structures or package formats and reported conditions where available. The cooperative’s supplier and cooling changes remain confounded; no case records were supplied. S12 is a negative seal comparator; no relevant maintenance-cost or recurring-maintenance history was found in the reviewed material. |
+| Give a later controlled pilot, traceability, confounder control, meaningful measures, and a decision rule | Largely covered by a blocked 2 × 2 package-system/handling comparison, batch splitting, randomization, batch/package IDs, destructive timepoint packs, moisture/activity/texture observations, and a texture decision rule. F-02 remains open because the integrity advancement gate is not yet operational. |
+| Keep texture, integrity, and safety distinct; obey the boundaries | Respected. The draft does not infer a case failure, recommend an additive or production seal setting, report an experiment, or claim safe shelf life, compliance, or sale readiness. |
+| Preserve the released plan’s opportunities and boundary | The draft covers within-package moisture and barrier limits, retains sizing/inventory alternatives, and reports a negative implementation example plus the absence of applicable maintenance evidence. It distinguishes proposed from executed work, preserves uncertainty, and does not use the plan as case evidence or disclose unrelated candidates. |
+
+## Source review and access limits
+
+The investigator source map is unusually complete about versions, locators, access operations, conditions, exceptions, and applicability. Its stable S01–S14 identifiers are retained unchanged in this critic’s source map. Independent primary-source checks confirmed the core claims for S02–S08, S10–S13 where accessible. Specifically:
+
+- S02 supports product-specific crispness preference and the effect of sensory cue.
+- S03 supports morphology-dependent cracker sorption and cautions against transferring rates between products.
+- S04 supports the reported cookie comparison and separately scoped milk-powder humidity exception.
+- S05 full text confirms random division of one batch, the disclosed package constructions/size, 35 °C/50% RH for 105 days, and no significant textural effect despite differences in other measured properties.
+- S06’s publisher search result supplies the article text for construction, test conditions, and varied snack outcomes; a direct publisher open was rate-limited.
+- S07 and S08 support the cited product-structure/early-checking and heat-seal factor summaries.
+- S12’s publisher abstract supports the impaired-seal and theoretical-versus-package water-vapor comparison, but not a broader claim that an implementation failed in service.
+- S13 supports the humidity-dependent EVOH permeability caveat only where the layer actually exists.
+- ASTM F88/F88M and F2096 support the separation between strip seal-strength measurement and gross package-leak testing. F2096 is destructive and the catalog states 250 μm sensitivity at 81% probability; neither establishes shelf life or food safety. The F1249 edition identifier was confirmed, but its full catalog summary and normative method were not available in this review.
+
+The SAGE and ASTM pages were not all directly retrievable; source-map entries say exactly which full texts were restricted. Direct-open failures and the observed search-result excerpts are recorded in sources/index.md and source-map.json. The critic did not treat search snippets as a substitute for a restricted full paper. No case-specific test or calculation is implied.
+
+## Frozen-input identity
+
+The revealed plan SHA-256 matches the plan hash recorded in plan-reveal.json: 7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95. The discovery also matches its recorded hash. The reviewed draft, source map, and plan hashes are recorded in this stage’s source-map.json.
+
+## Carry-forward to the reviser
+
+Keep the disclosure that this investigator stage did not consume the complete 60-minute window, and resolve the cross-stage commitment only from work actually performed. Preserve the case boundaries and source limitations. Before treating the proposed pilot as decision-ready, define how its integrity outcome will be assessed once the actual package and laboratory method are known. Keep the three-batch suggestion explicitly provisional. The critique identifies these points for independent consideration; it does not authorize scope reduction or supply a final proposal.

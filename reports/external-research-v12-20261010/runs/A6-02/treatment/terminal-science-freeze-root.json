@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A6-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The complete proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight clauses and dispositions C1\u2013C3 as accepted (C2 with amendment), while retaining uncertainty for C4. It incorporates the scope conditions in [RightsStatements.org guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) and treats [DPLA\u2019s metadata policy](https://pro.dp.la/hubs/metadata-application-profile) and [Europeana\u2019s framework](https://pro.europeana.eu/page/europeana-licensing-framework) as specific to their own provider arrangements. Product and collection validation remain unrun.\n\nOne native Goal was created with the frozen objective, observed active, and completed after the required files were saved. Its final status was `complete` (thread `01a12432-56bc-7ae2-9d79-d258e650c52e`; 144,885 tokens; 678 seconds).",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4fa29f15-4630-4861-adea-7813a424d087",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The complete proposal, source map, and navigable source index are saved here:\n\n- [final.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight clauses and dispositions C1\u2013C3 as accepted (C2 with amendment), while retaining uncertainty for C4. It incorporates the scope conditions in [RightsStatements.org guidance](https://rightsstatements.org/en/2018/12/where-statements-apply.html) and treats [DPLA\u2019s metadata policy](https://pro.dp.la/hubs/metadata-application-profile) and [Europeana\u2019s framework](https://pro.europeana.eu/page/europeana-licensing-framework) as specific to their own provider arrangements. Product and collection validation remain unrun.\n\nOne native Goal was created with the frozen objective, observed active, and completed after the required files were saved. Its final status was `complete` (thread `01a12432-56bc-7ae2-9d79-d258e650c52e`; 144,885 tokens; 678 seconds).",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4fa29f15-4630-4861-adea-7813a424d087",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "5df600a96a38c072e3d48689ea8d6927d5b01bc1b24acaafa1fe6146ce926c68"
   }
 }

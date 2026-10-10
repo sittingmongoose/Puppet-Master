@@ -1,0 +1,388 @@
+{
+  "method": "Independent read-only public HTTP retrieval. Original authored source bytes unchanged. Raw caches and extracted text are reviewer evidence, not candidate execution proof.",
+  "sources": [
+    {
+      "id": "E001",
+      "requested_url": "https://doi.org/10.1186/s13643-020-01542-z",
+      "retrieval_started_utc": "2026-10-10T06:41:41.135605+00:00",
+      "status": 200,
+      "resolved_url": "https://link.springer.com/article/10.1186/s13643-020-01542-z?error=cookies_not_supported&code=d46f6773-3469-442e-938e-a6507ee68fd1",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "etag": "W/\"bba2eedb43332561e471c02d1c612ece\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E001.html",
+      "bytes": 718205,
+      "sha256": "bbfa3e306d8427d7e2c8d90cb87c033d4fbc9b323754db02e0e66f391aabacfb",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.643174+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E001.txt",
+      "text_sha256": "a7a5cdad8d13b0b3e9d8404cae43a3b402ea4a89eb9db00d9b2c3900b8c8d285",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E002",
+      "requested_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "retrieval_started_utc": "2026-10-10T06:41:41.136956+00:00",
+      "status": 200,
+      "resolved_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "Last-Modified": "Sat, 10 Oct 2026 03:37:47 GMT",
+        "ETag": "W/\"1791603467-gzip\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E002.html",
+      "bytes": 372750,
+      "sha256": "ec451a2b9d443b96459529247d93bb5b413ff468ae817c5b3c3d6d7604b4403e",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.719581+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E002.txt",
+      "text_sha256": "a2f0b6323c03cd929db8f5978e527a0b88f8ad5f389dc9fa356c3a758d1263ab",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E003",
+      "requested_url": "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+      "retrieval_started_utc": "2026-10-10T06:41:41.138208+00:00",
+      "status": 200,
+      "resolved_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/chapter04-tech-supplonlinepdfv65270924",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "Last-Modified": "Wed, 09 Apr 2025 06:59:52 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E003.pdf",
+      "bytes": 1946872,
+      "sha256": "da93cb6506e0253016be8153140b2d50c0d265a658692d4e6d88a962684c75d6",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E003.txt",
+      "text_sha256": "c057759df6ad11dad367995bd340fd140027d0d4a518d4187171d024b6a9661c",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.593599+00:00"
+    },
+    {
+      "id": "E004",
+      "requested_url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:41.139366+00:00",
+      "status": 200,
+      "resolved_url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "ETag": "\"6aa9517b-595978\"",
+        "Last-Modified": "Tue, 15 Sep 2026 14:08:59 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E004.pdf",
+      "bytes": 5855608,
+      "sha256": "6c8af6f9d259c3410b024e1f5e4f747c40cada7b214fb40e58397c446d1d2daf",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E004.txt",
+      "text_sha256": "05850d9b2642954a88e9e61bb1449051002a7b1c7383243bf27f27bdea89bdb7",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.240665+00:00"
+    },
+    {
+      "id": "E005",
+      "requested_url": "https://help.openalex.org/api/searching/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.140759+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/api/searching/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E005.html",
+      "bytes": 53520,
+      "sha256": "2b7e13eaf234632428e9d5887411a5be2f6b69011a1dc0dfaba6d9e72999dda1",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.289699+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E005.txt",
+      "text_sha256": "d471183183cc0e32373a0c1d18d3f841fae5c9154c81c4e28c8c10e482bdb8e6",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E006",
+      "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.142482+00:00",
+      "status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "content_type": "text/html",
+      "headers": {
+        "Content-Type": "text/html",
+        "last-modified": "Tue, 06 Oct 2026 18:04:15 GMT",
+        "etag": "\"6a6b95e5d9ebbf59273743c98a390e42\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E006.html",
+      "bytes": 70823,
+      "sha256": "7fa3b2fcca9134b850c9f433516e4bedbf44b304d0cc914ecb615c72962875f8",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.232824+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E006.txt",
+      "text_sha256": "f60a905e817d8ba83d9902f3ca6143e9484f0e78a1d339688463391fa36472f0",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E007",
+      "requested_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.232908+00:00",
+      "status": 200,
+      "resolved_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "content_type": "text/html",
+      "headers": {
+        "Content-Type": "text/html",
+        "last-modified": "Tue, 06 Oct 2026 18:04:15 GMT",
+        "etag": "\"98164d3145c741d3985f5d424bfa331e\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E007.html",
+      "bytes": 80507,
+      "sha256": "cc8b853e69296d9868affc0894ab3cb1787c138399d5373ce82639181fd59326",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.329859+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E007.txt",
+      "text_sha256": "8208387e5a0a73cdb8bc24290ada623f55c96174fd270beccb5644e779981eab",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E008",
+      "requested_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "retrieval_started_utc": "2026-10-10T06:41:41.289807+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"121061601337f66eada66db67ba4c622\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E008.html",
+      "bytes": 244442,
+      "sha256": "9c02371cfab294a3831915375a08c7905546378989332aac7a36f3bff04cc1de",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.647593+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E008.txt",
+      "text_sha256": "ba2b1267e869f62c1888409c2368d39ccf7453a3d287b0b0f00cc62aafbddded",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E009",
+      "requested_url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+      "retrieval_started_utc": "2026-10-10T06:41:41.329933+00:00",
+      "status": 200,
+      "resolved_url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"a71c9d489604559df7d1f487c1b172c8\"",
+        "Last-Modified": "Thu, 18 Jun 2026 21:14:02 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E009.html",
+      "bytes": 32647,
+      "sha256": "699edcf55c266e1fc3eec74fdeb2c7d94e0bc606337b69a5d2390ab4449837f7",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.426272+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E009.txt",
+      "text_sha256": "39c4d4a92aa92799c6336188b77bc762387130d7815b24fe3affedc7f2782436",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E010",
+      "requested_url": "https://github.com/asreview/asreview/releases",
+      "retrieval_started_utc": "2026-10-10T06:41:41.426352+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"f753d0bd7299b5b97109cc1475e6379c\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E010.html",
+      "bytes": 462433,
+      "sha256": "ac7c8ac0e67730373ff824b2b88ad1d0e1b16c6239cc492bced820f55a673292",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.154589+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E010.txt",
+      "text_sha256": "625065a6af18948800709c0bce47e084c30945be0cdeaf7a1aa64daa0b42bf66",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E011",
+      "requested_url": "https://help.openalex.org/data/works/attributes/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.647673+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/data/works/attributes/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E011.html",
+      "bytes": 50831,
+      "sha256": "cb793208f095403e9502a55bd4be4c75a72f43d07ec3503814c376d17041fba3",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.738676+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E011.txt",
+      "text_sha256": "66df994e0ad9f011a2a4fb5dc444d64f0ea76306fc93be10142075747367f465",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E012",
+      "requested_url": "https://help.openalex.org/access/fulltext/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.719662+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/access/fulltext/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E012.html",
+      "bytes": 47875,
+      "sha256": "62e9e3fe5bac6218c0b7151fbaf3d0058695a126e84f3b9efe376cf1e47881f4",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.830108+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E012.txt",
+      "text_sha256": "299ef805a3c4fa73b2e448c4bcb19274a91f307bfbb8ecbc9591602338ad388d",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E013",
+      "requested_url": "https://help.openalex.org/data/works/open-access/",
+      "retrieval_started_utc": "2026-10-10T06:41:41.738742+00:00",
+      "status": 200,
+      "resolved_url": "https://help.openalex.org/data/works/open-access/",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E013.html",
+      "bytes": 41521,
+      "sha256": "be2f4b8e0c40dc97978cdcacc1f558e07fd09abafcaeb6f9e1bcca9b1aabea37",
+      "retrieval_completed_utc": "2026-10-10T06:41:41.823342+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E013.txt",
+      "text_sha256": "1e99b950c423e268732d9b3b0804f2ee9c6257329e01df811fe9ad2b9add694c",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E014",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.8",
+      "retrieval_started_utc": "2026-10-10T06:41:41.823438+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.8",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"b9a09ce3bdff287499c2e7a7fa07a09a\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E014.html",
+      "bytes": 200823,
+      "sha256": "d09e5c84ef55451651671f4b5f87645dd0d7dc9af0e3b33b33e18187123ee43e",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.259656+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E014.txt",
+      "text_sha256": "2e3923a8bcc15108cf4624f37885a897fd8223c6792283153dce6a3099c9cc48",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E015",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.5",
+      "retrieval_started_utc": "2026-10-10T06:41:41.830206+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.5",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"98f8cf937de41657f968d0f0a5eba5e8\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E015.html",
+      "bytes": 202073,
+      "sha256": "d6d194e5621a745c6c62412ae7d38d7e9e726b6f19ef6e4651fd6640d94fbdd3",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.196532+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E015.txt",
+      "text_sha256": "171cf78450755de35cf8471ec1ca836da257c308e85395bc40fa658e6b1fb4ad",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E016",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.6",
+      "retrieval_started_utc": "2026-10-10T06:41:42.154668+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.6",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"2b3141e6393aaa1dac197b31ba9ad2fc\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E016.html",
+      "bytes": 200302,
+      "sha256": "5d0e2aea4c65ebdda86237e81dcc5d9217596140839dc3fdd7f6b3b044be4134",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.549315+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E016.txt",
+      "text_sha256": "09a5ce2db8722856fc2bd31dfd1d7c8caa563ea8c4ea547e97dd7b75150e8ec5",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E017",
+      "requested_url": "https://github.com/asreview/asreview/releases/tag/v3.0.7",
+      "retrieval_started_utc": "2026-10-10T06:41:42.196622+00:00",
+      "status": 200,
+      "resolved_url": "https://github.com/asreview/asreview/releases/tag/v3.0.7",
+      "content_type": "text/html; charset=utf-8",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"4c46db9ee8d98d5e46657cd14d329733\""
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E017.html",
+      "bytes": 200921,
+      "sha256": "942c7bd16cb563b8ebaa7748e36c5869b3fec3266bc07b56b81236119ecd2ccc",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.569904+00:00",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E017.txt",
+      "text_sha256": "28317e261bc4ef0802b23d2bf7c8bbaed7d0cc6f9bb38482fc5af1b56178e76f",
+      "initial_extraction_error": "ModuleNotFoundError(\"No module named 'bs4'\")"
+    },
+    {
+      "id": "E018",
+      "requested_url": "https://www.inspq.qc.ca/pdf/publications/1513_UrbanHeatIslandMitigationStrategies.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:42.242307+00:00",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.334090+00:00"
+    },
+    {
+      "id": "E019",
+      "requested_url": "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf",
+      "retrieval_started_utc": "2026-10-10T06:41:42.259743+00:00",
+      "status": 200,
+      "resolved_url": "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf",
+      "content_type": "application/pdf",
+      "headers": {
+        "Content-Type": "application/pdf",
+        "ETag": "\"6aa9515e-174bd0\"",
+        "Last-Modified": "Tue, 15 Sep 2026 14:08:30 GMT"
+      },
+      "path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E019.pdf",
+      "bytes": 1526736,
+      "sha256": "9e3c5712b0086243da2705b4abe2066569dc673ff5eb02f49092ccbed11f5263",
+      "text_path": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/evidence/E019.txt",
+      "text_sha256": "56a09a7437fbeff2b6aadb5373eaffc386545c625efe6c0983c703cd9f975c1f",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.620521+00:00"
+    },
+    {
+      "id": "E020",
+      "requested_url": "https://www.inspq.qc.ca/en/publications/1513",
+      "retrieval_started_utc": "2026-10-10T06:41:42.334245+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.394541+00:00"
+    },
+    {
+      "id": "E021",
+      "requested_url": "https://www.inspq.qc.ca/publications/988",
+      "retrieval_started_utc": "2026-10-10T06:41:42.394601+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:41:42.450254+00:00"
+    },
+    {
+      "id": "E022",
+      "requested_url": "https://help.openalex.org/api/semantic-search/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.281547+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.357913+00:00"
+    },
+    {
+      "id": "E023",
+      "requested_url": "https://help.openalex.org/data/works/corpus/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.357959+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.412965+00:00"
+    },
+    {
+      "id": "E024",
+      "requested_url": "https://help.openalex.org/api/authentication/",
+      "retrieval_started_utc": "2026-10-10T06:44:43.413011+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "retrieval_completed_utc": "2026-10-10T06:44:43.468694+00:00"
+    }
+  ]
+}

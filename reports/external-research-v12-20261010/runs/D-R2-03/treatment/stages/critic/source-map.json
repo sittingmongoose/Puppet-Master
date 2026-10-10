@@ -1,0 +1,235 @@
+{
+  "schema_version": "ER12-critic-source-map-v1",
+  "run_id": "D-R2-03-treatment",
+  "stage": "critic",
+  "source_index": "sources/index.md",
+  "access_note": "All listed URLs were opened or searched through the web source tool. The timestamp is the observed review-completion time; the tool exposed 'Crawled: today' but not individual fetch times.",
+  "records": [
+    {
+      "source_id": "CR01",
+      "packet_crosswalk": "S01 (same URL and edition; critic access recorded separately)",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "released_version_or_commit": "Version 1.0, July 2022; PDF hosting path includes 2026/07, which is not the publication version.",
+      "locator": "PDF pp. 18–19, 69–70, 88–90, 114–117; extracted lines 2044–2054 and 3430–3465.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official PDF; inspected cloud conditions, position-in-frame, standards, and self-assessment sections.",
+      "governing_conditions_defaults_exceptions": "Cloud cancellation is described only when thin uniform cloud affects target and comparisons to the same degree; described as rare. Standard-field accuracy work depends on known field stars, calibration frames, filter, and repeated nights.",
+      "applicability": "General CCD/CMOS photometry guidance; no case camera, cloud, standard field, or calibrated accuracy established.",
+      "note_path": "sources/CR01.md"
+    },
+    {
+      "source_id": "CR02",
+      "packet_crosswalk": "S04 (same URL and IRAF release documentation)",
+      "title": "IRAF ccdproc task documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "released_version_or_commit": "Documentation identifies IRAF 2.18; latest URL exposes no source commit.",
+      "locator": "Parameter lines 18–55; subset/flat processing lines 76–81; output replacement lines 18–19 and processing description lines 128–179.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official task documentation; inspected defaults, required sections/calibrations, flat selection, and output behavior.",
+      "governing_conditions_defaults_exceptions": "Task defaults are not evidence of execution by the case reducer; correction switches need matching parameters/calibration inputs. Blank output replaces input science images; dependent calibration images may still be in-place with optional backup.",
+      "applicability": "Supports a version-specific implementation example and preservation caution; unknown case software remains unknown.",
+      "note_path": "sources/CR02.md"
+    },
+    {
+      "source_id": "CR03",
+      "packet_crosswalk": "S06 (same URL; guide has no pinned application build)",
+      "title": "AstroImageJ official user guide",
+      "url": "https://astroimagej.com/guides/aij/",
+      "released_version_or_commit": "Current guide observed 2026-10-10; no revision/build pinned.",
+      "locator": "Data Processor Module lines 408–427; Astrometry Settings and Re-save Raw Science lines 582–615.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official guide; compared Data Processor descriptions with the specific astrometry option and warning.",
+      "governing_conditions_defaults_exceptions": "Overwrite warning applies when the named Re-save Raw Science option is enabled; it writes WCS-added data to original FITS files. It is not a general statement about all AIJ saves or Data Processor operations.",
+      "applicability": "Supports a scoped preservation warning; case app/version/settings unknown.",
+      "note_path": "sources/CR03.md"
+    },
+    {
+      "source_id": "CR04",
+      "packet_crosswalk": "S09 (same stable documentation URL)",
+      "title": "Astropy Time and Dates",
+      "url": "https://docs.astropy.org/en/stable/time/index.html",
+      "released_version_or_commit": "Astropy v8.0.1 stable docs observed; no commit pinned.",
+      "locator": "Barycentric and Heliocentric Light Travel Time Corrections, lines 2278–2305; location description around 1836–1837.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official documentation and inspected the example constructing Time, SkyCoord, location, barycentric light-time, and TDB output.",
+      "governing_conditions_defaults_exceptions": "Calculating the barycentric correction uses a source coordinate and a Time with observatory location; the correction is added to TDB time. This is narrower than requiring coordinates to label any supplied value BJD_TDB.",
+      "applicability": "Supports a later verified time conversion only; no conversion performed.",
+      "note_path": "sources/CR04.md"
+    },
+    {
+      "source_id": "CR05",
+      "packet_crosswalk": "S11 (same URL; current-page access recorded separately)",
+      "title": "ZTF Public Data Releases",
+      "url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "released_version_or_commit": "Current page observed 2026-10-10; ZTF-3 Jan 1 2025–Dec 31 2026, DR24 release date Jan 22 2026, DR25 Jan 20 2027.",
+      "locator": "Public Data Releases overview and ZTF-3 schedule lines 73–102.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official release page and inspected survey data, release schedule, and public/proprietary timing.",
+      "governing_conditions_defaults_exceptions": "Public releases cover NSF-supported public survey time; images have 60-day sliding release and light curves are recalculated annually. The checked page lines do not state DR24 observations through 2025-10-22.",
+      "applicability": "Supports the existence of a separate survey route, but not this target's field/date/cadence match; no query/download.",
+      "note_path": "sources/CR05.md"
+    },
+    {
+      "source_id": "CR06",
+      "packet_crosswalk": "S12 (same current mission documentation URL)",
+      "title": "TESS Data Products Information",
+      "url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "released_version_or_commit": "Current page observed 2026-10-10; no page revision or pipeline commit exposed.",
+      "locator": "Product overview lines 26–30; TPF lines 56–61; light-curve product lines 63–66.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened NASA/HEASARC page and inspected acquisition cadence, target pixel, and light-curve product descriptions.",
+      "governing_conditions_defaults_exceptions": "TPFs contain selected target pixels; SPOC produces TPF and light-curve products. Documented light curves use SAP and SPOC cotrending; sectors can be separate deliveries.",
+      "applicability": "Confirms separate space-based products and their processing lineage; no case coverage, quality, or matched source established.",
+      "note_path": "sources/CR06.md"
+    },
+    {
+      "source_id": "CR07",
+      "packet_crosswalk": "S13 (same article identity and arXiv version)",
+      "title": "VanderPlas, Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/html/1703.09824",
+      "released_version_or_commit": "arXiv:1703.09824 v1 (2017-03-28); ApJS 236(1), 16 (2018), DOI 10.3847/1538-4365/aab766.",
+      "locator": "Section III observing windows; Section VI correlated-error equations lines 448–456; Section VII.4.2 false-alarm and search-wide maximum lines 611–658.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the primary arXiv full text; inspected window, correlated-noise, false-alarm, and interpretation sections.",
+      "governing_conditions_defaults_exceptions": "White-noise/single-frequency significance is not enough for a searched maximum with structured sampling or correlated errors; ordinary value-resampling bootstrap does not represent correlated noise.",
+      "applicability": "Supports proposed future preregistration and dependence-aware analysis, not any case result; no periodogram run.",
+      "note_path": "sources/CR07.md"
+    },
+    {
+      "source_id": "CR08",
+      "packet_crosswalk": "S14 (same URL and Photutils docs release)",
+      "title": "Photutils Aperture Photometry guide",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "released_version_or_commit": "Photutils 3.0.0 stable documentation observed; no source commit pinned.",
+      "locator": "Aperture photometry and overlap lines 114–154; background/input assumptions lines 207–212; annulus example lines 335–363.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official guide; inspected aperture defaults, speed/precision alternatives, background subtraction, annulus, and masks.",
+      "governing_conditions_defaults_exceptions": "The default exact method is specific to this API call; center/subpixel are faster but less precise. aperture_photometry expects background-subtracted input; WCS distortions can limit sky-aperture conversion.",
+      "applicability": "Supports only the proposed Photutils-specific sensitivity method; not evidence about the archive reducer.",
+      "note_path": "sources/CR08.md"
+    },
+    {
+      "source_id": "CR09",
+      "packet_crosswalk": "S08 (same paper, independent access)",
+      "title": "Eastman, Siverd & Gaudi, Achieving Better Than 1 Minute Accuracy in the Heliocentric and Barycentric Julian Dates",
+      "url": "https://arxiv.org/html/1005.4415",
+      "released_version_or_commit": "arXiv:1005.4415 (2010; version not pinned in URL).",
+      "locator": "Abstract and recommendation lines 57 and 90; conversion steps lines 239–249.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the primary paper and inspected timing standards, site-arrival, and BJD_TDB recommendations.",
+      "governing_conditions_defaults_exceptions": "The paper frames the reporting requirement around event timing at about one-minute accuracy; source and observer data and exposure semantics affect the conversion.",
+      "applicability": "Supports the draft's timing-provenance recommendation without asserting a case timing precision.",
+      "note_path": "sources/CR09.md"
+    },
+    {
+      "source_id": "CR10",
+      "packet_crosswalk": "S05 (same URL and IRAF documentation release)",
+      "title": "IRAF discussion of CCD flat-field calibrations",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+      "released_version_or_commit": "IRAF documentation identifies 2.18; latest URL has no commit.",
+      "locator": "Direct-imaging flat fields, lines 14–24.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page; inspected lamp-flat mismatch and blank-sky/illumination alternatives.",
+      "governing_conditions_defaults_exceptions": "Blank sky is preferred when a residual large-scale pattern is measured; removing lamp-flat shape is a fallback if no sky observation exists and pattern is attributable to lamp flat.",
+      "applicability": "Supports conditional flat alternatives; archive calibration source is unknown.",
+      "note_path": "sources/CR10.md"
+    },
+    {
+      "source_id": "CR11",
+      "packet_crosswalk": "S02 (same current URL)",
+      "title": "AAVSO Stellar Photometry: Data Quality",
+      "url": "https://aavso.org/stellar-photometry/",
+      "released_version_or_commit": "Current page observed 2026-10-10; no release/commit.",
+      "locator": "Data quality and Charts lines 135–155.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page and inspected its data-quality checklist.",
+      "governing_conditions_defaults_exceptions": "Checklist is non-exhaustive, gives no instrument-specific numeric threshold, and directs readers to the detailed CCD/CMOS guide.",
+      "applicability": "Supports a general pilot preference for nearby color/magnitude-similar comparisons; no field stars selected.",
+      "note_path": "sources/CR11.md"
+    },
+    {
+      "source_id": "CR12",
+      "packet_crosswalk": "S03 (same current URL)",
+      "title": "AAVSO Exoplanet Photometry",
+      "url": "https://aavso.org/exoplanet-photometry/",
+      "released_version_or_commit": "Current page observed 2026-10-10; no release/commit.",
+      "locator": "Autoguiding / fixed sensor position recommendation, lines 120–122.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page and inspected the sensor-position guidance.",
+      "governing_conditions_defaults_exceptions": "Same-pixel positioning is a precision optimization for exoplanet observations requiring autoguiding; it is not a finding about the case rotation.",
+      "applicability": "Supports a controlled baseline and separate position diagnostic only.",
+      "note_path": "sources/CR12.md"
+    },
+    {
+      "source_id": "CR13",
+      "packet_crosswalk": "S10 is the journal URL; CR13 is a distinct arXiv-version source identity, not a rebinding.",
+      "title": "Osborn et al., Atmospheric Scintillation in Astronomical Photometry",
+      "url": "https://arxiv.org/html/1506.06921",
+      "released_version_or_commit": "arXiv:1506.06921v1 (2015-06-23); MNRAS 452(2), 1707–1716 (2015), DOI 10.1093/mnras/stv1400.",
+      "locator": "Abstract and introduction lines 36–53; physical theory lines 58–69; estimate limits lines 80–87.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "The packet journal URL redirected to a publisher CDN with an internal error; searched exact title and opened the primary arXiv full text.",
+      "governing_conditions_defaults_exceptions": "Scintillation is turbulence-driven intensity variation distinct from blur/seeing; approximate noise models are not precise for a specific observation without relevant conditions.",
+      "applicability": "Confirms mechanism distinction; supports no site-specific estimate for the unknown camera/site.",
+      "note_path": "sources/CR13.md"
+    },
+    {
+      "source_id": "CR14",
+      "packet_crosswalk": "S07 (same current release-history URL)",
+      "title": "AstroImageJ release history",
+      "url": "https://astroimagej.com/releases/",
+      "released_version_or_commit": "Current page observed 2026-10-10; latest listed AIJ 6.0.11.00 (2026-09-10), includes ImageJ 1.54s and Java 26.",
+      "locator": "Latest release lines 8–58; earlier changes lines 192–259 and 296–389.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official changelog and inspected current release identity and version-specific fixes.",
+      "governing_conditions_defaults_exceptions": "Release entries apply to their named build and feature; a listed fix does not establish that the archive used AIJ or encountered that behavior.",
+      "applicability": "Supports version recovery as necessary for transfer; no AIJ version is attributed to the case.",
+      "note_path": "sources/CR14.md"
+    }
+  ],
+  "evidence_sets": [
+    {
+      "evidence_id": "E01",
+      "scw_id": "SCW-01",
+      "sources": [
+        "CR05",
+        "CR06"
+      ],
+      "case_input": "ER12_RUNTIME/runs/D-R2-03/treatment/inputs/brief.md",
+      "join": "ZTF page describes a public telescope survey and its own releases; TESS page describes spacecraft images, target pixels, and downstream products. The case brief separately identifies the teaching archive as nightly images and says no data were supplied. Neither source establishes this target's actual coverage or whether a proposed third-party product shares inputs."
+    },
+    {
+      "evidence_id": "E02",
+      "scw_id": "SCW-02",
+      "sources": [
+        "CR01"
+      ],
+      "join": "AAVSO atmospheric section states same-degree attenuation for target and comparisons as the cancellation condition; cloud spatial uniformity alone is not equated with same-degree measured effect."
+    },
+    {
+      "evidence_id": "E03",
+      "scw_id": "SCW-03",
+      "sources": [
+        "CR02"
+      ],
+      "join": "IRAF task parameter table and output section define the task-level defaults and the blank-output replacement condition; no case reducer is identified."
+    },
+    {
+      "evidence_id": "E04",
+      "scw_id": "SCW-04",
+      "sources": [
+        "CR03"
+      ],
+      "join": "AIJ guide's Astrometry Settings name the raw re-save toggle and its consequence; separate Data Processor section does not make that warning universal."
+    },
+    {
+      "evidence_id": "E05",
+      "scw_id": "SCW-05",
+      "sources": [
+        "CR04"
+      ],
+      "join": "Astropy example joins a Time object carrying observer location, a source SkyCoord passed to light_travel_time, and TDB addition; documentation does not address arbitrary time labels imported from elsewhere."
+    }
+  ]
+}

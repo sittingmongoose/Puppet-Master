@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A6-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The proposal covers all eight plan clauses and records each critique disposition.\n\n- [final.md](ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json)\n- [Source index](ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md)\n\nThe revision adds the documented Omeka REST `PUT`/`PATCH` update conditions and a conditional Item Importer path, pending confirmation that a collection already uses Omeka S ([official REST API docs](https://omeka.org/s/docs/developer/api/rest_api/), [Item Importer module](https://omeka.org/s/modules/Osii/)). It preserves the CNE page retrieval limitation. No product validation was run.\n\nThe actual native Goal is **complete**. Its returned fields include `tokensUsed: 148914`, `timeUsedSeconds: 688`, `createdAt: 1791608864`, and `updatedAt: 1791609553`. Provenance beyond the tool-returned fields is UNKNOWN.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4dd32c3c-dadc-442a-9cb6-b33c11815f6f",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The proposal covers all eight plan clauses and records each critique disposition.\n\n- [final.md](ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-02/control/stages/reviser/source-map.json)\n- [Source index](ER12_RUNTIME/runs/A6-02/control/stages/reviser/sources/index.md)\n\nThe revision adds the documented Omeka REST `PUT`/`PATCH` update conditions and a conditional Item Importer path, pending confirmation that a collection already uses Omeka S ([official REST API docs](https://omeka.org/s/docs/developer/api/rest_api/), [Item Importer module](https://omeka.org/s/modules/Osii/)). It preserves the CNE page retrieval limitation. No product validation was run.\n\nThe actual native Goal is **complete**. Its returned fields include `tokensUsed: 148914`, `timeUsedSeconds: 688`, `createdAt: 1791608864`, and `updatedAt: 1791609553`. Provenance beyond the tool-returned fields is UNKNOWN.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4dd32c3c-dadc-442a-9cb6-b33c11815f6f",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "113e1041e838dbe32376bef135e65d13438d5ad8b22820881d4bee4817616b84"
   }
 }

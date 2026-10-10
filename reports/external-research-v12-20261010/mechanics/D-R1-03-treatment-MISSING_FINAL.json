@@ -1,0 +1,150 @@
+{
+  "schema": "er12.mechanical-missing-final.v1",
+  "at_utc": "2026-10-10T06:29:07.014590+00:00",
+  "slot": "D-R1-03",
+  "arm": "treatment",
+  "original_task": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-treatment-investigator-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "latestTerminalStatus": "completed"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "4f7dd5599343ee6a6aeff9df75262e8d4e1d541c97d6044359563ff88b6e6db7"
+  },
+  "source_judgment": "UNASSESSED_MISSING_FINAL",
+  "delivery": "MISSING_PRE_INPUT_GUARD_FAILURE",
+  "source_inference": "not performed per original failure record; required science files absent; full access trace UNKNOWN",
+  "native": "one captured actual native Goal; recorded wrong immutable objective; worker reports blocked after3consecutiveguardfailures; direct host nativeproof UNKNOWN",
+  "protocol": "INVALID_EXACT_OBJECTIVE_BINDING; originalrequest correct, no shared helper defect established",
+  "whole_arm_timely_source_success": false,
+  "guard_was_loosened": false,
+  "paid_restart_or_replacement_goal": false,
+  "D_locked_recipe_changed": false,
+  "all_attempts_and_resources": "preserved including three sameGoal continuation receipts; no closedstage/job credit as scientificprogress",
+  "failure_evidence": {
+    "path": "ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/exact-goal-binding-failure.json",
+    "sha256": "f044230c06b88394b0f1148534f7de5d790c50c4febdeb0dbbfdb589e98f7454"
+  },
+  "expected_objective": "ER12 investigator stage, run D-R1-03-treatment: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "captured_goal_objectives": [
+    "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal."
+  ],
+  "native_raw_cumulative_fields": [
+    {
+      "threadId": "01a1247b-bbf6-7c11-9cc9-24263f0e2209",
+      "objective": "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791613486,
+      "updatedAt": 1791613486
+    },
+    {
+      "threadId": "01a1247b-bbf6-7c11-9cc9-24263f0e2209",
+      "objective": "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 11965,
+      "timeUsedSeconds": 35,
+      "createdAt": 1791613486,
+      "updatedAt": 1791613522
+    },
+    {
+      "threadId": "01a1247b-bbf6-7c11-9cc9-24263f0e2209",
+      "objective": "ER12 investigator stage, run D-R1-03: execute ER12_RUNTIME/runs/D-R1-03/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 23732,
+      "timeUsedSeconds": 74,
+      "createdAt": 1791613486,
+      "updatedAt": 1791613560
+    }
+  ],
+  "actual_one_time_host_thread_observation": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "structured_content_metadata": [
+          {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-treatment-investigator-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T06:24:10.983Z",
+              "updatedAt": "2026-10-10T06:27:43.227Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T06:24:10.985Z",
+                "startedAt": "2026-10-10T06:24:11.684Z",
+                "completedAt": "2026-10-10T06:27:28.887Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T06:24:10.985Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
+          }
+        ],
+        "structuredContent": {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-treatment-investigator-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T06:24:10.983Z",
+            "updatedAt": "2026-10-10T06:27:43.227Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "requestedAt": "2026-10-10T06:24:10.985Z",
+              "startedAt": "2026-10-10T06:24:11.684Z",
+              "completedAt": "2026-10-10T06:27:28.887Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-D-R1-03-treatment-investigator-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T06:24:10.985Z"
+            }
+          ],
+          "nextPosition": 0,
+          "hasMore": true
+        }
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "0f5e1540c7a8323651c5a451adc23118d158f793864c6e1edc52a4e18cc01eeb"
+  },
+  "ordinary_root_mechanics_error": "root advance attemptedcritic preparation after completedtask; refusedmissingfrozen discovery. No critic task dispatched, reservation correctedbelow."
+}

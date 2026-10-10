@@ -1,1 +1,84 @@
-{"applicability":{"cross_arm_note":"Common substantive input identical across arms per assignment; no arm-specific evidence used.","corpus":"null (no supplied corpus; all evidence from bounded retrieval below)","role_scope":"Brief-only discovery: chunk boundary selection and chunk-identity/encryption interaction; excludes scheduling, UI, full restore architecture"},"conditions_exceptions":{"conditions":"Fresh context; web retrieval only (web_fetch/web_search); at most eight additional primary pages; no code execution, installs, logins, local probes, delegation, or cross-arm contact.","exceptions":["HTTP 404 on two guessed restic URLs (see failed_retrievals); recovered via correct References URL.","Three web_fetch responses truncated by the harness; full text retained only in harness tool-output store, not in this directory; excerpts quote observed content.","Page budget (8/8) exhausted: Tarsnap slides/chunkify.c, Borg data-structures, Kopia/Duplicacy/Bup docs, 2025 paper full text, and all source code not retrieved."],"page_budget":"8 of 8 additional primary pages used"},"failed_retrievals":[{"diagnostic_exact":"web_fetch failed: HTTP 404 Not Found","url":"https://restic.readthedocs.io/en/stable/100_references/01-references.html"},{"diagnostic_exact":"web_fetch failed: HTTP 404 Not Found","url":"https://restic.readthedocs.io/en/stable/design.html"}],"goal_activation":{"objective_verbatim":"ER12 B-DISC-M-02/treatment: execute ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.","receipt_path":"records/goal-activation-receipt.json","single_native_goal":"exactly one native Goal activated before any common source/case input or inference"},"inputs":{"common_assignment":"ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md","fixture":"ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json"},"outputs":{"artifacts":["discovery.md","source-map.json","sources/restic-references.excerpt.md","sources/borg-internals-security.excerpt.md","sources/tarsnap-crypto-dedup.excerpt.md","sources/retrieval-log.md","records/goal-activation-receipt.json"],"write_root":"ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role"},"proposed_vs_executed":{"executed":"Activated 1 native Goal; read input-map + common assignment + fixture; retrieved 8 primary pages (5 substantive) across restic/borg/tarsnap; saved 4 bounded evidence files; wrote discovery.md (973 words: 4-mechanism shortlist, 2 implementation leads, 1 version lead, tradeoff table, 3 questions/tests, capabilities-vs-choices, uncertainty + next step); saved source-map.json before native completion.","proposed":"Per assignment.md: 900s total, <=600s investigation, 300s writing reserve; >=3 primary sources across >=2 orgs; discovery.md 700-1000 words with shortlist/leads/tradeoffs/tests; source-map.json + sources/ evidence before native completion.","variance":"None material. No local probes were needed (no probe run). Deadline 2026-10-10T04:52:26.708000+00:00 honored; all artifacts saved before native completion."},"sources":[{"evidence_file":"sources/restic-references.excerpt.md","locator":"Sections: Repository Format; backup/CDC paragraph; Threat Model; Changes (Repository Version 2); keys/ directory handling","operation":"web_fetch","organization":"Restic project (restic.readthedocs.io)","retrieval_utc":"2026-10-10T04:38Z","status":"200 OK, ~54KB, harness-truncated","url":"https://restic.readthedocs.io/en/latest/100_references.html","version":"docs 'latest'; repo format v1/v2; mitigation restic 0.18.0 (#5295)"},{"evidence_file":"sources/borg-internals-security.excerpt.md","locator":"internals.html intro (chunker/cache); security.html: Attack model, Structural Authentication, Encryption, Offline key security","operation":"web_fetch","organization":"BorgBackup project (borgbackup.readthedocs.io)","retrieval_utc":"2026-10-10T04:38-04:39Z","status":"200 OK each, ~10KB and ~23KB, harness-truncated","url":"https://borgbackup.readthedocs.io/en/stable/internals.html + https://borgbackup.readthedocs.io/en/stable/internals/security.html","version":"Borg 1.4.5 docs (stable)"},{"evidence_file":"sources/tarsnap-crypto-dedup.excerpt.md","locator":"crypto.html: session keys, HMAC block names, signing/Merkle, request keys; deduplication-explanation.html: chunkification, wordification table, production notes, binary-chunking pointer","operation":"web_fetch","organization":"Tarsnap (tarsnap.com, Colin Percival)","retrieval_utc":"2026-10-10T04:38Z","status":"200 OK, ~6KB and ~17KB, latter harness-truncated; index pages design/technical/deduplication also fetched (200, non-substantive)","url":"https://www.tarsnap.com/crypto.html + https://www.tarsnap.com/deduplication-explanation.html","version":"site as served 2026-10-10 (unversioned)"}]}
+{
+  "applicability": {
+    "cross_arm_note": "Common substantive input identical across arms per assignment; no arm-specific evidence used.",
+    "corpus": "null (no supplied corpus; all evidence from bounded retrieval below)",
+    "role_scope": "Brief-only discovery: chunk boundary selection and chunk-identity/encryption interaction; excludes scheduling, UI, full restore architecture"
+  },
+  "conditions_exceptions": {
+    "conditions": "Fresh context; web retrieval only (web_fetch/web_search); at most eight additional primary pages; no code execution, installs, logins, local probes, delegation, or cross-arm contact.",
+    "exceptions": [
+      "HTTP 404 on two guessed restic URLs (see failed_retrievals); recovered via correct References URL.",
+      "Three web_fetch responses truncated by the harness; full text retained only in harness tool-output store, not in this directory; excerpts quote observed content.",
+      "Page budget (8/8) exhausted: Tarsnap slides/chunkify.c, Borg data-structures, Kopia/Duplicacy/Bup docs, 2025 paper full text, and all source code not retrieved."
+    ],
+    "page_budget": "8 of 8 additional primary pages used"
+  },
+  "failed_retrievals": [
+    {
+      "diagnostic_exact": "web_fetch failed: HTTP 404 Not Found",
+      "url": "https://restic.readthedocs.io/en/stable/100_references/01-references.html"
+    },
+    {
+      "diagnostic_exact": "web_fetch failed: HTTP 404 Not Found",
+      "url": "https://restic.readthedocs.io/en/stable/design.html"
+    }
+  ],
+  "goal_activation": {
+    "objective_verbatim": "ER12 B-DISC-M-02/treatment: execute ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+    "receipt_path": "records/goal-activation-receipt.json",
+    "single_native_goal": "exactly one native Goal activated before any common source/case input or inference"
+  },
+  "inputs": {
+    "common_assignment": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/assignment.md",
+    "fixture": "ER12_RUNTIME/runs/B-DISC-M-02/inputs/fixture.json"
+  },
+  "outputs": {
+    "artifacts": [
+      "discovery.md",
+      "source-map.json",
+      "sources/restic-references.excerpt.md",
+      "sources/borg-internals-security.excerpt.md",
+      "sources/tarsnap-crypto-dedup.excerpt.md",
+      "sources/retrieval-log.md",
+      "records/goal-activation-receipt.json"
+    ],
+    "write_root": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role"
+  },
+  "proposed_vs_executed": {
+    "executed": "Activated 1 native Goal; read input-map + common assignment + fixture; retrieved 8 primary pages (5 substantive) across restic/borg/tarsnap; saved 4 bounded evidence files; wrote discovery.md (973 words: 4-mechanism shortlist, 2 implementation leads, 1 version lead, tradeoff table, 3 questions/tests, capabilities-vs-choices, uncertainty + next step); saved source-map.json before native completion.",
+    "proposed": "Per assignment.md: 900s total, <=600s investigation, 300s writing reserve; >=3 primary sources across >=2 orgs; discovery.md 700-1000 words with shortlist/leads/tradeoffs/tests; source-map.json + sources/ evidence before native completion.",
+    "variance": "None material. No local probes were needed (no probe run). Deadline 2026-10-10T04:52:26.708000+00:00 honored; all artifacts saved before native completion."
+  },
+  "sources": [
+    {
+      "evidence_file": "sources/restic-references.excerpt.md",
+      "locator": "Sections: Repository Format; backup/CDC paragraph; Threat Model; Changes (Repository Version 2); keys/ directory handling",
+      "operation": "web_fetch",
+      "organization": "Restic project (restic.readthedocs.io)",
+      "retrieval_utc": "2026-10-10T04:38Z",
+      "status": "200 OK, ~54KB, harness-truncated",
+      "url": "https://restic.readthedocs.io/en/latest/100_references.html",
+      "version": "docs 'latest'; repo format v1/v2; mitigation restic 0.18.0 (#5295)"
+    },
+    {
+      "evidence_file": "sources/borg-internals-security.excerpt.md",
+      "locator": "internals.html intro (chunker/cache); security.html: Attack model, Structural Authentication, Encryption, Offline key security",
+      "operation": "web_fetch",
+      "organization": "BorgBackup project (borgbackup.readthedocs.io)",
+      "retrieval_utc": "2026-10-10T04:38-04:39Z",
+      "status": "200 OK each, ~10KB and ~23KB, harness-truncated",
+      "url": "https://borgbackup.readthedocs.io/en/stable/internals.html + https://borgbackup.readthedocs.io/en/stable/internals/security.html",
+      "version": "Borg 1.4.5 docs (stable)"
+    },
+    {
+      "evidence_file": "sources/tarsnap-crypto-dedup.excerpt.md",
+      "locator": "crypto.html: session keys, HMAC block names, signing/Merkle, request keys; deduplication-explanation.html: chunkification, wordification table, production notes, binary-chunking pointer",
+      "operation": "web_fetch",
+      "organization": "Tarsnap (tarsnap.com, Colin Percival)",
+      "retrieval_utc": "2026-10-10T04:38Z",
+      "status": "200 OK, ~6KB and ~17KB, latter harness-truncated; index pages design/technical/deduplication also fetched (200, non-substantive)",
+      "url": "https://www.tarsnap.com/crypto.html + https://www.tarsnap.com/deduplication-explanation.html",
+      "version": "site as served 2026-10-10 (unversioned)"
+    }
+  ]
+}

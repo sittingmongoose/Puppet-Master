@@ -1,9 +1,20 @@
-# S11 — UltiMaker Cura 5.7.0 release
-
-- **Exact URL:** https://github.com/Ultimaker/Cura/releases/tag/5.7.0
-- **Released version/commit:** Tag 5.7.0, commit 04ddb8e; release page prints 3 April but not the year in the retrieved view.
-- **Locator:** UCP feature lines 151-165; 3MF saved-position/import-mode change lines 192-205; UCP reset tip lines 244-247.
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open of official Cura release notes; no binary or project was run.
-- **Governing condition/default/exception:** Release says UCP contains models/settings and can be shared with people with different printers; it allows positional data and selected settings. It restores saved position when a 3MF project loads but Import Models ignores saved positions. The release recommends starting a new project after a UCP to reset its settings.
-- **Applicability:** Cura 5.7.0 workflow only; this is not cross-slicer interoperability or approval of loaded machine settings.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "24e16aac50ca4cf654f3fa3c61420858dfa7cab9090ede8f85c2353a0839c14f",
+  "rawSHA256": "24e16aac50ca4cf654f3fa3c61420858dfa7cab9090ede8f85c2353a0839c14f",
+  "original_bytes": 998,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S11-cura-570-release.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

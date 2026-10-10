@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-10T06:56:57.554404+00:00",
+  "review": "root selection of bounded diagnostic after all4 original C2 judgments quiet, before fresh D2 access",
+  "C2_original_outcomes": [
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "source_judgment": "FAIL",
+      "original_sha256": "53078dbf3fa7c566a0a69d1d2ed91ce423fb37abc0d55284ddf108d52cc20c2f"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "original_sha256": "f7c4368b3274ef000fe531ecf938b899eb2cfaec0e122e06a346b4e69218f73b"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "original_sha256": "cce8e43941395a94e530f005dd7d4234706e0910a33519cb4f37eb18321798ef"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "original_sha256": "dadac2e6e68cf552b478cf866ff1a189f75dcd590b6d1da15e8570c2b5ec2e52"
+    }
+  ],
+  "C2_original_method_fault": {
+    "pointer": "/mechanics/protocol",
+    "status": "A8_COMPONENT_NONCOMPLIANT",
+    "original_assessment": "assessment/C-R2-01/treatment-v1/assessment.json"
+  },
+  "all_assigned_latency_increase_percent": 12.042728997267194,
+  "occupied_context_increase_percent": 17.94007429417035,
+  "source_both_pass_second_pair_latency_increase_percent": 5.939063142440748,
+  "classification": "mechanism/reference-feasibility diagnostic; no qualified optimizer or development confirmation",
+  "method_frozen": "exact C2 scientific A1+A8; common future typed activation v2.1 both arms. No feedback/tuning after lock. Preserve SCW recipe-fidelity assessment separately from source grade.",
+  "D2_inputs": "outer IDs/domains/hashes only; unopened; original prewritten fixtures matched across each pair",
+  "replication_use": "authorized4freshblocks, no20%floor and no hidden paid replacement; prior D1missingfinal retained",
+  "C2pins_unchanged": true,
+  "root_read_scope": "Original delivered source judgment/material findings, complete relevant method/protocol decisions, six-axis coverage statuses; actual12hostlifetimes and26localreceipt objective comparisons. No original regrade."
+}

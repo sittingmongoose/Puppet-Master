@@ -1,9 +1,20 @@
-# S10 — Prusa project 3MF
-
-- **Source:** [Saving projects as 3MF](https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1)
-- **Version:** Prusa knowledge-base article; no exact executable build stated.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** Save Project as and 3MF file format sections.
-- **Observed operation:** Read only; no project was saved/opened.
-- **Relevant rules:** A PrusaSlicer project 3MF can contain all objects, settings, modifiers and parameters, as well as multiple models, slicer settings, thumbnail, color, and texture. Article describes same-G-code expectation on another computer, especially where that recipient uses PrusaSlicer/Prusa printer.
-- **Applicability:** A product-specific project snapshot, not a generic cross-slicer promise.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+  "rawSHA256": "4093bb0a29d33bca2e1c70b4e48f1c50b316ea45b82abd8a8d9e879a5b929b15",
+  "original_bytes": 810,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S10-prusa-project-3mf.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

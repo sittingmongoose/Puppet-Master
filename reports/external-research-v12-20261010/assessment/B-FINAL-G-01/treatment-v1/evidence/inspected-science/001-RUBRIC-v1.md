@@ -1,12 +1,20 @@
-# ER12 independent rubric v1
-Authority: frozen ER12 handoff section 9. Same criteria for control/treatment; graders must inspect the complete frozen input/stage/final bytes and independently verify consequential primary evidence. No candidate assistance or feedback.
-
-Full pipelines: separately assess (1) original obligations/negative constraints; (2) consequential source claims including version/default/unit/type/operation/applicability/exception; (3) useful unfamiliar discovery, meaningful alternatives, implementation/history and opportunity coverage; (4) wrong corrections/rejections and exact plan dispositions; (5) supported discovery/draft/critique/final meaning preserved; (6) meaningful proposed versus actually executed validation and oracle applicability.
-
-Source judgments: PASS or PASS_WITH_LIMITATIONS only without remaining material error, material omission or unsupported consequential decision. Minor locator/wording issues may be limitations. Honest external decisions may remain after necessary investigation; do not require nonexistent deployments or invent requirements. Vacuous caution is not discovery. FAIL requires a material supported finding. UNASSESSED/MISSING final is no semantic grade, not guessed FAIL.
-
-Track B: brief discovery assesses bounded unfamiliar mechanisms/alternatives, source conditions, implementation/history leads, discriminating prospective checks and actual validation status. Applicability assesses each enumerated claim, exact subject/operation/version/exceptions, corrected bounded wording, preserved uncertainty and service checks. Finalization assesses exact section obligations, factual applicability, all critique dispositions, supported-scope preservation and proposed/executed checks. Role PASS is not full-pipeline qualification.
-
-Record per-arm delivery/source/coverage/native/protocol/time separately. Native missing telemetry UNKNOWN. Unauthorized assistance invalidates method protocol while independent source diagnostic remains unchanged. Do not convert shorter occupancy into inference/billing savings. Both-source-passing paired latency is a conditional subset subject to survivorship; retain every assigned attempt/failure. No 20% prerequisite to replication and no speed claim from source-incomparable outputs.
-
-Required assessment outputs: assessment.md with all assigned axes and source-backed material findings/limitations; assessment.json with per-arm source judgment, axis coverage, material findings, unknowns, artifacts inspected, URLs/versions and useful discoveries; source-map.json with navigable evidence. Source-correct judgment is semantic review, never hashes/counts/agreements. Preserve original assessment; later dispute disposition is separate. Do not repair candidate science or edit frozen files.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+  "rawSHA256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+  "original_bytes": 2790,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/B-FINAL-G-01/treatment-v1/evidence/inspected-science/001-RUBRIC-v1.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

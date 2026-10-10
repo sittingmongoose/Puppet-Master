@@ -1,0 +1,161 @@
+{
+  "observed_at_utc": "2026-10-10T06:39:06.408351+00:00",
+  "basis": "one bounded actual T3 metadata read for each of 12 quiet original C2 candidate contexts; requested→last completed latency and sum(started→completed) occupied including waits",
+  "host_capture_sha256": "a2cf354bc8d99c30c3795538251ea30437cfed38021c11fb9d3f85beac445c51",
+  "arms": [
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "candidate_latency_seconds": 2192.079,
+      "occupied_context_seconds_including_waits": 2129.576,
+      "stage_lifetimes": [
+        {
+          "stage": "investigator",
+          "request_at": "2026-10-10T05:48:46.380Z",
+          "start_at": "2026-10-10T05:48:47.062Z",
+          "complete_at": "2026-10-10T06:05:02.249Z",
+          "latency_seconds": 975.869,
+          "occupied_seconds_including_waits": 975.187
+        },
+        {
+          "stage": "critic",
+          "request_at": "2026-10-10T06:05:18.230Z",
+          "start_at": "2026-10-10T06:05:18.878Z",
+          "complete_at": "2026-10-10T06:14:19.545Z",
+          "latency_seconds": 541.315,
+          "occupied_seconds_including_waits": 540.667
+        },
+        {
+          "stage": "reviser",
+          "request_at": "2026-10-10T06:15:04.114Z",
+          "start_at": "2026-10-10T06:15:04.737Z",
+          "complete_at": "2026-10-10T06:25:18.459Z",
+          "latency_seconds": 614.345,
+          "occupied_seconds_including_waits": 613.722
+        }
+      ],
+      "whole_deadline_utc": "2026-10-10T06:48:45.213333+00:00",
+      "whole_time_met": true,
+      "native_provenance": "UNKNOWN: functions.exec nested native outputs not exposed by thin host metadata; local captured receipts separately inspectable",
+      "effective_compute_billing_cached_tokens": "UNKNOWN"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "candidate_latency_seconds": 2627.227,
+      "occupied_context_seconds_including_waits": 2607.45,
+      "stage_lifetimes": [
+        {
+          "stage": "investigator",
+          "request_at": "2026-10-10T05:48:48.244Z",
+          "start_at": "2026-10-10T05:48:49.003Z",
+          "complete_at": "2026-10-10T06:11:30.801Z",
+          "latency_seconds": 1362.557,
+          "occupied_seconds_including_waits": 1361.798
+        },
+        {
+          "stage": "critic",
+          "request_at": "2026-10-10T06:11:42.582Z",
+          "start_at": "2026-10-10T06:11:43.173Z",
+          "complete_at": "2026-10-10T06:22:30.977Z",
+          "latency_seconds": 648.395,
+          "occupied_seconds_including_waits": 647.804
+        },
+        {
+          "stage": "reviser",
+          "request_at": "2026-10-10T06:22:37.050Z",
+          "start_at": "2026-10-10T06:22:37.623Z",
+          "complete_at": "2026-10-10T06:32:35.471Z",
+          "latency_seconds": 598.421,
+          "occupied_seconds_including_waits": 597.848
+        }
+      ],
+      "whole_deadline_utc": "2026-10-10T06:48:45.213830+00:00",
+      "whole_time_met": true,
+      "native_provenance": "UNKNOWN: functions.exec nested native outputs not exposed by thin host metadata; local captured receipts separately inspectable",
+      "effective_compute_billing_cached_tokens": "UNKNOWN"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "candidate_latency_seconds": 2804.247,
+      "occupied_context_seconds_including_waits": 2581.157,
+      "stage_lifetimes": [
+        {
+          "stage": "investigator",
+          "request_at": "2026-10-10T05:48:52.096Z",
+          "start_at": "2026-10-10T05:48:52.968Z",
+          "complete_at": "2026-10-10T06:12:00.883Z",
+          "latency_seconds": 1388.787,
+          "occupied_seconds_including_waits": 1387.915
+        },
+        {
+          "stage": "critic",
+          "request_at": "2026-10-10T06:15:00.548Z",
+          "start_at": "2026-10-10T06:15:01.150Z",
+          "complete_at": "2026-10-10T06:23:54.177Z",
+          "latency_seconds": 533.629,
+          "occupied_seconds_including_waits": 533.027
+        },
+        {
+          "stage": "reviser",
+          "request_at": "2026-10-10T06:24:34.388Z",
+          "start_at": "2026-10-10T06:24:36.128Z",
+          "complete_at": "2026-10-10T06:35:36.343Z",
+          "latency_seconds": 661.955,
+          "occupied_seconds_including_waits": 660.215
+        }
+      ],
+      "whole_deadline_utc": "2026-10-10T06:48:48.875174+00:00",
+      "whole_time_met": true,
+      "native_provenance": "UNKNOWN: functions.exec nested native outputs not exposed by thin host metadata; local captured receipts separately inspectable",
+      "effective_compute_billing_cached_tokens": "UNKNOWN"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "candidate_latency_seconds": 2970.793,
+      "occupied_context_seconds_including_waits": 2948.392,
+      "stage_lifetimes": [
+        {
+          "stage": "investigator",
+          "request_at": "2026-10-10T05:48:50.270Z",
+          "start_at": "2026-10-10T05:48:51.121Z",
+          "complete_at": "2026-10-10T06:01:31.461Z",
+          "latency_seconds": 761.191,
+          "occupied_seconds_including_waits": 760.34
+        },
+        {
+          "stage": "critic",
+          "request_at": "2026-10-10T06:01:40.774Z",
+          "start_at": "2026-10-10T06:01:41.345Z",
+          "complete_at": "2026-10-10T06:26:58.368Z",
+          "latency_seconds": 1517.594,
+          "occupied_seconds_including_waits": 1517.023
+        },
+        {
+          "stage": "reviser",
+          "request_at": "2026-10-10T06:27:09.268Z",
+          "start_at": "2026-10-10T06:27:10.034Z",
+          "complete_at": "2026-10-10T06:38:21.063Z",
+          "latency_seconds": 671.795,
+          "occupied_seconds_including_waits": 671.029
+        }
+      ],
+      "whole_deadline_utc": "2026-10-10T06:48:48.875889+00:00",
+      "whole_time_met": true,
+      "native_provenance": "UNKNOWN: functions.exec nested native outputs not exposed by thin host metadata; local captured receipts separately inspectable",
+      "effective_compute_billing_cached_tokens": "UNKNOWN"
+    }
+  ],
+  "all_assigned_sums": {
+    "control": {
+      "latency_seconds": 4996.326,
+      "occupied_context_seconds_including_waits": 4710.733
+    },
+    "treatment": {
+      "latency_seconds": 5598.02,
+      "occupied_context_seconds_including_waits": 5555.842
+    }
+  }
+}

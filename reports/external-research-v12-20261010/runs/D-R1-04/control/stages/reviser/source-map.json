@@ -1,0 +1,383 @@
+{
+  "schema": "ER12 reviser source map v1",
+  "run_id": "D-R1-04-control",
+  "stage": "reviser",
+  "source_access_window_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+  "access_time_note": "The browser did not provide per-page UTC timestamps. This interval brackets the reviser's primary-source session. It is not a per-page timestamp.",
+  "source_id_policy": "R-01 through R-05 are new reviser checks. The complete investigator S-01 through S-10 and critic C-01 through C-07 maps are embedded below under their original stages and namespaces; no ID is rebound.",
+  "method": "Independent reviser browser review of official EPA/MPCA guidance and the Drexel-hosted peer-reviewed article record to recheck the central conditional mechanisms and transfer limits. The official USGS records could not be reopened in this session, so their predecessor-source records and critic limitations are preserved. No site-specific data, survey, field work, model, test, or maintenance action was available or performed.",
+  "native_goal_binding": {
+    "objective": "ER12 reviser stage, run D-R1-04-control: execute ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "activation_response_file": "native-goal-activation.json",
+    "activation_response_sha256": "f0aa42298fc7eeea9257abaccf9ec42409e005520d7d46e23896e4680e308497",
+    "activation_response": {
+      "goal": {
+        "threadId": "01a12498-cc82-7791-9434-4a1561f4a110",
+        "objective": "ER12 reviser stage, run D-R1-04-control: execute ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791615378,
+        "updatedAt": 1791615378
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "binding_guard_script": "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+    "binding_guard_response_file": "native-goal-binding-guard-response.json",
+    "binding_guard_response_raw": "{\"ok\": true, \"provenance_independently_proved\": false}",
+    "binding_guard_exit_code": 0,
+    "provenance_independently_proved": false,
+    "missing_provenance_fields": "UNKNOWN; the checker states provenance_independently_proved=false."
+  },
+  "prior_source_maps": [
+    {
+      "origin_stage": "investigator",
+      "source_id_namespace": "S-",
+      "source_map_path": "ER12_RUNTIME/runs/D-R1-04/control/stages/investigator/source-map.json",
+      "source_map": {
+        "schema": "ER12 investigator source map v1",
+        "run_id": "D-R1-04-control",
+        "stage": "investigator",
+        "source_access_window_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+        "access_time_note": "Web calls do not provide a per-page UTC timestamp; this conservative interval brackets the source-review session. No access time was invented at individual-page precision.",
+        "source_id_policy": "Stable source IDs for this stage; IDs are not silently rebound.",
+        "method": "Independent discovery used the released hypothetical brief plus public primary sources only. No case-specific field observation, site record, installation file, rainfall series, model, test, or repair was available or executed.",
+        "sources": [
+          {
+            "source_id": "S-01",
+            "title": "Bioretention Design Handbook: Designing Holistic Bioretention for Performance and Longevity",
+            "publisher": "U.S. Environmental Protection Agency",
+            "exact_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+            "alternate_official_url": "https://www.epa.gov/system/files/documents/2023-11/bioretentiondesignhandbook_plainnov2023.pdf",
+            "released_version_or_commit": "EPA 841-B-23-002, November 2023; static handbook release.",
+            "locator": "Ch. 4 §4.1, drainage area delineation (handbook pp. 4-2–4-3); Ch. 6 §§6.3–6.6, inlet types, placement, sizing and flow-path modifications (pp. 6-7–6-28); Ch. 7 §§7.1–7.3, pretreatment; Ch. 13 §§13.1–13.3, construction and inspection; Ch. 14 §14.2, maintenance. Text rendering locators are also recorded in the local sources index.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened EPA's official NEPIS text rendering and inspected the listed handbook sections; also used official EPA listing for release number/date. No code, model, field test, or design calculation was run.",
+            "governing_conditions_defaults_exceptions": "Capture depends on catchment boundary, grade, alignment and orientation of the inlet, inlet opening and debris, number/placement of inlets, and rainfall flow. Offline configurations may accept a controlled portion and bypass excess down-gutter; online configurations receive runoff into the facility and require a safe overflow path. Pretreatment can localize debris/sediment and dissipate energy, but introduces maintenance needs. Underdrain/outlet behavior is a separate path. Examples are conditional on local geometry, design intent, safety, maintenance capacity, and local standards.",
+            "applicability_and_limits": "Useful for a qualified partner to screen mechanisms and alternatives only. The case has no surveyed drainage boundary, elevations, inlet/overflow drawings, or known jurisdiction. Do not transfer handbook sizes, thresholds, details, or reported performance into a construction design.",
+            "issue_fix_regression_release_history": "Static 2023 release. Ch. 6 recounts NYC replacing some first-generation inlets with depressed curb cuts or modified back-plates after conveyance problems, and Portland adding bars after vehicles could enter an opening; these are historical issue/fix examples with different local geometry and safety tradeoffs, not a proposed site repair. No later handbook revision or errata was established in the accessed source."
+          },
+          {
+            "source_id": "S-02",
+            "title": "Rain gardens (bioretention) 101",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+            "released_version_or_commit": "Living online manual page; no page revision, release number, or commit was displayed in the accessed page.",
+            "locator": "Sections “How does a rain garden work?”, “Why would I need an underdrain?”, and “What maintenance is needed?”; accessed rendering lines 62–91.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened and read the official MPCA page sections; no site assessment or local-standard determination was performed.",
+            "governing_conditions_defaults_exceptions": "The page distinguishes no-underdrain gardens, where captured water can infiltrate into underlying soil, from underdrained gardens, where captured water can be conveyed to a sewer. It describes curb cuts as one routing method, ponding followed by percolation or underdrain flow, typical drainage in a day or two, and routine inspection of entry points for clogging. These are general descriptions, not universal limits.",
+            "applicability_and_limits": "Supports separate capture, temporary storage, and drawdown questions. Minnesota guidance is an example only because the site jurisdiction and the garden's actual underdrain/media are unknown. Do not treat its generic timing as a project-specific compliance finding.",
+            "issue_fix_regression_release_history": "No dated page revision or issue/fix history was visible in the accessed live page."
+          },
+          {
+            "source_id": "S-03",
+            "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+            "released_version_or_commit": "Living online manual page; no page revision, release number, or commit was displayed in the accessed page.",
+            "locator": "Post-construction phase O&M and troubleshooting table; accessed rendering lines 156–212, particularly 170–205.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened and read the official MPCA page; no maintenance was carried out.",
+            "governing_conditions_defaults_exceptions": "The general table suggests first-year post-storm checks after events over 0.5 inches, then checks including 48 hours after rain and when ground is not frozen; the page notes deep sumps may retain water. Troubleshooting associates prolonged standing water with possible fine-sediment surface clogging, ineffective pretreatment, or high sediment loading; absence of flow may reflect leaves, sediment, trash, or plant debris; inlet scour may relate to obstruction or improper grading. It also says mulch can clog inlets/outlets/bypass pipes. These are possible causes and contextual schedules, not a unique diagnosis or universal requirement.",
+            "applicability_and_limits": "Directly informs what to inspect and log given the stated recent leaf clearing and mulch addition. Applicability depends on actual design and local rules; do not prescribe scraping, aeration, vacuuming, or another repair from this research alone.",
+            "issue_fix_regression_release_history": "No dated page revision or issue/fix history was visible in the accessed live page."
+          },
+          {
+            "source_id": "S-04",
+            "title": "Alleviating compaction from construction activities",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/alleviating_compaction_from_construction_activities",
+            "released_version_or_commit": "Living online manual page; the page displays no current revision identifier. A linked MPCA PDF search result shows a 2021-06-15 document date, but this review relied on the live page.",
+            "locator": "Causes/effects, identifying compaction, effectiveness of methods, and applicability sections; accessed rendering lines 103–106, 222–244 and 267 onward.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened and read the official MPCA page; no soil measurement or infiltration test was performed.",
+            "governing_conditions_defaults_exceptions": "The page describes compaction from equipment, storage, excavation and traffic; wet and clay soils as more susceptible; and reduced porosity/permeability as mechanisms. Ponding, weak plant growth and erosion may be clues, but it distinguishes observations from soil measurements. It states restoration must be tailored to site conditions and discourages prescriptive restoration specifications. It notes measurement-method limitations and reports mixed evidence on tillage versus amendments.",
+            "applicability_and_limits": "Makes the delivery a plausible lead only; it does not show that compaction occurred at this hypothetical site. Surface ponding alone is not diagnostic. Any future soil characterization or remediation belongs to a qualified partner after permission and after installation/media/underdrain records are reviewed.",
+            "issue_fix_regression_release_history": "The page references multiple prior studies and says compaction alleviation remains an active research area; reported intervention results vary. No live-page revision history was displayed. This is a reason not to claim one universal fix."
+          },
+          {
+            "source_id": "S-05",
+            "title": "Green Infrastructure Installation, Operation, and Maintenance",
+            "publisher": "U.S. Environmental Protection Agency",
+            "exact_url": "https://www.epa.gov/green-infrastructure/green-infrastructure-installation-operation-and-maintenance",
+            "released_version_or_commit": "Current EPA web guidance as accessed; no fixed release number or revision date was visible in the page.",
+            "locator": "Construction, operation and maintenance, municipal plans, and inspection/maintenance tracking; accessed rendering lines 4–64.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened and read the official EPA page; no inspection or maintenance was carried out.",
+            "governing_conditions_defaults_exceptions": "EPA says installation tasks depend on the green-infrastructure type; avoid compaction or clogging during construction, maintain written plans and schedules, identify responsible parties, and track maintenance/inspection. Heavy equipment is discouraged for routine maintenance because it can compact soil or damage roots. Local codes determine actual owner obligations.",
+            "applicability_and_limits": "Supports requesting installation/maintenance documents and separating owner routines from repairs. It is national program guidance, not a binding local standard for an unidentified city or this hypothetical garden.",
+            "issue_fix_regression_release_history": "No fixed edition/revision history was shown in the accessed page."
+          },
+          {
+            "source_id": "S-06",
+            "title": "Assessing the performance of stormwater Best Management Practices (BMPs)",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+            "released_version_or_commit": "Living manual page. It identifies an assessment manual developed in 2010 and notes a related Stormwater BMP Inspection and Maintenance Resource Guide update issued June 2024.",
+            "locator": "Four levels of assessment and summary table; accessed rendering lines 59–85.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened and read the official MPCA page and its assessment-level summary; no assessment level was executed at the site.",
+            "governing_conditions_defaults_exceptions": "Level 1 visual inspection is described as quick and inexpensive but limited; capacity testing and simulated runoff provide different information and can have substantial effort/uncertainty or limited scope; Level 4 monitoring is most comprehensive but the page lists high effort and a typical 14-month elapsed time. The page says owners seeking credit from testing should consult the MPCA or another regulator.",
+            "applicability_and_limits": "Supports a modest observation-first proposal and a clear boundary between visual diagnosis and quantitative performance claims. The numerical effort/timing are generic manual estimates, not a schedule commitment or result for this site.",
+            "issue_fix_regression_release_history": "The page records a 2010 assessment manual and a June 2024 related-guide update; the current live manual page itself has no displayed commit/version."
+          },
+          {
+            "source_id": "S-07",
+            "title": "Water balance monitoring for two bioretention gardens in Omaha, Nebraska, 2011–14",
+            "publisher": "U.S. Geological Survey",
+            "exact_url": "https://pubs.usgs.gov/publication/sir20155188",
+            "alternate_official_url": "https://pubs.usgs.gov/sir/2015/5188/sir20155188.pdf",
+            "released_version_or_commit": "USGS Scientific Investigations Report 2015–5188; first posted 2016-01-29; DOI 10.3133/sir20155188.",
+            "locator": "Abstract; report section “Water Balance Monitoring”, “Performance on an Event Basis”, including event examples in report text.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Read USGS publication metadata/abstract and report text; did not download or reanalyze the monitoring data.",
+            "governing_conditions_defaults_exceptions": "The study measured inflow and outflow at two Omaha gardens. At one garden, results varied by event size; the report discusses rainfall amount, maximum intensity, duration and antecedent dry period. It gives two roughly similar-depth events with different durations/intensities and different outflow. Events with ponding above the report's 0.7-ft analysis limit were excluded from event analyses, and a second site had no recorded overflow.",
+            "applicability_and_limits": "Supports logging storm depth, duration/intensity, antecedent conditions, inflow and overflow separately. It is a study of two designed, instrumented gardens in Omaha; neither the event results nor numerical performance can be transferred to this unmeasured site. Covariates changed together, so a single-event comparison cannot isolate a cause.",
+            "issue_fix_regression_release_history": "Static numbered-series report, issued January 2016; no later correction/version history was identified in the accessed publication record."
+          },
+          {
+            "source_id": "S-08",
+            "title": "Evaluation of turf-grass and prairie-vegetated rain gardens in a clay and sand soil, Madison, Wisconsin, water years 2004–08",
+            "publisher": "U.S. Geological Survey with University of Wisconsin coauthor",
+            "exact_url": "https://pubs.usgs.gov/sir/2010/5077/",
+            "alternate_official_url": "https://pubs.usgs.gov/sir/2010/5077/sir20105077.pdf",
+            "released_version_or_commit": "USGS Scientific Investigations Report 2010–5077; first posted 2010-06-11.",
+            "locator": "Publication abstract and report text describing the five-year event record and comparisons of clay/sand and turf/prairie sites.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Read USGS publication record and abstract; no underlying data were reanalyzed.",
+            "governing_conditions_defaults_exceptions": "Two purpose-built, roof-fed gardens with different soils and vegetation were monitored. The abstract states precipitation intensity and antecedent dry days influenced when underlying storage became saturated; reported performance also differed by soil and vegetation. The study uses a defined contributing-area ratio and design that are not known here.",
+            "applicability_and_limits": "Supports considering antecedent conditions, soil, vegetation and temporary storage separately. Results apply to those Madison sites and water years only; they do not establish the soil, drainage, or capacity of this curb-fed hypothetical garden.",
+            "issue_fix_regression_release_history": "Static numbered-series report, posted in 2010; no later correction/version history was identified in the accessed publication record."
+          },
+          {
+            "source_id": "S-09",
+            "title": "Evaluating Green Infrastructure Stormwater Capture Performance under Extreme Precipitation",
+            "publisher": "Journal of Extreme Events; author record hosted by Drexel University; World Scientific Publishing",
+            "exact_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+            "canonical_doi": "https://doi.org/10.1142/S2345737616500068",
+            "released_version_or_commit": "Journal of Extreme Events, volume 3 issue 2, article 1650006; June 2016; DOI 10.1142/S2345737616500068.",
+            "locator": "Drexel-hosted article record and abstract, especially study setting and findings (record lines 5–29).",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Read the university-hosted article metadata and abstract; full article details beyond that record were not asserted.",
+            "governing_conditions_defaults_exceptions": "The abstract describes a Queens, New York facility monitored during 2011–2014, with sandy native soils and a low 3.8:1 hydraulic loading ratio. It reports that inlet bypass often limited capture despite high infiltration and that event duration, total precipitation and peak hourly intensity were associated with capture performance; maintenance frequency was described as a possible, anecdotal factor.",
+            "applicability_and_limits": "Direct evidence that capture failure can be distinct from slow infiltration. Its setting and site-specific ratios and percentages are not predictive for this case; maintenance causality was not established.",
+            "issue_fix_regression_release_history": "Static 2016 journal article/issue. The abstract states future work would examine other drivers of inlet bypass, including maintenance frequency; this is unresolved research, not a proven fix. No correction history was identified in the accessed author record."
+          },
+          {
+            "source_id": "S-10",
+            "title": "Overview for bioretention",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+            "released_version_or_commit": "Living online manual page; no page revision, release number, or commit was displayed in the accessed page.",
+            "locator": "Water quantity treatment section, high-flow bypass types; accessed rendering lines 110–123.",
+            "access_utc": "2026-10-10T06:25:27Z/2026-10-10T06:32:28Z",
+            "observed_operation": "Opened the official MPCA page through the indexed page result and read the water-quantity/bypass section; no design calculation was performed.",
+            "governing_conditions_defaults_exceptions": "The page describes bypass when a cell reaches its maximum ponding depth; it prefers offline designs where feasible to reduce internal erosion, and describes online overflow options. If offline design is not achievable, it emphasizes short flow paths for high flows and energy dissipation. Actual configuration depends on site and local criteria.",
+            "applicability_and_limits": "Useful for naming distinct routing alternatives and safe downstream questions; not a proposal to alter the curb or specify an overflow for this site.",
+            "issue_fix_regression_release_history": "The page links a June 2022 PDF snapshot, but no current live-page revision/commit was displayed. No site-specific problem history is available."
+          }
+        ]
+      }
+    },
+    {
+      "origin_stage": "critic",
+      "source_id_namespace": "C-",
+      "source_map_path": "ER12_RUNTIME/runs/D-R1-04/control/stages/critic/source-map.json",
+      "source_map": {
+        "schema": "ER12 critic source map v1",
+        "run_id": "D-R1-04-control",
+        "stage": "critic",
+        "source_access_window_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+        "access_time_note": "The browser did not provide per-page access timestamps. This interval brackets the critic's independent primary-source review. Search results or page renderings used are described explicitly; no more precise page timestamp is claimed.",
+        "source_id_policy": "Critic source IDs C-01 through C-06 are new, stable IDs for this stage. They do not silently rebind investigator IDs S-01 through S-10.",
+        "method": "Independent review of primary or official publisher sources to check consequential claims in the investigator package. No site-specific records, field data, model, or tests were available or used.",
+        "sources": [
+          {
+            "source_id": "C-01",
+            "title": "Bioretention Design Handbook: Designing Holistic Bioretention for Performance and Longevity",
+            "publisher": "U.S. Environmental Protection Agency",
+            "exact_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+            "released_version_or_commit": "EPA 841-B-23-002, November 2023, static handbook release.",
+            "locator": "Ch. 4 §4.1, pp. 4-2–4-3; Ch. 6 §§6.3–6.6; Ch. 7 §7.3; Ch. 13; Ch. 14 §14.2. Critic browser rendering also inspected the opening scope, drainage-area delineation/grade, inlet, and leaf-screen/pretreatment passages.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Opened the official EPA NEPIS text, reviewed its scope and relevant chapter passages, and searched within the text for drainage-area delineation, undersized inlets, historical inlet changes, and leaf pretreatment. No design calculation or field work was performed.",
+            "governing_conditions_defaults_exceptions": "The handbook says site conditions and local requirements govern design selection. Capture and runoff volumes depend on delineated drainage area, flow direction/grade and inlet configuration. It describes alternatives and historical examples, not universal fixes; pretreatment has maintenance implications.",
+            "applicability_and_limits": "Supports the draft's records-first inquiry and conditional alternatives. It does not supply the hypothetical site's drainage boundary, elevations, inlet condition, or an applicable construction dimension.",
+            "issue_fix_regression_release_history": "Static 2023 edition. The accessed handbook describes site-specific inlet problems and changes; no later revision or errata was established in this review."
+          },
+          {
+            "source_id": "C-02",
+            "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+            "released_version_or_commit": "Living manual page; no current page revision/date was visible in the reviewed rendering.",
+            "locator": "Post-construction maintenance table and troubleshooting table, especially mulch note and rows for standing water, blocked flow path, and inlet scour; rendered around lines 178–212.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Opened the official MPCA page and reviewed the rendered tables and mulch note. No site inspection or maintenance was performed.",
+            "governing_conditions_defaults_exceptions": "The maintenance table places a 48-hour post-rain check in a semiannual after-first-year schedule and says deep sumps may retain water. The troubleshooting table describes standing water over 48 hours as a symptom with possible sediment/pretreatment causes, and leaves/debris as possible blockage; mulch can clog inlets, outlets, or bypass pipes. These are contextual possibilities and recommendations, not a universal site criterion.",
+            "applicability_and_limits": "Supports logging debris, mulch, sediment, maintenance, and ponding while preserving uncertainty. Minnesota guidance does not establish this site's local criterion or diagnose the hypothetical garden.",
+            "issue_fix_regression_release_history": "No dated page revision or issue/fix history was visible in the live rendering."
+          },
+          {
+            "source_id": "C-03",
+            "title": "Overview for bioretention",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+            "released_version_or_commit": "Living manual page; no page revision or commit was displayed.",
+            "locator": "Water quantity treatment / high-flow bypass section, rendered lines 106–116.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Opened the official MPCA page and searched/reviewed the offline and maximum-ponding-depth passages. No design calculation was performed.",
+            "governing_conditions_defaults_exceptions": "The page describes high-flow bypass when a cell fills to maximum ponding depth; it prefers offline designs where feasible to reduce internal erosion, and recommends short high-flow paths and energy dissipation where relevant. Actual layout remains site-dependent.",
+            "applicability_and_limits": "Supports keeping intended bypass, overflow, and downstream route distinct. It does not show whether bypass at this site is intended or excessive.",
+            "issue_fix_regression_release_history": "The live page links a June 2022 PDF snapshot; no current live-page revision was shown."
+          },
+          {
+            "source_id": "C-04",
+            "title": "Alleviating compaction from construction activities",
+            "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+            "exact_url": "https://stormwater.pca.state.mn.us/alleviating_compaction_from_construction_activities",
+            "released_version_or_commit": "Living manual page; no current revision identifier was visible in the reviewed rendering.",
+            "locator": "Causes/effects and determining extent of compaction, rendered lines 103–132; method-effectiveness and applicability, lines 222–265.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Opened the official MPCA page and read the cause/effect, observation/measurement, and restoration-limit passages. No compaction measurement or infiltration test was performed.",
+            "governing_conditions_defaults_exceptions": "The page identifies equipment, stockpiling and traffic as causes and wet/clay soils as more susceptible. Ponding is one possible observation, not proof; field measurements have method limits. It says restoration must be tailored and does not recommend a prescriptive specification.",
+            "applicability_and_limits": "Makes delivery-related compaction a plausible inquiry only. No site condition or soil property is established by this general guidance.",
+            "issue_fix_regression_release_history": "The page references a changing research base and reports variation in remediation evidence; no live-page revision history was visible."
+          },
+          {
+            "source_id": "C-05",
+            "title": "Evaluating Green Infrastructure Stormwater Capture Performance under Extreme Precipitation",
+            "publisher": "Journal of Extreme Events; author record hosted by Drexel University; World Scientific Publishing",
+            "exact_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+            "canonical_doi": "https://doi.org/10.1142/S2345737616500068",
+            "released_version_or_commit": "Journal of Extreme Events, volume 3 issue 2, article 1650006, June 2016.",
+            "locator": "Article abstract, especially study conditions and findings, rendered lines 22–29; bibliographic details lines 5–13 and 55–63.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Opened the university-hosted peer-reviewed article record and read its abstract and publication metadata. The full article was not reviewed.",
+            "governing_conditions_defaults_exceptions": "The abstract describes one Queens facility with sandy native soil and low 3.8:1 loading ratio; its inlet bypass often limited capture despite high infiltration. Duration, precipitation total, and peak-hour intensity were associated with capture at that site. Maintenance frequency was described as anecdotal and for future investigation.",
+            "applicability_and_limits": "Supports distinguishing capture from infiltration and recording storm covariates. Its geometry, soil, capture percentages, and causal relationships are not predictive for this hypothetical site.",
+            "issue_fix_regression_release_history": "Static 2016 journal article record; no correction history was identified in the accessed record."
+          },
+          {
+            "source_id": "C-06",
+            "title": "Water balance monitoring for two bioretention gardens in Omaha, Nebraska, 2011–14",
+            "publisher": "U.S. Geological Survey",
+            "exact_url": "https://pubs.usgs.gov/publication/sir20155188",
+            "alternate_official_url": "https://pubs.usgs.gov/sir/2015/5188/sir20155188.pdf",
+            "released_version_or_commit": "USGS Scientific Investigations Report 2015–5188, first posted January 29, 2016; DOI 10.3133/sir20155188.",
+            "locator": "Official publication record/abstract. Detailed report section “Performance on an Event Basis” was not independently read in this critic review.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Queried the official USGS Publications Warehouse and reviewed the returned report metadata and abstract. A direct browser open of the record/PDF returned an internal error, so no detailed report text or event table is claimed as independently checked.",
+            "governing_conditions_defaults_exceptions": "The official record describes two monitored Omaha gardens; volume reduction varied by event size at one garden, and no overflow was recorded at the other. These are results from the measured sites, not general design thresholds.",
+            "applicability_and_limits": "Supports an example of event-dependent behavior only. The critic did not independently verify the draft's specific similar-depth/different-duration event examples; the report's numeric results do not transfer to this unmeasured case.",
+            "issue_fix_regression_release_history": "Static numbered-series USGS report issued in 2016; no later correction/version history was identified in the reviewed publication record."
+          },
+          {
+            "source_id": "C-07",
+            "title": "Evaluation of turf-grass and prairie-vegetated rain gardens in a clay and sand soil, Madison, Wisconsin, water years 2004–08",
+            "publisher": "U.S. Geological Survey",
+            "exact_url": "https://pubs.usgs.gov/sir/2010/5077/pdf/sir20105077.pdf",
+            "alternate_official_url": "https://pubs.usgs.gov/sir/2010/5077/",
+            "released_version_or_commit": "USGS Scientific Investigations Report 2010–5077, first posted June 11, 2010.",
+            "locator": "Official report PDF search-result excerpt summarizing storage, antecedent dry days and precipitation intensity; the report page/PDF could not be opened directly in the browser during this review.",
+            "access_utc": "2026-10-10T06:49:03Z/2026-10-10T06:51:14Z",
+            "observed_operation": "Searched the official USGS Publications Warehouse path and inspected the returned USGS PDF excerpt. A subsequent find/open on the result returned an internal error; this is a limited excerpt check, not a full report read.",
+            "governing_conditions_defaults_exceptions": "The excerpt describes two purpose-built roof-fed gardens with different soil and vegetation; it identifies precipitation intensity and antecedent dry days as secondary factors in when storage might be exceeded. The studied contributing-area ratios and garden designs are specified in that report and are not known here.",
+            "applicability_and_limits": "Supports considering storm intensity and antecedent wetness as variables in that study setting only. It does not establish the hypothetical site's soil, storage, or performance; no numeric findings are transferred.",
+            "issue_fix_regression_release_history": "Static numbered-series report posted in 2010; no correction history was checked."
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "R-01",
+      "title": "Bioretention Design Handbook: Designing Holistic Bioretention for Performance and Longevity",
+      "publisher": "U.S. Environmental Protection Agency",
+      "exact_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+      "released_version_or_commit": "EPA 841-B-23-002, November 2023; static handbook release.",
+      "locator": "Official text rendering: scope/disclaimer lines 100–131; drainage-area delineation and roadway as-builts lines 1673–1759; grade lines 1782–1787; runoff capture/inlet alternatives Chapter 6 §6.3, lines 2587–2661; captured historical New York example lines 2691–2699. Chapter 6 is a design guide; no dimensions are applied.",
+      "access_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+      "observed_operation": "Opened the official EPA NEPIS text rendering and searched/reviewed the scope, drainage-area/grade, and inlet passages. No local calculation, design, site inspection, or test was performed.",
+      "governing_conditions_defaults_exceptions": "EPA states design selection/specifications should follow thorough site-condition analysis and awareness of local regulations; the handbook is a starting point, not a specification and is not legally binding. Drainage-area delineation informs runoff volumes and design elements; grade affects direction/velocity/capture. Inlet types and modifications have flow, safety, durability, and maintenance tradeoffs.",
+      "applicability_and_limits": "Supports records-first investigation and conditional alternatives only. No surveyed boundary, grade, opening, overflow, jurisdiction, or design intent is known here. Dimensions/examples are not transferred.",
+      "issue_fix_regression_release_history": "Static November 2023 release. The handbook recounts some New York inlet modifications to increase conveyance; no later revision or errata was established in this check."
+    },
+    {
+      "source_id": "R-02",
+      "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "exact_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+      "released_version_or_commit": "Living manual page; no current page revision/date/commit was visible in the accessed rendering.",
+      "locator": "Overview of typical O&M issues lines 86–95; 48-hour post-rain schedule line 178; mulch note line 200; troubleshooting for standing water lines 202–209.",
+      "access_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+      "observed_operation": "Opened the official MPCA manual and searched/reviewed the sections on blockage, standing water, mulch, and the contextual 48-hour check. No maintenance or field assessment was performed.",
+      "governing_conditions_defaults_exceptions": "The page lists blockage, grading/slope, sediment, debris, and other possible concerns. Its 48-hour check is in a semiannual post-first-year maintenance schedule; it also notes deep sumps can pond. Mulch can clog inlet/outlet/bypass pipes. These are troubleshooting possibilities and a context-specific schedule, not a universal local requirement or a diagnosis.",
+      "applicability_and_limits": "Supports logging leaves, sediment, mulch, blockage, and ponding separately. Minnesota guidance does not establish the hypothetical site's applicable criterion, causal mechanism, or repair.",
+      "issue_fix_regression_release_history": "No current page revision/date/commit or issue history was visible."
+    },
+    {
+      "source_id": "R-03",
+      "title": "Overview for bioretention",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "exact_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+      "released_version_or_commit": "Living manual page; no current page revision/date/commit was visible.",
+      "locator": "Water quantity treatment/high-flow bypass section, lines 110–119.",
+      "access_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+      "observed_operation": "Opened the official MPCA page and reviewed the passages describing offline/online bypass, maximum ponding depth, short flow paths, and erosion/energy-dissipation considerations. No design or calculation was performed.",
+      "governing_conditions_defaults_exceptions": "The page describes high-flow bypass once a cell reaches maximum ponding depth; offline bypass is preferred where feasible to reduce internal erosion. Online configurations and overflow details depend on design; routing should safely pass the design discharge.",
+      "applicability_and_limits": "Supports treating bypass/overflow as a distinct, potentially intended route. It does not establish this facility's bypass intent, geometry, capacity, downstream destination, or local requirement.",
+      "issue_fix_regression_release_history": "The live manual page links a June 2022 PDF snapshot; no current live-page revision/commit was visible."
+    },
+    {
+      "source_id": "R-04",
+      "title": "Alleviating compaction from construction activities",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "exact_url": "https://stormwater.pca.state.mn.us/alleviating_compaction_from_construction_activities",
+      "released_version_or_commit": "Living manual page; no current revision identifier visible in the reviewed rendering.",
+      "locator": "Causes/effects of compaction lines 103–120; moisture/soil dependence and method-limit discussion around lines 145 onward.",
+      "access_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+      "observed_operation": "Opened the official MPCA page and reviewed cause/effect and soil-dependence passages. No compaction measurement, infiltration test, or remediation was performed.",
+      "governing_conditions_defaults_exceptions": "The page identifies excavation, stockpiling, equipment storage/traffic as possible causes; wet and clay soils are more susceptible, and compaction can reduce porosity/permeability. It also says soil/moisture/type and equipment affect restoration methods, so universal specifications are inappropriate.",
+      "applicability_and_limits": "Makes traffic/delivery a plausible history question only. This hypothetical delivery route, soil, edge contact, and damage are unknown; this source does not diagnose compaction from ponding.",
+      "issue_fix_regression_release_history": "Living manual with no page revision or issue/fix history visible in this check; the page notes site-condition dependence and method variation."
+    },
+    {
+      "source_id": "R-05",
+      "title": "Evaluating Green Infrastructure Stormwater Capture Performance under Extreme Precipitation",
+      "publisher": "Journal of Extreme Events; author record hosted by Drexel University; World Scientific Publishing",
+      "exact_url": "https://researchdiscovery.drexel.edu/esploro/outputs/journalArticle/Evaluating-Green-Infrastructure-Stormwater-Capture-Performance/991019205522104721",
+      "canonical_doi": "https://doi.org/10.1142/S2345737616500068",
+      "released_version_or_commit": "Journal of Extreme Events, volume 3 issue 2, article 1650006, June 2016.",
+      "locator": "Peer-reviewed article record/abstract lines 4–13 and 22–29.",
+      "access_utc": "2026-10-10T06:57:01Z/2026-10-10T06:57:50Z",
+      "observed_operation": "Opened the university-hosted article record and reviewed bibliographic metadata and the abstract. The full article was not opened or analyzed.",
+      "governing_conditions_defaults_exceptions": "The abstract describes one Queens facility (2011–2014), sandy native soil, and a 3.8:1 hydraulic loading ratio. It reports that inlet bypass often limited capture despite high infiltration of water that entered; storm duration, total precipitation, and peak-hour intensity were associated with capture. Maintenance frequency is described as anecdotal/future work.",
+      "applicability_and_limits": "Supports separating capture from infiltration and logging event covariates. Its capture percentages, geometry, loading ratio, soils, and causal relationships are not predictions for this hypothetical case.",
+      "issue_fix_regression_release_history": "Static 2016 article record; no correction history identified in the accessed record."
+    }
+  ],
+  "unverified_or_unavailable": [
+    {
+      "source_ids": [
+        "S-07",
+        "C-06"
+      ],
+      "subject": "USGS SIR 2015-5188, detailed Omaha event examples",
+      "status": "The investigator's map reports reading report text; the critic could only review the official record/abstract and did not independently verify the detailed event pair. The reviser browser open returned an internal error.",
+      "use_in_final": "Retained only as prior-stage reported context with the verification limitation stated. No quantitative result or predictive claim is transferred."
+    },
+    {
+      "source_ids": [
+        "S-08",
+        "C-07"
+      ],
+      "subject": "USGS SIR 2010-5077, Madison event/soil findings",
+      "status": "The investigator map reports the abstract; the critic reviewed only a limited official PDF excerpt and could not open the report. The reviser did not independently reopen the report.",
+      "use_in_final": "Retained only as site-specific background with access limitations; no result is transferred to this case."
+    }
+  ]
+}

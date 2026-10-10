@@ -1,0 +1,471 @@
+{
+  "observed_at_utc": "2026-10-10T07:50:17.399803+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/critique.md",
+      "bytes": 18311,
+      "sha256": "cd712100ab0671d12da14c94b56a2153ea5cda95a72bed316c5f4ca2a62b5206",
+      "mtime_ns": 1791617236836432369
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "bytes": 18298,
+      "sha256": "1b5993a69844d312d3a41a70fa551c70c4fa323c1ae510014effba3d803ac514",
+      "mtime_ns": 1791617065755755874
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR01.md",
+      "bytes": 1350,
+      "sha256": "b3bbf9b989f9f66eb3c953dde83c4a60d4c3f0b038c19fcf755a6f60d24bedda",
+      "mtime_ns": 1791617039399669987
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR02.md",
+      "bytes": 1325,
+      "sha256": "b804563241918dd283c31097f42ea5b784558bc63bfb2027d538e84ac7314e97",
+      "mtime_ns": 1791617039370808204
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR03.md",
+      "bytes": 1078,
+      "sha256": "6aeb64d6c956f8044e459423053e437468173a1a0910daf4fa60df8e2d7a564f",
+      "mtime_ns": 1791617039402098900
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR04.md",
+      "bytes": 1144,
+      "sha256": "9b849d75d3b84c299a9001043987b8b7121417a14a7aeb8f4930845fd172fae8",
+      "mtime_ns": 1791617039393354732
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR05.md",
+      "bytes": 1210,
+      "sha256": "0d8f76efb4fee53ae5c43a039fbe93c673ceb2e796f3adbcb8618828c875aaf8",
+      "mtime_ns": 1791617039418842452
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR06.md",
+      "bytes": 1160,
+      "sha256": "fa83735bca286a97aaf40e8bf833fe1dbfcfee69763fc462f64b6ad778b31aaf",
+      "mtime_ns": 1791617039406561930
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR07.md",
+      "bytes": 1351,
+      "sha256": "3bce25e27cc676b4dc1e414276f08a3db69605ac36455ba9d78603991a3986a7",
+      "mtime_ns": 1791617010973019507
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR08.md",
+      "bytes": 1221,
+      "sha256": "0b39f3521b6bde87c4bd04fc6844f518baaa4b050f170953c25b7b77fe2c3f15",
+      "mtime_ns": 1791617010992352604
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR09.md",
+      "bytes": 1201,
+      "sha256": "8fe5220bc9ffe4f9b8c828813bba1cb117e62fcc5e14b969eea35c542ddce468",
+      "mtime_ns": 1791617010993644235
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR10.md",
+      "bytes": 1174,
+      "sha256": "eda0a22f2be859076a4eb87604412739e9aeec64535d4856fb967daf1cd13265",
+      "mtime_ns": 1791617011012352784
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR11.md",
+      "bytes": 892,
+      "sha256": "4882b6bd6e50832a1963cfb457965d45817138959213ebddc8306ae532980185",
+      "mtime_ns": 1791617010999352667
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR12.md",
+      "bytes": 908,
+      "sha256": "61c8a61295329a9d9b9878c7b30722e8237eb73c9a855fd3491449800e636517",
+      "mtime_ns": 1791617011001769901
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR13.md",
+      "bytes": 1421,
+      "sha256": "77ec0354497b1230f3bf3ef36af34c557701ead23fa9f744dd06a98c77d2c40a",
+      "mtime_ns": 1791617011018352838
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/CR14.md",
+      "bytes": 1000,
+      "sha256": "6240ea8eee90adfd3d90debad1a74b2882b57fe113022eb29c3233bef4c676f2",
+      "mtime_ns": 1791617011029759703
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/sources/index.md",
+      "bytes": 1523,
+      "sha256": "de5027a7e1cfc43fdfaaf0598e73e64c7eec9aa6cf6b6fc2775cc108cddb1a2e",
+      "mtime_ns": 1791617010939780946
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/discovery.md",
+      "bytes": 15678,
+      "sha256": "eb09fcf675b5e9425b27d2e8b3b7b1c373fcb26f074b4e33215505412597e49f",
+      "mtime_ns": 1791615826791842884
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/draft.md",
+      "bytes": 35241,
+      "sha256": "b90223b5f2ad2dbe5c8b4dd30beac6572137a3d5d629c744d5f4a482e84c8e28",
+      "mtime_ns": 1791616240835898379
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7042,
+      "sha256": "936dac13775ec07494773bcd507ecc0b6d1a70818017db30a7c79278eff9d6c2",
+      "mtime_ns": 1791615867171017135
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "bytes": 21245,
+      "sha256": "b721a216ec05ba80500c067c264b8fa8d14c416b3956fb67ea3dc53dd1d46077",
+      "mtime_ns": 1791616240834975875
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S01.md",
+      "bytes": 1803,
+      "sha256": "3507e3c4885ce23ef4cb1ba49fbb6f0bdcc6c4d2f8f07bc4f75e23f93ac063dc",
+      "mtime_ns": 1791615826792208523
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S02.md",
+      "bytes": 1049,
+      "sha256": "3fbc6a7b71f2a7f23aa0c1f1544d9a48a07dc63fc892fdd1b1d4f60598de0ba6",
+      "mtime_ns": 1791615826792282904
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S03.md",
+      "bytes": 1003,
+      "sha256": "3fc2833b2ddb8219b09f5538de74103452fb370caa386e7a4d96a50d2f10adb1",
+      "mtime_ns": 1791615862193323839
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S04.md",
+      "bytes": 1440,
+      "sha256": "9c70d2673545e84eab2a40cbe0642ab2bd50f82166620489a90b1f6fe24216fc",
+      "mtime_ns": 1791615826793333837
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S05.md",
+      "bytes": 1218,
+      "sha256": "524683071d38d1ac899bb9385d16e19cbe24afb3fc768e2b0be06d232cfcb020",
+      "mtime_ns": 1791615826793457757
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S06.md",
+      "bytes": 1221,
+      "sha256": "0cb8b664646f095cc797d93efbc688e1d39a2b14ab50f49a5b6f5da502ee64c7",
+      "mtime_ns": 1791615826793544869
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S07.md",
+      "bytes": 1197,
+      "sha256": "c38fd5c3e6d1f3a95d0cd523f32302df4bc0f26a02ae931ef84d0d2236cfd74a",
+      "mtime_ns": 1791615826793621590
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S08.md",
+      "bytes": 1116,
+      "sha256": "a127c4b557c16f65437bee7d12978b026379f9d334ed0454fa2f414c7dbae0d5",
+      "mtime_ns": 1791615826793693041
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S09.md",
+      "bytes": 1207,
+      "sha256": "d32168394745d01644e8371deb00403b790e99a8a472853965e86e97abc461f1",
+      "mtime_ns": 1791615826793778443
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S10.md",
+      "bytes": 1216,
+      "sha256": "1e9a84fe2c11125c0fb2a6da4c61aeec1ae912fe7eeb6271367d26e19e52661c",
+      "mtime_ns": 1791615826793851553
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S11.md",
+      "bytes": 1331,
+      "sha256": "aa305b3220ace437c37b66acea7aa350187e35a05bb5b7c9daa80b59a6038f7f",
+      "mtime_ns": 1791615826793918909
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S12.md",
+      "bytes": 1220,
+      "sha256": "372fa8639054a28a589b9f1fe9f8dea3aef2b1998aae43f03740e181cad94579",
+      "mtime_ns": 1791615826793987680
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S13.md",
+      "bytes": 2189,
+      "sha256": "5253090d8b46e11f9e8b6cc8899f62746cc4fed7fea3240e5ad6dbbb941900b2",
+      "mtime_ns": 1791616240835391104
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/S14.md",
+      "bytes": 1851,
+      "sha256": "735eb6209d348550bba3fa9f96ecf421bd905f828025e0bbe7d26803a27c2987",
+      "mtime_ns": 1791616004281459294
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/sources/index.md",
+      "bytes": 1580,
+      "sha256": "d3408087b82135eb1851a2114aa822d97dd9f243a08646d2de3fef69783ef4ca",
+      "mtime_ns": 1791616240836184622
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+      "bytes": 51832,
+      "sha256": "7d32d502c571d60812c43d26bc7e4c6d1ec9c061a9a971ce6c4bbe1bf12e0142",
+      "mtime_ns": 1791618536298645234
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/source-map.json",
+      "bytes": 63158,
+      "sha256": "2ea639d0ad2dd3dfb1d7ab7d6b2944a7cd341b0ebc27d4f2c25ce6a542bac432",
+      "mtime_ns": 1791618558855604395
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR01.md",
+      "bytes": 1285,
+      "sha256": "ce8c34b5a898865372ad57fa8be113b6a48ac170ae617ec9f2110c281521426a",
+      "mtime_ns": 1791618475686203563
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR02.md",
+      "bytes": 1303,
+      "sha256": "76fda25a30e7dbc9ed64568a2f0e50d2c891d69048ff16191a668ef848573dca",
+      "mtime_ns": 1791618475686270273
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR03.md",
+      "bytes": 1125,
+      "sha256": "6a092f49903c2971b39fbc0705fcf6e2994a5dc14fbfb02f9f85d042f724422e",
+      "mtime_ns": 1791618475686342056
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR04.md",
+      "bytes": 1162,
+      "sha256": "5cfdd778cc4d01000b79044ab0789713dfd2fea5042aa2f8baea4464474be7d2",
+      "mtime_ns": 1791618475686405312
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR05.md",
+      "bytes": 1195,
+      "sha256": "b5c307065adb6bda207b3f7452a563c7aebc8630cdacbe317dd206d962c9844a",
+      "mtime_ns": 1791618475686466298
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR06.md",
+      "bytes": 1154,
+      "sha256": "8c7ea73a0a305bfb69d454695e2ad91fd956007b861e4527d197edf712d87be7",
+      "mtime_ns": 1791618475686533178
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR07.md",
+      "bytes": 1251,
+      "sha256": "10f2ed6dc81e30d34af3f6ab77941b1449014c5f0333c64c15f779df86454ed0",
+      "mtime_ns": 1791618475686595040
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR08.md",
+      "bytes": 1235,
+      "sha256": "8b65b17abc38cfafee5102c8d7c5246668b62a60b21784308e206432c33b41cc",
+      "mtime_ns": 1791618475686660857
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR09.md",
+      "bytes": 1120,
+      "sha256": "f84ed9847afc073f42806b98904adede8561128e1fb18878099677227ad58877",
+      "mtime_ns": 1791618475686721054
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR10.md",
+      "bytes": 1079,
+      "sha256": "61f15994ce488619f15d4949115b52276317cd1653a867b3f097381a474e85c5",
+      "mtime_ns": 1791618475686796546
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR11.md",
+      "bytes": 944,
+      "sha256": "babe1d6145fecd049986de2bcf7eb6fc0fb7597a9412f3309da4c9813f53d8d7",
+      "mtime_ns": 1791618475686857439
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR12.md",
+      "bytes": 942,
+      "sha256": "afa9646962f0a0d872c47c905cbdee94742e8037115d9680e0f42368d0be4936",
+      "mtime_ns": 1791618475686941607
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR13.md",
+      "bytes": 1248,
+      "sha256": "f2803068290d52c615d05d57621e908bba9c96c9d6ef6b873b8b6c5ea770b004",
+      "mtime_ns": 1791618475687007275
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/CR14.md",
+      "bytes": 1069,
+      "sha256": "ab4e49b92ef4e07f3454b12bd1b0f249c8c96d18f4471104d589eb5a6cd40975",
+      "mtime_ns": 1791618475687100017
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV01.md",
+      "bytes": 1120,
+      "sha256": "610d321cb859a886e83bed2c38e54833b0fe23f716deb929ce9901b48a20073d",
+      "mtime_ns": 1791618475687164404
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV02.md",
+      "bytes": 1246,
+      "sha256": "1141f219b03482c7aca0d85ac6d699b87493353ea2bc085afe486ff88aa99236",
+      "mtime_ns": 1791618475687228853
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV03.md",
+      "bytes": 1336,
+      "sha256": "279546166806a3dcc11f97d78c2859cc2290e413c132a7257b96570437f4acfd",
+      "mtime_ns": 1791618475687291108
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV04.md",
+      "bytes": 1140,
+      "sha256": "f67581b560d5e8402873ea7f6d3329994942edf973437792e9b0cebd2f94e94b",
+      "mtime_ns": 1791618475687352828
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV05.md",
+      "bytes": 1227,
+      "sha256": "c58c3adc45c6ddef56e418bb026f5b857a8ee433ea5a1a3a2300fce2e28d6610",
+      "mtime_ns": 1791618475687415587
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV06.md",
+      "bytes": 1229,
+      "sha256": "cffb4c2a5d1a99be1d2ffb97f010554714f226ffe4c9d2e3a8e9383e68482ba6",
+      "mtime_ns": 1791618475687478522
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV07.md",
+      "bytes": 1190,
+      "sha256": "8d1b397a5c9f4f11f55ec6e12f849d5d65c44cfe0cb60c91bcc7636a0f0570b7",
+      "mtime_ns": 1791618475687540526
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/RV08.md",
+      "bytes": 1259,
+      "sha256": "52da0d99f441115d64e999072b1f9019e4e60a610e09d8f6fc80d3277359bed2",
+      "mtime_ns": 1791618475687608948
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S01.md",
+      "bytes": 1840,
+      "sha256": "59915cc070181707a26d4e81862c544774325476d99fb5c18cf7a27ba5c024e6",
+      "mtime_ns": 1791618475685162681
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S02.md",
+      "bytes": 1146,
+      "sha256": "fc74517392c982e2e40989182d2c23befc4dd7f1c162300905d34b959f99ad17",
+      "mtime_ns": 1791618475685266538
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S03.md",
+      "bytes": 1012,
+      "sha256": "5801dd4c38a7a3e8d8c89123e18df177a0e55d07b24a9e415525e0c5b4a048f0",
+      "mtime_ns": 1791618475685340096
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S04.md",
+      "bytes": 1485,
+      "sha256": "da1f1790a62979fe7329c0db3f46d5d33af63ca59a2c2a4e53de4497e22fdeb3",
+      "mtime_ns": 1791618475685463690
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S05.md",
+      "bytes": 1296,
+      "sha256": "d104020ec1f39c9eb27758f2dac71bfb83272256ae3f7b96883d2188ead68812",
+      "mtime_ns": 1791618475685543703
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S06.md",
+      "bytes": 1315,
+      "sha256": "3ec23c7066c8f109513161270901dbbfdf38a491bbc7bbfafe427489a32b5443",
+      "mtime_ns": 1791618475685606186
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S07.md",
+      "bytes": 1275,
+      "sha256": "c4236315ace2ca61064bff62125a0af298e3a10e4c70d411ee035116e39eb772",
+      "mtime_ns": 1791618475685666564
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S08.md",
+      "bytes": 1200,
+      "sha256": "43cfbcc82661ce9b21bb248aa4bf3d47a2bfb53105b48366cd6cc2642852b87a",
+      "mtime_ns": 1791618475685742907
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S09.md",
+      "bytes": 1277,
+      "sha256": "049e0f6f8f068095c123a2c2a231d6d7ada50f16c61651046c75e230f6e958f6",
+      "mtime_ns": 1791618475685809300
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S10.md",
+      "bytes": 1288,
+      "sha256": "a6c944bc5ec7bb87c0f2db00b805a2dc5db8a1ba32f01907c816cbea6768c7c1",
+      "mtime_ns": 1791618475685872228
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S11.md",
+      "bytes": 1352,
+      "sha256": "88e7c2e5af390dc6a9f3b64b2a941a7edf666afe40f7266c19762fa3196ebe12",
+      "mtime_ns": 1791618475685932900
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S12.md",
+      "bytes": 1331,
+      "sha256": "a7bf2f91685fa328189ff3654ec6c743c40e116be3cd9727fb3e40ac7485e3f0",
+      "mtime_ns": 1791618475685998473
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S13.md",
+      "bytes": 1889,
+      "sha256": "4f66e6b1c04a7fecb5ccf02081e599ac4d2cd1d1182daaf0735f9836d7cc8758",
+      "mtime_ns": 1791618475686062528
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/S14.md",
+      "bytes": 1466,
+      "sha256": "19bb85aa84c30546a46e2376a504e68b7b6af136fc6a6cd430f4a99b7aee5410",
+      "mtime_ns": 1791618475686140434
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/sources/index.md",
+      "bytes": 4390,
+      "sha256": "3cb5fcd1f9c835e6768b8da46daef66084ec79b540e2f6fa36a8b2dedbb4e2e0",
+      "mtime_ns": 1791618475687678665
+    }
+  ],
+  "final_stage_task": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-03-treatment-reviser-A1-A8-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "56e34ebff32ce31554baba2e99cb54c67f3e02978657cc6f37268577a684b50e"
+  }
+}

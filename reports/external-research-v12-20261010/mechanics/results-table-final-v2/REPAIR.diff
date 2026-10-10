@@ -1,0 +1,44 @@
+--- v1/join_final.py
++++ v2/join_final.py
+@@ -12,6 +12,10 @@
+ def need(ok, why):
+     if not ok: raise ValueError(why)
+ def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
++def recorded_pointer(v):
++    ps=[v[k] for k in ('pointer','json_pointer') if k in v]
++    need(bool(ps) and all(isinstance(p,str) and p.startswith('/') for p in ps) and len(set(ps))==1,'invalid/conflicting recorded metadata pointers')
++    return ps[0]
+ def numeric(v): return type(v) in (int,float) and math.isfinite(v) and v >= 0
+ def identity(r): return r['slot']+'/'+r['arm']
+ def unique(rows, key):
+@@ -106,7 +110,7 @@
+         need(d['armId']==aid and d['root_science_freeze_pointer']=={'path':str(freeze_path),'pointer':'/arms/'+str(i)},'global root pointer mismatch')
+         need(a['delivery_disposition']==d['disposition'] and a['delivery_evidence']['raw']==d,'accounting delivery attestation mismatch')
+         evidence=a['delivery_evidence']['provenance']; declared=acct['delivery_manifest']['provenance']
+-        need(evidence['path']==declared['path'] and evidence['sha256']==declared['sha256'] and evidence['json_pointer'].startswith('/rows/'),'accounting delivery provenance mismatch')
++        need(evidence['path']==declared['path'] and evidence['sha256']==declared['sha256'] and recorded_pointer(evidence).startswith('/rows/'),'accounting delivery provenance mismatch')
+         def artifact(m):
+             need(isinstance(m,dict) and inv.get(m.get('path'))==m,'artifact not in frozen hash inventory')
+         def pointer(p):
+@@ -120,7 +124,11 @@
+             artifact(review['original_sidecar']); artifact(review['failure_evidence'])
+             need(review['original_sidecar']['sha256']=='f14f237b2a4f1f5bdc302a957cc91d144105d40c2240b0ddda3bd5f186dc443d','missing sidecar pin mismatch')
+             need(a['delivery_proxy_latency_seconds']==U and a['delivery_latency_seconds']==U and a['candidate_latency_seconds']==U,'missing arm cannot acquire delivery latency')
+-            need(a['observed_native_or_host_failure'] is True and numeric(a['observed_occupied_context_sum_seconds']) and a['observed_occupied_context_sum_seconds']>=197,'missing failed consumed cost erased')
++            need(numeric(a['observed_occupied_context_sum_seconds']) and a['observed_occupied_context_sum_seconds']>=197,'missing failed consumed cost erased')
++            need(review['failure_evidence']['sha256']=='f044230c06b88394b0f1148534f7de5d790c50c4febdeb0dbbfdb589e98f7454','original guard-failure evidence changed')
++            # No observed native terminal proof is invented. The original guard-failure
++            # sidecar, pinned above, establishes the mechanical failure independently.
++            # Preserve the extractor's false observation field and unobserved native state.
+         else:
+             need(d['final_task_id']==r['final_attempt_id'],'root designated final mismatch')
+             need(d['disposition']=='DELIVERED' and review['state']=='ASSESSED' and r['assessment_state']=='ASSESSED','delivered assessment absent')
+@@ -155,6 +163,8 @@
+     validate(old,cp,acct,freeze,checkpoint,freeze_path)
+     acct['_snapshot_provenance']=manifest[str(accounting)]
+     rows=enrich(old,acct); metrics=comparisons(rows)
++    missing_freeze=next(e for e in freeze['arms'] if e['armId']==MISSING)
++    next(r for r in rows if identity(r)==MISSING)['original_mechanical_guard_failure_evidence']=copy.deepcopy(missing_freeze['original_assessment'])
+     for m in old['source_manifest']: manifest[m['path']]=m
+     manifest[str(LEGACY)]={'path':str(LEGACY),'sha256':PIN,'bytes':LEGACY.stat().st_size}
+     need(all(digest(p)==m['sha256'] for p,m in manifest.items()),'consumed input changed during join')

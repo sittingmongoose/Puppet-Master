@@ -1,1 +1,18 @@
-{"goal":{"threadId":"01a12454-eb17-7712-ad20-30cf915d1b54","objective":"Capture the exact terminal-only TARGETS whitelist once via native thin thread reads within a five-minute cap; save unchanged raw results, compact timing SUMMARY.json, and SHA manifest in the reserved task host directory, then complete this Goal.","status":"complete","tokensUsed":45188,"timeUsedSeconds":49,"createdAt":1791610915,"updatedAt":1791610964},"remainingTokens":null,"completionBudgetReport":"Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."}
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "goal": {
+        "threadId": "01a12454-eb17-7712-ad20-30cf915d1b54",
+        "status": "complete",
+        "createdAt": 1791610915,
+        "updatedAt": 1791610964
+      }
+    }
+  ],
+  "original_capture_sha256": "5d12fd07842834c8eeb7547ddb70f800037b77881616672653c18a904d15754d",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-thin-timing-completion-v1/host/self/goal-completed.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

@@ -1,0 +1,871 @@
+{
+  "schema": "ER12 reviser source map v1",
+  "run_id": "D-R2-03-control",
+  "stage": "reviser",
+  "scope_input": "ER12_RUNTIME/runs/D-R2-03/control/inputs/brief.md",
+  "reviewed_inputs": [
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/assignment.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/input-map.json",
+    "ER12_RUNTIME/runs/D-R2-03/control/inputs/brief.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/sources/index.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/critic/critique.md",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/critic/source-map.json",
+    "ER12_RUNTIME/runs/D-R2-03/control/stages/critic/sources/index.md"
+  ],
+  "revealed_plan_record": {
+    "path": "ER12_RUNTIME/runs/D-R2-03/control/stages/investigator/revealed-plan.md",
+    "revealed_at_utc": "2026-10-10T07:02:10.442Z",
+    "sha256": "936dac13775ec07494773bcd507ecc0b6d1a70818017db30a7c79278eff9d6c2",
+    "bytes": 7042
+  },
+  "native_goal": {
+    "create_receipt_path": "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/native-goal-create.json",
+    "create_response": {
+      "goal": {
+        "threadId": "01a124a9-7d43-7e51-8463-7186ed46db58",
+        "objective": "ER12 reviser stage, run D-R2-03-control: execute ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791616463,
+        "updatedAt": 1791616463
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "goal_provenance_and_freshness": "UNKNOWN beyond the exact-goal binding checker.",
+    "completion_receipt_path": "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/native-goal-complete.json",
+    "completion_receipt_note": "Will be written after final.md and source-map.json are saved, when the same native Goal is completed."
+  },
+  "source_id_policy": "All inherited source IDs are retained. Every investigator and critic source record is preserved verbatim under stage_records. Where a locator was corrected, the prior record and correction are both explicit.",
+  "sources": [
+    {
+      "id": "AIJ-PAPER-2017",
+      "title": "AstroImageJ: Image Processing and Photometric Extraction for Ultra-Precise Astronomical Light Curves (Expanded Edition)",
+      "primary_url": "https://arxiv.org/abs/1701.04817",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AIJ-PAPER-2017",
+            "title": "AstroImageJ: Image Processing and Photometric Extraction for Ultra-Precise Astronomical Light Curves (Expanded Edition)",
+            "url": "https://arxiv.org/abs/1701.04817",
+            "version_or_commit": "2017 publication / arXiv:1701.04817; exact arXiv revision UNKNOWN",
+            "locator": "§§III, IV.2, IV.5; Appendices A.6 and B",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read the public expanded paper; it documents staged calibration, interactive multi-aperture photometry, ensemble changes, and that error calculation requires detector gain, dark current, and read noise.",
+            "governing_condition_default_exception": "The error model depends on entered detector settings; release/options may differ. No default is presumed to match this archive.",
+            "applicability_transferability": "Good operational precedent for reproducible time-series reduction and aperture/ensemble sensitivity. Transfer workflow concepts, not parameters or example performance."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIJ-GUIDE-LEGACY",
+      "title": "AstroImageJ Legacy User Guide",
+      "primary_url": "https://astroimagej.com/guides/legacy/",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AIJ-GUIDE-LEGACY",
+            "title": "AstroImageJ Legacy User Guide",
+            "url": "https://astroimagej.com/guides/legacy/",
+            "version_or_commit": "Legacy guide; software version unspecified (UNKNOWN)",
+            "locator": "Run Multi-Aperture Differential Photometry; Variable Aperture Usage",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read documented target/ensemble count ratios and FWHM-varying aperture operation.",
+            "governing_condition_default_exception": "Variable sizing depends on FWHM measured within initially defined fixed apertures; those must exceed the largest sequence FWHM. Historical guide notes FWHM overestimation and gives version-specific factors.",
+            "applicability_transferability": "Only if AIJ was used. Recover archive version/preferences before applying; do not transfer historical factors as defaults."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIJ-RELEASE-6.0.11",
+      "title": "AIJ Release 6.0.11.00",
+      "primary_url": "https://astroimagej.com/releases/601100/",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AIJ-RELEASE-6.0.11",
+            "title": "AIJ Release 6.0.11.00",
+            "url": "https://astroimagej.com/releases/601100/",
+            "version_or_commit": "6.0.11.00; 2026-09-10; ImageJ 1.54s, Java 26",
+            "locator": "Release changelog, New Features and Bug Fixes",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read official note: optional meridian-flip detection from a changing measurement-table field, faster FITS open, and fixes to Add Data panel, comparison-star labels, plot titling.",
+            "governing_condition_default_exception": "Flip detection depends on an available changing field (example PIERSIDE); this is optional. Does not establish the archive's version.",
+            "applicability_transferability": "Use to show behaviors evolve; reproduce actual version/settings, not current release by default."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "AIJ-RELEASE-6.0.11",
+            "title": "AstroImageJ Release 6.0.11.00",
+            "url": "https://astroimagej.com/releases/601100/",
+            "version_or_commit": "6.0.11.00; 2026-09-10",
+            "locator": "Official release changelog, new features and bug fixes",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened official release notes and confirmed optional meridian-flip detection from a changing measurements-table column and later Multi-plot/FITS-related fixes.",
+            "governing_condition_default_exception": "Flip detection requires a relevant column such as PIERSIDE; the feature is optional and release-specific.",
+            "applicability_transferability": "Shows implementation evolves; reproduce actual historical version/settings rather than assume current behavior."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIJ-RELEASE-5.4.0",
+      "title": "AIJ Release 5.4.0.00",
+      "primary_url": "https://astroimagej.com/releases/54000/",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AIJ-RELEASE-5.4.0",
+            "title": "AIJ Release 5.4.0.00",
+            "url": "https://astroimagej.com/releases/54000/",
+            "version_or_commit": "5.4.0.00; 2024-12-12; ImageJ 1.54h2, Java 23",
+            "locator": "FITS handling and Multi-Aperture entries",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read official changelog: beta freeform apertures and fix for BJD timestamps in TESS TICA FFI images.",
+            "governing_condition_default_exception": "BJD fix is explicitly for TESS TICA FFIs; not arbitrary ground FITS or all TESS products.",
+            "applicability_transferability": "Demonstrates product- and release-specific timing fixes; does not imply this archive had that defect."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "AIJ-RELEASE-5.4.0",
+            "title": "AstroImageJ Release 5.4.0.00",
+            "url": "https://astroimagej.com/releases/54000/",
+            "version_or_commit": "5.4.0.00; 2024-12-12",
+            "locator": "Official release changelog, FITS handling",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened official release notes and confirmed the BJD timestamp fix is specifically for TESS TICA FFI images.",
+            "governing_condition_default_exception": "Applies to the named TESS TICA FFI product; not arbitrary ground-based FITS or every TESS product.",
+            "applicability_transferability": "Supports version/product-specific history and the need to recover actual version; does not imply a local timing bug."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CCDPROC-2.5.1",
+      "title": "ccdproc v2.5.1 Reduction Toolbox",
+      "primary_url": "https://ccdproc.readthedocs.io/en/2.5.1/reduction_toolbox.html",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "CCDPROC-2.5.1",
+            "title": "ccdproc v2.5.1 Reduction Toolbox",
+            "url": "https://ccdproc.readthedocs.io/en/2.5.1/reduction_toolbox.html",
+            "version_or_commit": "ccdproc documentation release 2.5.1",
+            "locator": "Subtract bias and dark; Correct flat; Basic Processing with one command",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read API examples: dark scaling is not default; flat is mean-scaled before division; ccd_process combines overscan/trim/gain/mask/uncertainty/bias/flat.",
+            "governing_condition_default_exception": "Dark scaling needs explicit scale=True and appropriate exposure metadata; calibration units must match after gain conversion; flat has optional min_value floor.",
+            "applicability_transferability": "A transparent later re-reduction option if approved; not known to be used here and not installed/run in this stage."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "CCDPROC-2.5.1",
+            "title": "ccdproc v2.5.1 Reduction Toolbox",
+            "url": "https://ccdproc.readthedocs.io/en/2.5.1/reduction_toolbox.html",
+            "version_or_commit": "Documentation release 2.5.1",
+            "locator": "Subtract bias and dark; Correct flat; Basic Processing with a single command",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the versioned official docs. Confirmed dark scaling is not default; flat is mean-scaled before division; `ccd_process` composes named calibration operations and requires compatible units.",
+            "governing_condition_default_exception": "Dark scaling requires explicit `scale=True` and exposure metadata; ccd_process behavior depends on supplied frames and options.",
+            "applicability_transferability": "An implementation-specific candidate for a later documented re-reduction; no evidence it was used locally and it was not run."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FORS2-ROTATING-ILLUMINATION",
+      "title": "Static and rotating illumination corrections in FORS2@VLT photometry",
+      "primary_url": "https://arxiv.org/abs/1311.6467",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "FORS2-ROTATING-ILLUMINATION",
+            "title": "Static and rotating illumination corrections in FORS2@VLT photometry",
+            "url": "https://arxiv.org/abs/1311.6467",
+            "version_or_commit": "arXiv:1311.6467 (2013); journal-version details UNKNOWN",
+            "locator": "Abstract and §§2-4",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read finding that FORS flat illumination had static and orientation-dependent terms; standard-star solutions improved FORS2 flux-scale patterns by about 1–2%.",
+            "governing_condition_default_exception": "Specific to FORS/FORS2, filters and era; no evidence teaching camera shares its effect or magnitude.",
+            "applicability_transferability": "Transfer only the test of residuals versus detector position and camera angle; never transfer correction coefficients."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "FORS2-ROTATING-ILLUMINATION",
+            "title": "Removal of systematics in photometric measurements: static and rotating illumination corrections in FORS2@VLT data",
+            "url": "https://arxiv.org/abs/1311.6467",
+            "version_or_commit": "arXiv:1311.6467v1 (2013); accepted MNRAS paper, DOI 10.1093/mnras/stt2272",
+            "locator": "Abstract; version and submission history",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the primary paper record and read its abstract: FORS/FORS2 standard-star fields were used to model static and rotating illumination terms; reported flux-scale improvement is about 1–2% for FORS2.",
+            "governing_condition_default_exception": "Results and parametrized correction are specific to FORS2, filters, and study data.",
+            "applicability_transferability": "Supports testing residuals against position and orientation; its coefficients and magnitude do not transfer to the teaching camera."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOME-FLAT-STANDARDS",
+      "title": "Flattening Scientific CCD Imaging Data with a Dome Flat Field System",
+      "primary_url": "https://arxiv.org/abs/astro-ph/0510233",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "DOME-FLAT-STANDARDS",
+            "title": "Flattening Scientific CCD Imaging Data with a Dome Flat Field System",
+            "url": "https://arxiv.org/abs/astro-ph/0510233",
+            "version_or_commit": "arXiv:astro-ph/0510233 (2005); revision UNKNOWN",
+            "locator": "Abstract and introduction",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read comparison of dome/twilight/night-sky flats; standard-star observations test known-magnitude reproducibility across the detector.",
+            "governing_condition_default_exception": "Camera and illumination setup are study-specific; two flat types agreeing is not sufficient validation.",
+            "applicability_transferability": "Supports validation from star residuals across detector position rather than visual flat appearance."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "DOME-FLAT-STANDARDS",
+            "title": "Flattening Scientific CCD Imaging Data with a Dome Flat Field System",
+            "url": "https://arxiv.org/abs/astro-ph/0510233",
+            "version_or_commit": "arXiv:astro-ph/0510233v1 (2005)",
+            "locator": "Abstract and introduction",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the primary paper record and read its comparison of flat methods and standard-star reproducibility test; it warns that two sky-flat types agreeing does not establish correct flatting.",
+            "governing_condition_default_exception": "The study's dome system, telescope, and illumination arrangement are specific to that experiment.",
+            "applicability_transferability": "Supports star-based known-magnitude/repeatability tests, not its preferred flat technology as a universal answer."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIFF-PHOTOMETRY-2023",
+      "title": "Optimized temporal binning of comparison star measurements for differential photometry",
+      "primary_url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "DIFF-PHOTOMETRY-2023",
+            "title": "Optimized temporal binning of comparison star measurements for differential photometry",
+            "url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+            "version_or_commit": "MNRAS 526(3), 3482 (2023)",
+            "locator": "§§2.3-2.5, 3 and 5",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read differential extinction/common-mode arguments and the optional target/comparison/test-star procedure, comparison-star binning and RMS diagnostics.",
+            "governing_condition_default_exception": "Temporal binning assumes good photometric conditions, low-frequency systematics, no blending; high-frequency cloud trends violate it. Comparison noise adds to target noise.",
+            "applicability_transferability": "Optional branch only after cadence/noise checks; reported performance does not transfer to these unknown data."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "DIFF-PHOTOMETRY-2023",
+            "title": "Optimized temporal binning of comparison star measurements for differential photometry",
+            "url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+            "version_or_commit": "MNRAS 526(3), 3482–3494 (2023); DOI 10.1093/mnras/stad2964",
+            "locator": "Abstract and §1; search result/article page payload",
+            "accessed_utc": "UNKNOWN; exact successful fetch timestamp was not exposed. Last refresh attempt was 2026-10-10T07:12:15Z and returned a publisher redirect error.",
+            "observed_operation": "Independently inspected a direct publisher page payload received earlier in this review. It describes comparison-star temporal binning for good photometric conditions and slow common systematics, and says intervals with high-frequency cloud trends may be omitted while binning other intervals.",
+            "governing_condition_default_exception": "The method is conditional on high-cadence data and systematics slower than cadence; the paper explicitly allows excluding affected high-frequency-cloud intervals rather than banning the method throughout.",
+            "applicability_transferability": "Supports the critique that the draft's fast-cloud wording is overbroad; does not establish this archive's cadence or benefit."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAST-TESS-PRODUCTS",
+      "title": "TESS Data Products (MAST)",
+      "primary_url": "https://archive.stsci.edu/missions-and-data/tess/data-products",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "MAST-TESS-PRODUCTS",
+            "title": "TESS Data Products (MAST)",
+            "url": "https://archive.stsci.edu/missions-and-data/tess/data-products",
+            "version_or_commit": "Live MAST product page observed 2026-10-10; no numbered revision",
+            "locator": "Product Summary table: calibrated/uncalibrated FFI, target-pixel, light-curve and cotrending products",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read product listing and links to governing TESS product sections.",
+            "governing_condition_default_exception": "Availability depends on location, sector, product, cadence and release. No target coordinates were supplied; no lookup was possible.",
+            "applicability_transferability": "Defines a conditional no-new-observation route. Pixel products help inspect blending/extraction; downloaded curves remain processed products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MAST-TESS-MISSION",
+      "title": "TESS Mission Overview (MAST)",
+      "primary_url": "https://archive.stsci.edu/missions-and-data/tess",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "MAST-TESS-MISSION",
+            "title": "TESS Mission Overview (MAST)",
+            "url": "https://archive.stsci.edu/missions-and-data/tess",
+            "version_or_commit": "Live MAST page observed 2026-10-10",
+            "locator": "Mission Overview, Resolution, Capabilities, Data Availability",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read summary of time-series products/FFIs and listed 21 arcsecond per pixel resolution.",
+            "governing_condition_default_exception": "Specific sector coverage/cadence requires a coordinate check; coarse pixels may blend sources, and passband/sampling differ.",
+            "applicability_transferability": "Independent data only if source coverage/separation/cadence suit the question; a simple non-detection may not be diagnostic."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "MAST-TESS-MISSION",
+            "title": "TESS Mission Overview (MAST)",
+            "url": "https://archive.stsci.edu/missions-and-data/tess",
+            "version_or_commit": "Live official MAST page observed 2026-10-10",
+            "locator": "Mission Overview; products, resolution, data availability",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened MAST's official page and verified TPF/light-curve/FFI product descriptions, approximately 21 arcseconds per pixel, and sector-availability caveat.",
+            "governing_condition_default_exception": "Coverage requires a coordinate/sector query; coarse pixel scale permits blending and products/cadences differ.",
+            "applicability_transferability": "Supports only a conditional independent-data route after coordinates are known; no availability query was run."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TESS-SDPD-REV-F",
+      "title": "TESS Science Data Products Description Document",
+      "primary_url": "https://archive.stsci.edu/missions/tess/doc/EXP-TESS-ARC-ICD-TM-0014.pdf",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "TESS-SDPD-REV-F",
+            "title": "TESS Science Data Products Description Document",
+            "url": "https://archive.stsci.edu/missions/tess/doc/EXP-TESS-ARC-ICD-TM-0014.pdf",
+            "version_or_commit": "Rev F; 2020-09-11; controlled document",
+            "locator": "§2.4 time standards/timestamps; §§3-5 FFI/TPF/LC; revision history",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read official product specification and its stated scope for SPOC-produced TESS data.",
+            "governing_condition_default_exception": "Document instructs users to verify current controlled revision; governs named TESS products, not ground-based FITS.",
+            "applicability_transferability": "Use for TESS file/time interpretation only if such products are later queried."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIGHTKURVE-API",
+      "title": "Lightkurve io.read API reference",
+      "primary_url": "https://lightkurve.github.io/lightkurve/reference/api/lightkurve.io.read.html",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "LIGHTKURVE-API",
+            "title": "Lightkurve io.read API reference",
+            "url": "https://lightkurve.github.io/lightkurve/reference/api/lightkurve.io.read.html",
+            "version_or_commit": "Live unversioned docs (observed 2026-10-10); package version UNKNOWN",
+            "locator": "io.read quality_bitmask and flux_column parameters",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read automatic Kepler/TESS product dispatch; default mask removes severe flags; hard may remove good cadences; hardest is not recommended; default LC flux column is pdcsap_flux.",
+            "governing_condition_default_exception": "Exact behavior depends on installed package/product. Masks can remove data; SAP and PDC flux are differently processed.",
+            "applicability_transferability": "Conditional TESS route: freeze version, product, flux column and mask. Not for local ground-image reduction."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "LIGHTKURVE-API",
+            "title": "Lightkurve io.read API reference",
+            "url": "https://lightkurve.github.io/lightkurve/reference/api/lightkurve.io.read.html",
+            "version_or_commit": "Live unversioned official docs observed 2026-10-10; package version unknown",
+            "locator": "io.read quality_bitmask and flux_column parameters",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened official API docs and verified default quality mask behavior and default light-curve flux column `pdcsap_flux`; hard can remove good data and hardest is not recommended.",
+            "governing_condition_default_exception": "Behavior depends on product and installed package version; mask and flux-column choices change included data/processing.",
+            "applicability_transferability": "Supports freezing product, software, flux column, and mask if this route is later used."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIGHTKURVE-2.5.0",
+      "title": "Lightkurve v2.5.0 Release Notes",
+      "primary_url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "LIGHTKURVE-2.5.0",
+            "title": "Lightkurve v2.5.0 Release Notes",
+            "url": "https://github.com/lightkurve/lightkurve/releases",
+            "version_or_commit": "v2.5.0; 2024-08-19",
+            "locator": "v2.5.0 changes: QLP sectors 56+, FFI cadence handling, time format, FITS/centroid fixes",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read official changelog including product-reader/cadence/time fixes.",
+            "governing_condition_default_exception": "These changes target specific data-product cases; live API docs are not pinned to v2.5.0.",
+            "applicability_transferability": "Freeze software version and product for any later reproduction; shows mission data tooling evolves."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "LIGHTKURVE-2.5.0",
+            "title": "Lightkurve v2.5.0 Release Notes",
+            "url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+            "version_or_commit": "v2.5.0; release commit f6c5f1e; 2024-08-19",
+            "locator": "Official tagged release notes; TESS sectors 56+, cadence search, time-format fixes",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the official tagged release and verified product-reader/cadence/time-format changes listed for this version.",
+            "governing_condition_default_exception": "Changes affect named data products and cases; they do not validate all products or identify a local source.",
+            "applicability_transferability": "Pins the historical claim to the v2.5.0 tag; no package was installed or run."
+          }
+        }
+      ],
+      "locator_correction": {
+        "status": "corrected with explicit history",
+        "previous_investigator_url": "https://github.com/lightkurve/lightkurve/releases",
+        "exact_version_url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+        "note": "The investigator record is preserved unchanged in stage_records. The critic and reviser used the exact v2.5.0 tag; the source ID is unchanged."
+      }
+    },
+    {
+      "id": "EASTMAN-BJD-2010",
+      "title": "Achieving Better Than 1 Minute Accuracy in Heliocentric and Barycentric Julian Dates",
+      "primary_url": "https://arxiv.org/abs/1005.4415",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "EASTMAN-BJD-2010",
+            "title": "Achieving Better Than 1 Minute Accuracy in Heliocentric and Barycentric Julian Dates",
+            "url": "https://arxiv.org/abs/1005.4415",
+            "version_or_commit": "PASP 122 (2010), 935-946; arXiv:1005.4415",
+            "locator": "Abstract and §III practical considerations",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read warning that JD/BJD/HJD need explicit time standards and recommendation to report site arrival time with BJD_TDB.",
+            "governing_condition_default_exception": "Accurate conversion depends on time standard, target coordinates, site location and clock/site-arrival metadata; required precision sets corrections.",
+            "applicability_transferability": "Preserve native time keyword and exposure start/mid/end. No conversion was run because required metadata are absent."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "EASTMAN-BJD-2010",
+            "title": "Achieving better than 1 minute accuracy in the Heliocentric and Barycentric Julian Dates",
+            "url": "https://arxiv.org/abs/1005.4415",
+            "version_or_commit": "arXiv:1005.4415v3; PASP 122, 935–946 (2010)",
+            "locator": "Abstract and practical timing recommendations",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the primary paper record and confirmed time standards must be reported; authors recommend site-arrival time alongside BJD_TDB for event timing.",
+            "governing_condition_default_exception": "Conversion accuracy depends on clock/time standard, target direction, site and arrival-time metadata.",
+            "applicability_transferability": "Supports preservation of native timing and conversion inputs; no conversion can be done for this case without metadata."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTROPY-LS-8",
+      "title": "Astropy LombScargle API",
+      "primary_url": "https://docs.astropy.org/en/stable/api/astropy.timeseries.LombScargle.html",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "ASTROPY-LS-8",
+            "title": "Astropy LombScargle API",
+            "url": "https://docs.astropy.org/en/stable/api/astropy.timeseries.LombScargle.html",
+            "version_or_commit": "Astropy docs v8.0.1 stable at access",
+            "locator": "Frequency-grid and false_alarm_probability documentation",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read current frequency-grid choices and statement that FAP methods approximate a Gaussian-noise, non-varying null.",
+            "governing_condition_default_exception": "FAP estimates are approximate under stated null; they do not absorb correlated systematics or determine aliases.",
+            "applicability_transferability": "Later exploratory period search only after reduction/timing validation; not evidence about this case."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "ASTROPY-LS-8",
+            "title": "Astropy LombScargle API",
+            "url": "https://docs.astropy.org/en/stable/api/astropy.timeseries.LombScargle.html",
+            "version_or_commit": "Astropy docs v8.0.1 stable at access",
+            "locator": "false_alarm_level and false_alarm_probability methods",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened official API documentation and confirmed the estimated largest-peak false-alarm probability assumes a non-varying signal with Gaussian noise and uses an approximation method.",
+            "governing_condition_default_exception": "The stated null does not account for unmodeled correlated systematics or searches across unrecorded candidate/analysis choices.",
+            "applicability_transferability": "Supports keeping any future period search exploratory until timing, noise, sampling, and candidate selection are modeled."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VANDERPLAS-LS-2018",
+      "title": "Understanding the Lomb–Scargle Periodogram",
+      "primary_url": "https://arxiv.org/abs/1703.09824",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "VANDERPLAS-LS-2018",
+            "title": "Understanding the Lomb–Scargle Periodogram",
+            "url": "https://arxiv.org/abs/1703.09824",
+            "version_or_commit": "ApJS 236 (2018), 16; arXiv:1703.09824",
+            "locator": "§7.2 failure modes / spectral-window aliases",
+            "accessed_utc": "2026-10-10T06:59:56Z",
+            "observed_operation": "Read uneven-sampling examples and warning that a largest peak can be an alias under structured observing windows.",
+            "governing_condition_default_exception": "Methods paper, not analysis of this archive; significance depends on sampling and noise model.",
+            "applicability_transferability": "Require window/alias checks and independent repeatability before any astrophysical period interpretation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PONT-RED-NOISE-2006",
+      "title": "The effect of red noise on planetary transit detection",
+      "primary_url": "https://arxiv.org/abs/astro-ph/0608597",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "PONT-RED-NOISE-2006",
+            "title": "The effect of red noise on planetary transit detection",
+            "url": "https://arxiv.org/abs/astro-ph/0608597",
+            "version_or_commit": "MNRAS 373(1), 231-242 (2006); arXiv:astro-ph/0608597",
+            "locator": "§§2.3, 2.6-2.7, 3",
+            "accessed_utc": "2026-10-10T07:03:01Z",
+            "observed_operation": "Read the primary paper's covariance treatment and OGLE examples; neighboring measurements can be correlated and uncertainty need not decrease as n^-1/2.",
+            "governing_condition_default_exception": "The quantitative model and transit thresholds are specific to OGLE-style transit data; actual covariance must be measured or modeled for this archive.",
+            "applicability_transferability": "Supports checking residual correlation and RMS-versus-timescale before using iid errors or false-alarm estimates; transfer this diagnostic, not its thresholds."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "PONT-RED-NOISE-2006",
+            "title": "The effect of red noise on planetary transit detection",
+            "url": "https://academic.oup.com/mnras/article/373/1/231/1378493",
+            "version_or_commit": "MNRAS 373(1), 231–242 (2006); DOI 10.1111/j.1365-2966.2006.11012.x",
+            "locator": "Publisher metadata and abstract; §2.4 covariance discussion",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the publisher's primary article record. It describes correlated photometric noise and significance increasing more slowly than white-noise n^1/2 scaling under covariance.",
+            "governing_condition_default_exception": "Quantitative thresholds and model are for transit-survey detections; the correlation structure must be assessed on the actual data.",
+            "applicability_transferability": "Supports a residual-dependence check, not transfer of thresholds or a detection conclusion to this case."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BALUEV-FAP-2008",
+      "title": "Assessing the statistical significance of periodogram peaks",
+      "primary_url": "https://arxiv.org/abs/0711.0330",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "BALUEV-FAP-2008",
+            "title": "Assessing the statistical significance of periodogram peaks",
+            "url": "https://arxiv.org/abs/0711.0330",
+            "version_or_commit": "MNRAS 385(3), 1279-1285 (2008); arXiv:0711.0330",
+            "locator": "Abstract; extreme-value method for maxima in periodogram searches",
+            "accessed_utc": "2026-10-10T07:03:01Z",
+            "observed_operation": "Read the primary paper abstract describing tested analytic estimates and an upper bound for false-alarm probability of searched periodogram peaks.",
+            "governing_condition_default_exception": "A peak-level frequency-search correction is distinct from correction across many stars, apertures, reductions, or post-selected candidates; model assumptions and frequency limits must be stated.",
+            "applicability_transferability": "Supports accounting for the search window, while requiring the later study to reproduce its entire candidate-selection process and correlated-noise controls."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "BALUEV-FAP-2008",
+            "title": "Assessing statistical significance of periodogram peaks",
+            "url": "https://arxiv.org/abs/0711.0330",
+            "version_or_commit": "arXiv:0711.0330v1; MNRAS 385(3), 1279–1285 (2008)",
+            "locator": "Abstract; extreme-value estimate for searched periodogram maxima",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the primary paper record and confirmed its extreme-value treatment gives estimates/upper limits for searched-frequency peak false-alarm probabilities under tested applicability regions.",
+            "governing_condition_default_exception": "Frequency-search correction is not automatically correction for selecting among many stars, apertures, reductions, and post-hoc candidate rules.",
+            "applicability_transferability": "Supports accounting for the search window and recording all candidate-selection stages."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAVSO-CCD-CMOS-GUIDE-2022",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "primary_url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AAVSO-CCD-CMOS-GUIDE-2022",
+            "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+            "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+            "version_or_commit": "Version 1.0 (July 2022); current hosted PDF served from AAVSO in 2026",
+            "locator": "§§2.1.2-2.1.7 (background, repeatability, frame position, color); Ch. 4 (calibration/acquisition); §§5.1-5.7 (differential/check/comparison); §§7.2-7.4 (standards/root cause); §8.2 (time/cadence)",
+            "accessed_utc": "2026-10-10T07:04:28Z",
+            "observed_operation": "Read the version page, background/position chapters, calibration, saturation/airmass, comparison/check-star, and root-cause guidance. The guide relates light pollution to sky background/noise, edge position to vignetting/optical effects, recommends comparison/check stars and standard fields, and records major camera-technology/version history.",
+            "governing_condition_default_exception": "Guidance is for beginner/intermediate CCD/monochrome-CMOS photometry. It states calibration images should match science temperature and CMOS gain/offset/binning/readout; scaled and unscaled dark methods should not be mixed in one session. Camera-specific numeric examples are not universal defaults.",
+            "applicability_transferability": "Especially relevant to teaching-telescope controls and standard-star tests. Transfer the checks, not frame counts, saturation limits, filter transformations, or a specific camera's results."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "AAVSO-CCD-CMOS-GUIDE-2022",
+            "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+            "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+            "version_or_commit": "Version 1.0 (July 2022)",
+            "locator": "§4 calibration settings; §5.5 check star; §7.2 standard fields",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened the official 132-page guide and inspected calibration-setting, check-star, and standard-field passages. It requires matched science/calibration settings as applicable and recommends known standards/check-star comparisons.",
+            "governing_condition_default_exception": "Guidance is for beginner/intermediate CCD/monochrome-CMOS photometry; numeric recommendations depend on camera, filter, and observing setup.",
+            "applicability_transferability": "Relevant as transferable control design and teaching-scale practice; not evidence about the unknown local detector."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIJ-RELEASE-6.0.10",
+      "title": "AIJ Release 6.0.10.00",
+      "primary_url": "https://astroimagej.com/releases/601000/",
+      "stage_records": [
+        {
+          "stage": "investigator",
+          "record": {
+            "id": "AIJ-RELEASE-6.0.10",
+            "title": "AIJ Release 6.0.10.00",
+            "url": "https://astroimagej.com/releases/601000/",
+            "version_or_commit": "6.0.10.00; 2026-07-23; ImageJ 1.54s and Java 25",
+            "locator": "BJD conversion API and Multi-plot latitude/longitude keyword options",
+            "accessed_utc": "2026-10-10T07:07:23Z",
+            "observed_operation": "Read official release notes: BJD conversion API changed to process table JD columns in one operation; latitude/longitude can be read from headers for BJD conversion and airmass.",
+            "governing_condition_default_exception": "The observatory latitude/longitude automation requires the corresponding header keywords; it does not remove the need to verify site and clock metadata. The change is AIJ 6.0.10-specific.",
+            "applicability_transferability": "Supports explicit validation of site coordinates in any historical timing conversion. Does not establish which AIJ release or metadata the archive used."
+          }
+        },
+        {
+          "stage": "critic",
+          "record": {
+            "id": "AIJ-RELEASE-6.0.10",
+            "title": "AstroImageJ Release 6.0.10.00",
+            "url": "https://astroimagej.com/releases/601000/",
+            "version_or_commit": "6.0.10.00; 2026-07-23",
+            "locator": "Official release changelog, BJD conversion and Multi-plot latitude/longitude options",
+            "accessed_utc": "2026-10-10T07:12:15Z",
+            "observed_operation": "Opened official release notes and confirmed observatory coordinates can be extracted from selected header keywords for timing conversion and airmass setup.",
+            "governing_condition_default_exception": "Automation requires those site-coordinate keywords to exist and be interpreted correctly.",
+            "applicability_transferability": "Supports explicit site-metadata checks; does not establish local software or header behavior."
+          }
+        }
+      ]
+    }
+  ],
+  "stage_claim_indexes": [
+    {
+      "stage": "investigator",
+      "entries": [
+        {
+          "claim": "Orientation may interact with detector position/illumination; test, do not assume.",
+          "source_ids": [
+            "FORS2-ROTATING-ILLUMINATION",
+            "DOME-FLAT-STANDARDS"
+          ]
+        },
+        {
+          "claim": "AIJ operations, error model, and version history.",
+          "source_ids": [
+            "AIJ-PAPER-2017",
+            "AIJ-GUIDE-LEGACY",
+            "AIJ-RELEASE-6.0.11",
+            "AIJ-RELEASE-5.4.0"
+          ]
+        },
+        {
+          "claim": "Calibration operations and explicit defaults.",
+          "source_ids": [
+            "CCDPROC-2.5.1"
+          ]
+        },
+        {
+          "claim": "Differential photometry, extinction, comparison noise, and optional binning conditions.",
+          "source_ids": [
+            "DIFF-PHOTOMETRY-2023"
+          ]
+        },
+        {
+          "claim": "Conditional independent archive path and product/quality limits.",
+          "source_ids": [
+            "MAST-TESS-PRODUCTS",
+            "MAST-TESS-MISSION",
+            "TESS-SDPD-REV-F",
+            "LIGHTKURVE-API",
+            "LIGHTKURVE-2.5.0"
+          ]
+        },
+        {
+          "claim": "Timestamp scales and BJD prerequisites.",
+          "source_ids": [
+            "EASTMAN-BJD-2010"
+          ]
+        },
+        {
+          "claim": "Periodogram alias and null-hypothesis limits.",
+          "source_ids": [
+            "ASTROPY-LS-8",
+            "VANDERPLAS-LS-2018"
+          ]
+        },
+        {
+          "claim": "Correlated noise can make white-noise significance optimistic; check dependence by timescale.",
+          "source_ids": [
+            "PONT-RED-NOISE-2006"
+          ]
+        },
+        {
+          "claim": "Periodogram peak significance must reflect the searched frequency range and candidate-selection process.",
+          "source_ids": [
+            "BALUEV-FAP-2008",
+            "ASTROPY-LS-8",
+            "VANDERPLAS-LS-2018"
+          ]
+        },
+        {
+          "claim": "Background, frame position, calibration settings, saturation, comparison/check stars, and post-change quality review have practical photometry guidance.",
+          "source_ids": [
+            "AAVSO-CCD-CMOS-GUIDE-2022"
+          ]
+        },
+        {
+          "claim": "AIJ timing/airmass conversion depends on release and observatory coordinate metadata.",
+          "source_ids": [
+            "AIJ-RELEASE-6.0.10",
+            "AIJ-RELEASE-5.4.0",
+            "EASTMAN-BJD-2010"
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "critic",
+      "entries": [
+        {
+          "claim": "Rotation-dependent flat illumination is a testable precedent, not a transferable local diagnosis.",
+          "source_ids": [
+            "FORS2-ROTATING-ILLUMINATION",
+            "DOME-FLAT-STANDARDS"
+          ]
+        },
+        {
+          "claim": "Calibration/reduction defaults and historical software behavior are version-specific.",
+          "source_ids": [
+            "CCDPROC-2.5.1",
+            "AIJ-RELEASE-5.4.0",
+            "AIJ-RELEASE-6.0.10",
+            "AIJ-RELEASE-6.0.11"
+          ]
+        },
+        {
+          "claim": "The 2023 temporal-binning paper permits exclusion of high-frequency cloud intervals rather than an all-or-nothing ban.",
+          "source_ids": [
+            "DIFF-PHOTOMETRY-2023"
+          ]
+        },
+        {
+          "claim": "Known-standard/check-star tests support demonstrated performance; no such test was possible here.",
+          "source_ids": [
+            "DOME-FLAT-STANDARDS",
+            "AAVSO-CCD-CMOS-GUIDE-2022"
+          ]
+        },
+        {
+          "claim": "TESS is only a conditional independent-data route; cadence, product, and spatial resolution require inspection.",
+          "source_ids": [
+            "MAST-TESS-MISSION",
+            "LIGHTKURVE-API",
+            "LIGHTKURVE-2.5.0"
+          ]
+        },
+        {
+          "claim": "Time scales, correlated noise, and candidate-search significance require explicit controls before period claims.",
+          "source_ids": [
+            "EASTMAN-BJD-2010",
+            "ASTROPY-LS-8",
+            "PONT-RED-NOISE-2006",
+            "BALUEV-FAP-2008"
+          ]
+        }
+      ]
+    }
+  ],
+  "independent_reviser_checks": [
+    {
+      "source_id": "DIFF-PHOTOMETRY-2023",
+      "title": "Optimized temporal binning of comparison star measurements for differential photometry",
+      "url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+      "version_or_commit": "MNRAS 526(3), 3482–3494 (2023); DOI 10.1093/mnras/stad2964",
+      "locator": "Publisher article payload: §2.5, §3.2, Discussion, and Conclusions",
+      "accessed_utc": "2026-10-10T07:15:05Z",
+      "access_time_note": "Clock read immediately before the web open/search batch; page-specific successful-fetch time was not exposed. Direct open returned a 500 redirect to an inaccessible OUP minimal page. The exact-title search returned the official Oxford Academic article payload.",
+      "observed_operation": "Read the official publisher payload. It states that the method assumes good photometric conditions, no high-frequency systematic trends, and no blending; the pipeline says to skip binning during high-frequency-trend periods; the discussion says binning can remain beneficial outside occasional rapid-trend intervals.",
+      "governing_condition_default_exception": "Use only when systematics are predominantly low-frequency relative to cadence and the data are otherwise suitable. Do not bin intervals with high-frequency trends; occasional such intervals do not require abandoning the method for all other intervals. The paper's demonstrated cadence and conditions do not establish benefit for this archive.",
+      "applicability_transferability": "Supports amending the draft's blanket-sounding caveat to an interval-specific optional method. Does not establish the local cadence, weather, or benefit."
+    },
+    {
+      "source_id": "LIGHTKURVE-2.5.0",
+      "title": "Lightkurve v2.5.0 release notes",
+      "url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+      "version_or_commit": "v2.5.0; release commit f6c5f1e; 2024-08-19",
+      "locator": "Official tagged release page and changelog",
+      "accessed_utc": "2026-10-10T07:15:05Z",
+      "access_time_note": "Clock read immediately before the web open batch; page-specific timestamp was not exposed.",
+      "observed_operation": "Opened the exact official tag and confirmed the v2.5.0 heading, 2024-08-19 release date, commit f6c5f1e, and product-reader/cadence/time-format changelog entries.",
+      "governing_condition_default_exception": "The release notes concern the named product/version changes; they do not validate every product, identify a local source, or describe the currently installed package.",
+      "applicability_transferability": "Supports the exact version-specific link and release-history claim only. No package was installed or run."
+    }
+  ],
+  "critique_dispositions": [
+    {
+      "finding": "CRIT-01",
+      "disposition": "accept; full-window use remains unverified"
+    },
+    {
+      "finding": "CRIT-02",
+      "disposition": "accept and amend; interval-specific high-frequency-trend caveat independently checked"
+    },
+    {
+      "finding": "CRIT-03",
+      "disposition": "accept and correct exact-tag locator; preserve old URL and source ID"
+    },
+    {
+      "finding": "CRIT-04",
+      "disposition": "accept; unavailable case data and local history remain unresolved"
+    }
+  ],
+  "evidence_limits": [
+    "No images, calibrations, pipeline code, target coordinates, logs, measurements, or catalog identity were supplied in the assigned inputs.",
+    "Primary-source context is methodological or implementation history, not evidence that a cited tool was used locally.",
+    "No empirical validation, photometry, period search, significance estimate, or public archive availability query was performed.",
+    "Source timestamps identify access events only and do not establish total research time."
+  ]
+}

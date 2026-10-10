@@ -1,11 +1,20 @@
-# Evidence S4: GNU diffutils manual (diff3 lineage)
-
-- URL: https://www.gnu.org/software/diffutils/manual/diffutils.html
-- Publisher: GNU / Free Software Foundation. Status: 200 OK. Retrieved: 2026-10-10 (UTC; exact time UNKNOWN).
-- Locator: "Comparing and Merging Files"; sections Comparing Three Files, Merging From a Common Ancestor, Invoking diff3.
-
-Verbatim excerpts (bounded):
-
-- "This manual is for GNU Diffutils (version 3.12, 12 January 2025), and documents the GNU diff, diff3, sdiff, and cmp commands for showing the differences between files and the GNU patch command for using their output to update files."
-- "Copyright © 1992–1994, 1998, 2001–2002, 2004, 2006, 2009–2025 Free Software Foundation, Inc."
-- "You can omit overlaps or conflicts, or select only overlaps, or mark conflicts with special ‘<<<<<<<’ and ‘>>>>>>>’ lines."
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "2ab24eca729da67f0fc417da9c680265b3a2cc76db9c644fe4d494f67c60352b",
+  "rawSHA256": "2ab24eca729da67f0fc417da9c680265b3a2cc76db9c644fe4d494f67c60352b",
+  "original_bytes": 860,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-01/treatment/stages/role/sources/ev-04-gnu-diffutils.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

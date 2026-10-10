@@ -1,153 +1,1565 @@
 {
   "schema": "er12.public-native-lifecycle.v1",
-  "target": {
-    "slot": "A7-02",
-    "arm": "treatment",
-    "stage": "investigator",
-    "helper": "ER12_RUNTIME/helpers/topology-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-    "status": "completed",
-    "hasPendingChildRuns": false,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "latestTerminalStatus": "completed",
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-    "whitelist_index": 56
-  },
-  "original_capture_sha256": "05d19efcd60afdebde14398beb46e3646f56ae0c7649cf8fd69e336f9fe9d2e5",
-  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-observation-cohort3/host/context-055.json",
   "observations": [
     {
-      "phase": "messages",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-        "view": "messages",
-        "limit": 1,
-        "maxCharsPerItem": 200,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:34:13.196Z",
-      "finished_at_utc": "2026-10-10T05:34:13.312Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:28:56.764Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:28:56.762Z",
+              "updatedAt": "2026-10-10T04:40:53.729Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:28:56.764Z",
+                "startedAt": "2026-10-10T04:28:57.422Z",
+                "completedAt": "2026-10-10T04:40:49.119Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:28:56.764Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "head",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-        "view": "activity",
-        "limit": 12,
-        "maxCharsPerItem": 350,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:34:14.565Z",
-      "finished_at_utc": "2026-10-10T05:34:15.570Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:28:56.764Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.387Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.709Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:21.450Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:21.450Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:25.017Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:28.748Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:29.068Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:34.662Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:28:56.762Z",
+              "updatedAt": "2026-10-10T04:40:53.729Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:28:56.764Z",
+                "startedAt": "2026-10-10T04:28:57.422Z",
+                "completedAt": "2026-10-10T04:40:49.119Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:28:56.764Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:10.256Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:10.256Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:10.256Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:10.387Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:10.709Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:21.450Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:21.450Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:25.017Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:28.748Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:29.068Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:29:34.662Z"
+              }
+            ],
+            "nextPosition": 11,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "tail",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-        "view": "activity",
-        "limit": 45,
-        "maxCharsPerItem": 350,
-        "runLimit": 1,
-        "afterPosition": 153
-      },
-      "started_at_utc": "2026-10-10T05:34:15.955Z",
-      "finished_at_utc": "2026-10-10T05:34:16.808Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:28:56.762Z",
-            "updatedAt": "2026-10-10T04:40:53.729Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:40.279Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:40.361Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:53.871Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:53.871Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:05.241Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:05.241Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:36.242Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:48.501Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:48.501Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:50.209Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:54.164Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:54.575Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:07.102Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:07.102Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.512Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:00.076Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:10.601Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:10.601Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:15.088Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:15.088Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:20.894Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.629Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:30.429Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:34.654Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:35.194Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:39.609Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:48.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:48.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "nextPosition": 197,
+              "hasMore": false
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:28:56.762Z",
+              "updatedAt": "2026-10-10T04:40:53.729Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:28:56.764Z",
+                "startedAt": "2026-10-10T04:28:57.422Z",
+                "completedAt": "2026-10-10T04:40:49.119Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:40.279Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:40.361Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:50.232Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:50.232Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:50.232Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:53.871Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:36:53.871Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:37:01.412Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:37:01.412Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:37:01.412Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:37:05.241Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:37:05.241Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:36.242Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:45.375Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:45.375Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:45.375Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:48.501Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:48.501Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:50.209Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:54.164Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:38:54.575Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:07.102Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:07.102Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:13.409Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:13.409Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:13.409Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:39:13.512Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:00.076Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:10.601Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:10.601Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:15.088Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:15.088Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:20.894Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:29.548Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:29.548Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:29.548Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:29.629Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:30.429Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:34.654Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:35.194Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:39.609Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:48.271Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:48.901Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:49.119Z"
+              }
+            ],
+            "nextPosition": 197,
+            "hasMore": false
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     }
   ],
-  "actual_lifecycle_metadata": [],
-  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
-  "source_body_coverage": "UNKNOWN"
+  "actual_lifecycle_metadata": [
+    {
+      "target": {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "latestTerminalStatus": "completed"
+      },
+      "reads": [
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:28:56.762Z",
+                  "updatedAt": "2026-10-10T04:40:53.729Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:28:56.764Z",
+                    "startedAt": "2026-10-10T04:28:57.422Z",
+                    "completedAt": "2026-10-10T04:40:49.119Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:28:56.764Z"
+                  }
+                ],
+                "nextPosition": 0,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:28:56.764Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:28:56.762Z",
+                  "updatedAt": "2026-10-10T04:40:53.729Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:28:56.764Z",
+                    "startedAt": "2026-10-10T04:28:57.422Z",
+                    "completedAt": "2026-10-10T04:40:49.119Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:28:56.764Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:10.256Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:10.256Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:10.256Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:10.387Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:10.709Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:21.450Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:21.450Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:25.017Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:28.748Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:29.068Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:29:34.662Z"
+                  }
+                ],
+                "nextPosition": 11,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:28:56.764Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.256Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.387Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:10.709Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:21.450Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:21.450Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:25.017Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:28.748Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:29.068Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:29:34.662Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:28:56.762Z",
+                  "updatedAt": "2026-10-10T04:40:53.729Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:28:56.764Z",
+                    "startedAt": "2026-10-10T04:28:57.422Z",
+                    "completedAt": "2026-10-10T04:40:49.119Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:40.279Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:40.361Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:50.232Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:50.232Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:50.232Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:53.871Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:36:53.871Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:37:01.412Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:37:01.412Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:37:01.412Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:37:05.241Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:37:05.241Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:36.242Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:45.375Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:45.375Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:45.375Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:48.501Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:48.501Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:50.209Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:54.164Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:38:54.575Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:07.102Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:07.102Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:13.409Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:13.409Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:13.409Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:39:13.512Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:00.076Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:10.601Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:10.601Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:15.088Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:15.088Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:20.894Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:29.548Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:29.548Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:29.548Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:29.629Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:30.429Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:34.654Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:35.194Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:39.609Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:48.271Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:48.901Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:49.119Z"
+                  }
+                ],
+                "nextPosition": 197,
+                "hasMore": false
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-investigator-topology-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:28:56.762Z",
+                "updatedAt": "2026-10-10T04:40:53.729Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:28:56.764Z",
+                  "startedAt": "2026-10-10T04:28:57.422Z",
+                  "completedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:40.279Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:40.361Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:50.232Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:53.871Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:36:53.871Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:01.412Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:05.241Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:37:05.241Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:36.242Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:45.375Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:48.501Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:48.501Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:50.209Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:54.164Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:38:54.575Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:07.102Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:07.102Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.409Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:39:13.512Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:00.076Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:10.601Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:10.601Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:15.088Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:15.088Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:20.894Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.548Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:29.629Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:30.429Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:34.654Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:35.194Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:39.609Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:48.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:48.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-investigator-topology-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.119Z"
+                }
+              ],
+              "nextPosition": 197,
+              "hasMore": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "original_capture_sha256": "05d19efcd60afdebde14398beb46e3646f56ae0c7649cf8fd69e336f9fe9d2e5",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-observation-cohort3/host/context-055.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

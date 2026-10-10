@@ -1,0 +1,43 @@
+{
+  "verified_at_utc": "2026-10-10T07:52:15.115919+00:00",
+  "judgment_saved_before_native_completion": true,
+  "all_six_axes_assessed": true,
+  "all_52_exact_plan_sentence_spans_checked": true,
+  "all_four_criticism_dispositions_present": true,
+  "all_eleven_independent_sources_navigable": true,
+  "original_inspected_files_unchanged": true,
+  "json_and_local_markdown_links_valid": true,
+  "semantic_grade_not_derived_from_these_structural_checks": true,
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/assessment.md",
+      "bytes": 80196,
+      "sha256": "878827e14bd1c36609a61241fbd81c27c59ba4fd26a61d7719ccad53a8faef92"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/assessment.json",
+      "bytes": 134229,
+      "sha256": "be47329fea02a974c6287dd435d9217bd0b130a9c71073701b90339150a7cb5b"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/source-map.json",
+      "bytes": 110071,
+      "sha256": "d2e2b1d5b18ab83158c20d84e9d3b85755dc84668e6fc3861bfaa8fde40b2207"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/evidence/index.md",
+      "bytes": 10505,
+      "sha256": "c43cd084cfa5cddf154ab52f64440bf1e814ae167d840280f7baea2705eba8b2"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/evidence/original-inspection.json",
+      "bytes": 28375,
+      "sha256": "0952f4a7d7f7c4cd80d51886c66b757760fcb99e848605a25882d299c1169024"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-04/control-v1/evidence/primary/retrieval-manifest.json",
+      "bytes": 51359,
+      "sha256": "1d336cd6e88f6988d4432e187407eec7943509e07556e16df0460db507a58578"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "I06-Jo",
+    "url": "https://www.mdpi.com/2304-8158/11/12/1704/pdf",
+    "started_utc": "2026-10-10T07:21:41.892277+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "error": "HTTP Error 403: Forbidden",
+    "completed_utc": "2026-10-10T07:21:41.984756+00:00"
+  },
+  {
+    "id": "I03-Esveld",
+    "url": "https://www.sciencedirect.com/science/article/pii/S0260877411004687",
+    "started_utc": "2026-10-10T07:21:41.896205+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "error": "HTTP Error 403: Forbidden",
+    "completed_utc": "2026-10-10T07:21:42.023280+00:00"
+  },
+  {
+    "id": "I07-BRICE",
+    "url": "https://www.cerealsgrains.org/publications/cfw/2019/November-December/Documents/CFW-64-6-0078.pdf",
+    "started_utc": "2026-10-10T07:21:41.895025+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://www.cerealsgrains.org/publications/cfw/2019/November-December/Documents/CFW-64-6-0078.pdf",
+    "content_type": "application/pdf",
+    "bytes": 1046683,
+    "sha256": "58b3e2ba7cdca306bcc86b1a961a76be0e83c2676a2c0b624dd28c1c6215a793",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.pdf",
+    "completed_utc": "2026-10-10T07:21:42.384072+00:00"
+  },
+  {
+    "id": "I08-Ilhan",
+    "url": "https://repository.tudelft.nl/record/uuid:923a6fa2-112d-4088-be4a-8a68caa03c07",
+    "started_utc": "2026-10-10T07:21:41.898081+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://repository.tudelft.nl/record/uuid:923a6fa2-112d-4088-be4a-8a68caa03c07",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 30366,
+    "sha256": "22e55300800f7c32ff1393487fb73395c8151fc3f9c121ea414afcd0a458c240",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.txt",
+    "completed_utc": "2026-10-10T07:21:42.427784+00:00"
+  },
+  {
+    "id": "I06-Jo-mirror",
+    "url": "https://pdfs.semanticscholar.org/2017/8835b7ce4d6cda54ea236c1101aaf287563f.pdf",
+    "started_utc": "2026-10-10T07:21:41.893803+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://pdfs.semanticscholar.org/2017/8835b7ce4d6cda54ea236c1101aaf287563f.pdf",
+    "content_type": "application/pdf",
+    "bytes": 2427576,
+    "sha256": "1d59fcaafffb737cce2a0d75538adccbaad54ce206c27028fb6cc5b427cff994",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.pdf",
+    "completed_utc": "2026-10-10T07:21:42.844240+00:00"
+  },
+  {
+    "id": "I10-F2095",
+    "url": "https://store.astm.org/f2095-07r21.html",
+    "started_utc": "2026-10-10T07:21:41.890340+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://store.astm.org/f2095-07r21.html",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 301757,
+    "sha256": "01f5bbc9e9e561f5be60ac2183dd61bdd4ef2fa69e04b768b43654f6a6e2be2b",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.txt",
+    "completed_utc": "2026-10-10T07:21:44.062332+00:00"
+  },
+  {
+    "id": "I11-F88",
+    "url": "https://store.astm.org/f0088_f0088m-23.html",
+    "started_utc": "2026-10-10T07:21:41.891165+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://store.astm.org/f0088_f0088m-23.html",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 321844,
+    "sha256": "ed46a1431f80adb0c59c718c3063dab39cbfbe55fed461c74caaf4d943434182",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.txt",
+    "completed_utc": "2026-10-10T07:21:44.258773+00:00"
+  },
+  {
+    "id": "I09-F2096",
+    "url": "https://store.astm.org/f2096-11r19.html",
+    "started_utc": "2026-10-10T07:21:41.887648+00:00",
+    "operation": "Independent HTTPS GET; no account or authentication",
+    "status": 200,
+    "final_url": "https://store.astm.org/f2096-11r19.html",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 292063,
+    "sha256": "a9f000567a9ce4c3a3597e97b44b63e87b8da2fb5d9fe611513f98b6ea381dcc",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.txt",
+    "completed_utc": "2026-10-10T07:21:44.286332+00:00"
+  }
+]

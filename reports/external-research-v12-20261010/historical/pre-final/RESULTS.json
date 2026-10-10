@@ -1,0 +1,23 @@
+{
+  "counts": {
+    "admitted_logical_arms": 72,
+    "quiet_full_final_arms": 37,
+    "quiet_role_final_arms": 24,
+    "original_completed_judgments": 60,
+    "source_labels": {
+      "FAIL": 21,
+      "PASS_WITH_LIMITATIONS": 39
+    },
+    "judgment_scopes": {
+      "A": 32,
+      "B": 24,
+      "C1": 4
+    },
+    "full_final_pending_review": "C-R2-01/control"
+  },
+  "rows": "mechanics/results-table-v1/table.json",
+  "freeze_sha256": "1dbccec00fad4ae05ed6e03f297dcc25c75c48f72dcfe1e1396c15511e7c7c27",
+  "later_or_active_assessments_excluded": true,
+  "source_grades_original_unregraded": true,
+  "effective_and_billing": "UNKNOWN"
+}

@@ -100,7 +100,7 @@ def extract(checkpoint, runtime):
     for p in sorted((runtime/'assessment').glob('*/*/*goal*.json')):
         v=load(p)
         if v is not None: walk(v,p,kind='local_reviewer_receipt')
-    dirs=['mechanics/native-observation-cohort2','mechanics/task-observations','observations','mechanics/observation-pass1','mechanics/terminal-evidence-pass2','mechanics/native-root-code-mode']
+    dirs=['mechanics/native-thin-timing-completion-v1/host','mechanics/native-observation-cohort3/host','mechanics/native-observation-cohort3/items','mechanics/native-observation-cohort3/exact','mechanics/native-observation-cohort2','mechanics/task-observations','observations','mechanics/observation-pass1','mechanics/terminal-evidence-pass2','mechanics/native-root-code-mode']
     files=set()
     for d in dirs:
         files.update((runtime/d).rglob('*.json'))

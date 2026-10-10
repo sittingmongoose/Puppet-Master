@@ -110,7 +110,7 @@
           ]
         }
       ],
-      "finding": "Authenticity does not establish tenant-resistant generation. The cited recipe omits generation/control-plane and trusted-level conditions needed to address the brief\u2019s compromised-job threat. Stolen keys and off-map builders do not exhaust this boundary.",
+      "finding": "Authenticity does not establish tenant-resistant generation. The cited recipe omits generation/control-plane and trusted-level conditions needed to address the brief’s compromised-job threat. Stolen keys and off-map builders do not exhaust this boundary.",
       "materiality": "A job-controlled claim can remain validly signed by an expected identity without demonstrating the dependency actually used. The assigned mechanism must bound that threat, rather than merely authenticate the statement.",
       "supported_scope_to_preserve": "Artifact digest, signature, predicate, identity and build-parameter expectations remain useful. No supplier certification, new deployment or universal SLSA level is required by this review.",
       "status": "OPEN; frozen candidate not repaired"

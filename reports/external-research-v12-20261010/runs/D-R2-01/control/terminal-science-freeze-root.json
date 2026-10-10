@@ -1,0 +1,87 @@
+{
+  "observed_at_utc": "2026-10-10T07:20:42.883083+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "bytes": 9658,
+      "sha256": "aa5fd2fad5094bd7035f5216f2f6256fce7b56c12f5df98a774af761bd705675",
+      "mtime_ns": 1791616344460877040
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "bytes": 21290,
+      "sha256": "2f5e88735fcdfc3841fcab089234e8a2e8f8be43b9e8463ea5f3aca1c1f76932",
+      "mtime_ns": 1791616344460636378
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/sources/index.md",
+      "bytes": 4078,
+      "sha256": "643c580298ac23f12ad6bdb6485e8ce47efb1aac7d1aca649fb025d324d69998",
+      "mtime_ns": 1791616344461124946
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 12123,
+      "sha256": "c66b1265f36573e4bdae9493e19934341233036b5622cd81984f4fd59503917c",
+      "mtime_ns": 1791615735005875898
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "bytes": 25639,
+      "sha256": "686101a8acdaf5c170f02c12dd17c205eaee06e4ec6ef870ac28a0d50a28bc70",
+      "mtime_ns": 1791615946396065764
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "mtime_ns": 1791615743161242580
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 13214,
+      "sha256": "ce1a5ee8b7ffc398427d972c2b6a3610ddbcd4bb0e35db6ec4b7e3cd4b6ee83e",
+      "mtime_ns": 1791615735006628107
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/sources/index.md",
+      "bytes": 1909,
+      "sha256": "c54c84163c1bae1064e8067f629082c4fed472924fa082e0994f515aedbd1354",
+      "mtime_ns": 1791615700889307840
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "bytes": 22758,
+      "sha256": "ab727625d9ade02032e7e8ce738c3e50387373d801da281b9192f365669eea80",
+      "mtime_ns": 1791616756758619180
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 28282,
+      "sha256": "063169e16bd4bc6686f27219f60d201cb5e39dfb73bc7bcd34e21a251c4ce594",
+      "mtime_ns": 1791616775684264324
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/sources/index.md",
+      "bytes": 2498,
+      "sha256": "527c53b1cab41edddb3930cb94cd2e85b6e4a9274795b66c14eb4dcf4682727d",
+      "mtime_ns": 1791616756759058353
+    }
+  ],
+  "final_stage_task": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "52e570e71bae983be867f5c77dd306c112a58b38ee7fdd946c46f054e9f4b39e"
+  }
+}

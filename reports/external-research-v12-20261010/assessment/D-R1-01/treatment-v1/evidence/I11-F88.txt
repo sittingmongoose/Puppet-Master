@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://store.astm.org/f0088_f0088m-23.html"
+  ],
+  "source_urls": [
+    "https://store.astm.org/f0088_f0088m-23.html"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-01/treatment-v1/evidence/direct-retrievals.json",
+      "source_id": "I11-F88",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "d45beed21a146348a8a04eff475c8a6f02fd82e1c89c12852e9fb14c36cc9edb",
+  "rawSHA256": "d45beed21a146348a8a04eff475c8a6f02fd82e1c89c12852e9fb14c36cc9edb",
+  "original_bytes": 13085,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-01/treatment-v1/evidence/I11-F88.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

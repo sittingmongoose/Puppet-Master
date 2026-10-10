@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A8-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. The complete proposal, source map, and navigable source index were saved before the native Goal completed.\n\n- [final.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md) \u2014 covers all eight obligations and dispositions each critic finding.\n- [source-map.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json) and [sources/index.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md) \u2014 preserve prior source IDs and record direct rechecks.\n- Native Goal activation and completion responses are preserved in [native-activation-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-activation-response.json) and [native-completion-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-completion-response.json).\n\nThe Goal completed with status `complete` (ID `01a12444-92d6-7f80-9c8e-d0fcabe91fb9`), using 106,978 tokens over 9m 12s. Provider/model provenance and a separate UTC terminal timestamp were not returned; both are recorded as `UNKNOWN`. Product validation was not run.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2270eaeb-ad03-4ace-9a2b-d993dff53f09",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. The complete proposal, source map, and navigable source index were saved before the native Goal completed.\n\n- [final.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md) \u2014 covers all eight obligations and dispositions each critic finding.\n- [source-map.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/source-map.json) and [sources/index.md](ER12_RUNTIME/runs/A8-02/control/stages/reviser/sources/index.md) \u2014 preserve prior source IDs and record direct rechecks.\n- Native Goal activation and completion responses are preserved in [native-activation-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-activation-response.json) and [native-completion-response.json](ER12_RUNTIME/runs/A8-02/control/stages/reviser/native-completion-response.json).\n\nThe Goal completed with status `complete` (ID `01a12444-92d6-7f80-9c8e-d0fcabe91fb9`), using 106,978 tokens over 9m 12s. Provider/model provenance and a separate UTC terminal timestamp were not returned; both are recorded as `UNKNOWN`. Product validation was not run.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A8-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2270eaeb-ad03-4ace-9a2b-d993dff53f09",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "dd1efa11160bc775c21b09c6f60c0336a6ce6f70f35d45f177806534d7c6d305"
   }
 }

@@ -1,0 +1,32 @@
+{
+  "at_utc": "2026-10-10T04:52:42.399329+00:00",
+  "actual_GitHub_ref": {
+    "ref": "refs/heads/research/er12-20261010",
+    "node_id": "REF_kwDOQ3DhHdoAIXJlZnMvaGVhZHMvcmVzZWFyY2gvZXIxMi0yMDI2MTAxMA",
+    "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/refs/heads/research/er12-20261010",
+    "object": {
+      "sha": "53828ec3039732052ba2c4844331714de7ccb2b5",
+      "type": "commit",
+      "url": "https://api.github.com/repos/sittingmongoose/Puppet-Master/git/commits/53828ec3039732052ba2c4844331714de7ccb2b5"
+    }
+  },
+  "commit": "53828ec3039732052ba2c4844331714de7ccb2b5",
+  "readback": [
+    {
+      "file": "reports/external-research-v12-20261010/README.md",
+      "bytes": 3139,
+      "sha256": "952aa2332ebabadf57e4d6d9264c12968e9bac8951c10df131ff29e941d3329d",
+      "GitHub_immutable_bytes_match": true,
+      "url": "https://github.com/sittingmongoose/Puppet-Master/blob/53828ec3039732052ba2c4844331714de7ccb2b5/reports/external-research-v12-20261010/README.md"
+    },
+    {
+      "file": "reports/external-research-v12-20261010/SHA256SUMS",
+      "bytes": 109304,
+      "sha256": "3c2c0b81451c812b45445dc397f925b7e4ba50a80fcf2a77158584175b5bd353",
+      "GitHub_immutable_bytes_match": true,
+      "url": "https://github.com/sittingmongoose/Puppet-Master/blob/53828ec3039732052ba2c4844331714de7ccb2b5/reports/external-research-v12-20261010/SHA256SUMS"
+    }
+  ],
+  "public_commit_identity": "Sittingmongoose <42017982+sittingmongoose@users.noreply.github.com>",
+  "GitHub_and_NAS_push": "both succeeded"
+}

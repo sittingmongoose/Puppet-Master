@@ -1,0 +1,783 @@
+{
+  "schema_version": "ER12-reviser-source-map-v1",
+  "run_id": "D-R2-03-treatment",
+  "stage": "reviser",
+  "source_identity_policy": "Original S01–S14 and CR01–CR14 IDs, source identities, and crosswalks are preserved. Direct reviser checks use new RV IDs; no source ID is silently rebound.",
+  "records": [
+    {
+      "source_id": "S01",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "released_version_or_commit": "Version 1.0, July 2022 (the PDF states this is a new publication and the earlier CCD guide lineage began in 2014; current hosting path contains 2026/07)",
+      "locator": "PDF pp. 12–19 (measurement, background, position in frame); 54–64 (calibrations and exposure); 67–76 (inspection, differential photometry, apertures, comparison/check stars); 86–91 and 120–123 (assessment, provenance, timing checklist)",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the English edition by following the AAVSO Manuals page; inspected the cited PDF sections and text-search results.",
+      "observed_operation": "Defines repeatability versus accuracy; explains local sky-annulus subtraction, position-dependent sensitivity/vignetting and flat-fielding, differential comparison photometry, check-star use, and standard-field accuracy checks.",
+      "governing_conditions_defaults_exceptions": "Comparison subtraction cancels a thin uniform cloud only under the explicit same-sky-conditions assumption; the guide says this is rarely the case. Calibration is configuration-dependent (filter, temperature and camera settings); avoid saturation/nonlinearity; precision depends on exposure, filter, background and settings. The timing checklist asks whether tags are exposure midpoints and whether the time source is UTC synchronized.",
+      "applicability": "Directly relevant as general practice for image-based stellar photometry, including monochrome CCD/CMOS; it is guidance, not evidence about this synthetic archive's unknown instrument or procedure.",
+      "stage_evidence_note_path": "sources/S01.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S01.md"
+    },
+    {
+      "source_id": "S02",
+      "title": "AAVSO Stellar Photometry: data-quality guidance",
+      "url": "https://aavso.org/stellar-photometry/",
+      "released_version_or_commit": "Current web page; no release number or commit exposed",
+      "locator": "Data quality and Charts sections, opened lines 135–155",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the AAVSO page and inspected its data-quality section.",
+      "observed_operation": "Recommends observing near culmination, choosing nearby comparison stars similar in color and magnitude, staying inside detector linearity, using standard filters, flat calibration, transformations, and reported uncertainty.",
+      "governing_conditions_defaults_exceptions": "The page calls its list non-exhaustive and directs readers to the detailed CCD/CMOS guide; it does not specify instrument-specific numeric thresholds.",
+      "applicability": "Concise current cross-check for the pilot design; no assumption that the archive used AAVSO sequences or this workflow.",
+      "stage_evidence_note_path": "sources/S02.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S02.md"
+    },
+    {
+      "source_id": "S03",
+      "title": "AAVSO Exoplanet Photometry",
+      "url": "https://aavso.org/exoplanet-photometry/",
+      "released_version_or_commit": "Current web page; no release number or commit exposed",
+      "locator": "Photometric precision guidance on keeping the target position fixed on the sensor",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened from an official AAVSO search result.",
+      "observed_operation": "Recommends freezing target position on the sensor as a way to increase photometric precision.",
+      "governing_conditions_defaults_exceptions": "This is an observing recommendation for precision work, not proof that the synthetic case's rotation moved stars across detector pixels or that its effect was material.",
+      "applicability": "Supports a controlled same-pixel baseline and a separate deliberate-position/rotation test.",
+      "stage_evidence_note_path": "sources/S03.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S03.md"
+    },
+    {
+      "source_id": "S04",
+      "title": "IRAF 2.18 ccdproc task documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "released_version_or_commit": "IRAF documentation identifies version 2.18; page is under /latest and exposes no source commit",
+      "locator": "Parameters lines 18–56 and 70–81; processing description lines 128–179",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the task documentation and inspected parameter defaults and the flat/illumination processing descriptions.",
+      "observed_operation": "Documents a calibration pipeline: default fixpix, overscan, trim, zero, dark, and flat switches are yes; illumination, fringe, readout and scan corrections default no. Flat selection follows a subset, and blank output name means corrected images replace inputs.",
+      "governing_conditions_defaults_exceptions": "The selected switches require matching sections/calibration inputs; flat response is wavelength-dependent and a flat is needed per filter/subset. Residual large-scale illumination can remain after flat-fielding. The task says it does not check for division by zero; minreplace applies only to flats processed by ccdproc.",
+      "applicability": "A concrete prior implementation showing why exact software, settings, inputs and output handling must be recovered. It is not evidence that this archive used IRAF.",
+      "stage_evidence_note_path": "sources/S04.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S04.md"
+    },
+    {
+      "source_id": "S05",
+      "title": "IRAF 2.18 discussion of CCD flat-field calibrations",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+      "released_version_or_commit": "IRAF documentation identifies version 2.18; no commit exposed",
+      "locator": "Sections on direct-imaging flat fields, especially lines 17–24",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the documentation and inspected its illumination-correction alternatives.",
+      "observed_operation": "Explains that lamp flats can calibrate local relative pixel response while leaving a large-scale illumination mismatch; describes a blank-sky correction and an illumination-flat correction as alternatives.",
+      "governing_conditions_defaults_exceptions": "A blank-sky observation is preferred for a residual large-scale pattern; removing the lamp-flat shape is a fallback when no such sky observation exists and the pattern is attributable to the lamp flat. Filter/subset-specific corrections may be needed.",
+      "applicability": "Useful for framing flat/illumination alternatives and their conditions; the actual flat source and optical train are unknown.",
+      "stage_evidence_note_path": "sources/S05.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S05.md"
+    },
+    {
+      "source_id": "S06",
+      "title": "AstroImageJ official user guide",
+      "url": "https://astroimagej.com/guides/aij/",
+      "released_version_or_commit": "Current online guide; the guide itself does not pin a software release",
+      "locator": "Multi-Aperture, Data Processor and Coordinate Converter descriptions, opened lines 164–178",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the official guide and inspected its module descriptions.",
+      "observed_operation": "Multi-Aperture operates on a series of typically calibrated images and emits a measurements table; Data Processor can calibrate bias/dark/flat/linearity, update FITS headers, plate-solve and invoke photometry; time conversion depends on supplied sky coordinates and observing location.",
+      "governing_conditions_defaults_exceptions": "The guide warns that re-saving raw science can overwrite FITS inputs. The described interfaces and behavior need confirmation against the exact installed release and settings.",
+      "applicability": "Relevant as an established image-photometry implementation and as a list of provenance inputs; it must not be attributed to the case until its software is identified.",
+      "stage_evidence_note_path": "sources/S06.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S06.md"
+    },
+    {
+      "source_id": "S07",
+      "title": "AstroImageJ official release history",
+      "url": "https://astroimagej.com/releases/",
+      "released_version_or_commit": "Latest page entry observed: AstroImageJ 6.0.11.00, 10 September 2026, includes ImageJ 1.54s and Java 26",
+      "locator": "6.0.11.00 at lines 8–37; 6.0.4.00–6.0.4.02 at lines 192–259; historical fixes at lines 339–389",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the official changelog and inspected current and earlier release entries.",
+      "observed_operation": "The changelog records behavior fixes and additions, including a parallel-photometry uncertainty bug fix in 6.0.0.00, WCS/TESS FITS fixes in 6.0.4.02, image-stack common-field and exclusion-region features in 6.0.4.00, and newer multithreaded FITS/photometer changes.",
+      "governing_conditions_defaults_exceptions": "Those entries apply only to the named releases/features; release-note history is not evidence that any listed bug affected this archive.",
+      "applicability": "Shows why recovering the actual application version, configuration and change date matters. The case's reducer and version remain unknown.",
+      "stage_evidence_note_path": "sources/S07.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S07.md"
+    },
+    {
+      "source_id": "S08",
+      "title": "Eastman, Siverd & Gaudi, Achieving better than 1 minute accuracy in the Heliocentric and Barycentric Julian Dates",
+      "url": "https://arxiv.org/abs/1005.4415",
+      "released_version_or_commit": "arXiv:1005.4415 (2010); no code commit relied upon",
+      "locator": "Abstract and paper recommendations on explicitly reporting time standards and site-arrival time",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the primary paper record and inspected the abstract/recommendation.",
+      "observed_operation": "Explains that JD/HJD/BJD labels alone are incomplete because time standards can differ; recommends reporting the site-arrival time alongside BJD_TDB for astrophysical event timing.",
+      "governing_conditions_defaults_exceptions": "The timing standard's importance depends on the scientific timing precision; event-time conversion also needs the source and observer information.",
+      "applicability": "Supports a timing audit, not a period calculation; site, source coordinates, exposure semantics and clock status are absent.",
+      "stage_evidence_note_path": "sources/S08.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S08.md"
+    },
+    {
+      "source_id": "S09",
+      "title": "Astropy Time and Dates documentation",
+      "url": "https://docs.astropy.org/en/stable/time/index.html",
+      "released_version_or_commit": "Astropy v8.0.1 stable documentation observed; no commit pinned",
+      "locator": "Time scale/input section and Barycentric/Heliocentric Light Travel Time Corrections, especially lines 1408 and 2278–2304",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the stable documentation and inspected time-scale and light-travel-time guidance.",
+      "observed_operation": "Time objects require an input format and scale; barycentric correction needs a source position and observer location, and normally combines TDB time with the barycentric light-travel-time correction.",
+      "governing_conditions_defaults_exceptions": "If observer location is omitted for barycentric transformations, accuracy is not appropriate to assume; the documentation notes finite-distance effects are neglected by the light-travel correction.",
+      "applicability": "One proposed implementation for a later timing audit after trustworthy headers, source coordinates and site are recovered; no conversion was executed.",
+      "stage_evidence_note_path": "sources/S09.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S09.md"
+    },
+    {
+      "source_id": "S10",
+      "title": "Osborn et al., Atmospheric scintillation in astronomical photometry",
+      "url": "https://academic.oup.com/mnras/article/452/2/1707/1067913",
+      "released_version_or_commit": "MNRAS 452(2), 1707–1716 (2015), DOI 10.1093/mnras/stv1400",
+      "locator": "Abstract and discussion, opened lines 74–88 and 352–368",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the primary journal article and inspected the abstract, results and discussion.",
+      "observed_operation": "Describes atmospheric turbulence causing scintillation intensity fluctuations; distinguishes scintillation from seeing and reports that scintillation varies with atmospheric profile and observing conditions.",
+      "governing_conditions_defaults_exceptions": "The paper cautions that approximate median-noise models are not precise for a particular observation; contemporaneous profiles are needed for the strongest estimate. Applicability depends on site, aperture, exposure and conditions.",
+      "applicability": "Keeps scintillation and seeing in the hypothesis set; no numerical scintillation estimate is possible for the unspecified telescope and conditions.",
+      "stage_evidence_note_path": "sources/S10.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S10.md"
+    },
+    {
+      "source_id": "S11",
+      "title": "Zwicky Transient Facility Public Data Releases",
+      "url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "released_version_or_commit": "As observed on 2026-10-10: DR24 (public observations through 22 October 2025); ZTF-3 schedule page lists DR25 for 20 January 2027",
+      "locator": "Overview and ZTF-3 release schedule, lines 78–109",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened the official ZTF release page; its linked large explanatory supplement exceeded the browser tool's content limit and was not used.",
+      "observed_operation": "The page describes public survey coverage in g/r, public single-exposure images and light curves; for ZTF-3 it says images release on a 60-day sliding window and light curves are recalculated annually.",
+      "governing_conditions_defaults_exceptions": "Coverage, actual availability and release cutoff depend on field/date and the selected release; the public release page also distinguishes public from proprietary survey data.",
+      "applicability": "Conditional independent-data candidate after field coordinates and epoch are known. A catalogue curve alone is not confirmation; retrieve and inspect single-exposure provenance/quality, and verify cadence, passband, crowding and overlap.",
+      "stage_evidence_note_path": "sources/S11.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S11.md"
+    },
+    {
+      "source_id": "S12",
+      "title": "NASA/HEASARC TESS Data Products Information",
+      "url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "released_version_or_commit": "Current mission data-product documentation; no page revision or pipeline commit exposed",
+      "locator": "TPF and light-curve product descriptions, opened lines 47–65",
+      "access_utc": "2026-10-10T06:57:50Z–2026-10-10T07:04:10Z; exact per-page timestamps were not exposed by the batch browser tool",
+      "retrieval_operation": "Opened NASA/HEASARC data-product documentation.",
+      "observed_operation": "Describes target pixel files and SPOC light-curve products; the latter are SAP flux time series with uncertainties and subsequent cotrending/systematics removal; repeated sectors can have separate files.",
+      "governing_conditions_defaults_exceptions": "Availability depends on whether the target was observed; target-pixel boxes may include unused pixels and different sectors may be delivered separately. The pipeline products are not raw pixel measurements.",
+      "applicability": "Conditional space-based comparison if coordinates, magnitude, cadence and sector coverage fit. If used, inspect quality metadata and consider pixel-level extraction where crowding or pipeline corrections matter.",
+      "stage_evidence_note_path": "sources/S12.md",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S12.md"
+    },
+    {
+      "source_id": "S13",
+      "title": "VanderPlas, Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/abs/1703.09824",
+      "released_version_or_commit": "arXiv:1703.09824 v1 submitted 2017-03-28; journal version ApJS 236(1), 16 (2018), DOI 10.3847/1538-4365/aab766",
+      "locator": "arXiv HTML lines 65–71; Section III on observing windows; Section VI lines 424–455 on white-noise assumptions and correlated-error formulation; Section VII.4.2 lines 611–662 on search-wide false-alarm probability, bootstrap caveats, and interpretation.",
+      "access_utc": "2026-10-10T07:06:21Z–2026-10-10T07:10:40Z; exact individual page timestamps were not exposed",
+      "retrieval_operation": "Opened the primary arXiv record and inspected the paper discussion of periodogram assumptions and practical interpretation.",
+      "observed_operation": "Explains Lomb–Scargle for unevenly sampled observations and discusses observing-window structure, aliases, frequency-grid choices, maximum-peak false-alarm assessment, and correlated-error modeling. The simple statistical guarantees assume uncorrelated white noise; its described ordinary bootstrap holds times fixed and resamples observed values.",
+      "governing_conditions_defaults_exceptions": "Window structure can create aliases. Single-frequency or white-noise significance does not account by itself for the maximum over a frequency search. The paper states that the ordinary value-resampling bootstrap does not correctly account for correlated noise and that false-alarm probability does not answer the probability the dataset is periodic. A null method must fit actual dependence and sampling; no universal method is selected for this unknown case.",
+      "applicability": "Guides a future preregistered periodicity analysis after timestamps, candidate-selection rules, sampling window, and dependence are known. No periodogram or significance was computed.",
+      "stage_evidence_note_path": "sources/S13.md",
+      "research_phase": "post-release draft supplementation; frozen discovery unchanged",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S13.md"
+    },
+    {
+      "source_id": "S14",
+      "title": "Photutils 3.0.0 Aperture Photometry user guide",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "released_version_or_commit": "Photutils 3.0.0 stable documentation observed; no source commit pinned",
+      "locator": "Aperture measurement and pixel overlap lines 114–154; multiple apertures lines 155–172; annulus background and masks/error sections later in guide (approximately lines 254–264 and 365–396)",
+      "access_utc": "2026-10-10T07:06:21Z (supplemental post-release source review)",
+      "retrieval_operation": "Opened the official stable guide and inspected aperture defaults, overlap choices, annulus background, and uncertainty/mask examples.",
+      "observed_operation": "Documents aperture summation and annulus shapes, demonstrates local annulus background estimation, and supports comparing multiple aperture sizes. Exact pixel overlap is the default; center/subpixel options are faster with different precision. The API assumes input data have already been background-subtracted.",
+      "governing_conditions_defaults_exceptions": "Sky apertures require WCS, with spatial-distortion limitations noted. Alternative overlap schemes, masks, contamination, aperture correction, and error assumptions need to be controlled in any comparison.",
+      "applicability": "Supports a proposed aperture/background sensitivity analysis on authorized images if available; does not describe the unknown archive pipeline or validate a star.",
+      "stage_evidence_note_path": "sources/S14.md",
+      "research_phase": "post-release draft supplementation; frozen discovery unchanged",
+      "origin_stage": "investigator",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/source-map.json",
+      "inherited_note_path": null,
+      "note_path": "sources/S14.md"
+    },
+    {
+      "source_id": "CR01",
+      "packet_crosswalk": "S01 (same URL and edition; critic access recorded separately)",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "released_version_or_commit": "Version 1.0, July 2022; PDF hosting path includes 2026/07, which is not the publication version.",
+      "locator": "PDF pp. 18–19, 69–70, 88–90, 114–117; extracted lines 2044–2054 and 3430–3465.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official PDF; inspected cloud conditions, position-in-frame, standards, and self-assessment sections.",
+      "governing_conditions_defaults_exceptions": "Cloud cancellation is described only when thin uniform cloud affects target and comparisons to the same degree; described as rare. Standard-field accuracy work depends on known field stars, calibration frames, filter, and repeated nights.",
+      "applicability": "General CCD/CMOS photometry guidance; no case camera, cloud, standard field, or calibrated accuracy established.",
+      "note_path": "sources/CR01.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR01.md"
+    },
+    {
+      "source_id": "CR02",
+      "packet_crosswalk": "S04 (same URL and IRAF release documentation)",
+      "title": "IRAF ccdproc task documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "released_version_or_commit": "Documentation identifies IRAF 2.18; latest URL exposes no source commit.",
+      "locator": "Parameter lines 18–55; subset/flat processing lines 76–81; output replacement lines 18–19 and processing description lines 128–179.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official task documentation; inspected defaults, required sections/calibrations, flat selection, and output behavior.",
+      "governing_conditions_defaults_exceptions": "Task defaults are not evidence of execution by the case reducer; correction switches need matching parameters/calibration inputs. Blank output replaces input science images; dependent calibration images may still be in-place with optional backup.",
+      "applicability": "Supports a version-specific implementation example and preservation caution; unknown case software remains unknown.",
+      "note_path": "sources/CR02.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR02.md"
+    },
+    {
+      "source_id": "CR03",
+      "packet_crosswalk": "S06 (same URL; guide has no pinned application build)",
+      "title": "AstroImageJ official user guide",
+      "url": "https://astroimagej.com/guides/aij/",
+      "released_version_or_commit": "Current guide observed 2026-10-10; no revision/build pinned.",
+      "locator": "Data Processor Module lines 408–427; Astrometry Settings and Re-save Raw Science lines 582–615.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official guide; compared Data Processor descriptions with the specific astrometry option and warning.",
+      "governing_conditions_defaults_exceptions": "Overwrite warning applies when the named Re-save Raw Science option is enabled; it writes WCS-added data to original FITS files. It is not a general statement about all AIJ saves or Data Processor operations.",
+      "applicability": "Supports a scoped preservation warning; case app/version/settings unknown.",
+      "note_path": "sources/CR03.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR03.md"
+    },
+    {
+      "source_id": "CR04",
+      "packet_crosswalk": "S09 (same stable documentation URL)",
+      "title": "Astropy Time and Dates",
+      "url": "https://docs.astropy.org/en/stable/time/index.html",
+      "released_version_or_commit": "Astropy v8.0.1 stable docs observed; no commit pinned.",
+      "locator": "Barycentric and Heliocentric Light Travel Time Corrections, lines 2278–2305; location description around 1836–1837.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official documentation and inspected the example constructing Time, SkyCoord, location, barycentric light-time, and TDB output.",
+      "governing_conditions_defaults_exceptions": "Calculating the barycentric correction uses a source coordinate and a Time with observatory location; the correction is added to TDB time. This is narrower than requiring coordinates to label any supplied value BJD_TDB.",
+      "applicability": "Supports a later verified time conversion only; no conversion performed.",
+      "note_path": "sources/CR04.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR04.md"
+    },
+    {
+      "source_id": "CR05",
+      "packet_crosswalk": "S11 (same URL; current-page access recorded separately)",
+      "title": "ZTF Public Data Releases",
+      "url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "released_version_or_commit": "Current page observed 2026-10-10; ZTF-3 Jan 1 2025–Dec 31 2026, DR24 release date Jan 22 2026, DR25 Jan 20 2027.",
+      "locator": "Public Data Releases overview and ZTF-3 schedule lines 73–102.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official release page and inspected survey data, release schedule, and public/proprietary timing.",
+      "governing_conditions_defaults_exceptions": "Public releases cover NSF-supported public survey time; images have 60-day sliding release and light curves are recalculated annually. The checked page lines do not state DR24 observations through 2025-10-22.",
+      "applicability": "Supports the existence of a separate survey route, but not this target's field/date/cadence match; no query/download.",
+      "note_path": "sources/CR05.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR05.md"
+    },
+    {
+      "source_id": "CR06",
+      "packet_crosswalk": "S12 (same current mission documentation URL)",
+      "title": "TESS Data Products Information",
+      "url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "released_version_or_commit": "Current page observed 2026-10-10; no page revision or pipeline commit exposed.",
+      "locator": "Product overview lines 26–30; TPF lines 56–61; light-curve product lines 63–66.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened NASA/HEASARC page and inspected acquisition cadence, target pixel, and light-curve product descriptions.",
+      "governing_conditions_defaults_exceptions": "TPFs contain selected target pixels; SPOC produces TPF and light-curve products. Documented light curves use SAP and SPOC cotrending; sectors can be separate deliveries.",
+      "applicability": "Confirms separate space-based products and their processing lineage; no case coverage, quality, or matched source established.",
+      "note_path": "sources/CR06.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR06.md"
+    },
+    {
+      "source_id": "CR07",
+      "packet_crosswalk": "S13 (same article identity and arXiv version)",
+      "title": "VanderPlas, Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/html/1703.09824",
+      "released_version_or_commit": "arXiv:1703.09824 v1 (2017-03-28); ApJS 236(1), 16 (2018), DOI 10.3847/1538-4365/aab766.",
+      "locator": "Section III observing windows; Section VI correlated-error equations lines 448–456; Section VII.4.2 false-alarm and search-wide maximum lines 611–658.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the primary arXiv full text; inspected window, correlated-noise, false-alarm, and interpretation sections.",
+      "governing_conditions_defaults_exceptions": "White-noise/single-frequency significance is not enough for a searched maximum with structured sampling or correlated errors; ordinary value-resampling bootstrap does not represent correlated noise.",
+      "applicability": "Supports proposed future preregistration and dependence-aware analysis, not any case result; no periodogram run.",
+      "note_path": "sources/CR07.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR07.md"
+    },
+    {
+      "source_id": "CR08",
+      "packet_crosswalk": "S14 (same URL and Photutils docs release)",
+      "title": "Photutils Aperture Photometry guide",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "released_version_or_commit": "Photutils 3.0.0 stable documentation observed; no source commit pinned.",
+      "locator": "Aperture photometry and overlap lines 114–154; background/input assumptions lines 207–212; annulus example lines 335–363.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official guide; inspected aperture defaults, speed/precision alternatives, background subtraction, annulus, and masks.",
+      "governing_conditions_defaults_exceptions": "The default exact method is specific to this API call; center/subpixel are faster but less precise. aperture_photometry expects background-subtracted input; WCS distortions can limit sky-aperture conversion.",
+      "applicability": "Supports only the proposed Photutils-specific sensitivity method; not evidence about the archive reducer.",
+      "note_path": "sources/CR08.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR08.md"
+    },
+    {
+      "source_id": "CR09",
+      "packet_crosswalk": "S08 (same paper, independent access)",
+      "title": "Eastman, Siverd & Gaudi, Achieving Better Than 1 Minute Accuracy in the Heliocentric and Barycentric Julian Dates",
+      "url": "https://arxiv.org/html/1005.4415",
+      "released_version_or_commit": "arXiv:1005.4415 (2010; version not pinned in URL).",
+      "locator": "Abstract and recommendation lines 57 and 90; conversion steps lines 239–249.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the primary paper and inspected timing standards, site-arrival, and BJD_TDB recommendations.",
+      "governing_conditions_defaults_exceptions": "The paper frames the reporting requirement around event timing at about one-minute accuracy; source and observer data and exposure semantics affect the conversion.",
+      "applicability": "Supports the draft's timing-provenance recommendation without asserting a case timing precision.",
+      "note_path": "sources/CR09.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR09.md"
+    },
+    {
+      "source_id": "CR10",
+      "packet_crosswalk": "S05 (same URL and IRAF documentation release)",
+      "title": "IRAF discussion of CCD flat-field calibrations",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/quadred/flatfields.html",
+      "released_version_or_commit": "IRAF documentation identifies 2.18; latest URL has no commit.",
+      "locator": "Direct-imaging flat fields, lines 14–24.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page; inspected lamp-flat mismatch and blank-sky/illumination alternatives.",
+      "governing_conditions_defaults_exceptions": "Blank sky is preferred when a residual large-scale pattern is measured; removing lamp-flat shape is a fallback if no sky observation exists and pattern is attributable to lamp flat.",
+      "applicability": "Supports conditional flat alternatives; archive calibration source is unknown.",
+      "note_path": "sources/CR10.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR10.md"
+    },
+    {
+      "source_id": "CR11",
+      "packet_crosswalk": "S02 (same current URL)",
+      "title": "AAVSO Stellar Photometry: Data Quality",
+      "url": "https://aavso.org/stellar-photometry/",
+      "released_version_or_commit": "Current page observed 2026-10-10; no release/commit.",
+      "locator": "Data quality and Charts lines 135–155.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page and inspected its data-quality checklist.",
+      "governing_conditions_defaults_exceptions": "Checklist is non-exhaustive, gives no instrument-specific numeric threshold, and directs readers to the detailed CCD/CMOS guide.",
+      "applicability": "Supports a general pilot preference for nearby color/magnitude-similar comparisons; no field stars selected.",
+      "note_path": "sources/CR11.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR11.md"
+    },
+    {
+      "source_id": "CR12",
+      "packet_crosswalk": "S03 (same current URL)",
+      "title": "AAVSO Exoplanet Photometry",
+      "url": "https://aavso.org/exoplanet-photometry/",
+      "released_version_or_commit": "Current page observed 2026-10-10; no release/commit.",
+      "locator": "Autoguiding / fixed sensor position recommendation, lines 120–122.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official page and inspected the sensor-position guidance.",
+      "governing_conditions_defaults_exceptions": "Same-pixel positioning is a precision optimization for exoplanet observations requiring autoguiding; it is not a finding about the case rotation.",
+      "applicability": "Supports a controlled baseline and separate position diagnostic only.",
+      "note_path": "sources/CR12.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR12.md"
+    },
+    {
+      "source_id": "CR13",
+      "packet_crosswalk": "S10 is the journal URL; CR13 is a distinct arXiv-version source identity, not a rebinding.",
+      "title": "Osborn et al., Atmospheric Scintillation in Astronomical Photometry",
+      "url": "https://arxiv.org/html/1506.06921",
+      "released_version_or_commit": "arXiv:1506.06921v1 (2015-06-23); MNRAS 452(2), 1707–1716 (2015), DOI 10.1093/mnras/stv1400.",
+      "locator": "Abstract and introduction lines 36–53; physical theory lines 58–69; estimate limits lines 80–87.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "The packet journal URL redirected to a publisher CDN with an internal error; searched exact title and opened the primary arXiv full text.",
+      "governing_conditions_defaults_exceptions": "Scintillation is turbulence-driven intensity variation distinct from blur/seeing; approximate noise models are not precise for a specific observation without relevant conditions.",
+      "applicability": "Confirms mechanism distinction; supports no site-specific estimate for the unknown camera/site.",
+      "note_path": "sources/CR13.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR13.md"
+    },
+    {
+      "source_id": "CR14",
+      "packet_crosswalk": "S07 (same current release-history URL)",
+      "title": "AstroImageJ release history",
+      "url": "https://astroimagej.com/releases/",
+      "released_version_or_commit": "Current page observed 2026-10-10; latest listed AIJ 6.0.11.00 (2026-09-10), includes ImageJ 1.54s and Java 26.",
+      "locator": "Latest release lines 8–58; earlier changes lines 192–259 and 296–389.",
+      "access_utc": "2026-10-10T07:22:39Z (critic reviewed retrieved text by this time; per-URL fetch timestamps were not exposed)",
+      "observed_operation": "Opened the official changelog and inspected current release identity and version-specific fixes.",
+      "governing_conditions_defaults_exceptions": "Release entries apply to their named build and feature; a listed fix does not establish that the archive used AIJ or encountered that behavior.",
+      "applicability": "Supports version recovery as necessary for transfer; no AIJ version is attributed to the case.",
+      "note_path": "sources/CR14.md",
+      "origin_stage": "critic",
+      "origin_source_map": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/critic/source-map.json",
+      "inherited_note_path": "sources/CR14.md"
+    },
+    {
+      "source_id": "RV01",
+      "packet_crosswalk": "S01 and CR01 (same AAVSO guide URL and July 2022 edition)",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "released_version_or_commit": "Version 1.0, July 2022; the hosting path includes 2026/07 but that is not the publication edition.",
+      "locator": "PDF p. 69, section 4.8.5, extracted lines 2049–2054.",
+      "access_utc": "2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed 'Crawled: today', not per-request fetch timestamps; this is the bounded direct-review interval)",
+      "observed_operation": "Opened the official PDF and rechecked the thin-cloud differential-photometry condition and its stated rarity.",
+      "governing_conditions_defaults_exceptions": "The cited case is cancellation only when the thin uniform cloud affects target and comparison stars to the same degree; the guide warns this is rare.",
+      "applicability": "Supports exact wording of the cloud condition; does not establish clouds or equal attenuation in the case.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV01.md"
+    },
+    {
+      "source_id": "RV02",
+      "packet_crosswalk": "S04 and CR02 (same IRAF ccdproc 2.18 documentation URL)",
+      "title": "IRAF ccdproc task documentation",
+      "url": "https://iraf.readthedocs.io/en/latest/tasks/noao/imred/ccdred/ccdproc.html",
+      "released_version_or_commit": "Documentation identifies IRAF 2.18; the latest URL does not expose a source commit.",
+      "locator": "Parameters lines 18–55 and flat selection lines 70–81; output behavior lines 18–19 and 143–144.",
+      "access_utc": "2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed 'Crawled: today', not per-request fetch timestamps; this is the bounded direct-review interval)",
+      "observed_operation": "Opened the official task documentation and rechecked default switches, prerequisite inputs, flat subset selection, and blank-output replacement behavior.",
+      "governing_conditions_defaults_exceptions": "Default switches are task-specific. Enabled operations need matching sections or calibration images; an empty output list replaces inputs, while dependent calibration images can also be processed in-place with optional backup.",
+      "applicability": "Supports IRAF as a bounded implementation example only; the archive reducer remains unidentified.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV02.md"
+    },
+    {
+      "source_id": "RV03",
+      "packet_crosswalk": "S06 and CR03 (same AstroImageJ guide URL; the application build is not pinned)",
+      "title": "AstroImageJ official user guide",
+      "url": "https://astroimagej.com/guides/aij/",
+      "released_version_or_commit": "Current online guide observed 2026-10-10; no guide revision or application build is pinned.",
+      "locator": "Data Processor lines 408–427; FITS Header Updates lines 551–563 and Coordinate Converter requirements lines 622–628; Astrometry Settings lines 582–615.",
+      "access_utc": "2026-10-10T07:35:06Z–2026-10-10T07:36:43Z and 2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed no per-request fetch time)",
+      "observed_operation": "Rechecked the distinction between Data Processor operations, calculated BJD_TDB metadata, and the Astrometry Settings Re-save Raw Science option.",
+      "governing_conditions_defaults_exceptions": "The named Re-save Raw Science option overwrites the original science FITS with WCS-added data when enabled. AstroImageJ separately documents that calculated astronomy metadata requires target sky and observatory geographic coordinates; neither statement makes every AIJ workflow equivalent.",
+      "applicability": "Supports operation-scoped preservation and timing guidance only; no case software or settings are known.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV03.md"
+    },
+    {
+      "source_id": "RV04",
+      "packet_crosswalk": "S09 and CR04 (same Astropy stable time documentation URL)",
+      "title": "Astropy Time and Dates",
+      "url": "https://docs.astropy.org/en/stable/time/index.html",
+      "released_version_or_commit": "Astropy v8.0.1 stable documentation observed; no source commit pinned.",
+      "locator": "Barycentric and Heliocentric Light Travel Time Corrections, lines 2278–2305.",
+      "access_utc": "2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed 'Crawled: today', not per-request fetch timestamps; this is the bounded direct-review interval)",
+      "observed_operation": "Opened the official example constructing SkyCoord, EarthLocation, and Time with observer location, computing barycentric light travel time, and adding it to TDB.",
+      "governing_conditions_defaults_exceptions": "The documented calculation uses the source coordinate and observer location; the correction is combined with TDB. This does not establish what inputs were used for an already supplied time label.",
+      "applicability": "Supports a future, verified conversion only; no case time conversion was performed.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV04.md"
+    },
+    {
+      "source_id": "RV05",
+      "packet_crosswalk": "S11 and CR05 (same official ZTF public-release page URL; expanded locator adds the DR24 subsection)",
+      "title": "ZTF Public Data Releases",
+      "url": "https://www.ztf.caltech.edu/ztf-public-releases.html",
+      "released_version_or_commit": "Current page observed 2026-10-10; no page revision or source commit exposed.",
+      "locator": "ZTF-3 schedule lines 87–102 and DR24 public-release subsection lines 103–109.",
+      "access_utc": "2026-10-10T07:34:30Z–2026-10-10T07:35:06Z and 2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed no per-request fetch time)",
+      "observed_operation": "Opened the public release page through the DR24 subsection, checking ZTF-3 access cadence and the public observation cutoff named by DR24.",
+      "governing_conditions_defaults_exceptions": "The page states DR24 public survey observations run through 22 October 2025; ZTF-3 describes a 60-day sliding release for images and annual light-curve recalculation. Release and product availability remain field/date-dependent.",
+      "applicability": "Supports the general release-date statement, not coverage or cadence for this case; no target query or download was performed.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV05.md"
+    },
+    {
+      "source_id": "RV06",
+      "packet_crosswalk": "S12 and CR06 (same NASA/HEASARC TESS data-product documentation URL)",
+      "title": "TESS Data Products Information",
+      "url": "https://heasarc.gsfc.nasa.gov/docs/tess/data-products.html",
+      "released_version_or_commit": "Current mission data-product documentation observed 2026-10-10; no revision or pipeline commit exposed.",
+      "locator": "Product overview lines 25–30; FFI lines 49–54; TPF and light-curve files lines 56–66.",
+      "access_utc": "2026-10-10T07:36:43Z–2026-10-10T07:37:01Z and 2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed no per-request fetch time)",
+      "observed_operation": "Opened official NASA/HEASARC product descriptions for spacecraft data, target pixels, SPOC products, and cadence/sector behavior.",
+      "governing_conditions_defaults_exceptions": "TPFs retain selected target pixels for possible re-extraction; SPOC light curves are SAP flux with subsequent cotrending/systematics removal, and multiple sectors can be separate files. Actual availability is target- and sector-dependent.",
+      "applicability": "Supports a conditional independent-source route and product-lineage cautions only; no target lookup was made.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV06.md"
+    },
+    {
+      "source_id": "RV07",
+      "packet_crosswalk": "S14 and CR08 (same Photutils 3.0.0 stable aperture documentation URL)",
+      "title": "Photutils Aperture Photometry guide",
+      "url": "https://photutils.readthedocs.io/en/stable/user_guide/aperture.html",
+      "released_version_or_commit": "Photutils 3.0.0 stable documentation observed; no source commit pinned.",
+      "locator": "Aperture input-background assumption lines 114–132; overlap methods lines 138–154.",
+      "access_utc": "2026-10-10T07:36:43Z–2026-10-10T07:37:01Z and 2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed no per-request fetch time)",
+      "observed_operation": "Opened the official guide and checked background-subtracted input, exact pixel-overlap default, and faster center/subpixel alternatives.",
+      "governing_conditions_defaults_exceptions": "The aperture_photometry API assumes background-subtracted input; exact overlap is the default. Center/subpixel methods are faster and trade some precision; sky apertures have WCS distortion limits.",
+      "applicability": "Supports a proposed controlled aperture sensitivity analysis only; it is not the archive reducer and was not installed or run.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV07.md"
+    },
+    {
+      "source_id": "RV08",
+      "packet_crosswalk": "S13 and CR07 (same VanderPlas article and arXiv v1)",
+      "title": "Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/html/1703.09824",
+      "released_version_or_commit": "arXiv:1703.09824 v1 (2017-03-28); journal version ApJS 236(1), 16 (2018), DOI 10.3847/1538-4365/aab766.",
+      "locator": "Correlated-error formulation lines 448–456; maximum-peak search lines 622–629; bootstrap caveat and FAP meaning lines 644–660.",
+      "access_utc": "2026-10-10T07:36:43Z–2026-10-10T07:37:01Z and 2026-10-10T07:37:59Z–2026-10-10T07:38:10Z (web source tool exposed no per-request fetch time)",
+      "observed_operation": "Opened the primary arXiv paper and checked correlated-error treatment, search-wide maximums, bootstrap assumptions, and the interpretation limits of false-alarm probability.",
+      "governing_conditions_defaults_exceptions": "The maximum over a frequency range differs from a single-frequency test; the ordinary value-resampling bootstrap does not handle correlated noise; FAP is not the probability that the dataset is periodic.",
+      "applicability": "Supports future analysis safeguards only; no periodogram, significance calculation, or null simulation was performed.",
+      "origin_stage": "reviser",
+      "origin_source_map": "direct primary-source recheck",
+      "inherited_note_path": null,
+      "note_path": "sources/RV08.md"
+    }
+  ],
+  "evidence_sets": {
+    "investigator": [],
+    "critic": [
+      {
+        "evidence_id": "E01",
+        "scw_id": "SCW-01",
+        "sources": [
+          "CR05",
+          "CR06"
+        ],
+        "case_input": "ER12_RUNTIME/runs/D-R2-03/treatment/inputs/brief.md",
+        "join": "ZTF page describes a public telescope survey and its own releases; TESS page describes spacecraft images, target pixels, and downstream products. The case brief separately identifies the teaching archive as nightly images and says no data were supplied. Neither source establishes this target's actual coverage or whether a proposed third-party product shares inputs."
+      },
+      {
+        "evidence_id": "E02",
+        "scw_id": "SCW-02",
+        "sources": [
+          "CR01"
+        ],
+        "join": "AAVSO atmospheric section states same-degree attenuation for target and comparisons as the cancellation condition; cloud spatial uniformity alone is not equated with same-degree measured effect."
+      },
+      {
+        "evidence_id": "E03",
+        "scw_id": "SCW-03",
+        "sources": [
+          "CR02"
+        ],
+        "join": "IRAF task parameter table and output section define the task-level defaults and the blank-output replacement condition; no case reducer is identified."
+      },
+      {
+        "evidence_id": "E04",
+        "scw_id": "SCW-04",
+        "sources": [
+          "CR03"
+        ],
+        "join": "AIJ guide's Astrometry Settings name the raw re-save toggle and its consequence; separate Data Processor section does not make that warning universal."
+      },
+      {
+        "evidence_id": "E05",
+        "scw_id": "SCW-05",
+        "sources": [
+          "CR04"
+        ],
+        "join": "Astropy example joins a Time object carrying observer location, a source SkyCoord passed to light_travel_time, and TDB addition; documentation does not address arbitrary time labels imported from elsewhere."
+      }
+    ],
+    "reviser": [
+      {
+        "evidence_id": "RE01",
+        "scope": "SCW-01 independent-data lineage",
+        "sources": [
+          "RV05",
+          "RV06"
+        ],
+        "join": "ZTF and TESS source documentation establishes separate survey/spacecraft products and their processing stages. It does not establish target coverage or case-level data lineage; reprocessed teaching exposures remain non-independent."
+      },
+      {
+        "evidence_id": "RE02",
+        "scope": "SCW-02 cloud-cancellation condition",
+        "sources": [
+          "RV01"
+        ],
+        "join": "The AAVSO example specifies same-degree effects on target and comparison stars, and says the cancellation case is rare; spatial uniformity alone is not asserted to suffice."
+      },
+      {
+        "evidence_id": "RE03",
+        "scope": "SCW-03 IRAF defaults and transfer",
+        "sources": [
+          "RV02"
+        ],
+        "join": "IRAF 2.18 ccdproc's parameter table and output section support the named-task defaults, preconditions, subset selection, and blank-output replacement; they do not identify the case reducer."
+      },
+      {
+        "evidence_id": "RE04",
+        "scope": "SCW-04 AstroImageJ overwrite operation",
+        "sources": [
+          "RV03"
+        ],
+        "join": "The AIJ guide separates Data Processor work from the named Astrometry Settings Re-save Raw Science option; only that enabled operation is tied to the WCS-added original science FITS overwrite warning."
+      },
+      {
+        "evidence_id": "RE05",
+        "scope": "SCW-05 barycentric calculation versus time label",
+        "sources": [
+          "RV03",
+          "RV04"
+        ],
+        "join": "Astropy's example and AIJ's calculated-header-metadata workflow use target and observer coordinates for computation; neither makes reading a pre-existing BJD_TDB label itself a computation."
+      },
+      {
+        "evidence_id": "RE06",
+        "scope": "ZTF DR24 cutoff adjudication",
+        "sources": [
+          "RV05"
+        ],
+        "join": "The expanded official page context, lines 103–109, directly states the public DR24 observation cutoff through 22 October 2025; the critic's cited lines 73–102 stopped before that subsection."
+      },
+      {
+        "evidence_id": "RE07",
+        "scope": "time-series method transferability",
+        "sources": [
+          "RV08"
+        ],
+        "join": "The primary paper supports dependence-aware and search-wide future analysis, while leaving the suitable null procedure unresolved until real cadence and residual dependence are known."
+      },
+      {
+        "evidence_id": "RE08",
+        "scope": "aperture-method transferability",
+        "sources": [
+          "RV07"
+        ],
+        "join": "The current Photutils guide supports a declared background-subtracted input and controlled overlap-method comparison, not a claim about the archive reducer."
+      }
+    ]
+  },
+  "predecessor_packet_integrity": {
+    "discovery": {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/discovery.md",
+      "bytes": 15678,
+      "sha256": "eb09fcf675b5e9425b27d2e8b3b7b1c373fcb26f074b4e33215505412597e49f",
+      "match_to_plan_reveal": true
+    },
+    "revealed_plan": {
+      "path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7042,
+      "sha256": "936dac13775ec07494773bcd507ecc0b6d1a70818017db30a7c79278eff9d6c2",
+      "match_to_plan_reveal": true
+    }
+  },
+  "goal_activation": {
+    "receipt_path": "native-goal-create.json",
+    "objective": "ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "binding_guard_passed_before_case_input": true,
+    "provenance_and_freshness": "UNKNOWN beyond checker"
+  },
+  "executed_validation": [
+    "Read mapped packet and source roots.",
+    "Recomputed and matched discovery and revealed-plan hashes/byte counts against plan-reveal.json.",
+    "Opened and reviewed the listed primary-source passages; source records preserve access bounds and locators.",
+    "No case archive, images, calibration, reducer, catalog lookup, target query, time conversion, photometry, periodogram, or empirical validation."
+  ],
+  "proposed_validation": [
+    "Authorized archive inventory and immutable input provenance.",
+    "Historical/current recipe reproduction on copies.",
+    "Predeclared one-factor-at-a-time calibration, background, aperture, ensemble, position, and condition sensitivity analyses.",
+    "Held-out comparisons/check stars, standards, and dependence-aware future time-series analysis.",
+    "Conditional coverage, cadence, bandpass, resolution, quality, and lineage review of independent data."
+  ],
+  "adjudication": [
+    {
+      "finding": "SCW-01",
+      "disposition": "accept with qualification"
+    },
+    {
+      "finding": "SCW-02",
+      "disposition": "amend to same-degree cloud effect; rarity retained"
+    },
+    {
+      "finding": "SCW-03",
+      "disposition": "accept named IRAF task example; no transfer to unknown reducer"
+    },
+    {
+      "finding": "SCW-04",
+      "disposition": "amend to enabled Re-save Raw Science operation",
+      "source_text_fidelity_note": "The critic's summary adds bias/dark/flat/linearity wording absent from the actual draft sentence; the final adjudicates the actual text and operation scope."
+    },
+    {
+      "finding": "SCW-05",
+      "disposition": "amend to calculation, distinct from reading a time label"
+    },
+    {
+      "finding": "full 60-minute window",
+      "disposition": "material limitation retained; not demonstrated"
+    },
+    {
+      "finding": "ZTF DR24 cutoff",
+      "disposition": "critic finding rejected after expanded primary-source context check"
+    },
+    {
+      "finding": "light-to-measurement chain presentation",
+      "disposition": "minor gap addressed explicitly"
+    }
+  ]
+}

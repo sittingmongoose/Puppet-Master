@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the critic stage. Saved [critique.md](ER12_RUNTIME/runs/A1-01/control/stages/critic/critique.md) and [source-map.json](ER12_RUNTIME/runs/A1-01/control/stages/critic/source-map.json); the JSON parses successfully.\n\nThe critique identifies two material gaps: clarify that the reported 16 MiB aws-chunked limit concerns transport encoding, not necessarily multipart part size ([MinIO issue #21611](https://github.com/minio/minio/issues/21611)); and apply abort-race reconciliation to expiry and orphan cleanup, since in-flight parts may succeed after an abort ([AWS AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)). No material false claims were found. No implementation tests were run.\n\nThe native Goal was observed active and then completed: `01a123fd-8430-7280-8fe1-c5ab0b956f89`. Final usage: 116,527 tokens and 671 seconds.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b63e92b7-0809-4371-9905-bbc9840fdb57",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the critic stage. Saved [critique.md](ER12_RUNTIME/runs/A1-01/control/stages/critic/critique.md) and [source-map.json](ER12_RUNTIME/runs/A1-01/control/stages/critic/source-map.json); the JSON parses successfully.\n\nThe critique identifies two material gaps: clarify that the reported 16 MiB aws-chunked limit concerns transport encoding, not necessarily multipart part size ([MinIO issue #21611](https://github.com/minio/minio/issues/21611)); and apply abort-race reconciliation to expiry and orphan cleanup, since in-flight parts may succeed after an abort ([AWS AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)). No material false claims were found. No implementation tests were run.\n\nThe native Goal was observed active and then completed: `01a123fd-8430-7280-8fe1-c5ab0b956f89`. Final usage: 116,527 tokens and 671 seconds.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b63e92b7-0809-4371-9905-bbc9840fdb57",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "a91026a93187f15ae5f93f31f28dc5721197538dd55d9facfe6f40c44c8631d4",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-01/control/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

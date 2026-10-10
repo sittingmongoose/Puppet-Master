@@ -1,19 +1,70 @@
-# S01 — BagIt File Packaging Format (RFC 8493)
-
-- URL: https://www.rfc-editor.org/rfc/rfc8493.html
-- Released version: BagIt v1.0; RFC 8493, October 2018.
-- Accessed: 2026-10-10T04:14:43Z (read-only browser retrieval; sections below inspected).
-- Locators: §§1.1, 2.1.3, 2.2.1–2.2.4, 2.4, 3, 5.4, 6.1.1–6.1.2; in particular RFC text around lines 140–166, 321–378, 384–425, 604–609, 653–707, 847–854, 943–1001.
-- Observed operation: Read official RFC text. No BagIt generator or validator was run.
-
-## Evidence and conditions
-
-BagIt is a directory-based wrapping convention for opaque payloads, with metadata tags; users can access payload files without a BagIt-aware tool. A BagIt 1.0 payload manifest lists every payload filename exactly once. Completeness requires all required elements and listed files to exist and every payload file to be listed in every payload manifest. Validity adds successful checksum verification for payload and tag manifests. These are distinct checks and neither expresses a curator's intended content set.
-
-BagIt 1.0 creation/validation tools must support SHA-256 and SHA-512; they should enable SHA-512 by default. Additional tag files are allowed, but implementations that do not understand a custom tag ignore its contents; a listed custom tag is checksum-validated. `bag-info.txt` is optional metadata intended primarily for human reading and editing. Thus a local CSV/README inventory is feasible, but its field meanings and completeness are local choices, not standardized BagIt semantics. Put the CSV in the payload if it must be covered by the payload manifest; otherwise list it in a tag manifest and do not assume generic clients interpret it.
-
-The RFC describes manifests as protection against corruption, not active attacks; signatures or other controls are outside scope. Its interoperability discussion says filesystems and utilities can normalize names differently (notably composed/decomposed Unicode) so a manifest path can fail a simple existence check although the name looks identical. The RFC recommends avoiding case/normalization collisions and tolerating normalization differences; it also requires `/` in manifest paths and discusses Windows/Unix path constraints. This matters to local/offsite copies and motivates exact-path reconciliation plus safe pilot filenames.
-
-## Applicability
-
-A strong fit for an inspectable per-deposit package on ordinary filesystems. BagIt itself does not preserve a succession of corrected versions: use a new immutable, identified package/deposit for each corrected state and a separate version relationship record. A manifest validates listed package bytes; registrar review determines whether the intended exhibition set is complete; a separate restore test determines practical recoverability.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.rfc-editor.org/rfc/rfc8493.html"
+  ],
+  "source_urls": [
+    "https://www.rfc-editor.org/rfc/rfc8493.html"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "RFC 8493, BagIt v1.0, October 2018",
+      "governing_condition_default_exception": "BagIt 1.0 requires at least one payload manifest and each manifest lists every payload file exactly once; completeness requires listed files and every payload file to be listed, while validity additionally requires checksums to verify. Creation/validation tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. Extra tag files are allowed but generic implementations ignore their contents unless validating their listed bytes. The format addresses corruption, not active attacks. Filesystem normalization and Windows/Unix naming can affect paths.",
+      "applicability": "Portable, inspectable package per deposit; does not natively provide corrected-version history or curatorial completeness."
+    }
+  ],
+  "selector": [
+    {
+      "locator": [
+        "§1.1",
+        "§2.1.3",
+        "§2.2.1–2.2.4",
+        "§2.4",
+        "§3",
+        "§5.4",
+        "§6.1.1–6.1.2"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "RFC 8493, BagIt v1.0, October 2018",
+      "governing_condition_default_exception": "BagIt 1.0 requires at least one payload manifest and each manifest lists every payload file exactly once; completeness requires listed files and every payload file to be listed, while validity additionally requires checksums to verify. Creation/validation tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. Extra tag files are allowed but generic implementations ignore their contents unless validating their listed bytes. The format addresses corruption, not active attacks. Filesystem normalization and Windows/Unix naming can affect paths.",
+      "applicability": "Portable, inspectable package per deposit; does not natively provide corrected-version history or curatorial completeness."
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/A8-01/treatment/stages/investigator/source-map.json",
+      "source_id": "S01",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "RFC 8493, BagIt v1.0, October 2018",
+        "governing_condition_default_exception": "BagIt 1.0 requires at least one payload manifest and each manifest lists every payload file exactly once; completeness requires listed files and every payload file to be listed, while validity additionally requires checksums to verify. Creation/validation tools MUST support SHA-256 and SHA-512 and SHOULD enable SHA-512 by default. Extra tag files are allowed but generic implementations ignore their contents unless validating their listed bytes. The format addresses corruption, not active attacks. Filesystem normalization and Windows/Unix naming can affect paths.",
+        "applicability": "Portable, inspectable package per deposit; does not natively provide corrected-version history or curatorial completeness."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": [
+        "§1.1",
+        "§2.1.3",
+        "§2.2.1–2.2.4",
+        "§2.4",
+        "§3",
+        "§5.4",
+        "§6.1.1–6.1.2"
+      ]
+    }
+  ],
+  "raw_sha256": "514a32e6f471a9a111a4ad04f26a3e126b159e7afdb0c4aa891e32940dd74702",
+  "rawSHA256": "514a32e6f471a9a111a4ad04f26a3e126b159e7afdb0c4aa891e32940dd74702",
+  "original_bytes": 2809,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A8-01/treatment/stages/investigator/sources/S01-bagit-rfc8493.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

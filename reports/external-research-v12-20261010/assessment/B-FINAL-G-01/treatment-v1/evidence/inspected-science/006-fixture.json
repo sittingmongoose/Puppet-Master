@@ -1,54 +1,20 @@
 {
-  "schema": "er12-role-fixture-v1",
-  "slot_id": "B-FINAL-G-01",
-  "case_id": "ER12-B-FINAL-G-01-FRESH",
-  "role": "Criticism adjudication and complete bounded finalization",
-  "title": "Rsync staged asset mirror",
-  "control": {
-    "provider": "codex_authorized",
-    "model": "Luna Max",
-    "input": "identical frozen role package to challenger"
-  },
-  "treatment": {
-    "provider": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "GLM 5.3 Flash Max",
-    "input": "identical frozen role package to Luna"
-  },
-  "whole_arm_seconds": 900,
-  "investigation_seconds_max": 600,
-  "writing_reserve_seconds": 300,
-  "counts_as_full_pipeline": false,
-  "status": "READY_FROZEN_NOT_DISPATCHED",
-  "frozen_at": "2026-10-10T03:56:03.665135+00:00",
-  "assignment": "assignment.md",
-  "input_files": [
-    {
-      "path": "assignment.md",
-      "sha256": "4f14d106f3d271031fd14911c24464e17e474d0086c22903465825e90deeaa6d"
-    },
-    {
-      "path": "corpus/S1.md",
-      "sha256": "95f8e558d6b96ab11ce68b3a1b6c8438309f7dda71ea23212ddacf58c465ad92"
-    },
-    {
-      "path": "corpus/S2.md",
-      "sha256": "a29d011459dc3bb1503fe4cbada7ec85b3566ee1c6389f486d7c26125f956e92"
-    },
-    {
-      "path": "corpus/index.json",
-      "sha256": "f45e897cf2df2eb5eb94ef9438bca253cdae0c78d75098ee303254c7f3253732"
-    }
-  ],
-  "input_sha256": "25405b7c0e90313fa47f95635bac1c00901d1f8cd6ab8b13526626362c3f9bc9",
-  "no_assessor_answers": true,
-  "source_versions": [
-    [
-      "S1",
-      "Live upstream man page, unpinned; target both peers rsync 3.2.7; check relevant option semantics"
-    ],
-    [
-      "S2",
-      "Live upstream FAQ, unpinned; target both peers rsync 3.2.7"
-    ]
-  ]
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+  "rawSHA256": "f10e0f5913123f0e0b0e98d6527053ded694d2c74ffc2b92c1cad598640aad20",
+  "original_bytes": 1652,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/B-FINAL-G-01/treatment-v1/evidence/inspected-science/006-fixture.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

@@ -118,25 +118,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-APPL-G-02",
-    "arm": "control",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-control-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-control-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the bounded role output and saved the exact activation and completion receipts.\n\n- [verification.md](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md) \u2014 566 words. Claims 1, 4, and 5 are supported; claims 2, 3, and 6 are rejected.\n- [source-map.json](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/source-map.json) and [bounded source evidence](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S1-evidence.md).\n- [Activation receipt](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-activation.json) and [completion receipt](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-completion.json).\n\nThe findings cite the pinned [systemd.timer v257 manual](https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml) and [systemd.time v257 manual](https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml). The one native Goal is complete; its receipt reports 55,501 tokens and 7m52s elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8c40bb38-1429-411c-ac28-3681ed943f33",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the bounded role output and saved the exact activation and completion receipts.\n\n- [verification.md](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md) \u2014 566 words. Claims 1, 4, and 5 are supported; claims 2, 3, and 6 are rejected.\n- [source-map.json](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/source-map.json) and [bounded source evidence](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/sources/S1-evidence.md).\n- [Activation receipt](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-activation.json) and [completion receipt](ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/native-completion.json).\n\nThe findings cite the pinned [systemd.timer v257 manual](https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml) and [systemd.time v257 manual](https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml). The one native Goal is complete; its receipt reports 55,501 tokens and 7m52s elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:8c40bb38-1429-411c-ac28-3681ed943f33",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "968954e61c231b738729a13f36b9801bde599e911c2bcc01e562f35d16e64cc6"
   }
 }

@@ -1,0 +1,99 @@
+{
+  "observed_at_utc": "2026-10-10T07:32:45.844477+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/critique.md",
+      "bytes": 13505,
+      "sha256": "529602f836da879c4a0de70dd8edd4e4cb611c8c3fd65f368d064764f016f470",
+      "mtime_ns": 1791616744911535643
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/source-map.json",
+      "bytes": 22905,
+      "sha256": "6897389b0b623d25122c3543fe9618389febabb7dd4182d75328c8c23e9c7707",
+      "mtime_ns": 1791616688704802587
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/index.md",
+      "bytes": 2996,
+      "sha256": "4edcf466d19e03fbba7d491f702c8a9c1feb13c9c957f61d17f70fa278a307c0",
+      "mtime_ns": 1791616676497202865
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/reviewed-evidence.md",
+      "bytes": 9459,
+      "sha256": "6996e6d124e2eec4a9dc5b0f6966a1af174f455655c11743b2726bb14cc23708",
+      "mtime_ns": 1791616676497368271
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/discovery.md",
+      "bytes": 14976,
+      "sha256": "911a62f69703115d3f405732f49fcd328f6e98184f6d0bd70050f614e812cba2",
+      "mtime_ns": 1791616015705951375
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/draft.md",
+      "bytes": 25491,
+      "sha256": "6516daeeaf8e8b2af6c26f02edd5bb8506740b2b78e712abd39ee9086ecd1d31",
+      "mtime_ns": 1791616234078572444
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7069,
+      "sha256": "72b52c88f5e170e7300d8965e3a823ad369e36e42c3103cdcf20b4d8eeb78cf6",
+      "mtime_ns": 1791616033175716412
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/source-map.json",
+      "bytes": 14499,
+      "sha256": "9789ee3d361ce2c529abb8aa158c19106792838a0731baf8e250a22b7b0922c4",
+      "mtime_ns": 1791616139192309255
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/sources/index.md",
+      "bytes": 3929,
+      "sha256": "cf0b43cdccb0f16dd925ffe1f3ec4999d5caa8e4e10ad93cac9faa9cf3f183d4",
+      "mtime_ns": 1791616139193309269
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+      "bytes": 39139,
+      "sha256": "f1b4cb04dd68c7f34145291912e7d5b2fc1fe652a778cedd25ddc5c1a7a659f6",
+      "mtime_ns": 1791617384285429727
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/source-map.json",
+      "bytes": 29949,
+      "sha256": "dbf9868ef96bbcdd3ef14dd069c934ee3ce608d445a5a8ebc4dd38216a4fe2ec",
+      "mtime_ns": 1791617425778485718
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/index.md",
+      "bytes": 3227,
+      "sha256": "c45631c824da343d55ac112a2d98cf7696007d16ad550e51264b05f8d7c0ca34",
+      "mtime_ns": 1791617235271342431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/rechecked-evidence.md",
+      "bytes": 4231,
+      "sha256": "01b47d87cdc68ff9ec243bcf66cff7b6d5ff30277c3fa3cca000dc501f0ddbf5",
+      "mtime_ns": 1791617235278216598
+    }
+  ],
+  "final_stage_task": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-04-treatment-reviser-A1-A8-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "dd161dc4ab5c64d3526dbd192fab4c6d04f9d8be8735b4e582f836330674b6aa"
+  }
+}

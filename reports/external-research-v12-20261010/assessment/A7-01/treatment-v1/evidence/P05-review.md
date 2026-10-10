@@ -1,13 +1,20 @@
-# P05 — Fusion Export designs
-
-[Governing primary source](https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN)
-
-**Version:** Live help; exact executable build UNKNOWN
-
-**Locator:** Format list and Tips; web lines 35–60
-
-**Independent assessment:** Supports 3MF and STEP export and the loss-of-associativity boundary. STEP protocol-specific fidelity and receiving behavior are not established by this help page.
-
-**Evidence captures:**
-
-- [web-official-docs.json](web-official-docs.json) — SHA-256 `4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3`
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0549f0d2f1201b4f34969b3e15ea65a9ea506231a60d12ea508e94a48a0be35a",
+  "rawSHA256": "0549f0d2f1201b4f34969b3e15ea65a9ea506231a60d12ea508e94a48a0be35a",
+  "original_bytes": 592,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P05-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

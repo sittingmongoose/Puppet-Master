@@ -1,0 +1,3743 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "case_id": "D-R1-02",
+  "original_case_id": "ER12-D-R1-02-FRESH",
+  "arm": "control",
+  "version": "control-v1",
+  "reviewer": "codex-er12-dr102-control-v1",
+  "assignment_scope": "One completed control full pipeline, ordinary final stages/reviser/final.md. No nested delegation, feedback/repair, other arms/results/history, shared roster, ER11, account/Git/publication.",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "review_started_at_utc": "2026-10-10T06:58:41Z",
+  "review_deadline_utc": "2026-10-10T07:43:41Z",
+  "judgment_saved_at_utc": "2026-10-10T07:23:55.596964+00:00",
+  "review_envelope_seconds": 2700,
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "per_arm": {
+    "control": {
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "all_six_axes_assessed": true,
+      "remaining_material_findings": [],
+      "delivery_source_coverage_native_protocol_time_billing_separated": true
+    }
+  },
+  "grading_reason": "No remaining material final error/omission/unsupported consequential decision after full semantic scope and independent governing evidence checks. Material draft omissions corrected, wrong criticism rejected. Retained minor source/lineage/wording/access limits explicit. Honest external choices follow necessary investigation, not vacuous caution.",
+  "final_artifact": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Self-contained synthetic-cart proposal meets mechanisms/alternatives/history/control/escalation requirements, distinguishes evidence levels, and addresses all interacting explanations. It neither diagnoses track/wheel safety nor authorizes use, replaces inspection, operates/installs/tunes field thresholds, builds a product, assumes true defects or invents cart readings/specifications. All exact plan clauses are separately assessed. L04 is a wording/open-endpoint limit, not a missing consequential decision.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 104,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 180
+        }
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S08"
+      ],
+      "remaining_material_findings": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent source records check subject, operation, version, unit/type, default/configuration, domain and exceptions for consequential evidence. Source numerical values/outcomes stay bounded examples, not cart settings. Internal cadence/date inconsistencies retained. Formal register evidence exposes L01 without a final consequential cart decision; L02/L03 record identity/access limitations.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 130
+        }
+      ],
+      "sources": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S11",
+        "S12",
+        "S13",
+        "I14",
+        "I15",
+        "I16"
+      ],
+      "remaining_material_findings": []
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "Specific discoveries span mount transfer, railway speed/position/vehicle dependence, service/software gaps, effective cadence versus capability, local-reference coverage, bracket fatigue and version/configuration-dependent timing/filtering. Competing approaches answer distinct evidential questions with manual/context and bench-only fallback. Implementation history includes limitations and analogue transfer, not only success. Unknown proprietary logger history is an investigated identity dependency, not vacuous caution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ],
+      "sources": [
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S12",
+        "S13"
+      ],
+      "remaining_material_findings": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticisms, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All four numbered criticisms and unnumbered load caveat independently adjudicated. C1 wrong/correctly rejected; C2/C4 material original omissions corrected; C3 clarified; compound load interpretation explicit. Exact-clause review separates obligations/context/release protocol and does not accept quotation or section-name agreement as semantic proof.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 152,
+          "line_end": 172
+        }
+      ],
+      "sources": [
+        "S05",
+        "S08",
+        "I15",
+        "I16"
+      ],
+      "remaining_material_findings": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preserved",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Final retains causal chain, useful alternatives, history, manual fallback, open endpoint, controlled design and no-ground-truth/no-safety qualifications. Supported discovery survives wrong criticism. Real material draft omissions remain visible as corrected lineage defects. Support-report wording is softened; inaccurate carried explanation remains L01 instead of becoming a cart decision.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 156,
+          "line_end": 162
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 180
+        }
+      ],
+      "sources": [
+        "S05",
+        "S08",
+        "S09",
+        "S11"
+      ],
+      "remaining_material_findings": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "judgment": "PASS",
+      "assessment": "Authored actual work is documentary research/targeted source rechecks. Proposed matched mount/acquisition, repeated speed × compound-load, calibrated local reference and surveyed time/position comparisons have clock checks, endpoint precision/stopping and quality/null/inconclusive branches. Warning recurrence is not location; surveyed location is not diagnosis; local response is not route-wide truth; attribution needs qualified inspection. No empirical cart accuracy, safety or detection validation claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 118,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 174,
+          "line_end": 180
+        }
+      ],
+      "sources": [
+        "S08",
+        "I14",
+        "I15",
+        "I16"
+      ],
+      "remaining_material_findings": []
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_plan_clauses": [
+    {
+      "clause_id": "P001",
+      "exact_text": "# Intermittent vibration warnings on a maintenance cart",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 1,
+        "line_end": 1
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P002",
+      "exact_text": "Case ID: ER12-D-R1-02-FRESH",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 3,
+        "line_end": 3
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P003",
+      "exact_text": "Slot ID: D-R1-02",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 4,
+        "line_end": 4
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P004",
+      "exact_text": "Domain: transport instrumentation",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 5,
+        "line_end": 5
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P005",
+      "exact_text": "## Concealed prospective design record",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P006",
+      "exact_text": "Keep this file outside the candidate-facing research packet.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 9,
+        "line_end": 9
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "DESIGN_CONTEXT_PROTOCOL_SEPARATE",
+      "independent_assessment": "Not a predetermined method or answer key. Synthetic authoring and candidate documentary work differ. Discovery precedes recorded reveal; full access provenance remains UNKNOWN.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P007",
+      "exact_text": "It preserves the authored request and open design opportunities.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 9,
+        "line_end": 9
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "DESIGN_CONTEXT_PROTOCOL_SEPARATE",
+      "independent_assessment": "Not a predetermined method or answer key. Synthetic authoring and candidate documentary work differ. Discovery precedes recorded reveal; full access provenance remains UNKNOWN.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P008",
+      "exact_text": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 9,
+        "line_end": 9
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "DESIGN_CONTEXT_PROTOCOL_SEPARATE",
+      "independent_assessment": "Not a predetermined method or answer key. Synthetic authoring and candidate documentary work differ. Discovery precedes recorded reveal; full access provenance remains UNKNOWN.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P009",
+      "exact_text": "Nothing here selects an eventual research method.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 9,
+        "line_end": 9
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "DESIGN_CONTEXT_PROTOCOL_SEPARATE",
+      "independent_assessment": "Not a predetermined method or answer key. Synthetic authoring and candidate documentary work differ. Discovery precedes recorded reveal; full access provenance remains UNKNOWN.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P010",
+      "exact_text": "No empirical validation has been executed in authoring this case.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 9,
+        "line_end": 9
+      },
+      "section": "Concealed prospective design record",
+      "disposition": "DESIGN_CONTEXT_PROTOCOL_SEPARATE",
+      "independent_assessment": "Not a predetermined method or answer key. Synthetic authoring and candidate documentary work differ. Discovery precedes recorded reveal; full access provenance remains UNKNOWN.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P011",
+      "exact_text": "## Exact original request and clauses",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 11,
+        "line_end": 11
+      },
+      "section": "Exact original request and clauses",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P012",
+      "exact_text": "The original brief follows verbatim between the delimiters.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 13,
+        "line_end": 13
+      },
+      "section": "Exact original request and clauses",
+      "disposition": "AUTHORITY_PRESERVED",
+      "independent_assessment": "Original obligations remain authoritative; frozen brief and plan/revealed-plan identities agree. Quotation alone does not prove substantive coverage.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 78
+        }
+      ]
+    },
+    {
+      "clause_id": "P013",
+      "exact_text": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 13,
+        "line_end": 13
+      },
+      "section": "Exact original request and clauses",
+      "disposition": "AUTHORITY_PRESERVED",
+      "independent_assessment": "Original obligations remain authoritative; frozen brief and plan/revealed-plan identities agree. Quotation alone does not prove substantive coverage.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 78
+        }
+      ]
+    },
+    {
+      "clause_id": "P014",
+      "exact_text": "BEGIN ORIGINAL BRIEF",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 15,
+        "line_end": 15
+      },
+      "section": "Exact original request and clauses",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P015",
+      "exact_text": "# Intermittent vibration warnings on a maintenance cart",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 17,
+        "line_end": 17
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P016",
+      "exact_text": "Case ID: ER12-D-R1-02-FRESH",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 19,
+        "line_end": 19
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P017",
+      "exact_text": "Slot ID: D-R1-02",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 20,
+        "line_end": 20
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P018",
+      "exact_text": "Domain: transport instrumentation",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 21,
+        "line_end": 21
+      },
+      "section": "Intermittent vibration warnings on a maintenance cart",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P019",
+      "exact_text": "## Project situation",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 23,
+        "line_end": 23
+      },
+      "section": "Project situation",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P020",
+      "exact_text": "A maintenance team is trialing a battery vibration logger on a cart used along a disused test track.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P021",
+      "exact_text": "Several warnings cluster near one bend, but the same cart also carries different tool loads on different days.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P022",
+      "exact_text": "The logger was moved to a new bracket shortly before the warnings increased.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P023",
+      "exact_text": "The team wants to know whether a research pilot could make the observations interpretable.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P024",
+      "exact_text": "No raw recordings, sensor specification, track survey, or fault diagnosis are available.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P025",
+      "exact_text": "This is a synthetic test-track scenario.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "section": "Project situation",
+      "disposition": "GIVENS_PRESERVED",
+      "independent_assessment": "Synthetic battery logger, bend warnings, changing loads and bracket chronology are retained; no raw data/spec/survey/diagnosis invented. Chronology is not causation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 9,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 170
+        }
+      ]
+    },
+    {
+      "clause_id": "P026",
+      "exact_text": "## Request",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 27,
+        "line_end": 27
+      },
+      "section": "Request",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P027",
+      "exact_text": "Spend the 60-minute research window producing a proposal to investigate the reliability and meaning of these vibration observations.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 29,
+        "line_end": 29
+      },
+      "section": "Request",
+      "disposition": "MET_SCIENCE_TIME_SEPARATE",
+      "independent_assessment": "Substantial mechanisms, useful alternatives, history and controlled later inspection-informing study; no product. Recorded elapsed time is separate from the 60-minute topic window.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 174,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P028",
+      "exact_text": "Explain the sensing and mechanical mechanisms, compare useful instrumentation and observation alternatives, and examine implementation history that could matter.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 29,
+        "line_end": 29
+      },
+      "section": "Request",
+      "disposition": "MET_SCIENCE_TIME_SEPARATE",
+      "independent_assessment": "Substantial mechanisms, useful alternatives, history and controlled later inspection-informing study; no product. Recorded elapsed time is separate from the 60-minute topic window.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 174,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P029",
+      "exact_text": "Propose a controlled later study that can inform whether further engineering inspection is warranted; do not create a monitoring product.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 29,
+        "line_end": 29
+      },
+      "section": "Request",
+      "disposition": "MET_SCIENCE_TIME_SEPARATE",
+      "independent_assessment": "Substantial mechanisms, useful alternatives, history and controlled later inspection-informing study; no product. Recorded elapsed time is separate from the 60-minute topic window.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 174,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P030",
+      "exact_text": "## Requirements to preserve",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 31,
+        "line_end": 31
+      },
+      "section": "Requirements to preserve",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P031",
+      "exact_text": "- Distinguish detecting an unusual signal, locating a repeatable event, and diagnosing a physical defect.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 33,
+        "line_end": 33
+      },
+      "section": "Requirements to preserve",
+      "disposition": "MET_AFTER_C3",
+      "independent_assessment": "Detection/location/diagnosis require distinct evidence; reference corroboration is not qualified physical attribution.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 83
+        }
+      ]
+    },
+    {
+      "clause_id": "P032",
+      "exact_text": "- Compare changes in sensor mounting or acquisition with a repeatable-pass protocol and a useful independent observation or reference-instrument alternative.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 34,
+        "line_end": 34
+      },
+      "section": "Requirements to preserve",
+      "disposition": "MET",
+      "independent_assessment": "Mount/acquisition, repeated passes and independent reference/inspection are meaningfully compared.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 108,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 126,
+          "line_end": 138
+        }
+      ]
+    },
+    {
+      "clause_id": "P033",
+      "exact_text": "- Address speed, load, mounting, sample timing, and background machine behavior as possible interacting explanations.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 35,
+        "line_end": 35
+      },
+      "section": "Requirements to preserve",
+      "disposition": "MET_AFTER_LOAD_QUALIFICATION",
+      "independent_assessment": "Speed/load/mount/timing/machine interaction explicit. Combined load configurations do not isolate mass from placement.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 85,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 134,
+          "line_end": 138
+        }
+      ]
+    },
+    {
+      "clause_id": "P034",
+      "exact_text": "- Investigate the bracket change and the operating history of comparable implementations, including what evidence supports transfer to this cart.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 36,
+        "line_end": 36
+      },
+      "section": "Requirements to preserve",
+      "disposition": "MET",
+      "independent_assessment": "Bracket chronology/practices/paired evidence sought; implementation histories and transfer constraints developed.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 128,
+          "line_end": 128
+        }
+      ]
+    },
+    {
+      "clause_id": "P035",
+      "exact_text": "- Propose synchronized comparisons, controls, and a meaningful escalation decision; report future validation separately from any desk simulation or data check actually executed.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 37,
+        "line_end": 37
+      },
+      "section": "Requirements to preserve",
+      "disposition": "MET_AFTER_C2_C4",
+      "independent_assessment": "Synchronized controls, persistent-event/null-reference escalation and conditional replication rules; documentary versus future validation explicit.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 134,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 174,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P036",
+      "exact_text": "## Boundaries",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 39,
+        "line_end": 39
+      },
+      "section": "Boundaries",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P037",
+      "exact_text": "- Do not diagnose track or wheel safety, authorize vehicle use, or substitute the proposal for a qualified inspection.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 41,
+        "line_end": 41
+      },
+      "section": "Boundaries",
+      "disposition": "MET",
+      "independent_assessment": "No safety diagnosis, use authorization or inspection substitution.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 11,
+          "line_end": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 83,
+          "line_end": 83
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 146,
+          "line_end": 150
+        }
+      ]
+    },
+    {
+      "clause_id": "P038",
+      "exact_text": "- Do not run the cart, access a live railway, install sensors, or tune a field warning threshold in this assignment.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 42,
+        "line_end": 42
+      },
+      "section": "Boundaries",
+      "disposition": "MET_RECORDED_NO_EXECUTION",
+      "independent_assessment": "No assignment physical operation/installation/live railway/threshold tuning. Proposed physical work requires later authorization.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 118,
+          "line_end": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 144,
+          "line_end": 144
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 178,
+          "line_end": 178
+        }
+      ]
+    },
+    {
+      "clause_id": "P039",
+      "exact_text": "- Do not assume warnings are true defects or fabricate sensor readings, frequencies, or sampling capability.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 43,
+        "line_end": 43
+      },
+      "section": "Boundaries",
+      "disposition": "MET",
+      "independent_assessment": "No assumed warning truth or fabricated cart readings/frequencies/capabilities. Numbers belong only to bounded source examples.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 87,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 168
+        }
+      ]
+    },
+    {
+      "clause_id": "P040",
+      "exact_text": "## Still unresolved",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 45,
+        "line_end": 45
+      },
+      "section": "Still unresolved",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P041",
+      "exact_text": "The logger range, sampling and timestamp behavior, mounting rigidity, wheel condition, path repeatability, speeds, loads, and warning logic are unspecified.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 47,
+        "line_end": 47
+      },
+      "section": "Still unresolved",
+      "disposition": "MET_HONEST_EXTERNAL_CHOICE",
+      "independent_assessment": "All missing parameters and endpoint options retained and tied to records/controls/owner choice.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P042",
+      "exact_text": "We have not decided whether the relevant future outcome is repeatability, location accuracy, or diagnostic utility.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 47,
+        "line_end": 47
+      },
+      "section": "Still unresolved",
+      "disposition": "MET_HONEST_EXTERNAL_CHOICE",
+      "independent_assessment": "All missing parameters and endpoint options retained and tied to records/controls/owner choice.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P043",
+      "exact_text": "Identify these dependencies.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 47,
+        "line_end": 47
+      },
+      "section": "Still unresolved",
+      "disposition": "MET_HONEST_EXTERNAL_CHOICE",
+      "independent_assessment": "All missing parameters and endpoint options retained and tied to records/controls/owner choice.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 170,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P044",
+      "exact_text": "END ORIGINAL BRIEF",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 49,
+        "line_end": 49
+      },
+      "section": "Still unresolved",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P045",
+      "exact_text": "## Research question and incompleteness",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 51,
+        "line_end": 51
+      },
+      "section": "Research question and incompleteness",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P046",
+      "exact_text": "What research and later comparison design would establish the evidential meaning of an intermittent vibration warning before any physical-fault claim is made?",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 53,
+        "line_end": 53
+      },
+      "section": "Research question and incompleteness",
+      "disposition": "MET",
+      "independent_assessment": "Evidence sequence and prospective comparisons establish meaning before physical-fault claims.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 116,
+          "line_end": 150
+        }
+      ]
+    },
+    {
+      "clause_id": "P047",
+      "exact_text": "The future test authorization, acquisition access, physical inspection reference, and primary endpoint remain open.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 55,
+        "line_end": 55
+      },
+      "section": "Research question and incompleteness",
+      "disposition": "MET_HONEST_EXTERNAL_CHOICE",
+      "independent_assessment": "Access/authorization/reference/endpoint open; manual map and bench characterization remain useful if logger cannot diagnose.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 109,
+          "line_end": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 130
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P048",
+      "exact_text": "The proposal should choose an evidence-gathering sequence that has value even if the logger cannot support the originally imagined diagnosis.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 55,
+        "line_end": 55
+      },
+      "section": "Research question and incompleteness",
+      "disposition": "MET_HONEST_EXTERNAL_CHOICE",
+      "independent_assessment": "Access/authorization/reference/endpoint open; manual map and bench characterization remain useful if logger cannot diagnose.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 109,
+          "line_end": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 130
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P049",
+      "exact_text": "## Meaningful useful alternatives",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 57,
+        "line_end": 57
+      },
+      "section": "Meaningful useful alternatives",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P050",
+      "exact_text": "Consider improving mounting characterization, acquisition or time synchronization, repeatable passes with documented load and speed, position-reference observations, and independent inspection or a reference sensor.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "section": "Meaningful useful alternatives",
+      "disposition": "MET",
+      "independent_assessment": "All alternative families compared by evidential question. Context/manual fallback has a specific role; no imposed winner.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 104,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P051",
+      "exact_text": "Recording operating context without changing the logger is a useful first step when attribution is weak.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "section": "Meaningful useful alternatives",
+      "disposition": "MET",
+      "independent_assessment": "All alternative families compared by evidential question. Context/manual fallback has a specific role; no imposed winner.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 104,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P052",
+      "exact_text": "A simpler manual event map may be preferable to additional automated processing for some decisions.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "section": "Meaningful useful alternatives",
+      "disposition": "MET",
+      "independent_assessment": "All alternative families compared by evidential question. Context/manual fallback has a specific role; no imposed winner.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 104,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P053",
+      "exact_text": "No sensor or analysis method is predetermined.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 59,
+        "line_end": 59
+      },
+      "section": "Meaningful useful alternatives",
+      "disposition": "MET",
+      "independent_assessment": "All alternative families compared by evidential question. Context/manual fallback has a specific role; no imposed winner.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 104,
+          "line_end": 114
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 124,
+          "line_end": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 172
+        }
+      ]
+    },
+    {
+      "clause_id": "P054",
+      "exact_text": "## Mechanism opportunity",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 61,
+        "line_end": 61
+      },
+      "section": "Mechanism opportunity",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P055",
+      "exact_text": "Investigate how excitation, mounting transfer, cart dynamics, sample timing, and location estimates contribute to a measured event.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 63,
+        "line_end": 63
+      },
+      "section": "Mechanism opportunity",
+      "disposition": "MET",
+      "independent_assessment": "Excitation/transfer/dynamics/timing/location mechanisms and evidence levels explicit. Aliasing/clipping/resonance/exposure remain actual-spec hypotheses.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 128,
+          "line_end": 130
+        }
+      ]
+    },
+    {
+      "clause_id": "P056",
+      "exact_text": "Aliasing, clipping, bracket resonance, and varying exposure are hypotheses to evaluate against actual specifications, not claimed causes.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 63,
+        "line_end": 63
+      },
+      "section": "Mechanism opportunity",
+      "disposition": "MET",
+      "independent_assessment": "Excitation/transfer/dynamics/timing/location mechanisms and evidence levels explicit. Aliasing/clipping/resonance/exposure remain actual-spec hypotheses.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 128,
+          "line_end": 130
+        }
+      ]
+    },
+    {
+      "clause_id": "P057",
+      "exact_text": "Explain which kinds of evidence support event detection versus location or diagnosis, and which comparisons could reveal a sensing artifact.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 63,
+        "line_end": 63
+      },
+      "section": "Mechanism opportunity",
+      "disposition": "MET",
+      "independent_assessment": "Excitation/transfer/dynamics/timing/location mechanisms and evidence levels explicit. Aliasing/clipping/resonance/exposure remain actual-spec hypotheses.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 87
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 128,
+          "line_end": 130
+        }
+      ]
+    },
+    {
+      "clause_id": "P058",
+      "exact_text": "## Implementation and history opportunity",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 65,
+        "line_end": 65
+      },
+      "section": "Implementation and history opportunity",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P059",
+      "exact_text": "Seek implementation histories with sensor placement, acquisition settings, vehicle conditions, reference observations, and failure or drift reports.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 67,
+        "line_end": 67
+      },
+      "section": "Implementation and history opportunity",
+      "disposition": "MET_WITH_MINOR_SOURCE_LIMIT",
+      "independent_assessment": "Placement/acquisition/context/reference, interruptions and failure/configuration examples investigated. No algorithm alone establishes cart performance; bracket records needed. S11 unreliable explanation is not adopted as a fix.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 168
+        }
+      ]
+    },
+    {
+      "clause_id": "P060",
+      "exact_text": "Results from a different vehicle or infrastructure context may not transfer.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 67,
+        "line_end": 67
+      },
+      "section": "Implementation and history opportunity",
+      "disposition": "MET_WITH_MINOR_SOURCE_LIMIT",
+      "independent_assessment": "Placement/acquisition/context/reference, interruptions and failure/configuration examples investigated. No algorithm alone establishes cart performance; bracket records needed. S11 unreliable explanation is not adopted as a fix.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 168
+        }
+      ]
+    },
+    {
+      "clause_id": "P061",
+      "exact_text": "The bracket relocation motivates recovery of installation dates and practices, but no before-and-after evidence is already supplied.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 67,
+        "line_end": 67
+      },
+      "section": "Implementation and history opportunity",
+      "disposition": "MET_WITH_MINOR_SOURCE_LIMIT",
+      "independent_assessment": "Placement/acquisition/context/reference, interruptions and failure/configuration examples investigated. No algorithm alone establishes cart performance; bracket records needed. S11 unreliable explanation is not adopted as a fix.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 168
+        }
+      ]
+    },
+    {
+      "clause_id": "P062",
+      "exact_text": "Historical algorithm performance without the sensing chain and operating context is insufficient to justify a field claim.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 67,
+        "line_end": 67
+      },
+      "section": "Implementation and history opportunity",
+      "disposition": "MET_WITH_MINOR_SOURCE_LIMIT",
+      "independent_assessment": "Placement/acquisition/context/reference, interruptions and failure/configuration examples investigated. No algorithm alone establishes cart performance; bracket records needed. S11 unreliable explanation is not adopted as a fix.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 93,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 168,
+          "line_end": 168
+        }
+      ]
+    },
+    {
+      "clause_id": "P063",
+      "exact_text": "## Proposed versus executed validation",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 69,
+        "line_end": 69
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P064",
+      "exact_text": "A later authorized test-track pilot could coordinate repeat passes, documented speed and load, timestamp or position references, and reversible mounting comparisons.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 71,
+        "line_end": 71
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "MET_WITH_WORDING_LIMIT_L04",
+      "independent_assessment": "Authorized repeats, synchronized references and reversible mount blocks proposed. Positive/null/inconclusive branches and artifact/quality checks address warning meaning without presumed ground truth. False-warning rate not operationalized because diagnostic endpoint/reference remain open. No empirical accuracy/safety/diagnosis executed.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 118,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 178,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P065",
+      "exact_text": "It should explain independent observation, repeated events, false warnings, and inspection escalation without presuming ground-truth faults.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 71,
+        "line_end": 71
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "MET_WITH_WORDING_LIMIT_L04",
+      "independent_assessment": "Authorized repeats, synchronized references and reversible mount blocks proposed. Positive/null/inconclusive branches and artifact/quality checks address warning meaning without presumed ground truth. False-warning rate not operationalized because diagnostic endpoint/reference remain open. No empirical accuracy/safety/diagnosis executed.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 118,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 178,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P066",
+      "exact_text": "Simulated signals or a sampling illustration performed during the hour count only as desk checks under explicit assumptions; no field detection accuracy, safety, or defect diagnosis has been validated.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 71,
+        "line_end": 71
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "MET_WITH_WORDING_LIMIT_L04",
+      "independent_assessment": "Authorized repeats, synchronized references and reversible mount blocks proposed. Positive/null/inconclusive branches and artifact/quality checks address warning meaning without presumed ground truth. False-warning rate not operationalized because diagnostic endpoint/reference remain open. No empirical accuracy/safety/diagnosis executed.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 118,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 178,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P067",
+      "exact_text": "Authoring status: only synthetic input files have been prepared.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 73,
+        "line_end": 73
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "AUTHORING_EXECUTION_DISTINGUISHED",
+      "independent_assessment": "Synthetic input-authoring status differs from documentary research. Final states actual documentary extent/targeted rechecks without empirical or deployment claims.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 102,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 176,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P068",
+      "exact_text": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 73,
+        "line_end": 73
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "AUTHORING_EXECUTION_DISTINGUISHED",
+      "independent_assessment": "Synthetic input-authoring status differs from documentary research. Final states actual documentary extent/targeted rechecks without empirical or deployment claims.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 102,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 176,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P069",
+      "exact_text": "Future researchers must state the actual extent of any work they execute.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 73,
+        "line_end": 73
+      },
+      "section": "Proposed versus executed validation",
+      "disposition": "AUTHORING_EXECUTION_DISTINGUISHED",
+      "independent_assessment": "Synthetic input-authoring status differs from documentary research. Final states actual documentary extent/targeted rechecks without empirical or deployment claims.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 78,
+          "line_end": 78
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 102,
+          "line_end": 102
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 176,
+          "line_end": 180
+        }
+      ]
+    },
+    {
+      "clause_id": "P070",
+      "exact_text": "## Scope and release boundary",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 75,
+        "line_end": 75
+      },
+      "section": "Scope and release boundary",
+      "disposition": "CONTEXT_PRESERVED",
+      "independent_assessment": "Heading/identifier/delimiter identifies original scope, not an additional scientific obligation.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 13,
+          "line_end": 76
+        }
+      ]
+    },
+    {
+      "clause_id": "P071",
+      "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "MET_SCIENCE_RELEASE_PROTOCOL_SEPARATE",
+      "independent_assessment": "Substantive research scope, useful choices and no product met. Original inputs unchanged. Global release/budget lock and off-record feedback UNKNOWN; readiness is not authorization proof.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 180
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-02/control-v1/freeze-verification.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P072",
+      "exact_text": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "MET_SCIENCE_RELEASE_PROTOCOL_SEPARATE",
+      "independent_assessment": "Substantive research scope, useful choices and no product met. Original inputs unchanged. Global release/budget lock and off-record feedback UNKNOWN; readiness is not authorization proof.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 180
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-02/control-v1/freeze-verification.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P073",
+      "exact_text": "It requests no product build.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "MET_SCIENCE_RELEASE_PROTOCOL_SEPARATE",
+      "independent_assessment": "Substantive research scope, useful choices and no product met. Original inputs unchanged. Global release/budget lock and off-record feedback UNKNOWN; readiness is not authorization proof.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 79,
+          "line_end": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 172,
+          "line_end": 180
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-02/control-v1/freeze-verification.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P074",
+      "exact_text": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "MET_BYTE_IDENTITY_ONLY",
+      "independent_assessment": "Original inputs and inspected artifacts remain unchanged. Identity is not scientific proof.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-02/control-v1/freeze-verification.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P075",
+      "exact_text": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "PROTOCOL_PARTIALLY_EVIDENCED_REMAINDER_UNKNOWN",
+      "independent_assessment": "Prepared caps/reveal records available; discovery precedes reveal. Full global recipe/budget-lock fulfillment and off-record feedback cannot be independently established; no feedback supplied by this reviewer.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/freeze.json",
+          "line_start": 1,
+          "line_end": 1
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    },
+    {
+      "clause_id": "P076",
+      "exact_text": "Input readiness does not assert that those release conditions have been satisfied.",
+      "original_plan_locator": {
+        "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+        "line_start": 77,
+        "line_end": 77
+      },
+      "section": "Scope and release boundary",
+      "disposition": "PROTOCOL_CAUTION_PRESERVED",
+      "independent_assessment": "No readiness or hash agreement treated as release-authorization proof.",
+      "supporting_locators": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R1-02/control-v1/freeze-verification.json",
+          "line_start": 1,
+          "line_end": 1
+        }
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "original_classification": "Unsupported",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 19,
+        "line_end": 19
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 49,
+        "line_end": 49
+      },
+      "final_disposition": "Reject unsupported-finding conclusion; amend for precision",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 95,
+          "line_end": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 156,
+          "line_end": 156
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 162,
+          "line_end": 162
+        }
+      ],
+      "independent_judgment": "Wrong criticism: governing S05 text includes a discrete repeat result in addition to section statistics. Final correctly rejects it and preserves supported meaning with alignment/context qualification.",
+      "sources": [
+        "S05"
+      ],
+      "status": "WRONG_CRITICISM_CORRECTLY_REJECTED"
+    },
+    {
+      "id": "C2",
+      "original_classification": "Material incomplete",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 20,
+        "line_end": 20
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 82,
+        "line_end": 85
+      },
+      "final_disposition": "Accept and amend",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 98,
+          "line_end": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 147,
+          "line_end": 147
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 157,
+          "line_end": 157
+        }
+      ],
+      "independent_judgment": "Original escalation omitted persistent cart event with a null local reference. Final adds coverage/quality/cart-source review and qualified engineering escalation. Material lineage omission is corrected, not presumed always covered.",
+      "sources": [
+        "S08"
+      ],
+      "status": "MATERIAL_LINEAGE_OMISSION_CORRECTED"
+    },
+    {
+      "id": "C3",
+      "original_classification": "Minor wording",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 21,
+        "line_end": 21
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 25,
+        "line_end": 25
+      },
+      "final_disposition": "Accept and amend",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 83,
+          "line_end": 83
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 158,
+          "line_end": 158
+        }
+      ],
+      "independent_judgment": "Original “or” could blur independent corroboration and physical attribution. Final requires independent physical evidence and qualified inspection. Wording corrected; no executed unsafe diagnosis invented.",
+      "sources": [],
+      "status": "MINOR_AMBIGUITY_CORRECTED"
+    },
+    {
+      "id": "C4",
+      "original_classification": "Material incomplete",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 22,
+        "line_end": 22
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "final_disposition": "Accept and amend",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 159,
+          "line_end": 159
+        }
+      ],
+      "independent_judgment": "“Enough”/“stable” lacked criteria. Final requires endpoint precision, minimum/maximum passes, predeclared interim/stopping and cap-inconclusive result. Numeric count legitimately depends on withheld endpoint/variance.",
+      "sources": [
+        "I15"
+      ],
+      "status": "MATERIAL_LINEAGE_OMISSION_CORRECTED"
+    },
+    {
+      "id": "load-factor-interpretation",
+      "original_classification": "Unnumbered caveat",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 31,
+        "line_end": 31
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "final_disposition": "Accept as explicit limitation",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 136,
+          "line_end": 136
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 160,
+          "line_end": 160
+        }
+      ],
+      "independent_judgment": "Combined mass/placement conditions are not separately varied factors. Final forbids separate component attribution without follow-on independent variation.",
+      "sources": [
+        "S07",
+        "I16"
+      ],
+      "status": "VALID_LIMITATION_PRESERVED"
+    }
+  ],
+  "remaining_material_findings": [],
+  "corrected_material_lineage_defects": [
+    {
+      "id": "C2",
+      "original_classification": "Material incomplete",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 20,
+        "line_end": 20
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 82,
+        "line_end": 85
+      },
+      "final_disposition": "Accept and amend",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 98,
+          "line_end": 98
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 147,
+          "line_end": 147
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 157,
+          "line_end": 157
+        }
+      ],
+      "independent_judgment": "Original escalation omitted persistent cart event with a null local reference. Final adds coverage/quality/cart-source review and qualified engineering escalation. Material lineage omission is corrected, not presumed always covered.",
+      "sources": [
+        "S08"
+      ],
+      "status": "MATERIAL_LINEAGE_OMISSION_CORRECTED"
+    },
+    {
+      "id": "C4",
+      "original_classification": "Material incomplete",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 22,
+        "line_end": 22
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "final_disposition": "Accept and amend",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 159,
+          "line_end": 159
+        }
+      ],
+      "independent_judgment": "“Enough”/“stable” lacked criteria. Final requires endpoint precision, minimum/maximum passes, predeclared interim/stopping and cap-inconclusive result. Numeric count legitimately depends on withheld endpoint/variance.",
+      "sources": [
+        "I15"
+      ],
+      "status": "MATERIAL_LINEAGE_OMISSION_CORRECTED"
+    }
+  ],
+  "wrong_criticisms": [
+    {
+      "id": "C1",
+      "original_classification": "Unsupported",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 19,
+        "line_end": 19
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 49,
+        "line_end": 49
+      },
+      "final_disposition": "Reject unsupported-finding conclusion; amend for precision",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 95,
+          "line_end": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 156,
+          "line_end": 156
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 162,
+          "line_end": 162
+        }
+      ],
+      "independent_judgment": "Wrong criticism: governing S05 text includes a discrete repeat result in addition to section statistics. Final correctly rejects it and preserves supported meaning with alignment/context qualification.",
+      "sources": [
+        "S05"
+      ],
+      "status": "WRONG_CRITICISM_CORRECTLY_REJECTED"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "severity": "MINOR_RETAINED_SOURCE_LINEAGE_ERROR",
+      "remaining_material": false,
+      "finding": "ST support reply misinterprets FIFO_CTRL4 = 0x08; discovery’s “traced” wording overstates a tentative answer. Original maps retain the reported explanation. Final merely attributes a configuration-specific report.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+          "line_start": 26,
+          "line_end": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+          "line_start": 55,
+          "line_end": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+          "line_start": 118,
+          "line_end": 130
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 99,
+          "line_end": 99
+        }
+      ],
+      "sources": [
+        "S09",
+        "S11"
+      ],
+      "materiality_reason": "No final register write, cart issue/default/capability, fix, diagnosis, instrument selection or escalation depends on this explanation. Formal sources independently justify actual logger identification/configuration audit."
+    },
+    {
+      "id": "L02",
+      "severity": "MINOR_BIBLIOGRAPHIC_LINEAGE_ERROR",
+      "remaining_material": false,
+      "finding": "Upstream S08 maps name Romero Navarrete et al.; primary authors are Jauregui-Correa et al. Title/DOI/URL still identify the correct source; reviser verification uses correct author identity.",
+      "original_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+          "line_start": 85,
+          "line_end": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/source-map.json",
+          "line_start": 126,
+          "line_end": 138
+        }
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 98,
+          "line_end": 98
+        }
+      ],
+      "sources": [
+        "S08"
+      ],
+      "materiality_reason": "Source remains navigable, substantive claims supported. No silent source substitution in this assessment."
+    },
+    {
+      "id": "L03",
+      "severity": "ACCESS_LOCATOR_LIMITATION",
+      "remaining_material": false,
+      "finding": "Some primary evidence is publisher-indexed text rather than unrestricted full download. ISO is abstract/metadata only; carried AN4987 page range slightly broad.",
+      "sources": [
+        "S01",
+        "S05",
+        "S10",
+        "S12"
+      ],
+      "materiality_reason": "Governing bounded passages independently recovered. Access limits explicitly recorded; unseen content not certified."
+    },
+    {
+      "id": "L04",
+      "severity": "MINOR_WORDING_OPEN_ENDPOINT_LIMITATION",
+      "remaining_material": false,
+      "finding": "A false-warning rate is not separately operationalized. Final distinguishes artifacts, recurrence, reference disagreement/coverage, quality failures and physical-inspection evidence while diagnostic endpoint/ground truth remain open.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 81,
+          "line_end": 83
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 122,
+          "line_end": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+          "line_start": 142,
+          "line_end": 150
+        }
+      ],
+      "sources": [],
+      "materiality_reason": "Original brief allows open endpoint and seeks inspection-informing proposal. No null-reference or nonrepeat result is labeled a proven false warning or safety clearance. An operational diagnostic metric requires withheld reference/endpoint information; substantive study is already present."
+    }
+  ],
+  "supported_meaning_lineage": [
+    {
+      "topic": "Evidence levels/chronology",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 6,
+        "line_end": 14
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 18,
+        "line_end": 33
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 11,
+        "line_end": 21
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 81,
+        "line_end": 87
+      },
+      "assessment": "Core distinctions retained; diagnosis ambiguity narrowed."
+    },
+    {
+      "topic": "Approaches/manual fallback",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 16,
+        "line_end": 21
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 57,
+        "line_end": 78
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 28,
+        "line_end": 36
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 104,
+        "line_end": 138
+      },
+      "assessment": "All useful approach families preserved with discriminating limits."
+    },
+    {
+      "topic": "Rail repeat/history",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 24,
+        "line_end": 24
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 49,
+        "line_end": 53
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 19,
+        "line_end": 40
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 94,
+        "line_end": 98
+      },
+      "assessment": "Supported meaning survives wrong criticism; source-internal and transfer caveats retained."
+    },
+    {
+      "topic": "Null-reference escalation",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 21,
+        "line_end": 31
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 82,
+        "line_end": 85
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 20,
+        "line_end": 20
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 146,
+        "line_end": 150
+      },
+      "assessment": "Material original missing branch explicitly corrected."
+    },
+    {
+      "topic": "Replication/compound load",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 18,
+        "line_end": 18
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 76,
+        "line_end": 76
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 22,
+        "line_end": 31
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 136,
+        "line_end": 144
+      },
+      "assessment": "Conditional stopping/precision added; components not separately attributed."
+    },
+    {
+      "topic": "Configuration source reliability",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 26,
+        "line_end": 26
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 55,
+        "line_end": 55
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 40,
+        "line_end": 40
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 99,
+        "line_end": 99
+      },
+      "assessment": "Audit purpose preserved; unreliable reported explanation retained only as minor lineage limitation."
+    },
+    {
+      "topic": "Execution boundary",
+      "discovery_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+        "line_start": 4,
+        "line_end": 4
+      },
+      "draft_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+        "line_start": 103,
+        "line_end": 105
+      },
+      "critique_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+        "line_start": 7,
+        "line_end": 7
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 176,
+        "line_end": 180
+      },
+      "assessment": "Documentary and hypothetical physical/numerical work remain distinct."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Mount transfer stiffness/mass/coupling",
+      "sources": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "use": "Matched fixture/reference discriminates transfer without diagnosis."
+    },
+    {
+      "discovery": "Repeat measurements depend on speed/position/vehicle",
+      "sources": [
+        "S04",
+        "S05",
+        "S06"
+      ],
+      "use": "Record context, repeat paths and independently align location; no imported thresholds."
+    },
+    {
+      "discovery": "Hardware sampling capability differs from saved cadence",
+      "sources": [
+        "S07"
+      ],
+      "use": "Recover actual files/settings, preserve unreconciled rates."
+    },
+    {
+      "discovery": "Finite local-reference coverage",
+      "sources": [
+        "S08"
+      ],
+      "use": "Synchronize local channels while retaining persistent-event/null review."
+    },
+    {
+      "discovery": "Device registers/filter modes govern timing/bandwidth",
+      "sources": [
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "use": "Recover authoritative actual configuration; support reply can be wrong."
+    },
+    {
+      "discovery": "Particular operational bracket mode",
+      "sources": [
+        "S12"
+      ],
+      "use": "Investigate history/transfer; do not copy example frequency."
+    },
+    {
+      "discovery": "Service gaps/early vendor trials differ from validation",
+      "sources": [
+        "S06",
+        "S13"
+      ],
+      "use": "Audit maintenance/software history and bound confidence."
+    }
+  ],
+  "meaningful_alternatives": [
+    {
+      "approach": "Configuration/raw recovery",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 108,
+        "line_end": 108
+      }
+    },
+    {
+      "approach": "Written context/manual map",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 109,
+        "line_end": 109
+      }
+    },
+    {
+      "approach": "Matched repeated passes",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 110,
+        "line_end": 110
+      }
+    },
+    {
+      "approach": "Old/new fixture mounts",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 111,
+        "line_end": 111
+      }
+    },
+    {
+      "approach": "Calibrated local accelerometer/geophone",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 112,
+        "line_end": 112
+      }
+    },
+    {
+      "approach": "Strain/displacement/inspection",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 113,
+        "line_end": 113
+      }
+    },
+    {
+      "approach": "Simultaneous multichannel DAQ",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 114,
+        "line_end": 114
+      }
+    }
+  ],
+  "validation_and_oracles": [
+    {
+      "proposed_check": "Records/configuration/history",
+      "oracle": "Actual raw/settings provenance and bracket records",
+      "can_establish": "Comparability/measurement plausibility",
+      "cannot_establish": "Defect or safety",
+      "executed": "Documentary only; no cart records supplied",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 122,
+        "line_end": 124
+      }
+    },
+    {
+      "proposed_check": "Matched mount/acquisition",
+      "oracle": "Same input/axis/logger and characterized base reference, actual intervals/saturation",
+      "can_establish": "Fixture response dependence",
+      "cannot_establish": "Field transfer or track/cart soundness",
+      "executed": "Not executed",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 128,
+        "line_end": 130
+      }
+    },
+    {
+      "proposed_check": "Repeated speed × compound-load",
+      "oracle": "Matched route/direction/configuration, variance and endpoint precision/stopping",
+      "can_establish": "Repeatability/association/conditional precision",
+      "cannot_establish": "Separate mass/placement effects, universal threshold or safety",
+      "executed": "Not executed",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 134,
+        "line_end": 144
+      }
+    },
+    {
+      "proposed_check": "Surveyed time/position/local reference",
+      "oracle": "Marker crossings, shared trigger/checked clocks, calibrated local motion/strain",
+      "can_establish": "Agreement/response within coverage",
+      "cannot_establish": "Route-wide truth/diagnosis; null does not prove false warning",
+      "executed": "Not executed",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 138,
+        "line_end": 150
+      }
+    },
+    {
+      "proposed_check": "Diagnostic utility/inspection",
+      "oracle": "Qualified inspection and independent physical evidence appropriate to endpoint",
+      "can_establish": "Physical attribution in actual authorized investigation",
+      "cannot_establish": "Known faults or use/safety authorization from this proposal",
+      "executed": "Not executed; endpoint/reference/authorization external",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+        "line_start": 142,
+        "line_end": 150
+      }
+    }
+  ],
+  "executed_validation": "Documentary research and targeted primary rechecks recorded. No cart/raw-data, simulation/numerical/fixture/field/installation/threshold/product/empirical validation. Full action trace absent, so off-record activity not independently excluded.",
+  "missing_or_incomplete_records": [
+    {
+      "item": "Original authored raw-source captures",
+      "status": "NOT_PRESENT_IN_MAPPED_SOURCE_DIRECTORIES",
+      "effect": "Indexes/maps contain authored URLs/locators; independent primary retrieval saved; no nonexistent capture assumed."
+    },
+    {
+      "item": "Investigator/critic separate guard execution receipt",
+      "status": "MISSING_OR_NOT_SUPPLIED",
+      "effect": "Execution provenance UNKNOWN, not scientific failure."
+    },
+    {
+      "item": "Additional standalone critique/check/disposition file",
+      "status": "NOT_PRESENT",
+      "effect": "Complete critique/additive source checks/final dispositions inspected; no missing science inferred."
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "kind": "HONEST_EXTERNAL_SCIENCE",
+      "detail": "Logger/sensor/firmware/rule/raw data/range/band/filtering/timebase/effective export cadence unavailable."
+    },
+    {
+      "id": "U02",
+      "kind": "HONEST_EXTERNAL_SCIENCE",
+      "detail": "Bracket geometry/installation/paired history, wheel/caster/machine condition, route/speed/load distributions unavailable."
+    },
+    {
+      "id": "U03",
+      "kind": "HONEST_EXTERNAL_DECISION",
+      "detail": "Endpoint/precision/numeric replication/site levels/reference/inspection/authorization remain owner decisions after investigated alternatives."
+    },
+    {
+      "id": "U04",
+      "kind": "NO_EMPIRICAL_ORACLE",
+      "detail": "Cart performance/safety unvalidated; no known ground-truth faults."
+    },
+    {
+      "id": "U05",
+      "kind": "PROTOCOL_TELEMETRY",
+      "detail": "Candidate receipt freshness, off-record assistance/reads, global release lock, effective configuration and billing UNKNOWN absent direct evidence."
+    },
+    {
+      "id": "U06",
+      "kind": "PRIMARY_ACCESS",
+      "detail": "Unavailable full texts recorded in L03; only retrieved governing passages judged."
+    }
+  ],
+  "protocol_and_telemetry": {
+    "delivery": {
+      "status": "RECORDED_TERMINAL_FINAL_AVAILABLE",
+      "evidence": "ER12_RUNTIME/runs/D-R1-02/control/terminal-science-freeze-root.json",
+      "observed_at_utc": "2026-10-10T06:58:15.736570+00:00",
+      "task_status": "completed",
+      "pending_children": false,
+      "limit": "Recorded root evidence; no live status query/other outcome inspected."
+    },
+    "native": {
+      "status": "RECORDED_CANDIDATE_RECEIPTS; INDEPENDENT_FRESHNESS_UNKNOWN",
+      "stages": [
+        {
+          "stage": "investigator",
+          "prepared_at_utc": "2026-10-10T06:24:04.035Z",
+          "cap_seconds": 1800,
+          "deadline_utc": "2026-10-10T06:54:04.035Z",
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "activation_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-activation.json",
+          "completion_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-completion.json",
+          "recorded_goal": {
+            "threadId": "01a1247b-a59d-7c92-b7de-103798406a63",
+            "objective": "ER12 investigator stage, run D-R1-02-control: execute ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 290081,
+            "timeUsedSeconds": 880,
+            "createdAt": 1791613464,
+            "updatedAt": 1791614345
+          },
+          "activation_completion_binding_agrees": true,
+          "native_evidence_status": "RECORDED_COMPLETE; independently fresh tool-call provenance UNKNOWN",
+          "guard_execution": "UNKNOWN; separate stdout absent",
+          "dispatch_evidence": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/dispatch.json"
+        },
+        {
+          "stage": "critic",
+          "prepared_at_utc": "2026-10-10T06:39:50.467Z",
+          "cap_seconds": 720,
+          "deadline_utc": "2026-10-10T06:51:50.467Z",
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "activation_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-activation.json",
+          "completion_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-completion.json",
+          "recorded_goal": {
+            "threadId": "01a1248a-15e3-7670-a5b1-a552f813bc3b",
+            "objective": "ER12 critic stage, run D-R1-02-control: execute ER12_RUNTIME/runs/D-R1-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 146924,
+            "timeUsedSeconds": 297,
+            "createdAt": 1791614411,
+            "updatedAt": 1791614708
+          },
+          "activation_completion_binding_agrees": true,
+          "native_evidence_status": "RECORDED_COMPLETE; independently fresh tool-call provenance UNKNOWN",
+          "guard_execution": "UNKNOWN; separate stdout absent",
+          "dispatch_evidence": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/dispatch.json"
+        },
+        {
+          "stage": "reviser",
+          "prepared_at_utc": "2026-10-10T06:45:57.495Z",
+          "cap_seconds": 1080,
+          "deadline_utc": "2026-10-10T07:03:57.495Z",
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "activation_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-activation.json",
+          "completion_record": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-completion.json",
+          "recorded_goal": {
+            "threadId": "01a1248f-afb6-75c0-a600-f38e59a7ead8",
+            "objective": "ER12 reviser stage, run D-R1-02-control: execute ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 183648,
+            "timeUsedSeconds": 684,
+            "createdAt": 1791614779,
+            "updatedAt": 1791615464
+          },
+          "activation_completion_binding_agrees": true,
+          "native_evidence_status": "RECORDED_COMPLETE; independently fresh tool-call provenance UNKNOWN",
+          "guard_execution": "Recorded stdout ok=true; provenance_independently_proved=false",
+          "dispatch_evidence": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/dispatch.json"
+        }
+      ]
+    },
+    "method_protocol": {
+      "status": "PARTIALLY_EVIDENCED_REMAINDER_UNKNOWN",
+      "reveal": "Discovery mtime 06:29:12.439642 UTC precedes recorded reveal 06:29:20.975 UTC and hash agrees. Separate pre-reveal source-map byte freeze unavailable.",
+      "release_lock": "Prepared caps/reveal records available; global exact recipe/budget-lock fulfillment independently UNKNOWN.",
+      "assistance": "No reviewer feedback/repair/assistance/delegation/account/Git/publication. Off-record candidate assistance/reads not independently excluded.",
+      "route_revision": "Initial priority prospectively revised to default in all stage records, user-standard-20261010-v1. No reviewer change.",
+      "guard": "Reviser disclaims independently proved provenance; other-stage guard execution not inferred from metadata.",
+      "freeze": "Checked identities match; originals rechecked before native completion."
+    },
+    "time": {
+      "status": "RECORDED_TIMESTAMPS_ONLY",
+      "initialized_at_utc": "2026-10-10T06:24:04.034Z",
+      "whole_deadline_utc": "2026-10-10T07:24:01.564Z",
+      "terminal_observation_utc": "2026-10-10T06:58:15.736570+00:00",
+      "prepare_to_terminal_seconds": 2051.70257,
+      "native_seconds_sum": 1861,
+      "native_tokens_sum": 620653,
+      "budget_compliance": "Recorded artifact/completion times precede stage and whole deadlines. Native elapsed is not effective research/inference time.",
+      "effective_work_queue_inference": "UNKNOWN",
+      "paired_latency_savings": "NOT_ASSESSED; one arm only"
+    },
+    "effective_configuration": {
+      "status": "UNKNOWN",
+      "recorded_request": "AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna / max / default / full-access",
+      "reason": "Labels do not prove effective routing/tier/reasoning/runtime enforcement."
+    },
+    "billing": {
+      "status": "UNKNOWN",
+      "reason": "No provider invoice/usage telemetry; native counters are not verified billable input/output tokens/money."
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613441551784743,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613441551895806,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/terminal-science-freeze-root.json",
+      "bytes": 8519,
+      "sha256": "75d9d7fcbdc4b32231a239a7338422231dbb867b5708e906639e3985e7c55460",
+      "mtime_ns": 1791615495737009263,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/inputs/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613444034493084,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/control/run.json",
+      "bytes": 582,
+      "sha256": "044e4916a3e6874513fe0cc844fe94b1486fdf317f660ebc9b04a6f3ef539245",
+      "mtime_ns": 1791613444034810726,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "ebc7bf5e768b7a9c92fd0ff745148b9e6a00c550ea57416fe2e7c24350ab7dae",
+      "mtime_ns": 1791613444724966280,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "d5a4a3a8d65f142540a1e0b315524bf01d59e734feb89c7c5b37181fbdcafabe",
+      "mtime_ns": 1791613444724105538,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "6d710dd87d9d9e5c94b0dca78c7e815efd3ff99636b2c7bec129e5770bd87c0d",
+      "mtime_ns": 1791613444723334657,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 16115,
+      "sha256": "c98413ebb33a3ac7b8534cf6a3838ecf26b92222f8adf9c9b58c993dd508d9e1",
+      "mtime_ns": 1791614191541580371,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 3507,
+      "sha256": "ee5377ca43cb4b5dbb75af81bc3825d92ea72ff3f858d3b78404b0123e174699",
+      "mtime_ns": 1791614006268101701,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "8840b5cc7aa7c3f0b5b9c27c9ee9825c1279f2c35a128f01be7a56fa64d965be",
+      "mtime_ns": 1791613444722768872,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "da9de0d05bb55b2c921638c95109b03fdc1156bc624e7e8294c9f392668c0285",
+      "mtime_ns": 1791613445639517833,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-activation.json",
+      "bytes": 480,
+      "sha256": "80555e2c065dcd60bb6ee4e7f82daf7dee76dc3967c5f29c30ee22f1765d2f7b",
+      "mtime_ns": 1791613502624907027,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-completion.json",
+      "bytes": 809,
+      "sha256": "265504a263c2b80451769b35c4cd56a4fa2559075ad2e3eb610bb77c34a84602",
+      "mtime_ns": 1791614345634562899,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "99cc3de4511823754ed71640bb5af28c14b8b823f1cb30c699458695bb96125d",
+      "mtime_ns": 1791613444725222282,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "5684f4ce479320a25c662ae08777486f4f4c5bc624a29fa59b608844ab40ee25",
+      "mtime_ns": 1791613444496462371,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "821cca4e8383d65df81ebf37df8c54fc5ffdad45d73888f10bc51586ec9fbc8c",
+      "mtime_ns": 1791613444212289940,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "de0f1a084aac4c619ef2c57eb34c9b60dbdef27ee368e2470a6364a82217447a",
+      "mtime_ns": 1791614391063708491,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "636da11617861cbe58e0ce695586dd9473774da1dd38ae89276c7ff6e91e2e40",
+      "mtime_ns": 1791614391063214649,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/freeze.json",
+      "bytes": 3313,
+      "sha256": "f1023657154bb5046d8ec194177907f1cec6d865b1c4a3eb48e43a6dc82531e6",
+      "mtime_ns": 1791614391062737930,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/source-map.json",
+      "bytes": 22503,
+      "sha256": "b4b0ac3560dc30029efbac7d8fdcf9209d1c98c67ae475bfa0f7dfb44a770563",
+      "mtime_ns": 1791614700978709907,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/sources/index.md",
+      "bytes": 3174,
+      "sha256": "a9725560993f842499a693d1d231cac8dce7c192830f479ee68f7b1e760fb260",
+      "mtime_ns": 1791614701098887060,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "d7aebb14c7f0935585d8039a7b79a4b8eb20b1303c3ec007e159dafeca9ced98",
+      "mtime_ns": 1791614391062245271,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "c3e4eafb3362619d293a9a6a9662b77ac33ea1a469dbc5342921ea27aeca4d05",
+      "mtime_ns": 1791614391928636340,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 467,
+      "sha256": "67dadf7ef02dcfd22512aef55c5f9ba5efe1d52f642913fc1d85fc4037179bc8",
+      "mtime_ns": 1791614701232948838,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 796,
+      "sha256": "48b991a44528c4510bfec4f74562ced0ef2c3fd02b05f310d779e3173e36faef",
+      "mtime_ns": 1791614708848571988,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "18cd60bb77fdc6e533e29ccad4efcf10e4bc3fe7b5e1dd275dcb801db43dcb4a",
+      "mtime_ns": 1791614391063857462,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "b071714190251263c33ed1bf012cf4ed904ed4a53da4b42abafd8d2b0b669ea1",
+      "mtime_ns": 1791614390871668283,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "19ae9a6c42744196f255b74091319354a97f8511ffd569db31962c61d464e119",
+      "mtime_ns": 1791614390638656926,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "95ebb21cd5dcc7c36326e820092bccd8361b7ee791a19007d2deb78dfdf209cc",
+      "mtime_ns": 1791614758091230953,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "71d68dab1379429f049ed4d63870ce6fbbda609db2b69c3b84a19e2bea8a14e3",
+      "mtime_ns": 1791614758090507920,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/freeze.json",
+      "bytes": 4091,
+      "sha256": "56ffaeae35e3c1cd8a0f7214d5c1e7001b05c23e9f71f3f25d9fdbf11daf3709",
+      "mtime_ns": 1791614758089994863,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 30367,
+      "sha256": "bdd16fdd0a8117c9d13edea1889b3db3e42ef44f0a066bfafc4492ceaf80de9c",
+      "mtime_ns": 1791615440947907093,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 3792,
+      "sha256": "26e55e15665582d4e153bd031005ef538b897dd525da2474f0d77b83edafd9a8",
+      "mtime_ns": 1791615121351502614,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "cef651214b20a7106e637291751c6b0b0214e831d28323ab1345fea19a377cb3",
+      "mtime_ns": 1791614758089292176,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "7c52aaf3ebe9e50635b4ba68a16aa646c33c2163f32661ccdc99aa273b281a7b",
+      "mtime_ns": 1791614759029847821,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 469,
+      "sha256": "5f60eee0c53d2e11eb71218d8e97faf956b26369ada566df1a35f8af75a2d90d",
+      "mtime_ns": 1791614825700875737,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 798,
+      "sha256": "77cb482a9ab1ec920d08aebe754820f21ccf1ec326c8c60697b36dde823b4eff",
+      "mtime_ns": 1791615464095184939,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "6552088523bc15b3feb79054728260622fc41f3fd5466e14188329d35e2a1888",
+      "mtime_ns": 1791614758091472024,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "c9731227078e392526379402812135a22c019e7e0fd867d6d64075949327a184",
+      "mtime_ns": 1791614757884155757,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "cdcb28b376453f03c950a4cdac489a86ef69925d73fce8dd3bd4fe55ffe9a412",
+      "mtime_ns": 1791614757673295947,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 8670,
+      "sha256": "d90437743f7e0de7b1573ff8e0bef49393a9dd9b028c04b7718b5afac1ef0003",
+      "mtime_ns": 1791613752439642139,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+      "bytes": 21076,
+      "sha256": "aecdf46fc4d166f29b1ed7ff2b23f8aba9f84937fbeb427e40659ee4627e8100",
+      "mtime_ns": 1791614311680492604,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613760975465324,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 430,
+      "sha256": "0b461e0b9f2cadc96bbd334263ba6508e902c4402455aee2de45caf96063cdfb",
+      "mtime_ns": 1791613760975600797,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-release.json",
+      "bytes": 397,
+      "sha256": "841f349384b0907bf595581742f52c0594015eab3b2b9dc80382bb9c80798728",
+      "mtime_ns": 1791614149276496698,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+      "bytes": 8264,
+      "sha256": "2d34e28b8dac35fb0bf7ee3c6be1d0aeba6b173261e503e07e58431cc94be72f",
+      "mtime_ns": 1791614700849580934,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+      "bytes": 25510,
+      "sha256": "4c7059e70709a117f6a872a14113241e60a9cca068ca942600a88d5f43fc20eb",
+      "mtime_ns": 1791615440946455824,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/goal-binding-guard.stdout.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614825701028213,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    }
+  ],
+  "independent_sources": [
+    {
+      "source_id": "S01",
+      "title": "ISO 5348:2021, Mechanical mounting of accelerometers",
+      "url": "https://www.iso.org/standard/78160.html",
+      "version_or_date": "Edition 3; January 2021; official metadata reports confirmation in 2026",
+      "primary_locator": "Official abstract and lifecycle",
+      "subject_operation_and_type": "Mounting guidance for contacting accelerometers and velocity transducers.",
+      "governing_conditions_defaults_units_exceptions": "Mount response/fidelity depends on coupling; several environmental/alignment influences are outside the standard scope.",
+      "independent_semantic_judgment": "Bounded mount-audit use is supported; no cart compliance or prescribed mount is established.",
+      "access_and_limits": "Official abstract/metadata only; paid full standard not inspected. Independent vendor sources also support the mechanism.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-05.json"
+      ]
+    },
+    {
+      "source_id": "S02",
+      "title": "TE Connectivity, Guidelines for Adhesive Mounting Accelerometers",
+      "url": "https://www.te.com/content/dam/te-com/documents/sensors/global/guidelines-adhesive-mounting-accelerometers-app-note.pdf",
+      "version_or_date": "Copyright 2017; no further revision identified",
+      "primary_locator": "One-page application note, mounting guidance",
+      "subject_operation_and_type": "Vendor adhesive mounting guidance.",
+      "governing_conditions_defaults_units_exceptions": "Coupling stiffness and layer thickness affect mounted response; clean flat interfaces and adhesive temperature limits depend on the actual assembly.",
+      "independent_semantic_judgment": "Supports characterization, not prescribing adhesive or temperatures for an unidentified cart logger.",
+      "access_and_limits": "Full official one-page PDF parsed by web tool; direct Python request returned 403.",
+      "evidence_files": [
+        "evidence/web-03.json"
+      ]
+    },
+    {
+      "source_id": "S03",
+      "title": "Endevco TP312, Guide to Adhesively Mounting Accelerometers",
+      "url": "https://www.endevco.com/contentStore/mktgContent/endevco/dlm_uploads/2019/02/TP312.pdf",
+      "version_or_date": "TP312; no explicit revision observed; URL directory is not a release date",
+      "primary_locator": "PDF pp. 2–5, purpose/background and mount comparisons",
+      "subject_operation_and_type": "Vendor experiments on specific transducers and mounts.",
+      "governing_conditions_defaults_units_exceptions": "Sinusoidal/random testing; high-g shock excluded. Models and mounting mass/stiffness, temperature and amplitude constrain results.",
+      "independent_semantic_judgment": "Mount dynamics and fixture comparison are justified; frequencies and adhesives are not cart specifications.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/S03.pdf",
+        "evidence/S03.txt",
+        "evidence/web-03.json"
+      ]
+    },
+    {
+      "source_id": "S04",
+      "title": "Malekjafarian et al., Railway Track Monitoring Using Train Measurements: An Experimental Case Study",
+      "url": "https://www.mdpi.com/2076-3417/9/22/4859",
+      "version_or_date": "Applied Sciences 2019, 9(22), 4859; DOI 10.3390/app9224859",
+      "primary_locator": "Abstract; §§2.1, 4, 5.3, 6; publisher PDF",
+      "subject_operation_and_type": "Sixty non-powered bogie passes over two months on a 6-km route, compared with a Track Recording Vehicle.",
+      "governing_conditions_defaults_units_exceptions": "Specific ±15 g accelerometer, 500 Hz acquisition and 5 Hz GPS; speed selection/scaling, low-speed exclusion, position mismatch and unmeasured mass/temperature constrain results.",
+      "independent_semantic_judgment": "Supports repeated comparisons and context controls; values and thresholds are not transferable cart settings.",
+      "access_and_limits": "Publisher landing open failed; complete official publisher-hosted PDF downloaded and relevant sections inspected. PDF URL: https://mdpi-res.com/d_attachment/applsci/applsci-09-04859/article_deploy/applsci-09-04859.pdf",
+      "evidence_files": [
+        "evidence/S04.pdf",
+        "evidence/S04.txt",
+        "evidence/web-07.json"
+      ]
+    },
+    {
+      "source_id": "S05",
+      "title": "Balouchi, Bevan and Formston, Development of railway track condition monitoring from multi-train in-service vehicles",
+      "url": "https://www.tandfonline.com/doi/full/10.1080/00423114.2020.1755045",
+      "version_or_date": "Online 22 April 2020; Vehicle System Dynamics 59(9), 1397–1417 (2021); DOI 10.1080/00423114.2020.1755045",
+      "primary_locator": "Trials, discrete-fault detection, Figures 7 and 9; track-quality and conclusion sections",
+      "subject_operation_and_type": "In-cab railway demonstrator compared with Network Rail measurement train.",
+      "governing_conditions_defaults_units_exceptions": "Run 36 explicitly recaptures the same known fault as Run 25; GNSS antenna offset affects alignment. Vertical correspondence exceeds lateral; developed speed compensation was not applied in these trials.",
+      "independent_semantic_judgment": "C1 incorrectly excludes the discrete repeat result. Final rejection is supported; this example does not validate cart detection, new-run ground truth, or universal accuracy.",
+      "access_and_limits": "Direct publisher open returned 403. Governing passages retrieved in extensive indexed excerpts from the primary publisher, not a secondary paraphrase; author-institution metadata corroborates identity. No unrestricted full-PDF access claimed.",
+      "evidence_files": [
+        "evidence/web-02.json",
+        "evidence/web-12.json"
+      ]
+    },
+    {
+      "source_id": "S06",
+      "title": "Tsunashima et al., Development and Operation of Track Condition Monitoring System Using In-Service Train",
+      "url": "https://www.mdpi.com/2076-3417/13/6/3835",
+      "version_or_date": "Applied Sciences 2023, 13(6), 3835; 17 March 2023; DOI 10.3390/app13063835",
+      "primary_locator": "§§2.1, 2.3, 3.2, 3.3, 7",
+      "subject_operation_and_type": "Regional-rail carbody monitoring history, GNSS and curvature/map position correction.",
+      "governing_conditions_defaults_units_exceptions": "October 2020–August 2022; inspection/software interruptions. Sections disagree on gap start. Same train used; selected analysis left speed uncorrected. Curve geometry and GNSS accuracy limit interpretation.",
+      "independent_semantic_judgment": "Final preserves the source inconsistency and vehicle/context limits; history is useful without becoming cart performance evidence.",
+      "access_and_limits": "Complete official publisher PDF downloaded; relevant full sections inspected. URL: https://mdpi-res.com/d_attachment/applsci/applsci-13-03835/article_deploy/applsci-13-03835.pdf?version=1691324931",
+      "evidence_files": [
+        "evidence/S06.pdf",
+        "evidence/S06.txt",
+        "evidence/web-08.json"
+      ]
+    },
+    {
+      "source_id": "S07",
+      "title": "Mihăilescu et al., Experimental Study of Wheel-to-Rail Interaction Using Acceleration Sensors for Continuous Rail Transport Comfort Evaluation",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10574946/",
+      "version_or_date": "Sensors 2023; accepted 22 September 2023; PMC10574946",
+      "primary_locator": "§§2.2–2.4, Table 2, empty/loaded tests and discussion",
+      "subject_operation_and_type": "Axle/body sensors and amplification hardware in specific tank-wagon runs.",
+      "governing_conditions_defaults_units_exceptions": "19.2 kS/s is a hardware capability; exports show 0.02 s steps while discussion says 50 ms/20 Hz. Empty/loaded runs used 125/110 km/h, respectively.",
+      "independent_semantic_judgment": "Final correctly preserves cadence inconsistency and load/speed confounding; neither rate is a cart capability or pure load effect.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-05.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "S08",
+      "title": "Jauregui-Correa et al., Method for predicting dynamic loads for a health monitoring system for subway tracks",
+      "url": "https://www.frontiersin.org/journals/mechanical-engineering/articles/10.3389/fmech.2022.858424/full",
+      "version_or_date": "Frontiers in Mechanical Engineering 8, 858424; 14 September 2022; DOI 10.3389/fmech.2022.858424",
+      "primary_locator": "Experimental procedure; EMD results discussing fixed strain-gauge locality",
+      "subject_operation_and_type": "1:10 inclined rail rig: optical speed, MEMS motion, strain and rail-gap trigger.",
+      "governing_conditions_defaults_units_exceptions": "MEMS 1594 Hz and strain 2400 Hz describe this rig; fixed strain coverage is local. Sensor paths and scale differ from the cart.",
+      "independent_semantic_judgment": "C2 is supported; final synchronized-reference pattern and null-reference qualification are appropriate. Upstream maps incorrectly name Romero Navarrete as author; final title/DOI and reviser verification identify the actual source.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-01.json",
+        "evidence/web-07.json"
+      ]
+    },
+    {
+      "source_id": "S09",
+      "title": "STMicroelectronics LSM6DSM datasheet",
+      "url": "https://www.st.com/resource/en/datasheet/lsm6dsm.pdf",
+      "version_or_date": "DocID028165 Rev 7, September 2017; revision history 29 September 2017",
+      "primary_locator": "§10.5 Tables 30–31, p.63; §10.7 Tables 36–38, p.65",
+      "subject_operation_and_type": "Exact register bit definitions for the LSM6DSM fourth FIFO data set.",
+      "governing_conditions_defaults_units_exceptions": "TIMER_PEDO_FIFO_EN is bit 7, default 0. DEC_DS4_FIFO occupies bits 5:3; 000 disables and 001 stores without decimation. Thus FIFO_CTRL4 = 0x08 selects 001, not 000.",
+      "independent_semantic_judgment": "Formal default supports a configuration audit. It contradicts S11’s explanation for the reported 0x08 configuration; no cart register recommendation is justified.",
+      "access_and_limits": "Official full PDF downloaded after timeout using query URL; actual p.65 register table visually inspected. Retry provenance preserved in S09-retry.json.",
+      "evidence_files": [
+        "evidence/S09.pdf",
+        "evidence/S09.txt",
+        "evidence/S09-page65.png",
+        "evidence/web-04.json"
+      ]
+    },
+    {
+      "source_id": "S10",
+      "title": "STMicroelectronics AN4987, LSM6DSM: always-on 3D accelerometer and 3D gyroscope",
+      "url": "https://www.st.com/resource/en/application_note/dm00352102-lsm6dsm-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf",
+      "version_or_date": "AN4987 Rev 5; revision 14 August 2018",
+      "primary_locator": "§3.7, printed pp.13–14, accelerometer filtering chain; FIFO timestamp section",
+      "subject_operation_and_type": "Device-specific analog/digital filtering and timestamp handling.",
+      "governing_conditions_defaults_units_exceptions": "Analog anti-alias behavior depends on performance mode, ODR and configuration; digital filters and timestamp data-set arrangement require exact settings. Units and settings belong to this device only.",
+      "independent_semantic_judgment": "Final’s configuration dependence is supported, with no inference about the unspecified logger. Carried p.12–14 locator is slightly broad.",
+      "access_and_limits": "Official PDF parsed via web tool; independent direct PDF download timed out.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-05.json"
+      ]
+    },
+    {
+      "source_id": "S11",
+      "title": "ST Community, LSM6DSM timestamp in FIFO occasionally incorrect",
+      "url": "https://community.st.com/mems-sensors-48/lsm6dsm-timestamp-in-fifo-occasionally-incorrect-166217?fid=48&tid=166217",
+      "version_or_date": "Question 17 June 2026; accepted moderator reply 6 July 2026",
+      "primary_locator": "Question register configuration and Federica Bossi’s accepted answer",
+      "subject_operation_and_type": "A support exchange about a 208 Hz, continuous FIFO report with 25 µs timestamp units.",
+      "governing_conditions_defaults_units_exceptions": "Question reports FIFO_CTRL2 = 0x80 and FIFO_CTRL4 = 0x08. Reply describes 0x08 as DEC_DS4_FIFO = 000; the governing datasheet instead gives 001. Answer is tentative, not a confirmed silicon defect or erratum.",
+      "independent_semantic_judgment": "Discovery’s “traced” wording is overstated and the carried explanation is unreliable. Final merely identifies a configuration-specific report and does not prescribe its alleged fix; this is a non-material retained lineage/source limitation.",
+      "access_and_limits": "First-party community report and attributed moderator answer inspected; answer correctness tested against formal manufacturer register definitions.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "S12",
+      "title": "Liu et al., Research on vibration fatigue of sensor bracket in a metro bogie based on the pseudo excitation method",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1350630722010135",
+      "version_or_date": "Engineering Failure Analysis 145, 107046; March 2023; DOI 10.1016/j.engfailanal.2022.107046",
+      "primary_locator": "Abstract; failure-mode analysis and field-test publisher excerpts",
+      "subject_operation_and_type": "Specific C-shaped bogie sensor bracket under metro wheel/rail excitation.",
+      "governing_conditions_defaults_units_exceptions": "Particular sensor mass, bolt assembly and bracket mode near 61 Hz; rail corrugation, local stress and measured excitation condition this finding.",
+      "independent_semantic_judgment": "Bounded bracket-resonance analogue is supported; no cart frequency, fatigue, or defect follows.",
+      "access_and_limits": "Publisher landing did not open; primary publisher indexed abstract and relevant section excerpts independently retrieved. Full article unavailable.",
+      "evidence_files": [
+        "evidence/web-02.json",
+        "evidence/web-14.json"
+      ]
+    },
+    {
+      "source_id": "S13",
+      "title": "Siemens Mobility takes part in Network Rail trials to predict rough rides",
+      "url": "https://news.siemens.co.uk/news/siemens-mobility-takes-part-in-network-rail-trials-to-predict-rough-rides",
+      "version_or_date": "Siemens UK press release, 22 April 2022",
+      "primary_locator": "Trial description and operational-status paragraphs",
+      "subject_operation_and_type": "Vendor account of GSM-R platform trial on 80 South Western Railway trains.",
+      "governing_conditions_defaults_units_exceptions": "Six-month trial at about one month of operational testing; multivendor project. Page supplies early vendor claims, not independently measured performance metrics.",
+      "independent_semantic_judgment": "Implementation context is useful; final does not adopt vendor success as validation.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-04.json",
+        "evidence/web-06.json"
+      ]
+    },
+    {
+      "source_id": "I14",
+      "title": "NI, Anti-Aliasing Filters and Their Usage Explained",
+      "url": "https://www.ni.com/en/shop/data-acquisition/measurement-fundamentals/analog-fundamentals/anti-aliasing-filters-and-their-usage-explained..html",
+      "version_or_date": "Updated 27 January 2026",
+      "primary_locator": "Nyquist/analog filter discussion",
+      "subject_operation_and_type": "Acquisition fundamentals: frequencies beyond the usable sampled band can fold into it.",
+      "governing_conditions_defaults_units_exceptions": "An analog filter before digitization and practical transition-band margin matter; a generic rate cannot establish the unknown sensor/logger passband.",
+      "independent_semantic_judgment": "Independent corroboration for auditing bandwidth/filtering; not a new obligation or cart sampling prescription.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-14.json"
+      ]
+    },
+    {
+      "source_id": "I15",
+      "title": "NIST/SEMATECH e-Handbook, Choosing a sampling plan",
+      "url": "https://www.itl.nist.gov/div898/handbook/ppc/section3/ppc333.htm",
+      "version_or_date": "Live official handbook; retrieved 10 October 2026; no edition date inferred",
+      "primary_locator": "Objectives → precision → distribution → information → practicality workflow",
+      "subject_operation_and_type": "Choosing sample size for specified measurement objectives.",
+      "governing_conditions_defaults_units_exceptions": "Precision, response distribution and prior variability information govern count; practicality limits the design.",
+      "independent_semantic_judgment": "Supports C4’s endpoint-conditional planning. A numeric cart count would require information the brief withholds.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-10.json",
+        "evidence/web-12.json"
+      ]
+    },
+    {
+      "source_id": "I16",
+      "title": "NIST/SEMATECH e-Handbook, Two-level full factorial designs",
+      "url": "https://www.itl.nist.gov/div898/handbook/pri/section3/pri3331.htm",
+      "version_or_date": "Live official handbook; retrieved 10 October 2026; no edition date inferred",
+      "primary_locator": "Two-level design matrix, replication and factor interpretation",
+      "subject_operation_and_type": "Factorial comparisons of defined factors/levels.",
+      "governing_conditions_defaults_units_exceptions": "Runs cross the selected levels; replication is additional. A compound load condition is not independent variation of its components.",
+      "independent_semantic_judgment": "Supports interpreting the final speed × load-configuration screen without separately attributing mass versus placement. This does not demand a product or new field experiment.",
+      "access_and_limits": "Independent primary-source retrieval via web tool; raw excerpts preserved.",
+      "evidence_files": [
+        "evidence/web-15.json"
+      ]
+    }
+  ],
+  "independent_source_map": "source-map.json",
+  "evidence_index": "evidence/index.md",
+  "freeze_check": "freeze-verification.json",
+  "reviewer_native_goal": {
+    "threadId": "01a1249b-08b9-7af2-b633-f9dab4779635",
+    "direct_observation_file": "review-native-goal-observed.json",
+    "status_at_last_direct_observation": "active",
+    "completion_order": "Full judgment saved before actual native completion; exact response saved separately as review-native-goal-completion.json."
+  },
+  "save_verification_file": "save-verification.json",
+  "preservation_recheck_file": "save-verification.json"
+}

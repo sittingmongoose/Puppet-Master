@@ -1,0 +1,102 @@
+--- v3/prepare.py
++++ v4/prepare.py
+@@ -203,6 +203,10 @@
+             'unassessed':1, 'source_labels':dict(collections.Counter(labels.values())),
+             'missing_attempt':{'slot':MISSING[0],'arm':MISSING[1], 'disposition':'MISSING_PRE_INPUT_GUARD_FAILURE','assessment_state':'UNASSESSED'}}, labels
+ 
++def actual_config_path(slot, arm):
++    # ROLE arms used the saved native dispatch request itself as their actual config.
++    return f"runs/{slot}/{arm}/stages/role/request.json" if slot.startswith("B-") else f"configs/{slot}-{arm}.json"
++
+ def global_inventory(core, runtime, frozen, args):
+     """Finite ownership selection after the root quiet freeze; no source semantics."""
+     files={}; deps=[]; hash_records=[]; digests={}
+@@ -227,7 +231,7 @@
+     for arm in core['arms']:
+         slot,name=arm['armId'].rsplit('/',1)
+         tree(runtime/'runs'/slot/name);tree(runtime/'runs'/slot/'inputs')
+-        add(runtime/'configs'/f'{slot}-{name}.json')
++        add(runtime/actual_config_path(slot,name))
+         for base in ['frozen-inputs','cases','cases-rest','role-cases','role-cases-v2','future-cases']:
+             tree(runtime/base/slot)
+         if arm['delivery']['disposition']=='DELIVERED':tree(runtime/'assessment'/slot/(name+'-v1'))
+@@ -358,7 +362,11 @@
+     for a in f['attempts']:
+         s,arm=key(a)
+         require(any(p.startswith(f'runs/{s}/{arm}/') for p in selected), 'owned run missing')
+-        require(f'configs/{s}-{arm}.json' in selected, 'actual config missing')
++        cfg=actual_config_path(s,arm)
++        require(cfg in selected, 'actual config missing: '+cfg)
++        if s.startswith('B-'):
++            req=json.loads(raws[cfg])['args'];dispatch=json.loads(raws[f'runs/{s}/{arm}/stages/role/dispatch.json'])
++            require(req==dispatch['args'] and isinstance(req.get('target'),dict) and isinstance(req.get('clientRequestId'),str),'actual role request config/dispatch mismatch')
+     require(len({p.split('/')[1]+'/'+p.split('/')[2] for p in selected if p.startswith('assessment/') and p.endswith('/assessment.json')})==79,'exact original review selection required')
+     require(f.get('selection_complete') is True and f.get('required_coverage') == {
+         'all80_owned_runs_configs_prompts_requests_input_maps_briefs_plans_source_maps_dispositions_checks':True,
+@@ -403,19 +411,19 @@
+         if native_envelope(pub,obj):
+             result=encode(normalize({'schema':'er12.public-native-lifecycle.v1',
+                 'actual_lifecycle_metadata':extract_meta(obj),'original_capture_sha256':sha(b),
+-                'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub,
++                'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub,
+                 'omitted_activity_message_bodies':True,'omitted_source_coverage':U},clean))
+             save(public,pub,result)
+             projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                 'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited native envelope metadata projection',
+-                'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub})
++                'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub})
+         else:
+             projected=nested_native_projection(obj)
+             if projected!=obj:
+                 result=encode(normalize(projected,clean));save(public,pub,result)
+                 projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                     'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited embedded native envelope metadata projection',
+-                    'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/prior-public/'+pub})
++                    'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub})
+ 
+     # Authored portable implementations override capture-directory heuristics, as finalize does.
+     for v,n,checks in [('materialize-v2',21,236),('materialize-v3',33,194)]:
+@@ -448,7 +456,7 @@
+             d=json.loads(b); observations=[]
+             for r in d.get('reads',[]) if isinstance(d,dict) else []:
+                 observations.append({'actual_lifecycle_metadata':ns['extract_meta'](r.get('raw')),'observed_at':r.get('at_utc',r.get('at',U))})
+-            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
++            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
+             result=encode(normalize(projected,clean)); reason='actual native lifecycle projection; full messages private'
+         elif reason:
+             summaries=[];urls=[];selectors=[]
+@@ -457,14 +465,14 @@
+                 summaries.append({'authored_source_map':mp,'source_id':row.get('id',row.get('source_id',U)),'existing_authored_summary_fields':rr})
+                 urls += [v for v in row.values() if isinstance(v,str) and v.startswith(('https://','http://'))]
+                 selectors += [{k:v} for k,v in row.items() if re.search('locator|selector|line|anchor',k)]
+-            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
++            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
+             result=encode(normalize(projected,clean));omissions.append({'public_path':pub,**normalize(projected,clean)})
+         elif pub in recipe_pins: result=b
+         else:
+             try: obj=json.loads(b);result=encode(normalize(nested_native_projection(obj),clean))
+             except (ValueError,UnicodeDecodeError): result=clean(b.decode()).encode()
+         save(public,pub,result)
+-        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v3/'+args.output_name+'/private/originals/'+pub})
++        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub})
+     def jw(p,d): save(public,p,encode(normalize(d,clean)))
+     # Preserve historical editions before replacing current projections (already archived above).
+     current={'RESULTS.json','mechanics/SCIENTIFIC_PROGRESS.json','provenance/selected-checkpoint.json','README.md'}
+@@ -476,7 +484,7 @@
+     jw('mechanics/SCIENTIFIC_PROGRESS.json',{'counts':counts,'logical_arms':statuses,'source_grade_from_completion':False,'basis':'root-final immutable original whitelist'})
+     jw('provenance/FINAL_WHITELIST.json',{'attempts':f['attempts'],'delivered_original_finals':f['delivered_original_finals'],'original_completed_judgments':f['original_completed_judgments'],'freeze_sha256':initial_freeze_sha,'counts':counts})
+     jw('provenance/selected-checkpoint.json',{'counts':counts,'original_checkpoint_sha256':f['checkpoint']['sha256'],'assessment_states':statuses,'quiet_root_attestation':True})
+-    methodmap=[{'slot':a['slot'],'arm':a['arm'],'config':f"configs/{a['slot']}-{a['arm']}.json",'actual_files':[p for p in selected if p.startswith(f"runs/{a['slot']}/{a['arm']}/")],'requested_model_effort_tier':'retained in actual configs/requests','vendor_effective':U,'billing':U} for a in f['attempts']]
++    methodmap=[{'slot':a['slot'],'arm':a['arm'],'config':actual_config_path(a['slot'],a['arm']),'actual_files':[p for p in selected if p.startswith(f"runs/{a['slot']}/{a['arm']}/")],'requested_model_effort_tier':'retained in actual configs/requests','vendor_effective':U,'billing':U} for a in f['attempts']]
+     jw('provenance/FINAL_METHOD_CASE_VERSION_MAP.json',{'attempts':methodmap,'historical_map':'METHOD_CASE_VERSION_MAP.json','recipes':['recipes/materialize-v2/README.md','recipes/materialize-v3/README.md'],'production_qualified':False})
+     dependencies=[]
+     declared_dependencies={r['public_path'] for r in f['dependencies']}
+@@ -491,7 +499,7 @@
+         p=relpath(r['public_path']); require(p in selected or p in old,'selected dependency absent: '+p)
+         dependencies.append({**r,'public_sha256':sha((public/p).read_bytes()),'available':True})
+     jw('provenance/SELECTED_INPUT_DEPENDENCIES.json',{'dependencies':dependencies,'original_hash_namespace':'frozen selected original SHA','public_hash_namespace':'sanitized projection SHA','complete_root_inventory':True})
+-    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v3/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
++    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v4/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
+     jw('provenance/FINAL_NAVIGATION.json',{'counts':counts,'results':'RESULTS.json','progress':'mechanics/SCIENTIFIC_PROGRESS.json','methodmap':'provenance/FINAL_METHOD_CASE_VERSION_MAP.json','whitelist':'provenance/FINAL_WHITELIST.json','dependencies':'provenance/SELECTED_INPUT_DEPENDENCIES.json','lineage':'provenance/FINAL_PRIVACY_AND_LINEAGE.json','analysis':next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve()),'historical_editions':'historical/pre-final/'})
+     analysis_rel=next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve())
+     save(public,'README.md',public_readme(counts,analysis_rel).encode())

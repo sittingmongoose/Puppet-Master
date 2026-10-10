@@ -1,0 +1,438 @@
+{
+  "captured_at_utc": "2026-10-10T06:27:50.705823+00:00",
+  "note": "All scoped current control files hashed before review writes. Hidden invocation backups not read; no other arms/outcomes/history inspected. Hashes establish identity, not semantic proof.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/control/run.json",
+      "bytes": 582,
+      "sha256": "a78d56e46180cee41b749e59b3f8176076cb415be5b4c4b7f4dc05fd43678004",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "a78d56e46180cee41b749e59b3f8176076cb415be5b4c4b7f4dc05fd43678004",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/inputs/brief.md",
+      "bytes": 2521,
+      "sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "6b0feb927c0c7c8a684358b9124f9244f9b461213955835289cfa4d9e032082f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/critique.md",
+      "bytes": 13934,
+      "sha256": "f402aad5cf170c28b5b9544ff922d732bb648c961f32b70d5859435ab808bdd7",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f402aad5cf170c28b5b9544ff922d732bb648c961f32b70d5859435ab808bdd7",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "22e33491ef2cd2f0df105a73a16f66ab63f9e508e2dbf5af97f6f49d18163639",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "22e33491ef2cd2f0df105a73a16f66ab63f9e508e2dbf5af97f6f49d18163639",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "ac510a089083eeacaec390e324470857b5e097f1f6cb23c07e2ad3088f9024ac",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "ac510a089083eeacaec390e324470857b5e097f1f6cb23c07e2ad3088f9024ac",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "a77acddeaa5b055822fbdcf747f6925cc6e4e93578b0e124532e2f6e29154022",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a77acddeaa5b055822fbdcf747f6925cc6e4e93578b0e124532e2f6e29154022",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "64b70a9e051e2afd05acfd78bf5a7f2451fbe464c16c60e7430c8cb064a008a9",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "64b70a9e051e2afd05acfd78bf5a7f2451fbe464c16c60e7430c8cb064a008a9",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "eab2afda19679eca2b2587365b34a67a74b62e915c1c2ea2308f3d0e5c3c29c0",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "eab2afda19679eca2b2587365b34a67a74b62e915c1c2ea2308f3d0e5c3c29c0",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_activation.json",
+      "bytes": 467,
+      "sha256": "cd41e35e754e4f0b50b98376e519dbf8dc3c6e40366f2ca51a9c859ad1f28462",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "cd41e35e754e4f0b50b98376e519dbf8dc3c6e40366f2ca51a9c859ad1f28462",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_binding_guard.txt",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/native_goal_completion.json",
+      "bytes": 796,
+      "sha256": "1c2ba94d72346afe083c6e4625291cc99a2b4473e961b9d92b603fd501d7f4fe",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "1c2ba94d72346afe083c6e4625291cc99a2b4473e961b9d92b603fd501d7f4fe",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "2cfd4fa39ebcb92312254b28b843c2e39711e47473a3c26bacab408caf52b031",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "2cfd4fa39ebcb92312254b28b843c2e39711e47473a3c26bacab408caf52b031",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "d3cc4bf0426f950be5c3e52ecc3b1e9ed33f738879db747c3ea46123eb6d1a3c",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d3cc4bf0426f950be5c3e52ecc3b1e9ed33f738879db747c3ea46123eb6d1a3c",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/source-map.json",
+      "bytes": 11857,
+      "sha256": "73cb990cad87a0b6d19ed143d5c847ba507a42592e77383b8b4439bd7eb53268",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "73cb990cad87a0b6d19ed143d5c847ba507a42592e77383b8b4439bd7eb53268",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/sources/INDEX.md",
+      "bytes": 2319,
+      "sha256": "01ea8b9b7c008d71c5fa48966cacd495112cbd823c62c1bbb36fdf317238af32",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "01ea8b9b7c008d71c5fa48966cacd495112cbd823c62c1bbb36fdf317238af32",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/critic/status.json",
+      "bytes": 3728,
+      "sha256": "0119e0094358d4725fa26498f424d35ed958ea3f2acba29d3c986bb4c5b92991",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "0119e0094358d4725fa26498f424d35ed958ea3f2acba29d3c986bb4c5b92991",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f5edd287f91e8961180822875e9c79e68e15fceeb7648e85143834c95b2bbfb1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 14715,
+      "sha256": "e85c7be9c7e519237bdccd247f9c892fb058adcfc6a0df2d8556c224eced1ac0",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "e85c7be9c7e519237bdccd247f9c892fb058adcfc6a0df2d8556c224eced1ac0",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "a0942fac7a43beab1354bc11fedf6c13de5f5c2b41111bb2e10ab654c1bf3500",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "a0942fac7a43beab1354bc11fedf6c13de5f5c2b41111bb2e10ab654c1bf3500",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/draft.md",
+      "bytes": 30735,
+      "sha256": "944f6ed7784b67c842bb8224d831b437962e93f302a528eaca1ab7ebcf34b493",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "944f6ed7784b67c842bb8224d831b437962e93f302a528eaca1ab7ebcf34b493",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "098a34e74c75be0262b28a56498552e5d3e413b2db237c73e39a78713ce7c3b4",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "098a34e74c75be0262b28a56498552e5d3e413b2db237c73e39a78713ce7c3b4",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "0d11fa933235bd1d53e86c83dd12fee79841aab17f645e1cb6952f500ee9c631",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "0d11fa933235bd1d53e86c83dd12fee79841aab17f645e1cb6952f500ee9c631",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "041806d95e357489cd7d86e0899775f13b4316eaa88498e1bf87bcc28ffab21f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "041806d95e357489cd7d86e0899775f13b4316eaa88498e1bf87bcc28ffab21f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "d879ac27d9e505f894e4b522cf2b9d8570408e57cc5946a974c5b5246729b3cd",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d879ac27d9e505f894e4b522cf2b9d8570408e57cc5946a974c5b5246729b3cd",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-activation.json",
+      "bytes": 479,
+      "sha256": "b9517310d84deaec14dced26a406349dc4a9fcd7481c55c2c1b2fb9ca252a37e",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "b9517310d84deaec14dced26a406349dc4a9fcd7481c55c2c1b2fb9ca252a37e",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-binding-guard.txt",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/native-goal-completion.json",
+      "bytes": 808,
+      "sha256": "a9cc6b6dcfb2dd4e0de247533e64bc7be62d1c73f3d5803c050a4c12089e7c50",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cc6b6dcfb2dd4e0de247533e64bc7be62d1c73f3d5803c050a4c12089e7c50",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/plan-release-receipt.json",
+      "bytes": 412,
+      "sha256": "9cd11b85d72f29f9617e9b30d422808d62ccf37bdc9fb9f5707d1a42bbe664e3",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "9cd11b85d72f29f9617e9b30d422808d62ccf37bdc9fb9f5707d1a42bbe664e3",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "52b2f39c81c576743f5e592ec9f95b057849c034db0890bfd3c8ca2e40119169",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "52b2f39c81c576743f5e592ec9f95b057849c034db0890bfd3c8ca2e40119169",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "e0532aca479527209dccae49fa06adf38a249aa077a302da93f127c118699dee",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "e0532aca479527209dccae49fa06adf38a249aa077a302da93f127c118699dee",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6718,
+      "sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "51660a9d23e445a0cc5b03a01d4868a28203b5e456c18ceb8f2d76e1d51f00d8",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "51660a9d23e445a0cc5b03a01d4868a28203b5e456c18ceb8f2d76e1d51f00d8",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 12885,
+      "sha256": "273408ce6205481baaae3bf7e4a21bf8c8f1c37b639420b0162c956f3842099b",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "273408ce6205481baaae3bf7e4a21bf8c8f1c37b639420b0162c956f3842099b",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/sources/INDEX.md",
+      "bytes": 3205,
+      "sha256": "91fab66dfff5a60c37f99b7aa93a95ed0eaf21dd42acf7ee467e744b09fa0ab8",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "91fab66dfff5a60c37f99b7aa93a95ed0eaf21dd42acf7ee467e744b09fa0ab8",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/status.json",
+      "bytes": 4248,
+      "sha256": "4aafb94369ca6b9f5473e521b4e82280d29402c7baca6a8184a87a81a38dbd79",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "4aafb94369ca6b9f5473e521b4e82280d29402c7baca6a8184a87a81a38dbd79",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "0a9c05e5332018b222f75e967b65a4b7f834bed7f25e6b0426fe3fb92abef775",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "4991c7488c75fa63aacbab75cf408be0d7b7b9c8f4c8a56b096ba6d4f310dff3",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "4991c7488c75fa63aacbab75cf408be0d7b7b9c8f4c8a56b096ba6d4f310dff3",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "d2ed5d449239789f5bcef38e3a895a05c800c8bfa9d394f52457face735678c9",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "d2ed5d449239789f5bcef38e3a895a05c800c8bfa9d394f52457face735678c9",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+      "bytes": 23514,
+      "sha256": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/freeze.json",
+      "bytes": 4093,
+      "sha256": "e1e1aedce961eb659415f86bb64617a26622bc15e7de61134203e1bc241df83a",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "e1e1aedce961eb659415f86bb64617a26622bc15e7de61134203e1bc241df83a",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "6b0aa927adcf726c166a6cc8aeb9f2b7fd1a4db7b6bf2c5bc7c8f4900455ad00",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "6b0aa927adcf726c166a6cc8aeb9f2b7fd1a4db7b6bf2c5bc7c8f4900455ad00",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "0ac6ada8f6c8ea535028279d260bb1749b118630eeb98200a70ad232ba6ec9bf",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "0ac6ada8f6c8ea535028279d260bb1749b118630eeb98200a70ad232ba6ec9bf",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json",
+      "bytes": 528,
+      "sha256": "182c7b37c8b4441eaee7e1bc61cabe3b178d381e086d52342ce75b708f2dd443",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "182c7b37c8b4441eaee7e1bc61cabe3b178d381e086d52342ce75b708f2dd443",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json",
+      "bytes": 857,
+      "sha256": "542d2289c5178e2a8421296878a0ace13bf2efd45480182f3d6132df02d5f744",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "542d2289c5178e2a8421296878a0ace13bf2efd45480182f3d6132df02d5f744",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "5cd6f40d7d739a5f0aaeda0b0097a9f7cda4549b103dd7b1ed86db051b2725da",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "5cd6f40d7d739a5f0aaeda0b0097a9f7cda4549b103dd7b1ed86db051b2725da",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "1fc4935ca4d7e0dbaa2b4ceeda7b0911704f3ebf9797a688e9267883f1fded35",
+      "inspection_scope": "Identity hashed only; optional mechanics not used as semantic proof",
+      "current_sha256_at_save": "1fc4935ca4d7e0dbaa2b4ceeda7b0911704f3ebf9797a688e9267883f1fded35",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 22068,
+      "sha256": "f28a5a3b8694b9521bce81f2a64ce812896ed32f01b7d7c9592c96089d131536",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "f28a5a3b8694b9521bce81f2a64ce812896ed32f01b7d7c9592c96089d131536",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md",
+      "bytes": 3057,
+      "sha256": "2e543f41adf4e8e101a6502881e84a2e091aebf7bdc7f87fa5f497a1c2ab1929",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "2e543f41adf4e8e101a6502881e84a2e091aebf7bdc7f87fa5f497a1c2ab1929",
+      "unchanged_from_initial_hash": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-01/control/terminal-science-freeze-root.json",
+      "bytes": 8617,
+      "sha256": "7fd35858498837be1ce327d3d06d03021b2ec74f3f98c61a48d2157d0ea7c1cf",
+      "inspection_scope": "FULL substantive bytes read and semantically inspected",
+      "current_sha256_at_save": "7fd35858498837be1ce327d3d06d03021b2ec74f3f98c61a48d2157d0ea7c1cf",
+      "unchanged_from_initial_hash": true
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+# Independent critic — uneven runoff entry into a demonstration rain garden
+
+## Review basis and overall assessment
+
+I reviewed the original brief, the complete investigator discovery and draft, the investigator source map and its navigable source index, and the exact revealed plan. I checked the consequential guidance and research claims against the cited primary pages or official release records, with source-by-source access notes in [source-map.json](source-map.json) and a short navigation page in [sources/index.md](sources/index.md). I did not use parent history, another candidate, campaign evaluations, or unlisted case files.
+
+**Assessment:** The proposal is substantively faithful to the brief and revealed plan. It keeps entry capture, temporary storage, infiltration/drainage, and downstream routing distinct; offers conditional routing, maintenance/soil inquiry, and observation-first options; retains site unknowns; and does not present a repair or a local performance conclusion. I found no material wrong claim or boundary violation. The two narrow concerns are (1) the packet does not establish whether the requested full 60-minute research window was actually used, and (2) one speculative mechanism and one software-release description could be more tightly grounded.
+
+## Coverage against the original brief and exact plan
+
+| Obligation or plan opportunity | Draft location | Critic finding |
+|---|---|---|
+| Distinguish entry capture, temporary storage, infiltration/drainage, and downstream effects | “Mechanisms, evidence, and alternatives,” subsections 1–4; event log | Addressed separately. The draft records approach/entry/bypass, ponding/overflow/recession, possible media/native-soil/underdrain routes, and observed downstream erosion or ponding. It does not use bypass as proof of infiltration failure. |
+| Compare inlet/surface routing, maintenance/soil inquiry, and observation-first | “Conditional alternatives for partner discussion” | Addressed. The alternatives are tied to different observations and missing geometry/history. Observation-first is a defensible first information step; no retrofit or soil treatment is selected. This matches the plan’s explicit no-winner design and conditional acceptance of limited capture where consistent with owner purpose. |
+| Include rainfall intensity and duration, antecedent wetness, debris/maintenance, local geometry; do not assume compaction | Mechanism section; “Proposed later field program” | Addressed. Event variables, prior dry interval/wetness proxy, debris, cleaning, as-builts, and qualified survey are included. The delivery remains an unverified lead. |
+| Investigate installation and recent maintenance; limit transfer from other gardens | “Installation and maintenance history to investigate”; transfer discussion | Addressed as a records request and chronology, which is appropriate because the hypothetical case provides no records. The limits of Minnesota guidance, EPA guidance, the UMN pretreatment tests, and the Beijing systems are stated. The draft does not imply that those materials describe this site. |
+| Propose event comparisons, feasible measurements, uncertainty, escalation/stop conditions; distinguish proposed and executed work | “Proposed later field program”; “Executed work versus proposed validation” | Addressed. The 4–6 event pilot is explicitly pattern-finding, not statistical certification. Measurements and safe access are conditional on permission. The draft clearly says that no site visit, test, model, water balance, or repair occurred. |
+| Preserve boundaries: no excavation, curb change, redirect, infiltration testing, dimensions, unsupported benefit/compliance claims, or invented site values | Whole draft, especially “Executed work versus proposed validation” | No violation found. Alternatives remain discussion topics for a qualified partner; no local flood, pollutant, or compliance result is claimed. |
+| Preserve unresolved drainage boundary, geometry/layers/overflow, storms, access/permission, and partner priority | Decision summary; preparation; “Owner/partner decisions required” | Addressed, with direct consequences for measurement and interpretation. |
+| Exact plan: investigate design intent/history, useful alternatives, water-balance usefulness and limits, and why untimed photos are inadequate | “Conditional water-balance use”; history section; storage section | Addressed. The balance is explicitly conditional on defining boundaries and measuring terms; it is not presented as a result. The photo limitation is correctly explained. |
+
+## Findings that need attention
+
+### 1. Full-window use is not verifiable from this packet
+
+**Classification: honestly unresolved external input; auditability gap.** The brief expressly requests use of the full 60-minute research window. The draft reports the research activities and the source map has source-access timestamps, but neither supplies the session start/end or elapsed-time record. Source-access timestamps alone cannot establish how long the researcher worked. This is not proof that the window was missed; the run-level timing record is needed to determine compliance.
+
+### 2. High water table is a plausible but uncited mechanism
+
+**Classification: unsupported (low consequence).** In discovery, “Competing explanations,” paragraph 3, a high water table is listed among possible reasons for slow recession. It is presented as a hypothesis, not a site finding, and the draft does not use it to recommend an action. The cited sources checked here do not directly substantiate that particular mechanism for this case. Keep it explicitly hypothetical and source it if it is retained as a material explanatory pathway.
+
+### 3. Narrow the description of SWMM v5.2.4 fixes
+
+**Classification: minor locator/wording.** Discovery’s “Evidence and useful approaches” and the draft’s transfer discussion summarize the release as fixing “curb-inlet/gutter calculations.” The official release identifies particular corrections: gutter slope for street links with depressed gutters, and effective hydraulic head for a curb inlet with an inclined throat; it also lists LID-layer flux and underdrain-input fixes. The broad summary is directionally right but could imply wider coverage than the release record supports. This does not affect the draft’s optional, future-only recommendation to confirm and pin a model version.
+
+No material wrong claim was found in the reviewed packet. No other material omission from the scientific proposal was identified. The potential use of a 48-hour observation is handled correctly: it is framed as a conditional investigation prompt in some guidance, not a known local criterion or diagnosis.
+
+## Independent evidence check
+
+- **Bypass and inlet alternatives ([S02], [S03]).** MPCA describes high-flow bypass when a bioretention cell reaches maximum ponding and says an offline curb cut can let flow continue down the gutter. EPA’s 2021 handbook likewise says flow at capacity may bypass downgradient; it discusses placement/grading and a berm or runnel for certain steep-flow conditions. The draft’s conditional interpretation is supported, and it does not transplant the handbook’s dimensions.
+- **Drawdown, 48-hour language, and maintenance ([S01], [S04], [S05], [S09]).** MPCA’s general rain-garden page gives a one-to-two-day drainage statement and routine inlet checks, but this is not a local criterion. MPCA’s O&M table uses a 48-hour post-rain inspection schedule after the first year and notes deep sumps can pond; its troubleshooting table associates standing water beyond 48 hours with possible surface sediment/clogging. EPA’s 2016 memo calls standing water at 48 hours an example reason for further evaluation, says frequency depends on drainage area, activity, and rainfall, and recommends staff-gage or other level measurements to monitor decline. EPA’s 2023 handbook supports checking for inlet debris, grading/damage, and sediment. The draft’s caveat that 48 hours is not a universal limit is essential and correct.
+- **Assessment and pretreatment ([S06], [S07], [S08]).** MPCA distinguishes quick visual inspection from capacity testing, synthetic-runoff testing, and monitoring; Level 1 does not yield numeric performance data. Its pretreatment guidance makes selection conditional on flow type, debris, space, topography, and maintenance. The UMN project page confirms the named five test configurations and reports intensity-dependent capture, reduced gross-solids retention in the tested sump under overflow, and relative maintenance differences. The draft states these as bounded analog evidence, not site performance or a product endorsement.
+- **Recent study ([S10]).** The publisher record supports the cited use of event and antecedent-storage variables and identifies two contrasting roof-fed Beijing systems. The draft only uses this as a reason to record event context and warn against transfer. The source-map appropriately discloses the original review limit; detailed five-minute rainfall-method wording was not independently confirmed beyond the accessible publisher-indexed material in this pass.
+- **Modeling ([S11], [S12]).** EPA’s SWMM 5.2 manual describes parameterized vertical LID layers and a moisture balance. The v5.2.4 release record supports the existence of the stated corrections. The draft correctly says no model was run and that any future model depends on verified site inputs.
+
+## Proposed versus executed work
+
+The draft’s executed-work statement is consistent with its evidence: it reports desk research and conceptual synthesis, while explicitly disclosing that there was no site visit, record retrieval, rainfall/soil/catchment measurement, field test, engineering survey, numerical water balance, simulation, repair, or water-quality/flood assessment. The event program, measurements, and escalation rules are proposals, not validations already performed. Any later records, permissions, local criteria, or site measurements remain external inputs.
+
+## Conclusion
+
+The investigator package is suitable as a scoped research proposal for discussion with a qualified site partner. Its strongest feature is that it does not collapse entry, storage, and drainage into one diagnosis. The remaining record-level uncertainty is whether the full 60-minute research window was used. The high-water-table sentence and the broad v5.2.4 wording are limited evidence/precision issues; neither changes the proposal’s core direction.

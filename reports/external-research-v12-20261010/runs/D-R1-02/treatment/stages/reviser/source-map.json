@@ -1,0 +1,178 @@
+{
+  "schema_version": "er12-source-map-v1",
+  "run_id": "D-R1-02-treatment",
+  "stage": "reviser",
+  "native_goal_objective": "ER12 reviser stage, run D-R1-02-treatment: execute ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "goal_binding": {
+    "activation_response_file": "native-goal-activation-response.json",
+    "activation_response_is_exact_complete_tool_output": true,
+    "guard_command": "python3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser --json '<exact complete create_goal response>'",
+    "guard_response_raw": "{\"ok\": true, \"provenance_independently_proved\": false}",
+    "guard_passed": true,
+    "provenance_independently_proved": false
+  },
+  "package_identity": {
+    "revealed_plan_path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/revealed-plan.md",
+    "revealed_plan_sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+    "plan_reveal_record_path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/plan-reveal.json",
+    "case_id_in_brief_and_revealed_plan": "ER12-D-R1-02-FRESH"
+  },
+  "source_ids_are_immutable_within_stage": true,
+  "source_id_binding_note": "S01-S08 preserve the investigator bindings. S08 retains the unversioned exact_url and records the reviewed arXiv v1 separately. S05 direct reviser retrieval failed; the supplied critic map retains its source identity.",
+  "reviser_retrieval_batch_access_utc": "2026-10-10T06:51:42Z",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "ADXL354/ADXL355 Data Sheet",
+      "exact_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/adxl354_adxl355.pdf",
+      "released_version_or_commit": "Rev D; revision history June 2025 (Rev C to Rev D).",
+      "locator": "PDF pp. 4-6 (ranges); pp. 23-27 (filter defaults, group delay); pp. 28-29 (I2C); pp. 32-33 (synchronization); corresponding manufacturer PDF text at lines 724-730, 914-919, 1023-1028.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Direct manufacturer datasheet review confirmed ADXL355 selectable ±2/±4/±8 g ranges; configurable power-up HPF off, LPF 1000 Hz and ODR 4000 Hz; 0.63 ms digital filter group delay at programmed 4 kHz ODR; and external synchronization timing semantics.",
+      "governing_condition_default_exception": "Filter and ODR values are power-up defaults and configurable. The datasheet recommends a maximum 800 Hz ODR at 400 kHz I2C; higher ODR can cause missed samples or added noise. Synchronization modes differ in delay and sample-time meaning.",
+      "applicability": "Concrete ADXL355 example for acquisition audit and a possible reference only. It neither identifies nor specifies the cart logger.",
+      "reviser_recheck": "Direct manufacturer PDF opened and relevant sections reviewed."
+    },
+    {
+      "source_id": "S02",
+      "title": "Measuring Vibration with Accelerometers",
+      "exact_url": "https://www.ni.com/en/shop/data-acquisition/sensor-fundamentals/measuring-vibration-with-accelerometers.html",
+      "released_version_or_commit": "Current HTML; no dated release or commit displayed.",
+      "locator": "Choosing the Right Accelerometer; Number of Axes; Weight; Mounting Options; Signal Conditioning.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Vendor guide reviewed for mount compliance, added mass, triaxial sensing, range/sensitivity, IEPE conditioning, and calibration considerations.",
+      "governing_condition_default_exception": "Numeric mount-frequency illustrations are for a typical 100 mV/g accelerometer; they are not universal. Looser attachment reduces usable frequency, and added mounting mass can lower resonance.",
+      "applicability": "General measurement-design guidance for a future reference and bracket comparison; confirm limits for the selected sensor/structure.",
+      "reviser_recheck": "Direct NI page opened and mount, mass and conditioning passages reviewed."
+    },
+    {
+      "source_id": "S03",
+      "title": "EVAL-ADXL355Z Linux command line for setting the sample frequency",
+      "exact_url": "https://ez.analog.com/linux-software-drivers/f/q-a/569014/eval-adxl355z-linux-command-line-for-setting-the-sample-frequency/493909",
+      "released_version_or_commit": "Q&A opened 2023-04-12; verified vendor response 2023-05-15; EVAL-ADXL355Z, PetaLinux 2022.2/Linux 5.15.36, IIO over SPI at 6.25 MHz.",
+      "locator": "User setup/report around lines 278-328; vendor support response and interrupt counts around lines 346-395.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "The user reported 4 kHz configured and about 2 kHz effective output. Vendor support described missed data-ready interrupts reproduced on a Raspberry Pi path and suggested reading the hardware FIFO on FIFO-full.",
+      "governing_condition_default_exception": "A specific non-real-time Linux interrupt path and implementation. FIFO handling was proposed for future work; the thread does not confirm a shipped fix.",
+      "applicability": "Bounded implementation failure mode motivating effective-rate/loss checks; not evidence of a general sensor defect or cart behavior.",
+      "reviser_recheck": "Direct original user and vendor posts reviewed; the page's generated summary was not used as sole evidence."
+    },
+    {
+      "source_id": "S04",
+      "title": "Simultaneous Measurements of the Vehicle, Track, and Soil Vibrations at a Surface, Bridge, and Tunnel Railway Line",
+      "exact_url": "https://onlinelibrary.wiley.com/doi/10.1155/2017/1959286",
+      "released_version_or_commit": "2017 version of record; DOI 10.1155/2017/1959286; underlying field campaign in 1994.",
+      "locator": "Sections 2.1-2.4 and 4-5; measurement equipment, procedures, and speed comparisons.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Primary field report describes vehicle accelerometers, track/soil geophones, multiple measurement positions, several track structures, and speed-varying train passages. The 72-channel 2 kHz system is specified for the surface-line section; smaller systems served other sections and the vehicle.",
+      "governing_condition_default_exception": "Passenger train and specified railway structures; the measuring car used a 100 kN axle load and 1500 kg wheelset mass. Sampling-rate details differ by section.",
+      "applicability": "Supports synchronized multi-location references and speed comparison as methods; no cart threshold, amplitude, diagnosis, or safety transfer.",
+      "reviser_recheck": "Direct Wiley version-of-record page opened; measurement-rate and speed-dependent response passages reviewed."
+    },
+    {
+      "source_id": "S05",
+      "title": "Assessment of integration method for displacement determination using field accelerometer and geophone data",
+      "exact_url": "https://jzus.zju.edu.cn/article.php?doi=10.1631/jzus.A1600212",
+      "retrieved_content_url": "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212",
+      "released_version_or_commit": "2017 version of record; Journal of Zhejiang University Science A 18(7), 553-566; DOI 10.1631/jzus.A1600212.",
+      "locator": "Abstract; field-study methods/results and conclusions, pp. 553-566.",
+      "access_utc": "2026-10-10T06:52:23Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "The supplied investigator and critic source maps describe a primary field study comparing accelerometer/geophone-derived displacement with a sleeper LVDT and discussing filtering, speed, load, repeatability, and validity.",
+      "governing_condition_default_exception": "Specific conventional railway track-bed displacement method, sensor placements, speeds, axle loads, and filtering assumptions; its numerical validity conditions are not transferable.",
+      "applicability": "Method precedent for independent reference instruments and explicit operating validity only; does not validate cart vibration or diagnosis.",
+      "reviser_recheck": "Attempted both official journal landing and full-text URLs at the stated reviser access time; both returned an internal error. No new direct extraction or numerical claim was made in this stage."
+    },
+    {
+      "source_id": "S06",
+      "title": "Experimental Study of Wheel-to-Rail Interaction Using Acceleration Sensors for Continuous Rail Transport Comfort Evaluation",
+      "exact_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10574946/",
+      "released_version_or_commit": "2023-09-25 version of record; Sensors 23(19):8064; DOI 10.3390/s23198064; current HTML notes updates through 2026-08-27.",
+      "locator": "Sections 2.1-2.4 and 4; tables 4-5; sensor positions and acquisition description.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Primary rail-wagon study reviewed for axle-box and car-body sensor positions, empty/loaded conditions, and 50 ms (20 Hz) data collection intervals.",
+      "governing_condition_default_exception": "Specific wagon/test-center comfort evaluation and acquisition design; the reported rate does not establish high-frequency defect-impact capture.",
+      "applicability": "Method precedent for load and sensor-position comparisons only; no cart threshold or diagnostic transfer.",
+      "reviser_recheck": "Direct PMC article page opened; sensor placement and 50 ms collection passage reviewed."
+    },
+    {
+      "source_id": "S07",
+      "title": "Order tracking — Dewesoft X Manual EN",
+      "exact_url": "https://manual.dewesoft.com/x/setupmodule/modules/machinery/ordertracking",
+      "released_version_or_commit": "Current online Dewesoft X manual page; no release date or pinned version displayed.",
+      "locator": "Overview/hardware notes; setup sample rate; angle/RPM input and frequency-channel settings.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Vendor module manual calls for an accelerometer plus angle/RPM input and says at least 10 kHz in many cases; it distinguishes angle-sensor inputs from RPM/signal tracking.",
+      "governing_condition_default_exception": "Dewesoft product/module guidance, not a universal sample-rate requirement. Signal tracking does not establish absolute zero-angle phase.",
+      "applicability": "Optional wheel-order analysis reference only; does not locate events along the cart route or diagnose a fault.",
+      "reviser_recheck": "Direct Dewesoft manual page opened; hardware and sample-rate guidance reviewed."
+    },
+    {
+      "source_id": "S08",
+      "title": "A methodology for the measurement of track geometry based on computer vision and inertial sensors",
+      "exact_url": "https://arxiv.org/abs/2008.03763",
+      "reviewed_version_url": "https://arxiv.org/abs/2008.03763v1",
+      "released_version_or_commit": "arXiv v1, submitted 2020-08-09.",
+      "locator": "Version-pinned v1 abstract; sections 2, 7-10, and 12 as described in the supplied source maps.",
+      "access_utc": "2026-10-10T06:51:42Z",
+      "prior_access_utc": [
+        "2026-10-10T06:27:50Z investigator",
+        "2026-10-10T06:41:47Z critic"
+      ],
+      "observed_operation": "Version-pinned primary methods preprint abstract describes a railway track geometry system with data acquisition, an IMU, two cameras, and an encoder; the stated installation assumes the equipment sees rail heads while moving.",
+      "governing_condition_default_exception": "Proposed railway track-geometry system, not a demonstrated cart implementation. The investigator's unversioned landing URL is retained and the reviewed v1 is recorded separately; no silent source-ID rebinding.",
+      "applicability": "Spatial-reference precedent only; does not establish cart location accuracy, fault detection, or safety.",
+      "reviser_recheck": "Direct v1 arXiv abstract opened. Version pin was checked against the supplied critic map; specific full-text calibration/rigidity conditions remain bounded to that record."
+    }
+  ],
+  "source_index": "sources/index.md",
+  "execution_record": {
+    "case_specific_data_received": false,
+    "cart_or_track_operated": false,
+    "field_or_bench_measurements_run": false,
+    "simulation_or_raw_data_check_run": false,
+    "sample_rate_computation_run": false,
+    "thresholds_tuned": false,
+    "direct_primary_source_rechecks": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S06",
+      "S07",
+      "S08"
+    ],
+    "direct_retrieval_failed": [
+      "S05 official landing and full-text endpoints; internal error"
+    ],
+    "performed": "Assigned package review, revealed-plan SHA-256 verification, bounded primary-source rechecks, explicit disposition of critic findings, and proposal/source-map authoring.",
+    "not_performed": "No case-data analysis, simulation, sample-rate calculation, bench/field test, cart movement, track access, sensor installation, physical inspection, diagnosis, accuracy estimate, field threshold change, or safety determination."
+  }
+}

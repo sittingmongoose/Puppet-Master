@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-10T06:37:53.732057+00:00",
+  "status": "PREPARED_FUTURE_D2_ONLY_NOT_LOCKED_OR_DISPATCHED",
+  "additive_change": "Original startReplication and advance copied with one exactSpec load substitution and explicit D2 prefix restriction; new exactSpec calls original v1 then future v2.1 overlay. Original D1 sources unchanged. No actual D2 input/config/stage access.",
+  "files": [
+    {
+      "path": "mechanics/native-root-code-mode/startReplicationV21JS.js",
+      "sha256": "1633c28edd21fbe0a549d1d4433a9504fa5658cc403221f7694ee4497f491f1e"
+    },
+    {
+      "path": "mechanics/native-root-code-mode/advanceV21JS.js",
+      "sha256": "aa0ca7e2b29d0479d28d72a93653f466765ef888d3cf48ce3065022485797507"
+    },
+    {
+      "path": "mechanics/native-root-code-mode/exactSpecV21JS.js",
+      "sha256": "ce115b5ff17bf35e6ac7adcc31768f2b68c18b078a9b04e702704c25eb5b7e7c"
+    }
+  ]
+}

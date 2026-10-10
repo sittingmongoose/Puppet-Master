@@ -1,0 +1,576 @@
+{
+  "run_id": "C-R2-02-control",
+  "stage": "reviser",
+  "source_identity_policy": "Stable upstream source IDs are retained only for identical exact URLs and identities; no silent rebinding. New direct checks are attached to the existing S06 and S08 identities. Source claims remain conditional on their recorded access/locator evidence.",
+  "access_time_precision": "Web tools exposed observation windows/checkpoints, not per-request server timestamps. Preserve those windows; do not infer exact fetch times.",
+  "native_goal": {
+    "objective": "ER12 reviser stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "activation_response_raw": "{\"goal\": {\"threadId\": \"01a1247c-196d-7cd3-984c-c5d6a88840a4\", \"objective\": \"ER12 reviser stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\", \"status\": \"active\", \"tokensUsed\": 0, \"timeUsedSeconds\": 0, \"createdAt\": 1791613489, \"updatedAt\": 1791613489}, \"remainingTokens\": null, \"completionBudgetReport\": null}",
+    "activation_response": {
+      "goal": {
+        "threadId": "01a1247c-196d-7cd3-984c-c5d6a88840a4",
+        "objective": "ER12 reviser stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791613489,
+        "updatedAt": 1791613489
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "binding_guard_response_raw": "{\"ok\": true, \"provenance_independently_proved\": false}",
+    "binding_guard_response": {
+      "ok": true,
+      "provenance_independently_proved": false
+    },
+    "activation_utc_timestamp": "UNKNOWN",
+    "independently_verified_provenance": "UNKNOWN; guard returned provenance_independently_proved=false",
+    "returned_native_timestamp_fields_note": "The exact returned createdAt and updatedAt numeric values are preserved in activation_response; timestamp units were not independently established.",
+    "completion_response_path": "native-goal-completion.json; written after completion of this same Goal."
+  },
+  "input_artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/input-map.json",
+      "sha256": "e2d1660783998a1dcf72cac7a058909534880d136b5ad7ecff37aff2b21fa632",
+      "bytes": 1794
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+      "sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+      "bytes": 10313
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+      "sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+      "bytes": 26180
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+      "sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+      "bytes": 22102
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/revealed-plan.md",
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+      "bytes": 6612
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+      "sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+      "bytes": 431
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+      "sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+      "bytes": 9973
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/source-map.json",
+      "sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+      "bytes": 9790
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/inputs/brief.md",
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+      "bytes": 2549
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md",
+      "sha256": "964613791bf5b7340a9df2cb431b4513cea7e4be4b2182184b8691e9c56fc246",
+      "bytes": 5504
+    }
+  ],
+  "released_plan_receipt": {
+    "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+    "revealed_at_utc": "2026-10-10T05:57:45.885Z",
+    "plan_sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+    "plan_bytes": 6612,
+    "discovery_sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+    "discovery_bytes": 10313,
+    "single_use": true
+  },
+  "upstream_source_map_observations": {
+    "investigator": {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "access_utc_window": {
+        "earliest_observed_checkpoint": "2026-10-10T05:49:35Z",
+        "latest_observed_checkpoint_at_initial_source_inspection": "2026-10-10T05:54:08Z"
+      },
+      "executed_searches": {
+        "search_types": [
+          "public web search for method/tool documentation",
+          "open official docs and repository release/history pages",
+          "search within opened pages"
+        ],
+        "exact_web_fetch_timestamps_exposed": false,
+        "report_or_study_screening_executed": false,
+        "exact_web_query_strings": [
+          "site:docs.openalex.org API works cited_by_api OpenAlex filters updated date versions",
+          "site:crossref.org documentation relations is-preprint-of has-version Crossref REST API",
+          "site:github.com/zotero/zotero duplicate detection matching algorithm issue release",
+          "PRISMA-S search strategy reporting supplementary methods grey literature sources official",
+          "site:cochrane.org handbook searching reference lists citation searching methods reporting sources grey literature",
+          "site:docs.openalex.org API works cited_by_api cursor sample query",
+          "OpenAlex blog launch database history 2022 snapshot update records API official",
+          "site:github.com/asreview/asreview/releases OR site:asreview.nl user guide screening workload active learning limitations",
+          "site:docs.openalex.org \"cited_by_api\" works search filters API version",
+          "site:github.com/asreview/asreview/releases ASReview LAB v3 release duplicate hiding",
+          "site:github.com/zotero/zotero \"duplicate detection\" issue merge duplicate title DOI ISBN",
+          "urban heat municipal reports repository official local government climate adaptation city report search",
+          "OpenAlex docs Works API search cited_by official documentation",
+          "PRESS 2015 guideline peer review electronic search strategies official CADTH pdf",
+          "site:openalex.org help geographic disambiguation works metadata sources limitation",
+          "TARCiS statement reporting citation searching 2024 BMJ e078384 official methods backwards forwards citation search",
+          "PRISMA-S checklist source search selection supplementary exact query date platform item 8 official PDF",
+          "site:epa.gov heat island local government reports resources urban heat city plans municipal official",
+          "Crossref REST API limits coverage relation metadata only deposited documentation relation types",
+          "site:bmj.com/content/385/bmj-2023-078384/correction TARCiS correction November 2024",
+          "TARCiS statement correction November 7 2024 BMJ erratum",
+          "urban heat island mitigation systematic review search strategy supplementary material databases exact query",
+          "urban heat interventions systematic review grey literature search municipal report database method supplementary",
+          "urban heat adaptation evidence synthesis literature search strategy city local studies systematic review",
+          "site:help.openalex.org \"API key\" required basic API OpenAlex 2026 access authentication",
+          "site:help.openalex.org API access authentication free API key limit OpenAlex"
+        ],
+        "intervention_study_retrieval_executed": false,
+        "public_web_search_for_prior_method_examples_executed": true
+      },
+      "post_release_source_checks": {
+        "logged_at_utc": "2026-10-10T06:04:22Z",
+        "queries": [
+          "urban heat island mitigation systematic review search strategy supplementary material databases exact query",
+          "urban heat interventions systematic review grey literature search municipal report database method supplementary",
+          "urban heat adaptation evidence synthesis literature search strategy city local studies systematic review",
+          "site:help.openalex.org \"API key\" required basic API OpenAlex 2026 access authentication",
+          "site:help.openalex.org API access authentication free API key limit OpenAlex"
+        ],
+        "case_study_searches_executed": false
+      },
+      "note": "Carries method/tool documentation searches and limited prior-review excerpt searches; its own record says no case-study search, intervention retrieval, screening, or effectiveness analysis."
+    },
+    "critic": {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/source-map.json",
+      "access_utc_observation_window": {
+        "earliest_observed_checkpoint": "2026-10-10T06:16:11Z",
+        "latest_observed_checkpoint": "2026-10-10T06:21:25Z",
+        "exact_fetch_timestamps_exposed": false
+      },
+      "exact_fetch_timestamps_exposed": null,
+      "checked_source_ids": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S06",
+        "S07",
+        "S08",
+        "S09",
+        "S10",
+        "S12",
+        "S15",
+        "S17"
+      ],
+      "note": "Critic-stage records are attached to stable source IDs only where exact_url matched."
+    }
+  },
+  "reviser_rechecks": [
+    {
+      "check_id": "R01",
+      "source_id": "S06",
+      "exact_url": "https://help.openalex.org/api/searching/",
+      "released_version_or_commit": "Live official documentation; page states last updated 2026-10-03; no commit exposed.",
+      "locator": "Search parameter and field scope, lines 28-53; relevance, rerank and semantic sections, lines 143-167.",
+      "access_utc_observation_window": "2026-10-10T06:25:56Z–2026-10-10T06:27:47Z; exact fetch timestamp not exposed.",
+      "observed_operation": "Opened the official page directly with the web tool and inspected the search, field-scope, ranking, rerank, and semantic-search sections.",
+      "governing_condition_default_exception": "Generic search matches title, abstract, full text, and keywords; search.title_abstract_keywords and search.title_and_abstract scope different fields. Results normally sort by relevance_score. rerank=true reorders only the top 100; semantic search is a separate mode. Exact request parameter controls scope.",
+      "applicability": "Corrects the unqualified upstream description of default search. For A/B comparisons, name and preserve the exact parameter and keep the mode constant within an index. Does not establish urban-heat coverage."
+    },
+    {
+      "check_id": "R02",
+      "source_id": "S08",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "released_version_or_commit": "Official REST API documentation, page states last updated 2020-04-08.",
+      "locator": "REST API description, lines 112-128; works endpoint, lines 129-132.",
+      "access_utc_observation_window": "2026-10-10T06:25:56Z–2026-10-10T06:27:47Z; exact fetch timestamp not exposed.",
+      "observed_operation": "Opened the official page directly with the web tool and inspected API availability, metadata provenance, query methods, and endpoint description.",
+      "governing_condition_default_exception": "Public JSON API can search, facet, filter, or sample scholarly metadata deposited by Crossref members and trusted sources. No signup is required. Records depend on deposits.",
+      "applicability": "Supports Crossref as a provisional publicly accessible scholarly metadata index for a paired comparison, subject to owner fit; a missing Crossref record cannot establish that a municipal report or study does not exist."
+    }
+  ],
+  "reviser_execution": {
+    "case_or_topic_searches_executed": false,
+    "municipal_portal_search_executed": false,
+    "citation_search_on_case_seed_executed": false,
+    "screening_executed": false,
+    "identity_adjudication_executed": false,
+    "effectiveness_analysis_executed": false,
+    "operation": "Directly opened only the official S06 and S08 documentation pages for independent rechecks."
+  },
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "PRISMA-Search official page",
+      "exact_url": "https://www.prisma-statement.org/prisma-search",
+      "released_version_or_commit": "PRISMA-S published 2021; live official landing page, no page revision identifier exposed",
+      "locator": "Opening paragraph; Key documents",
+      "access_utc": "2026-10-10T05:51:46Z–2026-10-10T05:53:06Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Web search result and opened official page; inspected lines 0–8",
+      "governing_condition_default_exception": "The page identifies a 16-item search reporting checklist and supporting explanation/FAQ; it is reporting guidance, not a retrieval-completeness test.",
+      "applicability": "Use for documenting the pilot's information sources, strategies, and reporting; do not treat checklist compliance as proof of coverage.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:53:06Z",
+      "critic_stage_observation": {
+        "id": "S01",
+        "title": "PRISMA-Search official page",
+        "exact_url": "https://www.prisma-statement.org/prisma-search",
+        "released_version_or_commit": "PRISMA-S published 2021; live landing page; no revision ID exposed",
+        "locator": "Page lines 0–8; publication date and 16-item checklist",
+        "access_utc": "2026-10-10T06:16:11Z–2026-10-10T06:21:25Z observation window",
+        "observed_operation": "Opened official page and inspected visible text",
+        "governing_condition_default_exception": "16 reporting items; reporting guidance does not establish retrieval completeness.",
+        "applicability": "Supports the draft’s reporting-aid statement only."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Cochrane Handbook Chapter 4: Searching for and selecting studies",
+      "exact_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "released_version_or_commit": "Current online chapter; no release ID exposed",
+      "locator": "§4.3.5 lines 248–258; §4.4.8 lines 462–473; citation searching lines 303–305 and 529–531",
+      "access_utc": "2026-10-10T05:51:46Z–2026-10-10T05:53:06Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened chapter and searched within it for citation searching, grey literature, and search strategies",
+      "governing_condition_default_exception": "Recommends relevant grey-literature sources, iterative/varied approaches, citation searching on key articles, and peer review before searches run.",
+      "applicability": "Methods guidance for evidence synthesis; health-review context does not establish an exhaustive urban-heat source set.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:53:06Z",
+      "critic_stage_observation": {
+        "id": "S02",
+        "title": "Cochrane Handbook Chapter 4",
+        "exact_url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+        "released_version_or_commit": "Version 6.5.1 (2025); page states last updated March 2025",
+        "locator": "§4.2.3 lines 116–119; §4.3.5 lines 248–261; §4.4.2 lines 303–305; §4.4.8 lines 462–465; §4.5 lines 527–534; §4.6.1–4.6.2 lines 542–561",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened official chapter and relevant line ranges",
+        "governing_condition_default_exception": "Search guidance is principally for Cochrane intervention reviews; reports are searched, studies are the interest unit, and multiple reports require linking. Supports grey-literature and citation routes and pre-run strategy review.",
+        "applicability": "Transfer methods cautiously; draft correctly states this is not urban-heat coverage evidence."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "TARCiS citation-searching statement",
+      "exact_url": "https://www.bmj.com/content/385/bmj-2023-078384",
+      "released_version_or_commit": "BMJ 2024;385:e078384; DOI 10.1136/bmj-2023-078384; published 2024-05-09; corrected record S04",
+      "locator": "Recommendations 1–4 and 7–10; limitation paragraph; web search full-text result; publisher page open returned HTTP 403",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Searched and inspected indexed primary article content; attempted direct open",
+      "governing_condition_default_exception": "Citation searching supplements a primary search, with stated seeds/direction/date/iterations/indexes/tools/dedup/screening; article flags limited geographic and health-field representation; Recommendation 5 has a later correction.",
+      "applicability": "Use corrected guidance before implementing Recommendation 5. Recommendations used for logging do not establish full applicability to urban heat.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S03",
+        "title": "TARCiS citation-searching statement",
+        "exact_url": "https://www.bmj.com/content/385/bmj-2023-078384",
+        "released_version_or_commit": "BMJ 2024;385:e078384; publisher page access denied in this check",
+        "locator": "Direct page open",
+        "access_utc": "2026-10-10T06:21:25Z checkpoint",
+        "observed_operation": "Opened publisher page; received HTTP 403",
+        "governing_condition_default_exception": "Original recommendation text was not directly inspected; correction status must govern operational use.",
+        "applicability": "Cannot independently verify its exact citation-search instructions in this check; investigator discloses the limit."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "TARCiS erratum record",
+      "exact_url": "https://pubmed.ncbi.nlm.nih.gov/39510583/",
+      "released_version_or_commit": "Published erratum, BMJ 2024;387:q2458; DOI 10.1136/bmj.q2458; 2024-11-07",
+      "locator": "Publication types; Comments and corrections; linked BMJ full correction PDF",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Web search result inspected; direct publisher PDF attempt returned HTTP 403",
+      "governing_condition_default_exception": "The PubMed record identifies an erratum for the original TARCiS article; indexed BMJ correction says a small error in Recommendation 5 was corrected.",
+      "applicability": "Correction existence is verified, but exact replacement wording was not; do not operationalize that recommendation from the original text alone.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S04",
+        "title": "TARCiS erratum record",
+        "exact_url": "https://pubmed.ncbi.nlm.nih.gov/39510583/",
+        "released_version_or_commit": "PubMed erratum record; browser response exposed only page shell",
+        "locator": "Direct open; no article body rendered",
+        "access_utc": "2026-10-10T06:21:25Z checkpoint",
+        "observed_operation": "Opened PubMed record; body text unavailable through this browser response",
+        "governing_condition_default_exception": "Existence and exact correction content not independently confirmed here.",
+        "applicability": "Leave exact corrected Recommendation 5 unresolved; do not rely on original text."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "OpenAlex launch post",
+      "exact_url": "https://blog.openalex.org/openalex-launch/",
+      "released_version_or_commit": "Post dated 2022-01-06, describing launch on 2022-01-03",
+      "locator": "Sections “As expected,” “Slight change of plan,” “Huge exciting news”",
+      "access_utc": "2026-10-10T05:49:35Z–2026-10-10T05:51:46Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Web search result inspected",
+      "governing_condition_default_exception": "Launch describes replacement of the former MAG source flow, a new REST API/five-entity model, and acknowledged inherited data coverage/structure issues during extended beta.",
+      "applicability": "Historical notice that a collection's sources and data model evolve; pin a date/snapshot when comparing outputs.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:51:46Z"
+    },
+    {
+      "id": "S06",
+      "title": "OpenAlex works-search documentation",
+      "exact_url": "https://help.openalex.org/api/searching/",
+      "released_version_or_commit": "Live API documentation, no commit/version exposed",
+      "locator": "Search scope lines 45–53; exact search lines 61–67; relevance/rerank lines 143–160; semantic search lines 161–167",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Search result and page opened; relevant documentation lines inspected",
+      "governing_condition_default_exception": "Default search includes title/abstract/keywords; result order uses relevance score; optional rerank changes top 100 and is not the same retrieval/ranking arm as plain lexical search.",
+      "applicability": "Useful free scholarly discovery and citation seed route; save full query parameters and ordering mode; indexed records do not guarantee municipal report coverage.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S06",
+        "title": "OpenAlex works-search documentation",
+        "exact_url": "https://help.openalex.org/api/searching/",
+        "released_version_or_commit": "Live API help page; no commit/version exposed",
+        "locator": "“What gets searched” lines 26–53; rerank lines 150–160; semantic lines 161–167",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened page and searched field/rerank passages",
+        "governing_condition_default_exception": "Generic search, scoped title/abstract/keyword search, title-and-abstract search, full-text search, reranking and semantic search are distinct modes. The exact field scope depends on query parameter.",
+        "applicability": "Supports the draft’s requirement to preserve exact query URL and mode; source-map shorthand “default search” is ambiguous."
+      },
+      "reviser_rechecks": [
+        {
+          "check_id": "R01",
+          "source_id": "S06",
+          "exact_url": "https://help.openalex.org/api/searching/",
+          "released_version_or_commit": "Live official documentation; page states last updated 2026-10-03; no commit exposed.",
+          "locator": "Search parameter and field scope, lines 28-53; relevance, rerank and semantic sections, lines 143-167.",
+          "access_utc_observation_window": "2026-10-10T06:25:56Z–2026-10-10T06:27:47Z; exact fetch timestamp not exposed.",
+          "observed_operation": "Opened the official page directly with the web tool and inspected the search, field-scope, ranking, rerank, and semantic-search sections.",
+          "governing_condition_default_exception": "Generic search matches title, abstract, full text, and keywords; search.title_abstract_keywords and search.title_and_abstract scope different fields. Results normally sort by relevance_score. rerank=true reorders only the top 100; semantic search is a separate mode. Exact request parameter controls scope.",
+          "applicability": "Corrects the unqualified upstream description of default search. For A/B comparisons, name and preserve the exact parameter and keep the mode constant within an index. Does not establish urban-heat coverage."
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "OpenAlex synchronization and change history",
+      "exact_url": "https://help.openalex.org/access/sync/",
+      "released_version_or_commit": "Live help page, last updated 2026-09-24",
+      "locator": "Release cadence lines 37–56; merged/deleted entity behavior lines 124–162",
+      "access_utc": "2026-10-10T05:51:46Z–2026-10-10T05:53:06Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened help page; inspected release and merge-history passages",
+      "governing_condition_default_exception": "Free public snapshots are quarterly and replace bucket contents; records merge/disappear; old merged-ID mapping ended at 2025 Walden cutover; documentation describes current works deletion information but not a general survivor map.",
+      "applicability": "Pin data state, save raw result records and IDs; do not silently replace prior IDs or infer continuity.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:53:06Z",
+      "critic_stage_observation": {
+        "id": "S07",
+        "title": "OpenAlex synchronization and change history",
+        "exact_url": "https://help.openalex.org/access/sync/",
+        "released_version_or_commit": "Live help page; page revision not exposed in inspected passages",
+        "locator": "Quarterly public snapshot lines 43, 80–95; merged/deleted IDs lines 124–130, 162",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened page and searched snapshot cadence and merge/deletion sections",
+        "governing_condition_default_exception": "Public snapshots are quarterly; merged/deleted entities disappear; historical merged-ID mapping ended at the 2025 Walden cutover; no current general merged-ID-to-survivor map.",
+        "applicability": "Supports pinning date/state and retaining old IDs and raw records."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Crossref REST API documentation",
+      "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "released_version_or_commit": "Live REST API documentation, page last updated 2020-04-08",
+      "locator": "REST API description and endpoints lines 112–154",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened official page; inspected description of deposited metadata and available endpoints",
+      "governing_condition_default_exception": "Metadata is primarily deposited by members and trusted sources; API is publicly available without sign-up; metadata fields and content depend on deposits.",
+      "applicability": "Can support DOI and bibliographic discovery, but absence from Crossref does not establish absence of a municipal report/study.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S08",
+        "title": "Crossref REST API documentation",
+        "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+        "released_version_or_commit": "Live API documentation; no revision identifier exposed in inspected text",
+        "locator": "REST API lines 112–116",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened and inspected official API description",
+        "governing_condition_default_exception": "Public API exposes scholarly metadata deposited by members and trusted sources; no signup required.",
+        "applicability": "Metadata provenance supports the draft’s caution that Crossref is not a complete municipal-report corpus."
+      },
+      "reviser_rechecks": [
+        {
+          "check_id": "R02",
+          "source_id": "S08",
+          "exact_url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+          "released_version_or_commit": "Official REST API documentation, page states last updated 2020-04-08.",
+          "locator": "REST API description, lines 112-128; works endpoint, lines 129-132.",
+          "access_utc_observation_window": "2026-10-10T06:25:56Z–2026-10-10T06:27:47Z; exact fetch timestamp not exposed.",
+          "observed_operation": "Opened the official page directly with the web tool and inspected API availability, metadata provenance, query methods, and endpoint description.",
+          "governing_condition_default_exception": "Public JSON API can search, facet, filter, or sample scholarly metadata deposited by Crossref members and trusted sources. No signup is required. Records depend on deposits.",
+          "applicability": "Supports Crossref as a provisional publicly accessible scholarly metadata index for a paired comparison, subject to owner fit; a missing Crossref record cannot establish that a municipal report or study does not exist."
+        }
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "Crossref relationship schema",
+      "exact_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+      "released_version_or_commit": "Schema documentation last updated 2020-04-08",
+      "locator": "Relationship kinds lines 122–163; intra-work version/preprint rows lines 135–144; unverified non-DOI identifiers line 163",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened official page and inspected relation tables and typed-relation conditions",
+      "governing_condition_default_exception": "Typed links can describe preprint/version/translation/replacement/reference relations; non-DOI identifiers are not verified by Crossref.",
+      "applicability": "Generate candidate links and retain relation provenance; never treat incomplete or unverified relations as an identity verdict.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S09",
+        "title": "Crossref relationship schema",
+        "exact_url": "https://www.crossref.org/documentation/schema-library/markup-guide-metadata-segments/relationships/",
+        "released_version_or_commit": "Live schema documentation; no revision identifier exposed in inspected section",
+        "locator": "Relationship types lines 122–157; unverified non-DOI identifiers line 163",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened relationship section and searched “non-DOI”",
+        "governing_condition_default_exception": "Typed relation kinds include version/preprint/translation and other links; non-DOI identifiers are not verified.",
+        "applicability": "Supports candidate generation with human confirmation, not automatic identity decisions."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Zotero duplicate-detection documentation",
+      "exact_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "released_version_or_commit": "Live main-branch documentation; commit/release not exposed",
+      "locator": "Finding Duplicates and Merging Duplicates, lines 192–205",
+      "access_utc": "2026-10-10T05:51:46Z–2026-10-10T05:53:06Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened official documentation file",
+      "governing_condition_default_exception": "Detector fields/conditions include title, DOI, ISBN; years within one year and author surname/initial comparison; only within one library; false positives cannot presently be excluded from the candidate set.",
+      "applicability": "Record-level candidate generation only; title/year/author similarity cannot safely establish study identity.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:53:06Z",
+      "critic_stage_observation": {
+        "id": "S10",
+        "title": "Zotero duplicate-detection documentation",
+        "exact_url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+        "released_version_or_commit": "Live main branch; commit not shown in checked content",
+        "locator": "Finding duplicates and merge guidance lines 190–205",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened official documentation",
+        "governing_condition_default_exception": "Title/DOI/ISBN plus year/author matching are used within one library; false positives cannot currently be marked as non-duplicates.",
+        "applicability": "Supports using software as record-level candidate generation only."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "ASReview LAB release history",
+      "exact_url": "https://github.com/asreview/asreview/releases",
+      "released_version_or_commit": "v3.0.8 at commit d3e863c94e1945ace7848b6ca5bcf2fb1eecbdb5; release entry displays 18 Jun 21:12 without year",
+      "locator": "v3.0.8 entry and v3.0.5 migration-fix entry",
+      "access_utc": "2026-10-10T05:51:46Z–2026-10-10T05:53:06Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened release history and inspected tagged commits and change notes",
+      "governing_condition_default_exception": "Release history includes data migration fixes; v3.0.5 notes a fix for broken migration of decision changes.",
+      "applicability": "If screening software is used, pin version and retain project export; screening behavior and data interpretation can change between releases.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:53:06Z"
+    },
+    {
+      "id": "S12",
+      "title": "ASReview LAB README at v3.0.8 commit",
+      "exact_url": "https://github.com/asreview/asreview/blob/d3e863c/README.md",
+      "released_version_or_commit": "Commit d3e863c94e1945ace7848b6ca5bcf2fb1eecbdb5, corresponding to v3.0.8",
+      "locator": "“What’s New in Version 3,” lines 207–210",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Opened file at pinned commit and searched for duplicate behavior",
+      "governing_condition_default_exception": "Duplicate title/text rows are hidden during screening by default behavior described in v3; export can include them.",
+      "applicability": "Screening workload must count hidden and exported records separately; hiding is not study-level merge.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z",
+      "critic_stage_observation": {
+        "id": "S12",
+        "title": "ASReview LAB README at v3.0.8 commit",
+        "exact_url": "https://github.com/asreview/asreview/blob/d3e863c/README.md",
+        "released_version_or_commit": "Commit d3e863c94e1945ace7848b6ca5bcf2fb1eecbdb5, tagged v3.0.8",
+        "locator": "“What’s New in Version 3” lines 207–210",
+        "access_utc": "2026-10-10T06:16:11Z–06:21:25Z observation window",
+        "observed_operation": "Opened pinned README",
+        "governing_condition_default_exception": "Version 3 hides duplicate-title/text rows during screening; exports can include them.",
+        "applicability": "Supports separate counting of hidden/input/exported records; does not establish study identity."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "ASReview user discussion on duplicate rows during screening",
+      "exact_url": "https://github.com/asreview/asreview/discussions/1741",
+      "released_version_or_commit": "Discussion 2024-05-07; maintainer answer 2024-05-28; follow-up 2024-06-11",
+      "locator": "Accepted answer lines 159–175; follow-up lines 186–199",
+      "access_utc": "2026-10-10T05:53:06Z–2026-10-10T05:54:08Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Search result and opened discussion inspected",
+      "governing_condition_default_exception": "User reports spelling-variant duplicate reappeared after screening started; maintainer suggests consistent labels and identifies removal as a useful missing feature at that time.",
+      "applicability": "Historical user/maintainer discussion, not a controlled evaluation; illustrates why automatic duplicate handling can miss variants.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:54:08Z"
+    },
+    {
+      "id": "S14",
+      "title": "CADTH PRESS 2015 search-review form",
+      "exact_url": "https://www.cadth.ca/sites/default/files/PRESS_Peer_Review_Electronic_Search_Strate/Table_10_PRESS.pdf",
+      "released_version_or_commit": "PRESS 2015 guideline; CADTH methods publication context 2016",
+      "locator": "Search Submission and Peer Review Assessment form; query/hit-count submission instruction",
+      "access_utc": "2026-10-10T05:49:35Z–2026-10-10T05:51:46Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Official PDF indexed through web search; title and instruction excerpt inspected",
+      "governing_condition_default_exception": "Form asks submitters to copy the strategy exactly as run and include hits per line.",
+      "applicability": "Useful reproducibility and peer-review check for the lexical arm; not validation of report coverage.",
+      "access_utc_observation_checkpoint": "2026-10-10T05:51:46Z"
+    },
+    {
+      "id": "S15",
+      "title": "Urban heat, vulnerability, and mitigation in U.S. cities: A systematic review",
+      "exact_url": "https://doi.org/10.1016/j.scsadv.2026.100077",
+      "released_version_or_commit": "Published 2026; DOI 10.1016/j.scsadv.2026.100077; publisher page could not be opened",
+      "locator": "Indexed methods/limitations excerpt returned for article title",
+      "access_utc": "2026-10-10T05:59:15Z–2026-10-10T06:00:20Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Post-release public web search result inspection; opening DOI returned HTTP 403",
+      "governing_condition_default_exception": "Indexed article excerpt describes a peer-reviewed U.S.-focused search using Web of Science with backward citation tracking and explicitly limits representation of other databases and grey literature, including municipal reports and technical evaluations.",
+      "applicability": "A useful disclosure-boundary example only. Full text, exact strings, supplementary file, and change history were not inspected; do not rely on its coverage counts or findings.",
+      "access_utc_observation_checkpoint": "2026-10-10T06:00:20Z",
+      "critic_stage_observation": {
+        "id": "S15",
+        "title": "2026 U.S. urban-heat systematic review",
+        "exact_url": "https://doi.org/10.1016/j.scsadv.2026.100077",
+        "released_version_or_commit": "Published 2026; article body inaccessible in this check",
+        "locator": "DOI open redirected to inaccessible Elsevier record",
+        "access_utc": "2026-10-10T06:21:25Z checkpoint",
+        "observed_operation": "Opened DOI URL; browser reported inaccessible redirect",
+        "governing_condition_default_exception": "Full article and supplement not checked.",
+        "applicability": "Treat upstream indexed-method excerpt only as a qualified disclosure example."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "OpenAlex API authentication and basic access",
+      "exact_url": "https://help.openalex.org/api/authentication/",
+      "released_version_or_commit": "Live help page, last updated 2026-08-19",
+      "locator": "Authentication opening; API key, rate-limit table, and Best practices",
+      "access_utc": "2026-10-10T06:00:20Z–2026-10-10T06:01:29Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Post-release search for current API authentication; official page indexed and inspected",
+      "governing_condition_default_exception": "Basic queries require no key; a free key raises the daily budget 10x; page lists query/page/result limits and 429 conditions.",
+      "applicability": "An anonymous small pilot can use basic queries without private account creation; exact query/response metadata and rate-limit headers should be retained.",
+      "access_utc_observation_checkpoint": "2026-10-10T06:01:29Z"
+    },
+    {
+      "id": "S17",
+      "title": "A systematic review of urban heat island and heat waves research (1991–2022)",
+      "exact_url": "https://doi.org/10.1016/j.crm.2024.100603",
+      "released_version_or_commit": "Published 2024; DOI 10.1016/j.crm.2024.100603",
+      "locator": "Indexed methods excerpt: search date/platform, query variants, inclusion/exclusion scope",
+      "access_utc": "2026-10-10T06:01:29Z–2026-10-10T06:04:22Z window; exact fetch timestamp not exposed",
+      "observed_operation": "Post-release public web search result inspected; opening publisher DOI returned HTTP 403",
+      "governing_condition_default_exception": "Indexed excerpt says search was in Web of Science Core Collection on 2023-10-19, used urban-heat-island plus heatwave/heat wave variants, restricted record types/period, and excluded reports, policy literature, and government documents.",
+      "applicability": "Method-scope example only. Full query, report, and supplementary material could not be verified here; its design cannot answer local-report coverage.",
+      "access_utc_observation_checkpoint": "2026-10-10T06:04:22Z",
+      "critic_stage_observation": {
+        "id": "S17",
+        "title": "2024 urban-heat island and heat-wave systematic review",
+        "exact_url": "https://doi.org/10.1016/j.crm.2024.100603",
+        "released_version_or_commit": "Published 2024; article body inaccessible in this check",
+        "locator": "DOI open returned HTTP 403",
+        "access_utc": "2026-10-10T06:21:25Z checkpoint",
+        "observed_operation": "Opened DOI URL; received HTTP 403",
+        "governing_condition_default_exception": "Full article and supplement not checked.",
+        "applicability": "Keep source-specific query/exclusion details unresolved; upstream draft does so."
+      }
+    }
+  ]
+}

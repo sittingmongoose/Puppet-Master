@@ -1,0 +1,130 @@
+{
+  "schema_version": "er12-source-map-v1",
+  "run_id": "D-R2-04-control",
+  "stage": "investigator",
+  "access_capture_utc": "2026-10-10T07:00:06Z",
+  "source_index": "sources/index.md",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Writing for user interfaces — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "version_or_commit": "Live, unversioned guidance; published 2017-10-10, last updated 2018-04-16; no commit/version displayed.",
+      "locator": "Sections “Think about alternatives before you add more words” and “Keep copy short and direct”; displayed lines 81–96; page change history at lines 182–201.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read page and displayed change history; it recommends starting with less, adding help only when user research shows need, short sentences with one idea, important words early.",
+      "governing_condition_default_exception": "Guidance concerns user interfaces and online scanning; its advice is not a claim that brevity alone improves comprehension or that long information should be removed when policy facts require it.",
+      "applicability_to_case": "Useful hypothesis for information order and mobile scanning. Transfer to print/bilingual course notices requires testing and preservation of all policy detail."
+    },
+    {
+      "id": "S02",
+      "title": "Finding participants for user research — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/find-user-research-participants",
+      "version_or_commit": "Live, unversioned guidance; published 2016-03-01, last updated 2026-09-22 (lead-time guidance revision).",
+      "locator": "Target groups and recruitment criteria; typical 4–8 participants for a round; accessibility, assistance needs, incentives and bias sections; page updates lines 241–264.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read live participant-recruitment guidance and update history.",
+      "governing_condition_default_exception": "Participants should be actual or likely users; research method determines sample size. A typical 4–8 is a planning guide for a round, not a statistical-power claim or guarantee of representation. Recruitment approach can exclude people; use varied routes and ask about support/preferences.",
+      "applicability_to_case": "Supports two small iterative formative rounds, sampling around actual course interest, language/reading comfort and access modes once known. UK government guidance is a method precedent, not local law or a proxy for the center’s audience."
+    },
+    {
+      "id": "S03",
+      "title": "Getting informed consent for user research — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research",
+      "version_or_commit": "Live, unversioned guidance; published 2016-05-24, last updated 2018-11-05 (withdrawal guidance revision).",
+      "locator": "Information-sheet format; evidence of consent; access needs; withdrawal sections, especially lines 108–158 and update history 172–191.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read consent, accessible-format, voluntary participation, withdrawal and data-handling guidance.",
+      "governing_condition_default_exception": "Consent must be understood, voluntary and recorded; accommodate formats and support. The guide directs organizations to their own data-protection/legal advice, so it does not establish this fictional center’s legal obligations.",
+      "applicability_to_case": "Propose plain, translated/otherwise accessible information and consent only after language pair is known; use mock materials and minimal research data, with a real withdrawal plan."
+    },
+    {
+      "id": "S04",
+      "title": "Using moderated usability testing — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "version_or_commit": "Live, unversioned guidance; published 2017-02-21, last updated 2017-10-03 (assistive-technology and ending-session guidance).",
+      "locator": "Purpose, 30–60 minute sessions, task design and neutral moderation at lines 78–145; page history at 195–210.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read guidance on checking understanding/task completion, comparing language/layout problems, non-leading tasks, likely users, interpreters/assistants and non-judgmental moderation.",
+      "governing_condition_default_exception": "A moderated test identifies usability issues and ideas; a small formative study does not estimate population prevalence. Use personal data only when service and security conditions permit; a prototype may not support that.",
+      "applicability_to_case": "Supports scenario tasks and separate comprehension/task outcomes with non-operational prototypes; use fictitious enrollment details and no personal data."
+    },
+    {
+      "id": "S05",
+      "title": "Planning and writing text messages and emails — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/design/sending-emails-and-text-messages",
+      "version_or_commit": "Live, unversioned guidance; published 2017-06-21, last updated 2017-10-03 (transactional/subscription/personalised examples).",
+      "locator": "Transactional-message examples and channel selection at lines 72–129; concise content, first sentence, sender, next action/timing at 141–163; page history 192–207.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read conditions for email/SMS, examples confirming an already-booked transport trip, message length/preferences, sensitive-information safeguards, and next-step/deadline guidance.",
+      "governing_condition_default_exception": "Transactional messages follow a user action; any automatic confirmation must describe the actual service state. The guide says to consider user preferences, length and whether contact details are permitted/current; subscription messages require opt-in. UK government security rules and infrastructure do not transfer automatically.",
+      "applicability_to_case": "A mobile-message channel is an alternative to investigate only after process and user preference checks. It must not imply a seat is reserved unless policy says so; do not add a channel or contact users in this stage."
+    },
+    {
+      "id": "S06",
+      "title": "Confirmation pages — GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/confirmation-pages/",
+      "version_or_commit": "Current live pattern; page exposes no release version/commit or page update date.",
+      "locator": "Use/how it works at lines 51–55 and 125–152; required next-step/timing and record elements; known gap about transactions inside wider journeys.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read current pattern and example; it separates transaction completion from next steps, suggests a reference if one exists, contact details and a saved record; page explicitly says research is needed for a confirmation embedded in a wider task.",
+      "governing_condition_default_exception": "Use at the end of a transaction; details must reflect the real process. The pattern does not decide whether form submission itself reserves a place; it acknowledges unresolved wider-journey research.",
+      "applicability_to_case": "A useful service-state model for testing the difference between form received and place confirmed, only after the center verifies which state exists. Digital government transaction pages differ from a printed enrollment notice."
+    },
+    {
+      "id": "S07",
+      "title": "Confirmation pages backlog discussion, issue #40 — alphagov/govuk-design-system-backlog",
+      "url": "https://github.com/alphagov/govuk-design-system-backlog/issues/40",
+      "version_or_commit": "Issue #40 opened 2018-01-12 and marked published; no release commit shown on the issue.",
+      "locator": "Issue description and metadata, displayed lines 128–186.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read the primary backlog item documenting the pattern’s discussion/publication status and opening date.",
+      "governing_condition_default_exception": "Issue history records governance/publication, not a controlled user study or evidence that this notice pattern works in a community-course setting.",
+      "applicability_to_case": "Supplies a bounded implementation-history anchor; combine with the pattern page’s explicit known gap rather than claiming transfer evidence."
+    },
+    {
+      "id": "S08",
+      "title": "Appointments service pattern proof of concept — Ministry of Justice Design System",
+      "url": "https://design-patterns.service.justice.gov.uk/service-patterns/appointment/",
+      "version_or_commit": "Current live proof-of-concept page; no commit/revision identifier displayed.",
+      "locator": "Overview at lines 112–116; end-to-end context including pending confirmation, assisted digital, payment and unhappy paths at 292–321.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read the service-pattern description and scenario inventory, which names tentative/pending confirmation, payment to book, assisted paths and failure cases.",
+      "governing_condition_default_exception": "The authors explicitly call the patterns proofs of concept built to test usefulness. They are not an established validated standard and do not specify this center’s policy.",
+      "applicability_to_case": "A useful alternative map for service/process discovery: test whether pending/confirmed states, fees, help and failure recovery require distinct communication."
+    },
+    {
+      "id": "S09",
+      "title": "Demography question development for Census 2021 — Office for National Statistics",
+      "url": "https://cy.ons.gov.uk/census/censustransformationprogramme/questiondevelopment/demographyquestiondevelopmentforcensus2021",
+      "version_or_commit": "Census 2021 question-development report; page has no commit/version date in its footer. Described Welsh-language testing occurred in 2017–2018; questions were finalized through 2020 legislation.",
+      "locator": "Section “Welsh language question development,” lines 444–459, plus report description at 96–97.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read account of focus groups and cognitive interviews with varying dialects and proficiency, specialist translation provider, and language/policy assurance group; testing led to different recommended terms.",
+      "governing_condition_default_exception": "This was a national census in Welsh, with a defined language, public-sector resources and statutory finalization. It demonstrates method and context sensitivity, not findings transferable to an unspecified language pair or course notice.",
+      "applicability_to_case": "Strong precedent for testing language-specific terms with varied proficiency/dialect and policy review. Do not assume bilingual readers or either language group are homogeneous; do not invent which variation matters locally."
+    },
+    {
+      "id": "S10",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2 — W3C",
+      "url": "https://www.w3.org/TR/WCAG22/?cq_net=g",
+      "version_or_commit": "W3C Recommendation WCAG 2.2 (2023-10-05); versioned normative standard.",
+      "locator": "Normative success criteria 1.4.10 Reflow, 1.4.12 Text Spacing, 3.1.1/3.1.2 language identification and 3.1.5 Reading Level; official TR page.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read the normative standard and conditions for web text reflow, programmatically determinable page/passage language, and the AAA supplemental reading-level criterion.",
+      "governing_condition_default_exception": "Conformance applies to web content; Reflow has exceptions for content needing two-dimensional layout, Text Spacing requires applicable markup support, and Reading Level is AAA with supplemental content. A readability metric is not a comprehension study and the standard alone does not establish legal applicability.",
+      "applicability_to_case": "If a future digital version is in scope, use relevant criteria as a proposed accessibility desk check alongside participant testing. Do not apply WCAG as proof that printed notice/SMS is understandable or legally compliant."
+    },
+    {
+      "id": "S11",
+      "title": "GOV.UK Design System live assessment — GOV.UK Service Standard report",
+      "url": "https://www.gov.uk/service-standard-reports/gov-dot-uk-design-system-live-assessment",
+      "version_or_commit": "Published live-service assessment report; no source-code commit or exact report revision identifier exposed on the page.",
+      "locator": "Assessment sections on accessibility fixes, support channels, user research and transparency/documentation of pattern research; lines 329–342 and 357–359.",
+      "accessed_utc": "2026-10-10T07:00:06Z",
+      "observed_operation": "Read report findings that accessibility audits identified issues later fixed; support channels surfaced user needs; the panel called for more end-to-end research and better publication of research behind patterns.",
+      "governing_condition_default_exception": "The report assesses a public-sector design-system service and its users, not community course readers; assessed improvements and gaps are institution-specific.",
+      "applicability_to_case": "Shows a useful implementation-history practice—record fixes and unresolved questions and keep studying end-to-end process. Local notice/process history must still be reconstructed from actual center records and staff."
+    }
+  ]
+}

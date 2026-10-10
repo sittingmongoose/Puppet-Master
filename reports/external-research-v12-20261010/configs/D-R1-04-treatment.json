@@ -1,0 +1,24 @@
+{
+  "run_id": "D-R1-04-treatment",
+  "runtime_root": "ER12_RUNTIME/runs/D-R1-04/treatment",
+  "brief_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/brief.md",
+  "plan_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+  "whole_deadline_utc": "2026-10-10T07:24:13.622386+00:00",
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode": "full-access",
+  "method_id": "A1",
+  "stage_prompt_deltas": {},
+  "helper_version": "ER12_RUNTIME/helpers/er12-screen-v1/VERSION.json"
+}

@@ -1,0 +1,551 @@
+{
+  "observed_at_utc": "2026-10-10T06:57:16.324180+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613453609999692,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791613453610117087,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/control/run.json",
+      "bytes": 584,
+      "sha256": "7333f99f167f837bee1486c224d650f05a9b57e5e3b0c03a897d0335ead28e05",
+      "mtime_ns": 1791613453767987244,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/inputs/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613453767771213,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/assignment.md",
+      "bytes": 4022,
+      "sha256": "9f987f5c92a611b4958241d50830a7a37bbbd480e2d6d522c53584db875178dd",
+      "mtime_ns": 1791614551214193286,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/freeze.json",
+      "bytes": 3348,
+      "sha256": "ac61eb84950f1c0f056e224142cdcd4f9639a4427a9610d38b3af748f378e0e2",
+      "mtime_ns": 1791614551213912636,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551214061502,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/request.json",
+      "bytes": 1625,
+      "sha256": "36d4093cb786bb5c84c2adac8b4b63b1111b83b2b6b33b450644d560b9f969c2",
+      "mtime_ns": 1791614551213787642,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/assignment.md",
+      "bytes": 3314,
+      "sha256": "7f99c4ff0a0f01ec5640f9789a26fa51d97ea4ef533b18a2fb92b404f181c316",
+      "mtime_ns": 1791614551014758661,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/freeze.json",
+      "bytes": 3260,
+      "sha256": "1d42d6b7702ac0fa611e339051f7079318e36a17f997ee92ceefaa124ab476e5",
+      "mtime_ns": 1791614551014627043,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551014697879,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/request.json",
+      "bytes": 905,
+      "sha256": "0f32f813e2c10066c9e0334d49e4ea99437da823dbf87aa5c2431d0e8bed765f",
+      "mtime_ns": 1791614551014509335,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md",
+      "bytes": 5533,
+      "sha256": "3c5c86463b7ce101539d744795244d09f1c01d2c6c4601b0cb3d12ba70eb5bf7",
+      "mtime_ns": 1791614551216884161,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+      "bytes": 10589,
+      "sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+      "mtime_ns": 1791614867965530900,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/dispatch.json",
+      "bytes": 6426,
+      "sha256": "2e9edc5947d63838ab6b0cce18536bb34b3bec01754a1aef1f863c57287fea38",
+      "mtime_ns": 1791614552345495304,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4599,
+      "sha256": "4f1df34addb2a8bba139c275309f7b7422afe43b66be2c7815b86b6179c5eab2",
+      "mtime_ns": 1791614551217075279,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/freeze.json",
+      "bytes": 3348,
+      "sha256": "4b6ffc8c7f2deb8e86c7fbcf85e8bfa5c6319ca7aa901cc153a9624cd566b74f",
+      "mtime_ns": 1791614551215889002,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551216383984,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3044,
+      "sha256": "63e87dde19af20b5eb4648d9191972b64bb9009c15fd7d198e82e76defb36113",
+      "mtime_ns": 1791614551015978281,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 471,
+      "sha256": "d12607a88556533ac0fe8dfdb7f179cde6c9b1abcf42bcf17fde880bfd95bdce",
+      "mtime_ns": 1791614867965716570,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-binding-guard.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791614867965818789,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 800,
+      "sha256": "c8d41884da0ab6b51e33d24d569a0e673806ca982c7b70a83be7500430074ac5",
+      "mtime_ns": 1791614894437001622,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-lifecycle.md",
+      "bytes": 595,
+      "sha256": "4595b91d96d8c71d88ceeba89bd76b2dfc26b85aff724f9ff23f33ab01bac884",
+      "mtime_ns": 1791614894527781257,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/request.json",
+      "bytes": 3144,
+      "sha256": "396593df120c68f796e7c04b2d6704ecbccd59540cf4ce2d49bc7bb9d5c1c12c",
+      "mtime_ns": 1791614551215400379,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/service-tier-change.json",
+      "bytes": 485,
+      "sha256": "72ff37859ea7a9c2dfde13bce8d951926596710663650d7b43fbbee7bdbd6d9b",
+      "mtime_ns": 1791614550805626316,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+      "bytes": 26953,
+      "sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+      "mtime_ns": 1791614867966608406,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/sources/index.md",
+      "bytes": 3397,
+      "sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+      "mtime_ns": 1791614867966757246,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/status.json",
+      "bytes": 3938,
+      "sha256": "ebe2d34b07b16ffb8b92fce422ca29fb75f04d2f92bc5be24b482001b02721dc",
+      "mtime_ns": 1791614921862864971,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/assignment.md",
+      "bytes": 4448,
+      "sha256": "a2ae20a8a1c747098768c66eec2101c17b5e9ebeb0befa579bf1869fbca44893",
+      "mtime_ns": 1791613454370423951,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/freeze.json",
+      "bytes": 1837,
+      "sha256": "3694a59906d7fad08ed9a4d9ed4e8b13a8a5f2e10e8ea1096fe59360641383f2",
+      "mtime_ns": 1791613454370284872,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454370357153,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/request.json",
+      "bytes": 1661,
+      "sha256": "6fa7355965b152c6c50db99fbdaff3ea6a92fd054834794e6b458582651949b6",
+      "mtime_ns": 1791613454370159794,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/assignment.md",
+      "bytes": 3728,
+      "sha256": "676591c9be84c7a70082f17901b2787b14e7cdf2a98411f141b0319da8f7764e",
+      "mtime_ns": 1791613454164265103,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/freeze.json",
+      "bytes": 1749,
+      "sha256": "73e0d6f3a9d291066f713447c2b6dbb6e58d07728a1f79e973374bd13d744840",
+      "mtime_ns": 1791613454164134445,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454164203573,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/request.json",
+      "bytes": 929,
+      "sha256": "43e6106290cb9105e5ac91842f1316355993b4434602d5cc7b408714c14a7c96",
+      "mtime_ns": 1791613454164001042,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "c78f781923d877bf694254f8581ce438599347fb10ce4faa0e1a705e7b9597ae",
+      "mtime_ns": 1791613454372999625,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/discovery.md",
+      "bytes": 12112,
+      "sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "mtime_ns": 1791614210792773103,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/dispatch.json",
+      "bytes": 6552,
+      "sha256": "13e07b2510c32131efdfd63e93d15239f424df6c606680d0de171878bd3c3436",
+      "mtime_ns": 1791613455625984334,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/draft.md",
+      "bytes": 17586,
+      "sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "mtime_ns": 1791614412626170606,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4665,
+      "sha256": "8b58880ab16329886dd08076bc31f96c60d27fdae7d4b0d1d638e17e14358c47",
+      "mtime_ns": 1791613454373185257,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/freeze.json",
+      "bytes": 1837,
+      "sha256": "079ab42a331d08467bc91a22efa07f253d8cdaf7e4108382578548d3b134c68b",
+      "mtime_ns": 1791613454372017622,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454372522028,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3086,
+      "sha256": "afb3c979fe8befb57cda5918a26b6ce305dda977be5928715a1e41df6afd9e86",
+      "mtime_ns": 1791613454165502762,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-binding-guard-response.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614445248885659,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-completion-response.json",
+      "bytes": 812,
+      "sha256": "97197cfe4508c8d953e5c620344556102f6efb05c796a047cbde85e4dbed4ee5",
+      "mtime_ns": 1791614445418474597,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-create-response.json",
+      "bytes": 483,
+      "sha256": "8f5ca5f2f7a8dbef257bc2633ba48fe34c7bf729ca39ce2ee861e77bfe2facf0",
+      "mtime_ns": 1791613556781686392,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/plan-release-response.json",
+      "bytes": 415,
+      "sha256": "734f8caa179a347cc81fa334726581cc0c71a6b6a3d248c3b2f80db959983114",
+      "mtime_ns": 1791614423793788200,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "15fddd753fabeb08c3db76989c317eb8d1e5fecc655ce5ac6c75856a42df1971",
+      "mtime_ns": 1791614218695982381,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/request.json",
+      "bytes": 3198,
+      "sha256": "7b111be2b5b1723127af43d6e4a95001d750423f9ce45a3b319ad86ae465572a",
+      "mtime_ns": 1791613454371521629,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791614218695862187,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 497,
+      "sha256": "8da9177e4025971ef42c3084bfcad3101fa411cb9920a2f77892991fa2fb1f7c",
+      "mtime_ns": 1791613453952585700,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+      "bytes": 15833,
+      "sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "mtime_ns": 1791614335225933687,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/sources/index.md",
+      "bytes": 3086,
+      "sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+      "mtime_ns": 1791614412626523148,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/status.json",
+      "bytes": 5492,
+      "sha256": "303b9b8961252eb9271961623d949c01852a33515506d4416f904bd54ec20e2d",
+      "mtime_ns": 1791614550263218592,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/assignment.md",
+      "bytes": 4004,
+      "sha256": "a72de3ad677318aba5fa4567fa813abf1717b3e0eb7b611f675e344554672645",
+      "mtime_ns": 1791614922787027999,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/freeze.json",
+      "bytes": 4134,
+      "sha256": "97874f584589e13a1cdb398a36838db6bcb6d9c55603dd84891d7ba35582aa0a",
+      "mtime_ns": 1791614922786879086,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922786967774,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/request.json",
+      "bytes": 1631,
+      "sha256": "58e0b62ec57911dd121303b93d112d1e60b487632ad5a5858e8dc8843a3a59e1",
+      "mtime_ns": 1791614922786747700,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/assignment.md",
+      "bytes": 3294,
+      "sha256": "f84a064f48e3c340ed82914a233f6e77471d103c3a9f9195e8958ba9fef2768c",
+      "mtime_ns": 1791614922600615447,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/freeze.json",
+      "bytes": 4046,
+      "sha256": "6ae9d5d7f75e7e724b852c15d6f83213fbf2eb85490c0933662645cb3390fe51",
+      "mtime_ns": 1791614922600492242,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922600557421,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/request.json",
+      "bytes": 909,
+      "sha256": "9297b2bc4f010b8909d610cd7b6fed0b15f29e3a4dd98f3beb72656ea3f3e488",
+      "mtime_ns": 1791614922600382735,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md",
+      "bytes": 5518,
+      "sha256": "36be4be31346c69843b3846977ff071379b041cf6af0a7057293b6df85e4554b",
+      "mtime_ns": 1791614922789718714,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/dispatch.json",
+      "bytes": 6447,
+      "sha256": "f7d91c0db1bdeeac3e3554945d73eceae93d6518a8776fbae2dd73cd0a2640ea",
+      "mtime_ns": 1791614925388880717,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4610,
+      "sha256": "1b01d5ce43c0148d3027d3eb6de196be78f4c76e4ac3310b0ad83f7ca8d20f54",
+      "mtime_ns": 1791614922789861167,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+      "bytes": 28255,
+      "sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "mtime_ns": 1791615240093053488,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/freeze.json",
+      "bytes": 4134,
+      "sha256": "7b0ee094a15ade8c3b9e9e1b0cb889a95638095817dc09238214ae74a28769fe",
+      "mtime_ns": 1791614922788755638,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922789256536,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3051,
+      "sha256": "bf4cdbeb76b6ef3fe6747d894eb9f4eb44cd47ab61c9c85085d9516cd6307993",
+      "mtime_ns": 1791614922601889945,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 473,
+      "sha256": "6b5fc30d0a39d678cc0b3247642ce4a9b111c3f5380db19aa480436a2b02a231",
+      "mtime_ns": 1791615269709198381,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "9f9e6a574566a57f30dd2c5caeb44b0e22f1a66f2fbfd06de06ef34e87575e23",
+      "mtime_ns": 1791615312802020997,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/request.json",
+      "bytes": 3153,
+      "sha256": "21bccaec3d4e162d42aabca178f91a3dbf461f5dc2950dd1e7c31da380d09c20",
+      "mtime_ns": 1791614922788096338,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 487,
+      "sha256": "f7cd7655c41f826d549b6a8b48b6e7d8096d0e08a7709d72558678a0fc212bfa",
+      "mtime_ns": 1791614922393497648,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json",
+      "bytes": 37611,
+      "sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+      "mtime_ns": 1791615290714820441,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/sources/index.md",
+      "bytes": 4302,
+      "sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+      "mtime_ns": 1791615240107053557,
+      "inspection": "pending unless separately marked complete"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/terminal-science-freeze-root.json",
+      "bytes": 8255,
+      "sha256": "e5079480fda43b692101917d39ad18a9561bb133fad7180bbb45178cf8983c95",
+      "mtime_ns": 1791615333145508729,
+      "inspection": "pending unless separately marked complete"
+    }
+  ]
+}

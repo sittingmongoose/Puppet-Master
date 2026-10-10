@@ -1,0 +1,30 @@
+{
+  "at_utc": "2026-10-10T07:40:22.306984+00:00",
+  "status": "ACCEPTED_FOR_QUIET_OWNED_ARCHIVE_AND_CLEANUP",
+  "basis": "root read complete v1 code and README, complete active v2 code/README/test diff; verified all pinned script bytes/prior-v1 preservation and syntax. Existing10 plus8meaningful fixture results retained; no repeated testing.",
+  "checks": {
+    "existing_tests_unchanged": true,
+    "existing_fixtures_passed": 10,
+    "new_fixtures_passed": 8,
+    "fixtures_passed": 18,
+    "fixtures_failed": 0,
+    "syntax_compile_passed": 4,
+    "original_v1_byte_preservation": true,
+    "prior_v1_exact_copy": true,
+    "actual_campaign_operated": false,
+    "scope_override_cli": false,
+    "temporary_fixtures_remaining": 0
+  },
+  "script_sha256": {
+    "archive.py": "5ec27c1bc97e9f8e78a584d544c16ece134aabd58d94feae8f72d72f36b852c9",
+    "clean.py": "b072564e596b606b5ca20365b0714cdc148e3ddf32ab4f5c7d2c6a1d827552c1",
+    "test_mechanics.py": "269ee051772b56f0c4d50b369b5d5739fb3c4058a2959feb9c1a241750a76445",
+    "test_v2.py": "1f4125289b93754ae5b5da9491842d7252f287a3cff6792fa39aeaf8e71a232b",
+    "README.md": "b69f0140d240d9aa7c9f0191b6f2c5170980d615763a783973001fe8273d03a9"
+  },
+  "actual_invocation": false,
+  "standing_user_authority": "ER12 complete campaign includes verified owned cleanup, no further phase approval",
+  "limits": [
+    "Root must establish source quiescence after GitHub readback. No source/body/grade changes. No main/account/sibling/appboundcwd removal. No adversarial writer atomicity. Actual archive/member/source verification precedes exact individual removals."
+  ]
+}

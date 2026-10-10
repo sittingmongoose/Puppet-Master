@@ -1,0 +1,19 @@
+{
+  "run_id": "D-R2-04-control",
+  "initialized_at_utc": "2026-10-10T06:57:25.218Z",
+  "whole_deadline_utc": "2026-10-10T07:57:22.653Z",
+  "brief_sha256": "e7969f35bee28f129f6ef2ed76a30f9c3680910a4f4dbc4ed9ff968e1d0e00a1",
+  "brief_bytes": 2652,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "R0",
+  "stage_prompt_deltas": {}
+}

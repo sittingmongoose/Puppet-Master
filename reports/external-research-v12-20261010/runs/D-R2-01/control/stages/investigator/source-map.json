@@ -1,0 +1,130 @@
+{
+  "schema_version": "ER12-source-map-v1",
+  "run_id": "D-R2-01-control",
+  "stage": "investigator",
+  "case_id": "ER12-D-R2-01-FRESH",
+  "source_identity_policy": "IDs are stable in this stage and not silently rebound. Sources inform mechanisms or methods; none establishes this hypothetical greenhouse's cause.",
+  "access_record": {
+    "access_utc": "2026-10-10T06:59:24Z",
+    "note": "UTC review time recorded immediately after opening/rechecking sources; retrieval limitations appear per source."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "citation": "Starbuck, C. J. Guttation: A Pressure Relief for Plants. University of Missouri IPM; published 2009-06-01, revised 2015-09-30.",
+      "exact_url": "https://ipm.missouri.edu/meg/2009/6/Guttation-A-Pressure-Relief-for-Plants/index.cfm",
+      "locator": "Article paragraphs on leaf-margin droplets and nighttime conditions; web lines 29-52.",
+      "observed_operation": "Describes hydathode exudation at tips/margins when nighttime low transpiration and root pressure occur; high humidity, cool air and warm soil are favorable context.",
+      "governing_condition_default_exception": "General extension explanation, not a crop-specific rule. Notes rare bacterial entry possibility, but droplets do not prove infection or explain pale leaves.",
+      "applicability": "Record droplet position and overnight/root-zone/environment conditions; cannot identify this case's droplets or cause.",
+      "retrieval_operation": "Opened the University of Missouri IPM page and inspected content and published/revised dates.",
+      "version_and_identity_note": " published 2009-06-01, revised 2015-09-30.",
+      "version": "Published 2009-06-01; revised 2015-09-30 (page footer).",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S2",
+      "citation": "Watson et al. Greenhouse Ventilation. UF/IFAS Extension publication AE-10/AE030; revision date not exposed.",
+      "exact_url": "https://ask.ifas.ufl.edu/publication/AE030",
+      "locator": "Definitions/purpose; Winter Ventilation; Summer Ventilation; Spring–Fall Ventilation; Air Distribution (web lines 17-29, 44-70).",
+      "observed_operation": "Ventilation replaces inside air with outside air; mechanical and natural paths differ. Venting removes moisture, but winter heat demand rises; natural flow depends on vents, wind and thermal gradients.",
+      "governing_condition_default_exception": "Humidity examples include tomato leaf mold and seasonal guidance for specified contexts; not thresholds for unknown herbs. More ventilation can raise operating/heating cost.",
+      "applicability": "Frames climate-history and ventilation tradeoff; does not justify changing this house's schedule without local measurements.",
+      "retrieval_operation": "Opened the UF/IFAS page and reviewed cited sections.",
+      "version_and_identity_note": " revision date not exposed.",
+      "version": "UF/IFAS publication AE-10/AE030; revision date not exposed on inspected live page.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S3",
+      "citation": "Latimer, J. G. Dealing with the High Cost of Energy for Greenhouse Operations. Virginia Cooperative Extension 430-101 (HORT-284P); first published May 2009, last reviewed August 2023.",
+      "exact_url": "https://www.pubs.ext.vt.edu/content/pubs_ext_vt_edu/en/430/430-101/430-101.html",
+      "locator": "HAF fan and Environmental Control sections; web lines 162-177.",
+      "observed_operation": "Describes horizontal airflow fan practice, representative aspirated sensor placement near canopy away from doors/fans/sidewalls, and sensor checks/calibration.",
+      "governing_condition_default_exception": "Conditional on local greenhouse layout, equipment, season and energy/crop needs; internal recirculation is not exhaust ventilation.",
+      "applicability": "Useful for layout, operating-history and sensor-placement questions; not a house-specific prescription or disease threshold.",
+      "retrieval_operation": "Opened Virginia Tech Extension page; inspected publication ID, review date and cited sections.",
+      "version_and_identity_note": " first published May 2009, last reviewed August 2023.",
+      "version": "VCE publication 430-101 (HORT-284P); first published May 2009; last reviewed August 2023.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S4",
+      "citation": "Zhang et al. Fans For Greenhouses. UF/IFAS Extension publication AE12/AE020; revision date not exposed.",
+      "exact_url": "https://ask.ifas.ufl.edu/publication/AE020",
+      "locator": "Fan Inspection and Maintenance; web lines 108-122.",
+      "observed_operation": "Check bearings, belt tension, wheel rotation, dust on blades/housings/shutters and outside blockages. Repairs/wiring may reverse rotation unnoticed; dust/unbalance can reduce airflow.",
+      "governing_condition_default_exception": "Potential 30–40% airflow reduction is general maintenance guidance, not evidence the case fan is impaired.",
+      "applicability": "Check direction, service history and delivered airflow instead of treating timer settings as proof of operation.",
+      "retrieval_operation": "Opened UF/IFAS fan guide and reviewed maintenance section.",
+      "version_and_identity_note": " revision date not exposed.",
+      "version": "UF/IFAS publication AE12/AE020; revision date not exposed on inspected live page.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S5",
+      "citation": "Henderson, S., Gholami, D., Zheng, Y. Soil Moisture Sensor-based Systems are Suitable for Monitoring and Controlling Irrigation of Greenhouse Crops. HortScience 53(4), 552-559 (2018), DOI 10.21273/HORTSCI12676-17.",
+      "exact_url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf?inlineView=true&pdfJsInlineViewToken=998458394",
+      "locator": "Abstract p.552; Methods pp.552-554; Results/Discussion pp.554-557; Conclusions p.557.",
+      "observed_operation": "Primary monitoring in southwestern Ontario commercial houses: ‘Genovese Gigante’ basil in peat mix/subirrigation and ‘Get Mee’ bellflower in a separate peat setup; 30/24 plants instrumented. Evaporation dishes across three layouts showed nonuniformity, with high/low ratios about 1.6–1.9; substrate VWC varied.",
+      "governing_condition_default_exception": "Observational monitoring did not prove irrigation caused growth differences; several VWC-growth correlations were absent. Sensor count/placement depends on local microclimate, crop and substrate.",
+      "applicability": "Supports positional mapping and distributed measurements; no established door effect or transferable trigger value.",
+      "retrieval_operation": "Opened HortScience PDF and inspected abstract, methods, results and conclusions. DOI: https://doi.org/10.21273/HORTSCI12676-17.",
+      "version_and_identity_note": "Henderson, S., Gholami, D., Zheng, Y. Soil Moisture Sensor-based Systems are Suitable for Monitoring and Controlling Irrigation of Greenhouse Crops. HortScience 53(4), 552-559 (2018), DOI 10.21273/HORTSCI12676-17.",
+      "version": "HortScience 53(4), April 2018, pp. 552-559; received 2017-11-02, accepted 2018-02-12.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S6",
+      "citation": "Currey, C. J., Flax, N. J., Litvin, A. G., Metz, V. C. Substrate Volumetric Water Content Controls Growth and Development of Containerized Culinary Herbs. Agronomy 9(11), 667 (2019), DOI 10.3390/agronomy9110667.",
+      "exact_url": "https://mdpi-res.com/d_attachment/agronomy/agronomy-09-00667/article_deploy/agronomy-09-00667.pdf",
+      "locator": "Methods/Figs. 1-4; Results on sage, basil and dill; Discussion/Conclusions; PDF pp.2-10.",
+      "observed_operation": "Controlled greenhouse studies in basil, dill, parsley and sage, 11.4-cm pots, 75% peat/25% coarse perlite plus controlled-release fertilizer, sensor-controlled VWC 0.15–0.45 m³/m³ for four weeks. Growth responses differed by species/measure; irrigation and WUE responses were not uniform.",
+      "governing_condition_default_exception": "Specific substrate, pots, cultivars, fertilizer and four-week period; authors advise commercial trials under local crop and greenhouse conditions. No low-moisture safety guarantee for other crops.",
+      "applicability": "Direct culinary-herb evidence; keep crop identity, growth, water use and substrate state as separate endpoints.",
+      "retrieval_operation": "Opened primary MDPI PDF and inspected methods/results/conclusion. DOI landing-page open errored; PDF is reviewed artifact. DOI: https://www.mdpi.com/2073-4395/9/11/667.",
+      "version_and_identity_note": "Currey, C. J., Flax, N. J., Litvin, A. G., Metz, V. C. Substrate Volumetric Water Content Controls Growth and Development of Containerized Culinary Herbs. Agronomy 9(11), 667 (2019), DOI 10.3390/agronomy9110667.",
+      "version": "Agronomy 9(11), article 667; published 2019-10-23.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S7",
+      "citation": "Montesano et al. Sensor-based irrigation management of soilless basil using a new smart irrigation system. Agricultural Water Management 203(C), 20-29 (2018), DOI 10.1016/j.agwat.2018.02.019.",
+      "exact_url": "https://ideas.repec.org/a/eee/agiwat/v203y2018icp20-29.html",
+      "locator": "Abstract/suggested citation, lines 19-27; full-text access note lines 32-42.",
+      "observed_operation": "Abstract describes greenhouse basil in perlite:coco (1:1), sensors, 0.20/0.30/0.40 m³/m³ setpoints and ≈8%/≈18% leaching in full-cycle comparison; growth similar across setpoints, fresh weight tended higher with higher leaching, plausibly via lower EC.",
+      "governing_condition_default_exception": "Abstract only; publisher full text marked subscription restricted. Do not infer unreported method detail or broader crop effects.",
+      "applicability": "Illustrates coupling of setpoint, leaching and EC, not a universal treatment.",
+      "retrieval_operation": "Opened RePEc bibliographic/abstract record; publisher record was access restricted. Publisher URL: https://www.sciencedirect.com/science/article/pii/S0378377418301057.",
+      "version_and_identity_note": "Montesano et al. Sensor-based irrigation management of soilless basil using a new smart irrigation system. Agricultural Water Management 203(C), 20-29 (2018), DOI 10.1016/j.agwat.2018.02.019.",
+      "version": "Agricultural Water Management 203(C), 2018, pp. 20-29; abstract record only; DOI 10.1016/j.agwat.2018.02.019.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S8",
+      "citation": "Both et al. Guidelines for measuring and reporting environmental parameters for experiments in greenhouses. Plant Methods 11, 43 (2015), DOI 10.1186/s13007-015-0083-5.",
+      "exact_url": "https://link.springer.com/article/10.1186/s13007-015-0083-5",
+      "locator": "Quality assurance lines 77-100; sensors/parameters lines 152-185, 237-255, 288-294; full article.",
+      "observed_operation": "Recommends logging sensor identity, position, calibration, processing intervals and structure/control strategy; independent measurement sensors can detect control-sensor failure; multiple/continuous readings address spatial/temporal variation.",
+      "governing_condition_default_exception": "Guidance for plant experiments; effort should fit the question and sensor choice/location depends on parameter and crop.",
+      "applicability": "Supports reproducible baseline measurement; no case-specific acceptable values.",
+      "retrieval_operation": "Opened Springer Nature full-text article; published 2015-09-11, volume 11, article 43.",
+      "version_and_identity_note": "Both et al. Guidelines for measuring and reporting environmental parameters for experiments in greenhouses. Plant Methods 11, 43 (2015), DOI 10.1186/s13007-015-0083-5.",
+      "version": "Plant Methods 11, article 43; published 2015-09-11; open-access commentary.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    },
+    {
+      "id": "S9",
+      "citation": "Munster, M. Submitting Samples From Plants in a Greenhouse. NC State Extension Plant Disease and Insect Clinic; updated 2026-02-27.",
+      "exact_url": "https://pdic.ces.ncsu.edu/submitting-samples-from-plants-in-a-greenhouse/",
+      "locator": "Greenhouse sample instructions and pathogen-detection policy; web lines 57-87.",
+      "observed_operation": "Requests representative symptomatic material and symptom-distribution photos; NC State instructions specify dry foliage and slightly moist (not soggy) media.",
+      "governing_condition_default_exception": "Local clinic submission guidance; receiving lab's instructions govern elsewhere.",
+      "applicability": "Supports specialist escalation and sample planning if diagnosis becomes consequential; none occurred here.",
+      "retrieval_operation": "Opened NC State Extension page and inspected update date and instructions.",
+      "version_and_identity_note": " updated 2026-02-27.",
+      "version": "Page updated 2026-02-27.",
+      "access_utc": "2026-10-10T06:59:24Z"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "verified_utc": "2026-10-10T07:46:59.343953+00:00",
+  "missing_required_artifacts": [],
+  "stage_frozen_input_checks": [
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/assignment.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/input-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/assignment.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/input-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/assignment.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/input-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+      "exists": true,
+      "hash_matches": true,
+      "bytes_match": true
+    }
+  ],
+  "terminal_science_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "expected_sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+      "actual_sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+      "matches": true,
+      "bytes": 10311
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+      "expected_sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+      "actual_sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+      "matches": true,
+      "bytes": 15797
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/sources/index.md",
+      "expected_sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+      "actual_sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+      "matches": true,
+      "bytes": 8790
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+      "expected_sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+      "actual_sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+      "matches": true,
+      "bytes": 13769
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+      "expected_sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+      "actual_sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+      "matches": true,
+      "bytes": 27450
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+      "expected_sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "actual_sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "matches": true,
+      "bytes": 6807
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+      "expected_sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+      "actual_sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+      "matches": true,
+      "bytes": 20867
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/sources/index.md",
+      "expected_sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+      "actual_sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+      "matches": true,
+      "bytes": 9877
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "expected_sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+      "actual_sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+      "matches": true,
+      "bytes": 37151
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/source-map.json",
+      "expected_sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+      "actual_sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+      "matches": true,
+      "bytes": 23572
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/sources/index.md",
+      "expected_sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+      "actual_sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+      "matches": true,
+      "bytes": 18383
+    }
+  ],
+  "original_brief_copy_exact": true,
+  "original_revealed_plan_exact": true,
+  "all_science_freeze_hashes_match": true,
+  "all_mapped_inputs_match": true,
+  "semantic_proof": false,
+  "note": "Identity/integrity checks show which bytes were reviewed; source/coverage judgments rest on semantic inspection and governing primary context."
+}

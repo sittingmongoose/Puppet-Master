@@ -1,0 +1,372 @@
+{
+  "schema": "er12.CD.quiet-original-synthesis-prep.v1",
+  "status": "DRAFT_ROOT_INTEGRATION_AND_FINAL_FREEZE_PENDING",
+  "saved_at_utc": "2026-10-10T07:59:47.462088+00:00",
+  "scope": {
+    "reviewed_assessments": 19,
+    "reviewed_source_counts": {
+      "PASS_WITH_LIMITATIONS": 18,
+      "FAIL": 1
+    },
+    "groups": {
+      "C-R1": {
+        "reviewed": 4,
+        "PASS_WITH_LIMITATIONS": 4
+      },
+      "C-R2": {
+        "reviewed": 4,
+        "PASS_WITH_LIMITATIONS": 3,
+        "FAIL": 1
+      },
+      "D-R1": {
+        "reviewed_delivered": 7,
+        "PASS_WITH_LIMITATIONS": 7,
+        "unassessed_missing": 1
+      },
+      "D-R2": {
+        "reviewed": 4,
+        "PASS_WITH_LIMITATIONS": 4,
+        "pending_not_inspected": 4
+      }
+    },
+    "pending_not_inspected": [
+      {
+        "slot": "D-R2-01",
+        "arm": "treatment",
+        "source_judgment": "PENDING_NOT_INSPECTED"
+      },
+      {
+        "slot": "D-R2-02",
+        "arm": "treatment",
+        "source_judgment": "PENDING_NOT_INSPECTED"
+      },
+      {
+        "slot": "D-R2-03",
+        "arm": "treatment",
+        "source_judgment": "PENDING_NOT_INSPECTED"
+      },
+      {
+        "slot": "D-R2-04",
+        "arm": "control",
+        "source_judgment": "PENDING_NOT_INSPECTED"
+      }
+    ],
+    "D2_timing": "PENDING_NOT_INSPECTED"
+  },
+  "supplied_campaign_denominators": {
+    "admitted": 80,
+    "admitted_FULL": 56,
+    "admitted_ROLE": 24,
+    "delivered": 79,
+    "delivered_FULL": 55,
+    "delivered_ROLE": 24,
+    "missing_FULL": 1,
+    "basis": "User assignment; no closed-stage science denominator; no failed delivery saving"
+  },
+  "missing_record": {
+    "slot": "D-R1-03",
+    "arm": "treatment",
+    "source_judgment": "UNASSESSED_MISSING_FINAL",
+    "delivery": "MISSING_PRE_INPUT_GUARD_FAILURE",
+    "protocol": "INVALID_EXACT_OBJECTIVE_BINDING",
+    "path": "ER12_RUNTIME/mechanics/D-R1-03-treatment-MISSING_FINAL.json",
+    "source_inference": "Not performed per original failure record; full access trace UNKNOWN",
+    "paid_restart_or_replacement_goal": false,
+    "guard_loosened": false
+  },
+  "reviewed_originals": [
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R1-01/control-v1/assessment.md",
+      "sha256": "b7349583de440ed5224b0d61172a2cf97532ffa6c542c8ca3612b3b80c870a88",
+      "bytes": 58389,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R1-02/control-v1/assessment.md",
+      "sha256": "017cad52ecced3d80aef2a1166c5e8366b4bffc260a8cf14a39dfd09a8488468",
+      "bytes": 104745,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R1-01/treatment-v1/assessment.md",
+      "sha256": "6027bdf0b2da6b92bd56ea3b08045322a45175590fdb53e4c30176dbcd3702c6",
+      "bytes": 83513,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R1-02/treatment-v1/assessment.md",
+      "sha256": "a2e86d6e28023afe6e021661f7f3a7d11de2c0fc3b08c9c126107219756a75ce",
+      "bytes": 82258,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "source_judgment": "FAIL",
+      "assessment": "ER12_RUNTIME/assessment/C-R2-01/control-v1/assessment.md",
+      "sha256": "80b60907753a9bd41b36b6cb033fa7de8dd057ca445312dd0a88cca4c0ec589f",
+      "bytes": 84582,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R2-01/treatment-v1/assessment.md",
+      "sha256": "ec5a1921fbfc49f21c12bf718ba3a3dbac0273bc0629f236c9fdae0a3bf25146",
+      "bytes": 79290,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R2-02/control-v1/assessment.md",
+      "sha256": "47c5d731e5a07f3375cf682eb67662ea83511ea949e123b8f1aae4c3f04ad2e3",
+      "bytes": 71626,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/C-R2-02/treatment-v1/assessment.md",
+      "sha256": "014b581718cc6ea2c758413d827d1aed7618ee34576277e50fded3ec5b41e1a0",
+      "bytes": 43852,
+      "judged_final_reference": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-04",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/assessment.md",
+      "sha256": "730212fa7bb988dbffe576be60a228d2d444e527a578a0cd02773872b6dbdd6c",
+      "bytes": 91711,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-02/control-v1/assessment.md",
+      "sha256": "bbc2841f6542396618348b5b662b66a82f623114c8183984652db051cb91572e",
+      "bytes": 100615,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-02",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-02/treatment-v1/assessment.md",
+      "sha256": "09a6c0e72c423e786abfd4bec7f3eb4fcb6ec6f3acdc5cc837519052db1d1196",
+      "bytes": 96248,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-04",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-04/control-v1/assessment.md",
+      "sha256": "558353963d64ddac827157e0c2a3dd69367f9e9a051bb185d76fa50a6f3895e9",
+      "bytes": 50492,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-01",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-01/control-v1/assessment.md",
+      "sha256": "af69884fe5fd027a2a6f43af6af4b1543bdcf1928a94de0135d987edf41198f6",
+      "bytes": 59155,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-03",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-03/control-v1/assessment.md",
+      "sha256": "6d580ef962600ce3e853b013a736949c5f104182b97f0fda09c2f99e7a861bd7",
+      "bytes": 49262,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R1-01",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.md",
+      "sha256": "d67fa962afd56b4b7d5db9f000c845aa82b426c56746fd835a871b29c2a68f46",
+      "bytes": 105874,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R2-01",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R2-01/control-v1/assessment.md",
+      "sha256": "c7938c36d429eb45bd07665e4097b7cba4b7f36fcb6bc94cb435924e1ff9f82d",
+      "bytes": 72487,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R2-03",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R2-03/control-v1/assessment.md",
+      "sha256": "ffe080e64f370bb170def6adbc6fdd57f1004e9ba22b2710cebfaa75196b72df",
+      "bytes": 55742,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R2-02",
+      "arm": "control",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R2-02/control-v1/assessment.md",
+      "sha256": "7c7318c80b6642e5c89115533c1d52cef270dac2cd8dfa5b63ec606e5ced117f",
+      "bytes": 69740,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    },
+    {
+      "slot": "D-R2-04",
+      "arm": "treatment",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/assessment.md",
+      "sha256": "c566804f1002a2b542edc47e8574c734dbb3257b8b92331664815f584055a226",
+      "bytes": 71017,
+      "judged_final_reference": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+      "artifact_reference_read_status": "REFERENCED_ONLY_NOT_OPENED",
+      "protocol_time_qualification": "See original assessment; source label does not imply full request/protocol/time PASS"
+    }
+  ],
+  "other_authorized_read_artifacts": [
+    {
+      "path": "ER12_RUNTIME/analysis/AB-synthesis-v1/analysis.md",
+      "sha256": "4d052fe8507fa5b76c9d534f706935a8e16d708d981c163ce433019eff470a26",
+      "bytes": 34656
+    },
+    {
+      "path": "ER12_RUNTIME/methods/C-R1/RECIPE_LOCK.json",
+      "sha256": "ad5fc1ef676943b50d822fd54ed349d6e46708bbe58cc0b66d47f1e0f99c8499",
+      "bytes": 4769
+    },
+    {
+      "path": "ER12_RUNTIME/methods/C-R2/RECIPE_LOCK.json",
+      "sha256": "1f8e8ebcd74d79d7ed76b04c8be3fb472338012336138cf5ec360d0ff15d3fb0",
+      "bytes": 11194
+    },
+    {
+      "path": "ER12_RUNTIME/methods/D-R1/RECIPE_LOCK.json",
+      "sha256": "ad6e8b171ed4e33e8e58c354639dddafc957f3f1b83af0785a9b5919e2fc4845",
+      "bytes": 11098
+    },
+    {
+      "path": "ER12_RUNTIME/methods/D-R2/RECIPE_LOCK.json",
+      "sha256": "be125a77348b5b891edf7e6da1438faa11888ee58e232894fa102a386f37a5d1",
+      "bytes": 18020
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/D-R1-03-treatment-MISSING_FINAL.json",
+      "sha256": "f14f237b2a4f1f5bdc302a957cc91d144105d40c2240b0ddda3bd5f186dc443d",
+      "bytes": 11391
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/C-R1-host-timing-v1/SUMMARY.json",
+      "sha256": "8504e4e512b021937598ae901f3f063f4aedcdc6051570648ed5e18683b2ff57",
+      "bytes": 28930
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/C-R2-host-timing-v1/SUMMARY.json",
+      "sha256": "7c7c8f4114c65096258abde2ed47bae0f72e45d9b52c4f3adbd959a3f033d721",
+      "bytes": 6285
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/D-R1-host-timing-v1/SUMMARY.json",
+      "sha256": "583758ab14c55b00f3cba981ecf6216f616fe2fa337d969ca511c9e65d50f595",
+      "bytes": 14030
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/D-R1-host-timing-v1/SUMMARY-v1.1.json",
+      "sha256": "9fce8f76d95042287290f0807da620755928aa15577afdf6ed3c4c2caf241044",
+      "bytes": 14291
+    }
+  ],
+  "unknowns": [
+    "native authentication and receipt freshness",
+    "effective model/reasoning/service tier",
+    "billing/cached-input/inference economics",
+    "complete off-record action/access history"
+  ],
+  "interpretation_constraints": [
+    "No regrade or source-label replacement",
+    "Source PASS_WITH_LIMITATIONS separate from full request/protocol/time fulfillment",
+    "Literal full60research versus fixed30/12/18 early-finish profile conflict preserved",
+    "D1/D2 amended mechanics diagnostic versions, not unchanged confirmations",
+    "No D2 paired/aggregate outcomes or timing inferred",
+    "No closed stage counts or failed delivery used as savings",
+    "Host latency/context lifetimes are descriptive proxies; different occupancy definitions not pooled",
+    "Original native/usage/source arrays referenced, not copied"
+  ],
+  "analysis": {
+    "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/analysis.md",
+    "sha256": "b166b6dc478c8a8e81ab59e9b0f59f283353dcc0daf2bfa1a0aca246e5cae6c9",
+    "bytes": 53706
+  },
+  "execution": {
+    "mail_identity": "codex-er12-cd-prep-10681257",
+    "goal_id": "01a124cb-74a4-7422-b451-49ad77a3b0df",
+    "native_activation_created_epoch": 1791618690,
+    "started_utc": "2026-10-10T07:51:30Z",
+    "deadline_utc": "2026-10-10T08:01:30Z",
+    "goal_status_at_save": "active",
+    "completion_order": "Complete the same actual native Goal after saving and verifying both files",
+    "no_nested_delegation": true,
+    "no_external_source_or_live_host_calls": true
+  }
+}

@@ -1,52 +1,20 @@
 {
-  "plan_clauses": [
-    {
-      "id": 1,
-      "exact_obligation": "Compare two realistic display/ingestion routes and an analogous schedule-plus-event-stream mechanism.",
-      "exact_plan_treatment": "Use trip IDs alone to join every realtime message to the current timetable. Display the last received message until another arrives.",
-      "original_plan_line": 15
-    },
-    {
-      "id": 2,
-      "exact_obligation": "Explain static trip/service identity, realtime message types, freshness and mismatch behavior without inventing predicted departures.",
-      "exact_plan_treatment": "OpenTripPlanner is the first candidate; a lightweight custom display is the second route pending research. Neither is approved for deployment.",
-      "original_plan_line": 19
-    },
-    {
-      "id": 3,
-      "exact_obligation": "Investigate related identifier, service-day/time-zone and alert-applicability conditions together, while preserving their distinct semantics.",
-      "exact_plan_treatment": "Treat all disruption messages as delayed departures and assume times fit within a calendar day. Service-day, timezone and alert scope are deferred.",
-      "original_plan_line": 23
-    },
-    {
-      "id": 4,
-      "exact_obligation": "Trace a relevant released feed/consumer change or failure/fix chain, identifying the operations and timetable revisions it governs.",
-      "exact_plan_treatment": "No consumer history is attached. The manual banner is retained, but its precedence and disclosure relative to feed data are unspecified.",
-      "original_plan_line": 27
-    },
-    {
-      "id": 5,
-      "exact_obligation": "Preserve and investigate this supported optional scope: a staff-authored advisory banner when machine-readable disruption data is unavailable. It is an authorized option, not a mandatory feature or an established technical capability; recommend conditions, retain it when supported, and explain any evidence-based exclusion.",
-      "exact_plan_treatment": "Retain a staff-authored advisory banner when machine-readable disruption data is unavailable as supported owner-authorized optional scope. Support here means that the brief explicitly permits it; technical support, conditions and interoperability still need research. Do not remove it merely because the baseline route lacks it, or silently promote it to mandatory scope.",
-      "original_plan_line": 31
-    },
-    {
-      "id": 6,
-      "exact_obligation": "Make owner decisions explicit: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies.",
-      "exact_plan_treatment": "Owner authority is reserved as follows: The schedule publisher owns timetable versions; the duty manager owns manual advisories and stale-data wording. The regional partner must confirm which realtime messages it actually supplies. The draft has not obtained these decisions. Its tentative implementation assumptions cannot substitute for them.",
-      "original_plan_line": 35
-    },
-    {
-      "id": 7,
-      "exact_obligation": "Preserve negative constraints: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation.",
-      "exact_plan_treatment": "Binding exclusions: Do not dispatch vessels, infer an ETA from missing data, treat service alerts as trip updates, or present a manual advisory as a realtime feed observation. The draft has no complete trace showing that its assumptions comply; revise the proposal wherever necessary to preserve these exclusions.",
-      "original_plan_line": 39
-    },
-    {
-      "id": 8,
-      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
-      "exact_plan_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
-      "original_plan_line": 43
-    }
-  ]
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "b7ae1ba366f60f11d6443e3c59ea94259072543122693626a9514f1161e7c7d3",
+  "rawSHA256": "b7ae1ba366f60f11d6443e3c59ea94259072543122693626a9514f1161e7c7d3",
+  "original_bytes": 4477,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A6-01/treatment-v1/evidence/exact-input-clauses.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

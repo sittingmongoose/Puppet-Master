@@ -1,0 +1,171 @@
+{
+  "observed_at_utc": "2026-10-10T07:04:00.573839+00:00",
+  "basis": "root observed terminal final T3 task/no pending; separate from native proof",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/critique.md",
+      "bytes": 9508,
+      "sha256": "412613b6bb91b15d44cf0774b4e97dc74ce663c80d87e954d0e48a6414f38212",
+      "mtime_ns": 1791615216297929144
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/critic/source-map.json",
+      "bytes": 37747,
+      "sha256": "2a7395715b798a08b9deda70923cdf88a7bee611028bfb473371d2996383baa0",
+      "mtime_ns": 1791615216297705787
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/discovery.md",
+      "bytes": 11524,
+      "sha256": "271be7e03473992f8d62cab24813f97afdbd403c3164f533e7e42bf99dff6e02",
+      "mtime_ns": 1791614047628851403
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/draft.md",
+      "bytes": 36422,
+      "sha256": "da1001bbace3b0de74ac11ad2a8203628b108333315625a3515ef7155cc16231",
+      "mtime_ns": 1791614818718862499
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 7045,
+      "sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "mtime_ns": 1791614061296499313
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/source-map.json",
+      "bytes": 28069,
+      "sha256": "0ad826840c715cb2a3391ed64c57eb7b209e70ceaa7b607e63a5b68abb4e6ba6",
+      "mtime_ns": 1791614660904760861
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S001.md",
+      "bytes": 815,
+      "sha256": "91e4d4134d7ab667232eb6400cc975e9fd4d0656dcf0a9eda59819c3e3c2765e",
+      "mtime_ns": 1791614047628104669
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S002.md",
+      "bytes": 1135,
+      "sha256": "e47b38c6f6f920b4f7b812aa84fc29c7d8cc3b1896e65a7d4b04e0c1051aab92",
+      "mtime_ns": 1791614047628184302
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S003.md",
+      "bytes": 1010,
+      "sha256": "3332f7dfaf72a948c49f73a1f71b07b93b2e8e5a92ed1703f51a7a0e3482cd74",
+      "mtime_ns": 1791614047628250518
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S004.md",
+      "bytes": 1101,
+      "sha256": "9f19bf37dee4a5a724ccbd2786259f76790c40d1e7396a10e35b46449da6292f",
+      "mtime_ns": 1791614047628308810
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S005.md",
+      "bytes": 707,
+      "sha256": "3f9cabb3f82ecf9d8fd1afc9b3078d91807caac730db562768c874f2bb8b50da",
+      "mtime_ns": 1791614047628369206
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S006.md",
+      "bytes": 964,
+      "sha256": "3ed4ea3037c7e3708ebbc6ff03356489eab0e007e549276ad7d55708b6d36a21",
+      "mtime_ns": 1791614047628425332
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S007.md",
+      "bytes": 895,
+      "sha256": "c3d219d6a107ba0ab3552cf7983d510b0be7825579e79b14ac3176db56e663b6",
+      "mtime_ns": 1791614047628485926
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S008.md",
+      "bytes": 915,
+      "sha256": "9d8b951decddf04d48bfe68fe64694fdae408d60b04a94b568c5ae1a4df68a76",
+      "mtime_ns": 1791614047628540373
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S009.md",
+      "bytes": 779,
+      "sha256": "f13bbdefab5139189afc6f52e14ed4dea5b5210a6aa3a7fbb744e26f10afce87",
+      "mtime_ns": 1791614047628600582
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S010.md",
+      "bytes": 804,
+      "sha256": "bae67b50c12a1fc9c549b90002b04217a5a35cb8011025684f354c09b0ed2b4b",
+      "mtime_ns": 1791614047628659095
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S011.md",
+      "bytes": 594,
+      "sha256": "b84d884e8d83c9fffb4d31e38d8d992e6c31e0721b94945636ef7629655487e1",
+      "mtime_ns": 1791614047628716281
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S012.md",
+      "bytes": 1025,
+      "sha256": "d3078b0afe1b0c5355456c6b738478bd6bd3c80ea547dc3f7097cfb2ec90fbdb",
+      "mtime_ns": 1791614272185351841
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S013.md",
+      "bytes": 981,
+      "sha256": "417da4cab7c841cc46e7460b503370ea8b14bf6ddbfac50e9fd4a40f8114e264",
+      "mtime_ns": 1791614272185453871
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S014.md",
+      "bytes": 1173,
+      "sha256": "716a8a80384055840c2403d5d88ad2d7936cfd322854fb918374e808f0095368",
+      "mtime_ns": 1791614660905377002
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/ER12-S015.md",
+      "bytes": 986,
+      "sha256": "b99f139eeada99373764a8cad0be262319bd2d9c9420897d7a166862d3e1ce6f",
+      "mtime_ns": 1791614660905492331
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/investigator/sources/index.md",
+      "bytes": 2257,
+      "sha256": "c54f3c702c562d82bbacf626a2e12e292bb330e35c331a0b0d4580334a349dd9",
+      "mtime_ns": 1791614660905689246
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md",
+      "bytes": 49086,
+      "sha256": "6d75191a3ba013567d877194f7e369b36456eb8411674aa3a06d1211071cfc90",
+      "mtime_ns": 1791615702540358551
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/source-map.json",
+      "bytes": 49738,
+      "sha256": "08112ddc1407c84e1e5d34114a478d90510fe0411ebed12dd46c96da92fa4ee0",
+      "mtime_ns": 1791615719895400823
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/sources/index.md",
+      "bytes": 4184,
+      "sha256": "815a4ff4a5ed8dc207251e2cdc62f4eac80dd0e24be66dcc6d216cae2d05070f",
+      "mtime_ns": 1791615654441670843
+    }
+  ],
+  "final_stage_task": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "e4e3ed44742ae36ee8bce0fb80a50ce54d21ad74c1ae23fd80455b4b7e80d119"
+  }
+}

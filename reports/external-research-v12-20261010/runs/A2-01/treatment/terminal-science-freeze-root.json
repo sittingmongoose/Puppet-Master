@@ -82,25 +82,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A2-01",
-    "arm": "treatment",
-    "stage": "investigator",
-    "helper": "ER12_RUNTIME/helpers/topology-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the investigator stage in the **original native Goal**. The final package was sealed at 04:48:20 UTC, and that same Goal is complete. No new Goal or review round was created.\n\nSaved the complete proposal, all three critic dispositions, the preserved 21-source map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md)\n- [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md)\n\nNo product validation was run. The seal records that source truth and scope fidelity were not independently proven by the helper. The Goal reports 562,132 tokens and 2,185 seconds elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:14c1467d-96b1-4801-b694-6c99413bf00b",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the investigator stage in the **original native Goal**. The final package was sealed at 04:48:20 UTC, and that same Goal is complete. No new Goal or review round was created.\n\nSaved the complete proposal, all three critic dispositions, the preserved 21-source map, and source index:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md)\n- [critique-dispositions.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/critique-dispositions.json)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/sources/index.md)\n\nNo product validation was run. The seal records that source truth and scope fidelity were not independently proven by the helper. The Goal reports 562,132 tokens and 2,185 seconds elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:14c1467d-96b1-4801-b694-6c99413bf00b",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "2324a48910f4c2007970099d06e9c00ca3d221a8bac81566d77091c8e474e7a1"
   }
 }

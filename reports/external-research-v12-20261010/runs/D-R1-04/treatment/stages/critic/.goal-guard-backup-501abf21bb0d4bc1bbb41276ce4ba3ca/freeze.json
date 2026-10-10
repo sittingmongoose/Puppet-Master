@@ -1,0 +1,73 @@
+{
+  "prepared_at_utc": "2026-10-10T06:42:30.612Z",
+  "stage": "critic",
+  "stage_deadline_utc": "2026-10-10T07:06:13.767Z",
+  "whole_deadline_utc": "2026-10-10T07:24:13.622Z",
+  "stage_budget_s": 720,
+  "predecessors": [
+    {
+      "stage": "investigator",
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-investigator-v1",
+      "statusPath": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/status.json"
+    }
+  ],
+  "frozen_inputs": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/inputs/brief.md",
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "bytes": 2512
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md",
+      "sha256": "9f987f5c92a611b4958241d50830a7a37bbbd480e2d6d522c53584db875178dd",
+      "bytes": 4022
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/input-map.json",
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "bytes": 1497
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/discovery.md",
+      "sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "bytes": 12112
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/draft.md",
+      "sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "bytes": 17586
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+      "sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "bytes": 15833
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "bytes": 6642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "15fddd753fabeb08c3db76989c317eb8d1e5fecc655ce5ac6c75856a42df1971",
+      "bytes": 433
+    }
+  ],
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_objective": "ER12 critic stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A1",
+  "stage_prompt_delta": null,
+  "time_contract": "absolute_T0_30_42_60",
+  "available_stage_seconds_at_prepare": 1423.154819,
+  "prospective_service_tier_revision": "user-standard-20261010-v1",
+  "request_sha256": "36d4093cb786bb5c84c2adac8b4b63b1111b83b2b6b33b450644d560b9f969c2"
+}

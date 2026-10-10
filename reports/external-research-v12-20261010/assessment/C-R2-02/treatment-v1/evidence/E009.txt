@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://asreview.readthedocs.io/en/stable/lab/progress.html"
+  ],
+  "source_urls": [
+    "https://asreview.readthedocs.io/en/stable/lab/progress.html"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R2-02/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E009",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "39c4d4a92aa92799c6336188b77bc762387130d7815b24fe3affedc7f2782436",
+  "rawSHA256": "39c4d4a92aa92799c6336188b77bc762387130d7815b24fe3affedc7f2782436",
+  "original_bytes": 5862,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/C-R2-02/treatment-v1/evidence/E009.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/source-map.json",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/sources/index.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/discovery.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/draft.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/revealed-plan.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/source-map.json",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/sources/index.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/source-map.json",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/sources/index.md",
+    "matches_terminal_sha256": true,
+    "matches_terminal_bytes": true
+  },
+  {
+    "check": "original brief equals carried brief",
+    "equal": true
+  },
+  {
+    "check": "original plan equals revealed plan",
+    "equal": true
+  }
+]

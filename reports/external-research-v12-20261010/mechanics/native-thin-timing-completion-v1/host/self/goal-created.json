@@ -1,1 +1,18 @@
-{"goal":{"threadId":"01a12454-eb17-7712-ad20-30cf915d1b54","objective":"Capture the exact terminal-only TARGETS whitelist once via native thin thread reads within a five-minute cap; save unchanged raw results, compact timing SUMMARY.json, and SHA manifest in the reserved task host directory, then complete this Goal.","status":"active","tokensUsed":0,"timeUsedSeconds":0,"createdAt":1791610915,"updatedAt":1791610915},"remainingTokens":null,"completionBudgetReport":null}
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "goal": {
+        "threadId": "01a12454-eb17-7712-ad20-30cf915d1b54",
+        "status": "active",
+        "createdAt": 1791610915,
+        "updatedAt": 1791610915
+      }
+    }
+  ],
+  "original_capture_sha256": "584d4a23d26a2f5bee1d5a674be60be7150ecccd04eeb61e534ced102adf67b5",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-thin-timing-completion-v1/host/self/goal-created.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "actual_response": {
+        "goal": {
+          "threadId": "01a123ee-ddb9-73e1-a20f-4c491b148384",
+          "status": "active",
+          "createdAt": 1791604255,
+          "updatedAt": 1791621440
+        }
+      },
+      "observed_at_utc": "2026-10-10T08:37:20.836Z"
+    }
+  ],
+  "original_capture_sha256": "3822a2d984766addf01f6e4a344ddc5877f926a8959df492d6c12628a0141289",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/final-native-host-capture-v1/host/root-native-asof-final-002.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

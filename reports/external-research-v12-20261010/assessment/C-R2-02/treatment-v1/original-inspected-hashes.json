@@ -1,0 +1,275 @@
+{
+  "note": "Read-only baseline inventory of this assigned packet only; inspection dispositions are supplied in the assessment. No unrelated or backup directories read.",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/inputs/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md",
+      "bytes": 8932,
+      "sha256": "ac6fe6855e595fab11b253c16d15b390dc249edf77bfc78f60852e46b6376156"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md",
+      "bytes": 22806,
+      "sha256": "6e0928ce6ae1caa0fa80d2facd24298702df0421c43cf1afab3d9e0816a95908"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/dispatch.json",
+      "bytes": 6608,
+      "sha256": "e28cc91e7df3a4e820db0500a5282cf5a869e34ca4ad51a198e3f9cc57bf213a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "761d05f910f6426414c200747388e76cd02fedf70409c4e34824b5365ca6fb65"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "8c5a009ed797a3c10f391c1b753bdb806ec934878cd8db85766fdb0a9259d3b3"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/goal-binding-guard.json",
+      "bytes": 52,
+      "sha256": "18045c8d0b63332cef1c4258e599be3a0120d40bf3eeae74a5445c28c42c8b1a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "2d3201962c7e5eb0d26228837371ea632f249e4147dee5b83b6c7af27e03b000"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "9a9f2eb5d79dfcb370adf07e814f83a08aa65f8fc76aeacb0dff8b2317c4e325"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 471,
+      "sha256": "2e2332cd7096916839b413807ae170947e0ed073bdab466699c81ff95ea8cb3d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "3c78e1fcddb383f1abe150d567829e2548be1badb4b9cfc0a42cb1dd7a048193"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/native-goal-preterminal.json",
+      "bytes": 479,
+      "sha256": "355dacc3d2c49511d1708b1e65207ac723dbbf13e41dac909387d567f7d628c4"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/request.json",
+      "bytes": 3170,
+      "sha256": "c319509d71db0a717dc02a06eacad1376b589dab5afc494d9c7a7d0c2dc8976c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "a0a09f9680b80aaf692cc289565a0614142cf94e0886571c52aa6a8880637f23"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/source-map.json",
+      "bytes": 20219,
+      "sha256": "3120518a6443e82d22323186bd932c4fc654c47f9b5e625dace1855380e19459"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/status.json",
+      "bytes": 4997,
+      "sha256": "caa165a47de7b6b6ef43070a49b95783d6e265455fe6d071331b2d15cd018783"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "1fba09a96879e5b0702bccb6ff0e248f74c8c815b8cac4a9ca17e4f2be0f8c2e"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/discovery.md",
+      "bytes": 18956,
+      "sha256": "462d79eec60b698f2ee8f8924fb263102da696b69873b3bc7ecbae2aa338caf1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 6734,
+      "sha256": "28d02bc14934bdac8ef3bf3cc0a727e7aebbb51b825eb949b027b062dfde324d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md",
+      "bytes": 30848,
+      "sha256": "9fd6fcc7221ee9fa3f65b42fd90c393f55d1d391b00dfb4e111bbe4d7c8659fc"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "966a97ed8ee8c8820501b3455ca538b55fad4b658f03db72a7fe9163943531ae"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "baeda85194a2d03fc334a2dadc2d17d14649418a9f30ca368ba5b0ff8f3bfe07"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "2d4b6a257311909f9ff22b29b434bbefd65ea5f5259d371726b579576016832d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "8b8fe0dfeb016e9d3c6b5db117bd3a0f266896b686f33d3c1de61db200805f5f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_activation.json",
+      "bytes": 483,
+      "sha256": "f58e7449e46efe3ab1d9bd65975326f9929294f928ef255001f61e16caae8af7"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_binding_guard.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_completion.json",
+      "bytes": 812,
+      "sha256": "ab4b72f1bd48419d7670b1ae16e52a29692e69df44cb96fcd495f9d1572b47aa"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "985435147417b6b395168fce018726aaf5e48f28d498babdc39f32d8ed1b17bb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/request.json",
+      "bytes": 3224,
+      "sha256": "491cf8e9bf87b3d87fd4ab17d2da1a1397dc9170d97ba93856786e150b94be2d"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "0668f0799088215148f8489f5e48e709c84b2c3536de8fa4816b4bd41f9bc5d5"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/source-map.json",
+      "bytes": 12907,
+      "sha256": "c950639df85956ae2482912ae95dbf19d57f304c6e661a4811d8674afaec5c41"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 2220,
+      "sha256": "a6faad122e0cc80af14d9c5da64bc5e7bc4a70262d2594527a2a057b5705e896"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/search-log.md",
+      "bytes": 2505,
+      "sha256": "7869133f05e0f151c54563e0358e46978dcae9ad310f525c70738651e086f14a"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/status.json",
+      "bytes": 6101,
+      "sha256": "1ea880c16a650504958f4803309cf507cb670facdea7a606029aec940266a65f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md",
+      "bytes": 7234,
+      "sha256": "175e8faec118252001fe580fe47126b4d475b2475f70d20e54f774d36ac25af0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 6629,
+      "sha256": "fb16882b10790c42f29c4d4d842cc52397b07a285551972fb5cb2d426de0977b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "6bb09ed97c9d65ff2dfc51423ba47fcd62f9ac789e28e1da62d30ab357e02131"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md",
+      "bytes": 38691,
+      "sha256": "f1a2f8b3d89f100790bc66d5bef4b36877ea9891a03c6c8134694c0f61294ef0"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/freeze.json",
+      "bytes": 6825,
+      "sha256": "660bc17e13146d1cac86caf7e631b00b445f4043697d94fefeabcce14a5b5a57"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "850163203d304ba07c4b2850459c0eb688aa99679677e6a0be6ea2decbdbf968"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "21983f74962b57aad469474489434d3bc58e0e41d7fd31479a332f4157d391f6"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 532,
+      "sha256": "383bfb5f174df7dd95892d9f43a168bd34c70ec30b1d5267b6ae1ae25d85a24c"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-binding-guard.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "00d09469cd4d6e5dc9196cea2295ac88c0eaf733991fef1a69486572e907d21b"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-preterminal.json",
+      "bytes": 480,
+      "sha256": "26000b2649819fee3e7d430cfa38e58d86703e59f11ce2d1dcca1b5a4c32f532"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/request.json",
+      "bytes": 3179,
+      "sha256": "4884fe053ce09ada47fc10ed2e73c22ca0404c9c44504f9597f53361271c1fd9"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "81af7b99f147e0c0a8162d984700cf2038d756c7bdecef222aabab50933c9273"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/source-map.json",
+      "bytes": 52870,
+      "sha256": "2162ef2b5cb77cf8b1cdec171fa9d399f23e69caf6cb87b0924d18f3c3aab835"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 4411,
+      "sha256": "64c1db65ea92c863407cde9d9c2f52f4d07abc0f0aa7837b8e62a49b3e9064c1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7730,
+      "sha256": "80e70668eab482148201a14b9bb33b5e8eb22c3726674d2939eb7ed99bde4493"
+    }
+  ]
+}

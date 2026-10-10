@@ -1,0 +1,110 @@
+{
+  "run_id": "D-R2-02-treatment",
+  "stage": "reviser",
+  "case_scope": "Synthetic brief ER12-D-R2-02-FRESH only. No route logs, product-temperature readings, shipment records, product identities, or verified quality outcomes were supplied or reviewed.",
+  "source_id_policy": "S1-S7 retain the investigator/critic bindings. No source ID was rebound. This map adds reviser access and adjudication notes while preserving retrieval limits.",
+  "reviser_recheck_access_utc": "2026-10-10T07:35:12Z",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Recommended International Code of Practice for Packaging and Transport of Fresh Fruit and Vegetables",
+      "publisher": "Codex Alimentarius Commission; official FAO/WHO-hosted compendium",
+      "url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+      "released_version": "CAC/RCP 44-1995, Amendment 1-2004, reproduced in the FAO/WHO Fresh Fruits and Vegetables first edition (2007); no later edition is asserted here.",
+      "locator": "§2.19, PDF p. 155; adjacent §2.19.1 and load-securing §2.18.",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Opened the official 195-page PDF and inspected §2.19 and adjacent text. Confirmed that the Code says to place an available small air recorder between packages in the warmest area, then separately attributes a top/side-wall/one-third-in-from-rear placement to recorder companies. Also checked §2.19.1 on recorder instructions and calibration/certification where necessary.",
+      "governing_condition_default_exception": "The between-package warmest-area sentence is the Code's placement criterion. The coordinates are separately attributed to recorder companies: on top of the load, near a side wall, one-third in from the rear doors, away from direct refrigerated-air discharge. The text does not specify an unsecured logger, attachment method, or product-core measurement.",
+      "applicability": "Primary transport guidance for a documented air-sampling location and recording placement. It is not a local rule, case observation, product-temperature conversion, safe limit, or evidence that a loose logger on top is equivalent to a secured logger between packages.",
+      "reviser_adjudication": "SCW-1 criticism accepted; wording amended to separate Code criterion from recorder-company example and to leave actual mounting/attachment as an unresolved case detail."
+    },
+    {
+      "id": "S2",
+      "title": "The role of post-harvest management in assuring the quality and safety of horticultural produce",
+      "publisher": "FAO-hosted postharvest reference",
+      "url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+      "released_version": "FAO chapter 3 web text; publication/version date is not stated on the retrieved page.",
+      "locator": "§§3.1-3.4, especially §3.4 on refrigerated transport/storage.",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Opened the complete official chapter page and read packaging airflow, temperature management, refrigerated transport, load spacing, commodity-versus-air measurement, and mixed-load context.",
+      "governing_condition_default_exception": "The chapter says packaging can change airflow around a commodity and calls for commodity rather than air temperature in refrigerated transport/storage. Its postharvest recommendations are general and commodity-dependent; they do not identify this synthetic case's produce or an applicable threshold.",
+      "applicability": "Mechanism support for separate product and air measurements, package/airflow records, and mixed-load questions; not evidence of local conditions or a numeric decision threshold."
+    },
+    {
+      "id": "S3",
+      "title": "Section 6: Temperature and relative humidity control",
+      "publisher": "FAO-hosted postharvest manual chapter",
+      "url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+      "released_version": "Web chapter; the retrieved page does not state an edition/date and cites underlying guidance including Kader 1992.",
+      "locator": "§6, especially paragraphs on heat transfer, shade, packaging, and vent alignment.",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Opened the official page and read its heat-transfer mechanisms, shade, and packaging/ventilation passages.",
+      "governing_condition_default_exception": "The page describes conduction, convection, radiation, and evaporation; shade is conditional on feasibility. It warns that added packaging can make cooling harder and recommends aligning vented liners with package vents. Cooling methods and crop tolerance vary.",
+      "applicability": "General mechanism and trade-off support for shade, preconditioning/packaging comparisons, and preserving vents. It does not establish that any particular cover, liner, or cooling method suits the unknown load."
+    },
+    {
+      "id": "S4",
+      "title": "Real-Time Temperature and Humidity Measurements during the Short-Range Distribution of Perishable Food Products as a Tool for Supply-Chain Energy Improvements",
+      "publisher": "Processes / MDPI",
+      "url": "https://doi.org/10.3390/pr10112286",
+      "retrieval_url": "https://www.mdpi.com/2227-9717/10/11/2286",
+      "version_notes_url": "https://www.mdpi.com/2227-9717/10/11/2286/notes",
+      "released_version": "Processes 2022, 10(11), 2286; version of record published 4 November 2022. Publisher version notes record a Version of Record PDF from 4 November 2022 and later HTML updates, including 3 September 2025; DOI/source identity retained.",
+      "locator": "Abstract; §§2.1-2.4 (SHT30 sensing modules, crate/load mapping, five-stop Portuguese route); §§3.1-3.6 and conclusions (air readings, stops, refrigeration, operational effects).",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Read the publisher-indexed article text and metadata, including abstract and methods details, through search results targeted to the exact MDPI article. A direct page open returned HTTP 429 during this reviser retrieval; the full publisher HTML was not directly retrieved. Publisher-indexed text states 18 wireless T/RH devices, five stops over 4 h 30 m, sensors placed in crates close to produce, and an SHT30 sensor measuring surrounding air. It also describes 5-minute sampling and route/stop context.",
+      "governing_condition_default_exception": "A field deployment on a Portuguese refrigerated van route with diverse produce, 18 crate-positioned SHT30 air-sensing modules, five stops and about 4.5 hours. The abstract reports associations with door opening, procedures, and irregular refrigeration. The sensors measure crate-near air, not product core or delivered quality. Because this is a different route and load, it is not a matched test of the synthetic cooperative's route or packaging (inference from the study's stated setting/methods).",
+      "applicability": "Implementation comparator for distributed air sensing, crate/location mapping, and event logging. Its observed route does not predict this case's effects and does not support a core-temperature or quality claim.",
+      "reviser_adjudication": "SCW-2 finding accepted. The study supports crate/route contextualization; the explicit air-versus-core/quality boundary is retained."
+    },
+    {
+      "id": "S5",
+      "title": "Thermal Management of Short-Range Distribution of Perishable Food Products Using Phase Change Materials in Packaging: Real-Time Field Data Acquisition",
+      "publisher": "Energies / MDPI",
+      "url": "https://doi.org/10.3390/en16135191",
+      "retrieval_url": "https://mdpi-res.com/d_attachment/energies/energies-16-05191/article_deploy/energies-16-05191.pdf?version=1688571133",
+      "released_version": "Energies 2023, 16(13), 5191; version of record published 5 July 2023. The inherited critic source map records later HTML updates through 31 December 2025; DOI/source identity retained.",
+      "locator": "PDF §§2.1-2.4.3 and Tables 1-3 (PCM, orange crates, route and SHT30 sensors); §§3-4 and conclusions (reported crate-sensor variation and remaining PCM phase-change reserve).",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Opened and inspected the official 13-page MDPI-hosted PDF, including methods, crate/sensor arrangement, route conditions, results, discussion and conclusion. Methods state that SHT30 measures air temperature, that its perforated housing directly interacts with ambient air, and that readings are taken every five minutes.",
+      "governing_condition_default_exception": "The study compared RT5HC PCM alveoli against empty alveoli in orange crates on a single Castelo Branco, Portugal delivery route, with six unloading stops, sunny winter conditions, refrigeration switched off, reported ambient temperatures from 1 °C to 10 °C, and oranges held near 5 °C overnight. Air-sensing modules were placed among the oranges; they were not probes in orange cores. The paper reports lower variation in those crate-air readings for the PCM crates and says the phase change was not finished by journey end. It does not directly measure orange-core temperature or delivered quality.",
+      "applicability": "A context-specific package-air buffering example, not a transferred efficacy estimate for unknown produce/crates/route and not evidence of product-core or quality benefit in this case.",
+      "reviser_adjudication": "SCW-3 finding accepted. The draft's endpoint limitation is retained and its result phrasing is sharpened to 'crate-air sensor readings'; no quality or core-temperature benefit is inferred."
+    },
+    {
+      "id": "S6",
+      "title": "Artificial fruit for monitoring the thermal history of horticultural produce in the cold chain",
+      "publisher": "Journal of Food Engineering / Elsevier ScienceDirect",
+      "url": "https://doi.org/10.1016/j.jfoodeng.2017.07.012",
+      "retrieval_url": "https://www.sciencedirect.com/science/article/pii/S0260877417303035",
+      "released_version": "Journal of Food Engineering 215 (December 2017), pp. 51-60; version-of-record DOI record.",
+      "locator": "Publisher abstract and bibliographic record; biomimetic artificial-apple prototype and cooling comparison against ten apples and water-filled simulators.",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Queried and read the publisher-indexed ScienceDirect record/abstract from the exact DOI search. A direct open of the publisher result was unavailable to this retrieval. The full article was not accessed.",
+      "governing_condition_default_exception": "The abstract says the fruit-of-interest-specific shell/filling was tested as an artificial apple during cooling against ten real apples; cooling time was within 5% for that test. It also reports differences up to 16% for water-filled fruit simulators. Neither result establishes cross-species performance. Because only the abstract was accessible, the exact comparison denominator behind the water-filled-simulator percentage is left uncertain.",
+      "applicability": "Supports considering a crop-matched thermal surrogate only after validation for the chosen crop and use. It does not validate a generic simulator or establish route performance for this case.",
+      "reviser_adjudication": "SCW-4 scope finding accepted; wording is amended to preserve the apple/cooling-test scope and to state that the full article and the percentage's detailed comparison basis were not accessed."
+    },
+    {
+      "id": "S7",
+      "title": "Adoption challenges of environmental monitoring practices: case study of temperature data loggers in selected Australian vegetable supply chains",
+      "publisher": "Applied Water Science / Springer Nature",
+      "url": "https://doi.org/10.1007/s13201-024-02300-5",
+      "retrieval_url": "https://link.springer.com/article/10.1007/s13201-024-02300-5",
+      "released_version": "Applied Water Science 14, article 260 (2024); version of record published 23 November 2024.",
+      "locator": "Methods §§4-5 (2021/22 exploratory qualitative cases, Lockyer Valley, three chains and interview/documentary methods); findings/discussion §§5-6 on cost, labor, mixed products, data sharing and accountability.",
+      "access_utc": "2026-10-10T07:35:12Z",
+      "observed_operation": "Opened and read the full publisher article page, including its methods and adoption-factor findings. Confirmed three separate supply-chain case studies in Lockyer Valley/Southeast Queensland in 2021/22, based on qualitative methods and 25 interviews; reviewed cost, retrieval/analysis labor, mixed-product, information-sharing and accountability passages.",
+      "governing_condition_default_exception": "The paper's qualitative findings apply to its selected Australian vegetable chains and interviewees, not to all chains and not to this synthetic cooperative. Themes include cost and uncertain returns, labor to retrieve/analyze logger data, mixed products with different temperature needs, information sharing, coordination, and responsibility/accountability.",
+      "applicability": "Implementation-history context for questions to ask about costs, labor, ownership, sharing and traceability. It supplies no local facts about this case.",
+      "reviser_adjudication": "SCW-5 finding accepted. The population is retained as three selected Australian chains; the draft's instruction to treat findings as local questions rather than local facts is preserved."
+    }
+  ],
+  "review_limits": [
+    "No case measurements, route records, crate history, or quality observations were supplied or reviewed.",
+    "S4 was rechecked against exact publisher-indexed text and metadata; direct MDPI page retrieval returned HTTP 429.",
+    "S6 was rechecked against the publisher-indexed ScienceDirect abstract/record; the publisher page could not be directly opened and the full article was not accessed.",
+    "S5, S1, S2, S3 and S7 were read from their official source pages/PDFs.",
+    "The checker validates objective binding but cannot independently establish response provenance or freshness; those remain UNKNOWN beyond the checker."
+  ]
+}

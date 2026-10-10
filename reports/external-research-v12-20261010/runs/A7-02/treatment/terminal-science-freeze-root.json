@@ -76,25 +76,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A7-02",
-    "arm": "treatment",
-    "stage": "critic-finalizer",
-    "helper": "ER12_RUNTIME/helpers/topology-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "The reference stage is sealed and its native Goal is complete.\n\nThe corrected helper sequence succeeded in order: `check-input` at 04:59:40.814Z, `freeze-review` at 04:59:59.252Z, then a newly authored `final.md` and `seal-final` at 05:01:22.855Z. The earlier premature draft remains preserved with its original hash and metadata. The initial bare-command errors are retained in `checks.json`.\n\n- [Final proposal](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md>)\n- [Critique and dispositions](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md>) \u00b7 [dispositions JSON](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json>) \u00b7 [source index](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md>)\n- [Checks](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json>) \u00b7 [process correction record](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md>) \u00b7 [preserved provisional diagnostic](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-diagnostic.md>)\n\nThe seal helper reported six dispositions and `scope_fidelity_proven=false`, `source_truth_proven=false`, and `native_provenance_attested_by_helper=false`; I make no claim that it proved those points. The directly observed native Goal completed with status `complete` (thread `01a1241d-3055-7802-b068-8c27557a5ae6`; 211,438 tokens; 1,225 seconds).",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:56bf84d1-82f5-47be-a162-69c39a21bad2",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "The reference stage is sealed and its native Goal is complete.\n\nThe corrected helper sequence succeeded in order: `check-input` at 04:59:40.814Z, `freeze-review` at 04:59:59.252Z, then a newly authored `final.md` and `seal-final` at 05:01:22.855Z. The earlier premature draft remains preserved with its original hash and metadata. The initial bare-command errors are retained in `checks.json`.\n\n- [Final proposal](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md>)\n- [Critique and dispositions](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique.md>) \u00b7 [dispositions JSON](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/critique-dispositions.json>)\n- [Source map](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/source-map.json>) \u00b7 [source index](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/sources/index.md>)\n- [Checks](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/checks.json>) \u00b7 [process correction record](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/stage-process.md>) \u00b7 [preserved provisional diagnostic](<ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/provisional-final-diagnostic.md>)\n\nThe seal helper reported six dispositions and `scope_fidelity_proven=false`, `source_truth_proven=false`, and `native_provenance_attested_by_helper=false`; I make no claim that it proved those points. The directly observed native Goal completed with status `complete` (thread `01a1241d-3055-7802-b068-8c27557a5ae6`; 211,438 tokens; 1,225 seconds).",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:56bf84d1-82f5-47be-a162-69c39a21bad2",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "a979eb0fe14d0aefd47fe61c3509c748a86adb67dafe510833811e694ee8207c"
   }
 }

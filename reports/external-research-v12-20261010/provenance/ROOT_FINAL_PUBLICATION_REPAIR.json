@@ -1,0 +1,58 @@
+{
+  "schema": "er12.actual-final-publication-repair.v1",
+  "observed_at_utc": "2026-10-10T08:59:28.737819+00:00",
+  "status": "PASS",
+  "counts": {
+    "attempts": 80,
+    "delivered_original_finals": 79,
+    "original_source_judgments": 79,
+    "unassessed": 1,
+    "source_labels": {
+      "PASS_WITH_LIMITATIONS": 56,
+      "FAIL": 23
+    },
+    "missing_attempt": {
+      "slot": "D-R1-03",
+      "arm": "treatment",
+      "disposition": "MISSING_PRE_INPUT_GUARD_FAILURE",
+      "assessment_state": "UNASSESSED"
+    }
+  },
+  "repair": "Project only two exact zero-byte stored copies; originals and source judgments unchanged",
+  "raw_copies_preserved_privately": true,
+  "original_full_validation_loop_completed_before_known_exact_parse-set_refusal": true,
+  "original_loop_checks": "all public privacy, JSON collection, Python AST, authored JS node syntax; tool refusal at final parse-set equality after loop",
+  "code_sha256": "97bfdbb611593102080b4f556e9b1e06fe378ce75f24f7648e4bbdcb9178ebd8",
+  "root_finalizer_sha256": "48d430a6861d31a99da03878bea555d8213397dd010c927b0276afeecadeaa5d",
+  "full_selected_original_private_current_hash_matches": 9421,
+  "full_science_freeze_hash_matches": 1877,
+  "all1980_JSON_plus7_fenced_prior_capsules_byte_exact": true,
+  "no_new_scientific_judgments": true,
+  "no_candidate_retry": true,
+  "checks": {
+    "json": 5553,
+    "typed_capsules": 2999,
+    "authored_python": 92,
+    "authored_javascript": 48
+  },
+  "only_two_original_parse_exceptions": [
+    {
+      "path": "runs/B-APPL-G-01/treatment/stages/role/goal_activation.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parse_error": "Expecting value: line 1 column 1 (char 0)",
+      "kind": "actual zero-byte failed native-activation diagnostic; preserved unchanged",
+      "native_goal_proof": false
+    },
+    {
+      "path": "runs/A3-02/control/stages/reviser/native-goal-active-confirmation.json",
+      "bytes": 429,
+      "sha256": "841f9305457f7ab06f41d04b732cd0f7eb5f32415cef5cb0367b7598d0fd07c0",
+      "parse_error": "Extra data: line 1 column 428 (char 427)",
+      "kind": "actual authored/native diagnostic contains extra JSON data; original structure preserved with sanitation only",
+      "native_goal_proof": "Not inferred from malformed JSON"
+    }
+  ],
+  "retained236_194_checks_rerun": false,
+  "production_qualified": false
+}

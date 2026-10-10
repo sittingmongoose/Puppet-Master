@@ -1,0 +1,27 @@
+{
+  "base_prepare": {
+    "path": "ER12_RUNTIME/helpers/er12-screen-v1/prepare.py",
+    "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+    "bytes": 23592
+  },
+  "base_reveal": {
+    "path": "ER12_RUNTIME/helpers/er12-screen-v1/reveal.py",
+    "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+    "bytes": 2880
+  },
+  "base_bootstrap": {
+    "path": "ER12_RUNTIME/helpers/er12-screen-v1/bootstrap.js",
+    "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+    "bytes": 4352
+  },
+  "critic_delta": {
+    "path": "ER12_RUNTIME/methods/A8/critic_prompt_delta.txt",
+    "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+    "bytes": 3398
+  },
+  "reviser_delta": {
+    "path": "ER12_RUNTIME/methods/A8/reviser_prompt_delta.txt",
+    "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+    "bytes": 1715
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "checked_at_utc": "2026-10-10T06:51:27.911276+00:00",
+  "source_judgment": "FAIL",
+  "six_axes_assessed": true,
+  "exact_plan_clause_count": 54,
+  "criticism_disposition_count": 4,
+  "unassessed_axes": [],
+  "originals_unchanged": true,
+  "temporary_files_removed": [
+    "build_assessment.py",
+    "evidence/E03-inspect.png",
+    "evidence/E04-inspect.png",
+    "evidence/E02-inspect.png",
+    "evidence/web-initial.json",
+    "evidence/web-methods.json",
+    "evidence/web-checks.json",
+    "evidence/web-conditions.json"
+  ],
+  "saved_judgment_before_native_completion": true,
+  "output_hashes": [
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/assessment.md",
+      "bytes": 84582,
+      "sha256": "80b60907753a9bd41b36b6cb033fa7de8dd057ca445312dd0a88cca4c0ec589f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/assessment.json",
+      "bytes": 173928,
+      "sha256": "53078dbf3fa7c566a0a69d1d2ed91ce423fb37abc0d55284ddf108d52cc20c2f"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/source-map.json",
+      "bytes": 97904,
+      "sha256": "de7986e06d02b86e604be578efbca7fd7c8bab4508004ded35ed7585648d0eda"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/C-R2-01/control-v1/evidence/INDEX.md",
+      "bytes": 11379,
+      "sha256": "889829b87ff47e4aa6ab747e5b9170230a1b4946bdeb3ff0b9882aaef8811df6"
+    }
+  ]
+}

@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A3-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. [final.md](ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md) covers R1\u2013R6, the original constraints, and dispositions of all three critique findings. It keeps the five-minute limit as an unresolved release gate: a page timer alone does not prove a strict cap when JavaScript is suspended. [Chrome\u2019s Page Lifecycle documentation](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) and the [WebKit issue record](https://bugs.webkit.org/show_bug.cgi?id=258567) are documented in the source map.\n\nThe [source map](ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md) are saved. The exact native Goal activation and completion responses are preserved [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json) and [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json). The same Goal completed; usage was 179,788 tokens over 12m 56s. No browser tests were run.\n\nScope note: during final inventory, I accidentally traversed the reviser directory and computed hashes for pre-existing unlisted files, including control and backup artifacts. I did not print, parse, or use their contents, and did not modify them, but this exceeded the instruction not to read unlisted paths.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:ed994308-3e1a-4b22-8cb2-86aad0e803ff",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. [final.md](ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md) covers R1\u2013R6, the original constraints, and dispositions of all three critique findings. It keeps the five-minute limit as an unresolved release gate: a page timer alone does not prove a strict cap when JavaScript is suspended. [Chrome\u2019s Page Lifecycle documentation](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) and the [WebKit issue record](https://bugs.webkit.org/show_bug.cgi?id=258567) are documented in the source map.\n\nThe [source map](ER12_RUNTIME/runs/A3-02/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/A3-02/control/stages/reviser/sources/index.md) are saved. The exact native Goal activation and completion responses are preserved [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-activation.json) and [here](ER12_RUNTIME/runs/A3-02/control/stages/reviser/native-goal-completion.json). The same Goal completed; usage was 179,788 tokens over 12m 56s. No browser tests were run.\n\nScope note: during final inventory, I accidentally traversed the reviser directory and computed hashes for pre-existing unlisted files, including control and backup artifacts. I did not print, parse, or use their contents, and did not modify them, but this exceeded the instruction not to read unlisted paths.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:ed994308-3e1a-4b22-8cb2-86aad0e803ff",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "7b286dad211282a91aafc158eec86ae2e7201b22d155f34a830d01e7a87fefe5"
   }
 }

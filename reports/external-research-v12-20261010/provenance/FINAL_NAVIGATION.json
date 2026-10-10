@@ -1,0 +1,26 @@
+{
+  "counts": {
+    "attempts": 80,
+    "delivered_original_finals": 79,
+    "original_source_judgments": 79,
+    "unassessed": 1,
+    "source_labels": {
+      "PASS_WITH_LIMITATIONS": 56,
+      "FAIL": 23
+    },
+    "missing_attempt": {
+      "slot": "D-R1-03",
+      "arm": "treatment",
+      "disposition": "MISSING_PRE_INPUT_GUARD_FAILURE",
+      "assessment_state": "UNASSESSED"
+    }
+  },
+  "results": "RESULTS.json",
+  "progress": "mechanics/SCIENTIFIC_PROGRESS.json",
+  "methodmap": "provenance/FINAL_METHOD_CASE_VERSION_MAP.json",
+  "whitelist": "provenance/FINAL_WHITELIST.json",
+  "dependencies": "provenance/SELECTED_INPUT_DEPENDENCIES.json",
+  "lineage": "provenance/FINAL_PRIVACY_AND_LINEAGE.json",
+  "analysis": "analysis/FINAL/analysis.md",
+  "historical_editions": "historical/pre-final/"
+}

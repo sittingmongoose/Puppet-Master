@@ -1,0 +1,1815 @@
+{
+  "schema_version": "ER12-independent-assessment-v1",
+  "assignment": {
+    "case": "D-R1-03",
+    "arm": "control",
+    "assessment_version": "control-v1",
+    "final_kind": "ordinary three-stage reviser final",
+    "reviewer_identity": "codex-er12-d-r1-03-control-v1-review",
+    "scope": "ONE frozen full pipeline only; no other arms, roster, outcome labels, campaign history or ER11 rescore",
+    "started_utc": "2026-10-10T07:08:00Z",
+    "judgment_saved_utc": "2026-10-10T07:23:00.806258+00:00",
+    "review_envelope_seconds": 2700,
+    "unassessed_axes": [],
+    "time_capped": false
+  },
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_reason": "No material remaining semantic error, omission or unsupported consequential recommendation found after complete six-axis review and independent governing primary-source checks. Corrected draft depth/naming gaps are retained as lineage defects. Minor navigation, source-summary/access and receipt limitations remain. Time and protocol findings are separately recorded and do not constitute an unqualified pipeline pass.",
+  "material_source_findings": [],
+  "all_six_axes": [
+    {
+      "id": 1,
+      "axis": "Original obligations and negative constraints",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The complete frozen original brief and plan were reviewed. The final carries all substantive science obligations, all four evidential questions, anomalies, strategy comparisons and a non-destructive pilot. All listed archive facts and copy roles remain hypotheses. No archive data or interviews were supplied. It does not infer consent/authenticity/completeness from checksums or plausible text, or propose current cleanup. Every original clause is individually mapped below. The 60-minute clause is retained but not certified; it is explicitly a separate time/route finding, not a source correctness waiver.",
+      "locators": [
+        "final.md:15",
+        "final.md:25",
+        "final.md:28",
+        "final.md:33",
+        "final.md:106",
+        "final.md:125",
+        "final.md:153",
+        "final.md:200"
+      ]
+    },
+    {
+      "id": 2,
+      "axis": "Consequential source claims: subject, operation, version, default, unit, type, domain and exceptions",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent governing text checks support all consequential final recommendations. BagIt validity, PREMIS optionality, BWF applicability, ffprobe approximate interval semantics, algorithm-specific fingerprints and versioned/configurable Archivematica operations retain their proper subjects. DSpace is an explicitly adjacent comparator rather than an installed solution. Extra hierarchy, filename-collision and item-type restrictions were inspected and recorded; the omissions are minor comparator depth limits because no operational decision depends on them. There is no materially unsupported recommended action.",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R18",
+        "R19",
+        "R20",
+        "R21"
+      ]
+    },
+    {
+      "id": 3,
+      "axis": "Useful discovery, competing/analogous approaches, implementation/history and breadth",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Discovery is substantive beyond generic caution: separate object/representation/event levels; contextual BWF clues; preserved originals versus policy derivatives; conditional fixity/filename events; a historic duplicate-hash validator failure; and Test3 short-input and frame-feed history. The draft compares manifests, metadata/events, content candidates and a genuinely usable two-reviewer manual route. The final adds DSpace collision/recovery and workflow-state comparisons and weighs current-name crosswalks versus restoration. Relevant missing records have explicit causal consequences. No product is declared a predetermined winner. The exact historical fix and speech matching performance remain bounded unknowns, not fabricated discoveries.",
+      "locators": [
+        "discovery.md:3",
+        "draft.md:40",
+        "draft.md:59",
+        "draft.md:105",
+        "final.md:78",
+        "final.md:88",
+        "final.md:159"
+      ],
+      "evidence_ids": [
+        "R02",
+        "R06",
+        "R08",
+        "R09",
+        "R10",
+        "R11",
+        "R12",
+        "R14",
+        "R17",
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": 4,
+      "axis": "Wrong criticism/correction/rejection and exact plan dispositions",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All five criticism groups receive explicit dispositions. The comparative implementation gap was real in the draft and is amended with supported, scoped evidence. The naming-option comparison was a minor draft gap and is corrected. The timing concern remains properly disclosed; calling it a material source defect solely because less than an hour was occupied would not be justified, particularly when the stage assignment permits early finish. Raw predecessor process receipts were not in the critic/reviser input maps, so their uncertainty is correct for those contexts; this reviewer separately inspected the saved receipts. No false science correction or unsupported rejection remains. Every plan sentence and the embedded original brief are independently disposed, including procedural clauses that are not research-method requirements.",
+      "locators": [
+        "critique.md:31",
+        "critique.md:39",
+        "critique.md:43",
+        "critique.md:47",
+        "critique.md:67",
+        "final.md:40",
+        "final.md:161"
+      ]
+    },
+    {
+      "id": 5,
+      "axis": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS",
+      "assessment": "The final is self-contained and preserves the staged hybrid, manual alternative, distinct claim scopes, anomaly hypotheses, missing-record consequences, baseline distinction, independent adjudication, append-only provenance and unresolved queue from discovery/draft. S01–S16 retain their URLs and condition records; S17–S19 are explicitly new. The revisions add comparator depth and naming tradeoffs without silently narrowing the request or turning hypotheses into archive facts. Corrected draft defects remain documented as lineage defects. Broken relative predecessor links are a minor navigation limit because actual input/source maps give absolute paths.",
+      "locators": [
+        "discovery.md",
+        "draft.md",
+        "critique.md",
+        "final.md",
+        "reviser/source-map.json",
+        "reviser/sources/index.md"
+      ]
+    },
+    {
+      "id": 6,
+      "axis": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "COMPLETE",
+      "source_axis_judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The proposed pilot has real discriminating checks: source/destination path/digest pairs where a trusted prior reference exists, second checksum implementation on a declared subset, metadata/event corroboration, multiple separated permissioned anchors, anomaly strata plus a separately selected random sample, and a reviewer who checks evidence before comparing decisions. Expected extents and transcript provenance constrain the oracle; absence leaves those conclusions unresolved. The proposal explicitly denies whole-archive accuracy from informal sampling and identity/completeness from fingerprints. No archive checksum, parser, fingerprint or relationship validation is claimed executed. Original artifact/process checks have limited raw receipts and are not semantic proof. No deployment, prototype or synthetic experiment was required, and none is invented.",
+      "locators": [
+        "draft.md:139",
+        "final.md:110",
+        "final.md:112",
+        "final.md:117",
+        "final.md:118",
+        "final.md:119",
+        "final.md:192"
+      ],
+      "evidence_ids": [
+        "R01",
+        "R05",
+        "R08",
+        "R09",
+        "R11",
+        "R12"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C01",
+      "critic_locator": "critique.md:33",
+      "criticism": "Requested 60-minute session is materially incomplete on investigator account.",
+      "candidate_disposition": "ACCEPT / retain timing uncertainty",
+      "final_locator": "final.md:44",
+      "reviewer_disposition": "ACCEPT missing certification, qualify materiality",
+      "assessment": "Saved native fields report investigator 1110 seconds; preparation gave a 1800-second stage cap. The final cannot certify a 60-minute session. Duration/route is separate from source quality; the stage explicitly permits early completion. This review neither waives the exact brief nor invents a minimum idle-time requirement.",
+      "remaining_source_defect": false
+    },
+    {
+      "id": "C02",
+      "critic_locator": "critique.md:37",
+      "criticism": "Failure, rollback and unresolved-item handling are not compared across relevant implementations.",
+      "candidate_disposition": "ACCEPT AND AMEND",
+      "final_locator": "final.md:78",
+      "reviewer_disposition": "SUPPORTED CORRECTION",
+      "assessment": "Draft details one processing implementation but offers its own queue rather than comparative implementation handling. Final compares versioned Archivematica reports/decisions with DSpace package and item-workflow mechanisms, expressly distinguishes their layers and refuses general rollback guarantees. Adequate for this bounded proposal; no requirement for a like-for-like product bake-off is invented.",
+      "evidence_ids": [
+        "R13",
+        "R14",
+        "R17",
+        "R18",
+        "R19"
+      ],
+      "remaining_source_defect": false
+    },
+    {
+      "id": "C03",
+      "critic_locator": "critique.md:41",
+      "criticism": "Investigator process checks lack raw command/native receipts in supplied package.",
+      "candidate_disposition": "ACCEPT UNCERTAINTY",
+      "final_locator": "final.md:46",
+      "reviewer_disposition": "CORRECT FOR THE MAPPED HANDOFF",
+      "assessment": "The critic/reviser predecessor maps carry the plan-reveal record and source maps, not investigator native receipt files. Saved receipts elsewhere in this assigned arm do exist and were independently read here. The final properly attributes unobserved predecessor checks; actual helper stdout/JSON/size-check receipts remain missing. No wrong correction to scientific meaning.",
+      "remaining_source_defect": false
+    },
+    {
+      "id": "C04",
+      "critic_locator": "critique.md:45",
+      "criticism": "No material false correction was found.",
+      "candidate_disposition": "AGREE",
+      "final_locator": "final.md:47",
+      "reviewer_disposition": "INDEPENDENTLY SUPPORTED",
+      "assessment": "Independent primary checks support the hypothetical overclaim corrections. They do not change the original brief or declare a case fact. Agreement by the critic is not used as evidence.",
+      "evidence_ids": [
+        "R01",
+        "R02",
+        "R09",
+        "R11",
+        "R15",
+        "R16"
+      ],
+      "remaining_source_defect": false
+    },
+    {
+      "id": "C05",
+      "critic_locator": "critique.md:27",
+      "criticism": "Restoring old names versus retaining current names is mentioned but not weighed.",
+      "candidate_disposition": "ACCEPT AND AMEND",
+      "final_locator": "final.md:159",
+      "reviewer_disposition": "SUPPORTED MINOR CORRECTION",
+      "assessment": "Final gives credible conditional benefit for legacy references/scripts and harms from collisions/overwriting/obscured path history. The pilot keeps a crosswalk and does not rename files. No claim that the archive has such a legacy script is invented.",
+      "remaining_source_defect": false
+    }
+  ],
+  "lineage_defects": [
+    {
+      "id": "LD01",
+      "classification": "material_incomplete_in_draft",
+      "clause_ids": [
+        "P21"
+      ],
+      "finding": "Draft lacked comparative failure/rollback/unresolved reporting depth.",
+      "draft_locator": "draft.md:66",
+      "critic_locator": "critique.md:39",
+      "final_locator": "final.md:78",
+      "final_state": "CORRECTED; original defect retained in this record",
+      "evidence_ids": [
+        "R13",
+        "R14",
+        "R17",
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": "LD02",
+      "classification": "minor_incomplete_in_draft",
+      "clause_ids": [
+        "P13"
+      ],
+      "finding": "Draft mentioned naming restoration but did not weigh its conditional value and harm.",
+      "draft_locator": "draft.md:137",
+      "critic_locator": "critique.md:27",
+      "final_locator": "final.md:159",
+      "final_state": "CORRECTED"
+    },
+    {
+      "id": "LD03",
+      "classification": "time_requirement_not_certified",
+      "clause_ids": [
+        "B06",
+        "P29"
+      ],
+      "finding": "No 60-minute investigator research session is established; candid disclosure is retained.",
+      "draft_locator": "draft.md:17",
+      "critic_locator": "critique.md:35",
+      "final_locator": "final.md:17",
+      "final_state": "UNRESOLVED TIME/ROUTE; not silently waived and not used as a source-truth error"
+    },
+    {
+      "id": "LD04",
+      "classification": "method_protocol_scope_deviation",
+      "finding": "Critic reports digesting the original plan path not listed in its allowed input map. Assignment forbids unlisted paths. No textual assistance or candidate feedback is established by that report.",
+      "critic_locator": "critique.md:67",
+      "final_locator": "final.md:46",
+      "final_state": "RECORDED; historical deviation cannot be undone by final qualification"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "classification": "minor_locator",
+      "locators": [
+        "critic/sources/index.md:36",
+        "reviser/sources/index.md:38"
+      ],
+      "finding": "Relative links to predecessor stages in authored source indexes do not resolve from the index directory. Actual input maps/source maps supply unambiguous absolute paths, and this assessment uses them.",
+      "material": false
+    },
+    {
+      "id": "L02",
+      "classification": "minor_source_summary_depth",
+      "locators": [
+        "final.md:85",
+        "final.md:86",
+        "final.md:62"
+      ],
+      "finding": "Adjacent comparator summaries do not recount DSpace keep-existing child skipping, entity-version blocking or the manual-normalization CSV collision exception. Governing context was inspected. They remain caveated comparators and no case-facing operational choice depends on an unrestricted interpretation.",
+      "evidence_ids": [
+        "R16",
+        "R17",
+        "R18"
+      ],
+      "material": false
+    },
+    {
+      "id": "L03",
+      "classification": "source_access_and_reproducibility",
+      "locators": [
+        "reviser/source-map.json S05/S17/S18/S19"
+      ],
+      "finding": "DSpace package page direct access returns 403; independent official indexed text corroborates the claims. REST main, ffprobe and PBCore are live/unpinned candidate sources. This reviewer saved current text and pinned REST evidence; that does not manufacture a candidate release tag or guarantee a historic deployment.",
+      "material": false
+    },
+    {
+      "id": "L04",
+      "classification": "validation_receipt_limit",
+      "locators": [
+        "draft.md:141",
+        "critique.md:65",
+        "final.md:196"
+      ],
+      "finding": "Authored source evidence consists of source maps and navigable indexes, not original page captures or raw research/check transcripts. Independent retrieval verifies claim meaning but cannot prove each candidate opened the page at its recorded time. Native receipts exist outside the critic/reviser mapped handoff, while raw helper/static-check output is absent.",
+      "material": false
+    }
+  ],
+  "unknowns": [
+    "Actual archive contents, source-drive availability, formats, counts, naming rules, transcript origins and copy roles remain unknown as the brief requires.",
+    "Trustworthy historical baseline, expected session/reel/segment extent and actual migration/rename/transcode logs are absent.",
+    "Archive permissions, consent limits and staffing for later adjudication are owner inputs, not gaps to fabricate.",
+    "Fingerprint speech accuracy, thresholds and executable/tool configuration for the actual collection remain prospective; no negative match is an identity oracle.",
+    "Exact shipped fix/current behavior for the historical issue is not established by issue closure or milestone.",
+    "Candidate native provenance/freshness, complete tool ordering, actual effective backend options, billing and original release-lock compliance are not independently authenticated.",
+    "Original raw browser captures, helper stdout and static-check receipts are absent; current independent retrieval verifies source meaning, not original visit history.",
+    "The requested 60-minute research session is not certified. Source judgment does not grant a time/protocol qualification."
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "mechanism": "Package-scoped fixity versus interview and expected-extent identity",
+      "evidence_ids": [
+        "R01",
+        "R02"
+      ],
+      "value": "Explains why a present manifest is useful without falsely reconstructing the migration."
+    },
+    {
+      "mechanism": "Typed object/representation relations and conditional operation events",
+      "evidence_ids": [
+        "R02",
+        "R03",
+        "R15",
+        "R20",
+        "R21"
+      ],
+      "value": "Defines identifiers, relation provenance and missing optional fields without overclaiming event absence."
+    },
+    {
+      "mechanism": "Original/derivative coexistence and evolving local policies",
+      "evidence_ids": [
+        "R06",
+        "R07",
+        "R12"
+      ],
+      "value": "Explains legitimate unlike hashes and identifies release/configuration records needed."
+    },
+    {
+      "mechanism": "Duplicate-hash matching versus path/digest verification history",
+      "evidence_ids": [
+        "R08"
+      ],
+      "value": "Motivates per-item outputs and independent checks rather than aggregate pass/fail faith."
+    },
+    {
+      "mechanism": "Near-identical fingerprint frame/window and algorithm limitations",
+      "evidence_ids": [
+        "R09",
+        "R10",
+        "R11"
+      ],
+      "value": "Makes content ranking conditional and excludes unvalidated short-window negative verdicts."
+    },
+    {
+      "mechanism": "Different failure/recovery layers and visible unresolved state",
+      "evidence_ids": [
+        "R13",
+        "R14",
+        "R17",
+        "R18",
+        "R19"
+      ],
+      "value": "Compares reports, redo/reject, collision rollback/skip/replacement, and current workflow state with their boundaries."
+    },
+    {
+      "mechanism": "Manual two-reviewer sample and current-name crosswalk alternative",
+      "evidence_ids": [
+        "R02",
+        "R16"
+      ],
+      "value": "A usable small-collection route with explicit selection, independent rationale and disagreement retention; avoids premature renaming."
+    }
+  ],
+  "exact_original_brief_clauses": [
+    {
+      "id": "B01",
+      "exact_clause": "A local oral-history archive moved audio files and transcripts from an older shared drive to a new storage arrangement.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 9,
+      "section": "Project situation",
+      "disposition": "PREMISE_PRESERVED",
+      "final_lines": "15",
+      "reviewer_assessment": "Synthetic move premise; not independently verified."
+    },
+    {
+      "id": "B02",
+      "exact_clause": "Staff notice that some transcripts refer to file names that no longer exist, and some recordings have two apparently different copies.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 9,
+      "section": "Project situation",
+      "disposition": "PREMISE_PRESERVED",
+      "final_lines": "15",
+      "reviewer_assessment": "Missing filename references and apparent copies preserved as reported anomalies."
+    },
+    {
+      "id": "B03",
+      "exact_clause": "A volunteer remembers that files were renamed in batches, but no full migration log has been found.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 9,
+      "section": "Project situation",
+      "disposition": "PREMISE_PRESERVED",
+      "final_lines": "15",
+      "reviewer_assessment": "Remembered batch renames retained as a lead, with no recovered log invented."
+    },
+    {
+      "id": "B04",
+      "exact_clause": "The archive wants a research proposal for a bounded provenance investigation before any cleanup.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 9,
+      "section": "Project situation",
+      "disposition": "COVERED",
+      "final_lines": "9",
+      "reviewer_assessment": "Bounded provenance study before cleanup."
+    },
+    {
+      "id": "B05",
+      "exact_clause": "The archive scenario is synthetic; no actual files or personal records are supplied.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 9,
+      "section": "Project situation",
+      "disposition": "PRESERVED",
+      "final_lines": "15",
+      "reviewer_assessment": "No supplied files or personal records, so no case validation is claimed."
+    },
+    {
+      "id": "B06",
+      "exact_clause": "Use a 60-minute research session to develop a proposal for studying file continuity, recording identity, and transcript relationships across the migration.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 13,
+      "section": "Request",
+      "disposition": "SCOPE_COVERED_TIME_NOT_CERTIFIED",
+      "final_lines": "17,25",
+      "reviewer_assessment": "Subjects covered; requested session duration remains a separately recorded time/route limitation."
+    },
+    {
+      "id": "B07",
+      "exact_clause": "Compare useful strategies, explain what each mechanism establishes and leaves unresolved, and investigate implementation and preservation history.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 13,
+      "section": "Request",
+      "disposition": "COVERED",
+      "final_lines": "50,69,78",
+      "reviewer_assessment": "Mechanisms and limits compared; implementation history and analogous recovery handling examined."
+    },
+    {
+      "id": "B08",
+      "exact_clause": "Give a reversible pilot plan with clear evidence limits, not an archive-management tool or a complete migration repair.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 13,
+      "section": "Request",
+      "disposition": "COVERED",
+      "final_lines": "102,125",
+      "reviewer_assessment": "Read-only pilot with evidence limits; no tool/build or complete repair."
+    },
+    {
+      "id": "B09",
+      "exact_clause": "Separate bit-level continuity, identity of the recorded interview, completeness, and the correctness of transcript-to-recording links.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 17,
+      "section": "Requirements to preserve",
+      "disposition": "COVERED",
+      "final_lines": "9,28",
+      "reviewer_assessment": "Four separate conclusion fields retained."
+    },
+    {
+      "id": "B10",
+      "exact_clause": "Compare manifest or fixity approaches with metadata and content-based relationship investigation and a useful manual sampling alternative.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 18,
+      "section": "Requirements to preserve",
+      "disposition": "COVERED",
+      "final_lines": "50,127",
+      "reviewer_assessment": "Manifests, metadata, content and usable manual route."
+    },
+    {
+      "id": "B11",
+      "exact_clause": "Address renamed files, transcoded versions, partial recordings, and ambiguous duplicates without assuming equal names or unequal hashes settle identity.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 19,
+      "section": "Requirements to preserve",
+      "disposition": "COVERED",
+      "final_lines": "60",
+      "reviewer_assessment": "Renames, transcodes, partials and duplicates have competing hypotheses; neither names nor hash inequality settles identity."
+    },
+    {
+      "id": "B12",
+      "exact_clause": "Include migration and comparable implementation history, specifying which missing records would change the evidential interpretation.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 20,
+      "section": "Requirements to preserve",
+      "disposition": "COVERED_AFTER_AMENDMENT",
+      "final_lines": "69,78,90",
+      "reviewer_assessment": "History and missing records have causal interpretations; comparator depth gap corrected."
+    },
+    {
+      "id": "B13",
+      "exact_clause": "Propose a reversible pilot, independent checks of sampled relationships, provenance recording, and handling of unresolved items; distinguish proposed validation from any checks actually executed.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 21,
+      "section": "Requirements to preserve",
+      "disposition": "COVERED",
+      "final_lines": "110,118,123,124,192",
+      "reviewer_assessment": "Reversible setup, second reviewer, event provenance, unresolved queue and actual/proposed distinction."
+    },
+    {
+      "id": "B14",
+      "exact_clause": "Do not delete, merge, rename, transcode, publish, or upload archive material.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 25,
+      "section": "Boundaries",
+      "disposition": "PRESERVED",
+      "final_lines": "33,125",
+      "reviewer_assessment": "No destructive change/upload/publication of archive material; future pilot is read-only."
+    },
+    {
+      "id": "B15",
+      "exact_clause": "Do not infer consent, authenticity, or completeness from a checksum match or a plausible transcript.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 26,
+      "section": "Boundaries",
+      "disposition": "PRESERVED",
+      "final_lines": "35,54,67,137",
+      "reviewer_assessment": "No consent/authenticity/completeness inference from weak proxies."
+    },
+    {
+      "id": "B16",
+      "exact_clause": "Do not access personal interviews, contact interviewees, create accounts, or invent recovered migration records.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 27,
+      "section": "Boundaries",
+      "disposition": "PRESERVED",
+      "final_lines": "35,106,198",
+      "reviewer_assessment": "No personal interviews/contact/account access or invented recovered records; later permitted content is gated per plan."
+    },
+    {
+      "id": "B17",
+      "exact_clause": "The old-drive availability, formats, naming rules, transcript origin, consent restrictions, file counts, baseline checksums, and migration tools are unknown.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 31,
+      "section": "Still unresolved",
+      "disposition": "HONESTLY_UNRESOLVED",
+      "final_lines": "15,90,153",
+      "reviewer_assessment": "All enumerated archive unknowns are retained and linked to future custodian decisions."
+    },
+    {
+      "id": "B18",
+      "exact_clause": "We have not said whether both apparent copies are preservation originals, access derivatives, or incomplete exports.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 31,
+      "section": "Still unresolved",
+      "disposition": "HONESTLY_UNRESOLVED",
+      "final_lines": "37,65,156",
+      "reviewer_assessment": "Preservation/access/incomplete roles are competing hypotheses."
+    },
+    {
+      "id": "B19",
+      "exact_clause": "Keep these questions unresolved until evidence supports a conclusion.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "original_line": 31,
+      "section": "Still unresolved",
+      "disposition": "PRESERVED",
+      "final_lines": "38,124,200",
+      "reviewer_assessment": "Missing support and disagreement stay unresolved."
+    }
+  ],
+  "exact_plan_clauses_excluding_verbatim_brief": [
+    {
+      "id": "P01",
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 9,
+      "section": "Concealed prospective design record",
+      "disposition": "PROCEDURAL_PARTLY_EVIDENCED",
+      "final_lines": "161",
+      "reviewer_assessment": "Mapped release places plan after discovery; original concealment until release is reported by plan-reveal metadata, not fully audited tool history."
+    },
+    {
+      "id": "P02",
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 9,
+      "section": "Concealed prospective design record",
+      "disposition": "CONTEXT_PRESERVED",
+      "final_lines": "161",
+      "reviewer_assessment": "Plan treated as prospective authored opportunities, not case findings."
+    },
+    {
+      "id": "P03",
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 9,
+      "section": "Concealed prospective design record",
+      "disposition": "CONTEXT_PRESERVED",
+      "final_lines": "163,184",
+      "reviewer_assessment": "No answer-key or predetermined result inference."
+    },
+    {
+      "id": "P04",
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 9,
+      "section": "Concealed prospective design record",
+      "disposition": "PRESERVED",
+      "final_lines": "11,186",
+      "reviewer_assessment": "Provisional hybrid and manual alternative, no selected universal method."
+    },
+    {
+      "id": "P05",
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 9,
+      "section": "Concealed prospective design record",
+      "disposition": "PRESERVED",
+      "final_lines": "184,198",
+      "reviewer_assessment": "Case preparation has no empirical validation; later public-source research is distinguished."
+    },
+    {
+      "id": "P06",
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 13,
+      "section": "Exact original request and clauses",
+      "disposition": "VERIFIED_TEXT_IDENTITY",
+      "final_lines": "19",
+      "reviewer_assessment": "Embedded original brief equals frozen brief; complete original clauses B01–B19 independently assessed."
+    },
+    {
+      "id": "P07",
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 13,
+      "section": "Exact original request and clauses",
+      "disposition": "PRESERVED",
+      "final_lines": "19,163",
+      "reviewer_assessment": "Original obligations are retained; later additions do not silently replace them."
+    },
+    {
+      "id": "P08",
+      "exact_clause": "How can a bounded and non-destructive provenance study determine which continuity and relationship claims are supportable when the original migration record is incomplete?",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 53,
+      "section": "Research question and incompleteness",
+      "disposition": "COVERED",
+      "final_lines": "167",
+      "reviewer_assessment": "Separate supportable claims and bounded inventory/pilot answer the question without invented archive conclusions."
+    },
+    {
+      "id": "P09",
+      "exact_clause": "Availability of pre-migration evidence, scope of allowable content access, the meaning of a complete interview, and staffing for manual adjudication remain open.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 55,
+      "section": "Research question and incompleteness",
+      "disposition": "HONESTLY_UNRESOLVED",
+      "final_lines": "106,153,168",
+      "reviewer_assessment": "Pre-move evidence, access, complete extent and reviewer staffing remain external inputs."
+    },
+    {
+      "id": "P10",
+      "exact_clause": "The proposal should offer a useful evidence inventory and next decision even if final relationship repair is not yet justified.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 55,
+      "section": "Research question and incompleteness",
+      "disposition": "COVERED",
+      "final_lines": "88,124,169",
+      "reviewer_assessment": "Inventory plus next evidence request is useful even without repair."
+    },
+    {
+      "id": "P11",
+      "exact_clause": "Consider establishing present-state manifests, comparing available prior inventories, tracing identifiers and metadata, investigating derivative relationships, and carefully scoped manual sample review.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 59,
+      "section": "Meaningful useful alternatives",
+      "disposition": "COVERED",
+      "final_lines": "50,110,117,127,170",
+      "reviewer_assessment": "All named routes are compared and implemented in the proposed study design."
+    },
+    {
+      "id": "P12",
+      "exact_clause": "Quarantining unresolved relationships in an inventory without modifying files is a useful outcome.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 59,
+      "section": "Meaningful useful alternatives",
+      "disposition": "COVERED",
+      "final_lines": "124,171",
+      "reviewer_assessment": "Non-mutating quarantine/queue of relationships, not movement/deletion of files."
+    },
+    {
+      "id": "P13",
+      "exact_clause": "Restoring an older naming convention may be unnecessary or harmful; retaining current names with a documented mapping is another possibility to investigate.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 59,
+      "section": "Meaningful useful alternatives",
+      "disposition": "COVERED_AFTER_MINOR_AMENDMENT",
+      "final_lines": "159,172",
+      "reviewer_assessment": "Current-name crosswalk and old-name restoration are weighed, with any later change separately authorized."
+    },
+    {
+      "id": "P14",
+      "exact_clause": "No recovery or matching route is designated correct.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 59,
+      "section": "Meaningful useful alternatives",
+      "disposition": "PRESERVED",
+      "final_lines": "11",
+      "reviewer_assessment": "No route designated correct by the case."
+    },
+    {
+      "id": "P15",
+      "exact_clause": "Explain what hashes can demonstrate when an appropriate prior baseline exists, what they cannot establish when it does not, and how transcodes or partial exports complicate comparisons.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 63,
+      "section": "Mechanism opportunity",
+      "disposition": "COVERED",
+      "final_lines": "54,64,66,173",
+      "reviewer_assessment": "Trusted prior-baseline scope and no-baseline limits; transcodes/partials complicate byte comparison."
+    },
+    {
+      "id": "P16",
+      "exact_clause": "Study the relationship between file identity, recorded event identity, transcript coverage, and provenance.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 63,
+      "section": "Mechanism opportunity",
+      "disposition": "COVERED",
+      "final_lines": "9,55,56,67,174",
+      "reviewer_assessment": "File versus event identity, transcript extent and provenance are separated."
+    },
+    {
+      "id": "P17",
+      "exact_clause": "Content similarity can suggest relationships but needs validation and permissions; it is not automatic evidence of completeness or authenticity.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 63,
+      "section": "Mechanism opportunity",
+      "disposition": "PRESERVED",
+      "final_lines": "57,106,117,175",
+      "reviewer_assessment": "Content nominates candidates; permission and validation required, no authenticity/completeness verdict."
+    },
+    {
+      "id": "P18",
+      "exact_clause": "Investigate migration procedures, tool versions, batch rename rules, access-derivative practices, and public preservation implementation reports.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 67,
+      "section": "Implementation and history opportunity",
+      "disposition": "COVERED",
+      "final_lines": "69,75,90,176",
+      "reviewer_assessment": "Public versioned procedures, policy/event history, batch-rename leads and needed actual records."
+    },
+    {
+      "id": "P19",
+      "exact_clause": "A history that documents checks before and after a move offers different evidence from a retrospectively generated inventory.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 67,
+      "section": "Implementation and history opportunity",
+      "disposition": "COVERED",
+      "final_lines": "54,100,177",
+      "reviewer_assessment": "Pre-/post-move documented comparisons differ from current retrospective inventories."
+    },
+    {
+      "id": "P20",
+      "exact_clause": "Recovering staff notes or prior manifests is a later opportunity; none is supplied as an answer.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 67,
+      "section": "Implementation and history opportunity",
+      "disposition": "PRESERVED",
+      "final_lines": "90,178",
+      "reviewer_assessment": "Staff notes/manifests remain later requests, not supplied answers."
+    },
+    {
+      "id": "P21",
+      "exact_clause": "Compare failure handling, rollback, and unresolved-item reporting in relevant implementations.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 67,
+      "section": "Implementation and history opportunity",
+      "disposition": "COVERED_AFTER_AMENDMENT",
+      "final_lines": "78,179",
+      "reviewer_assessment": "Scoped Archivematica/DSpace comparison covers reports, failed/continue/reject states and bounded recovery semantics."
+    },
+    {
+      "id": "P22",
+      "exact_clause": "A future pilot could operate on an authorized read-only copy or permitted metadata inventory, preserve original references, and test proposed relationships on a sample with independent adjudication.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 71,
+      "section": "Proposed versus executed validation",
+      "disposition": "COVERED",
+      "final_lines": "110,118,180",
+      "reviewer_assessment": "Authorized read-only copy/metadata route, original references, independent sample adjudication."
+    },
+    {
+      "id": "P23",
+      "exact_clause": "Record uncertainty and contradictory evidence, including how missing baselines restrict conclusions.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 71,
+      "section": "Proposed versus executed validation",
+      "disposition": "COVERED",
+      "final_lines": "113,124,181",
+      "reviewer_assessment": "Contradictions and no-baseline result categories are explicit."
+    },
+    {
+      "id": "P24",
+      "exact_clause": "Synthetic manifests or toy hash examples actually produced in the research hour must be labeled synthetic; they do not validate archive continuity, interview identity, or transcript correctness.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 71,
+      "section": "Proposed versus executed validation",
+      "disposition": "CONDITIONAL_RULE_PRESERVED",
+      "final_lines": "182",
+      "reviewer_assessment": "No toy manifest/hash validation was reported; any future toy checks must be synthetic and cannot prove archive relations."
+    },
+    {
+      "id": "P25",
+      "exact_clause": "Any later content access requires the archive's permissions.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 71,
+      "section": "Proposed versus executed validation",
+      "disposition": "PRESERVED",
+      "final_lines": "106,183",
+      "reviewer_assessment": "Later content access is permission-gated."
+    },
+    {
+      "id": "P26",
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 73,
+      "section": "Proposed versus executed validation",
+      "disposition": "CONTEXT_PRESERVED",
+      "final_lines": "184",
+      "reviewer_assessment": "Synthetic input-preparation status is distinguished from candidate public-source review."
+    },
+    {
+      "id": "P27",
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 73,
+      "section": "Proposed versus executed validation",
+      "disposition": "CONTEXT_PRESERVED",
+      "final_lines": "184",
+      "reviewer_assessment": "No case science/experiment/performance execution is invented; authoring note does not forbid later requested research."
+    },
+    {
+      "id": "P28",
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 73,
+      "section": "Proposed versus executed validation",
+      "disposition": "COVERED",
+      "final_lines": "192",
+      "reviewer_assessment": "Actual research/process work is attributed and proposed archive checks are explicitly unrun."
+    },
+    {
+      "id": "P29",
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "SUBSTANTIVE_SCOPE_COVERED_TIME_NOT_CERTIFIED",
+      "final_lines": "17,185",
+      "reviewer_assessment": "Discovery, causal comparison, history and later validation design present; a 60-minute session is not established."
+    },
+    {
+      "id": "P30",
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "PRESERVED",
+      "final_lines": "11,186",
+      "reviewer_assessment": "Reasoned provisional choices, no predetermined winner."
+    },
+    {
+      "id": "P31",
+      "exact_clause": "It requests no product build.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "PRESERVED",
+      "final_lines": "125,187",
+      "reviewer_assessment": "No product build or deployment."
+    },
+    {
+      "id": "P32",
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "INTEGRITY_MATCHES_RECORDED_FREEZE",
+      "final_lines": "188",
+      "reviewer_assessment": "Current frozen hashes and released plan/brief identities match; this does not prove every past no-edit action."
+    },
+    {
+      "id": "P33",
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "RELEASE_PROTOCOL_NOT_INDEPENDENTLY_ESTABLISHED",
+      "final_lines": "189",
+      "reviewer_assessment": "Plan reveal and assignments are present; exact recipe/budget-lock release conditions and all feedback history are not audited. No reviewer feedback or other-arm access occurred."
+    },
+    {
+      "id": "P34",
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "original_line": 77,
+      "section": "Scope and release boundary",
+      "disposition": "PRESERVED_WITH_RELEASE_STATE_UNKNOWN",
+      "final_lines": "190",
+      "reviewer_assessment": "Readiness is not promoted to proof of release conditions."
+    }
+  ],
+  "embedded_brief_identity_matches": true,
+  "original_inspected_hashes": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-03/brief.md",
+      "bytes": 2612,
+      "sha256": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-03/plan.md",
+      "bytes": 6938,
+      "sha256": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/control/run.json",
+      "bytes": 582,
+      "sha256": "2c6536f86d2a606d389ea9d4bc2ef637b1dd41eb8d4a3dc5e19de38192726dee",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/inputs/brief.md",
+      "bytes": 2612,
+      "sha256": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "4911f3da603478fc00f8b279442e7cba342294a8452e0df3384826550d06584a",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/critique.md",
+      "bytes": 12557,
+      "sha256": "fe3ec225009c6fbf5dd95e0628f94fc449b63961d3299d8a5e6a728ca3e71407",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "b205cbfe2930ad1e8588e78212037a1d883191a41e0c97dce82b6e2b92b92654",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "bca2c83d66535b70a2f1d299a972f94914cbf3c8e8629d55fd88ffd1c5233a92",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "2f0c2a243f03e29d7d17d5cecd2a8e0b1c02979645c813c580086d83ec11f4d4",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "c2d826f7d937009cd6a72eb52e211cb9fa8a63b21f6e54bbebb89d7d3eb01eb0",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "9a19051d56136e1351e97b3ccd85aa4552ceb976d1e26979c383c5863e4b46c3",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/native-goal-activation-response.json",
+      "bytes": 468,
+      "sha256": "25584f99827d07749e852e57163f4aa53e95a2b7138a0c4336ab594210a7b1fc",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/native-goal-binding-guard.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/native-goal-completion-response.json",
+      "bytes": 797,
+      "sha256": "7b57edd412937ceb76b509112653480e243a61e161599436662598ecfcb04843",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "361598f3180c79dbc3cae9ff2e0c46ddbf42e2c297c60a120ad0d39e960dba33",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "e48b49c7eaddb4564cf9b9aad2e366dc420198d2892822554312ee1ab0dc9e5e",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/source-map.json",
+      "bytes": 29771,
+      "sha256": "602b27ad54f0fff05eed51252d5f2544ba8f096b118e5879818b5995b193b9ea",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/sources/index.md",
+      "bytes": 3197,
+      "sha256": "ae06b5a1b3fe2ece8f6ec7e96384c5c41a0ae9d52384803e2eb55bf54df90d6e",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/status.json",
+      "bytes": 4916,
+      "sha256": "d6a2f2175393516c15a337e6a1ae760494fa271f1b9bbb9f2d8cce8d3e3c9aac",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "751a8a16054ab3a1c5b5f342f5eec64e92e1dc1a03c3aedcf4340aab8e1f0415",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/discovery.md",
+      "bytes": 12387,
+      "sha256": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "053fa724a027d3116fd3ea4383117be77bb149e91404b696d9bb62c1f1fa02bc",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/draft.md",
+      "bytes": 26575,
+      "sha256": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "0c6e2794228b7c0ff7fc5783bf3c9ff7742c2678bf980f5e53e49d33b9820c5f",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "92b14882749e91470dcaf4dfda28eae58436635d5e1aac3e9855f230b90fdb4b",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "05070c44165de480d0215d34045cc3b7fca6ac7b00d082e90a34bf97f61d0875",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "000144480dc9d4667617112215a488fa452e54f67270dab56fa0456fb0393bf3",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/native-goal-activation.json",
+      "bytes": 479,
+      "sha256": "f0aea0357af721d58a7b27daf7ffbb5e1eb9b6244ffe6561b78460a35911e056",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/native-goal-binding-gate.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/native-goal-completion.json",
+      "bytes": 809,
+      "sha256": "541b26ebc520f38b3e6326e3d75187f2f6193002a867fcfc55b5f68e939370e9",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "64ee181d6312d2aabcbdf6d6f5de897184ca480ffd038ca346c48ba650242b91",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "de72bcf81811ba6ef403929432b12b60e29ce37e6d178337682c23ec0f2acb05",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/revealed-plan.md",
+      "bytes": 6938,
+      "sha256": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "83b25244fc861b03311f00e16a2f81d9fae83d6535115bfd9664618492cc2e44",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/source-map.json",
+      "bytes": 19445,
+      "sha256": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/sources/index.md",
+      "bytes": 3323,
+      "sha256": "188c7ff3c111f6e033e8224a5068dc4784ffed1e7897ef94291e584825a4b95f",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/status.json",
+      "bytes": 6118,
+      "sha256": "155098eeee5cf1181f87465cd2a4c8eeb8cc96a434a3c331545e8ca1a3497bc0",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "0bd5beb3945cc80371966ae6a42773aab37aca6c256e88f078f2e07a537716fb",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "f03a35f84bee8d69cde17b69c6273e51e91c1dbcd057909b86a4f785d4c9c53a",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "c99e59e92eb253bc04ea2011bc2559c4702026cbb24bca8f77f93ed612e17c67",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/final.md",
+      "bytes": 42843,
+      "sha256": "ff37b0f65d4015187ee3089582e815b5b968dc131fbb1b32584f23cffe5de37f",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/freeze.json",
+      "bytes": 4093,
+      "sha256": "3a2464383a08236263dfe27b42dc3970d8e22c8289a25903600792d9b7442f57",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "8c775914ca081ac99c70c912b397c73338df910125077e9975230bb3831f5f96",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "57b7bd05dbcd6f3311f8b9eeb106c6e0a7de9977073ec099c473dfe69413b4a2",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "dcee128fd962b1cf397110c56e435ed8b2ef71e60c2906caf14de56d3bf8da24",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "5d94cd65d2b4f6532b8097d0ddcad43212a87ef1f92adb01fa7fed6e8d269189",
+      "inspection_level": "FULL_METADATA_READ; repeated transport strings not treated as science"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/source-map.json",
+      "bytes": 47258,
+      "sha256": "4afe68d7a031c865bd16c2a911bf92b060115c0c7be2cc9fe46b29774c92dea5",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/sources/index.md",
+      "bytes": 4346,
+      "sha256": "b0dd59fc5a59c488effcb8e8657458de7cf7c81330b75c6f453033b79ca3ab86",
+      "inspection_level": "FULL_CONTENT"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/terminal-science-freeze-root.json",
+      "bytes": 6763,
+      "sha256": "b2389af0467a1b23d0085959ed21a858dca8412668ae8d46f271fd39b2efe8e0",
+      "inspection_level": "FULL_CONTENT"
+    }
+  ],
+  "sources_and_versions": [
+    {
+      "id": "R01",
+      "candidate_id": "S01",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "access_utc": "2026-10-10T07:10:12.573163+00:00",
+      "http_status": 200,
+      "final_url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "content_type": "text/html",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R01.html",
+      "sha256": "f801a6d8685e3910354079fe2194b223f574343b74f0897d505a32bf313925f2",
+      "bytes": 63600,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R01.txt",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "candidate_released_version": "BagIt 1.0; RFC 8493; October 2018; Informational",
+      "independent_locator": "RFC 8493 §§1.1, 2.1.2–2.1.3, 2.4, 3, 5.4; R01.txt lines 211–229, 455–475, 565–577",
+      "independent_condition_review": "BagIt 1.0 treats payload as opaque bytes. Complete/valid are package-relative, not an expected interview inventory. Creation and validation tools must support SHA-256 and SHA-512; SHA-512 is recommended for new bags, not a guaranteed observed default. All tag-manifest checksums count as well. No active-attack guarantee.",
+      "independent_semantic_assessment": "The final conditions historical continuity on an attributable earlier reference and scope; present hashes cannot witness an earlier undocumented move. This temporal conclusion is reviewer reasoning, consistent with the specified mechanism.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "4dae81d231e13f248ba7997c01e3901c05147de320d0fdca9c198c461af03f02"
+    },
+    {
+      "id": "R02",
+      "candidate_id": "S02",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "access_utc": "2026-10-10T07:10:12.574805+00:00",
+      "http_status": 200,
+      "final_url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "content_type": "application/pdf",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R02.pdf",
+      "sha256": "2e3e3fe001798f3f43d26b4aed03e8737310fa044ee001af2493f7c72517b0e0",
+      "bytes": 2176353,
+      "title": "PREMIS Data Dictionary for Preservation Metadata, Version 3.0",
+      "candidate_released_version": "PREMIS 3.0 final; PDF updated November 2015",
+      "independent_locator": "PREMIS 3.0 printed pp. 8–9, 15–17, 137, 142–146; R02.txt lines 557–609, 916–945, 5858–5898, 6035–6083, 6162–6178",
+      "independent_condition_review": "Intellectual Entity, Representation, File and Bitstream are Object categories in v3. Event identifier, type and date/time are mandatory. Detail and outcome containers are optional; supplied containers have their own child constraints. Specific time and zone are recommendations. Repositories may record some actions in other logs.",
+      "independent_semantic_assessment": "Supports typed relation/event proposals and prohibits interpreting missing optional details as proof no migration occurred. The proposed ledger deliberately records more than the minimum standard; that is a design choice, not a claim of mandatory PREMIS fields.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution."
+    },
+    {
+      "id": "R03",
+      "candidate_id": "S03",
+      "url": "https://pbcore.org/elements/instantiationrelationtype.html",
+      "access_utc": "2026-10-10T07:10:12.576092+00:00",
+      "http_status": 200,
+      "final_url": "https://pbcore.org/elements/instantiationrelationtype.html",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R03.html",
+      "sha256": "2dd2a151185487891436d4bf7ba293087734ccef68f02e6724a478c19541ca5f",
+      "bytes": 65153,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R03.txt",
+      "title": "PBCore instantiationRelationType",
+      "candidate_released_version": "Current web specification; no numbered release stated on page",
+      "independent_locator": "PBCore relation-type definition/best practice; R03.txt lines 130–149, supplemented by R20/R21",
+      "independent_condition_review": "The relation type describes audiovisual instantiation relationships including parts, generations, derivatives and versions. The container is optional/repeatable; type and related-item identifier are required when it is supplied.",
+      "independent_semantic_assessment": "Vocabulary is useful for assertions with separately preserved support, not self-validating provenance.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "f275ab4eb37d516647b9cf7c4c16cabad52e520eecff97734d62913e56bfdde7"
+    },
+    {
+      "id": "R04",
+      "candidate_id": "S04",
+      "url": "https://loc.gov/preservation/digital/formats/fdd/fdd000356.shtml",
+      "access_utc": "2026-10-10T07:10:12.577455+00:00",
+      "http_status": 200,
+      "final_url": "https://loc.gov/preservation/digital/formats/fdd/fdd000356.shtml",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R04.html",
+      "sha256": "d475515f63c56a29bc879f152d39082576c6a48f2738f4b492f7cae01cb25dfd",
+      "bytes": 37640,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R04.txt",
+      "title": "Broadcast WAVE Audio File Format, Version 1 (FDD 000356)",
+      "candidate_released_version": "BWF version 1 description; page describes v0 (1997), v1 (2001), v2 and supplements",
+      "independent_locator": "LOC FDD 000356 Description, Self-documentation, Notes; R04.txt lines 31–38, 67–84, 131–143",
+      "independent_condition_review": "BWF extends WAVE with bext metadata. UMID and loudness additions distinguish versions; format and version must be established before interpreting fields. Originator/date/time are embedded clues, not independent truth.",
+      "independent_semantic_assessment": "Final applies BWF clues only conditionally and does not infer completeness or authenticity from them. LOC is an institutional format description, not evidence about any supplied archive file.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "0d7982dd0ee447f089f90fa33f30e63c5728669b446c2e225d7fd7748738388c"
+    },
+    {
+      "id": "R05",
+      "candidate_id": "S05",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "access_utc": "2026-10-10T07:10:12.584320+00:00",
+      "http_status": 200,
+      "final_url": "https://ffmpeg.org/ffprobe.html",
+      "content_type": "text/html; charset=UTF-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R05.html",
+      "sha256": "75dd3d482461e4b453510ec9fc87076a95f2eb0698d211784e1eabaabc82eeb6",
+      "bytes": 62129,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R05.txt",
+      "title": "ffprobe Documentation",
+      "candidate_released_version": "Live docs page does not identify release tag/commit; any binary version must be captured if used",
+      "independent_locator": "ffprobe Description and read_intervals; R05.txt lines 49–67, 455–466, 536–558",
+      "independent_condition_review": "Container/stream fields can be selected. Unreadable/unrecognized input returns a positive exit status. Approximate seeking can move the actual start; a duration-based interval ends relative to that actual start. A # interval counts packets, not seconds.",
+      "independent_semantic_assessment": "Characterization and separated anchors are proposed only. No binary release, successful media parse, exact-boundary result or measured duration is claimed.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "b7e12da4208f69b2cccab2f83d4adeddf55e93f48a3d06a1d34f14f126370c90"
+    },
+    {
+      "id": "R06",
+      "candidate_id": "S06",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/overview/technical/",
+      "access_utc": "2026-10-10T07:10:12.585696+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/overview/technical/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R06.html",
+      "sha256": "2cb25ffcc705172ac47e0f8df3fab170f1102f616dd404d799d27563d7c487f4",
+      "bytes": 27137,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R06.txt",
+      "title": "Technical architecture — Archivematica 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 Technical architecture, Format policies and package flow; R06.txt lines 54–78",
+      "independent_condition_review": "The documented workflow retains ingested originals and creates preservation/access representations under format policies, with METS/PREMIS/BagIt packaging.",
+      "independent_semantic_assessment": "A useful explanation for unlike copies intentionally coexisting, explicitly not evidence this archive used Archivematica.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "b821fef9daa3ec0cad0e308d0b450e2de103a2d4c8b8a667a016f71ba91f5434"
+    },
+    {
+      "id": "R07",
+      "candidate_id": "S07",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.16/user-manual/preservation/preservation-planning/",
+      "access_utc": "2026-10-10T07:10:12.736461+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.16/user-manual/preservation/preservation-planning/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R07.html",
+      "sha256": "7ccdb147d584ceb66f3308f755bd1801736278f2cfefd5527f2b023d41aedd2e",
+      "bytes": 98621,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R07.txt",
+      "title": "Preservation Planning — Archivematica 1.16.0",
+      "candidate_released_version": "Archivematica documentation 1.16.0",
+      "independent_locator": "Archivematica 1.16.0 Preservation Planning, opening policy section; R07.txt lines 33–49",
+      "independent_condition_review": "Defaults evolve across releases; local changes may customize behavior and survive upgrades.",
+      "independent_semantic_assessment": "Supports requesting actual historic release, local rules and commands rather than assuming current defaults.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "871429074d1c993732b5eed81636d07928bf78cc5593cd05495ede76aae37791"
+    },
+    {
+      "id": "R08",
+      "candidate_id": "S08",
+      "url": "https://github.com/archivematica/Issues/issues/346",
+      "access_utc": "2026-10-10T07:10:12.759290+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/archivematica/Issues/issues/346",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R08.html",
+      "sha256": "09eb54aa3f7c54d6e4f08ab02dd8d7a2028833ccdfe53743a173114e0d6bdb0c",
+      "bytes": 542602,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R08.txt",
+      "title": "Archivematica issue #346: md5deep checksum validation for multiple files with same checksum",
+      "candidate_released_version": "Opened 2018-11-23; reported AM 1.7.2/Ubuntu 16.04; closed; milestone 1.10.0",
+      "independent_locator": "Issue #346 body and discussion; R08.txt lines 123–141, 278–305, 370–404, 405–469, 514–560, 579–618",
+      "independent_condition_review": "The AM 1.7.2/Ubuntu 16.04 report describes aggregate error 110 despite per-file passes for duplicate digests. Discussion distinguishes matching known hashes from verifying path/digest pairs, including an unlisted duplicate false pass and relative/absolute-path effects. Closed status and 1.10.0 milestone do not alone establish a shipped fix.",
+      "independent_semantic_assessment": "Final reports a bounded historic case and calls for raw per-item results and independent checks. It does not declare a current regression. The discussion offers deeper investigation leads than the final recounts, but no chosen case decision depends on a claimed fix.",
+      "claim_status": "SUPPORTED_WITH_BOUNDED_HISTORY_LIMIT",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "dd67ed10873fe9b71cf3e8ee933eb8484edb672bd7fd6d9390abb2d9ee3f8a35"
+    },
+    {
+      "id": "R09",
+      "candidate_id": "S09",
+      "url": "https://github.com/acoustid/chromaprint/blob/aed8eba/README.md",
+      "access_utc": "2026-10-10T07:10:12.768356+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/acoustid/chromaprint/blob/aed8eba/README.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R09.html",
+      "sha256": "b5efddf2e10ae7870f4844f987c8e7bbdf5a8437cd65553d817963f43369d7f0",
+      "bytes": 260696,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R09.txt",
+      "title": "Chromaprint README at v1.6.1 release commit",
+      "candidate_released_version": "v1.6.1; commit aed8eba2202dd9d7b3b0a56c77904cc805490d72; released 2026-07-28",
+      "independent_locator": "README at aed8eba2202dd9d7b3b0a56c77904cc805490d72; R09.txt lines 135–139",
+      "independent_condition_review": "Chromaprint targets near-identical audio with compact fingerprints and a search-performance tradeoff; it is not a general-purpose solution.",
+      "independent_semantic_assessment": "Candidate ranking, permission gating, pinned algorithm/windows and no automatic identity/completeness decision are appropriate. Oral-history speech matching accuracy remains untested, as expressly admitted.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "independently_observed_commit": "aed8eba2202dd9d7b3b0a56c77904cc805490d72",
+      "text_sha256": "06b1a83017a24ab3f074928bff1fa20e8120a4e859f04f77e443d3e63c3d5cbc"
+    },
+    {
+      "id": "R10",
+      "candidate_id": "S10",
+      "url": "https://github.com/acoustid/chromaprint/releases/tag/v1.6.1",
+      "access_utc": "2026-10-10T07:10:12.860460+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/acoustid/chromaprint/releases/tag/v1.6.1",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R10.html",
+      "sha256": "bfbfbdfd4781f39626c2a536253d0f238161b6c1b3c31d552136f6d1e33cd74b",
+      "bytes": 193783,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R10.txt",
+      "title": "Chromaprint 1.6.1 release notes",
+      "candidate_released_version": "Chromaprint v1.6.1, commit aed8eba, 2026-07-28",
+      "independent_locator": "v1.6.1 release; R10.txt lines 123–132 and HTML release timestamp",
+      "independent_condition_review": "The 2026-07-28 release at aed8eba fixes partial-frame dropping at feed-buffer boundaries and a heap overflow in encoded fingerprint decoding. FFmpeg 4.x build compatibility is a separate release change.",
+      "independent_semantic_assessment": "The final relies on partial-frame history, not an invented audio-decoder result. Candidate map wording about decoder overflow is terse, but the actual operation is fingerprint decoding, not audio decoding.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "independently_observed_release_utc": "2026-07-28T06:18:07Z",
+      "text_sha256": "8a95d960df057aa7b0ecc8b5dd8d957feab6aef0426ba04407ec9f4e2529767e"
+    },
+    {
+      "id": "R11",
+      "candidate_id": "S11",
+      "url": "https://github.com/acoustid/chromaprint/issues/160",
+      "access_utc": "2026-10-10T07:10:12.871794+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/acoustid/chromaprint/issues/160",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R11.html",
+      "sha256": "1721b760f9d675d5c584c99d4d2b7babf1ba9e31297ac65f4adca0eb978a5e72",
+      "bytes": 265244,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R11.txt",
+      "title": "Chromaprint issue #160: Algorithm 3 short-input empty fingerprint report",
+      "candidate_released_version": "Opened 2026-02-20; observed Open 2026-10-10",
+      "independent_locator": "Issue #160 Summary/Affected/Actual behavior/Compatibility note; R11.txt lines 118–153",
+      "independent_condition_review": "Open author report is specific to Test3 with zero frame overlap, 4096-sample frames at 11025 Hz and resulting increased delay around seven seconds. It is not a measured bound for all algorithms. Altering overlap changes historical fingerprints.",
+      "independent_semantic_assessment": "Final preserves the Test3/open-report qualifier and rejects unvalidated short-window negatives. No patch or validated speech threshold is claimed.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "3a5e18c118424a118aadd85fd03c6fa84739ec258e16cd3ca19809efde0e7000"
+    },
+    {
+      "id": "R12",
+      "candidate_id": "S12",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/preservation/preservation-planning/",
+      "access_utc": "2026-10-10T07:10:13.123947+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/preservation/preservation-planning/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R12.html",
+      "sha256": "c17d1d4fa5d8a0b7290fafaf412ebadfbb92f3c4c5bf9e00fa841efed8c2279d",
+      "bytes": 98169,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R12.txt",
+      "title": "Preservation Planning — Archivematica 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 Preservation Planning; R12.txt lines 194–227, 249–257, 442–464, 511–519, 797–801",
+      "independent_condition_review": "Commands/rules and event-detail/verification choices can be locally replaced. Normalization retains originals. Basic shipped output verification concerns existence/nonzero bytes, not content equivalence. Revision history can identify prior rules.",
+      "independent_semantic_assessment": "The source map preserves this weaker oracle. The proposal does not promote product success, output existence or a nonempty derivative to proof of interview identity/completeness.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "c72fb1676e50de342f2a832d799e310334fe4a288b2d1bd610babba8078f1f6f"
+    },
+    {
+      "id": "R13",
+      "candidate_id": "S13",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/",
+      "access_utc": "2026-10-10T07:10:13.220818+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R13.html",
+      "sha256": "8562db174ab55d98b37488041dae1a0b554fb4dc52e491d11331caf5f3456adc",
+      "bytes": 79311,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R13.txt",
+      "title": "Transfer — Archivematica 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 Transfer; R13.txt lines 223–247, 438–456, 483–501",
+      "independent_condition_review": "Supplied external MD5/SHA1/SHA256/SHA512 manifests can be checked. Transfer microservices assign IDs/checksums and capture original order/structure. Dashboard removal does not delete transfer/source entities.",
+      "independent_semantic_assessment": "Final correctly requests manifests, crosswalks, logs and original-order METS and distinguishes dashboard cleanup from file deletion. These are comparators, not recovered case records.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "20429f3bc41e2e8aaff06220040cf71f9cfcf1f943d2c60f23a2126d90ebe7af"
+    },
+    {
+      "id": "R14",
+      "candidate_id": "S14",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/troubleshooting/error-handling/",
+      "access_utc": "2026-10-10T07:10:13.319822+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/troubleshooting/error-handling/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R14.html",
+      "sha256": "4d912e8cdf03074072205fd668be02738dab8be1f1755b50b099d976251469a2",
+      "bytes": 38474,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R14.txt",
+      "title": "Error handling — Archivematica 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 Error handling; R14.txt lines 56–72, 86–123, 135–151, 164–178",
+      "independent_condition_review": "Checksum and bag-verification failures halt transfers. Normalization errors can reach approval with review, continue or redo choices. Rejection stops processing and moves the transfer/SIP to Rejected. Reports identify steps and files.",
+      "independent_semantic_assessment": "These pages do not establish external-source restoration or general transactional rollback. The final observes that limit rather than inventing a product guarantee.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "ca178265f9d0a6ed051e7d504c396d666af0985af951144eba566b23ac555e25"
+    },
+    {
+      "id": "R15",
+      "candidate_id": "S15",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/metadata/premis/",
+      "access_utc": "2026-10-10T07:10:13.320612+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/metadata/premis/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R15.html",
+      "sha256": "42613bd95a64ebcf21002f62e37e11f98c73c02898f84dd6c8e7a3ce84451134",
+      "bytes": 90042,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R15.txt",
+      "title": "PREMIS metadata in Archivematica — 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 PREMIS metadata; R15.txt lines 103–121, 142–162",
+      "independent_condition_review": "Fixity events depend on a supplied bag/manifest; normalized derivatives produce conditional creation/digest/validation events, and originals can carry normalization events. Filename-change events preserve original and new path details when that step runs.",
+      "independent_semantic_assessment": "Final keeps workflow conditions and does not equate absent product-specific events with proof no migration happened.",
+      "claim_status": "SUPPORTED",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "e9ffb0b75f0df4cb888705773f3b2e9816e190db59c290eea76ba05a448a8bc6"
+    },
+    {
+      "id": "R16",
+      "candidate_id": "S16",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/ingest/manual-normalization/",
+      "access_utc": "2026-10-10T07:10:13.378572+00:00",
+      "http_status": 200,
+      "final_url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/ingest/manual-normalization/",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R16.html",
+      "sha256": "262a3d3c5524bb589937d2c0b2ac7502efbbfd93536821ec2450edc938360919",
+      "bytes": 47213,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R16.txt",
+      "title": "Manual normalization — Archivematica 1.17.1",
+      "candidate_released_version": "Archivematica documentation 1.17.1",
+      "independent_locator": "Archivematica 1.17.1 Manual normalization Workflow 1 and same-name section; R16.txt lines 52–67, 87–129, 224–260",
+      "independent_condition_review": "Prescribed folder/name association has one original to one derivative per relevant role, not arbitrary filename identity. Not every original needs derivatives. Ambiguous same basenames need an exact, case-sensitive normalization.csv crosswalk.",
+      "independent_semantic_assessment": "Final uses this solely as a bounded example of operational association keys and preserves the one-to-one/folder condition. The CSV collision exception is useful additional depth, not a missing pilot dependency.",
+      "claim_status": "SUPPORTED_WITH_MINOR_UNRECOUNTED_EXCEPTION",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "text_sha256": "e8f95d5f735eec702af973b224fb564deb5d204168a3d590c51ecb05ad7f3f26"
+    },
+    {
+      "id": "R17",
+      "candidate_id": "S17",
+      "url": "https://wiki.lyrasis.org/spaces/DSDOC10x/pages/408944826/Importing%2Band%2BExporting%2BContent%2Bvia%2BPackages",
+      "access_utc": "2026-10-10T07:10:13.441205+00:00",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "title": "Importing and Exporting Content via Packages — DSpace 10.x",
+      "candidate_released_version": "DSpace 10.x documentation; page metadata reports last updated 2026-07-20; patch release not stated in the page result",
+      "independent_locator": "Official DSpace 10.x package page, restore-mode subsections; captured in R17-web-search.json",
+      "independent_condition_review": "For AIP restore: -r collision backs out changes; -r -k skips an existing object and its children; existing collection/community prevents automatic restoration of its missing children. -r -f replaces contents with potential loss and attempts rollback on an error. Bulk traversal and supported modes depend on flags/plugin.",
+      "independent_semantic_assessment": "Final correctly compares default rollback, skip and replacement and warns of scope/access limits. It omits the parent/children special case, but offers no DSpace operational recommendation or assertion all missing items are recovered. Direct retrieval here also returned 403; official indexed text is the evidence, not a claimed successful direct open.",
+      "claim_status": "SUPPORTED_WITH_ACCESS_AND_SUMMARY_LIMIT",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "indexed_text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R17-web-search.json",
+      "indexed_text_sha256": "6fe81ac2cbea853dc3dc180d4c0bd3bb6d46e41c98ccf3fc0c804e04ded47852",
+      "web_access_utc": "UNKNOWN (exact web-tool access time not recorded)",
+      "capture_saved_utc": "2026-10-10T07:12:48.991491+00:00"
+    },
+    {
+      "id": "R18",
+      "candidate_id": "S18",
+      "url": "https://github.com/DSpace/RestContract/blob/main/versions.md",
+      "access_utc": "2026-10-10T07:10:13.514515+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/DSpace/RestContract/blob/main/versions.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R18.html",
+      "sha256": "e1f52e0b280961e256512bff61b9d5f6e07ac372002a38383e6015072f5e022a",
+      "bytes": 277394,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R18.txt",
+      "title": "DSpace REST Contract — Versioning endpoints",
+      "candidate_released_version": "Repository main branch; contract states it documents DSpace REST API beginning with DSpace 7.0; commit/release tag not pinned; observed 2026-10-10",
+      "independent_locator": "Official RestContract versions.md, reviewer-pinned commit 06630fcbf97118426a65d8459b7454450c3607c8; R18-pinned.md lines 7–10, 20–45",
+      "independent_condition_review": "A permitted new version can use an older history item; it does not restore arbitrary external audio bytes. Administrator/submitter settings, entity-block settings and existing in-progress submissions constrain creation; version visibility is separate.",
+      "independent_semantic_assessment": "Final accurately treats this as adjacent item-version recovery and says deployed release, permissions and configuration need checking. The entity-block detail is absent from its summary but it claims no universally available restore route.",
+      "claim_status": "SUPPORTED_WITH_UNPINNED_CANDIDATE_LIMIT",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "reviewer_pinned_commit": "06630fcbf97118426a65d8459b7454450c3607c8",
+      "pinned_evidence": {
+        "id": "R18-pinned",
+        "url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/versions.md",
+        "access_utc": "2026-10-10T07:16:16.958088+00:00",
+        "http_status": 200,
+        "final_url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/versions.md",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R18-pinned.md",
+        "sha256": "5f2a9504c88d16d1e8a3f9253a25549bf73eead8a50c9bcd9453d451106934f4",
+        "bytes": 5668
+      },
+      "text_sha256": "230475fce29670b56693ad93019ca2af23444cfda18f459dd33bbf732ebccabd"
+    },
+    {
+      "id": "R19",
+      "candidate_id": "S19",
+      "url": "https://github.com/DSpace/RestContract/blob/main/workflowitems.md",
+      "access_utc": "2026-10-10T07:10:13.566572+00:00",
+      "http_status": 200,
+      "final_url": "https://github.com/DSpace/RestContract/blob/main/workflowitems.md",
+      "content_type": "text/html; charset=utf-8",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R19.html",
+      "sha256": "7165c09d9e819b2e87a7a7f6c6d26ae30cbcaab3bc22267911262a1237be2c33",
+      "bytes": 305181,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R19.txt",
+      "title": "DSpace REST Contract — WorkflowItem endpoints",
+      "candidate_released_version": "Repository main branch; contract states it documents DSpace REST API beginning with DSpace 7.0; commit/release tag not pinned; observed 2026-10-10",
+      "independent_locator": "Official RestContract workflowitems.md, reviewer-pinned commit 06630fcbf97118426a65d8459b7454450c3607c8; R19-pinned.md lines 4–14, 83–89, 116–142, 167–178",
+      "independent_condition_review": "Lists current workflow items, step and permissioned lookups. DELETE resets to workspace by default; expunge=true deletes instead, with administrator authorization. This is current submission state, not a historic media migration exception log.",
+      "independent_semantic_assessment": "Final states the current/adjacent scope and default versus expunge difference and does not claim archived error history or successful deployment.",
+      "claim_status": "SUPPORTED_WITH_UNPINNED_CANDIDATE_LIMIT",
+      "observation_operation": "Independent public URL retrieval and surrounding governing text inspection; no code execution.",
+      "reviewer_pinned_commit": "06630fcbf97118426a65d8459b7454450c3607c8",
+      "pinned_evidence": {
+        "id": "R19-pinned",
+        "url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/workflowitems.md",
+        "access_utc": "2026-10-10T07:16:17.100923+00:00",
+        "http_status": 200,
+        "final_url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/workflowitems.md",
+        "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R19-pinned.md",
+        "sha256": "568b9a61283641e90fd47a50a0d9bcca51fe5a1d10561f2591bbf3e18eaad986",
+        "bytes": 7988
+      },
+      "text_sha256": "bbf940c781ddc35e3160ce18ec84769f36924dd2d5a5f7521e0a0d8e0fef9af1"
+    }
+  ],
+  "supplemental_primary_evidence": [
+    {
+      "id": "R20",
+      "url": "https://pbcore.org/elements/instantiationrelation.html",
+      "access_utc": "2026-10-10T07:16:16.686895+00:00",
+      "http_status": 200,
+      "final_url": "https://pbcore.org/elements/instantiationrelation.html",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R20.html",
+      "sha256": "024a7b25b96fd0fc17b0891343f1ae46448318ec3835253085edc08ff9a7f6be",
+      "bytes": 64633,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R20.txt"
+    },
+    {
+      "id": "R21",
+      "url": "https://pbcore.org/elements/instantiationrelationidentifier.html",
+      "access_utc": "2026-10-10T07:16:16.829275+00:00",
+      "http_status": 200,
+      "final_url": "https://pbcore.org/elements/instantiationrelationidentifier.html",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R21.html",
+      "sha256": "741493e29ec8512d92fc4bb20cc9f47ceaf4022d663af274d3d01f7176e14290",
+      "bytes": 64283,
+      "text_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R21.txt"
+    },
+    {
+      "id": "R18-pinned",
+      "url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/versions.md",
+      "access_utc": "2026-10-10T07:16:16.958088+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/versions.md",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R18-pinned.md",
+      "sha256": "5f2a9504c88d16d1e8a3f9253a25549bf73eead8a50c9bcd9453d451106934f4",
+      "bytes": 5668
+    },
+    {
+      "id": "R19-pinned",
+      "url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/workflowitems.md",
+      "access_utc": "2026-10-10T07:16:17.100923+00:00",
+      "http_status": 200,
+      "final_url": "https://raw.githubusercontent.com/DSpace/RestContract/06630fcbf97118426a65d8459b7454450c3607c8/workflowitems.md",
+      "raw_path": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/R19-pinned.md",
+      "sha256": "568b9a61283641e90fd47a50a0d9bcca51fe5a1d10561f2591bbf3e18eaad986",
+      "bytes": 7988
+    }
+  ],
+  "delivery_native_protocol_time_effective_billing": {
+    "delivery": "COMPLETE_FROZEN_ORDINARY_FINAL",
+    "final_path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/final.md",
+    "source_judgment_separate": true,
+    "pipeline_qualification": "NOT_AN_UNQUALIFIED_PROTOCOL_OR_TIME_PASS",
+    "native": {
+      "investigator": {
+        "goal": {
+          "threadId": "01a1247b-b49d-7261-8098-6da78403ecae",
+          "objective": "ER12 investigator stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 207005,
+          "timeUsedSeconds": 1110,
+          "createdAt": 1791613483,
+          "updatedAt": 1791614593
+        },
+        "remainingTokens": null,
+        "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+      },
+      "critic": {
+        "goal": {
+          "threadId": "01a1248f-c097-79d1-9def-4a01cbc259aa",
+          "objective": "ER12 critic stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 132757,
+          "timeUsedSeconds": 495,
+          "createdAt": 1791614778,
+          "updatedAt": 1791615274
+        },
+        "remainingTokens": null,
+        "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+      },
+      "reviser": {
+        "goal": {
+          "threadId": "01a12497-eceb-7882-8a18-33b420258566",
+          "objective": "ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 233135,
+          "timeUsedSeconds": 723,
+          "createdAt": 1791615313,
+          "updatedAt": 1791616036
+        },
+        "remainingTokens": null,
+        "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+      },
+      "independently_authenticated_candidate_native_provenance": "UNKNOWN",
+      "observed_evidence": "Saved exact activation/completion responses have matching stage objectives/thread IDs and recorded complete statuses. Guards explicitly report provenance_independently_proved=false. T3 terminal state is separately recorded; it does not substitute for native lifecycle proof."
+    },
+    "protocol": {
+      "status": "SCOPE_DEVIATION_RECORDED; FULL_COMPLIANCE_UNKNOWN",
+      "finding": "Critic explicitly reports an unlisted frozen-plan digest operation (critique.md line 67), contrary to its input-path restriction. No unauthorized scientific assistance, repair feedback or nested delegation is evidenced by this bounded packet; their complete absence cannot be attested without a full tool transcript.",
+      "original_release_conditions": "UNKNOWN beyond recorded plan-reveal metadata; no other arm/roster/history accessed"
+    },
+    "time": {
+      "brief_60_minute_session": "NOT_ESTABLISHED",
+      "investigator_stage_cap_seconds": 1800,
+      "investigator_saved_native_elapsed_seconds": 1110,
+      "critic_saved_native_elapsed_seconds": 495,
+      "reviser_saved_native_elapsed_seconds": 723,
+      "elapsed_metrics_basis": "Literal fields of saved native responses, not independently authenticated timer/billing telemetry. Stage cap is a limit, not observed occupancy.",
+      "root_init_utc": "2026-10-10T06:24:08.010Z",
+      "root_terminal_freeze_utc": "2026-10-10T07:07:39.519866+00:00",
+      "root_prepare_to_terminal_freeze_seconds": 2611.509866,
+      "route_interpretation": "The final candidly retains the brief timing clause. Fixed stage assignments permit early finish; no minimum hour of idle time is invented. Whether this staged bounded run fulfills the original session contract remains a route-owner decision, not a source truth claim."
+    },
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "default",
+      "basis": "All three final stage request/input/freeze files. Initial run.json retains priority and each stage has a prospective service-tier-change record."
+    },
+    "t3_reported_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "basis": "Saved dispatch/task-terminal records"
+    },
+    "effective_backend_model_effort_service_tier": "UNKNOWN",
+    "billing_cost_inference_tokens_and_savings": "UNKNOWN; saved native token counters are not billing receipts and occupancy does not establish inference savings"
+  },
+  "validation": {
+    "executed_by_candidate_science": "Public-source research and documentary/artifact process checks reported. No archive-facing experiment or validation is claimed.",
+    "independently_executed_by_reviewer": [
+      "Full bounded artifact review",
+      "Independent primary URL/source-context retrieval",
+      "Freeze/input/path/hash consistency check",
+      "Exact embedded-brief comparison",
+      "Saved native response inspection",
+      "Assessment JSON/navigation verification"
+    ],
+    "proposed_only": [
+      "Authorized inventory and trusted pre/post manifests",
+      "Second implementation on sampled fixity rows",
+      "Permissioned metadata/content characterization",
+      "Independent sampled relationship and transcript-anchor adjudication",
+      "Completeness against a custodian-supplied expected extent"
+    ],
+    "oracle_assessment": "Meaningful, bounded source-reference and independent evidence checks. Neither counts/hashes/agreements nor parser/fingerprint success alone establish semantic identity, completeness or correctness. Missing source scope/extents preserve uncertainty.",
+    "synthetic_or_deployment_obligations_invented": false
+  },
+  "integrity": {
+    "terminal_freeze_matches": "All 11 listed scientific artifacts match their recorded original hashes.",
+    "stage_frozen_input_matches": "All listed stage frozen-input paths match.",
+    "missing_mapped_required_science_files": [],
+    "raw_authored_evidence_available": "Only maps/indexes in each sources root; no original page snapshot/check transcript",
+    "excluded": "Hidden pre-dispatch backup histories, unrelated experiment files, other arms, shared roster and other status labels were not opened."
+  },
+  "outputs": {
+    "assessment_md": "ER12_RUNTIME/assessment/D-R1-03/control-v1/assessment.md",
+    "assessment_json": "ER12_RUNTIME/assessment/D-R1-03/control-v1/assessment.json",
+    "source_map": "ER12_RUNTIME/assessment/D-R1-03/control-v1/source-map.json",
+    "evidence_index": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/index.md",
+    "original_hashes": "ER12_RUNTIME/assessment/D-R1-03/control-v1/original-inspected-hashes.json"
+  },
+  "reviewer_native_goal": {
+    "active_observation_receipt": "ER12_RUNTIME/assessment/D-R1-03/control-v1/evidence/reviewer-native-observed-active.json",
+    "completion_rule": "Save full judgment and verify it before completing the one actual review Goal. Completion receipt is a separate file written after terminal response."
+  }
+}

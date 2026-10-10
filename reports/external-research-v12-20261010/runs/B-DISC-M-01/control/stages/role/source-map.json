@@ -22,14 +22,42 @@
       "title": "RFC 9110: HTTP Semantics",
       "version": "RFC 9110, June 2022",
       "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
-      "locators": ["§8.8.1", "§13.1.5", "§14.2–14.3", "§15.3.7.1", "§15.3.7.3", "front matter: obsoletes RFC 7233"],
+      "locators": [
+        "§8.8.1",
+        "§13.1.5",
+        "§14.2–14.3",
+        "§15.3.7.1",
+        "§15.3.7.3",
+        "front matter: obsoletes RFC 7233"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web search/open/find; RFC text inspected",
-      "supports": ["strong-validator range continuation", "partial-response combination condition", "range support and response boundaries", "historical/version lead"],
-      "conditions_exceptions": ["Range may be ignored", "Accept-Ranges does not guarantee future partial responses", "If-Range uses exact strong entity-tag comparison", "content coding affects byte positions"],
+      "supports": [
+        "strong-validator range continuation",
+        "partial-response combination condition",
+        "range support and response boundaries",
+        "historical/version lead"
+      ],
+      "conditions_exceptions": [
+        "Range may be ignored",
+        "Accept-Ranges does not guarantee future partial responses",
+        "If-Range uses exact strong entity-tag comparison",
+        "content coding affects byte positions"
+      ],
       "applicability": "HTTP protocol behavior only; does not prove integrity or behavior of a specific origin",
-      "inference": ["A refreshed signed URL is a locator change, not evidence that the selected bytes are the same", "Discard/restart on unexpected full response or mismatched range is a proposed client policy"],
-      "checks": {"proposed": ["wrong start/total", "200 instead of 206", "416", "changed content coding"], "executed": []}
+      "inference": [
+        "A refreshed signed URL is a locator change, not evidence that the selected bytes are the same",
+        "Discard/restart on unexpected full response or mismatched range is a proposed client policy"
+      ],
+      "checks": {
+        "proposed": [
+          "wrong start/total",
+          "200 instead of 206",
+          "416",
+          "changed content coding"
+        ],
+        "executed": []
+      }
     },
     {
       "id": "metalink-rfc5854",
@@ -37,14 +65,37 @@
       "title": "RFC 5854: The Metalink Download Description Format",
       "version": "RFC 5854, June 2010",
       "url": "https://www.rfc-editor.org/info/rfc5854/",
-      "locators": ["§1", "§4.1.3", "§4.2.4", "§7.4"],
+      "locators": [
+        "§1",
+        "§4.1.3",
+        "§4.2.4",
+        "§7.4"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web search/open/find; RFC text inspected",
-      "supports": ["ordered piece hashes", "whole-file hashes", "multiple locations for one file"],
-      "conditions_exceptions": ["description signatures are optional", "manifest authenticity must be established separately", "hash algorithm strength matters"],
+      "supports": [
+        "ordered piece hashes",
+        "whole-file hashes",
+        "multiple locations for one file"
+      ],
+      "conditions_exceptions": [
+        "description signatures are optional",
+        "manifest authenticity must be established separately",
+        "hash algorithm strength matters"
+      ],
       "applicability": "design precedent for verified piece reuse; not evidence of target service support",
-      "inference": ["Piece map can persist verified/missing units for restart", "Concurrent ranges need the same identity rule per response"],
-      "checks": {"proposed": ["piece index-to-range mapping", "short final piece", "bad piece hash"], "executed": []}
+      "inference": [
+        "Piece map can persist verified/missing units for restart",
+        "Concurrent ranges need the same identity rule per response"
+      ],
+      "checks": {
+        "proposed": [
+          "piece index-to-range mapping",
+          "short final piece",
+          "bad piece hash"
+        ],
+        "executed": []
+      }
     },
     {
       "id": "tuf-spec-v1.0.36",
@@ -52,14 +103,37 @@
       "title": "The Update Framework Specification",
       "version": "v1.0.36",
       "url": "https://theupdateframework.github.io/specification/v1.0.36/",
-      "locators": ["§2", "§5.7", "§6.2", "target metadata data model"],
+      "locators": [
+        "§2",
+        "§5.7",
+        "§6.2",
+        "target metadata data model"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web search/open/find; specification text inspected",
-      "supports": ["target length and hashes", "full target hash verification", "delayed availability until verification", "hash-prefixed consistent snapshot target naming"],
-      "conditions_exceptions": ["requires trusted and timely metadata", "does not specify resumable transfer or crash-safe promotion"],
+      "supports": [
+        "target length and hashes",
+        "full target hash verification",
+        "delayed availability until verification",
+        "hash-prefixed consistent snapshot target naming"
+      ],
+      "conditions_exceptions": [
+        "requires trusted and timely metadata",
+        "does not specify resumable transfer or crash-safe promotion"
+      ],
       "applicability": "trusted artifact identity/integrity model, not a resume implementation",
-      "inference": ["Fresh signed URL may be used if it still resolves to the same trusted target hash", "Stage and promote only after full verification"],
-      "checks": {"proposed": ["same target through rotated locator", "wrong whole-file digest", "stale target metadata"], "executed": []}
+      "inference": [
+        "Fresh signed URL may be used if it still resolves to the same trusted target hash",
+        "Stage and promote only after full verification"
+      ],
+      "checks": {
+        "proposed": [
+          "same target through rotated locator",
+          "wrong whole-file digest",
+          "stale target metadata"
+        ],
+        "executed": []
+      }
     },
     {
       "id": "curl-resume-large",
@@ -67,14 +141,29 @@
       "title": "CURLOPT_RESUME_FROM_LARGE",
       "version": "curl API; documented availability since 7.11.0",
       "url": "https://curl.se/libcurl/c/CURLOPT_RESUME_FROM_LARGE.html",
-      "locators": ["Description", "Availability"],
+      "locators": [
+        "Description",
+        "Availability"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web open; API page inspected",
-      "supports": ["byte-offset API for large transfer resume", "version lead"],
-      "conditions_exceptions": ["offset API alone supplies no remote identity or cryptographic verification"],
+      "supports": [
+        "byte-offset API for large transfer resume",
+        "version lead"
+      ],
+      "conditions_exceptions": [
+        "offset API alone supplies no remote identity or cryptographic verification"
+      ],
       "applicability": "inspectable transfer-library lead",
-      "inference": ["Caller must provide a separate identity and finalization design"],
-      "checks": {"proposed": ["offset and Content-Range behavior across redirect"], "executed": []}
+      "inference": [
+        "Caller must provide a separate identity and finalization design"
+      ],
+      "checks": {
+        "proposed": [
+          "offset and Content-Range behavior across redirect"
+        ],
+        "executed": []
+      }
     },
     {
       "id": "curl-resume",
@@ -82,14 +171,26 @@
       "title": "CURLOPT_RESUME_FROM",
       "version": "branch master page; exact commit UNKNOWN; added in 7.1",
       "url": "https://github.com/curl/curl/blob/master/docs/libcurl/opts/CURLOPT_RESUME_FROM.md",
-      "locators": ["option metadata", "Description"],
+      "locators": [
+        "option metadata",
+        "Description"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web search/open/find; documentation source inspected",
-      "supports": ["legacy offset API context", "recommendation to use large-offset API beyond 2 GB"],
-      "conditions_exceptions": ["mutable branch and exact commit not captured", "offset API alone supplies no integrity check"],
+      "supports": [
+        "legacy offset API context",
+        "recommendation to use large-offset API beyond 2 GB"
+      ],
+      "conditions_exceptions": [
+        "mutable branch and exact commit not captured",
+        "offset API alone supplies no integrity check"
+      ],
       "applicability": "version lead only",
       "inference": [],
-      "checks": {"proposed": [], "executed": []},
+      "checks": {
+        "proposed": [],
+        "executed": []
+      },
       "provenance": "UNKNOWN"
     },
     {
@@ -98,14 +199,31 @@
       "title": "metadata/updater/updater.go",
       "version": "branch master as observed; commit UNKNOWN",
       "url": "https://github.com/theupdateframework/go-tuf/blob/master/metadata/updater/updater.go",
-      "locators": ["Updater.DownloadTarget, approximately lines 2045–2138"],
+      "locators": [
+        "Updater.DownloadTarget, approximately lines 2045–2138"
+      ],
       "retrieval_utc": "UNKNOWN; within retrieval_window_utc",
       "retrieval_operation": "web search/open/find; source page inspected, not downloaded or executed",
-      "supports": ["hash-prefixed remote target path", "VerifyLengthHashes before persistent write"],
-      "conditions_exceptions": ["inspected implementation buffers data as byte slice", "exact source commit not captured"],
+      "supports": [
+        "hash-prefixed remote target path",
+        "VerifyLengthHashes before persistent write"
+      ],
+      "conditions_exceptions": [
+        "inspected implementation buffers data as byte slice",
+        "exact source commit not captured"
+      ],
       "applicability": "control-flow implementation lead; not a proven 2-GB streaming or crash-safe design",
-      "inference": ["Could guide ordering for a streaming staged implementation"],
-      "checks": {"proposed": ["memory use", "write failure after verification", "power interruption during finalization"], "executed": []},
+      "inference": [
+        "Could guide ordering for a streaming staged implementation"
+      ],
+      "checks": {
+        "proposed": [
+          "memory use",
+          "write failure after verification",
+          "power interruption during finalization"
+        ],
+        "executed": []
+      },
       "provenance": "UNKNOWN"
     }
   ]

@@ -1,0 +1,21 @@
+{
+  "at_utc": "2026-10-10T08:39:33.816607+00:00",
+  "actual_join": "root-final-join-001",
+  "passed": true,
+  "rows": 80,
+  "source_labels": {
+    "PASS_WITH_LIMITATIONS": 56,
+    "FAIL": 23,
+    "UNKNOWN": 1
+  },
+  "original_judgments_immutable": 79,
+  "legacy_join_pin_unchanged": true,
+  "candidate_failures_inclusive": true,
+  "original_missing_cost_created_seconds": 197.904,
+  "recorded_observed_native_failure": false,
+  "mechanical_guard_failure_preserved_separately": true,
+  "candidate_native_terminal_proof": "UNKNOWN",
+  "old_fixture_groups_retained": 4,
+  "additional_pointer_contract_checks": "PASS",
+  "canonical_copy": "Exact byte copies to mechanics/results-table-final; no rerun or relabel"
+}

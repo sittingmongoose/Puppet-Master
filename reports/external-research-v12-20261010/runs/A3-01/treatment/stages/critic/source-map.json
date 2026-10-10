@@ -11,7 +11,27 @@
   },
   "inherited_source_ids_preserved": {
     "source_map": "ER12_RUNTIME/runs/A3-01/treatment/stages/investigator/source-map.json",
-    "ids": ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18", "S19"]
+    "ids": [
+      "S01",
+      "S02",
+      "S03",
+      "S04",
+      "S05",
+      "S06",
+      "S07",
+      "S08",
+      "S09",
+      "S10",
+      "S11",
+      "S12",
+      "S13",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S18",
+      "S19"
+    ]
   },
   "records": [
     {
@@ -141,13 +161,20 @@
       "topic": "SQLite contentless mode recommendation",
       "observation": "The 3.43.0 release record introduced contentless-delete. Current FTS5 docs say to prefer that mode over ordinary contentless, while separately documenting external-content tables with source-table lookup, triggers, integrity-check, and rebuild.",
       "resolution": "These statements do not conflict with the draft’s conditional external-content preference. The recommendation compares contentless-delete to ordinary contentless, not to external content; source-table retrieval and content-based rebuild are material distinctions for this adapter.",
-      "sources": ["C01", "C02"]
+      "sources": [
+        "C01",
+        "C02"
+      ]
     },
     {
       "topic": "Tantivy malformed query history",
       "observation": "Upstream issue 3031 remains open for the reported 0.22.1 / grammar 0.22.0 panic, while a fix-like commit is linked from a contributor fork. Tantivy 0.26.2 package metadata in inherited S07 identifies a newer grammar dependency range but does not prove release behavior for the reported input.",
       "resolution": "Do not infer either persistence or fix in 0.26.2. Preserve exact-version testing and use a bounded typed query interface.",
-      "sources": ["S07", "S15", "C09"]
+      "sources": [
+        "S07",
+        "S15",
+        "C09"
+      ]
     }
   ]
 }

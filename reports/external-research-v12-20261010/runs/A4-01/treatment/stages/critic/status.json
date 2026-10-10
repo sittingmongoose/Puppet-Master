@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed only the assigned critic stage. Saved the review, critic source map, and source index:\n\n- [critique.md](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/sources/index.md)\n\nThe critique flags two material gaps: the proposal omits AWS’s consecutive part-number requirement when using multipart checksums, and it may count tus twice where the brief calls for a separate analogous mechanism. No product validation was run.\n\nThe native Goal was activated and completed after saving the outputs. Final usage: 190,055 tokens and 637 seconds.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1e4b19c7-c378-4ad8-815a-4a9ddbedcd97",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed only the assigned critic stage. Saved the review, critic source map, and source index:\n\n- [critique.md](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A4-01/treatment/stages/critic/sources/index.md)\n\nThe critique flags two material gaps: the proposal omits AWS’s consecutive part-number requirement when using multipart checksums, and it may count tus twice where the brief calls for a separate analogous mechanism. No product validation was run.\n\nThe native Goal was activated and completed after saving the outputs. Final usage: 190,055 tokens and 637 seconds.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1e4b19c7-c378-4ad8-815a-4a9ddbedcd97",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "5a625b40f8988d09bbb303cdf0b3cef02c8f742ccad51e9344b56ec8c40c5813",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A4-01/treatment/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

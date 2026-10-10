@@ -1,0 +1,489 @@
+{
+  "run_id": "D-R1-03-control",
+  "stage": "reviser",
+  "brief": "ER12_RUNTIME/runs/D-R1-03/control/inputs/brief.md",
+  "research_basis": "Assigned synthetic brief, complete revealed plan, investigator proposal/discovery/source-map, independent critique and source-map, and listed public primary-source records. No archive evidence was supplied or accessed.",
+  "source_ids_are_immutable": true,
+  "predecessor_source_map_context": {
+    "investigator": {
+      "source_map": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/source-map.json",
+      "research_basis": "Assigned synthetic brief only; exact plan unreleased at discovery cutoff.",
+      "accessed_observation_utc": "2026-10-10T06:26:52Z",
+      "supplemental_access_observation_utc": "2026-10-10T06:33:54Z"
+    },
+    "critic": {
+      "source_map": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/source-map.json",
+      "research_basis": "Assigned synthetic brief only; exact plan unreleased at discovery cutoff.",
+      "accessed_observation_utc": "2026-10-10T06:26:52Z",
+      "supplemental_access_observation_utc": "2026-10-10T06:33:54Z",
+      "reviewer_access_batch_utc": "2026-10-10T06:50:02Z",
+      "reviewer_scope": "Primary-source recheck for this critique; source IDs and exact URLs preserved."
+    }
+  },
+  "reviser_independent_rechecks": {
+    "access_batch_utc": "2026-10-10T06:59:39Z",
+    "sources": [
+      {
+        "id": "S01",
+        "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+        "released_version": "RFC 8493 / BagIt 1.0, October 2018",
+        "locator": "Sections 1.3, 2.1.2–2.1.3 and 3; complete versus valid and opaque payload semantics.",
+        "observed_operation": "Opened the RFC HTML and inspected the definitions and payload-manifest requirements.",
+        "governing_condition_default_exception": "Complete and valid are package/manifests-scoped; every payload is listed and valid additionally means all manifest checksums verify. Payload bytes and paths do not carry semantic recording identity.",
+        "applicability": "Confirms only a package-scoped fixity/completeness witness against a stated manifest, not completeness against an absent expected archive inventory."
+      },
+      {
+        "id": "S12",
+        "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/preservation/preservation-planning/",
+        "released_version": "Archivematica documentation 1.17.1",
+        "locator": "Default/replaced command and rule conditions; optional verification/event-detail fields; normalization/source retention, rendered sections around lines 128–153 and 324–329.",
+        "observed_operation": "Opened the exact versioned page and inspected rule configurability, event-detail/verification commands, and normalization/source-retention sections.",
+        "governing_condition_default_exception": "Commands/rules can be disabled or replaced; event-detail and verification commands are configurable/optional. Normalization adds preservation/access copies while retaining originals in the documented workflow.",
+        "applicability": "Supports treating configuration/event records as necessary historical evidence and originals/derivatives as a comparator, not as this archive's implementation."
+      },
+      {
+        "id": "S13",
+        "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/",
+        "released_version": "Archivematica documentation 1.17.1",
+        "locator": "Existing-checksum transfer section and Transfer tab microservices: external checksums, file UUIDs, original-order METS, transfer-structure report.",
+        "observed_operation": "Opened the exact versioned page and inspected external-checksum instructions and transfer microservice descriptions.",
+        "governing_condition_default_exception": "External MD5/SHA-1/SHA-256/SHA-512 checksums can be verified when supplied; transfer processing can assign IDs/checksums and capture original order/structure.",
+        "applicability": "Identifies records that could support a move if that system and workflow were actually used; their presence does not authenticate the source manifest or expected collection scope."
+      },
+      {
+        "id": "S14",
+        "url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/troubleshooting/error-handling/",
+        "released_version": "Archivematica documentation 1.17.1",
+        "locator": "Overview and sections on normalization errors, errors that fail transfers, common behavior, and rejecting a transfer/SIP.",
+        "observed_operation": "Opened the exact versioned page and inspected failure, continuation/redo, report, and rejection behavior.",
+        "governing_condition_default_exception": "Some microservice errors halt and move work to Failed; normalization can report an error yet continue to an approval point where review, continue, or redo is available; reject stops processing and moves the object to Rejected.",
+        "applicability": "Confirms distinct outcomes/reports and limited redo behavior; the page does not describe general rollback to the external source."
+      },
+      {
+        "id": "S17",
+        "url": "https://wiki.lyrasis.org/spaces/DSDOC10x/pages/408944826/Importing%2Band%2BExporting%2BContent%2Bvia%2BPackages",
+        "released_version": "DSpace 10.x documentation, last updated 2026-07-20 per search result",
+        "locator": "Default restore (-r), keep-existing (-r -k), force-replace (-r -f).",
+        "observed_operation": "Searched the official DSpace 10.x documentation; search result exposed all three restore-mode descriptions; direct open returned 403 Forbidden.",
+        "governing_condition_default_exception": "Default collision causes error and rollback; keep-existing skips conflicting objects and continues; force-replace overwrites and carries a data-loss warning.",
+        "applicability": "Explicit comparator for package restore policies, only if DSpace was used."
+      },
+      {
+        "id": "S18",
+        "url": "https://github.com/DSpace/RestContract/blob/main/versions.md",
+        "released_version": "Official DSpace REST Contract main branch; repository describes its contract from DSpace 7.0 onward; no commit pinned.",
+        "locator": "POST /api/versioning/versions and using an older item as source to facilitate restore.",
+        "observed_operation": "Opened and inspected the official project file.",
+        "governing_condition_default_exception": "A new version may be based on an older version in history subject to permission and in-progress workflow constraints; history remains a version sequence.",
+        "applicability": "Comparator for repository-level item-version recovery, not proof of audio byte recovery or archive use."
+      },
+      {
+        "id": "S19",
+        "url": "https://github.com/DSpace/RestContract/blob/main/workflowitems.md",
+        "released_version": "Official DSpace REST Contract main branch; repository describes its contract from DSpace 7.0 onward; no commit pinned.",
+        "locator": "Workflow-item list/details/current step/search/reset operations.",
+        "observed_operation": "Opened and inspected the official project file.",
+        "governing_condition_default_exception": "Active workflow items can be listed/read subject to permissions; reset-to-workspace is default for DELETE, while expunge deletes the workflow item.",
+        "applicability": "Comparator for current in-progress repository workflow state, not a dedicated migration exception report."
+      }
+    ]
+  },
+  "critic_reported_scope_exception": "The critic states that it ran a digest command against the frozen plan source path named in plan-reveal.json, although that path was not listed in input-map.json; it states that it did not open/render the source or use its contents. This reviser did not access that path and does not use that digest as evidence.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "RFC 8493: The BagIt File Packaging Format (V1.0)",
+      "publisher": "RFC Editor / IETF Trust",
+      "url": "https://www.rfc-editor.org/rfc/rfc8493.html",
+      "released_version": "BagIt 1.0; RFC 8493; October 2018; Informational",
+      "locator": "Sections 1.1, 2.1.2–2.1.3, 2.4, 3, 5.4: opaque payload, path/manifests, hash requirements/default, complete/valid definitions, active-attack caveat.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened RFC HTML and inspected the identified sections in rendered text.",
+      "governing_condition_default_exception": "Every payload file is listed in each BagIt 1.0 manifest; complete requires listed files present; valid additionally requires all manifest checksums verify. Implementations MUST support SHA-256/SHA-512 and SHOULD default to SHA-512. Payload bytes are opaque; names are paths without semantic meaning; fixity is not protection from active attacks.",
+      "applicability": "Read-only package witness and bounded bit-continuity claim if an authoritative earlier manifest and scope exist.",
+      "limitation": "Does not establish interview identity, transcript correctness, consent, or completeness against an absent source inventory.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected RFC HTML; sections 1.1, 2.1.2–2.1.3, 2.4, 3 and 5.4.",
+        "governing_condition_default_exception": "Confirmed opaque payload/path semantics, manifest scope, SHA-256/SHA-512 support, SHA-512 default, complete/valid definitions and active-attack caveat.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "PREMIS Data Dictionary for Preservation Metadata, Version 3.0",
+      "publisher": "Library of Congress / PREMIS Editorial Committee",
+      "url": "https://www.loc.gov/standards/premis/v3/premis-3-0-final.pdf",
+      "released_version": "PREMIS 3.0 final; PDF updated November 2015",
+      "locator": "Introduction pp. 7–15; relationship semantic unit pp. 117–130; eventDateTime pp. 141–142; eventDetailInformation pp. 142–144; eventOutcomeInformation pp. 145–146; fixity discussion pp. 257–259.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened official PDF and inspected the cited pages and semantic units in rendered text.",
+      "governing_condition_default_exception": "Models Intellectual Entity, Representation, File, Bitstream, relationships and object-linked Events. Event date/time is mandatory and recommends specific time with time zone; event detail and outcome are optional.",
+      "applicability": "Candidate model for stable object IDs, source/target relations, agents, migration/validation events, parameters and outcomes.",
+      "limitation": "Absent optional event detail/outcome does not prove no event; recorded relations remain assertions requiring provenance.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Library of Congress PREMIS 3.0 PDF; Event entity and pp. 141–146.",
+        "governing_condition_default_exception": "Confirmed eventIdentifier/eventType/eventDateTime mandatory; eventDetailInformation and eventOutcomeInformation optional; specific time and zone recommended.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "PBCore instantiationRelationType",
+      "publisher": "PBCore Metadata Standard",
+      "url": "https://pbcore.org/elements/instantiationrelationtype.html",
+      "released_version": "Current web specification; no numbered release stated on page",
+      "locator": "Definition, best practice and usage for instantiationRelationType and its containing instantiationRelation.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened the PBCore element page; inspected definition and usage.",
+      "governing_condition_default_exception": "Relations may represent discrete parts of one unit, generations, derivative/source, or different versions. Type and related-item identifier are required within a relation; relation container is optional/repeatable.",
+      "applicability": "Candidate vocabulary for describing supported relations among audiovisual instantiations.",
+      "limitation": "A PBCore assertion does not itself prove a relation or preserve its operational evidence.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected PBCore official element page; definition and best-practice sections.",
+        "governing_condition_default_exception": "Confirmed instantiation relation may describe parts, generations, derivatives or versions; retained the page’s current-web-specification status.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Broadcast WAVE Audio File Format, Version 1 (FDD 000356)",
+      "publisher": "Library of Congress, Sustainability of Digital Formats",
+      "url": "https://loc.gov/preservation/digital/formats/fdd/fdd000356.shtml",
+      "released_version": "BWF version 1 description; page describes v0 (1997), v1 (2001), v2 and supplements",
+      "locator": "Description; sustainability factors; BWF version history and version clues.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened LOC format description and inspected BWF description and history sections.",
+      "governing_condition_default_exception": "BWF refines WAVE. Version clues depend on bext fields/UMID/loudness metadata; fields are present only in applicable files/versions. LOC reports specified preferred/recommended use.",
+      "applicability": "If audio is BWF, inspect exact embedded fields/version as technical and provenance clues.",
+      "limitation": "Not every audio file is BWF; embedded fields do not independently establish truth, identity or completeness.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Library of Congress Sustainability of Digital Formats page; BWF description and history.",
+        "governing_condition_default_exception": "Confirmed BWF-specific bext metadata and version clues; applicability remains conditional on the file actually being BWF.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "ffprobe Documentation",
+      "publisher": "FFmpeg project",
+      "url": "https://ffmpeg.org/ffprobe.html",
+      "released_version": "Live docs page does not identify release tag/commit; any binary version must be captured if used",
+      "locator": "Section 2; format/stream and metadata output options; show_entries; read_intervals accuracy note.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened official ffprobe docs and inspected description, metadata and interval options.",
+      "governing_condition_default_exception": "Reports multimedia container/stream information in human/machine-readable output; fields can be selected; unreadable/unrecognized input returns positive exit; seeking is not exact.",
+      "applicability": "Candidate read-only characterization of format, streams, tags, duration; capture exact executable version and raw output.",
+      "limitation": "Metadata/duration do not establish identity/completeness; approximate seeks cannot prove exact segment boundaries.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected FFmpeg official ffprobe documentation; output and read_intervals sections.",
+        "governing_condition_default_exception": "Confirmed stream/container reporting and that seeking intervals are not exact.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Technical architecture — Archivematica 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/overview/technical/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "Format policies; From Transfer to SIP to AIP and DIP; rendered lines 45–59.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened versioned official docs and inspected technical architecture section.",
+      "governing_condition_default_exception": "Describes retaining originals while normalizing to preservation/access formats by policy and creating AIPs using METS, PREMIS and BagIt.",
+      "applicability": "Comparable implementation where distinct files intentionally coexist as original and derivative.",
+      "limitation": "Does not establish software/settings/history at the synthetic archive.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 technical architecture; format policy section.",
+        "governing_condition_default_exception": "Confirmed originals are retained while normalization produces preservation/access representations; treated as a comparator, not case evidence.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "Preservation Planning — Archivematica 1.16.0",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.16/user-manual/preservation/preservation-planning/",
+      "released_version": "Archivematica documentation 1.16.0",
+      "locator": "FPR definitions, preservation planning policies, rules, defaults and local-rule configuration.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened versioned official docs and inspected policy/default sections.",
+      "governing_condition_default_exception": "Rules connect file formats to commands/actions; defaults can be changed locally, persist across upgrades, and new release may add rules.",
+      "applicability": "Shows exact release and local config matter when attributing a transcode to policy.",
+      "limitation": "Generic defaults do not prove which command an archive ran.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.16.0 Preservation Planning; default/local rules and upgrade behavior.",
+        "governing_condition_default_exception": "Confirmed local rules may customize defaults and persist across upgrades; historical attribution needs actual release/configuration.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Archivematica issue #346: md5deep checksum validation for multiple files with same checksum",
+      "publisher": "Archivematica/Issues",
+      "url": "https://github.com/archivematica/Issues/issues/346",
+      "released_version": "Opened 2018-11-23; reported AM 1.7.2/Ubuntu 16.04; closed; milestone 1.10.0",
+      "locator": "Issue status/milestone; expected/current behavior and reproduction with two paths sharing one checksum.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened issue page and inspected status, reproduction and per-file/aggregate output report.",
+      "governing_condition_default_exception": "Reporter describes error 110 for different paths with same digest although md5deep printed both files as passing; issue is closed and assigned 1.10.0 milestone.",
+      "applicability": "Implementation history for duplicate hash groups; motivates per-file review, independent validation and raw logs.",
+      "limitation": "Page does not identify the fix or prove current behavior across releases; not evidence of a case error.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica issue 346; issue description, reported environment, status and milestone.",
+        "governing_condition_default_exception": "Confirmed AM 1.7.2/Ubuntu 16.04 report, duplicate-path checksums, error 110 despite md5deep per-file passes, closure and 1.10.0 milestone; page does not state the fix.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Chromaprint README at v1.6.1 release commit",
+      "publisher": "AcoustID / Chromaprint project",
+      "url": "https://github.com/acoustid/chromaprint/blob/aed8eba/README.md",
+      "released_version": "v1.6.1; commit aed8eba2202dd9d7b3b0a56c77904cc805490d72; released 2026-07-28",
+      "locator": "Chromaprint description: near-identical audio, not general purpose, precision/robustness tradeoff, target use cases.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened README pinned to GitHub-rendered release commit and inspected project description.",
+      "governing_condition_default_exception": "Designed for compact fingerprints of near-identical audio and search performance; target uses include full-file identification, duplicate detection and long-stream monitoring.",
+      "applicability": "Candidate generation for authorized audio comparisons, with release pinned for reproducibility.",
+      "limitation": "Not a general identity solution; match/no-match depends on content, representation, window and algorithm; cannot assert provenance or completeness.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Chromaprint README pinned to commit aed8eba2202dd9d7b3b0a56c77904cc805490d72.",
+        "governing_condition_default_exception": "Confirmed near-identical-audio purpose, non-general-purpose warning and precision/robustness trade-off.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Chromaprint 1.6.1 release notes",
+      "publisher": "AcoustID / Chromaprint project",
+      "url": "https://github.com/acoustid/chromaprint/releases/tag/v1.6.1",
+      "released_version": "Chromaprint v1.6.1, commit aed8eba, 2026-07-28",
+      "locator": "Release bullets for decoder buffer overflow, FFmpeg 4.x build compatibility, and partial-frame input handling.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened official release page and inspected version, commit and release notes.",
+      "governing_condition_default_exception": "Release says earlier code dropped a partial frame when feed buffers did not end on frame boundaries; v1.6.1 changes handling. It also reports a decoding overflow fix for extra encoded data.",
+      "applicability": "Tool history relevant to fingerprinting; version and input chunking matter.",
+      "limitation": "Release notes do not establish speech-matching accuracy for oral histories.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Chromaprint v1.6.1 release page.",
+        "governing_condition_default_exception": "Confirmed release notes on decoder overflow, FFmpeg build compatibility and partial-frame input handling; release date/commit identity retained from the pinned source record.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "Chromaprint issue #160: Algorithm 3 short-input empty fingerprint report",
+      "publisher": "AcoustID / Chromaprint project",
+      "url": "https://github.com/acoustid/chromaprint/issues/160",
+      "released_version": "Opened 2026-02-20; observed Open 2026-10-10",
+      "locator": "Issue description of Test3 overlap setting and reported empty fingerprints for inputs under approximately seven seconds; compatibility note.",
+      "access_utc": "2026-10-10T06:26:52Z",
+      "observed_operation": "Opened exact issue page and inspected its status and stated conditions.",
+      "governing_condition_default_exception": "Issue author reports one Test3 configuration may return no fingerprint for short inputs; it is an open report, not a validated general result.",
+      "applicability": "Short/partial-window outcomes require algorithm-specific validation; missing output is not evidence of differing interviews.",
+      "limitation": "Test3/open issue only; does not establish failure in default algorithm or any archive item.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Chromaprint issue 160; status and issue description.",
+        "governing_condition_default_exception": "Confirmed open report is specific to Algorithm/Test3 configuration and short inputs around the reported delay; not generalized to other algorithms.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S12",
+      "title": "Preservation Planning — Archivematica 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/preservation/preservation-planning/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "FPR and policy lines 32–35; local rule/changeability lines 128–134; event detail and command history lines 143–152, 163–172; normalization/source-retention lines 324–374.",
+      "access_utc": "2026-10-10T06:33:54Z",
+      "observed_operation": "Opened the versioned official documentation and inspected FPR, normalization, event-detail and verification sections.",
+      "governing_condition_default_exception": "Normalization makes a copy for access/preservation while retaining original. Audio-visual normalization may use ffmpeg. FPR commands/rules have version and local configuration; defaults may be replaced. A verification command can be configured; shipped basic checks only test output existence and nonzero size; event-detail command can record tool/version. Command/rule revision history can be viewed.",
+      "applicability": "Provides implementation paths and the records to request when testing whether two unlike files are a policy-produced derivative pair.",
+      "limitation": "Current documented defaults do not prove historical use; simple output-exists verification is not media integrity, identity or completeness.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 Preservation Planning; rule history, normalization, verification and event-detail sections.",
+        "governing_condition_default_exception": "Confirmed rules are replaceable/versioned, originals retained, output verification checks existence/nonzero size, and event-detail command can record tool information.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S13",
+      "title": "Transfer — Archivematica 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/transfer/transfer/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "Create a transfer with existing checksums lines 113–131; transfer microservices and METS original-order capture lines 262–264; page outline on transfer/derivative workflows.",
+      "access_utc": "2026-10-10T06:33:54Z",
+      "observed_operation": "Opened the versioned official Transfer page; used rendered find results for existing-checksum and original-order sections.",
+      "governing_condition_default_exception": "Can verify external MD5/SHA1/SHA256/SHA512 checksums during transfer if supplied; transfer workflow assigns object UUIDs/checksums and can create METS capturing original transfer order. Supplied checksum files must map checksums to file paths.",
+      "applicability": "If this or a comparable workflow was used, prior external manifests, per-file transfer results, item UUID mappings and retained METS/tree reports could materially evidence the move.",
+      "limitation": "Verification only evidences bytes against the supplied manifest at that step. It cannot authenticate the source manifest or prove intended collection completeness.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 Transfer; external checksum and original-order records.",
+        "governing_condition_default_exception": "Confirmed MD5/SHA1/SHA256/SHA512 external checksum verification, path-mapped manifest format, failure behavior and transfer-order records.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S14",
+      "title": "Error handling — Archivematica 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/getting-started/troubleshooting/error-handling/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "General error handling lines 30–53; normalization errors/continue or redo lines 75–109; halt/error handling lines 117–133.",
+      "access_utc": "2026-10-10T06:33:54Z",
+      "observed_operation": "Opened the versioned official error-handling page and inspected normalization, failure, and rejection behavior.",
+      "governing_condition_default_exception": "Some failures halt and move a transfer/SIP to Failed; normalization errors can be reported while the SIP continues, with review/redo options; checksum failures are listed among transfer-halting errors. Rejecting moves an item to Rejected and stops processing.",
+      "applicability": "Shows why logs, named failure points, user decisions and per-step result states matter when reconstructing a migration.",
+      "limitation": "The page documents handling states, not an automatic rollback guarantee. No such product behavior should be inferred for this archive.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 Error handling; normalization and failed-transfer sections.",
+        "governing_condition_default_exception": "Confirmed normalization may continue to review/redo, while checksum verification failures halt a transfer; no rollback guarantee inferred.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S15",
+      "title": "PREMIS metadata in Archivematica — 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/metadata/premis/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "PREMIS event inventory; originals and normalized files lines 85–117; filename-change event lines 139–162; normalization example and event detail.",
+      "access_utc": "2026-10-10T06:33:54Z",
+      "observed_operation": "Opened versioned official documentation and inspected event lists/examples for originals, derivatives and filename changes.",
+      "governing_condition_default_exception": "Originals have ingest/digest/virus events; fixity check is included if a bag or transfer checksum manifest was ingested. Normalized files have creation/digest and optional validation; original with normalized derivative receives normalization Event. Filename-change Event includes original filename. These events are only present when applicable workflow steps ran.",
+      "applicability": "Specific record types to seek if retained AIP METS/PREMIS packages or Archivematica logs exist.",
+      "limitation": "This is a product-specific documented workflow; its absence in unrelated systems or incomplete packages proves nothing.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 PREMIS implementation; original, normalized and filename-change event sections.",
+        "governing_condition_default_exception": "Confirmed events are conditional on workflow steps, including normalization and filename changes; absence outside that workflow proves nothing.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S16",
+      "title": "Manual normalization — Archivematica 1.17.1",
+      "publisher": "Artefactual Systems / Archivematica",
+      "url": "https://www.archivematica.org/en/docs/archivematica-1.17/user-manual/ingest/manual-normalization/",
+      "released_version": "Archivematica documentation 1.17.1",
+      "locator": "Workflow 1 and its matching-filename/constrained relationship rules, especially lines 55–56 and 68–96.",
+      "access_utc": "2026-10-10T06:33:54Z",
+      "observed_operation": "Opened the versioned official manual-normalization page and inspected the filename and one-to-one relationship requirements.",
+      "governing_condition_default_exception": "For the specific manualNormalization transfer convention, matching filenames in prescribed original/access/preservation folder structure let Archivematica recognize source/derivative links; that documented workflow constrains relationship cardinality and folder placement.",
+      "applicability": "Demonstrates that names may act as operational association keys inside a known, versioned process, and why workflow records/rules are needed to interpret such names.",
+      "limitation": "Does not justify using filename equality as general evidence of identity or relation outside that specific controlled workflow.",
+      "critic_review": {
+        "access_utc": "2026-10-10T06:50:02Z",
+        "observed_operation": "Opened the exact URL carried in the investigator source index and inspected Archivematica 1.17.1 manual-normalization workflow 1.",
+        "governing_condition_default_exception": "Confirmed matching names are association keys only in the prescribed folder convention and one-to-one original/derivative workflow.",
+        "applicability": "Used only to assess the investigator’s stated general mechanism and its limits; not evidence that the synthetic archive used this standard or product."
+      }
+    },
+    {
+      "id": "S17",
+      "title": "Importing and Exporting Content via Packages — DSpace 10.x",
+      "publisher": "LYRASIS / DSpace documentation",
+      "url": "https://wiki.lyrasis.org/spaces/DSDOC10x/pages/408944826/Importing%2Band%2BExporting%2BContent%2Bvia%2BPackages",
+      "released_version": "DSpace 10.x documentation; page metadata reports last updated 2026-07-20; patch release not stated in the page result",
+      "locator": "Package Importer and Exporter; restore modes: default restore (-r), keep-existing (-r -k), and force-replace (-r -f).",
+      "access_utc": "2026-10-10T06:59:39Z",
+      "observed_operation": "Searched the official LYRASIS DSpace 10.x documentation and inspected the returned page text for all three restore modes; direct open of the exact page returned 403 Forbidden.",
+      "governing_condition_default_exception": "The default restore mode errors and rolls back the package operation if an object already exists; keep-existing skips existing objects and continues; force-replace overwrites existing objects and warns that content absent from the AIP may be permanently lost.",
+      "applicability": "A versioned comparator for package-level collision, rollback, skip, and replacement behavior if DSpace AIP restore was actually used.",
+      "limitation": "Does not establish how unrelated filesystem migrations behave, does not restore an unavailable source baseline, and does not show this archive used DSpace. Search-result access is less directly inspectable than an opened page."
+    },
+    {
+      "id": "S18",
+      "title": "DSpace REST Contract — Versioning endpoints",
+      "publisher": "DSpace project (official RestContract repository)",
+      "url": "https://github.com/DSpace/RestContract/blob/main/versions.md",
+      "released_version": "Repository main branch; contract states it documents DSpace REST API beginning with DSpace 7.0; commit/release tag not pinned; observed 2026-10-10",
+      "locator": "POST /api/versioning/versions; older version in a history may be used to facilitate restore; version response/history; permissions and in-progress submission error.",
+      "access_utc": "2026-10-10T06:59:39Z",
+      "observed_operation": "Opened the official DSpace/RestContract main-branch file and inspected the version creation and restore language.",
+      "governing_condition_default_exception": "An authorized item administrator (or configured submitter) may create a new version based on an item in the existing history, including an older version, to facilitate restore; this creates a new version in the history rather than deleting the prior sequence.",
+      "applicability": "Shows how repository-level version history can make a prior item state available for a new version, subject to the deployed release and permissions.",
+      "limitation": "Does not by itself guarantee retention of every original audio byte, prove identity or completeness, or establish that the archive used DSpace."
+    },
+    {
+      "id": "S19",
+      "title": "DSpace REST Contract — WorkflowItem endpoints",
+      "publisher": "DSpace project (official RestContract repository)",
+      "url": "https://github.com/DSpace/RestContract/blob/main/workflowitems.md",
+      "released_version": "Repository main branch; contract states it documents DSpace REST API beginning with DSpace 7.0; commit/release tag not pinned; observed 2026-10-10",
+      "locator": "Main workflow-item endpoint; item details including current step; findBySubmitter and item lookup; DELETE reset-to-workspace and optional expunge behavior.",
+      "access_utc": "2026-10-10T06:59:39Z",
+      "observed_operation": "Opened the official DSpace/RestContract main-branch file and inspected workflow-item list/details, search methods, and DELETE behavior.",
+      "governing_condition_default_exception": "The endpoint exposes active workflow items and the current workflow step; lookup is permissioned. DELETE resets a workflow item to the workspace by default, with ?expunge=true deleting the workflow item instead.",
+      "applicability": "A comparator for enumerating unresolved in-progress repository submissions when that system is actually deployed.",
+      "limitation": "It is not a dedicated media migration exception log or a record of past rejected/cleared work; local configuration and logs still matter, and it does not identify this archive's software."
+    }
+  ],
+  "native_goal_lifecycle": {
+    "immutable_objective": "ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "activation_response_json_exact": "{\"goal\": {\"threadId\": \"01a12497-eceb-7882-8a18-33b420258566\", \"objective\": \"ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\", \"status\": \"active\", \"tokensUsed\": 0, \"timeUsedSeconds\": 0, \"createdAt\": 1791615313, \"updatedAt\": 1791615313}, \"remainingTokens\": null, \"completionBudgetReport\": null}",
+    "binding_guard": {
+      "command": "python3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R1-03/control/stages/reviser --json '{\"goal\":{\"threadId\":\"01a12497-eceb-7882-8a18-33b420258566\",\"objective\":\"ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\",\"status\":\"active\",\"tokensUsed\":0,\"timeUsedSeconds\":0,\"createdAt\":1791615313,\"updatedAt\":1791615313},\"remainingTokens\":null,\"completionBudgetReport\":null}'",
+      "exit_code": 0,
+      "stdout_exact": "{\"ok\": true, \"provenance_independently_proved\": false}",
+      "argv_exact": [
+        "python3",
+        "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+        "--stage-dir",
+        "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser",
+        "--json",
+        "{\"goal\": {\"threadId\": \"01a12497-eceb-7882-8a18-33b420258566\", \"objective\": \"ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\", \"status\": \"active\", \"tokensUsed\": 0, \"timeUsedSeconds\": 0, \"createdAt\": 1791615313, \"updatedAt\": 1791615313}, \"remainingTokens\": null, \"completionBudgetReport\": null}"
+      ]
+    },
+    "completion_response_json_exact": "{\"goal\": {\"threadId\": \"01a12497-eceb-7882-8a18-33b420258566\", \"objective\": \"ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\", \"status\": \"complete\", \"tokensUsed\": 233135, \"timeUsedSeconds\": 723, \"createdAt\": 1791615313, \"updatedAt\": 1791616036}, \"remainingTokens\": null, \"completionBudgetReport\": \"Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language.\"}",
+    "goal_provenance_status": "UNKNOWN as an independently proved fact; the native activation response reports threadId and timestamps, while the binding guard explicitly reports provenance_independently_proved=false.",
+    "completion_response": {
+      "goal": {
+        "threadId": "01a12497-eceb-7882-8a18-33b420258566",
+        "objective": "ER12 reviser stage, run D-R1-03-control: execute ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 233135,
+        "timeUsedSeconds": 723,
+        "createdAt": 1791615313,
+        "updatedAt": 1791616036
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+    }
+  },
+  "validation_status": {
+    "case_facing_checks_run": [],
+    "case_facing_checks_proposed": [
+      "authorized inventory and source/destination manifest comparison",
+      "audio characterization and any permissioned fingerprint candidate ranking",
+      "completeness assessment against a custodially supplied expected session/reel/segment inventory",
+      "permissioned transcript anchor review and independent relationship sampling"
+    ],
+    "archive_material_accessed": false,
+    "personal_records_accessed": false,
+    "raw_predecessor_command_receipts_available": false,
+    "unverified_timing_requirement": "Requested 60-minute research session is not independently established."
+  },
+  "outputs": [
+    "final.md",
+    "source-map.json",
+    "sources/index.md"
+  ],
+  "assignment": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md",
+  "input_map": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/input-map.json"
+}

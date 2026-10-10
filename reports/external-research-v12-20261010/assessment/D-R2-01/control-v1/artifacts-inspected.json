@@ -1,0 +1,542 @@
+{
+  "captured_at_utc": "2026-10-10T07:25:50.250943+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/terminal-science-freeze-root.json",
+      "bytes": 7856,
+      "sha256": "3964f946190fbc5185e4b3874239bb7375a1fb9d7770acfd2c0506ae42231f11",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md",
+      "bytes": 9021,
+      "sha256": "3410c1790668e9847bbae7eb979e486c3409554b9525a343b00f7f6b9ee8b85d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "d9851ac724a0e9d0862396cd27aa0a70e9794a8cef4b6efebf922e0872b6800e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "4919023196d5ef47a5bf897a7bff0bdcc8f744e8cb08e30998718076a9bec850",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 13214,
+      "sha256": "ce1a5ee8b7ffc398427d972c2b6a3610ddbcd4bb0e35db6ec4b7e3cd4b6ee83e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/sources/index.md",
+      "bytes": 1909,
+      "sha256": "c54c84163c1bae1064e8067f629082c4fed472924fa082e0994f515aedbd1354",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/native-goal-create.json",
+      "bytes": 479,
+      "sha256": "135f967af4487c9a1cf5befd16328dc712b2616485cf0ec16338b64b55388d94",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/native-goal-complete.json",
+      "bytes": 808,
+      "sha256": "ba7f63ec7e5a660fc84f1ae84d4afe80a86705812d7e99d88eaf02e58929dbd8",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "cbabe1cb8ed4f87c2ee2ba966eead78b0f877199b79823565f4c590091717f9d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/assignment.md",
+      "bytes": 8569,
+      "sha256": "00310863969e4fda6e6f12449545e54236bd44f91fe41fdc2853cc933d98cc3d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "c7fe140cd8f637ffe0cf7ff5df79c08856ef8cd71de48c9f245ef1d3edbd9f5e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "6acf0c5b8d23bc4870350326c7a88a256c330c20b457586fe5549f7f38590cc3",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "bytes": 21290,
+      "sha256": "2f5e88735fcdfc3841fcab089234e8a2e8f8be43b9e8463ea5f3aca1c1f76932",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/sources/index.md",
+      "bytes": 4078,
+      "sha256": "643c580298ac23f12ad6bdb6485e8ce47efb1aac7d1aca649fb025d324d69998",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/native-goal-create.json",
+      "bytes": 467,
+      "sha256": "64d387b5180ff9b8df4851f27cbd9c40c2ddc243ae409ae7f4cfef76fd538573",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/native-goal-complete.json",
+      "bytes": 796,
+      "sha256": "522a4d3aaed292c0e15385b700bd3a7142ddc1ccc21fa8efea720b242cad2835",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "cc2645e08f8e2c1a11dc2749dba3136b7d1fa62561ed50461f7a25cb6d914fe4",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/assignment.md",
+      "bytes": 8556,
+      "sha256": "c23943ec8d5ccc342ee4f5f2064af188e54d6ef5171c9af5d92067c0b0c698ef",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "002c70aee2b503045b67f6ea2b6c3734bbf3e5fb806aee25fe11376f99607831",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/freeze.json",
+      "bytes": 4092,
+      "sha256": "925d8706336a31dd247acb03aaae2ad1f9b0fd9402f7f0a1cdce672684b51721",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 28282,
+      "sha256": "063169e16bd4bc6686f27219f60d201cb5e39dfb73bc7bcd34e21a251c4ce594",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/sources/index.md",
+      "bytes": 2498,
+      "sha256": "527c53b1cab41edddb3930cb94cd2e85b6e4a9274795b66c14eb4dcf4682727d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/native-goal-create.json",
+      "bytes": 469,
+      "sha256": "65da0434b6886ab65e8e661e289aaacce9b02392c1b5a20d5c79bba3da2423a2",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/native-goal-complete.json",
+      "bytes": 798,
+      "sha256": "0730074165e2c1c246a706e8fe727129d2e7df799d3551dceff078dbee7b4ab4",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "cde0e3273013cd2c891c6d278579b89ed1e916a0b071bc46a1ac2a5a44f4d8e9",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 12123,
+      "sha256": "c66b1265f36573e4bdae9493e19934341233036b5622cd81984f4fd59503917c",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "bytes": 25639,
+      "sha256": "686101a8acdaf5c170f02c12dd17c205eaee06e4ec6ef870ac28a0d50a28bc70",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "64925f8915a7bcdf2314b4c4dda4b691c385b42ac301a4f07c88cddfa5836370",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "bytes": 9658,
+      "sha256": "aa5fd2fad5094bd7035f5216f2f6256fce7b56c12f5df98a774af761bd705675",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "bytes": 22758,
+      "sha256": "ab727625d9ade02032e7e8ce738c3e50387373d801da281b9192f365669eea80",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/request.json",
+      "bytes": 6329,
+      "sha256": "da30dbe09daa2a03595b9523a570b6dc08b1a97924f84760d9fb26dede4afb69",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/dispatch.json",
+      "bytes": 9659,
+      "sha256": "6fc0aa7d7c11dcfd0e6d2ff2742715690f19c9db4974305810ccb0b16fe310eb",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "f06f8eeaa3399c0fae87eacfee257bdd2c413a098a0da76b4bd8bd7c18bfd8ff",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/exact-activation-capture-v2-1.json",
+      "bytes": 7741,
+      "sha256": "bfe696cd8db3c84f05d84084f22ad3b81e890e8f133c7f0cba022b1ae5f4d674",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "8d75a9d2ccc6d7febe1f2c9e4c981641544ca6a0f2fbad4a661399b2f7e29710",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/request.json",
+      "bytes": 6263,
+      "sha256": "cb8b7d69a9c4cefd98e51139e6c3380aec4007c776448550d3f745d99a948459",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/dispatch.json",
+      "bytes": 9521,
+      "sha256": "e5a7a4895dfc7ccda3748baa811a530717fafa64ed19ec1381206a29f1099c9e",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "af328e263703c82090a5355708f8dce40bff9946d76ef67264636686780cca17",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/exact-activation-capture-v2-1.json",
+      "bytes": 7669,
+      "sha256": "99c10577f99096ade6dd5cf7136a3d83bc1974b8a796071975d33f29a2d00120",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "1d95498416cad00438303783d9db6427357a32e7510a6013cd44280512f9634c",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/request.json",
+      "bytes": 6274,
+      "sha256": "cf07f6f723685a69a702ec1d4edceaf9bd4476deb0b1946bd3660594be3cf956",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/dispatch.json",
+      "bytes": 9544,
+      "sha256": "e2e80ba80e5f30c778542fea7f9ee97e1e216f62ff032885cef7e4fba08933b9",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "a37ae52507fc23ada95c0f8bc572cd70d08530b03abee172594fd8078d291be7",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/exact-activation-capture-v2-1.json",
+      "bytes": 7681,
+      "sha256": "630d5e1490b2ee6ca6ffc55d21090a06e638521ce8eabd26285f3a2e50542a2c",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "0431fdc8be7763a687f19b4d767422268593c32fefe2d95ff79ed4cb057cec1d",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    }
+  ],
+  "freeze_identity_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    }
+  ]
+}

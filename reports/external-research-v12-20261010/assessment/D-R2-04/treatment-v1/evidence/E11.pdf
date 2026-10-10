@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.rmit.edu.au/content/dam/rmit/au/en/about/schools-colleges/guss/social-equity-research-centre/projects/serc-testing-useability-applicability-aus-multilingual-public-service-communications.pdf"
+  ],
+  "source_urls": [
+    "https://www.rmit.edu.au/content/dam/rmit/au/en/about/schools-colleges/guss/social-equity-research-centre/projects/serc-testing-useability-applicability-aus-multilingual-public-service-communications.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R2-04/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E11",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "cbb7af3504ffd780908b94d96cb078dd885773d1f59e14df884f01170446be49",
+  "rawSHA256": "cbb7af3504ffd780908b94d96cb078dd885773d1f59e14df884f01170446be49",
+  "original_bytes": 1170582,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R2-04/treatment-v1/evidence/E11.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

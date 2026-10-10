@@ -1,0 +1,79 @@
+--- v4/prepare.py
++++ v5/prepare.py
+@@ -382,7 +382,8 @@
+         require(not p.is_symlink(), 'prior symlink rejected')
+         rel = relpath(str(p.relative_to(prior))); b = p.read_bytes(); old[rel]=b
+         if capsule(b): protected[rel]=sha(b)
+-    require(len(protected)==1980, 'expected all 1980 repaired typed capsules; observed '+str(len(protected)))
++    baseline=load(HERE/'CURRENT_CAPSULE_BASELINE.json')
++    require(protected==baseline['all_capsules'] and len(baseline['json_capsules'])==1980 and len(baseline['additional_fenced_capsules'])==7,'exact committed 1980 JSON plus seven fenced capsule baseline required')
+     for p,h in f['protected_capsules'].items(): require(protected.get(p)==h, 'protected freeze capsule differs')
+     require(f['protected_capsules']==protected, 'exact protected1980 whitelist required')
+     # Binding lookup uses original paths but frozen bytes only. Classifier itself performs no IO.
+@@ -411,19 +412,19 @@
+         if native_envelope(pub,obj):
+             result=encode(normalize({'schema':'er12.public-native-lifecycle.v1',
+                 'actual_lifecycle_metadata':extract_meta(obj),'original_capture_sha256':sha(b),
+-                'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub,
++                'private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/prior-public/'+pub,
+                 'omitted_activity_message_bodies':True,'omitted_source_coverage':U},clean))
+             save(public,pub,result)
+             projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                 'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited native envelope metadata projection',
+-                'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub})
++                'private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/prior-public/'+pub})
+         else:
+             projected=nested_native_projection(obj)
+             if projected!=obj:
+                 result=encode(normalize(projected,clean));save(public,pub,result)
+                 projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),
+                     'original_bytes':len(b),'public_bytes':len(result),'operation':'inherited embedded native envelope metadata projection',
+-                    'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/prior-public/'+pub})
++                    'private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/prior-public/'+pub})
+ 
+     # Authored portable implementations override capture-directory heuristics, as finalize does.
+     for v,n,checks in [('materialize-v2',21,236),('materialize-v3',33,194)]:
+@@ -456,7 +457,7 @@
+             d=json.loads(b); observations=[]
+             for r in d.get('reads',[]) if isinstance(d,dict) else []:
+                 observations.append({'actual_lifecycle_metadata':ns['extract_meta'](r.get('raw')),'observed_at':r.get('at_utc',r.get('at',U))})
+-            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
++            projected={'schema':'er12.public-native-lifecycle.v1','observations':observations,'actual_lifecycle_metadata':ns['extract_meta'](d), 'original_capture_sha256':sha(b),'private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/originals/'+pub,'omitted_activity_message_bodies':True, 'omitted_source_coverage':U}
+             result=encode(normalize(projected,clean)); reason='actual native lifecycle projection; full messages private'
+         elif reason:
+             summaries=[];urls=[];selectors=[]
+@@ -465,14 +466,14 @@
+                 summaries.append({'authored_source_map':mp,'source_id':row.get('id',row.get('source_id',U)),'existing_authored_summary_fields':rr})
+                 urls += [v for v in row.values() if isinstance(v,str) and v.startswith(('https://','http://'))]
+                 selectors += [{k:v} for k,v in row.items() if re.search('locator|selector|line|anchor',k)]
+-            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
++            projected={'schema':CAP,'record_type':'source evidence capsule; fetched body private','classification_basis':reason,'primaryURL':sorted(set(urls)) or U,'source_urls':sorted(set(urls)),'version':[r['existing_authored_summary_fields'] for r in summaries if any('version' in k.lower() for k in r['existing_authored_summary_fields'])] or U,'selector':selectors or U,'conditions':[r['existing_authored_summary_fields'] for r in summaries if any(re.search('condition|applicability|subject_operation',k,re.I) for k in r['existing_authored_summary_fields'])] or U,'versions_conditions_and_authored_summaries':summaries,'original_capture_selectors':selectors,'raw_sha256':sha(b),'rawSHA256':sha(b),'original_bytes':len(b),'private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/originals/'+pub,'quoted_body_words':0,'evidence_coverage':'BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN' if summaries else U,'byte_exact_replay':False,'omission':'Full source/native capture private; zero new quotations, no invented summary or semantic repair.'}
+             result=encode(normalize(projected,clean));omissions.append({'public_path':pub,**normalize(projected,clean)})
+         elif pub in recipe_pins: result=b
+         else:
+             try: obj=json.loads(b);result=encode(normalize(nested_native_projection(obj),clean))
+             except (ValueError,UnicodeDecodeError): result=clean(b.decode()).encode()
+         save(public,pub,result)
+-        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v4/'+args.output_name+'/private/originals/'+pub})
++        projections.append({'public_path':pub,'original_sha256':sha(b),'public_sha256':sha(result),'original_bytes':len(b),'public_bytes':len(result),'operation':reason or 'authored content retained; identity/path normalization only','private_archive_lineage':'publication-final-prep-v5/'+args.output_name+'/private/originals/'+pub})
+     def jw(p,d): save(public,p,encode(normalize(d,clean)))
+     # Preserve historical editions before replacing current projections (already archived above).
+     current={'RESULTS.json','mechanics/SCIENTIFIC_PROGRESS.json','provenance/selected-checkpoint.json','README.md'}
+@@ -499,7 +500,7 @@
+         p=relpath(r['public_path']); require(p in selected or p in old,'selected dependency absent: '+p)
+         dependencies.append({**r,'public_sha256':sha((public/p).read_bytes()),'available':True})
+     jw('provenance/SELECTED_INPUT_DEPENDENCIES.json',{'dependencies':dependencies,'original_hash_namespace':'frozen selected original SHA','public_hash_namespace':'sanitized projection SHA','complete_root_inventory':True})
+-    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v4/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
++    jw('provenance/FINAL_PRIVACY_AND_LINEAGE.json',{'files':projections,'protected1980':baseline['json_capsules'],'additional7_fenced':baseline['additional_fenced_capsules'],'protected_all_current':protected,'source_body_omissions':omissions,'prior_public_archive':'publication-final-prep-v5/'+args.output_name+'/private/prior-public','native_goal_counters':'structured frozen accounting core only; raw usage, UNKNOWN billing; never campaign aggregate','new_quotes':0,'full_private_originals':True,'source_semantic_repair':False})
+     jw('provenance/FINAL_NAVIGATION.json',{'counts':counts,'results':'RESULTS.json','progress':'mechanics/SCIENTIFIC_PROGRESS.json','methodmap':'provenance/FINAL_METHOD_CASE_VERSION_MAP.json','whitelist':'provenance/FINAL_WHITELIST.json','dependencies':'provenance/SELECTED_INPUT_DEPENDENCIES.json','lineage':'provenance/FINAL_PRIVACY_AND_LINEAGE.json','analysis':next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve()),'historical_editions':'historical/pre-final/'})
+     analysis_rel=next(p for p,r in selected.items() if (Path(r['source_path']).resolve() if 'source_path' in r else (frozen/r['frozen_path']).resolve())==args.analysis.resolve())
+     save(public,'README.md',public_readme(counts,analysis_rel).encode())
+@@ -535,7 +536,7 @@
+                 for r in load(public/'recipes'/v/name)['files']:
+                     q=public/'recipes'/v/relpath(r['relative_path']);require(sha(q.read_bytes())==r['sha256'] and q.stat().st_size==r['bytes'],'final recipe closure changed')
+         return dict(stats)
+-    checks=validate();jw('validation/FINAL_PUBLICATION_CHECKS.json',{'status':'PASS','checks':checks,'protected_capsules':1980,'original_malformed_exceptions':exceptions,'v2_checks_retained':236,'v3_checks_retained':194,'retained_checks_rerun':False,'source_grades_original':79,'selected_original_hashes_before_after':True,'no_live_host_or_source_retrieval':True,'original_hash_reads':'actual frozen inputs','production_qualified':False})
++    checks=validate();jw('validation/FINAL_PUBLICATION_CHECKS.json',{'status':'PASS','checks':checks,'protected_capsules':len(protected),'protected_json_capsules':1980,'protected_additional_fenced_capsules':7,'original_malformed_exceptions':exceptions,'v2_checks_retained':236,'v3_checks_retained':194,'retained_checks_rerun':False,'source_grades_original':79,'selected_original_hashes_before_after':True,'no_live_host_or_source_retrieval':True,'original_hash_reads':'actual frozen inputs','production_qualified':False})
+     jw('PRIVACY_SCAN.json',{'status':'PASS','scope':'all final public bytes including private identity prefix','checks':'validation/FINAL_PUBLICATION_CHECKS.json'})
+     # Exact changed/new paths for this edition; no inherited staging counts promoted.
+     reserved={'STAGING_FILES.txt','SHA256SUMS'}

@@ -1,9 +1,20 @@
-# S13 — Cura issue #17110: Core object.name import
-
-- **Exact URL:** https://github.com/Ultimaker/Cura/issues/17110
-- **Released version/commit:** Opened 2023-10-26; issue does not state a tested Cura release.
-- **Locator:** Issue description, actual/expected behavior and status (lines 129-180).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open of the public issue; example attachment not downloaded or tested.
-- **Governing condition/default/exception:** Reporter says Cura ignored incoming Core object.name and wrote filename-derived object labels; issue page marks Under Investigation.
-- **Applicability:** User report without an exact tested build; selected Cura release behavior remains unverified.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "b69154f69984d83567b6cad0965204f913b43b273f2e5226772962715a1dc4b5",
+  "rawSHA256": "b69154f69984d83567b6cad0965204f913b43b273f2e5226772962715a1dc4b5",
+  "original_bytes": 738,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S13-cura-object-name-issue.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

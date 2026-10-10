@@ -1,153 +1,1565 @@
 {
   "schema": "er12.public-native-lifecycle.v1",
-  "target": {
-    "slot": "B-APPL-G-02",
-    "arm": "treatment",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-    "status": "completed",
-    "hasPendingChildRuns": false,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "muse-spark-1.3-contributor",
-    "latestTerminalStatus": "completed",
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-    "whitelist_index": 97
-  },
-  "original_capture_sha256": "4b7c18e7a52e9c3c244993a57f323b1a27d47a781925cd6e57d0c76329ae76e6",
-  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-observation-cohort3/host/context-014.json",
   "observations": [
     {
-      "phase": "messages",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-        "view": "messages",
-        "limit": 1,
-        "maxCharsPerItem": 200,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:33:26.682Z",
-      "finished_at_utc": "2026-10-10T05:33:28.968Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:09.344Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "muse-spark-1.3-contributor",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T05:09:09.343Z",
+              "updatedAt": "2026-10-10T05:12:49.663Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "requestedAt": "2026-10-10T05:09:09.344Z",
+                "startedAt": "2026-10-10T05:09:10.382Z",
+                "completedAt": "2026-10-10T05:12:42.334Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:09.344Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "head",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-        "view": "activity",
-        "limit": 12,
-        "maxCharsPerItem": 350,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:33:28.040Z",
-      "finished_at_utc": "2026-10-10T05:33:28.968Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:09.344Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:19.803Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:20.374Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:23.829Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:27.189Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:29.545Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:31.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:33.872Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:36.162Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:38.688Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:42.522Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:43.911Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "muse-spark-1.3-contributor",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T05:09:09.343Z",
+              "updatedAt": "2026-10-10T05:12:49.663Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "requestedAt": "2026-10-10T05:09:09.344Z",
+                "startedAt": "2026-10-10T05:09:10.382Z",
+                "completedAt": "2026-10-10T05:12:42.334Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:09.344Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:19.803Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:20.374Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:23.829Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:27.189Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:29.545Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:31.988Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:33.872Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:36.162Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:38.688Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:42.522Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:43.911Z"
+              }
+            ],
+            "nextPosition": 11,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "tail",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-        "view": "activity",
-        "limit": 45,
-        "maxCharsPerItem": 350,
-        "runLimit": 1,
-        "afterPosition": 4
-      },
-      "started_at_utc": "2026-10-10T05:33:28.446Z",
-      "finished_at_utc": "2026-10-10T05:33:28.968Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "muse-spark-1.3-contributor",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T05:09:09.343Z",
-            "updatedAt": "2026-10-10T05:12:49.663Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:29.545Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:31.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:33.872Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:36.162Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:38.688Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:42.522Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:43.911Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.822Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.822Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.890Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.857Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:52.151Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:09.788Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:10.812Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:15.085Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:20.786Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:22.405Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:22.505Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "failed",
+                  "updatedAt": "2026-10-10T05:10:26.351Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:29.136Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:35.001Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:36.581Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:39.283Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:42.115Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:47.227Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:09.153Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:11.966Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:24.518Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:29.588Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:31.539Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:36.571Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:43.144Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:48.418Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:48.429Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:53.005Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:06.609Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:10.123Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:13.972Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:15.798Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:20.336Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:24.703Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:29.808Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:33.401Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "nextPosition": 48,
+              "hasMore": false
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "muse-spark-1.3-contributor",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T05:09:09.343Z",
+              "updatedAt": "2026-10-10T05:12:49.663Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "requestedAt": "2026-10-10T05:09:09.344Z",
+                "startedAt": "2026-10-10T05:09:10.382Z",
+                "completedAt": "2026-10-10T05:12:42.334Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:29.545Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:31.988Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:33.872Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:36.162Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:38.688Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:42.522Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:43.911Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:47.822Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:47.822Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:47.890Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:47.857Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:09:52.151Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:09.788Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:10.812Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:15.085Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:20.786Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:22.405Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:22.505Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "failed",
+                "updatedAt": "2026-10-10T05:10:26.351Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:29.136Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:35.001Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:36.581Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:39.283Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:42.115Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:10:47.227Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:09.153Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:11.966Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:24.518Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:29.588Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:31.539Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:36.571Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:43.144Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:48.418Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:48.429Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:11:53.005Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:06.609Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:10.123Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:13.972Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:15.798Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:20.336Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:24.703Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:29.808Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:33.401Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T05:12:42.334Z"
+              }
+            ],
+            "nextPosition": 48,
+            "hasMore": false
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     }
   ],
-  "actual_lifecycle_metadata": [],
-  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
-  "source_body_coverage": "UNKNOWN"
+  "actual_lifecycle_metadata": [
+    {
+      "target": {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor",
+        "latestTerminalStatus": "completed"
+      },
+      "reads": [
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T05:09:09.343Z",
+                  "updatedAt": "2026-10-10T05:12:49.663Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "muse-spark-1.3-contributor",
+                    "requestedAt": "2026-10-10T05:09:09.344Z",
+                    "startedAt": "2026-10-10T05:09:10.382Z",
+                    "completedAt": "2026-10-10T05:12:42.334Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:09.344Z"
+                  }
+                ],
+                "nextPosition": 0,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:09.344Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T05:09:09.343Z",
+                  "updatedAt": "2026-10-10T05:12:49.663Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "muse-spark-1.3-contributor",
+                    "requestedAt": "2026-10-10T05:09:09.344Z",
+                    "startedAt": "2026-10-10T05:09:10.382Z",
+                    "completedAt": "2026-10-10T05:12:42.334Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:09.344Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:19.803Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:20.374Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:23.829Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:27.189Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:29.545Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:31.988Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:33.872Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:36.162Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:38.688Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:42.522Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:43.911Z"
+                  }
+                ],
+                "nextPosition": 11,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:09.344Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:19.803Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:20.374Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:23.829Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:27.189Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:29.545Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:31.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:33.872Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:36.162Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:38.688Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:42.522Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:43.911Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T05:09:09.343Z",
+                  "updatedAt": "2026-10-10T05:12:49.663Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "muse-spark-1.3-contributor",
+                    "requestedAt": "2026-10-10T05:09:09.344Z",
+                    "startedAt": "2026-10-10T05:09:10.382Z",
+                    "completedAt": "2026-10-10T05:12:42.334Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:29.545Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:31.988Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:33.872Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:36.162Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:38.688Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:42.522Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:43.911Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:47.822Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:47.822Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:47.890Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:47.857Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:09:52.151Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:09.788Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:10.812Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:15.085Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:20.786Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:22.405Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:22.505Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "failed",
+                    "updatedAt": "2026-10-10T05:10:26.351Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:29.136Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:35.001Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:36.581Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:39.283Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:42.115Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:10:47.227Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:09.153Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:11.966Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:24.518Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:29.588Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:31.539Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:36.571Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:43.144Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:48.418Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:48.429Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:11:53.005Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:06.609Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:10.123Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:13.972Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:15.798Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:20.336Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:24.703Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:29.808Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:33.401Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T05:12:42.334Z"
+                  }
+                ],
+                "nextPosition": 48,
+                "hasMore": false
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "muse-spark-1.3-contributor",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T05:09:09.343Z",
+                "updatedAt": "2026-10-10T05:12:49.663Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "muse-spark-1.3-contributor",
+                  "requestedAt": "2026-10-10T05:09:09.344Z",
+                  "startedAt": "2026-10-10T05:09:10.382Z",
+                  "completedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:29.545Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:31.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:33.872Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:36.162Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:38.688Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:42.522Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:43.911Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.822Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.822Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.890Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:47.857Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:09:52.151Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:09.788Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:10.812Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:15.085Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:20.786Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:22.405Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:22.505Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "failed",
+                  "updatedAt": "2026-10-10T05:10:26.351Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:29.136Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:35.001Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:36.581Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:39.283Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:42.115Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:10:47.227Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:09.153Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:11.966Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:24.518Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:29.588Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:31.539Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:36.571Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:43.144Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:48.418Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:48.429Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:11:53.005Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:06.609Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:10.123Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:13.972Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:15.798Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:20.336Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:24.703Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:29.808Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:33.401Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T05:12:42.334Z"
+                }
+              ],
+              "nextPosition": 48,
+              "hasMore": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "original_capture_sha256": "4b7c18e7a52e9c3c244993a57f323b1a27d47a781925cd6e57d0c76329ae76e6",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-observation-cohort3/host/context-014.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

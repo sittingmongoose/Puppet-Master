@@ -1,0 +1,32 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+    "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/chapter04-tech-supplonlinepdfv65270924"
+  ],
+  "source_urls": [
+    "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+    "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/chapter04-tech-supplonlinepdfv65270924"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R2-02/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E003",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "da93cb6506e0253016be8153140b2d50c0d265a658692d4e6d88a962684c75d6",
+  "rawSHA256": "da93cb6506e0253016be8153140b2d50c0d265a658692d4e6d88a962684c75d6",
+  "original_bytes": 1946872,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/C-R2-02/treatment-v1/evidence/E003.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

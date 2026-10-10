@@ -1,1 +1,30 @@
-{"ref":"refs/tags/v2.10.0","node_id":"MDM6UmVmMjA2NzI1MzpyZWZzL3RhZ3MvdjIuMTAuMA==","url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/refs/tags/v2.10.0","object":{"sha":"35d23ad9b23321685bdc49351c744004044611be","type":"tag","url":"https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/tags/35d23ad9b23321685bdc49351c744004044611be"}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.10.0"
+  ],
+  "source_urls": [
+    "https://api.github.com/repos/opentripplanner/OpenTripPlanner/git/ref/tags/v2.10.0"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E31",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c",
+  "rawSHA256": "5ad175ea6659af2c86569d29544cdedf2a9ff419bbaef999dcf60c6e68109f0c",
+  "original_bytes": 367,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A6-01/treatment-v1/evidence/E31.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

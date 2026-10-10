@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-CD-scientific-synthesis-prep-v1",
+  "title": "ER12 C/D synthesis preparation",
+  "role": "worker",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "default"
+    }
+  },
+  "task": "Prepare ONE bounded scientific synthesis of already quiet ER12 C/D original judgments. One actual native Goal <4000chars referencing this assignment; finish within10minutes including saving, complete after save. Write only ER12_RUNTIME/analysis/CD-synthesis-prep-v1/. No nested delegation, sources/live host calls, original edits/regrading, candidate feedback, Git/publication/accounts/cleanup. Read ER12_RUNTIME/analysis/AB-synthesis-v1/analysis.md for context; current C/D recipe locks under methods/{C-R1,C-R2,D-R1,D-R2}/RECIPE_LOCK.json; exact missing record mechanics/D-R1-03-treatment-MISSING_FINAL.json. Read only these quiet original assessment.md files: ER12_RUNTIME/assessment/C-R1-01/control-v1/assessment.md, ER12_RUNTIME/assessment/C-R1-02/control-v1/assessment.md, ER12_RUNTIME/assessment/C-R1-01/treatment-v1/assessment.md, ER12_RUNTIME/assessment/C-R1-02/treatment-v1/assessment.md, ER12_RUNTIME/assessment/C-R2-01/control-v1/assessment.md, ER12_RUNTIME/assessment/C-R2-01/treatment-v1/assessment.md, ER12_RUNTIME/assessment/C-R2-02/control-v1/assessment.md, ER12_RUNTIME/assessment/C-R2-02/treatment-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-04/treatment-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-02/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-02/treatment-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-04/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-01/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-03/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.md, ER12_RUNTIME/assessment/D-R2-01/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R2-03/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R2-02/control-v1/assessment.md, ER12_RUNTIME/assessment/D-R2-04/treatment-v1/assessment.md. Remaining D2 judgments are pending; do not inspect active assessment paths or infer their labels. Produce full authored analysis.md and compact index.json: useful unfamiliar physical/scientific/social approaches with exact governing subject/operation/domain/conditions and limitations; distinct competing/analogous alternatives; implementation/history breadth; preserved plan obligations; proposed versus actually executed validation; original criticism/severity errors and corrected lineage defects; literal full60research versus30/12/18 profile conflict; native authentication/effective/billing UNKNOWN. Preserve original source labels and distinguish source PASS_WITH_LIMITATIONS from full request/protocol/time qualification. No comparative numerical win unless supported actual finite C1/C2/D1 host summaries, which you may read fully; D2 timing pending. All80 admitted;79delivered(55FULL24ROLE),one D1 treatment preinput guard missing. Science/cost denominators must never use closed stage counts or failed delivery as savings. Draft only, explicitly exact reviewed-set/pending scopes; root later integrates final freeze. Link original evidence and artifacts rather than copy raw native/usage arrays. Register unique pm-mail identity/check own inbox, root reserved path."
+}

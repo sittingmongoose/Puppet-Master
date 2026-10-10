@@ -6,7 +6,18 @@
   "brief_path": "ER12_RUNTIME/cases-rest/A8-01/brief.md",
   "plan_path": "ER12_RUNTIME/cases-rest/A8-01/plan.md",
   "whole_deadline_utc": "ROOT_SET_ONCE_TO_ABSOLUTE_UTC_WITHIN_60_MINUTES_BEFORE_PREPARATION",
-  "stage_budgets_s": {"investigator": 1800, "critic": 720, "reviser": 1080},
-  "provider": {"providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE", "model": "gpt-6-luna", "options": {"reasoningEffort": "max", "serviceTier": "priority"}},
+  "stage_budgets_s": {
+    "investigator": 1800,
+    "critic": 720,
+    "reviser": 1080
+  },
+  "provider": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
   "runtime_mode": "full-access"
 }

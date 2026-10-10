@@ -1,0 +1,40 @@
+{
+  "recorded_utc": "2026-10-10T07:44:38.338260+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "semantic_judgment_files_unchanged_after_native_completion": true,
+  "semantic_files": [
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.md",
+      "bytes": 105874,
+      "sha256": "d67fa962afd56b4b7d5db9f000c845aa82b426c56746fd835a871b29c2a68f46"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.json",
+      "bytes": 203286,
+      "sha256": "0d8545917a3920f402b64648cc2de7ddb3045aa5a1dd360e21d5914cb67f586d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/source-map.json",
+      "bytes": 34743,
+      "sha256": "a873bde7124e7b9d7a25816fb83f671260b4e34280cc7175800e1ec6df9b7728"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/clause-inventory.json",
+      "bytes": 56965,
+      "sha256": "27cecc54d7a4cda3ef4039452f3e9312a12d185afe261960459137001ba5e1e5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/original-inspected-hashes.json",
+      "bytes": 30141,
+      "sha256": "c37fddbc6a3f71c9434e3fe285bf51bdf3794df2babaa99fb93a2bb7b7455413"
+    }
+  ],
+  "postcompletion_metadata_only": [
+    "evidence/reviewer-native-goal-completion.json",
+    "review-completion-record.json",
+    "final-save-manifest.json"
+  ],
+  "evidence_index_postcompletion_change": "Appended exact reviewer Goal completion receipt and save-order links; the precompletion index hash in review-save-verification.json remains its historical snapshot.",
+  "native_completion_record": "review-completion-record.json",
+  "original_freeze_preserved": true
+}

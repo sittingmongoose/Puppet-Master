@@ -1,9 +1,20 @@
-# S02 — Autodesk Fusion Save As Mesh
-
-- **Source:** [Save bodies in a component as 3MF, OBJ, or STL files](https://help.autodesk.com/view/fusion360/ENU/?contextId=MESH-SAVE-AS-MESH)
-- **Version:** Live documentation; no application build stated.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** Steps 3–5.
-- **Observed operation:** Read only; no Fusion export performed.
-- **Relevant rules:** Formats include 3MF and STL. Unit choices include cm/mm/m/in/ft. Structure can be all bodies in one file or one body per file.
-- **Applicability:** Fusion UI behavior; does not establish slicer importer behavior or complete preservation of assembly semantics.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+  "rawSHA256": "2f24c205f7be2de6d5d96cdd0ecdd33b61e444f9f05454f873f4c1436fa6f5a5",
+  "original_bytes": 679,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S02-fusion-mesh.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

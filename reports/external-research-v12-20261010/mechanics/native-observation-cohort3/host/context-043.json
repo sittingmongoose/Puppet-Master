@@ -1,153 +1,1565 @@
 {
   "schema": "er12.public-native-lifecycle.v1",
-  "target": {
-    "slot": "A2-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-    "status": "completed",
-    "hasPendingChildRuns": false,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "latestTerminalStatus": "completed",
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-    "whitelist_index": 68
-  },
-  "original_capture_sha256": "9b3412f25d10afa394866c98425ca65005ffec26a336a3195355db4be47a33fc",
-  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-observation-cohort3/host/context-043.json",
   "observations": [
     {
-      "phase": "messages",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-        "view": "messages",
-        "limit": 1,
-        "maxCharsPerItem": 200,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:34:01.067Z",
-      "finished_at_utc": "2026-10-10T05:34:03.941Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:31.384Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:40:31.382Z",
+              "updatedAt": "2026-10-10T04:53:53.264Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:40:31.384Z",
+                "startedAt": "2026-10-10T04:40:31.924Z",
+                "completedAt": "2026-10-10T04:53:09.313Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:31.384Z"
+              }
+            ],
+            "nextPosition": 0,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "head",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-        "view": "activity",
-        "limit": 12,
-        "maxCharsPerItem": 350,
-        "runLimit": 1
-      },
-      "started_at_utc": "2026-10-10T05:34:04.229Z",
-      "finished_at_utc": "2026-10-10T05:34:06.345Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:31.384Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.446Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.787Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.895Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "failed",
+                  "updatedAt": "2026-10-10T04:40:49.503Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:55.518Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:40:31.382Z",
+              "updatedAt": "2026-10-10T04:53:53.264Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:40:31.384Z",
+                "startedAt": "2026-10-10T04:40:31.924Z",
+                "completedAt": "2026-10-10T04:53:09.313Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:31.384Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.377Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.377Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.377Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.446Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.787Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:41.895Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:49.271Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:49.271Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:49.271Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "failed",
+                "updatedAt": "2026-10-10T04:40:49.503Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:40:55.518Z"
+              }
+            ],
+            "nextPosition": 11,
+            "hasMore": true
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     },
     {
-      "phase": "tail",
-      "route": "mcp__t3_code__t3_thread_read",
-      "request": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-        "view": "activity",
-        "limit": 45,
-        "maxCharsPerItem": 350,
-        "runLimit": 1,
-        "afterPosition": 153
-      },
-      "started_at_utc": "2026-10-10T05:34:06.744Z",
-      "finished_at_utc": "2026-10-10T05:34:07.649Z",
       "actual_lifecycle_metadata": [
         {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
-          }
-        },
-        {
-          "thread": {
-            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-            "status": "completed",
-            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-            "activeRunId": null,
-            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-            "model": "gpt-6-luna",
-            "pendingRequestCount": 0,
-            "createdAt": "2026-10-10T04:40:31.382Z",
-            "updatedAt": "2026-10-10T04:53:53.264Z"
+          "structured_content_metadata": [
+            {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:21.051Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:24.004Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:24.004Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.878Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.879Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.879Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:38.813Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.293Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.294Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.294Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:50.191Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:50.191Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:52.573Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:13.172Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:27.920Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:27.921Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:36.977Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:37.026Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.658Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.658Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.706Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.439Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.439Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.691Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.893Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:56.800Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:03.559Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:03.559Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:08.790Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:08.790Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:09.063Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "nextPosition": 197,
+              "hasMore": false
+            }
+          ],
+          "structuredContent": {
+            "thread": {
+              "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+              "status": "completed",
+              "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+              "activeRunId": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "pendingRequestCount": 0,
+              "createdAt": "2026-10-10T04:40:31.382Z",
+              "updatedAt": "2026-10-10T04:53:53.264Z"
+            },
+            "recentRuns": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "ordinal": 1,
+                "status": "completed",
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "requestedAt": "2026-10-10T04:40:31.384Z",
+                "startedAt": "2026-10-10T04:40:31.924Z",
+                "completedAt": "2026-10-10T04:53:09.313Z"
+              }
+            ],
+            "items": [
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:21.051Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:24.004Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:24.004Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:26.878Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:26.879Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:48:26.879Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:30.901Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:30.901Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:30.988Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:38.813Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:45.293Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:45.294Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:45.294Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:50.191Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:50.191Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:51:52.573Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:13.172Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:20.758Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:20.758Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:20.758Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:25.099Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:25.099Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:25.099Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:27.920Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:27.921Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:35.297Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:35.297Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:35.297Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:36.977Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:37.026Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:48.658Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:48.658Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:48.706Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:53.439Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:53.439Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:53.691Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:53.893Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:52:56.800Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:03.559Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:03.559Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:08.790Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:08.790Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:09.063Z"
+              },
+              {
+                "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "status": "completed",
+                "updatedAt": "2026-10-10T04:53:09.313Z"
+              }
+            ],
+            "nextPosition": 197,
+            "hasMore": false
           }
         }
       ],
-      "omitted_activity_message_bodies": "UNKNOWN coverage; private original only"
+      "observed_at": "UNKNOWN"
     }
   ],
-  "actual_lifecycle_metadata": [],
-  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
-  "source_body_coverage": "UNKNOWN"
+  "actual_lifecycle_metadata": [
+    {
+      "target": {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "latestTerminalStatus": "completed"
+      },
+      "reads": [
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:40:31.382Z",
+                  "updatedAt": "2026-10-10T04:53:53.264Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:40:31.384Z",
+                    "startedAt": "2026-10-10T04:40:31.924Z",
+                    "completedAt": "2026-10-10T04:53:09.313Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:31.384Z"
+                  }
+                ],
+                "nextPosition": 0,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:31.384Z"
+                }
+              ],
+              "nextPosition": 0,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:40:31.382Z",
+                  "updatedAt": "2026-10-10T04:53:53.264Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:40:31.384Z",
+                    "startedAt": "2026-10-10T04:40:31.924Z",
+                    "completedAt": "2026-10-10T04:53:09.313Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:31.384Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.377Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.377Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.377Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.446Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.787Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:41.895Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:49.271Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:49.271Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:49.271Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "failed",
+                    "updatedAt": "2026-10-10T04:40:49.503Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:40:55.518Z"
+                  }
+                ],
+                "nextPosition": 11,
+                "hasMore": true
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:31.384Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.377Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.446Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.787Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:41.895Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:49.271Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "failed",
+                  "updatedAt": "2026-10-10T04:40:49.503Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:40:55.518Z"
+                }
+              ],
+              "nextPosition": 11,
+              "hasMore": true
+            }
+          }
+        },
+        {
+          "request": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1"
+          },
+          "raw": {
+            "structured_content_metadata": [
+              {
+                "thread": {
+                  "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                  "status": "completed",
+                  "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "activeRunId": null,
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "pendingRequestCount": 0,
+                  "createdAt": "2026-10-10T04:40:31.382Z",
+                  "updatedAt": "2026-10-10T04:53:53.264Z"
+                },
+                "recentRuns": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "ordinal": 1,
+                    "status": "completed",
+                    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                    "model": "gpt-6-luna",
+                    "requestedAt": "2026-10-10T04:40:31.384Z",
+                    "startedAt": "2026-10-10T04:40:31.924Z",
+                    "completedAt": "2026-10-10T04:53:09.313Z"
+                  }
+                ],
+                "items": [
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:21.051Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:24.004Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:24.004Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:26.878Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:26.879Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:48:26.879Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:30.901Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:30.901Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:30.988Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:38.813Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:45.293Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:45.294Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:45.294Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:50.191Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:50.191Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:51:52.573Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:13.172Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:20.758Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:20.758Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:20.758Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:25.099Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:25.099Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:25.099Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:27.920Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:27.921Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:35.297Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:35.297Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:35.297Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:36.977Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:37.026Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:48.658Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:48.658Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:48.706Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:53.439Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:53.439Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:53.691Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:53.893Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:52:56.800Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:03.559Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:03.559Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:08.790Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:08.790Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:09.063Z"
+                  },
+                  {
+                    "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                    "status": "completed",
+                    "updatedAt": "2026-10-10T04:53:09.313Z"
+                  }
+                ],
+                "nextPosition": 197,
+                "hasMore": false
+              }
+            ],
+            "structuredContent": {
+              "thread": {
+                "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+                "status": "completed",
+                "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                "activeRunId": null,
+                "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                "model": "gpt-6-luna",
+                "pendingRequestCount": 0,
+                "createdAt": "2026-10-10T04:40:31.382Z",
+                "updatedAt": "2026-10-10T04:53:53.264Z"
+              },
+              "recentRuns": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "ordinal": 1,
+                  "status": "completed",
+                  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+                  "model": "gpt-6-luna",
+                  "requestedAt": "2026-10-10T04:40:31.384Z",
+                  "startedAt": "2026-10-10T04:40:31.924Z",
+                  "completedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "items": [
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:21.051Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:24.004Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:24.004Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.878Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.879Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:48:26.879Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.901Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:30.988Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:38.813Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.293Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.294Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:45.294Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:50.191Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:50.191Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:51:52.573Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:13.172Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:20.758Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:25.099Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:27.920Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:27.921Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:35.297Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:36.977Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:37.026Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.658Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.658Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:48.706Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.439Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.439Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.691Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:53.893Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:52:56.800Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:03.559Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:03.559Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:08.790Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:08.790Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:09.063Z"
+                },
+                {
+                  "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
+                  "status": "completed",
+                  "updatedAt": "2026-10-10T04:53:09.313Z"
+                }
+              ],
+              "nextPosition": 197,
+              "hasMore": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "original_capture_sha256": "9b3412f25d10afa394866c98425ca65005ffec26a336a3195355db4be47a33fc",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-observation-cohort3/host/context-043.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

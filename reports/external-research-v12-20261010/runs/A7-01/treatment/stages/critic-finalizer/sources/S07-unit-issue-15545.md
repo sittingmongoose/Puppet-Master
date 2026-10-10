@@ -1,9 +1,20 @@
-# S07 — PrusaSlicer issue #15545: 3MF non-millimetre transform translations
-
-- **Exact URL:** https://github.com/prusa3d/PrusaSlicer/issues/15545
-- **Released version/commit:** Issue opened 2026-07-28; reproducer identifies PrusaSlicer 2.9.6 Windows x64 portable, SHA-256 7fd50b52d1cc3da87dbcb71e45e764412dd45688bea028f351333e86d9769704. Closed after inactivity on 2026-09-29; no fix/PR linked.
-- **Locator:** Minimal reproduction, expected/actual bounds and tested build (lines 158-223); close activity (lines 243-267).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open of the official GitHub issue; did not download the reproducer or run the app.
-- **Governing condition/default/exception:** Reporter describes mesh vertices converted to mm while build-item/component translation terms from an inch model are not; translated geometry can be off-plate. The issue closes after an inactivity warning, not a documented repair.
-- **Applicability:** Specific reported 2.9.6 behavior, not independent verification or a claim about later builds; useful unit/transform sentinel.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "316c8d3e277e8ace25f6e430775ebba7facd2ff5f3f65f29c79d09f98c8ffb92",
+  "rawSHA256": "316c8d3e277e8ace25f6e430775ebba7facd2ff5f3f65f29c79d09f98c8ffb92",
+  "original_bytes": 1104,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S07-unit-issue-15545.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

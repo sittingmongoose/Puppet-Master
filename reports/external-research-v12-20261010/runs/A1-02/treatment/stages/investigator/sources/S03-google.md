@@ -1,10 +1,20 @@
-# S03 — Google Calendar recurring events
-
-- URL: https://developers.google.com/workspace/calendar/api/guides/recurringevents
-- Version: Google Calendar API v3 guide; the live page gives no immutable release commit.
-- Access observation: 2026-10-10T04:00:20Z.
-- Locators: “instance-specific fields” and “Modify or delete instances”; cancellation code sample.
-
-**Observed operation.** `recurringEventId` connects an instance to its master. `originalStartTime` is the scheduled start from recurrence data, can differ from current `start` after reschedule, and uniquely identifies the instance within the series. The guide retrieves the instance and updates that instance resource to create an exception; its cancellation example sets that instance status to `cancelled` and updates it.
-
-**Conditions and applicability.** API authorization/provider IDs are required. The original-slot/current-start split transfers conceptually to UID/RECURRENCE-ID versus DTSTART; the Google event ID and JSON status field do not become iCalendar semantics.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "fa613019ed366957373e8546e03e8d76a31eb2ecd4c4c748222fa503158c3860",
+  "rawSHA256": "fa613019ed366957373e8546e03e8d76a31eb2ecd4c4c748222fa503158c3860",
+  "original_bytes": 1048,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S03-google.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

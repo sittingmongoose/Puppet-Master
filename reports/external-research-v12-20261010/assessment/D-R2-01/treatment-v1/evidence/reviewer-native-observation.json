@@ -1,0 +1,17 @@
+{
+  "observed_at_utc": "2026-10-10T07:45:52Z",
+  "observation": "Actual reviewer get_goal response; not reconstructed activation receipt",
+  "response": {
+    "goal": {
+      "threadId": "01a124bd-3069-7943-a2d2-6e29ef9fd901",
+      "objective": "Independently assess only the completed ER12 D-R2-01 treatment full pipeline against the full assessment/RUBRIC-v1.md and original frozen brief/plan. Read all mapped original authored stages, assignments, input maps, freeze records, critique dispositions/checks, and authored evidence. Assess all six rubric axes and every exact plan clause; retrieve governing primary evidence for consequential claims, recommendations, corrections, and source conditions. Preserve original freeze unchanged. No delegation, feedback/repair, account changes, Git/publication, other arms/results/history, or ER11 rescore. Work within a finite 45-minute envelope including saving. Save complete assessment.md, assessment.json, and independently navigable source-map/evidence only under ER12_RUNTIME/assessment/D-R2-01/treatment-v1. Preserve lineage defects separately from final qualifications. Report missing/unassessed/UNKNOWN rather than guess. Complete this Goal only after saving full judgment, then report result and paths.",
+      "status": "active",
+      "tokensUsed": 250830,
+      "timeUsedSeconds": 593,
+      "createdAt": 1791617758,
+      "updatedAt": 1791618352
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  }
+}

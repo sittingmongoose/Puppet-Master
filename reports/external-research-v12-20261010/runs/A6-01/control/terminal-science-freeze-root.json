@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A6-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight obligations and released-plan clauses, and adjudicates C-01 through C-05 with direct primary-source rechecks. Those rechecks confirm the GTFS frequency and DST conditions, the current trip relationships, the SIRI version distinction, and the narrow OTP tests ([GTFS Schedule](https://gtfs.org/documentation/schedule/reference/), [GTFS-RT](https://gtfs.org/documentation/realtime/reference/), [SIRI repository](https://github.com/TransmodelEcosystem/SIRI), [OTP PR #6262](https://github.com/opentripplanner/OpenTripPlanner/pull/6262), [test commit](https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485)). No ferry product validation was performed; pilot checks remain proposed or NOT_RUN.\n\nThe actual native Goal completed: `01a1240e-2764-7262-9ca9-11666df4d6bf`. Its completion result reported **173,100 tokens** and **446 seconds (7m 26s)**.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d83f2f86-76ef-48b3-8d2a-06853543ad96",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The required outputs were saved before the native Goal was completed:\n\n- [final.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A6-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A6-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight obligations and released-plan clauses, and adjudicates C-01 through C-05 with direct primary-source rechecks. Those rechecks confirm the GTFS frequency and DST conditions, the current trip relationships, the SIRI version distinction, and the narrow OTP tests ([GTFS Schedule](https://gtfs.org/documentation/schedule/reference/), [GTFS-RT](https://gtfs.org/documentation/realtime/reference/), [SIRI repository](https://github.com/TransmodelEcosystem/SIRI), [OTP PR #6262](https://github.com/opentripplanner/OpenTripPlanner/pull/6262), [test commit](https://github.com/opentripplanner/OpenTripPlanner/commit/69ac485)). No ferry product validation was performed; pilot checks remain proposed or NOT_RUN.\n\nThe actual native Goal completed: `01a1240e-2764-7262-9ca9-11666df4d6bf`. Its completion result reported **173,100 tokens** and **446 seconds (7m 26s)**.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d83f2f86-76ef-48b3-8d2a-06853543ad96",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "137beecbd0dd96063dcd5d4456e0f773832b7dc4da500f61cc71a1d7bb3f6b02"
   }
 }

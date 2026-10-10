@@ -1,13 +1,20 @@
-# Evidence S5: Yjs UndoManager API
-
-- URL: https://docs.yjs.dev/api/undo-manager
-- Publisher: Yjs project. Status: 200 OK. Retrieved: 2026-10-10 (UTC; exact time UNKNOWN).
-- Locator: Y.UndoManager API page.
-
-Verbatim excerpts (bounded):
-
-- "A selective Undo/Redo manager for Yjs."
-- "If any of the specified types, or any of its children is modified, the UndoManager adds a reverse-operation on its stack."
-- "By default, all local changes that don't specify a transaction origin will be tracked." (via trackedOrigins option)
-- "The UndoManager merges edits that are created within a certain captureTimeout (defaults to 500ms). Set it to 0 to capture each change individually."
-- "Undo the last operation on the UndoManager stack. The reverse operation will be put on the redo-stack."
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0947fda8a481b1e9538358e2506a05075c57bda65d149701266bbb5c836d8209",
+  "rawSHA256": "0947fda8a481b1e9538358e2506a05075c57bda65d149701266bbb5c836d8209",
+  "original_bytes": 785,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-01/treatment/stages/role/sources/ev-05-yjs-undo.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

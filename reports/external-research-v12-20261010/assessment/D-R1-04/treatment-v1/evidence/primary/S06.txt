@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps"
+  ],
+  "source_urls": [
+    "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-04/treatment-v1/evidence/primary/retrieval-manifest.json",
+      "source_id": "S06",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "1629b2e7cdef6bf0ff7f85c2a2ed783c47c24e889cd4c95e62075177b0fba3d7",
+  "rawSHA256": "1629b2e7cdef6bf0ff7f85c2a2ed783c47c24e889cd4c95e62075177b0fba3d7",
+  "original_bytes": 3573,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-04/treatment-v1/evidence/primary/S06.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-investigator-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-investigator-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-investigator-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-investigator-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-investigator-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the investigator stage and native Goal. The Goal was observed active, then completed with thread ID `01a1242c-febe-70f3-8426-445ad968661c`; reported usage was 248,982 tokens and 1,372 seconds (22m 52s).\n\n- [Discovery](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/discovery.md>) and [12-source map](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/source-map.json>) were saved before the one-time reveal. The frozen discovery SHA-256 remained unchanged.\n- The released plan and [release receipt](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/plan-release.json>) are recorded.\n- The standalone [draft](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/draft.md>) includes clause dispositions, a proposed pilot, implementation comparisons, and clear limits on what the evidence establishes. [Source index](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/sources/index.md>) and [native Goal evidence](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/native-goal.json>) are also saved.\n\nFile, JSON, and digest checks passed. No building measurements or other validation were performed; those remain proposals.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:75ba3eaf-86d7-4d22-9f47-5b175275c0f8",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the investigator stage and native Goal. The Goal was observed active, then completed with thread ID `01a1242c-febe-70f3-8426-445ad968661c`; reported usage was 248,982 tokens and 1,372 seconds (22m 52s).\n\n- [Discovery](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/discovery.md>) and [12-source map](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/source-map.json>) were saved before the one-time reveal. The frozen discovery SHA-256 remained unchanged.\n- The released plan and [release receipt](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/plan-release.json>) are recorded.\n- The standalone [draft](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/draft.md>) includes clause dispositions, a proposed pilot, implementation comparisons, and clear limits on what the evidence establishes. [Source index](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/sources/index.md>) and [native Goal evidence](<ER12_RUNTIME/runs/C-R1-01/treatment/stages/investigator/native-goal.json>) are also saved.\n\nFile, JSON, and digest checks passed. No building measurements or other validation were performed; those remain proposals.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:75ba3eaf-86d7-4d22-9f47-5b175275c0f8",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-investigator-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "42a1eeaacdc008a21142e385f695f5a61d4ef6f1dba230661e86f6ba22d89a85",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/C-R1-01/treatment/stages/investigator/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

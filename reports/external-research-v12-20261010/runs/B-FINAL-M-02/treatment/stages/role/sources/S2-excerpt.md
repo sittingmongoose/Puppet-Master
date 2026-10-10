@@ -1,22 +1,50 @@
-# S2 evidence — PostgreSQL transaction isolation (PostgreSQL 17)
-
-URL: https://www.postgresql.org/docs/17/transaction-iso.html
-Version/scope: PostgreSQL 17 documentation; target Read Committed
-Retrieval UTC: 2026-10-10T05:19:15Z
-Operation: web_fetch (full page, excerpted here; bounded locator aid, not a mirror)
-Locators: 13.2 Transaction Isolation; 13.2.1 Read Committed Isolation Level
-
-## Verbatim short excerpts (source statements)
-
-1. Default level:
-> Read Committed is the default isolation level in PostgreSQL.
-
-2. ON CONFLICT DO UPDATE under Read Committed:
-> INSERT with an ON CONFLICT DO UPDATE clause behaves similarly. In Read Committed mode, each row proposed for insertion will either insert or update. Unless there are unrelated errors, one of those two outcomes is guaranteed.
-
-3. Conflict from not-yet-visible transaction:
-> If a conflict originates in another transaction whose effects are not yet visible to the INSERT, the UPDATE clause will affect that row, even though possibly no version of that row is conventionally visible to the command.
-
-## Applicability note (inference, not source)
-
-Excerpts 1–2 refute redesign around Serializable: DO UPDATE is documented at Read Committed. Excerpt 2's "unless there are unrelated errors" supports stating uniqueness/concurrency conditions without unconditional success. Excerpt 3 informs concurrent-write behavior; it does not promise latency or freedom from all failures.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.postgresql.org/docs/17/transaction-iso.html"
+  ],
+  "source_urls": [
+    "https://www.postgresql.org/docs/17/transaction-iso.html"
+  ],
+  "version": [
+    {
+      "version": "PostgreSQL 17 documentation; target Read Committed"
+    }
+  ],
+  "selector": [
+    {
+      "locators": [
+        "13.2 Transaction Isolation",
+        "13.2.1 Read Committed Isolation Level"
+      ]
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-FINAL-M-02/treatment/stages/role/source-map.json",
+      "source_id": "S2",
+      "existing_authored_summary_fields": {
+        "version": "PostgreSQL 17 documentation; target Read Committed"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locators": [
+        "13.2 Transaction Isolation",
+        "13.2.1 Read Committed Isolation Level"
+      ]
+    }
+  ],
+  "raw_sha256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+  "rawSHA256": "712e462d06574383d6039b45daa0ac1ec3596b184e2fc4dfe480cc7e97d86e36",
+  "original_bytes": 1444,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-02/treatment/stages/role/sources/S2-excerpt.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

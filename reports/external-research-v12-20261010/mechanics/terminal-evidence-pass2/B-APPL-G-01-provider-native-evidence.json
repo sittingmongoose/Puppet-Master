@@ -1,58 +1,35 @@
 {
-  "native_goal": {
-    "evidence_status": "FAILED_ACTIVATION_ATTEMPTS_NO_ACTUAL_GOAL_RECEIPT",
-    "activation": "UNKNOWN",
-    "terminal": "UNKNOWN",
-    "original_authored_limitation": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_receipt.json",
-    "original_stderr": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/goal_activation.err",
-    "original_stdout_bytes": 0,
-    "actual_diagnostic_items": [
-      "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-G-01-item-56.json",
-      "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-APPL-G-01-item-59.json"
-    ],
-    "native_tool_receipts_found": false,
-    "summary_is_goal_proof": false,
-    "attempted_cli_descendant": {
-      "status": "argument validation rejection then model creation failure",
-      "session_id": "UNKNOWN",
-      "goal_id": "UNKNOWN",
-      "model_creation_traceId": "456d6e87-fce5-417a-a939-ac93b943e043",
-      "actual_descendant_ids_exposed": []
-    }
-  },
-  "accounting": {
-    "billing": "UNKNOWN",
-    "cumulative_meter_semantics": "UNKNOWN",
-    "exact_billable_tokens": "UNKNOWN",
-    "effective_options": "UNKNOWN",
-    "requested_target": {
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-      "options": {
-        "mode": "yolo",
-        "thought": "max"
-      }
-    },
-    "exposed_thread_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-    "runtimeMode": "full-access",
-    "interactionMode": "default",
-    "raw_usage_summaries": [
-      {
-        "itemId": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A67a9612b-bd6c-418e-8eac-a5517b37c423%3Aturn%3A1%3Aassistant%3Amessage%3Aturninfo_9ec83341-30f1-4fde-becb-7e75d6042296",
-        "text": "✓ completed · cache 56/57 messages · 117.2k cache-read tokens"
-      }
-    ]
-  },
-  "recentRuns": [
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
     {
-      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1",
-      "ordinal": 1,
-      "status": "completed",
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-      "requestedAt": "2026-10-10T03:54:59.243Z",
-      "startedAt": "2026-10-10T03:55:05.656Z",
-      "completedAt": "2026-10-10T04:09:36.116Z"
+      "native_goal": {
+        "attempted_cli_descendant": {
+          "status": "argument validation rejection then model creation failure"
+        }
+      },
+      "accounting": {
+        "requested_target": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+        }
+      },
+      "recentRuns": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-01-treatment-role-v1:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-10T03:54:59.243Z",
+          "startedAt": "2026-10-10T03:55:05.656Z",
+          "completedAt": "2026-10-10T04:09:36.116Z"
+        }
+      ]
     }
-  ]
+  ],
+  "original_capture_sha256": "93601a34b19f2f3232e9702f0b57bc2e401a28f29acd33e6b76159e9ec446ac9",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/terminal-evidence-pass2/B-APPL-G-01-provider-native-evidence.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

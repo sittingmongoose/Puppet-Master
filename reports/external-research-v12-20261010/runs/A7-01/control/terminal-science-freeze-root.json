@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A7-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage and completed the native Goal after saving the outputs.\n\n- [final.md](ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json)\n- [sources index](ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight brief and plan clauses. C2\u2013C4 are accepted; C1 remains unresolved because [Materials 1.2.1](https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md) specifies Core 1.2, while the [conformance-suite README](https://github.com/3MFConsortium/test_suites) lists Core 1.4.0 and Materials 1.2.1. Product validation remains NOT_RUN.\n\nGoal `01a1241e-b3f2-7102-91be-344bb0b66a8f` was directly observed active, then complete; its terminal response reported 578 seconds elapsed. Provider and model provenance are recorded as UNKNOWN. No parent history or nested agents were used.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e9f6fde7-903b-4969-9f83-11018d52c153",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage and completed the native Goal after saving the outputs.\n\n- [final.md](ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A7-01/control/stages/reviser/source-map.json)\n- [sources index](ER12_RUNTIME/runs/A7-01/control/stages/reviser/sources/index.md)\n\nThe proposal covers all eight brief and plan clauses. C2\u2013C4 are accepted; C1 remains unresolved because [Materials 1.2.1](https://github.com/3MFConsortium/spec_materials/blob/1.2.1/3MF%20Materials%20Extension.md) specifies Core 1.2, while the [conformance-suite README](https://github.com/3MFConsortium/test_suites) lists Core 1.4.0 and Materials 1.2.1. Product validation remains NOT_RUN.\n\nGoal `01a1241e-b3f2-7102-91be-344bb0b66a8f` was directly observed active, then complete; its terminal response reported 578 seconds elapsed. Provider and model provenance are recorded as UNKNOWN. No parent history or nested agents were used.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A7-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:e9f6fde7-903b-4969-9f83-11018d52c153",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "dd2a8eb468adff3625a89372f6744674420ba8b73502c8e8b71fd174fc74158c"
   }
 }

@@ -1,0 +1,82 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "structured_content_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-treatment-role-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:02:10.076Z",
+            "updatedAt": "2026-10-10T04:09:36.871Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "muse-spark-1.3-contributor",
+              "requestedAt": "2026-10-10T04:02:10.706Z",
+              "startedAt": "2026-10-10T04:02:12.938Z",
+              "completedAt": "2026-10-10T04:07:20.756Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:06:41.680Z"
+            }
+          ],
+          "nextPosition": 46,
+          "hasMore": false
+        }
+      ],
+      "structuredContent": {
+        "thread": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-treatment-role-v1",
+          "status": "completed",
+          "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+          "activeRunId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor",
+          "pendingRequestCount": 0,
+          "createdAt": "2026-10-10T04:02:10.076Z",
+          "updatedAt": "2026-10-10T04:09:36.871Z"
+        },
+        "recentRuns": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+            "ordinal": 1,
+            "status": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor",
+            "requestedAt": "2026-10-10T04:02:10.706Z",
+            "startedAt": "2026-10-10T04:02:12.938Z",
+            "completedAt": "2026-10-10T04:07:20.756Z"
+          }
+        ],
+        "items": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-M-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:06:41.680Z"
+          }
+        ],
+        "nextPosition": 46,
+        "hasMore": false
+      }
+    }
+  ],
+  "original_capture_sha256": "40f65bbcccd7e559b03fff1c8fef5610fc1206872a224a6f85347e4ea05b955f",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/terminal-evidence-pass2/B-APPL-M-01-item-46.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

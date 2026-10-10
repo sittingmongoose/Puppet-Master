@@ -1,0 +1,283 @@
+{
+  "sources": [
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/prepare.py",
+      "sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "bytes": 23592,
+      "source_logical_path": "helpers/er12-screen-v1/prepare.py",
+      "actual_current_sha256": "bb38b943536f5039018da2616afce260a88baf9aafa8412a1590180420f047da",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
+      "sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "bytes": 2880,
+      "source_logical_path": "helpers/er12-screen-v1/reveal.py",
+      "actual_current_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
+      "sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "bytes": 4352,
+      "source_logical_path": "helpers/er12-screen-v1/bootstrap.js",
+      "actual_current_sha256": "42d76b4a90d073e64fa25b730fe78a1810e25224c8acc1089f85e6c6786f3056",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "bytes": 2503,
+      "source_logical_path": "mechanics/native-root-code-mode/standardSpecJS.js",
+      "actual_current_sha256": "803f679454dd062b9d11ec54c7adf04172b0c5330bc949ca115161672315fac6",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a",
+      "bytes": 380,
+      "source_logical_path": "mechanics/native-root-code-mode/clarifySpecJS.js",
+      "actual_current_sha256": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
+      "sha256": "3eeb571945b1ad45f38e3116c98fb5724c0fc5a2bd023fc5b66a807a11a93be8",
+      "bytes": 7821,
+      "source_logical_path": "mechanics/invocation-clarification-v1/transform.py",
+      "actual_current_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594",
+      "normalization": [
+        "runtime path -> ER12_RUNTIME",
+        "route -> AUTHORIZED_PROVIDER_INSTANCE"
+      ],
+      "published_reference_sha256": null,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "source_logical_path": "helpers/er12-composite-A1-A8-v1/prepare.py",
+      "actual_current_sha256": "0041e88d4806ecedd66521f0b63e28e1e4c83128b686b98db6f4ac91f7d0a5e8",
+      "sha256": "0a58d80ff288253c9cbbce15ec03a25ab5f4dc0c4c6cdd42e7ef3faedb8f2deb",
+      "bytes": 4645,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "source_logical_path": "helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "actual_current_sha256": "656eab890701f839b54bf969c4fc26f4f0fd482389eb8b53796be86090b75c58",
+      "sha256": "d60077e6451c1a15fc6dc56396b1ee2f361de7cfdc52b1bdce1294897d9c818e",
+      "bytes": 945,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/methods/A8/critic_prompt_delta.txt",
+      "source_logical_path": "methods/A8/critic_prompt_delta.txt",
+      "actual_current_sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "sha256": "6ca210592ebaffd1228f390855af2dcbb7b338dcbb3e00c9fb57f0bdc8672c0d",
+      "bytes": 3398,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/methods/A8/reviser_prompt_delta.txt",
+      "source_logical_path": "methods/A8/reviser_prompt_delta.txt",
+      "actual_current_sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "sha256": "31b0b79da9d1a99d81103a485448bbd2d518e5c48cd56b15a1a1a9cb9d11e087",
+      "bytes": 1715,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "source_logical_path": "mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "actual_current_sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "sha256": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "bytes": 8570,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "source_logical_path": "mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "actual_current_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "bytes": 3151,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "source_logical_path": "mechanics/native-root-code-mode/exactSpecJS.js",
+      "actual_current_sha256": "9e0ed39aaea03047d71d47bf8bbc268bb54e10071aab1fa7e8d9051a4219f178",
+      "sha256": "127a1b34c143125583abf26b5cd3f4c139d0b2fd71470d9a65036b56fa63f03c",
+      "bytes": 376,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "source_logical_path": "mechanics/invocation-clarification-v1/helper-pins.json",
+      "actual_current_sha256": "c19221a12bf46b6b5e59d16d5cbfc464dbdc16ac3855dc945c3f4e94c54f0cd5",
+      "sha256": "f3f3bda6151468f2a4a1362a51dc21a5d5593ab50a8705986a043594f2bc00c6",
+      "bytes": 242,
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "sha256": "0822e9c39dd60e06a3092f8d291bfefad4936e1ae1f178632de13e9092cd27b2",
+      "bytes": 5187,
+      "source_logical_path": "mechanics/exact-activation-capture-v2-1/README.md",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685",
+      "bytes": 1229,
+      "source_logical_path": "mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "sha256": "3eed7edf2cb7d5cd506daecaab89502d45eb07b64d1006f6ab72b3f7afc6e6f5",
+      "bytes": 2355,
+      "source_logical_path": "mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "sha256": "bba569a9dd50ad6344f3314ac022803c56d273213030e540f9e6bbfa2980deaf",
+      "bytes": 284,
+      "source_logical_path": "mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "sha256": "1ba74a47636a5351bf3337d9733a8cdf470313377638b22ad83d2d1d168fce90",
+      "bytes": 10477,
+      "source_logical_path": "mechanics/exact-activation-capture-v2-1/overlay.py",
+      "original_byte_equivalence_claimed": false
+    },
+    {
+      "relative_path": "sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "sha256": "1769a27979b991ae9569699d730c6bb430ec9ae4807aa79c230c4adbb442211c",
+      "bytes": 394,
+      "source_logical_path": "portable capture wrapper adapted from existing exactSpecJS.js",
+      "original_byte_equivalence_claimed": false
+    }
+  ],
+  "scope": [
+    "R0",
+    "A1",
+    "A1+A8"
+  ],
+  "prior_materializer_sha256": "523a6084496506f3e8acaa595879a497ac33f159b31e494b85a01d8eafe7c13c",
+  "selection": {
+    "recipe_id": "C-R2-A1-A8-standard-binding-v1",
+    "lock_sha256": "1f8e8ebcd74d79d7ed76b04c8be3fb472338012336138cf5ec360d0ff15d3fb0",
+    "prospectively_frozen": true,
+    "science_qualification": "actual C/D outputs only"
+  },
+  "explicit_public_amendments": [
+    "normalize runtime and authorized route placeholders",
+    "prune unreachable role/topology clarification branches for finite three-stage closure",
+    "apply exactSpec to all three public recipe choices",
+    "repin public composite/clarification companions to normalized public bytes"
+  ],
+  "activation_capture_lineage": {
+    "locked_overlay_logical_path": "mechanics/exact-activation-capture-v2-1",
+    "original_files": [
+      {
+        "name": "README.md",
+        "sha256": "c987131ca2cfb9d3cb8c263f877ece36a4e2772eeaecdf0b2e29048e1191562c"
+      },
+      {
+        "name": "READY.json",
+        "sha256": "523d2bbe6a801d8ef8a4711da7bf68fea887d3548612bfa1dd5125ba3c54ded4"
+      },
+      {
+        "name": "ROOT_VERIFICATION.json",
+        "sha256": "a38caf70251cbe7fd27a5cdb9464ec4a21183034091eccb44fa9b67acf69e685"
+      },
+      {
+        "name": "SHA256SUMS",
+        "sha256": "ea286e47620e9f232114c5483e60afe34d4588885533610a5471fa756b5f63c0"
+      },
+      {
+        "name": "activation-snippet-template.js",
+        "sha256": "2db6e25022303c7c5730dd0192e2b90903f89f641a798b04ca30998e8f1d37f3"
+      },
+      {
+        "name": "checks.py",
+        "sha256": "d1c0f4fc6410da73d897588893d139391ba5692122a4389c6c51d93766e58491"
+      },
+      {
+        "name": "dependency-sha256.json",
+        "sha256": "c31951b40e8923f4220ec88a19e525b2b8c3514c8395353d68d857500eaab491"
+      },
+      {
+        "name": "finite-check-results.json",
+        "sha256": "aca0121e36c52c82b9e72e588ef21196d22e43377bcab1228125c8be02788645"
+      },
+      {
+        "name": "native-setup-active.json",
+        "sha256": "9375767973bf51d942d121d3447192910a30b734b26d2322245711b0f59fbcd9"
+      },
+      {
+        "name": "original-v2-pins.json",
+        "sha256": "377ec6540a6c37c63497ad63eac75f005cc0429b7032ada00a304ec74527907d"
+      },
+      {
+        "name": "overlay.py",
+        "sha256": "13d5ae8583c95cd898d65e0ac3cb7b386111b72b898da94c96f77315ae85fc9a"
+      }
+    ],
+    "portable_amendments": [
+      "runtime placeholders",
+      "historical D2 slot restriction replaced by generated caller-owned config/runtime binding",
+      "runtime dependencies repinned; historical dependency hashes retained as lineage",
+      "raise private v21 bootstrap local JSON output ceiling for larger request"
+    ],
+    "root_prospective_mechanical_version": true,
+    "qualification": false,
+    "historical_dependencies": {
+      "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/overlay.py": "05c96bcda9ee1babe46e9dff17a454b5b1cc769df7c4c6fc479a454f574cf4ff",
+      "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+      "ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/README.md": "84875f936afa71051e1aad4256b7feffc765681affe2869b8f39472a43f487bd",
+      "ER12_RUNTIME/mechanics/native-root-code-mode/exactSpecJS.js": "9e0ed39aaea03047d71d47bf8bbc268bb54e10071aab1fa7e8d9051a4219f178",
+      "ER12_RUNTIME/mechanics/native-root-code-mode/clarifySpecJS.js": "9bf15a8f4835128f27ceedd63d7267e0c99cd8f3cccf5c2da8f6600589d41588",
+      "ER12_RUNTIME/mechanics/D-R1-03-treatment-MISSING_FINAL.json": "f14f237b2a4f1f5bdc302a957cc91d144105d40c2240b0ddda3bd5f186dc443d"
+    },
+    "original_v2_pins": {
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/ROOT_REVIEW.json": "3183972c3339b253f1c180e0b911a8ea720cec94fdd95d6436f721db3f13e1eb",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/SHA256SUMS": "b064d7ca36f4464972419c0e485e65a71151f4f075080e1295dcfb18fdef650d",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/README.md": "10a9a0c9a137a4d2f3bf4ec9e5f4fdbce4e5e7b29a6b4c5a40e19d2a9e1a5df7",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/finite-check-results.json": "b4334f2eef5d0e249c87eeba0041f68172a91ed9e13986e23488246e2d928e98",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/native-setup-active.json": "4ef8b7639f5a80ea75e1831981f948a4b4924d3908d759392d47bc6f80d2ce6d",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/checks.py": "eb92404c1d9dd358afd8d3e62939846b6d9eedfe72e101c99619472bf454c636",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/activation-snippet-template.js": "2db6e25022303c7c5730dd0192e2b90903f89f641a798b04ca30998e8f1d37f3",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/READY.json": "c1a6db8e9f637f62a446744e7f154c8d532410998eb3fd101df12bd4c088b95a",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/dependency-sha256.json": "c31951b40e8923f4220ec88a19e525b2b8c3514c8395353d68d857500eaab491",
+      "ER12_RUNTIME/mechanics/exact-activation-capture-v2/overlay.py": "3b243a8b282b2800992860a8727f4190269e84c8ce077889f4625a34b3fa155c"
+    }
+  }
+}

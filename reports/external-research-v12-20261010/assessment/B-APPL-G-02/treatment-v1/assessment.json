@@ -264,7 +264,7 @@
       "candidate_disposition": "REFUTED",
       "review": "SUPPORTED_REFUTATION",
       "candidate_lines": "74-86",
-      "assessment": "Correctly distinguishes daily midnight syntax/next-occurrence calculation from execution/completion, clock correctness and boot activation. A possible three-minute runtime is enough to disprove a universal two-second completion guarantee; actual runtime is unknown. The midnight \u00b1 wording is loose: AccuracySec adds a nonnegative window, not symmetric scheduling jitter. This is minor given claim 4\u2019s explicit after-time wording.",
+      "assessment": "Correctly distinguishes daily midnight syntax/next-occurrence calculation from execution/completion, clock correctness and boot activation. A possible three-minute runtime is enough to disprove a universal two-second completion guarantee; actual runtime is unknown. The midnight ± wording is loose: AccuracySec adds a nonnegative window, not symmetric scheduling jitter. This is minor given claim 4’s explicit after-time wording.",
       "evidence": [
         {
           "source_id": "time-manual",
@@ -442,7 +442,7 @@
       "id": "L2",
       "material": false,
       "candidate_locator": "verification.md:42-48,83-85",
-      "text": "Informal active wording for a running oneshot and midnight \u00b1 phrasing are imprecise; neighboring explicit statements retain the correct no-overlap and nonnegative AccuracySec interpretation."
+      "text": "Informal active wording for a running oneshot and midnight ± phrasing are imprecise; neighboring explicit statements retain the correct no-overlap and nonnegative AccuracySec interpretation."
     },
     {
       "id": "L3",
@@ -470,7 +470,7 @@
     {
       "field": "billing_or_actual_inference_token_consumption",
       "value": "UNKNOWN",
-      "reason": "No billing/usage record. Completion receipt tokens_used=2370902 is preserved as a raw reported field, not interpreted as billed tokens or this attempt\u2019s inference consumption."
+      "reason": "No billing/usage record. Completion receipt tokens_used=2370902 is preserved as a raw reported field, not interpreted as billed tokens or this attempt’s inference consumption."
     },
     {
       "field": "complete_candidate_protocol_observation",

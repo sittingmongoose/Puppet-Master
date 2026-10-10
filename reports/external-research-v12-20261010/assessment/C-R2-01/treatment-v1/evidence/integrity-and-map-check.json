@@ -1,0 +1,648 @@
+{
+  "checked_at_utc": "2026-10-10T06:39:16.445226+00:00",
+  "purpose": "Identity and locator checks only; not semantic proof",
+  "checks": [
+    {
+      "kind": "stage_input",
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+      "expected_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "actual_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/assignment.md",
+      "expected_sha256": "152016a8f449ce09f43756bf5e1164f78962bf2694414d186a90c5a8ffec7701",
+      "actual_sha256": "152016a8f449ce09f43756bf5e1164f78962bf2694414d186a90c5a8ffec7701",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/input-map.json",
+      "expected_sha256": "3a5f2a8c5e0031afb5c38e644249d15a19478ee70dd51bdecaccbb0ed9077150",
+      "actual_sha256": "3a5f2a8c5e0031afb5c38e644249d15a19478ee70dd51bdecaccbb0ed9077150",
+      "matches": true
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S01",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S01-loc-index.md",
+      "exists": true,
+      "expected_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "actual_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S02",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S02-loc-700-713.md",
+      "exists": true,
+      "expected_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "actual_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S03",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S03-loc-700-703.md",
+      "exists": true,
+      "expected_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "actual_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S04",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S04-lindner-hygroexpansion.md",
+      "exists": true,
+      "expected_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "actual_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S05",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S05-de-ruvo-1973.md",
+      "exists": true,
+      "expected_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "actual_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S06",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S06-maass-hirn-2024.md",
+      "exists": true,
+      "expected_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "actual_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S07",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S07-nara-paper-guidance.md",
+      "exists": true,
+      "expected_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "actual_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S08",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S08-canon-printer-manual.md",
+      "exists": true,
+      "expected_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "actual_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "investigator",
+      "source_id": "S09",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S09-jstage-paper-history.md",
+      "exists": true,
+      "expected_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "actual_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11"
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+      "expected_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "actual_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/assignment.md",
+      "expected_sha256": "56fa1229f48ec1f638730a3321622ef8de6a9b97b3f1174c997da44705bf6ec6",
+      "actual_sha256": "56fa1229f48ec1f638730a3321622ef8de6a9b97b3f1174c997da44705bf6ec6",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/input-map.json",
+      "expected_sha256": "8a1fc0791da8188dcba616246a459b2efe02b68c81920e479011973282b412ae",
+      "actual_sha256": "8a1fc0791da8188dcba616246a459b2efe02b68c81920e479011973282b412ae",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "actual_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "actual_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "actual_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "actual_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "ab58a22182e4f8ae0e15ccdb8fde9ea1cb646d6df4df313d9fafb8c4494baf19",
+      "actual_sha256": "ab58a22182e4f8ae0e15ccdb8fde9ea1cb646d6df4df313d9fafb8c4494baf19",
+      "matches": true
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S01",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S01-loc-index.md",
+      "exists": true,
+      "expected_sha256": "5533a37cbfbbbf589a0fce4f5b98d781e61846aa93e6c42f2e78cb51020cbc9e",
+      "actual_sha256": "5533a37cbfbbbf589a0fce4f5b98d781e61846aa93e6c42f2e78cb51020cbc9e"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S02",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S02-loc-700-713.md",
+      "exists": true,
+      "expected_sha256": "82000149bc438be3f38502fe472d83102c57e6f0826eaa78e5cd09a297d6de1f",
+      "actual_sha256": "82000149bc438be3f38502fe472d83102c57e6f0826eaa78e5cd09a297d6de1f"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S03",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S03-loc-700-703.md",
+      "exists": true,
+      "expected_sha256": "966ea1d5c9aa57b2c2c2ac93342706439a20cc2832746c673cb215e162e45b40",
+      "actual_sha256": "966ea1d5c9aa57b2c2c2ac93342706439a20cc2832746c673cb215e162e45b40"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S04",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S04-lindner-hygroexpansion.md",
+      "exists": true,
+      "expected_sha256": "53a947df86dd23f658c8e668b4f28450855cbbe23a2c824fcd659615d278ad9a",
+      "actual_sha256": "53a947df86dd23f658c8e668b4f28450855cbbe23a2c824fcd659615d278ad9a"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S05",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S05-de-ruvo-1973.md",
+      "exists": true,
+      "expected_sha256": "0d6790fe274710cd4b27f730dfd8be18f5ea58e97311c6c1351df0fdf241a0f1",
+      "actual_sha256": "0d6790fe274710cd4b27f730dfd8be18f5ea58e97311c6c1351df0fdf241a0f1"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S06",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S06-maass-hirn-2024.md",
+      "exists": true,
+      "expected_sha256": "f2036987460b084538013b03129c446a27eb085eadf8b76e103841fe50d1cad5",
+      "actual_sha256": "f2036987460b084538013b03129c446a27eb085eadf8b76e103841fe50d1cad5"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S07",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S07-nara-paper-guidance.md",
+      "exists": true,
+      "expected_sha256": "9a7cf57c9fe5c67ea0b21b8c78fdd36a4dd5fcddeaf0f3e19fcaab3fe3202762",
+      "actual_sha256": "9a7cf57c9fe5c67ea0b21b8c78fdd36a4dd5fcddeaf0f3e19fcaab3fe3202762"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S08",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S08-canon-printer-manual.md",
+      "exists": true,
+      "expected_sha256": "64a87b6c0e97e27079ffb2fc8baceb305dcbcc591d17c0644542382682b706de",
+      "actual_sha256": "64a87b6c0e97e27079ffb2fc8baceb305dcbcc591d17c0644542382682b706de"
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "critic",
+      "source_id": "S09",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S09-jstage-paper-history.md",
+      "exists": true,
+      "expected_sha256": "70c89de248c071a7339bf0f44478efd4ebf9101d1bc4480ca2506f28fab01022",
+      "actual_sha256": "70c89de248c071a7339bf0f44478efd4ebf9101d1bc4480ca2506f28fab01022"
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+      "expected_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "actual_sha256": "3d5533283d59a1ca1d7b1f75bc62a8307e75057850b03d87e22a716ea8cba778",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md",
+      "expected_sha256": "ed39aaa9e8f8d93468c13d684d275b92710c2d42bad4291d81e340ac82eac1c7",
+      "actual_sha256": "ed39aaa9e8f8d93468c13d684d275b92710c2d42bad4291d81e340ac82eac1c7",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/input-map.json",
+      "expected_sha256": "fb8f6c9cb6935d0d94937b0e9f3099a927427268f5ace58a4bb1f4747a4cac74",
+      "actual_sha256": "fb8f6c9cb6935d0d94937b0e9f3099a927427268f5ace58a4bb1f4747a4cac74",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "actual_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "actual_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "actual_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "actual_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "ab58a22182e4f8ae0e15ccdb8fde9ea1cb646d6df4df313d9fafb8c4494baf19",
+      "actual_sha256": "ab58a22182e4f8ae0e15ccdb8fde9ea1cb646d6df4df313d9fafb8c4494baf19",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/critique.md",
+      "expected_sha256": "0f9d9299fc2ff6c6a81e0bfc88038682b9ba803c52f36491e21e5cdc573d62c7",
+      "actual_sha256": "0f9d9299fc2ff6c6a81e0bfc88038682b9ba803c52f36491e21e5cdc573d62c7",
+      "matches": true
+    },
+    {
+      "kind": "stage_input",
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/source-map.json",
+      "expected_sha256": "746ac98c5f91daee73e881814d3a1a29753a270e4cbf079d717a7eac9e985007",
+      "actual_sha256": "746ac98c5f91daee73e881814d3a1a29753a270e4cbf079d717a7eac9e985007",
+      "matches": true
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S01",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S01-loc-index.md",
+      "exists": false,
+      "expected_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S02",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S02-loc-700-713.md",
+      "exists": false,
+      "expected_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S03",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S03-loc-700-703.md",
+      "exists": false,
+      "expected_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S04",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S04-lindner-hygroexpansion.md",
+      "exists": false,
+      "expected_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S05",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S05-de-ruvo-1973.md",
+      "exists": false,
+      "expected_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S06",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S06-maass-hirn-2024.md",
+      "exists": false,
+      "expected_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S07",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S07-nara-paper-guidance.md",
+      "exists": false,
+      "expected_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S08",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S08-canon-printer-manual.md",
+      "exists": false,
+      "expected_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S09",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S09-jstage-paper-history.md",
+      "exists": false,
+      "expected_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "actual_sha256": null
+    },
+    {
+      "kind": "source_note_literal_path",
+      "stage": "reviser",
+      "source_id": "S10",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S10-loc-700-714.md",
+      "exists": true,
+      "expected_sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944",
+      "actual_sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944"
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/critique.md",
+      "expected_sha256": "0f9d9299fc2ff6c6a81e0bfc88038682b9ba803c52f36491e21e5cdc573d62c7",
+      "actual_sha256": "0f9d9299fc2ff6c6a81e0bfc88038682b9ba803c52f36491e21e5cdc573d62c7",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/source-map.json",
+      "expected_sha256": "746ac98c5f91daee73e881814d3a1a29753a270e4cbf079d717a7eac9e985007",
+      "actual_sha256": "746ac98c5f91daee73e881814d3a1a29753a270e4cbf079d717a7eac9e985007",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S01-loc-index.md",
+      "expected_sha256": "5533a37cbfbbbf589a0fce4f5b98d781e61846aa93e6c42f2e78cb51020cbc9e",
+      "actual_sha256": "5533a37cbfbbbf589a0fce4f5b98d781e61846aa93e6c42f2e78cb51020cbc9e",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S02-loc-700-713.md",
+      "expected_sha256": "82000149bc438be3f38502fe472d83102c57e6f0826eaa78e5cd09a297d6de1f",
+      "actual_sha256": "82000149bc438be3f38502fe472d83102c57e6f0826eaa78e5cd09a297d6de1f",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S03-loc-700-703.md",
+      "expected_sha256": "966ea1d5c9aa57b2c2c2ac93342706439a20cc2832746c673cb215e162e45b40",
+      "actual_sha256": "966ea1d5c9aa57b2c2c2ac93342706439a20cc2832746c673cb215e162e45b40",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S04-lindner-hygroexpansion.md",
+      "expected_sha256": "53a947df86dd23f658c8e668b4f28450855cbbe23a2c824fcd659615d278ad9a",
+      "actual_sha256": "53a947df86dd23f658c8e668b4f28450855cbbe23a2c824fcd659615d278ad9a",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S05-de-ruvo-1973.md",
+      "expected_sha256": "0d6790fe274710cd4b27f730dfd8be18f5ea58e97311c6c1351df0fdf241a0f1",
+      "actual_sha256": "0d6790fe274710cd4b27f730dfd8be18f5ea58e97311c6c1351df0fdf241a0f1",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S06-maass-hirn-2024.md",
+      "expected_sha256": "f2036987460b084538013b03129c446a27eb085eadf8b76e103841fe50d1cad5",
+      "actual_sha256": "f2036987460b084538013b03129c446a27eb085eadf8b76e103841fe50d1cad5",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S07-nara-paper-guidance.md",
+      "expected_sha256": "9a7cf57c9fe5c67ea0b21b8c78fdd36a4dd5fcddeaf0f3e19fcaab3fe3202762",
+      "actual_sha256": "9a7cf57c9fe5c67ea0b21b8c78fdd36a4dd5fcddeaf0f3e19fcaab3fe3202762",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S08-canon-printer-manual.md",
+      "expected_sha256": "64a87b6c0e97e27079ffb2fc8baceb305dcbcc591d17c0644542382682b706de",
+      "actual_sha256": "64a87b6c0e97e27079ffb2fc8baceb305dcbcc591d17c0644542382682b706de",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/S09-jstage-paper-history.md",
+      "expected_sha256": "70c89de248c071a7339bf0f44478efd4ebf9101d1bc4480ca2506f28fab01022",
+      "actual_sha256": "70c89de248c071a7339bf0f44478efd4ebf9101d1bc4480ca2506f28fab01022",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "1a1e984f65f1818f8d4472c10c08958a2006ab9efdd05c87f25ad22cfe78a83a",
+      "actual_sha256": "1a1e984f65f1818f8d4472c10c08958a2006ab9efdd05c87f25ad22cfe78a83a",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "actual_sha256": "a15e8c5a71ff495fc2b5259ff503f34d7db339144fbe7d917c1737e54207b370",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "actual_sha256": "96da21f3f203e264909a381e8e517e4c373d14f1c447d60b42f0b801d92c6484",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "actual_sha256": "a9cfe54c239ea09aeccec070c8754a305206f5565bf7d4cfa92d26b192f491e1",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "actual_sha256": "6f0db7128b585d853b6e7f8596565c2b57cbf2d5df2c56a2edce5ae7b72119e5",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S01-loc-index.md",
+      "expected_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "actual_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S02-loc-700-713.md",
+      "expected_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "actual_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S03-loc-700-703.md",
+      "expected_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "actual_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S04-lindner-hygroexpansion.md",
+      "expected_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "actual_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S05-de-ruvo-1973.md",
+      "expected_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "actual_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S06-maass-hirn-2024.md",
+      "expected_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "actual_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S07-nara-paper-guidance.md",
+      "expected_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "actual_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S08-canon-printer-manual.md",
+      "expected_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "actual_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/S09-jstage-paper-history.md",
+      "expected_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "actual_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "72c4498ae2f111cd16a450cee4dd42dfb61af1f2dce3fe4ae34ebf7855027d28",
+      "actual_sha256": "72c4498ae2f111cd16a450cee4dd42dfb61af1f2dce3fe4ae34ebf7855027d28",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/final.md",
+      "expected_sha256": "b514999acbca58187f86e29f477a030e06d8b85dda84f8a84493fd490f4d7376",
+      "actual_sha256": "b514999acbca58187f86e29f477a030e06d8b85dda84f8a84493fd490f4d7376",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "37318bd9e725d9e6f67c63208338770e189e9ee4487cf534b7865ae91a48823b",
+      "actual_sha256": "37318bd9e725d9e6f67c63208338770e189e9ee4487cf534b7865ae91a48823b",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/S10-loc-700-714.md",
+      "expected_sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944",
+      "actual_sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944",
+      "matches": true
+    },
+    {
+      "kind": "terminal_science",
+      "path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "7ad86656713914fdf5ec5951adeedaa4c5ea9f41c7ee6b0579181f62be59f302",
+      "actual_sha256": "7ad86656713914fdf5ec5951adeedaa4c5ea9f41c7ee6b0579181f62be59f302",
+      "matches": true
+    },
+    {
+      "kind": "original_to_released",
+      "original": "ER12_RUNTIME/frozen-inputs/C-R2-01/brief.md",
+      "released": "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+      "byte_identical": true
+    },
+    {
+      "kind": "original_to_released",
+      "original": "ER12_RUNTIME/frozen-inputs/C-R2-01/plan.md",
+      "released": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "byte_identical": true
+    }
+  ]
+}

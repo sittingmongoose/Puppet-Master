@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the A1-01-control investigator stage. The required outputs are saved:\n\n- [Discovery](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/source-map.json>)\n- [Draft](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/draft.md>)\n- [Source index](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/sources/index.md>)\n\nThe reveal helper ran once. The frozen discovery hash matches, and the source map parses. No implementation, storage integration, or upload tests were run; proposed validations are marked separately.\n\nThe native Goal returned **complete**. Its thread ID is `01a123f2-7daf-7353-afe3-29344d00bcb3`; `createdAt` is `1791604488` (`2026-10-10T03:54:48Z`) and final `updatedAt` is `1791605102` (`2026-10-10T04:05:02Z`). Final usage was 161,064 tokens over 10m 14s. Provider, model, and a separate `completedAt` field were unavailable and are recorded as UNKNOWN.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d695016a-32ce-4d2b-bc8f-333ab51ef84a",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the A1-01-control investigator stage. The required outputs are saved:\n\n- [Discovery](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/discovery.md>)\n- [Source map](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/source-map.json>)\n- [Draft](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/draft.md>)\n- [Source index](<ER12_RUNTIME/runs/A1-01/control/stages/investigator/sources/index.md>)\n\nThe reveal helper ran once. The frozen discovery hash matches, and the source map parses. No implementation, storage integration, or upload tests were run; proposed validations are marked separately.\n\nThe native Goal returned **complete**. Its thread ID is `01a123f2-7daf-7353-afe3-29344d00bcb3`; `createdAt` is `1791604488` (`2026-10-10T03:54:48Z`) and final `updatedAt` is `1791605102` (`2026-10-10T04:05:02Z`). Final usage was 161,064 tokens over 10m 14s. Provider, model, and a separate `completedAt` field were unavailable and are recorded as UNKNOWN.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-01-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:d695016a-32ce-4d2b-bc8f-333ab51ef84a",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-investigator-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "9c72923649684baadaf91c69de929e0d0af668d03ab83caf2e1c676dd7201052",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-01/control/stages/investigator/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

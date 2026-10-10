@@ -1,19 +1,24 @@
 {
   "captured_at_utc": "2026-10-10T04:36:06.240Z",
   "raw_response": {
-    "content": [
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
       {
-        "type": "text",
-        "text": "{\"threadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1\",\"messageId\":\"message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A2-A2-01-treatment-frozen-critic-notify-v1\",\"runId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1\",\"status\":\"running\",\"delivery\":\"steered\"}"
+        "structured_content_metadata": [
+          {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
+            "status": "running"
+          }
+        ],
+        "structuredContent": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
+          "status": "running"
+        }
       }
     ],
-    "structuredContent": {
-      "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
-      "messageId": "message:mcp:39c31430-71a8-4158-b353-1fe1bb3dad4d:thread-send:er12-A2-A2-01-treatment-frozen-critic-notify-v1",
-      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A2-A2-01-treatment-investigator-topology-v1:ordinal:1",
-      "status": "running",
-      "delivery": "steered"
-    },
-    "isError": false
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "7dccc063ead83fdf15c86bf08245b8a80940540f7e535da80845d35a49eb6569"
   }
 }

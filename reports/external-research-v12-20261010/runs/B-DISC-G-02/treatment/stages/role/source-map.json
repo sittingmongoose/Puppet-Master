@@ -1,1 +1,107 @@
-{"applicability":{"s01-slsa-provenance-v1":"Mechanism 1 claims: predicateType, buildDefinition/runDetails/builder.id, purpose; historical lead: Retired/v1.2 pointer, migration and change-history sections","s02-slsa-verifying-artifacts":"Mechanism 1 verification steps: trusted builder IDs, signature check, buildType/externalParameters match; implementation lead A","s03-sigstore-overview":"Mechanism 2 existence of Fulcio/Rekor/Bundle/cosign verify flows; implementation lead B context","s04-cosign-attestation":"Mechanism 2 verify-attestation flow incl. in-toto attestations and OIDC/policy docs; implementation lead B","s05-tuf-overview":"Mechanism 4 purpose statements: libraries/formats/utilities, key-compromise impact, updater integration; depth limited to overview","s06-intoto-docs":"Mechanism 3 framework existence: spec/demo/Python implementation; SLSA/Sigstore cross-refs carry predicate usage; layout/link details unresolved"},"arm":"treatment","case_id":"ER12-B-DISC-G-02-FRESH","conditions_exceptions":"All fetches HTTP 200 HTML via provider web_fetch; processed output truncated by tool with full pages saved to session tool-outputs (not transcribed here). TUF and in-toto retrievals returned overview/index depth only; roles/specification and layout/link/threshold sections not retrieved in this run. No login, install, code execution, or fixture modification. Page budget respected; no other cases/canon/assessor reads.","corpus":"null (brief-only discovery; no seeded evidence corpus)","counts":{"organizations_projects":4,"primary_pages_executed":6,"primary_pages_max":8,"primary_pages_min":3},"deadline_utc":"2026-10-10T05:11:04.161000+00:00","proposed_vs_executed":{"executed":"6 primary pages across 4 orgs/projects (SLSA x2, Sigstore x2, TUF x1, in-toto x1); discovery.md 779 words; source-map.json and sources/s01-s06 evidence saved before native Goal completion","proposed":"Common assignment: >=3 primary sources across >=2 orgs, at most 8 additional primary pages; discovery.md 700-1000 words with 4-item shortlist, 2 implementation leads, 1 historical lead, tradeoff comparison, 3 discriminating tests; wrapper: source-map.json + sources/ evidence before native completion"},"retrieval_operation":"provider web_fetch (GET, HTML); Status 200 OK for all six; Content-Type text/html","retrieval_utc_exact_per_source":"UNKNOWN","retrieval_window_utc":{"end":"2026-10-10T04:58:30Z","note":"Window bounded by observed shell date outputs 04:57:10Z (pre-fetch) and 04:58:14Z/04:59:46Z (post-fetch); per-source seconds not emitted by fetch tool so recorded UNKNOWN, not fabricated","start":"2026-10-10T04:57:10Z"},"role_scope":"Brief-only discovery","slot_id":"B-DISC-G-02","source_statement_vs_inference":"Source statements are sentences attributed to named URL+section/version in discovery.md; all design judgments (coverage of compromised-job claim, fail-closed behavior, pairing advice) are marked Inference and are the agent's, not quoted source text.","sources":[{"id":"s01-slsa-provenance-v1","locator_sections":["Purpose","Model","Schema: Provenance/BuildDefinition/RunDetails/Builder/BuildMetadata","Verification","Migrating from 0.2","Change history v0.1-v1.0"],"organization":"SLSA (slsa.dev)","url":"https://slsa.dev/spec/v1.0/provenance","version":"SLSA Specification 1.0; page Status: Retired; notes v1.2 current"},{"id":"s02-slsa-verifying-artifacts","locator_sections":["How to verify","Step 1: Check SLSA Build level","Step 2: Check expectations","Forming Expectations","Architecture options"],"organization":"SLSA (slsa.dev)","url":"https://slsa.dev/spec/v1.0/verifying-artifacts","version":"SLSA Specification 1.0; page Status: Retired; notes v1.2 current"},{"id":"s03-sigstore-overview","locator_sections":["About/Overview nav","Cosign Signing/Verifying/Key Management nav","Certificate Authority/Fulcio/Rekor/Bundle refs (nav)"],"organization":"Sigstore (docs.sigstore.dev)","url":"https://docs.sigstore.dev/about/overview/","version":"UNKNOWN (docs site, version not stated on page)"},{"id":"s04-cosign-attestation","locator_sections":["Cosign Verifying: In-Toto Attestations","OIDC Verification Cheat Sheet ref","Policy Controller/Certificate Authority refs (nav)"],"organization":"Sigstore (docs.sigstore.dev)","url":"https://docs.sigstore.dev/cosign/verifying/attestation/","version":"UNKNOWN (docs site, version not stated on page)"},{"id":"s05-tuf-overview","locator_sections":["Purpose, or Why Get TUF?","Software Updates 101"],"organization":"The Update Framework (theupdateframework.io)","url":"https://theupdateframework.io/overview/","version":"UNKNOWN (docs site; fetched canonical /docs/overview/ content)"},{"id":"s06-intoto-docs","locator_sections":["Docs index: Technical Specification","Basic Demo","Python Reference Implementation"],"organization":"in-toto (in-toto.io)","url":"https://in-toto.io/docs/","version":"UNKNOWN (docs site, version not stated on page)"}]}
+{
+  "applicability": {
+    "s01-slsa-provenance-v1": "Mechanism 1 claims: predicateType, buildDefinition/runDetails/builder.id, purpose; historical lead: Retired/v1.2 pointer, migration and change-history sections",
+    "s02-slsa-verifying-artifacts": "Mechanism 1 verification steps: trusted builder IDs, signature check, buildType/externalParameters match; implementation lead A",
+    "s03-sigstore-overview": "Mechanism 2 existence of Fulcio/Rekor/Bundle/cosign verify flows; implementation lead B context",
+    "s04-cosign-attestation": "Mechanism 2 verify-attestation flow incl. in-toto attestations and OIDC/policy docs; implementation lead B",
+    "s05-tuf-overview": "Mechanism 4 purpose statements: libraries/formats/utilities, key-compromise impact, updater integration; depth limited to overview",
+    "s06-intoto-docs": "Mechanism 3 framework existence: spec/demo/Python implementation; SLSA/Sigstore cross-refs carry predicate usage; layout/link details unresolved"
+  },
+  "arm": "treatment",
+  "case_id": "ER12-B-DISC-G-02-FRESH",
+  "conditions_exceptions": "All fetches HTTP 200 HTML via provider web_fetch; processed output truncated by tool with full pages saved to session tool-outputs (not transcribed here). TUF and in-toto retrievals returned overview/index depth only; roles/specification and layout/link/threshold sections not retrieved in this run. No login, install, code execution, or fixture modification. Page budget respected; no other cases/canon/assessor reads.",
+  "corpus": "null (brief-only discovery; no seeded evidence corpus)",
+  "counts": {
+    "organizations_projects": 4,
+    "primary_pages_executed": 6,
+    "primary_pages_max": 8,
+    "primary_pages_min": 3
+  },
+  "deadline_utc": "2026-10-10T05:11:04.161000+00:00",
+  "proposed_vs_executed": {
+    "executed": "6 primary pages across 4 orgs/projects (SLSA x2, Sigstore x2, TUF x1, in-toto x1); discovery.md 779 words; source-map.json and sources/s01-s06 evidence saved before native Goal completion",
+    "proposed": "Common assignment: >=3 primary sources across >=2 orgs, at most 8 additional primary pages; discovery.md 700-1000 words with 4-item shortlist, 2 implementation leads, 1 historical lead, tradeoff comparison, 3 discriminating tests; wrapper: source-map.json + sources/ evidence before native completion"
+  },
+  "retrieval_operation": "provider web_fetch (GET, HTML); Status 200 OK for all six; Content-Type text/html",
+  "retrieval_utc_exact_per_source": "UNKNOWN",
+  "retrieval_window_utc": {
+    "end": "2026-10-10T04:58:30Z",
+    "note": "Window bounded by observed shell date outputs 04:57:10Z (pre-fetch) and 04:58:14Z/04:59:46Z (post-fetch); per-source seconds not emitted by fetch tool so recorded UNKNOWN, not fabricated",
+    "start": "2026-10-10T04:57:10Z"
+  },
+  "role_scope": "Brief-only discovery",
+  "slot_id": "B-DISC-G-02",
+  "source_statement_vs_inference": "Source statements are sentences attributed to named URL+section/version in discovery.md; all design judgments (coverage of compromised-job claim, fail-closed behavior, pairing advice) are marked Inference and are the agent's, not quoted source text.",
+  "sources": [
+    {
+      "id": "s01-slsa-provenance-v1",
+      "locator_sections": [
+        "Purpose",
+        "Model",
+        "Schema: Provenance/BuildDefinition/RunDetails/Builder/BuildMetadata",
+        "Verification",
+        "Migrating from 0.2",
+        "Change history v0.1-v1.0"
+      ],
+      "organization": "SLSA (slsa.dev)",
+      "url": "https://slsa.dev/spec/v1.0/provenance",
+      "version": "SLSA Specification 1.0; page Status: Retired; notes v1.2 current"
+    },
+    {
+      "id": "s02-slsa-verifying-artifacts",
+      "locator_sections": [
+        "How to verify",
+        "Step 1: Check SLSA Build level",
+        "Step 2: Check expectations",
+        "Forming Expectations",
+        "Architecture options"
+      ],
+      "organization": "SLSA (slsa.dev)",
+      "url": "https://slsa.dev/spec/v1.0/verifying-artifacts",
+      "version": "SLSA Specification 1.0; page Status: Retired; notes v1.2 current"
+    },
+    {
+      "id": "s03-sigstore-overview",
+      "locator_sections": [
+        "About/Overview nav",
+        "Cosign Signing/Verifying/Key Management nav",
+        "Certificate Authority/Fulcio/Rekor/Bundle refs (nav)"
+      ],
+      "organization": "Sigstore (docs.sigstore.dev)",
+      "url": "https://docs.sigstore.dev/about/overview/",
+      "version": "UNKNOWN (docs site, version not stated on page)"
+    },
+    {
+      "id": "s04-cosign-attestation",
+      "locator_sections": [
+        "Cosign Verifying: In-Toto Attestations",
+        "OIDC Verification Cheat Sheet ref",
+        "Policy Controller/Certificate Authority refs (nav)"
+      ],
+      "organization": "Sigstore (docs.sigstore.dev)",
+      "url": "https://docs.sigstore.dev/cosign/verifying/attestation/",
+      "version": "UNKNOWN (docs site, version not stated on page)"
+    },
+    {
+      "id": "s05-tuf-overview",
+      "locator_sections": [
+        "Purpose, or Why Get TUF?",
+        "Software Updates 101"
+      ],
+      "organization": "The Update Framework (theupdateframework.io)",
+      "url": "https://theupdateframework.io/overview/",
+      "version": "UNKNOWN (docs site; fetched canonical /docs/overview/ content)"
+    },
+    {
+      "id": "s06-intoto-docs",
+      "locator_sections": [
+        "Docs index: Technical Specification",
+        "Basic Demo",
+        "Python Reference Implementation"
+      ],
+      "organization": "in-toto (in-toto.io)",
+      "url": "https://in-toto.io/docs/",
+      "version": "UNKNOWN (docs site, version not stated on page)"
+    }
+  ]
+}

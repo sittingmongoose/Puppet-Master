@@ -1,0 +1,142 @@
+[
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/critique.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/reviewed-evidence.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/discovery.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/draft.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/revealed-plan.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/source-map.json",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/index.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/rechecked-evidence.md",
+    "sha256_matches": true,
+    "bytes_match": true
+  },
+  {
+    "stage": "investigator",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/inputs/brief.md",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/inputs/brief.md",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/discovery.md",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/draft.md",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/source-map.json",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/revealed-plan.md",
+    "exists": true
+  },
+  {
+    "stage": "critic",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/plan-reveal.json",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/inputs/brief.md",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/discovery.md",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/draft.md",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/source-map.json",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/revealed-plan.md",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/plan-reveal.json",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/critique.md",
+    "exists": true
+  },
+  {
+    "stage": "reviser",
+    "mapped_input": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/source-map.json",
+    "exists": true
+  }
+]

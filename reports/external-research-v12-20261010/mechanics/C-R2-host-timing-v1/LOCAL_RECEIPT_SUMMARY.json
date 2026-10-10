@@ -1,0 +1,411 @@
+{
+  "at": "2026-10-10T06:39:54.043325+00:00",
+  "stages": [
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "stage": "investigator",
+      "expected_objective": "ER12 investigator stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/control/stages/investigator/native-goal-activation.json",
+          "sha256": "b9517310d84deaec14dced26a406349dc4a9fcd7481c55c2c1b2fb9ca252a37e",
+          "pointer": "/goal",
+          "identity": "01a1245b-50ac-76f3-b213-e92049148654",
+          "objective": "ER12 investigator stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/control/stages/investigator/native-goal-completion.json",
+          "sha256": "a9cc6b6dcfb2dd4e0de247533e64bc7be62d1c73f3d5803c050a4c12089e7c50",
+          "pointer": "/goal",
+          "identity": "01a1245b-50ac-76f3-b213-e92049148654",
+          "objective": "ER12 investigator stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 199588,
+          "raw_cumulative_seconds": 928
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "stage": "critic",
+      "expected_objective": "ER12 critic stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/control/stages/critic/native_goal_activation.json",
+          "sha256": "cd41e35e754e4f0b50b98376e519dbf8dc3c6e40366f2ca51a9c859ad1f28462",
+          "pointer": "/goal",
+          "identity": "01a1246a-7330-7553-b8a5-4486b8f3f8c3",
+          "objective": "ER12 critic stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/control/stages/critic/native_goal_completion.json",
+          "sha256": "1c2ba94d72346afe083c6e4625291cc99a2b4473e961b9d92b603fd501d7f4fe",
+          "pointer": "/goal",
+          "identity": "01a1246a-7330-7553-b8a5-4486b8f3f8c3",
+          "objective": "ER12 critic stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 109693,
+          "raw_cumulative_seconds": 510
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "stage": "reviser",
+      "expected_objective": "ER12 reviser stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/control/stages/reviser/native-goal-activation.json",
+          "sha256": "182c7b37c8b4441eaee7e1bc61cabe3b178d381e086d52342ce75b708f2dd443",
+          "pointer": "/goal",
+          "identity": "01a12473-639b-7483-af44-f748d9f2b58c",
+          "objective": "ER12 reviser stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/control/stages/reviser/native-goal-completion.json",
+          "sha256": "542d2289c5178e2a8421296878a0ace13bf2efd45480182f3d6132df02d5f744",
+          "pointer": "/goal",
+          "identity": "01a12473-639b-7483-af44-f748d9f2b58c",
+          "objective": "ER12 reviser stage, run C-R2-01-control: execute ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 118942,
+          "raw_cumulative_seconds": 581
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "stage": "investigator",
+      "expected_objective": "ER12 investigator stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/treatment/stages/investigator/native-goal-activation.json",
+          "sha256": "20e8aad2abbcb3e4e04c54ec8004cabf28f5eb86edad919dc12b533c0813fd17",
+          "pointer": "/goal",
+          "identity": "01a1245b-588d-78d3-8832-c036f2112b97",
+          "objective": "ER12 investigator stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/treatment/stages/investigator/native-goal-completion.json",
+          "sha256": "4241b1f24a1fe170eae1eeb50c4a1c6700595b2458c22782fb0d18376e014401",
+          "pointer": "/goal",
+          "identity": "01a1245b-588d-78d3-8832-c036f2112b97",
+          "objective": "ER12 investigator stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 263994,
+          "raw_cumulative_seconds": 1308
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "stage": "critic",
+      "expected_objective": "ER12 critic stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/treatment/stages/critic/native-goal-activation.json",
+          "sha256": "31c09cd14e89268ec6a09be069a648db0bdc9ced9be49b4c13527a011cf3d84d",
+          "pointer": "/goal",
+          "identity": "01a12470-5037-7361-b8d2-23a1442c1b81",
+          "objective": "ER12 critic stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/treatment/stages/critic/native-goal-completion.json",
+          "sha256": "1836e5586783f70a561c42948bbecba92ed6124f1c26d88eaa2def3e3249c8fb",
+          "pointer": "/goal",
+          "identity": "01a12470-5037-7361-b8d2-23a1442c1b81",
+          "objective": "ER12 critic stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 185262,
+          "raw_cumulative_seconds": 616
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "expected_objective": "ER12 reviser stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-01/treatment/stages/reviser/native-goal-activation.json",
+          "sha256": "529fc57fa7148dc12b99d8974ae2d09bd7527aced0c4dabccc8b81f17fd1b104",
+          "pointer": "/goal",
+          "identity": "01a1247a-4cb7-7252-9b90-9e9c520d9ed0",
+          "objective": "ER12 reviser stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-01/treatment/stages/reviser/native-goal-completion.json",
+          "sha256": "5642b480604a06d99ac4736017b6f65ee6432862e211014c2077b5ff0599ff16",
+          "pointer": "/goal",
+          "identity": "01a1247a-4cb7-7252-9b90-9e9c520d9ed0",
+          "objective": "ER12 reviser stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 177105,
+          "raw_cumulative_seconds": 570
+        },
+        {
+          "path": "runs/C-R2-01/treatment/stages/reviser/native-goal-preterminal.json",
+          "sha256": "13e245e49479a156fb720572c485585d7fb61b7f655054e754cc82931b4fbd15",
+          "pointer": "/goal",
+          "identity": "01a1247a-4cb7-7252-9b90-9e9c520d9ed0",
+          "objective": "ER12 reviser stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 170988,
+          "raw_cumulative_seconds": 535
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "stage": "investigator",
+      "expected_objective": "ER12 investigator stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/control/stages/investigator/native-goal-activation.json",
+          "sha256": "d4a9233d4c03d84a8dc0e552e609ae624771f3cd82562ff910023c5e4e487dcf",
+          "pointer": "/goal",
+          "identity": "01a1245b-67e1-7a62-a2d7-72115b057044",
+          "objective": "ER12 investigator stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-02/control/stages/investigator/native-goal-completion.json",
+          "sha256": "39cbd25016bede3e677d7b695ba04e7893f1c1690c4ad4e502013260df27976c",
+          "pointer": "/goal",
+          "identity": "01a1245b-67e1-7a62-a2d7-72115b057044",
+          "objective": "ER12 investigator stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 247424,
+          "raw_cumulative_seconds": 1342
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "stage": "critic",
+      "expected_objective": "ER12 critic stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/control/stages/critic/native-goal-activation.json",
+          "sha256": "73a42a1159c2d8af324050781b1b33cef94ed9fb8ad9701ea6e466c4cb3d48ad",
+          "pointer": "/goal",
+          "identity": "01a12473-5581-7bc0-bce3-acf150660670",
+          "objective": "ER12 critic stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-02/control/stages/critic/native-goal-completion.json",
+          "sha256": "595cdb7311d0b328623758e1473be227c8d2581c4cbfaef6dab9287fc8350d8f",
+          "pointer": "/goal",
+          "identity": "01a12473-5581-7bc0-bce3-acf150660670",
+          "objective": "ER12 critic stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 111502,
+          "raw_cumulative_seconds": 496
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "control",
+      "stage": "reviser",
+      "expected_objective": "ER12 reviser stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/control/stages/reviser/native-goal-completion.json",
+          "sha256": "74c1f4da963d0f5b39d5f5c53f7ecbed4865d66d7a20d8e99bdca98462198857",
+          "pointer": "/goal",
+          "identity": "01a1247c-196d-7cd3-984c-c5d6a88840a4",
+          "objective": "ER12 reviser stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 98872,
+          "raw_cumulative_seconds": 633
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "stage": "investigator",
+      "expected_objective": "ER12 investigator stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/treatment/stages/investigator/native_goal_activation.json",
+          "sha256": "f58e7449e46efe3ab1d9bd65975326f9929294f928ef255001f61e16caae8af7",
+          "pointer": "/goal",
+          "identity": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+          "objective": "ER12 investigator stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-02/treatment/stages/investigator/native_goal_completion.json",
+          "sha256": "ab4b72f1bd48419d7670b1ae16e52a29692e69df44cb96fcd495f9d1572b47aa",
+          "pointer": "/goal",
+          "identity": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+          "objective": "ER12 investigator stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 189696,
+          "raw_cumulative_seconds": 715
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "stage": "critic",
+      "expected_objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/treatment/stages/critic/native-goal-activation.json",
+          "sha256": "2e2332cd7096916839b413807ae170947e0ed073bdab466699c81ff95ea8cb3d",
+          "pointer": "/goal",
+          "identity": "01a12467-2171-7702-b034-90507a6ad30d",
+          "objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-02/treatment/stages/critic/native-goal-completion.json",
+          "sha256": "3c78e1fcddb383f1abe150d567829e2548be1badb4b9cfc0a42cb1dd7a048193",
+          "pointer": "/goal",
+          "identity": "01a12467-2171-7702-b034-90507a6ad30d",
+          "objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 288910,
+          "raw_cumulative_seconds": 1426
+        },
+        {
+          "path": "runs/C-R2-02/treatment/stages/critic/native-goal-preterminal.json",
+          "sha256": "355dacc3d2c49511d1708b1e65207ac723dbbf13e41dac909387d567f7d628c4",
+          "pointer": "/goal",
+          "identity": "01a12467-2171-7702-b034-90507a6ad30d",
+          "objective": "ER12 critic stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 275792,
+          "raw_cumulative_seconds": 1325
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    },
+    {
+      "slot": "C-R2-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "expected_objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "local_receipt_claims": [
+        {
+          "path": "runs/C-R2-02/treatment/stages/reviser/native-goal-activation.json",
+          "sha256": "383bfb5f174df7dd95892d9f43a168bd34c70ec30b1d5267b6ae1ae25d85a24c",
+          "pointer": "/goal",
+          "identity": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+          "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 0,
+          "raw_cumulative_seconds": 0
+        },
+        {
+          "path": "runs/C-R2-02/treatment/stages/reviser/native-goal-completion.json",
+          "sha256": "00d09469cd4d6e5dc9196cea2295ac88c0eaf733991fef1a69486572e907d21b",
+          "pointer": "/goal",
+          "identity": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+          "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 254584,
+          "raw_cumulative_seconds": 643
+        },
+        {
+          "path": "runs/C-R2-02/treatment/stages/reviser/native-goal-preterminal.json",
+          "sha256": "26000b2649819fee3e7d430cfa38e58d86703e59f11ce2d1dcca1b5a4c32f532",
+          "pointer": "/goal",
+          "identity": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+          "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "objective_matches_frozen": true,
+          "raw_cumulative_tokens": 209289,
+          "raw_cumulative_seconds": 482
+        }
+      ],
+      "direct_native_host_provenance": "UNKNOWN",
+      "interpretation": "Captured local claims only; no receipt authenticity/freshness inferred from files, guard pass, or T3 completed state."
+    }
+  ]
+}

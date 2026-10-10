@@ -1,0 +1,1362 @@
+{
+  "checkpoint_original_sha256": "94f7c261ec522ef0505f9aba3438a11d29ea65dec3a956fb537e0d178f749d6e",
+  "frozen_at_utc": "2026-10-10T06:25:50.089725+00:00",
+  "counts": {
+    "admitted_logical_arms": 72,
+    "quiet_full_final_arms": 37,
+    "quiet_role_final_arms": 24,
+    "original_completed_judgments": 60,
+    "source_labels": {
+      "FAIL": 21,
+      "PASS_WITH_LIMITATIONS": 39
+    },
+    "judgment_scopes": {
+      "A": 32,
+      "B": 24,
+      "C1": 4
+    },
+    "full_final_pending_review": "C-R2-01/control"
+  },
+  "selected_final_arms": [
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-control-role-v1"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-treatment-role-v1"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-treatment-role-v1"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-control-role-v1"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "treatment",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-control-role-v2"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-control-role-v2"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-treatment-role-v2"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-reviser-v1"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-reviser-v1"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "treatment",
+      "stage": "critic-finalizer",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-02-control-role-v2"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "treatment",
+      "stage": "critic-finalizer",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-control-role-v2"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "treatment",
+      "stage": "investigator",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-control-reviser-v1"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "treatment",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "control",
+      "stage": "role",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "stage": "reviser",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1"
+    }
+  ],
+  "completed_original_judgments": [
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/treatment-v1/assessment.json",
+      "sha256": "12ce8013bfd59a4a30c4339e995968d6aa224273025d4e6d176f51fab353f2ae"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/control-v1/assessment.json",
+      "sha256": "9e0463165f1767a9b337cfd16cb334827d5328fb347e63f24e02c3c551fce914"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-01/control-v1/assessment.json",
+      "sha256": "28baf2e858b94d2d8dc2c7d4b3218f779040fdf70d29668c8e2f9e0f0b3a83ac"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/control-v1/assessment.json",
+      "sha256": "e929e0c1ff3978e72c421b650fe73ad9962262476180681c3fdb18c5f92e4452"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-01/treatment-v1/assessment.json",
+      "sha256": "122fe9751385c51d27000b2936d19bdc18a2ad55640b616ee13d4e5f245f883a"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-01/treatment-v1/assessment.json",
+      "sha256": "e63d283ba10cff51468180cf2a3d464bc01c3883bdf3c285184dbcca2d95cd71"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/treatment-v1/assessment.json",
+      "sha256": "94c8e8ce21ee3b7b1adc028ea3e4c454b57a0d62898522784a428551405fedf0"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-01/control-v1/assessment.json",
+      "sha256": "b4475269b2b406fda3942b7850c07ea6f485168cf5b5278600bedcf382a3064f"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/control-v1/assessment.json",
+      "sha256": "4a3829336eb5f6b21564edae6d9f9ffd010537fdbeda4a881e29d9d63a26a1d5"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-M-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-M-02/treatment-v1/assessment.json",
+      "sha256": "39e254132cd4bfe4c7cde3e6c4ef68f60bd0f82d479452d8840cd71585f76eb6"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A4-01/control-v1/assessment.json",
+      "sha256": "e43ef375bdcc63db1fb6e2b9bcf50cf76c0bae1b54e55859ab7ea571d3a18b2a"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/treatment-v1/assessment.json",
+      "sha256": "0c9b49e342128008e3f00d031ee7a87cdf46caeeac40624130666f61d5eb67f7"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A1-01/treatment-v1/assessment.json",
+      "sha256": "ff4bb8e68753975444aa3f4d4caf5e356d1478ddd4e88cdbb174f88500b3e9eb"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-01/control-v1/assessment.json",
+      "sha256": "92c6564d988c342d0d1fba8314365d36949931409890c2add08d48d6a8a8f090"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A6-01/treatment-v1/assessment.json",
+      "sha256": "9b062d21f7193110c253920d0edf8d0173aa1777b1eaa14b16a0ab0e1da0723c"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A1-02/control-v1/assessment.json",
+      "sha256": "9e2292f269e56163d5c69b6dc8be900c24384c77072cc09707fdc72553f9dbce"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A3-01/control-v1/assessment.json",
+      "sha256": "ad89862f132b364bea142acc9a2c873fe45eb411e4439f266a5ea6b726f9eaf7"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A1-01/control-v1/assessment.json",
+      "sha256": "2e8feaa4f758077eebe92a851cf36f74387aa67576f1877126ef24cd4b0c0e00"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A3-01/treatment-v1/assessment.json",
+      "sha256": "bce8d45f2601b63b056141c107b37c3180429d3cebf3d1d618d5662058d4cf16"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A6-01/control-v1/assessment.json",
+      "sha256": "4850f2f799e7f959d0c18ace032bd25e9bb30bb82ab3dd7f8c7d8c3a6cc0689e"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A8-01/treatment-v1/assessment.json",
+      "sha256": "8d47f5641f15cdf0a270196f22150e1f30a5fe7e151816df1666cb05d0b9459a"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A4-01/treatment-v1/assessment.json",
+      "sha256": "8b88e1b5f4a7ea99c563200d42a7c21f05ccdd4b3c2352908c75af2cbdc08664"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-02/treatment-v1/assessment.json",
+      "sha256": "0f73f07e4669b05ddbeb7b18a127740d6e75a4e9dcb92bd2823751e0840a1887"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A8-01/control-v1/assessment.json",
+      "sha256": "aeaa94460ebad5dfc577e6834244a5e23174703dab34d87793dbb978873b0044"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A1-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A1-02/treatment-v1/assessment.json",
+      "sha256": "287e89fb780439a37e75f538942e324288957c74f63a18ff1625696ac93282bd"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-M-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-M-02/control-v1/assessment.json",
+      "sha256": "b2b6a9d4478e3659d354c99d676ff7f911f8c801070640d88dffb9c459418e9a"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A5-01/treatment-v1/assessment.json",
+      "sha256": "0863fd6668d91c94bb590e1b13f4950ad207b1cc7c2166b45173c21efcf8cfac"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A2-01/treatment-v1/assessment.json",
+      "sha256": "05bc4912379526714ca7fe7c001839a2b38d751912a0d98bdd5cc3c02c693501"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A5-01/control-v1/assessment.json",
+      "sha256": "2542d312f799604883b0df782006ec492a894c2aa80af07b8bfaf01d05f4fbd2"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-01/treatment-v1/assessment.json",
+      "sha256": "bf7e98facf5813922b8e778f749dc499ca9c5243fea76a47a97ffd9062026f04"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A7-01/treatment-v1/assessment.json",
+      "sha256": "82915d4c90203398521b8dfd7d8b09b79d7aafd43f5616d13a506c911ddb13fa"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A7-01/control-v1/assessment.json",
+      "sha256": "381648046499f76c27b9ece715c4fae4d189a92ba0d4f8a20e4d7223c3954561"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A2-01/control-v1/assessment.json",
+      "sha256": "34bd8eaae0563fc427c4fcde63fd92d13ce116ce6db4125f519e9a2941c70c0f"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-01-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-01/control-v1/assessment.json",
+      "sha256": "428950d2fe194f7ce3f476646ace273e3f893ad5b8645196dd7e2b3b5197b9f6"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A7-02/treatment-v1/assessment.json",
+      "sha256": "dd4ac34a188c413b6a0845d07152326cd9e631bf8564f5a1fcc611c509c88abe"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/treatment-v1/assessment.json",
+      "sha256": "6da2942eaedec9d0e0c6486eb46e2959ba9f95099c387fc69c7f71317688004b"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-DISC-G-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-DISC-G-02/control-v1/assessment.json",
+      "sha256": "7f2dc999c433787fc36a54da326f94265dbe806ab45e4a734eaec0e1216f9cd6"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A7-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A7-02/control-v1/assessment.json",
+      "sha256": "f4db346b869edbedceed8d9890d6533734b5a258e8e79bac5e32c0cee4bd1a9e"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-02/treatment-v1/assessment.json",
+      "sha256": "464f4f16295f5aebe768bcb1ef0bb99f3b4f99b1409655aa51e72e11e2b848d1"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A6-02/treatment-v1/assessment.json",
+      "sha256": "ab87a6330551e15b6a77ac2728583dbfb6b836953285cfd80bd5cb182553216a"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-APPL-G-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-APPL-G-02/control-v1/assessment.json",
+      "sha256": "317a52883afd89bbb15ef85fc53847c4afc761e73e3e2dec4683e3281743b29d"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A6-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A6-02/control-v1/assessment.json",
+      "sha256": "8426823cefe95aa30bc58213d6142d24297cb70b276f31973b9c8e6a7b18caea"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/treatment-v1/assessment.json",
+      "sha256": "c509eb0538228b151aab4f4743691a1fe1fd9e213a3543c726c88dfafcb6a1f5"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-M-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1/assessment.json",
+      "sha256": "08f5ad60d830c84f04f8aa1a0e4089a8af45bbeafaf375bf990f7721cb12fe1c"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-treatment-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-02/treatment-v1/assessment.json",
+      "sha256": "1fe1afb5a99637ec19ac33cb9e93a2506082b8f1426a85e0ed42ff45cd3f4ee7"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A4-02/control-v1/assessment.json",
+      "sha256": "d3bb713f70ff2a022dd5e0231aa25346386c98ad86ca3bd36979efb8bcac000f"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-B-FINAL-G-02-control-v1",
+      "path": "ER12_RUNTIME/assessment/B-FINAL-G-02/control-v1/assessment.json",
+      "sha256": "5c83bc6a76f4ffa6392306430fc922f56d59da90dac183cbc1342c1edd50fb94"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A3-02/control-v1/assessment.json",
+      "sha256": "e724db52464182841aa6e4d00b705733057195195c6aef71ac3ebe9c550aaee0"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A8-02/treatment-v1/assessment.json",
+      "sha256": "18287ef1230b2e9bf614635d5a6e9177a0ed27eb35de496da61af0f26833db30"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A3-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A3-02/treatment-v1/assessment.json",
+      "sha256": "69ff978b63ef7e79b940017a487359670df6e84442c2d8b1eeabf29619247658"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A8-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A8-02/control-v1/assessment.json",
+      "sha256": "9be8f7848d2c7b14ca016c21c87aec986e972b05273c11fc62f5aff877ee3770"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R1-01-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/C-R1-01/control-v1/assessment.json",
+      "sha256": "2df3643bcf80139898fe6352f3fab1814793e2d780ee011db9cd0cf4ae48971c"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A5-02/treatment-v1/assessment.json",
+      "sha256": "874b3cbe80802cfc8dea28b30ca8d93ee530b7f45ff44fe5f9941ddf5321d6b8"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A2-02/treatment-v1/assessment.json",
+      "sha256": "6ff2cef9edcf59b0a404b22526b4eff617074a7a0d2e0a9bcc1173c0bdbb541f"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R1-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/C-R1-02/control-v1/assessment.json",
+      "sha256": "22750834e1c092615c441e8dfae9e33cbe90f28cc276d36a1b8264a34fd3a78b"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A5-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A5-02/control-v1/assessment.json",
+      "sha256": "f9c8a68d43dd270c07837aa7de99131d3f5e4aaa10d700f391fcc57694423811"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "control",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A2-02-control-full-v1",
+      "path": "ER12_RUNTIME/assessment/A2-02/control-v1/assessment.json",
+      "sha256": "5c0623d45990f84fe5c578963f1656effe9858c313142e17d8c100d15927e75b"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-A4-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/A4-02/treatment-v1/assessment.json",
+      "sha256": "2136d62e52b612d92ac56852d4c189fe0c514a720a893cd00b7cd7d7177c8595"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R1-01-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/C-R1-01/treatment-v1/assessment.json",
+      "sha256": "36d3ddc5b9f088eea2f22507916dc29329a8ec564ddd81084aae31250d62c80d"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R1-02-treatment-full-v1",
+      "path": "ER12_RUNTIME/assessment/C-R1-02/treatment-v1/assessment.json",
+      "sha256": "87a234d0c0ae025db42f91289490a953371c523df4664f71b9e343016e91570c"
+    }
+  ],
+  "originals_remain_unregraded": true,
+  "assessment_states": [
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-DISC-M-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-G-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-M-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-G-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "investigator"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-M-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-M-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A6-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A3-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A4-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "critic-finalizer"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-DISC-M-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A5-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A2-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "critic-finalizer"
+    },
+    {
+      "slot": "A7-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-DISC-G-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-DISC-G-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A7-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A6-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "investigator"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-APPL-G-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-M-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A3-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "B-FINAL-G-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "role"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "FAIL",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A4-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A5-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "A2-02",
+      "arm": "control",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "C-R1-01",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "C-R1-02",
+      "arm": "treatment",
+      "state": "COMPLETED_INDEPENDENT_ASSESSMENT",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    },
+    {
+      "slot": "C-R2-01",
+      "arm": "control",
+      "state": "SOURCE_PENDING",
+      "source_judgment": null,
+      "basis": "immutable cohort4 original-completed-judgment whitelist",
+      "source_grading": "original unmodified; no completion-derived grade",
+      "final_stage": "reviser"
+    }
+  ]
+}

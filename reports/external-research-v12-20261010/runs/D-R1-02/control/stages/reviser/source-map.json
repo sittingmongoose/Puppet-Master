@@ -1,0 +1,340 @@
+{
+  "run_id": "D-R1-02-control",
+  "stage": "reviser",
+  "scope_basis": "Complete review of the original brief, revealed plan, frozen investigator package, independent critique and critic source map. Source IDs and identities are carried unchanged; disputed claims were independently rechecked in governing primary publisher sources.",
+  "access_utc_window": "2026-10-10T06:51:14Z/2026-10-10T06:51:15Z",
+  "sources": [
+    {
+      "source_id": "S01",
+      "title": "ISO 5348:2021 — Mechanical mounting of accelerometers",
+      "url": "https://www.iso.org/standard/78160.html",
+      "released_version_or_commit": "ISO 5348:2021, Edition 3, published 2021-01; official page says confirmed 2026-07-16 and current.",
+      "locator": "Official ISO page, abstract and lifecycle lines 4–50, 83–97, 138–142.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Describes properties and recommended practice for contacting vibration-transducer mounts; says mounting can affect frequency response and measurement fidelity.",
+      "governing_condition_default_exception": "Applies to contacting uniaxial/multiaxial accelerometers and velocity transducers; other influences (alignment, base bending, cable motion, temperature, fields, cable whip, torque) are listed but out of scope.",
+      "applicability": "Use to motivate mount characterization and account for orientation/fastening; does not state what mount the cart has or diagnose the bracket.",
+      "critic_independent_verification": {
+        "access": "Official ISO page opened; not relied on for substantive claims in this critique because its page carries a non-AI-use notice. Mounting claims were checked against S02/S03.",
+        "locator_checked": "Official page metadata/abstract was encountered; no substantive source text reproduced in critique.",
+        "scope": "Identity/version mapping preserved from investigator record; no cart-specific inference."
+      }
+    },
+    {
+      "source_id": "S02",
+      "title": "TE Connectivity, Guidelines for Adhesive Mounting Accelerometers",
+      "url": "https://www.te.com/content/dam/te-com/documents/sensors/global/guidelines-adhesive-mounting-accelerometers-app-note.pdf",
+      "released_version_or_commit": "©2017 TE Connectivity; one-page application note; no revision number shown.",
+      "locator": "Page 1, opening paragraph and mounting guidelines.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "States stiffer coupling raises mounted natural frequency; magnetic is least stiff and stud/screw most stiff; recommends a thin adhesive layer when using cyanoacrylate.",
+      "governing_condition_default_exception": "Guidance is specific to adhesive mounting; temperature range for cited cyanoacrylate is −18 to 125 °C; surface should be flat, clean; the document disclaims application suitability warranties.",
+      "applicability": "Only an illustrative alternative if the cart uses an adhesive or removable mount; do not prescribe this adhesive for an unknown sensor/surface.",
+      "critic_independent_verification": {
+        "access": "Official TE PDF opened and read.",
+        "locator_checked": "Page 1: mounting stiffness and mounted natural frequency; clean/flat surface and thin adhesive-layer guidance.",
+        "scope": "Adhesive-specific vendor guidance; supports a conditional mechanism only, not an unknown cart mount."
+      }
+    },
+    {
+      "source_id": "S03",
+      "title": "Endevco Technical Paper 312 — Guide to Adhesively Mounting Accelerometers",
+      "url": "https://www.endevco.com/contentStore/mktgContent/endevco/dlm_uploads/2019/02/TP312.pdf",
+      "released_version_or_commit": "Technical Paper 312; vendor PDF URL dated 2019-02; no revision identifier observed.",
+      "locator": "Pages 1–5, purpose, mounting recommendations, tested-model examples and material-specific restrictions.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Reports mount coupling stiffness affects natural frequency; describes tests of models 751-100 and 2226C and examples of adhesive/magnet limits.",
+      "governing_condition_default_exception": "Results are limited to the listed sensors, adhesives, test conditions, frequencies, temperatures and amplitudes; e.g. vendor cautions magnet mounts only at lower frequencies and hot glue above 93 °C.",
+      "applicability": "Supports treating mount method as a transfer-function variable; numerical frequency limits are not transferable to unknown cart hardware.",
+      "critic_independent_verification": {
+        "access": "Official Endevco PDF opened and read.",
+        "locator_checked": "Pages 1–5: coupling stiffness, tested models, adhesives, and method-specific limits.",
+        "scope": "Results depend on the cited sensor models and test conditions; no cart performance transfer."
+      }
+    },
+    {
+      "source_id": "S04",
+      "title": "Railway Track Monitoring Using Train Measurements: An Experimental Case Study",
+      "url": "https://www.mdpi.com/2076-3417/9/22/4859",
+      "released_version_or_commit": "Malekjafarian et al., Applied Sciences 2019, 9(22), 4859; DOI 10.3390/app9224859; published 2019-11-13.",
+      "locator": "Abstract and sections 1, 3–5 (60-pass study, speed influence/correction, comparison with Track Recording Vehicle).",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Uses an in-service Irish train with accelerometers/GPS over two months; analyzes 60 passes on Dublin–Belfast and compares scaled signal energy to Track Recording Vehicle data.",
+      "governing_condition_default_exception": "Data selection removed passes below a speed limit and corrected remaining energy by measured speed; it is specific to that line/train/algorithm/reference.",
+      "applicability": "Supports logging speed, repeated passes and an independent geometry reference; no result or threshold transfers to the maintenance cart.",
+      "critic_independent_verification": {
+        "access": "Official MDPI article surfaced through publisher search excerpts; direct open returned an internal error.",
+        "locator_checked": "Publisher excerpt supports 60 passes and speed influence/correction; full article details were not independently re-read in this stage.",
+        "scope": "A rail precedent for repeat passes/speed/reference only; no cart thresholds or responses transfer."
+      }
+    },
+    {
+      "source_id": "S05",
+      "title": "Development of railway track condition monitoring from multi-train in-service vehicles",
+      "url": "https://doi.org/10.1080/00423114.2020.1755045",
+      "released_version_or_commit": "Balouchi, Bevan & Formston, Vehicle System Dynamics 59(9), 1397–1417; online 2020-04-22, issue publication 2021-09-01; DOI 10.1080/00423114.2020.1755045.",
+      "locator": "Publisher full text, trials on Network Rail infrastructure and conclusions (Run 36 repeat; speed/GNSS alignment; vertical/lateral limits).",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "A cab-based demonstrator was aligned with Network Rail New Measurement Train geometry using time/GNSS and compared speed; Run 36 repeated a section and detected the same location.",
+      "governing_condition_default_exception": "Authors report low/changing speed reduced correlation without speed compensation; vehicle response and suspension limit inference; lateral correspondence weaker than vertical.",
+      "applicability": "Supports a controlled repeat-pass and synchronization design, while showing that rail-car calibration and known-fault correlation are not cart evidence.",
+      "critic_independent_verification": {
+        "access": "Taylor & Francis full-text result and excerpts reviewed; direct open returned an internal error.",
+        "locator_checked": "Official excerpts describe speed compensation and Figures 16–18 comparing normalized 1/8-mile statistics for Run 25/Run 36 against NMT data; vertical agreement is stronger than lateral.",
+        "scope": "The excerpt does not substantiate the draft's stronger claim that a repeated run detected the same discrete reported location; see C1."
+      },
+      "reviser_independent_verification": {
+        "access_utc_window": "2026-10-10T06:51:14Z/2026-10-10T06:51:15Z",
+        "primary_source_page": "https://www.tandfonline.com/doi/full/10.1080/00423114.2020.1755045",
+        "release": "Vehicle System Dynamics 59(9), pp. 1397–1417, 2021; published online 2020-04-22; DOI 10.1080/00423114.2020.1755045.",
+        "locator_checked": "Publisher full-text search result, sections on speed compensation and Network Rail trials, Figure 9 text, and comparison of Runs 25 and 36.",
+        "access_operation": "Official Taylor & Francis full-text result returned the article passage; direct open returned an internal error.",
+        "observed_operation": "The article says the repeated Run 36 over the same section captured the same known track fault as Run 25. It describes matching speed/data sections against NMT and a longitudinal location offset from different GNSS antenna positions. Its trial also reports stronger vertical than lateral agreement and speed effects.",
+        "governing_condition_default_exception": "A particular in-cab demonstrator, Thameslink/NMT route, known track fault, train response and GNSS configuration; the article describes speed compensation needs and acknowledges location offset. These conditions are specific to the rail study.",
+        "applicability": "Supports the narrow statement that this rail demonstrator reported repeated capture of the same fault and the use of time/GNSS/speed alignment. It does not supply cart performance, a transferable threshold, or diagnosis for this case.",
+        "disposition": "Critique C1's claim that the primary study did not establish repeated capture is rejected; the final wording is tightened to the article's rail-specific result and limits."
+      }
+    },
+    {
+      "source_id": "S06",
+      "title": "Development and Operation of Track Condition Monitoring System Using In-Service Train",
+      "url": "https://doi.org/10.3390/app13063835",
+      "released_version_or_commit": "Tsunashima et al., Applied Sciences 2023, 13(6), 3835; DOI 10.3390/app13063835; PDF article version linked as version=1691324931.",
+      "locator": "Sections 2–3 and 7; PDF pages 3–7 and 18–19, especially measurement history, same-train note, speed note, position caveat, and maintenance comparison.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Regional railway onboard accelerometer/gyro/GNSS deployment operated Oct 2020–Aug 2022; near-zero data Jan–Jun 2022 due to vehicle inspection/software updates; used time-position correction and track-geometry data.",
+      "governing_condition_default_exception": "Analysis used the same train because readings change with train; selected sections did not correct speed because reported variation was small. Section 2.3 gives the inspection/software-update gap as Jan–Jun 2022, while Section 3.3 gives Jan 2021–Jun 2022; the paper is internally inconsistent on the gap start. GNSS map matching and operator curve reference points also had stated location caveats.",
+      "applicability": "Operational history and explicit limits inform audit items; system, rail thresholds, vehicle dynamics and location corrections do not transfer to this cart.",
+      "critic_independent_verification": {
+        "access": "Official MDPI article/PDF search results reviewed; direct open returned an internal error.",
+        "locator_checked": "Publisher excerpts confirm long-term deployment, no measurement between January and June 2022, GNSS position error and correction; the complete cited sections were not independently recovered.",
+        "scope": "Operational history only; cart transfer is bounded. Investigator's noted internal gap-date inconsistency remains a source-level caveat."
+      }
+    },
+    {
+      "source_id": "S07",
+      "title": "Experimental Study of Wheel-to-Rail Interaction Using Acceleration Sensors for Continuous Rail Transport Comfort Evaluation",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10574946/",
+      "released_version_or_commit": "Mihăilescu et al., Sensors 2023; PMCID PMC10574946, PMID 37836894; accepted 2023-09-22, collection date 2023-10.",
+      "locator": "Sections 2.1–2.3, 3.1–3.3 and 4; sensor/DAQ specifications, stored table rows, and discussion of empty vs loaded trials.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "A six-sensor tank-wagon study compares axle and car-body positions, empty and loaded, on a test ring; the hardware table reports 19.2 kS/s, the example export advances by 0.02 s (50 Hz), while discussion says 50 ms (20 Hz).",
+      "governing_condition_default_exception": "Empty run was 125 km/h and loaded run 110 km/h, so load and speed are confounded. The paper does not reconcile the stated amplifier rate, tabulated 0.02 s increments, and 50 ms/20 Hz discussion. Findings and cadence are specific to this wagon/setup.",
+      "applicability": "Shows why mounting position, load, speed and background vehicle response must be logged and separated; neither its sample rate nor values set cart requirements.",
+      "critic_independent_verification": {
+        "access": "Full PMC article opened and checked.",
+        "locator_checked": "Table 2 amplifier specification; software/export table at 0.02 s; later text says 50 ms/20 Hz; unloaded 125 km/h versus loaded 110 km/h.",
+        "scope": "The paper's setup is internally inconsistent about cadence, and load is confounded with speed; neither rate transfers to the cart."
+      }
+    },
+    {
+      "source_id": "S08",
+      "title": "Method for predicting dynamic loads for a health monitoring system for subway tracks",
+      "url": "https://doi.org/10.3389/fmech.2022.858424",
+      "released_version_or_commit": "Romero Navarrete et al., Frontiers in Mechanical Engineering, article 858424 (2022); DOI 10.3389/fmech.2022.858424.",
+      "locator": "Sections 'Force estimation' and 'Experimental procedure', field/rig method and limitations, lines 351–379 of publisher text.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "A 1:10 rail rig measured cart speed optically, MEMS acceleration, and track strain; a rail-gap trigger synchronized channels; impact tests identified system natural frequencies.",
+      "governing_condition_default_exception": "Specific scaled rail geometry/model and operating conditions; authors note validation of analytical models is limited to particular conditions; a fixed strain gauge only captures its local passage response.",
+      "applicability": "Provides a concrete synchronized independent-reference design pattern, not a ready-made method or transfer function for this cart.",
+      "critic_independent_verification": {
+        "access": "Full Frontiers article opened and checked.",
+        "locator_checked": "Experimental procedure: 1:10 rig, optical speed, acceleration, strain gauges and rail-gap trigger; results explain the fixed gauge's local coverage.",
+        "scope": "A synchronized-reference design pattern only; the scaled rig and fixed sensor do not provide a cart transfer function."
+      },
+      "reviser_independent_verification": {
+        "access_utc_window": "2026-10-10T06:51:14Z/2026-10-10T06:51:15Z",
+        "primary_source_page": "https://www.frontiersin.org/journals/mechanical-engineering/articles/10.3389/fmech.2022.858424/full",
+        "release": "Jauregui-Correa et al., Frontiers in Mechanical Engineering, volume 8, article 858424, published 2022-09-14; DOI 10.3389/fmech.2022.858424.",
+        "locator_checked": "Force estimation / Experimental procedure, publisher lines 366–376; Empirical mode decomposition results, lines 407–412.",
+        "access_operation": "Frontiers publisher article opened and the experimental setup and fixed-gauge locality text were read.",
+        "observed_operation": "A 1:10 rig used optical speed, MEMS acceleration and fixed track strain gauges, with rail-gap triggering for synchronization. The authors say strain was significant when the railcar passed a fixed gauge and that a gauge would not register a dynamic condition at a remote track location.",
+        "governing_condition_default_exception": "A scaled rail rig, fixed gauge positions and the authors' measurement arrangement; local coverage is explicit, but the arrangement is not the maintenance cart.",
+        "applicability": "Supports synchronized reference design as an analogy and confirms that a null at one fixed location cannot exclude an event elsewhere. It does not establish cart diagnosis or whole-route coverage.",
+        "disposition": "Critique C2 is accepted; a null-reference branch and reference-quality checks are added."
+      }
+    },
+    {
+      "source_id": "S09",
+      "title": "STMicroelectronics LSM6DSM datasheet",
+      "url": "https://www.st.com/resource/en/datasheet/lsm6dsm.pdf",
+      "released_version_or_commit": "DocID028165 Rev 7, dated September 2017; revision history at page 125 records Rev 6 (2017-05-03) and Rev 7 (2017-09-29).",
+      "locator": "Section 10.5 FIFO_CTRL2, Table 31; page 1 release metadata; revision history page 125.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Describes a configurable digital 3-axis accelerometer/gyro, FIFO, ranges and register behavior; timestamp/step-counter FIFO data set is disabled by default.",
+      "governing_condition_default_exception": "Applies only to LSM6DSM. TIMER_PEDO_FIFO_EN default is 0; timestamp storage requires enabling it; defaults/configuration are not generic logger behavior.",
+      "applicability": "Example of why exact sensor ID and register configuration matter before relying on sample timestamps; no evidence this device is in the cart logger.",
+      "critic_independent_verification": {
+        "access": "Official ST datasheet PDF opened and checked.",
+        "locator_checked": "DocID028165 Rev 7, FIFO_CTRL2 and FIFO_CTRL4: timestamp/step dataset disabled by default; fourth-set decimation default is zero.",
+        "scope": "Applies only to LSM6DSM and its register configuration; no evidence that the cart uses it."
+      }
+    },
+    {
+      "source_id": "S10",
+      "title": "ST AN4987 — LSM6DSM: always-on 3D accelerometer and 3D gyroscope",
+      "url": "https://www.st.com/resource/en/application_note/dm00352102-lsm6dsm-alwayson-3d-accelerometer-and-3d-gyroscope-stmicroelectronics.pdf",
+      "released_version_or_commit": "AN4987 Rev 5, revision history dated 2018-08-14.",
+      "locator": "Section 3.7, pp.12–14 for accelerometer filtering chain/ODR bandwidth; p.114 Table 93 for revision history.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Documents a multi-stage sampling/filter chain and configuration-dependent bandwidth, anti-alias and filter settling.",
+      "governing_condition_default_exception": "Anti-alias filter is enabled only in High-Performance mode; bandwidth depends on selected ODR and bits; applies to this exact sensor/configuration.",
+      "applicability": "Supports auditing actual filter and sampling settings; do not infer any cart logger behavior from this sample device.",
+      "critic_independent_verification": {
+        "access": "Official ST AN4987 Rev 5 PDF opened and checked.",
+        "locator_checked": "Section 3.7, pp. 12–14: analog anti-alias filter only in High-Performance mode, ODR-dependent bandwidth and filtering chain.",
+        "scope": "Configuration-specific example; no cart logger behavior inferred."
+      }
+    },
+    {
+      "source_id": "S11",
+      "title": "ST technical support thread: LSM6DSM timestamp in FIFO occasionally incorrect",
+      "url": "https://community.st.com/mems-sensors-48/lsm6dsm-timestamp-in-fifo-occasionally-incorrect-166217?fid=48&tid=166217",
+      "released_version_or_commit": "ST Community accepted answer by ST Technical Moderator, dated 2026-07-06; no device firmware/revision or formal erratum identified in the thread.",
+      "locator": "Accepted answer lines 62–80 and repeated answer lines 89–107.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "For one reported jumping/backward timestamp case, moderator says FIFO timestamp dataset/configuration and parsing may be responsible; recommends enabling dataset, checking pattern/order, and resetting counter after resolution change.",
+      "governing_condition_default_exception": "Scoped to LSM6DSM FIFO and the user's reported FIFO_CTRL4=0x08 setup; response says cause is likely/may explain, not a confirmed silicon defect.",
+      "applicability": "Illustrates version/config-specific support history to check if device matches; not evidence of a cart logger issue or proof of defect.",
+      "critic_independent_verification": {
+        "access": "ST Community thread opened and checked.",
+        "locator_checked": "Accepted moderator answer: timestamp issue is described as likely related to FIFO setup; timestamp dataset and FIFO decimation are both required.",
+        "scope": "Single configuration-specific support response, not a confirmed silicon defect or cart issue."
+      }
+    },
+    {
+      "source_id": "S12",
+      "title": "Research on vibration fatigue of sensor bracket in a metro bogie based on the pseudo excitation method",
+      "url": "https://doi.org/10.1016/j.engfailanal.2022.107046",
+      "released_version_or_commit": "Liu et al., Engineering Failure Analysis 145 (March 2023), Article 107046; DOI 10.1016/j.engfailanal.2022.107046.",
+      "locator": "Publisher abstract and sections 'Failure mode of sensor bracket in a metro car' and 'Field test'; article PII S1350630722010135.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "A field-tested metro bracket was modeled; paper reports a bracket mode near 61 Hz excited by rail corrugation impact as a fatigue contributor.",
+      "governing_condition_default_exception": "Specific 3.5-kg position sensor, C-shaped cantilever bracket, bolted metro bogie, operating line and validated model.",
+      "applicability": "Supports considering bracket resonance/flex as a possible mechanism after the reported bracket change; it cannot establish cart bracket behavior or failure.",
+      "critic_independent_verification": {
+        "access": "Elsevier ScienceDirect publisher search excerpt reviewed; direct open returned an internal error.",
+        "locator_checked": "Publisher abstract identifies a specific C-shaped bolted metro bracket and a modal vibration near 61 Hz associated with rail-corrugation impact/fatigue.",
+        "scope": "Specific metro installation only; draft correctly limits transfer to plausibility of bracket dynamics."
+      }
+    },
+    {
+      "source_id": "S13",
+      "title": "Siemens Mobility takes part in Network Rail trials to predict rough rides",
+      "url": "https://news.siemens.co.uk/news/siemens-mobility-takes-part-in-network-rail-trials-to-predict-rough-rides",
+      "released_version_or_commit": "Siemens Mobility press release dated 2022-04-22; trial status reported one month into a six-month operational trial.",
+      "locator": "Lines 16–34, especially trial fleet, predecessor simulation, progress and product architecture.",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z",
+      "observed_operation": "Siemens reported its TBCM application in a Network Rail Lot 1 trial on 80 South Western Railway trains in the Wessex region; five other manufacturers' systems were also in the trial. The product used the existing GSM-R cab-radio platform; press release says it was one month into operation.",
+      "governing_condition_default_exception": "Vendor report, early in a six-month trial; states an initial rough-ride prediction result but supplies no independent metrics or post-trial evaluation in this page.",
+      "applicability": "Shows a comparator's route from simulation to multi-train operational trial and dependence on rail data/GSM-R; its claims, sensors, location performance and thresholds do not transfer to a cart.",
+      "critic_independent_verification": {
+        "access": "Official Siemens release opened and checked.",
+        "locator_checked": "Lines 17–27: 80 SWR trains, Wessex, GSM-R platform and one month into a six-month multi-vendor trial; page is vendor-authored.",
+        "scope": "Early vendor-reported implementation history; it supplies no independent performance metrics."
+      }
+    }
+  ],
+  "note": "Source claims are bounded by the listed locators and conditions; applicability is stated per source. No live or physical measurements were taken.",
+  "upstream_source_maps": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+      "stage": "investigator",
+      "access_utc_window": "2026-10-10T06:24:44Z/2026-10-10T06:33:01Z"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/source-map.json",
+      "stage": "critic",
+      "access_utc_window": "2026-10-10T06:40:25Z/2026-10-10T06:44:12Z"
+    }
+  ],
+  "reviewed_input_artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/inputs/brief.md",
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+      "sha256": "d90437743f7e0de7b1573ff8e0bef49393a9dd9b028c04b7718b5afac1ef0003"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+      "sha256": "aecdf46fc4d166f29b1ed7ff2b23f8aba9f84937fbeb427e40659ee4627e8100"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+      "sha256": "c98413ebb33a3ac7b8534cf6a3838ecf26b92222f8adf9c9b58c993dd508d9e1"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/revealed-plan.md",
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+      "sha256": "0b461e0b9f2cadc96bbd334263ba6508e902c4402455aee2de45caf96063cdfb"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+      "sha256": "2d34e28b8dac35fb0bf7ee3c6be1d0aeba6b173261e503e07e58431cc94be72f"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/source-map.json",
+      "sha256": "b4b0ac3560dc30029efbac7d8fdcf9209d1c98c67ae475bfa0f7dfb44a770563"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/input-map.json",
+      "sha256": "71d68dab1379429f049ed4d63870ce6fbbda609db2b69c3b84a19e2bea8a14e3"
+    }
+  ],
+  "native_goal_activation": {
+    "response_path": "native-goal-activation.json",
+    "threadId": "01a1248f-afb6-75c0-a600-f38e59a7ead8",
+    "objective": "ER12 reviser stage, run D-R1-02-control: execute ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status_at_activation": "active",
+    "createdAt": 1791614779,
+    "updatedAt": 1791614779,
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "binding_guard": {
+      "stdout_path": "goal-binding-guard.stdout.txt",
+      "exit_code": 0,
+      "result": {
+        "ok": true,
+        "provenance_independently_proved": false
+      }
+    }
+  },
+  "native_goal_completion_response_path": "native-goal-completion.json",
+  "reviser_critique_dispositions": [
+    {
+      "id": "C1",
+      "decision": "reject unsupported-finding conclusion; amend for precision",
+      "rationale": "Publisher full-text result explicitly reports Run 36 capturing the same known fault as Run 25; retain rail-specific context and transfer limitations."
+    },
+    {
+      "id": "C2",
+      "decision": "accept and amend",
+      "rationale": "Fixed-reference null is non-diagnostic outside its coverage; add coverage/acquisition checks and qualified-engineering review for a persistent mapped event."
+    },
+    {
+      "id": "C3",
+      "decision": "accept and amend",
+      "rationale": "A reference channel corroborates local response; qualified inspection is needed for defect attribution and safety judgment."
+    },
+    {
+      "id": "C4",
+      "decision": "accept and amend",
+      "rationale": "Replication and stopping criteria depend on the unresolved endpoint and baseline variation; define precision target, minimum/maximum passes, interim points, and inconclusive result rule before testing."
+    },
+    {
+      "id": "load-factor-interpretation",
+      "decision": "accept as an explicit limitation",
+      "rationale": "Two combined load configurations do not isolate mass from placement; vary separately only in a justified follow-on design."
+    }
+  ],
+  "reviewer_note": "The exact activation response and binding-guard stdout are saved as separate files in this stage directory. Goal response freshness/provenance is not independently proved by the guard. The exact native completion response will be saved separately after completing the same Goal.",
+  "final_path": "final.md",
+  "source_index_path": "sources/index.md",
+  "final_sha256": "4c7059e70709a117f6a872a14113241e60a9cca068ca942600a88d5f43fc20eb",
+  "source_index_sha256": "26e55e15665582d4e153bd031005ef538b897dd525da2474f0d77b83edafd9a8"
+}

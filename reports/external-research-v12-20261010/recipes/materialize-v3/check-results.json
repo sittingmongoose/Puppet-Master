@@ -1,0 +1,791 @@
+{
+  "passed": true,
+  "checks": 194,
+  "details": [
+    {
+      "name": "public pin README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin delta-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin extra-checks.py",
+      "passed": true
+    },
+    {
+      "name": "public pin materialize.py",
+      "passed": true
+    },
+    {
+      "name": "public pin preservation-check.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-bundle-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "public pin prior-v2-check-results.json",
+      "passed": true
+    },
+    {
+      "name": "public pin public-input-dependency-manifest.json",
+      "passed": true
+    },
+    {
+      "name": "public pin source-lineage.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-composite-A1-A8-v1/COMPONENT_PINS.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-composite-A1-A8-v1/prepare.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/bootstrap.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/prepare.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/helpers/er12-screen-v1/reveal.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/README.md",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/ROOT_VERIFICATION.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/activation-snippet-template.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/dependency-sha256.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-activation-capture-v2-1/overlay.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/exact-goal-binding-guard-v1/overlay.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/invocation-clarification-v1/helper-pins.json",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/invocation-clarification-v1/transform.py",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/captureSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/clarifySpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/exactSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/mechanics/native-root-code-mode/standardSpecJS.js",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/A8/critic_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "public pin sources/methods/A8/reviser_prompt_delta.txt",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 R0 old bootstrap sequence preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1 old bootstrap sequence preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 final composite config pins",
+      "passed": true
+    },
+    {
+      "name": "exact-v1 A1+A8 old bootstrap sequence preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 offline bootstrap stops before dispatch",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 bootstrap v21 prepared before stop",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 no reveal or native Goal",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 bootstrap unused retry preserves v21 capture",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 investigator expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 critic expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 reviser expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 changed generated config refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 R0 external historical slot not adopted",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 offline bootstrap stops before dispatch",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 bootstrap v21 prepared before stop",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 no reveal or native Goal",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 bootstrap unused retry preserves v21 capture",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 investigator expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 critic expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 reviser expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 changed generated config refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1 external historical slot not adopted",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 copied complete closure materializes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 final portable manifest",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 actual final relocated repins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 unchanged v1 assertion",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 final component pins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 final composite config pins",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 offline bootstrap stops before dispatch",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 bootstrap v21 prepared before stop",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 no reveal or native Goal",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 bootstrap unused retry preserves v21 capture",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 investigator expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 critic expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser frozen hard clock",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser original transforms first ",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser opaque fields unread and equivalent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser objective time route key scope preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser entire baseline assignment preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser exact prompt delta preserved",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser unused v21 retry idempotent",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser used stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser changed stage refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser MOCK snippet once full bytes optional quotes",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser wrong objective stops onecreate preserves raw",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 reviser expired clock refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 changed generated config refused",
+      "passed": true
+    },
+    {
+      "name": "exact-capture-v21 A1+A8 external historical slot not adopted",
+      "passed": true
+    },
+    {
+      "name": "236 prior edition assertions retained, not rerun",
+      "passed": true
+    }
+  ],
+  "prior_v2_checks": 236,
+  "prior_v2_rerun": false,
+  "mode": "SYNTHETIC_OFFLINE_DELTA_ONLY",
+  "native_candidate_calls": 0,
+  "dispatches": 0,
+  "reveal_executions": 0,
+  "science_qualified": false,
+  "provenance_qualified": false,
+  "scratch_removed": true
+}

@@ -26,7 +26,7 @@
       "name": "Original obligations and negative constraints",
       "coverage": "COMPLETE",
       "judgment": "PASS",
-      "assessment": "Final covers U1\u2013U6 as a standalone proposal: separate identities and content-backed local journal; recovery from process/network/source changes; two mechanisms; three integrity levels; accountable cleanup/retry owners; versioned history and exact compatibility tuple; facts/design/unknowns and proposed/executed separation. Existing UI and identity stay outside implementation scope. Conditional gateway journaling respects the preference to avoid a second durable server, while retaining tus. No real upload or throughput result is asserted. The original brief's phase/reveal constraints are assessed separately as protocol evidence.",
+      "assessment": "Final covers U1–U6 as a standalone proposal: separate identities and content-backed local journal; recovery from process/network/source changes; two mechanisms; three integrity levels; accountable cleanup/retry owners; versioned history and exact compatibility tuple; facts/design/unknowns and proposed/executed separation. Existing UI and identity stay outside implementation scope. Conditional gateway journaling respects the preference to avoid a second durable server, while retaining tus. No real upload or throughput result is asserted. The original brief's phase/reveal constraints are assessed separately as protocol evidence.",
       "locators": [
         {
           "path": "ER12_RUNTIME/runs/A1-01/control/stages/reviser/final.md",
@@ -692,10 +692,10 @@
         "path": "ER12_RUNTIME/frozen-inputs/A1-01/plan.md",
         "line": 14
       },
-      "exact_text": "Required final clauses U1\u2013U6 and the brief's negative constraints remain binding. Preserve the option of a protocol service if research supports it; the initial preference is not a command to reject it. The final plan needs a minimal state sketch, one owner for each recovery/cleanup action, and an explicit compatibility boundary. It does not need executable product code.",
+      "exact_text": "Required final clauses U1–U6 and the brief's negative constraints remain binding. Preserve the option of a protocol service if research supports it; the initial preference is not a command to reject it. The final plan needs a minimal state sketch, one owner for each recovery/cleanup action, and an explicit compatibility boundary. It does not need executable product code.",
       "judgment": "PASS",
       "constituent_clause_dispositions": [
-        "U1\u2013U6/negative constraints binding: all six separately inspected; negative constraints separately listed.",
+        "U1–U6/negative constraints binding: all six separately inspected; negative constraints separately listed.",
         "Protocol service remains possible; preference does not reject it: retained tus conditional alternative.",
         "Minimal state sketch: PREPARED/INITIATING/UPLOADING/FINALIZING/COMPLETED, reconciliation and distinct stop causes.",
         "One owner each action: client local data/body retries; gateway session/reconciliation/cleanup; store API execution; host existing credentials; operator lifecycle configuration.",
@@ -1258,7 +1258,7 @@
       "id": "R14",
       "url": "https://raw.githubusercontent.com/aws/aws-sdk-go-v2/service/s3/v1.73.0/service/s3/CHANGELOG.md",
       "version": "Pinned tag service/s3/v1.73.0; release entry 2025-01-15",
-      "locator": "First v1.73.0 release entry, lines 1\u20135",
+      "locator": "First v1.73.0 release entry, lines 1–5",
       "capture_locator": "R14.md:1-5",
       "applicability": "Go service/s3 v1.73.0 release only; independently corroborates the issue's changed-default lead without extrapolating to fictional Rust SDK."
     }

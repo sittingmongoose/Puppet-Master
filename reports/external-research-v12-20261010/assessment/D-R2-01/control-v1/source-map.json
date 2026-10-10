@@ -1,0 +1,2309 @@
+{
+  "schema_version": "ER12-independent-source-map-v1",
+  "slot": "D-R2-01",
+  "arm": "control",
+  "reviewer_identity": "codex-er12-d-r2-01-control-review-v1",
+  "judgment_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/assessment.json",
+  "source_evidence": [
+    {
+      "reviewer_source_id": "R-S1",
+      "candidate_source_id": "S1",
+      "identity": "University of Missouri IPM, Christopher J. Starbuck",
+      "version": "Published 2009-06-01; page footer revised 2015-09-30.",
+      "urls": [
+        "https://ipm.missouri.edu/meg/2009/6/Guttation-A-Pressure-Relief-for-Plants/index.cfm"
+      ],
+      "governing_primary_url": "https://ipm.missouri.edu/meg/2009/6/Guttation-A-Pressure-Relief-for-Plants/index.cfm",
+      "locator": "Article paragraphs on hydathodes and night/root-pressure conditions; page publication line and REVISED footer.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Live primary extension page opened independently.",
+      "independent_judgment": "Tip/margin exudation and overnight root-pressure conditions support a competing droplet hypothesis. The case has no identified droplet origin. The rare bacterial-entry discussion is not evidence of infection here.",
+      "conditions_units_types_exceptions": "General physiological explanation, not a diagnostic rule or a finding about these herbs.",
+      "status": "VERIFIED_BOUNDED",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 29,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S1.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "105fb85695ae87165b77aedea505bd0f80c06ac1be18700b1d94a6d5b91a6496"
+    },
+    {
+      "reviewer_source_id": "R-S2",
+      "candidate_source_id": "S2",
+      "identity": "UF/IFAS, Greenhouse Ventilation, AE-10/AE030",
+      "version": "Live publication AE-10/AE030; revision date not exposed in the reviewed page.",
+      "urls": [
+        "https://ask.ifas.ufl.edu/publication/AE030"
+      ],
+      "governing_primary_url": "https://ask.ifas.ufl.edu/publication/AE030",
+      "locator": "Opening definition; Winter Ventilation, especially condensation paragraph and moisture-removal/heating tradeoff; Air Distribution within Greenhouses.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Live primary institutional operating guidance opened independently, including surrounding seasonal conditions.",
+      "independent_judgment": "Air exchange differs from internal circulation. Moisture removal depends on outside air and seasonal heating. Condensation at a sufficiently cool surface supports the expressly labeled leaf-surface inference. Tomato examples and generic air-exchange rates are not targets for the unknown crop.",
+      "conditions_units_types_exceptions": "Guidance contains system/season examples, not a universal herb humidity or airflow default.",
+      "status": "VERIFIED_BOUNDED",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 25,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 29,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 39,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S2.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "367955a3be3df15eddb67ea2db7d1049dc5306a83458ef44ee37d35109f809a2"
+    },
+    {
+      "reviewer_source_id": "R-S3",
+      "candidate_source_id": "S3",
+      "identity": "Virginia Cooperative Extension, Joyce G. Latimer; reviewed by Eric Stallknecht",
+      "version": "430-101 (HORT-284P); first published May 2009, reviewed August 2023.",
+      "urls": [
+        "https://www.pubs.ext.vt.edu/content/pubs_ext_vt_edu/en/430/430-101/430-101.html"
+      ],
+      "governing_primary_url": "https://www.pubs.ext.vt.edu/content/pubs_ext_vt_edu/en/430/430-101/430-101.html",
+      "locator": "Add Horizontal Air Flow (HAF) Fans; Environmental Control: aspirated thermostats and calibration.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Live primary institutional page opened independently; the cited operating sections were read.",
+      "independent_judgment": "The operating article supports HAF recirculation, representative crop-canopy thermostats and regular calibration. Its continuous winter fan practice is contextual. A controller probe used to represent a house has a different purpose from a logger placed to investigate a door gradient.",
+      "conditions_units_types_exceptions": "Energy-management guidance is conditional on climate, equipment and crop needs; it does not prescribe this house's schedule.",
+      "status": "VERIFIED_BOUNDED",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 39,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 48,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 49,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S3.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "43480be62acf0d6438f60f839ed9d07580ba61873f2f7a5d6da36aef56059850"
+    },
+    {
+      "reviewer_source_id": "R-S4",
+      "candidate_source_id": "S4",
+      "identity": "UF/IFAS, Fans For Greenhouses, AE12/AE020",
+      "version": "Live publication AE12/AE020; revision date not exposed.",
+      "urls": [
+        "https://ask.ifas.ufl.edu/publication/AE020"
+      ],
+      "governing_primary_url": "https://ask.ifas.ufl.edu/publication/AE020",
+      "locator": "Fan Inspection and Maintenance: bearings, belts, direction, dust, outside obstructions; following reversal paragraph.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Live primary institutional page opened independently with maintenance context.",
+      "independent_judgment": "The guide supports verifying delivered operation rather than relying on an on-schedule. Reversal after wiring/repair and airflow loss from impeller imbalance are generic possibilities. Neither is claimed to have happened in the case.",
+      "conditions_units_types_exceptions": "A cited generic 30–40% loss applies to an unbalanced impeller, not every fan fault or this greenhouse. The final does not transfer that number.",
+      "status": "VERIFIED_BOUNDED",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 25,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 48,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S4.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "5d3ec0ca98deed57626ee1ce0b17ad30563032affc4e63676ef0895f1a61e20e"
+    },
+    {
+      "reviewer_source_id": "R-S5",
+      "candidate_source_id": "S5",
+      "identity": "Henderson, Gholami and Zheng, HortScience 53(4):552–559",
+      "version": "2018 article; DOI 10.21273/HORTSCI12676-17; received 2017-11-02, accepted 2018-02-12.",
+      "urls": [
+        "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf?inlineView=true&pdfJsInlineViewToken=998458394",
+        "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf"
+      ],
+      "governing_primary_url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf",
+      "locator": "p.553: bellflower and basil cultivation methods; p.554: evaporation measurements and house construction; pp.555–557: results/discussion; p.558: conclusions.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Official ASHS URL with query returned web-tool 403; a Python request returned an HTML application shell. curl of the official PDF URL without query succeeded, PDF magic was checked, and extracted text was inspected independently.",
+      "independent_judgment": "The added crop/media, heat/vent targets, outside temperatures and construction dates match the methods. Evaporation heterogeneity motivates mapping, not a door mechanism. The growth analysis is observational; a bellflower delta-VWC association is not proof that changing irrigation improved growth.",
+      "conditions_units_types_exceptions": "Heat 17.5 °C and vent opening 20.5 °C are settings, whereas 4.8/14.1 °C are outside means. Evaporation ratios are relative dish losses, not water savings. Local sensor adequacy depends on crop/media/microclimate.",
+      "status": "VERIFIED_PRIMARY_PDF",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 35,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+          "line": 19,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 88,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S5.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "f810126ea5b33f09d1f507d8d57d698a111af5e06011203548de7540c20d8c8e"
+    },
+    {
+      "reviewer_source_id": "R-S6",
+      "candidate_source_id": "S6",
+      "identity": "Currey, Flax, Litvin and Metz, Agronomy 9(11):667",
+      "version": "Published 2019-10-23; DOI 10.3390/agronomy9110667.",
+      "urls": [
+        "https://mdpi-res.com/d_attachment/agronomy/agronomy-09-00667/article_deploy/agronomy-09-00667.pdf"
+      ],
+      "governing_primary_url": "https://mdpi-res.com/d_attachment/agronomy/agronomy-09-00667/article_deploy/agronomy-09-00667.pdf",
+      "locator": "pp.2–3: crop, medium, greenhouse controls and sensor system; Table 1: measured climate; pp.5–8: species results; pp.9–10: discussion/conclusions.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Official publisher PDF opened independently via web and downloaded directly; PDF text inspected, including governing methods, results and conclusion limits.",
+      "independent_judgment": "Four-week responses in four culinary herbs support separate growth and water outcomes. The Iowa greenhouse controls, pot/media details and climate settings added by the reviser match the methods. Those air setpoints are not the measured Table 1 means or local recommendations.",
+      "conditions_units_types_exceptions": "VWC is volumetric fraction in m³/m³. WUE here uses shoot dry mass per irrigation volume; it must not be pooled with the other study's fresh-mass definition. The authors call for local commercial trials, not a universal safe deficit setting.",
+      "status": "VERIFIED_PRIMARY_PDF",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 36,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 88,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+          "line": 20,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S6.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "e7239c4c71ba42bc134e13c6caee0f8e3f12da09cd106ebb4e9a840f4dd01dec"
+    },
+    {
+      "reviewer_source_id": "R-S7",
+      "candidate_source_id": "S7",
+      "identity": "Montesano et al., Agricultural Water Management 203:20–29",
+      "version": "2018; DOI 10.1016/j.agwat.2018.02.019; publisher date 2018-04-30.",
+      "urls": [
+        "https://ideas.repec.org/a/eee/agiwat/v203y2018icp20-29.html",
+        "https://www.sciencedirect.com/science/article/pii/S0378377418301057",
+        "https://explore.cnr.it/resource/item/112557?language=en-US",
+        "https://iris.cnr.it/handle/20.500.14243/375524"
+      ],
+      "governing_primary_url": "https://www.sciencedirect.com/science/article/pii/S0378377418301057",
+      "locator": "Publisher indexed abstract: full-cycle setpoint/leaching comparison; author-institution CNR abstract; original RePEc abstract and access statement.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Direct publisher open failed. Independent search retrieved the publisher-authored abstract and section snippets; CNR institutional abstract was also retrieved. RePEc original record was opened to check exactly what the candidate had available. No full text was obtained.",
+      "independent_judgment": "The final's bounded basil/perlite-coco comparison and EC-related fresh-weight tendency match the abstract. Similar growth is the full-cycle comparison, not a claim that progressively drying basil never shows stress. The author abstract describes a separate dry-down/recovery experiment.",
+      "conditions_units_types_exceptions": "Perlite:coco 1:1 is volume ratio; VWC setpoints are 0.20/0.30/0.40 m³/m³. Approximate leaching rates are study conditions. Detailed climate, controls and further methods remain unknown. WUE uses fresh weight per water used.",
+      "status": "VERIFIED_ABSTRACT_ONLY",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 37,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+          "line": 20,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S7.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "primary_access_limit": "Publisher/institution indexed abstract only; no authenticated/subscription access or account change.",
+      "evidence_sha256": "a690a06ed71348c9386173226a64f1c724bdd7738d374abf7b978249f9d209b5"
+    },
+    {
+      "reviewer_source_id": "R-S8",
+      "candidate_source_id": "S8",
+      "identity": "Both et al., Plant Methods 11:43, ICCEG commentary",
+      "version": "Published 2015-09-11; DOI 10.1186/s13007-015-0083-5.",
+      "urls": [
+        "https://link.springer.com/article/10.1186/s13007-015-0083-5"
+      ],
+      "governing_primary_url": "https://link.springer.com/article/10.1186/s13007-015-0083-5",
+      "locator": "Background sensor principles/calibration paragraphs; Compliance and quality assurance independent-sensor paragraphs; Parameters to be monitored and recorded.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Primary full-text publisher article opened independently; governing sensor and reporting sections inspected.",
+      "independent_judgment": "Independent calibrated measurement, spatial/temporal sampling and recording processing intervals support the proposed baseline. Different probes sharing the same electronics are not fully independent assurance. The final's independent checks must be read with that condition.",
+      "conditions_units_types_exceptions": "Guidance calibrates effort to the research question. It supplies neither a 7–14-day minimum nor acceptable conditions for this crop, and it is not a causal or diagnostic oracle.",
+      "status": "VERIFIED_BOUNDED",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 49,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 63,
+          "section": null
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 65,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S8.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "8e5a6bcd2f37586ab6734108b010d02e852720d1f079a7b6d6da188c08a89edb"
+    },
+    {
+      "reviewer_source_id": "R-S9",
+      "candidate_source_id": "S9",
+      "identity": "NC State Extension Plant Disease and Insect Clinic",
+      "version": "Submitting Samples From Plants in a Greenhouse; updated 2026-02-27.",
+      "urls": [
+        "https://pdic.ces.ncsu.edu/submitting-samples-from-plants-in-a-greenhouse/"
+      ],
+      "governing_primary_url": "https://pdic.ces.ncsu.edu/submitting-samples-from-plants-in-a-greenhouse/",
+      "locator": "To sample for disease diagnosis, especially dry foliage/slightly moist media and distribution photographs; pathogen-detection policy.",
+      "access_utc_window": {
+        "start": "2026-10-10T07:22:25+00:00",
+        "end": "2026-10-10T07:37:57.033425+00:00",
+        "precision": "review-session bounds; exact independent PDF fetch timestamp appears in independent-retrievals.json where captured"
+      },
+      "operation": "Current primary clinic instructions opened independently with the governing scope and sample policy.",
+      "independent_judgment": "The sample-handling example is accurate and is kept local. Symptomatic material and distribution photographs can support a specialist; receiving-clinic rules govern. The final does not claim that a sample or diagnosis occurred.",
+      "conditions_units_types_exceptions": "Greenhouse sample guidance is not permission for symptom-free pathogen screening or a claim of food safety. Escalation is a decision branch, not a diagnosis.",
+      "status": "VERIFIED_CURRENT_LOCAL_GUIDANCE",
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 74,
+          "section": null
+        }
+      ],
+      "evidence_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/evidence/S9.md",
+      "basis": "Directly inspected independent primary evidence; candidate check assertions were not treated as proof.",
+      "evidence_sha256": "2bf9f62c63d6f25f9089c3b0c88527b3ca3f64c1d7554bfe87275852da8a837e"
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/terminal-science-freeze-root.json",
+      "bytes": 7856,
+      "sha256": "3964f946190fbc5185e4b3874239bb7375a1fb9d7770acfd2c0506ae42231f11",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md",
+      "bytes": 9021,
+      "sha256": "3410c1790668e9847bbae7eb979e486c3409554b9525a343b00f7f6b9ee8b85d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "d9851ac724a0e9d0862396cd27aa0a70e9794a8cef4b6efebf922e0872b6800e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "4919023196d5ef47a5bf897a7bff0bdcc8f744e8cb08e30998718076a9bec850",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "bytes": 13214,
+      "sha256": "ce1a5ee8b7ffc398427d972c2b6a3610ddbcd4bb0e35db6ec4b7e3cd4b6ee83e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/sources/index.md",
+      "bytes": 1909,
+      "sha256": "c54c84163c1bae1064e8067f629082c4fed472924fa082e0994f515aedbd1354",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/native-goal-create.json",
+      "bytes": 479,
+      "sha256": "135f967af4487c9a1cf5befd16328dc712b2616485cf0ec16338b64b55388d94",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/native-goal-complete.json",
+      "bytes": 808,
+      "sha256": "ba7f63ec7e5a660fc84f1ae84d4afe80a86705812d7e99d88eaf02e58929dbd8",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "cbabe1cb8ed4f87c2ee2ba966eead78b0f877199b79823565f4c590091717f9d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/assignment.md",
+      "bytes": 8569,
+      "sha256": "00310863969e4fda6e6f12449545e54236bd44f91fe41fdc2853cc933d98cc3d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "c7fe140cd8f637ffe0cf7ff5df79c08856ef8cd71de48c9f245ef1d3edbd9f5e",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "6acf0c5b8d23bc4870350326c7a88a256c330c20b457586fe5549f7f38590cc3",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "bytes": 21290,
+      "sha256": "2f5e88735fcdfc3841fcab089234e8a2e8f8be43b9e8463ea5f3aca1c1f76932",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/sources/index.md",
+      "bytes": 4078,
+      "sha256": "643c580298ac23f12ad6bdb6485e8ce47efb1aac7d1aca649fb025d324d69998",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/native-goal-create.json",
+      "bytes": 467,
+      "sha256": "64d387b5180ff9b8df4851f27cbd9c40c2ddc243ae409ae7f4cfef76fd538573",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/native-goal-complete.json",
+      "bytes": 796,
+      "sha256": "522a4d3aaed292c0e15385b700bd3a7142ddc1ccc21fa8efea720b242cad2835",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "cc2645e08f8e2c1a11dc2749dba3136b7d1fa62561ed50461f7a25cb6d914fe4",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/assignment.md",
+      "bytes": 8556,
+      "sha256": "c23943ec8d5ccc342ee4f5f2064af188e54d6ef5171c9af5d92067c0b0c698ef",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "002c70aee2b503045b67f6ea2b6c3734bbf3e5fb806aee25fe11376f99607831",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/freeze.json",
+      "bytes": 4092,
+      "sha256": "925d8706336a31dd247acb03aaae2ad1f9b0fd9402f7f0a1cdce672684b51721",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/source-map.json",
+      "bytes": 28282,
+      "sha256": "063169e16bd4bc6686f27219f60d201cb5e39dfb73bc7bcd34e21a251c4ce594",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/sources/index.md",
+      "bytes": 2498,
+      "sha256": "527c53b1cab41edddb3930cb94cd2e85b6e4a9274795b66c14eb4dcf4682727d",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/native-goal-create.json",
+      "bytes": 469,
+      "sha256": "65da0434b6886ab65e8e661e289aaacce9b02392c1b5a20d5c79bba3da2423a2",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/native-goal-complete.json",
+      "bytes": 798,
+      "sha256": "0730074165e2c1c246a706e8fe727129d2e7df799d3551dceff078dbee7b4ab4",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "cde0e3273013cd2c891c6d278579b89ed1e916a0b071bc46a1ac2a5a44f4d8e9",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "bytes": 12123,
+      "sha256": "c66b1265f36573e4bdae9493e19934341233036b5622cd81984f4fd59503917c",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "bytes": 25639,
+      "sha256": "686101a8acdaf5c170f02c12dd17c205eaee06e4ec6ef870ac28a0d50a28bc70",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "64925f8915a7bcdf2314b4c4dda4b691c385b42ac301a4f07c88cddfa5836370",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "bytes": 9658,
+      "sha256": "aa5fd2fad5094bd7035f5216f2f6256fce7b56c12f5df98a774af761bd705675",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "bytes": 22758,
+      "sha256": "ab727625d9ade02032e7e8ce738c3e50387373d801da281b9192f365669eea80",
+      "read_scope": "FULL",
+      "exists": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/request.json",
+      "bytes": 6329,
+      "sha256": "da30dbe09daa2a03595b9523a570b6dc08b1a97924f84760d9fb26dede4afb69",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/dispatch.json",
+      "bytes": 9659,
+      "sha256": "6fc0aa7d7c11dcfd0e6d2ff2742715690f19c9db4974305810ccb0b16fe310eb",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "f06f8eeaa3399c0fae87eacfee257bdd2c413a098a0da76b4bd8bd7c18bfd8ff",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/exact-activation-capture-v2-1.json",
+      "bytes": 7741,
+      "sha256": "bfe696cd8db3c84f05d84084f22ad3b81e890e8f133c7f0cba022b1ae5f4d674",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "8d75a9d2ccc6d7febe1f2c9e4c981641544ca6a0f2fbad4a661399b2f7e29710",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/request.json",
+      "bytes": 6263,
+      "sha256": "cb8b7d69a9c4cefd98e51139e6c3380aec4007c776448550d3f745d99a948459",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/dispatch.json",
+      "bytes": 9521,
+      "sha256": "e5a7a4895dfc7ccda3748baa811a530717fafa64ed19ec1381206a29f1099c9e",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "af328e263703c82090a5355708f8dce40bff9946d76ef67264636686780cca17",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/exact-activation-capture-v2-1.json",
+      "bytes": 7669,
+      "sha256": "99c10577f99096ade6dd5cf7136a3d83bc1974b8a796071975d33f29a2d00120",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "1d95498416cad00438303783d9db6427357a32e7510a6013cd44280512f9634c",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/request.json",
+      "bytes": 6274,
+      "sha256": "cf07f6f723685a69a702ec1d4edceaf9bd4476deb0b1946bd3660594be3cf956",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/dispatch.json",
+      "bytes": 9544,
+      "sha256": "e2e80ba80e5f30c778542fea7f9ee97e1e216f62ff032885cef7e4fba08933b9",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "a37ae52507fc23ada95c0f8bc572cd70d08530b03abee172594fd8078d291be7",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/exact-activation-capture-v2-1.json",
+      "bytes": 7681,
+      "sha256": "630d5e1490b2ee6ca6ffc55d21090a06e638521ce8eabd26285f3a2e50542a2c",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "0431fdc8be7763a687f19b4d767422268593c32fefe2d95ff79ed4cb057cec1d",
+      "read_scope": "STRUCTURAL_INSPECTION for request/dispatch; PARTIAL supporting root mechanics records (one oversized terminal read was truncated); no science omitted",
+      "exists": true,
+      "mandatory_full_science_scope": false
+    }
+  ],
+  "claim_to_clause_navigation": {
+    "axes": [
+      {
+        "id": "A1",
+        "name": "Original obligations and negative constraints",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS_WITH_LIMITATIONS",
+        "execution_axis_result": "UNMET_LITERAL_60_MINUTE_WINDOW",
+        "summary": "All substantive scientific obligations and prohibitions are retained in the self-contained final. The case remains hypothetical; symptoms, growth, applied/drained water and diagnosis are separated. Door proximity and simultaneous controls remain confounded. The later comparison is conditional and reversible. The literal full 60-minute research-use clause remains explicitly unmet; this is recorded as an execution-completeness finding rather than inferred scientific wrongness. No crop intervention, chemical prescription, case measurement, food-safety, disease-prevention or yield claim is introduced.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 10,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 12,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 16,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 18,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 24,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 29,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 61,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 74,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 87,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 100,
+            "section": null
+          }
+        ]
+      },
+      {
+        "id": "A2",
+        "name": "Consequential source claims: subject, operation, version, default, unit, type, domain and exceptions",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS_WITH_LIMITATIONS",
+        "summary": "Governing primary evidence was independently retrieved for the droplet physics, circulation/ventilation distinction, fan/sensor history cues, crop-study transfer claims and clinic example. The S5/S6 additions match primary methods. Setpoints remain settings, outside temperatures remain measured means, and evaporation/VWC/growth/water outcomes are not interchangeable. No generic threshold is adopted as a local default. S7 remains abstract-only. The proposal's baseline duration and future agenda are labeled planning choices, not externally validated standards.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 25,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 29,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 35,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 36,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 37,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 39,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 57,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 74,
+            "section": null
+          }
+        ],
+        "evidence_ids": [
+          "R-S1",
+          "R-S2",
+          "R-S3",
+          "R-S4",
+          "R-S5",
+          "R-S6",
+          "R-S7",
+          "R-S8",
+          "R-S9"
+        ]
+      },
+      {
+        "id": "A3",
+        "name": "Useful unfamiliar discovery, competing and analogous approaches, implementation/history and opportunity breadth",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS_WITH_LIMITATIONS",
+        "summary": "Discovery adds usable information: sensor-based inquiry can reveal spatial root-zone variation; leaf droplet routes differ; a fan timer does not prove delivered airflow; crop and production objectives change what an irrigation response means. The three required inquiries are meaningfully distinguished and have concrete observations. Controlled culinary herbs, commercial basil and an ornamental bellflower comparison provide direct and analogous evidence; house construction, controls, substrate and climate are investigated. Local records cannot be recovered in this hypothetical case and are properly proposed. Conditional restoration of a documented stable routine is not named as a standalone final option, but old/new settings and rejection of an assumed-good prior routine are retained. That optional opportunity is a limitation, not an invented mandatory treatment.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 16,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 26,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 37,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 24,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 35,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 44,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 113,
+            "section": null
+          }
+        ]
+      },
+      {
+        "id": "A4",
+        "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS_WITH_LIMITATIONS",
+        "summary": "C-01 correctly challenges the draft's claim that a future 60-minute agenda covers performed research. The final honestly retains that gap. However, two minutes describes reported source access, not all investigator work; the reviewer does not infer deficient science from that number or equate the execution finding with a false horticultural claim. C-02 is a supported criticism and was corrected using source-specific climate/control context. No wrong scientific correction or rejection was established. Every original sentence/bullet and supplemental plan clause is independently disposed below, including optional opportunities and authoring/release metadata.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 118,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+            "line": 18,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+            "line": 19,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 87,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 88,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 90,
+            "section": null
+          }
+        ]
+      },
+      {
+        "id": "A5",
+        "name": "Supported meaning preserved from discovery through draft, critique and final",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS_WITH_LIMITATIONS",
+        "summary": "The final preserves competing accounts, three inquiry paths, history reconstruction, endpoint separation, conditional pilot, welfare stops, diagnostic escalation and external owner choices. C-02 is repaired rather than merely agreed with. Detailed antecedent study numbers, explicit guttation conditions and some alternative-comparison language are compressed; the source map retains them without rebinding IDs. No material decision changes as a result. The final no longer falsely marks the performed 60-minute obligation covered, while the original draft defect remains recorded in lineage.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 18,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 41,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 118,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 29,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 35,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 36,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 83,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 100,
+            "section": null
+          }
+        ]
+      },
+      {
+        "id": "A6",
+        "name": "Meaningful proposed versus executed validation and oracle applicability",
+        "coverage": "ASSESSED_FULL",
+        "source_axis_result": "PASS",
+        "summary": "The proposed baseline has a mapped sample, repeatable symptom/growth observations, independent delivery/environmental measurements, fixed dawn/irrigation timing and explicit uncertainty. Later one-factor comparisons retain controls and welfare limits; house-wide air control becomes an exploratory time series rather than fake randomization. These checks can test co-variation and pilot feasibility; they cannot by themselves diagnose a pathogen, prove causal improvement, or establish food safety. Diagnostic escalation is an independent branch. Executed work is limited to desk/source review. No crop log, sample, intervention, baseline or pilot exists or is claimed. Literature and plan hashes are not diagnostic or empirical oracles.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 57,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 59,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 61,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 65,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 70,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 74,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 125,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 127,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 129,
+            "section": null
+          }
+        ]
+      }
+    ],
+    "criticism_dispositions": [
+      {
+        "id": "C-01",
+        "candidate_classification": "material incomplete",
+        "candidate_final_disposition": "accept; remain unmet",
+        "reviewer_disposition": "ACCEPT factual execution gap; AMEND classification boundary",
+        "reason": "The original brief asks for a full 60-minute window, the draft substitutes a future agenda, and the final explicitly admits non-execution. This is a valid correction to the draft's coverage claim. The reported two-minute source-access interval is not the whole investigator duration. Short occupancy alone does not prove a material scientific omission; no such missing content was established. The assigned early-finish permission and stage caps are also recorded, so deadline compliance is distinct from satisfying the literal original window.",
+        "critique_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+          "line": 18,
+          "section": null
+        },
+        "draft_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+          "line": 118,
+          "section": null
+        },
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 87,
+          "section": null
+        },
+        "supporting_evidence": [
+          "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+          "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/native-goal-complete.json"
+        ],
+        "remaining_source_defect": false,
+        "remaining_execution_gap": true
+      },
+      {
+        "id": "C-02",
+        "candidate_classification": "material incomplete",
+        "candidate_final_disposition": "accept and amend",
+        "reviewer_disposition": "ACCEPT; CORRECTED IN FINAL",
+        "reason": "The draft asserted differences generically. The final supplies primary-supported S5/S6 operating/climate context and explicitly limits S7 to abstract evidence. Independent methods inspection supports the additions; agreement with the critic is not the basis.",
+        "critique_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+          "line": 19,
+          "section": null
+        },
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 88,
+          "section": null
+        },
+        "evidence_ids": [
+          "R-S5",
+          "R-S6",
+          "R-S7"
+        ],
+        "remaining_source_defect": false
+      },
+      {
+        "id": "critic-other-classifications",
+        "candidate_final_disposition": "accept no material wrong/unsupported; retain external uncertainty",
+        "reviewer_disposition": "BOUNDED AGREEMENT AFTER INDEPENDENT CHECK",
+        "reason": "No material remaining scientific wrongness or unsupported consequential decision was established. This agreement is bounded by the accessed primary evidence and the noted source/preservation limits. Unknown local inputs are not filled with fabricated measurements.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 89,
+          "section": null
+        },
+        "evidence_ids": [
+          "R-S1",
+          "R-S2",
+          "R-S3",
+          "R-S4",
+          "R-S5",
+          "R-S6",
+          "R-S7",
+          "R-S8",
+          "R-S9"
+        ]
+      }
+    ],
+    "exact_clause_dispositions": [
+      {
+        "id": "B01",
+        "exact_clause": "A teaching greenhouse has a bench of potted herbs with pale lower leaves and occasional visible droplets on some mornings.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "Reported leaf/droplet facts are kept informal and unmeasured.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 16,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B02",
+        "exact_clause": "The irrigation timer and the circulation-fan schedule were both changed before the symptoms were noticed.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "Both changed schedules retained; programmed versus delivered operation investigated.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 16,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B03",
+        "exact_clause": "Plants closest to the door seem less affected, but the observations were informal.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "Informal door pattern becomes a mapped stratum, not a conclusion.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 16,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B04",
+        "exact_clause": "The instructor wants a research proposal before changing the teaching crop protocol.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "Proposal precedes any teaching-protocol change; future pilot requires owner decisions.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 10,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B05",
+        "exact_clause": "This is a hypothetical setting with no diagnostic samples, environmental logs, or treatment results.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "No samples, environmental logs or treatment results invented.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B06",
+        "exact_clause": "Use a full 60-minute research window to propose an investigation of the competing environmental and crop-management explanations.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 13
+        },
+        "disposition": "SUBSTANTIVE_INQUIRY_COVERED_EXECUTION_UNMET",
+        "assessment": "Competing inquiry is supplied, but the literal full research-window use is not performed. Draft claimed coverage by an agenda; final corrects that claim. Execution finding E-01 is separate from scientific source accuracy.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 87,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B07",
+        "exact_clause": "Explain plausible mechanisms, compare useful non-chemical alternatives, and investigate operating or implementation history that could affect transfer of evidence.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 13
+        },
+        "disposition": "COVERED_WITH_MINOR_COMPRESSION",
+        "assessment": "Conditional mechanisms, useful inquiries and source implementation contexts remain. Final source-condition detail is compressed; see L-02.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 24,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B08",
+        "exact_clause": "Design a later observational or reversible pilot and identify when specialist diagnosis would be needed.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 13
+        },
+        "disposition": "COVERED",
+        "assessment": "Later observation/reversible comparisons and specialist branch supplied; no current intervention.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 68,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B09",
+        "exact_clause": "We need a research proposal, not instructions to treat the plants today.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 13
+        },
+        "disposition": "COVERED",
+        "assessment": "Research proposal explicitly distinguished from treatment advice.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B10",
+        "exact_clause": "Separate visible leaf symptoms, plant growth, water use, and the possibility of a condition requiring diagnosis; symptom reduction alone does not identify a cause.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 17
+        },
+        "disposition": "COVERED",
+        "assessment": "Four outcome families preserved; symptom reduction is not cause identification.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 61,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B11",
+        "exact_clause": "Compare irrigation or substrate-management inquiry with ventilation or microclimate inquiry and a useful observation-first alternative.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 18
+        },
+        "disposition": "COVERED",
+        "assessment": "Observation-first, delivery/substrate and air-system inquiry all remain; their evidence and conditional selection are supplied.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 24,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B12",
+        "exact_clause": "Account for plant position, watering distribution, morning conditions, crop age, and the simultaneous schedule changes without assuming droplets prove one explanation.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 19
+        },
+        "disposition": "COVERED",
+        "assessment": "Position, delivery, dawn timing, cohorts and simultaneous schedules accounted for; droplets remain ambiguous.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 25,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B13",
+        "exact_clause": "Include greenhouse operating history and comparable implementation evidence, stating differences in crop, substrate, climate, and controls.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 20
+        },
+        "disposition": "COVERED_AFTER_CORRECTION",
+        "assessment": "C-02 repaired: crop/media/climate/control and house-history details are now substantive. Local history remains a proposed retrieval.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 35,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B14",
+        "exact_clause": "Propose an interpretable baseline, observation plan, limited comparison, and escalation criteria; distinguish proposed crop validation from any literature or desk checks actually executed.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 21
+        },
+        "disposition": "COVERED",
+        "assessment": "Interpretable mapped baseline, limited comparison, stops and escalation; executed desk checks explicitly separated.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 57,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B15",
+        "exact_clause": "Do not diagnose a pathogen or deficiency, prescribe pesticides or fertilizer doses, or conduct a crop intervention in this assignment.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 25
+        },
+        "disposition": "COVERED",
+        "assessment": "No pathogen/deficiency diagnosis, pesticide/fertilizer dose prescription or executed intervention. Published study fertility context is not local dosing advice.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B16",
+        "exact_clause": "Do not claim food safety, disease prevention, or yield improvement from the anecdotal pattern.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 26
+        },
+        "disposition": "COVERED",
+        "assessment": "No food safety, prevention or yield benefit claimed from the anecdote.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 70,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B17",
+        "exact_clause": "Do not invent humidity, moisture, temperature, symptom prevalence, or measured treatment response.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 27
+        },
+        "disposition": "COVERED",
+        "assessment": "Case values not invented; literature settings clearly identified as study settings.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B18",
+        "exact_clause": "The species and age mix, substrates, irrigation delivery, climate-control behavior, sensor placement, seasonal conditions, and bench map are not supplied.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 31
+        },
+        "disposition": "COVERED",
+        "assessment": "All enumerated missing inputs are retained as collection/design dependencies.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 18,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B19",
+        "exact_clause": "The instructor has not defined whether the immediate decision concerns plant welfare, water use, or teaching reliability.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 31
+        },
+        "disposition": "COVERED",
+        "assessment": "Welfare, water use and teaching reliability remain owner choices.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 18,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "B20",
+        "exact_clause": "Make these dependencies explicit.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+          "line": 31
+        },
+        "disposition": "COVERED",
+        "assessment": "Primary outcome, access, allowed comparison, stops and burden depend on the instructor's decisions.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 76,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": true
+      },
+      {
+        "id": "P01",
+        "exact_clause": "Keep this file outside the candidate-facing research packet.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 9
+        },
+        "disposition": "AUTHORING_RELEASE_METADATA",
+        "assessment": "A frozen pre-release instruction to the packet designer, not a requirement to reproduce the plan in the proposal. Candidate discovery is recorded before the explicit authorized reveal; pre-reveal access is not independently proved.",
+        "final_locator": null,
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P02",
+        "exact_clause": "It preserves the authored request and open design opportunities.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 9
+        },
+        "disposition": "SOURCE_AUTHORITY_PRESERVED",
+        "assessment": "The exact authored request and opportunities are the review authority, not an answer key.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 92,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P03",
+        "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 9
+        },
+        "disposition": "SOURCE_AUTHORITY_PRESERVED",
+        "assessment": "Final does not present the plan as a result, evidence source or predetermined solution.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P04",
+        "exact_clause": "Nothing here selects an eventual research method.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "Conditional pilot choice depends on baseline and owner decisions.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 68,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P05",
+        "exact_clause": "No empirical validation has been executed in authoring this case.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 9
+        },
+        "disposition": "COVERED",
+        "assessment": "No authoring-stage validation is repurposed as crop evidence.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 127,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P06",
+        "exact_clause": "The original brief follows verbatim between the delimiters.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 13
+        },
+        "disposition": "BYTE_IDENTITY_VERIFIED",
+        "assessment": "Original embedded brief and frozen brief match; revealed plan is byte-identical to the original frozen plan. Identity is provenance, not semantic proof.",
+        "final_locator": null,
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P07",
+        "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 13
+        },
+        "disposition": "COVERED_WITH_EXECUTION_EXCEPTION",
+        "assessment": "Original obligations remain visible; the literal hour is admitted unmet rather than silently rewritten.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 87,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P08",
+        "exact_clause": "Which environmental observations and later comparisons would make the symptom pattern informative while preserving the distinction between management hypotheses and plant diagnosis?",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 53
+        },
+        "disposition": "COVERED",
+        "assessment": "Measurements discriminate management accounts while diagnosis stays a specialist branch.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 24,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P09",
+        "exact_clause": "The crop endpoint, diagnostic access, measurement permissions, acceptable comparison conditions, and plant-protection stop criteria remain undecided.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 55
+        },
+        "disposition": "COVERED",
+        "assessment": "Crop endpoint, access, permissions, admissible comparison and welfare stops are owner inputs.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 76,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P10",
+        "exact_clause": "The proposal should support a useful first inquiry without pretending that the current anecdote identifies a treatable cause.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 55
+        },
+        "disposition": "COVERED",
+        "assessment": "A useful mapped first inquiry is proposed without claiming a treatable cause.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 10,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P11",
+        "exact_clause": "Investigate watering distribution and timing, substrate moisture and drainage, airflow or schedule changes, plant placement, and a structured observation log.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 59
+        },
+        "disposition": "COVERED",
+        "assessment": "Distribution/timing, substrate/drainage, airflow, placement and a repeatable log are all specified.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 24,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P12",
+        "exact_clause": "Restoring a documented stable operating routine may be useful only if its past conditions and suitability are established.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 59
+        },
+        "disposition": "OPTIONAL_OPPORTUNITY_PARTLY_EXPLICIT",
+        "assessment": "Old/new operation and its suitability are investigated, and draft rejects assuming the old routine was right. Final does not name restoration as a separate conditional option. No management restoration was required or chosen; limitation L-03.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 44,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P13",
+        "exact_clause": "Referral for diagnosis can be an appropriate branch when environmental explanations are insufficient.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 59
+        },
+        "disposition": "COVERED",
+        "assessment": "Persistent unexplained symptoms and progression trigger a specialist branch.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 74,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P14",
+        "exact_clause": "No management change is preselected, and waiting with better monitoring must have a concrete information benefit.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 59
+        },
+        "disposition": "COVERED",
+        "assessment": "No treatment preselected. Monitoring can establish the persistence of the door pattern and timing/co-variation, providing a concrete information benefit.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 113,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P15",
+        "exact_clause": "Explore how moisture availability, root-zone conditions, air movement, temperature and humidity cycles, and plant physiology could produce or correlate with observations.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 63
+        },
+        "disposition": "COVERED_WITH_MINOR_COMPRESSION",
+        "assessment": "Water/root-zone, air/temperature/moisture and plant physiology hypotheses remain conditional. Guttation detail is shorter than discovery; no diagnosis follows.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 24,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P16",
+        "exact_clause": "Visible droplets have more than one possible explanation and cannot establish a diagnosis.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 63
+        },
+        "disposition": "COVERED",
+        "assessment": "At least guttation and condensation remain competing droplet accounts.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 29,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P17",
+        "exact_clause": "Consider interactions and spatial gradients, with predictions to investigate rather than statements that a mechanism has been confirmed.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 63
+        },
+        "disposition": "COVERED",
+        "assessment": "Spatial gradients and interacting schedules remain confounded; table lists discriminating observations.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 16,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P18",
+        "exact_clause": "Seek implementation accounts describing crop and substrate, environmental controls, sensor locations, schedules, and observed plant outcomes.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 67
+        },
+        "disposition": "COVERED",
+        "assessment": "Relevant primary implementation accounts are used; crop/media/environment/control differences and observed response limits are retained, with fuller source-method context in navigable maps.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 35,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P19",
+        "exact_clause": "Investigate old timer and fan settings, maintenance, plant movements, and changes in teaching practice as future evidence.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 67
+        },
+        "disposition": "COVERED",
+        "assessment": "Old/new timer/fan records, service, crop moves and practice history proposed as future evidence.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 44,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P20",
+        "exact_clause": "A climate-control result from another crop or season needs transfer assumptions.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 67
+        },
+        "disposition": "COVERED_AFTER_CORRECTION",
+        "assessment": "Climate/control/crop/media differences made explicit; no borrowed target selected.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 35,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P21",
+        "exact_clause": "No supplied success story or reference confirms how this greenhouse should be operated.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 67
+        },
+        "disposition": "COVERED",
+        "assessment": "Sources are used to design measurements, not establish this house's correct operation.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 33,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P22",
+        "exact_clause": "A later authorized pilot could map plant and sensor positions, record environmental and watering conditions, define repeatable symptom and growth observations, and stage limited reversible comparisons with independent diagnostic escalation when indicated.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 71
+        },
+        "disposition": "COVERED",
+        "assessment": "Maps, environmental/watering records, repeatable outcomes, one-factor pilot and independent diagnostic escalation proposed.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 57,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P23",
+        "exact_clause": "Explain spatial confounding, plant age, time trends, and the ethical stopping point for stressed plants.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 71
+        },
+        "disposition": "COVERED",
+        "assessment": "Spatial/cohort structure, repeated time plots and house-wide time-series limitations retained; welfare stopping rules supplied.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 65,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P24",
+        "exact_clause": "Literature review or a hypothetical daily-cycle sketch executed during the hour must not be called tested crop improvement or diagnostic validation.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 71
+        },
+        "disposition": "COVERED",
+        "assessment": "Desk/literature checks not called crop improvement or diagnostic validation.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 123,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P25",
+        "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 73
+        },
+        "disposition": "AUTHORING_STATUS_PRESERVED",
+        "assessment": "Synthetic/hypothetical case retained; authoring status does not prohibit later desk research.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 12,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P26",
+        "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 73
+        },
+        "disposition": "AUTHORING_STATUS_PRESERVED",
+        "assessment": "Authoring-stage absence of research is distinguished from subsequent actual literature review; no empirical case validation asserted.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 125,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P27",
+        "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 73
+        },
+        "disposition": "COVERED",
+        "assessment": "Actual desk checks and all unexecuted field/crop activities explicitly separated.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 125,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P28",
+        "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "SCIENTIFIC_SCOPE_COVERED_LITERAL_WINDOW_UNMET",
+        "assessment": "Discovery, reasoning, alternatives, history and later design assessed; literal research-time use remains an execution gap, not evidence that scientific claims are false.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 87,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P29",
+        "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "COVERED",
+        "assessment": "Observation-first is a provisional inquiry, not a predetermined winning management intervention.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 68,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P30",
+        "exact_clause": "It requests no product build.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "COVERED",
+        "assessment": "No product build proposed.",
+        "final_locator": {
+          "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+          "line": 116,
+          "section": null
+        },
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P31",
+        "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "BYTE_IDENTITY_VERIFIED",
+        "assessment": "Frozen original brief and plan and carried copies preserved unchanged; terminal identity checks match.",
+        "final_locator": null,
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P32",
+        "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "RELEASE_METADATA_NOT_FULLY_AUDITABLE",
+        "assessment": "No reviewer assistance or designer feedback was sent. The selected stage package shows an authorized reveal; campaign-level lock/release history is outside this assignment and remains UNKNOWN.",
+        "final_locator": null,
+        "embedded_original_brief_in_plan": false
+      },
+      {
+        "id": "P33",
+        "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+        "original_locator": {
+          "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+          "line": 77
+        },
+        "disposition": "RELEASE_METADATA_NOT_FULLY_AUDITABLE",
+        "assessment": "Input existence is not treated as proof of campaign release authorization; other history was not read.",
+        "final_locator": null,
+        "embedded_original_brief_in_plan": false
+      }
+    ],
+    "supported_lineage": [
+      {
+        "item": "Future agenda marked as coverage of performed research",
+        "discovery": "Only a short source-access window is reported, with no field validation.",
+        "draft": "Exact disposition labels the full-hour clause covered by a future agenda.",
+        "critique": "C-01 identifies this mismatch.",
+        "final": "Unmet execution explicitly retained; future agenda clearly proposed.",
+        "judgment": "Original lineage defect corrected as a reporting claim; timed execution gap remains.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 118,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 87,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 100,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Crop/substrate/climate/control transfer",
+        "discovery": "S5–S7 found and transfer caution recorded.",
+        "draft": "Specific climate/control differences too generic.",
+        "critique": "C-02 requests source-specific distinctions.",
+        "final": "Primary-supported S5/S6 details added and S7 access limit preserved.",
+        "judgment": "Supported final qualification; original draft omission preserved in record.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 58,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 35,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 36,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 37,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Droplet ambiguity",
+        "discovery": "Specific conditional guttation account and distinct dew-point inference.",
+        "draft": "Routes and discriminating observations preserved.",
+        "critique": "No diagnosis inferred from droplets.",
+        "final": "Routes and observation plan preserved; some physiological conditions compressed.",
+        "judgment": "Meaning retained; nonmaterial detail loss L-02.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 18,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 29,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Three inquiry paths and concrete monitoring benefit",
+        "discovery": "Observation-first, delivery/substrate and air/microclimate inquiry compared.",
+        "draft": "Distinct approach paragraphs and correlated-schedules limit stated.",
+        "critique": "All three accepted as useful.",
+        "final": "Mapped baseline, discriminating table and conditional pilot retain all three; final comparison rationale is scattered.",
+        "judgment": "No material lost approach or selected management winner.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+            "line": 37,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 24,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 113,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Study response numbers and conditions",
+        "discovery": "VWC ranges, evaporation ratios and response distinctions supplied.",
+        "draft": "Numbers motivate inquiry without becoming targets.",
+        "critique": "Source-specific checks and access limits recorded.",
+        "final": "Several numbers and explicit WUE details removed from prose; inherited source map preserves bounded identities/conditions.",
+        "judgment": "The operative growth/water distinction survives. Final prose is less detailed, not a material change in recommendation; L-02.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 20,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 35,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 36,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 37,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Local history and owner choices",
+        "discovery": "Schedules, service/wiring, sensor calibration, crop moves and season requested as future records.",
+        "draft": "Endpoint and authorization decisions explicit; assumed-good prior routine rejected.",
+        "critique": "External dependencies retained.",
+        "final": "History reconstruction and owner priorities retained; restoration option not separately named.",
+        "judgment": "Unknown local records honestly unresolved; optional-opportunity limit L-03.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 33,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 44,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 76,
+            "section": null
+          }
+        ]
+      },
+      {
+        "item": "Validation status and oracle boundaries",
+        "discovery": "Desk sources actually checked; all local/crop work proposed.",
+        "draft": "Mapped baseline and one-factor design do not claim results.",
+        "critique": "No crop test demanded as an executed requirement.",
+        "final": "Same distinction preserved; never calls a symptom score a diagnosis or house-wide series randomized evidence.",
+        "judgment": "Supported scope preserved; no unrun deployment or nonexistent validation required.",
+        "locators": [
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+            "line": 47,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 68,
+            "section": null
+          },
+          {
+            "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+            "line": 123,
+            "section": null
+          }
+        ]
+      }
+    ]
+  },
+  "freeze_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/source-map.json",
+      "matches_terminal_sha256": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/sources/index.md",
+      "matches_terminal_sha256": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/inputs/brief.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/assignment.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/input-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/discovery.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/draft.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/revealed-plan.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/investigator/plan-reveal.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/critique.md",
+      "matches_sha256": true,
+      "matches_bytes": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R2-01/control/stages/critic/source-map.json",
+      "matches_sha256": true,
+      "matches_bytes": true
+    }
+  ],
+  "retrieval_metadata_path": "ER12_RUNTIME/assessment/D-R2-01/control-v1/independent-retrievals.json",
+  "identity_policy": "Candidate S1–S9 retain their original identities. Reviewer R-S1–R-S9 are independent checks of those sources; additional official URLs are explicit alternate access locators, not silent ID replacement.",
+  "evidence_policy": "Original hashes identify inspected bytes only. Primary semantic checks, conditions and locators are separately recorded. Temporary downloaded article bytes are removed after review; bounded reviewer-authored evidence notes remain navigable."
+}

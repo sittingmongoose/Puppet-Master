@@ -1,46 +1,30 @@
 {
-  "native_goal": {
-    "evidence_status": "UNSUPPORTED_CAPABILITY_REPORTED_NO_ACTUAL_GOAL_RECEIPT",
-    "activation": "UNKNOWN",
-    "terminal": "UNKNOWN",
-    "original_authored_limitation": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/goal-record.md",
-    "diagnostic_native_item": "ER12_RUNTIME/mechanics/terminal-evidence-pass2/B-FINAL-G-01-item-27.json",
-    "native_tool_receipts_found": false,
-    "summary_is_goal_proof": false
-  },
-  "accounting": {
-    "billing": "UNKNOWN",
-    "cumulative_meter_semantics": "UNKNOWN",
-    "exact_billable_tokens": "UNKNOWN",
-    "effective_options": "UNKNOWN",
-    "requested_target": {
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-      "options": {
-        "mode": "yolo",
-        "thought": "max"
-      }
-    },
-    "exposed_thread_model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-    "runtimeMode": "full-access",
-    "interactionMode": "default",
-    "raw_usage_summaries": [
-      {
-        "itemId": "turn-item:provider:acpRegistry:native-item:provider-instance%3Azcode%3A47e82a88-08ff-4896-80b3-c6b5c5760cd5%3Aturn%3A1%3Aassistant%3Amessage%3Aturninfo_2fbde4d5-2a06-4b6f-8785-abcd4efbcf1e",
-        "text": "✓ completed · cache 32/33 messages · 72.5k cache-read tokens"
-      }
-    ]
-  },
-  "recentRuns": [
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
     {
-      "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
-      "ordinal": 1,
-      "status": "completed",
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
-      "requestedAt": "2026-10-10T04:02:12.048Z",
-      "startedAt": "2026-10-10T04:02:17.079Z",
-      "completedAt": "2026-10-10T04:09:28.584Z"
+      "accounting": {
+        "requested_target": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash"
+        }
+      },
+      "recentRuns": [
+        {
+          "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+          "ordinal": 1,
+          "status": "completed",
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "requestedAt": "2026-10-10T04:02:12.048Z",
+          "startedAt": "2026-10-10T04:02:17.079Z",
+          "completedAt": "2026-10-10T04:09:28.584Z"
+        }
+      ]
     }
-  ]
+  ],
+  "original_capture_sha256": "2ecfa52c9bb486a6474511c22c9769d16e29da559521dab839ee0e21b4bb8697",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/terminal-evidence-pass2/B-FINAL-G-01-provider-native-evidence.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A3-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The native Goal was active before saving the outputs and is now complete.\n\n- [Final recommendation](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/source-map.json>)\n- [Navigable source index](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/sources/index.md>)\n\nThe source map preserves S01\u2013S11 and C01\u2013C13 and adds six direct rechecks. Validation items are marked proposed; no application tests or builds were run.\n\nNative Goal usage: 210,535 tokens; 9m55s.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:53ef0a5c-8547-41fc-ba46-4f7c7bde0505",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The native Goal was active before saving the outputs and is now complete.\n\n- [Final recommendation](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/source-map.json>)\n- [Navigable source index](<ER12_RUNTIME/runs/A3-01/control/stages/reviser/sources/index.md>)\n\nThe source map preserves S01\u2013S11 and C01\u2013C13 and adds six direct rechecks. Validation items are marked proposed; no application tests or builds were run.\n\nNative Goal usage: 210,535 tokens; 9m55s.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:53ef0a5c-8547-41fc-ba46-4f7c7bde0505",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "35b0caa955e238e9fc2f2b1e05af5b2b00d64961736f07b49d83e4af0b0c8460"
   }
 }

@@ -1,9 +1,20 @@
-# S10 — Prusa Knowledge Base: Saving projects as 3MF
-
-- **Exact URL:** https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1
-- **Released version/commit:** Prusa Knowledge Base under PrusaSlicer 2.9 legacy topics; no exact executable build stated.
-- **Locator:** Save Project and 3MF file format sections (lines 350-368).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open of Prusa's official help; no project was saved/opened.
-- **Governing condition/default/exception:** Prusa describes its project 3MF as a snapshot of objects, settings, modifiers and parameters. It notes the same-G-code expectation on another computer and specifically recommends sharing with a Prusa printer; the format can include multiple models, slicer settings and thumbnails/colors/textures.
-- **Applicability:** Prusa application-project behavior, not a generic cross-vendor settings promise or technician approval.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0374f45f67cb3392f905cd1179b7afe8dbf5cccc19fe30105cdf71c4af9c9fd9",
+  "rawSHA256": "0374f45f67cb3392f905cd1179b7afe8dbf5cccc19fe30105cdf71c4af9c9fd9",
+  "original_bytes": 945,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S10-prusa-project-3mf.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

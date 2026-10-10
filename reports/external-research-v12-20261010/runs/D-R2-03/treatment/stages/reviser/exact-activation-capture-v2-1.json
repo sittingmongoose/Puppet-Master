@@ -1,0 +1,41 @@
+{
+  "version": "exact-activation-capture-v2-1",
+  "stageDir": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser",
+  "backupDir": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/.activation-backup-76531c3426dd408b90bafeeb7eef43f6",
+  "command": "Execute the following body in worker functions.exec with native tools available.",
+  "args": {
+    "clientRequestId": "er12-composite-D-R2-03-treatment-reviser-A1-A8-v1",
+    "mode": "async",
+    "role": "general",
+    "title": "ER12 reference D-R2-03-treatment reviser",
+    "target": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "runtimeMode": "full-access",
+    "interactionMode": "default",
+    "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use.\nBefore any case/source input or inference, activate exactly ONE actual exposed native Goal using this exact immutable freeze.native_goal_objective string: \"ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nNo case input is needed for activation. Preserve the exact native activation response; if unsupported, stop before inference and preserve the exact diagnostic. No second or replacement Goal. Original Goal lifecycle and scope remain binding. Follow the appended ROOT MECHANICS CLARIFICATION v1 in the assignment.\n\nROOT EXACT GOAL BINDING GUARD v1 — PRE-INPUT\nBefore ANY case/source reading or inference, activate ONE actual native Goal with this EXACT frozen objective: \"ER12 reviser stage, run D-R2-03-treatment: execute ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.\"\nImmediately pass its EXACT unmodified COMPLETE fresh native create_goal response (or an immediately obtained native get_goal response) as ONE --json argument to:\npython3 ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py --stage-dir ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser --json '<EXACT unmodified complete fresh native create_goal/get_goal response JSON>'\nThe quoted response slot is runtime native data, never literal placeholder JSON. Use structured argv or correct shell quoting; preserve every response field. If activation is unavailable or the gate fails, STOP before any case/source reading or inference. Preserve the exact diagnostic and original failure; never create a second/replacement Goal or repair the objective. Save before completing the SAME Goal. Original route, deadlines, scope, science and lifecycle remain binding. Response provenance/freshness cannot be independently proved by this checker. This is common symmetric future mechanics, not technique or source assistance.\n\nEXACT ACTIVATION CAPTURE v2.1 — COMMON PRE-INPUT MECHANICS\nThis body implements the existing v1 ONE Goal activation instruction; execute it once, not as a second activation after that prose. Before scientific input, execute this body once. Stop on failure/unsupported; no second Goal. Original substantive assignment, route, deadlines, scope and science remain binding.\n```javascript\n// functions.exec body. Root substitutes only \"ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser\" with JSON.stringify(knownStageDir).\nconst stageDir = \"ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser\";\nconst q = s => \"'\" + s.replaceAll(\"'\", \"'\\\\''\") + \"'\";\nconst guard = \"ER12_RUNTIME/mechanics/exact-goal-binding-guard-v1/assert-active-goal.py\";\nconst readObjective = \"import json,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); assert not (p.parent/'native-goal-create.json').exists(); f=json.loads(p.read_text()); o=f['native_goal_objective']; assert isinstance(o,str) and 0<len(o)<4000; print(json.dumps(o,ensure_ascii=False))\";\nif (typeof tools.exec_command !== \"function\" || typeof tools.create_goal !== \"function\") throw Error(\"STOP: native tools unsupported\");\nconst read = await tools.exec_command({cmd: \"python3 -B -c \" + q(readObjective) + \" \" + q(stageDir + \"/freeze.json\"), max_output_tokens: 6000});\nif (read.exit_code !== 0 || read.session_id) throw Error(\"STOP: objective read failed: \" + read.output);\nconst objective = JSON.parse(read.output);\nif (typeof objective !== \"string\" || !objective.length) throw Error(\"STOP: objective is not a string\");\n// One native call. No retry, replacement, extraction, transcription, normalization or fallback.\nconst response = await tools.create_goal({objective});\nif (!response || typeof response !== \"object\" || Array.isArray(response)) throw Error(\"STOP: unsupported native response\");\nconst receipt = JSON.stringify(response);\nconst save = \"import os,sys; from pathlib import Path; p=Path(sys.argv[1]); assert p.is_absolute() and not any(x.is_symlink() for x in (p,*p.parents)); fd=os.open(str(p),os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o444); f=os.fdopen(fd,'w',encoding='utf-8'); f.write(sys.argv[2]); f.close()\";\nconst checked = await tools.exec_command({cmd: \"python3 -B -c \" + q(save) + \" \" + q(stageDir + \"/native-goal-create.json\") + \" \" + q(receipt) + \" && python3 -B \" + q(guard) + \" --stage-dir \" + q(stageDir) + \" --json \" + q(receipt), max_output_tokens: 1500});\nif (checked.exit_code !== 0 || checked.session_id) throw Error(\"STOP: save/binding failed; preserve original receipt/diagnostic; no second Goal: \" + checked.output);\ntext({activation_binding_checked: true, receipt_path: stageDir + \"/native-goal-create.json\", provenance_and_freshness: \"UNKNOWN beyond checker\"});\n\n```\nSave required stage outputs before completing the same Goal. Source/native provenance/freshness remain UNKNOWN beyond checker.\n"
+  },
+  "root_only_integration": true,
+  "dispatch_performed": false,
+  "idempotent": false,
+  "v1_marker_sha256": "13ee345bb089446238ccbc98bd8a759466801a89866d52c79e35705af8815012",
+  "snippet_sha256": "2db6e25022303c7c5730dd0192e2b90903f89f641a798b04ca30998e8f1d37f3",
+  "guard_sha256": "4a61deec5eb0ca5eca149f0e1f30c55c3e90b5a6ad0557fc98946d340cae99ed",
+  "original_sha256": {
+    "request.json": "d52e9720b19ab648cda733e16eda1e6bed569257a56738f45cf90c780f54c057",
+    "freeze.json": "e3eb372f52d249285ea28b8c60f1049f87c9da7349ab3c93782a5bef671ab960",
+    "input-map.json": "4c9a8bb3ddf4a35d18f30db9f3eed032d031f564b23f63f3b617fded4b6b0226",
+    "assignment.md": "433dabd35dc94b7feedd5565b50bd953277eeb3169372b1d06ab2fc416e8f3ad"
+  },
+  "updated_sha256": {
+    "request.json": "093b1e5876805dad963ec7d30165eeef6eb42f6e037baf24d037e55a0aca501e",
+    "freeze.json": "f983806584b3a8a5b9fca72328d993031367186327048d105f5e861695808525",
+    "input-map.json": "4c9a8bb3ddf4a35d18f30db9f3eed032d031f564b23f63f3b617fded4b6b0226",
+    "assignment.md": "4358826a5ed34d960d5610598f16debe04eac73b6310480b83a51973ed397379"
+  }
+}

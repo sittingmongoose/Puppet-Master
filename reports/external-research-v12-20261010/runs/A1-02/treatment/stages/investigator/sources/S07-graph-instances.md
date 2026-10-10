@@ -1,10 +1,20 @@
-# S07 — Microsoft Graph list instances
-
-- URL: https://learn.microsoft.com/en-us/graph/api/event-list-instances?view=graph-rest-1.0
-- Version: Microsoft Graph REST v1.0 method; live documentation.
-- Access observation: 2026-10-10T04:00:34Z.
-- Locators: description, GET `/events/{id}/instances`, date range parameters and `Prefer: outlook.timezone` header.
-
-**Observed operation.** GET lists occurrences and exceptions for a series master over required start/end date-time bounds. If no `Prefer: outlook.timezone` header is supplied, returned times are UTC; header selects a supported zone for start/end in response.
-
-**Application.** This illustrates retrieving a concrete occurrence before provider-side modification. It requires auth and a service; it is not in the trusted-file-only build.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "490020a95e31f0957c227eca3ce5a02e3146b8d2031a9705c105f6c80ddedfc4",
+  "rawSHA256": "490020a95e31f0957c227eca3ce5a02e3146b8d2031a9705c105f6c80ddedfc4",
+  "original_bytes": 796,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S07-graph-instances.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

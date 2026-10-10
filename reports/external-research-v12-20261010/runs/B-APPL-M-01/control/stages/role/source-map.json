@@ -9,8 +9,8 @@
       "title": "SQLite Write-Ahead Logging",
       "url": "https://www.sqlite.org/wal.html",
       "source_version": "Page last updated 2026-08-25 19:42:39Z; product version 3.51.3 is the assignment scenario, not a version label on this page",
-      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
-      "retrieval_operation": "Opened the official URL directly with the web tool; inspected \u00a7\u00a71, 2.2, 2.3, 3.2, 4, 5, 6, and 11",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02–04:04 UTC session window",
+      "retrieval_operation": "Opened the official URL directly with the web tool; inspected §§1, 2.2, 2.3, 3.2, 4, 5, 6, and 11",
       "conditions_and_exceptions": [
         "WAL requires same-host processes and shared-memory support; it does not work over a network filesystem.",
         "One writer at a time; readers and a writer may proceed concurrently.",
@@ -26,7 +26,7 @@
       "title": "SQLite checkpoint C interface",
       "url": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html",
       "source_version": "Live, unversioned C API reference; consulted for the assignment's 3.51.3 target",
-      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02–04:04 UTC session window",
       "retrieval_operation": "Opened the official URL directly with the web tool; inspected PASSIVE, TRUNCATE, output parameters, and return conditions",
       "conditions_and_exceptions": [
         "PASSIVE never waits for readers or writers and may leave checkpoint work unfinished.",
@@ -40,8 +40,8 @@
       "title": "SQLite URI filenames",
       "url": "https://www.sqlite.org/uri.html",
       "source_version": "Live, unversioned URI reference retrieved 2026-10-10",
-      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02\u201304:04 UTC session window",
-      "retrieval_operation": "Opened the official URL directly with the web tool; inspected \u00a73.3 immutable=1",
+      "retrieval_utc": "2026-10-10; exact per-open timestamp not exposed, direct opens completed during the 04:02–04:04 UTC session window",
+      "retrieval_operation": "Opened the official URL directly with the web tool; inspected §3.3 immutable=1",
       "conditions_and_exceptions": [
         "immutable=1 signals that the database cannot change, forces read-only mode, and skips file locking and change detection.",
         "If an asserted-immutable file changes, incorrect query results or SQLITE_CORRUPT are possible."
@@ -51,24 +51,24 @@
   ],
   "claim_sources": {
     "1": [
-      "S1 \u00a72.2"
+      "S1 §2.2"
     ],
     "2": [
-      "S1 \u00a7\u00a72.2, 6"
+      "S1 §§2.2, 6"
     ],
     "3": [
-      "S1 \u00a7\u00a71, 2.2"
+      "S1 §§1, 2.2"
     ],
     "4": [
-      "S1 \u00a7\u00a74\u20135",
-      "S3 \u00a73.3"
+      "S1 §§4–5",
+      "S3 §3.3"
     ],
     "5": [
       "S2 PASSIVE/TRUNCATE and output parameters",
-      "S1 \u00a76"
+      "S1 §6"
     ],
     "6": [
-      "S1 \u00a7\u00a71, 2.3"
+      "S1 §§1, 2.3"
     ]
   },
   "checks": [
@@ -88,6 +88,6 @@
   "execution_status": "No local database probe, binary test, or workload benchmark was executed; no claim is presented as experimentally verified.",
   "retrieval_failures": [],
   "version_note_sources": [
-    "S1 \u00a711"
+    "S1 §11"
   ]
 }

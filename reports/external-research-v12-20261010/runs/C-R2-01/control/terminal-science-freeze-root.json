@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "C-R2-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the C-R2-01-control reviser stage. The exact frozen Goal was activated, the binding guard passed, and that same Goal was completed.\n\n- [final.md](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md)\n- [Activation receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json), [completion receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json), and [guard result](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt)\n\nThe revision adds sleeve strata to the coupon design and treats 12 weeks only as a planning cap, with an inconclusive outcome when evidence is insufficient. It preserves uncertainty about the investigator\u2019s 60-minute timing and corrects the description of S01\u2019s laboratory sheets. Those limits are consistent with the primary paper, model-ink study, and CCI seasonal-monitoring guidance ([S01](https://link.springer.com/article/10.1007/s10570-023-05626-6), [S02](https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf), [CCI](https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html)).\n\nNo specimen inspection or material-performance validation was performed. The Goal completed with 118,942 tokens used and 581 seconds elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3519bc8c-6a15-4a00-a349-67713b9a1f37",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the C-R2-01-control reviser stage. The exact frozen Goal was activated, the binding guard passed, and that same Goal was completed.\n\n- [final.md](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/source-map.json) and [source index](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/sources/INDEX.md)\n- [Activation receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-activation.json), [completion receipt](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/native-goal-completion.json), and [guard result](ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/goal-binding-guard.txt)\n\nThe revision adds sleeve strata to the coupon design and treats 12 weeks only as a planning cap, with an inconclusive outcome when evidence is insufficient. It preserves uncertainty about the investigator\u2019s 60-minute timing and corrects the description of S01\u2019s laboratory sheets. Those limits are consistent with the primary paper, model-ink study, and CCI seasonal-monitoring guidance ([S01](https://link.springer.com/article/10.1007/s10570-023-05626-6), [S02](https://tugraz.elsevierpure.com/ws/portalfiles/portal/79063769/1-s2.0-S0264127523010092-main.pdf), [CCI](https://www.canada.ca/en/conservation-institute/services/agents-deterioration/humidity.html)).\n\nNo specimen inspection or material-performance validation was performed. The Goal completed with 118,942 tokens used and 581 seconds elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3519bc8c-6a15-4a00-a349-67713b9a1f37",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "df1c4fff06c387dc69ac44fb8493d333edc19bcd2813cdda662d38af453bc132"
   }
 }

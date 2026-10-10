@@ -1,9 +1,20 @@
-# S03 — Autodesk Fusion export formats
-
-- **Source:** [Export designs](https://help.autodesk.com/view/fusion360/ENU/?contextId=ASM-EXPORT-DESIGN)
-- **Version:** Live documentation; no application build stated.
-- **Access:** 2026-10-10T04:14:03Z, read-only web open.
-- **Locator:** Export format list and Tips.
-- **Observed operation:** Read only; no design export performed.
-- **Relevant rules:** Fusion lists both 3MF and STEP exports. It describes 3MF as including vertices, triangular faces, units, colors, and textures. Exported files do not remain associative with the source design.
-- **Applicability:** Fusion workflow only; it does not establish protocol-specific STEP preservation or receiver support.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+  "rawSHA256": "3aa71f40ade5109e8b51e99d2f0f697b37575b70e014603b520faff2b6c70d41",
+  "original_bytes": 713,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S03-fusion-export.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

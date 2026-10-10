@@ -1,0 +1,1575 @@
+[
+  {
+    "clause_id": "B001",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 1,
+    "exact_text": "# Intermittent vibration warnings on a maintenance cart",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B003",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 3,
+    "exact_text": "Case ID: ER12-D-R1-02-FRESH",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 3
+      }
+    ],
+    "independent_assessment": "Same case ID; C1 corrected the draft metadata error."
+  },
+  {
+    "clause_id": "B004",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 4,
+    "exact_text": "Slot ID: D-R1-02",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Correct slot preserved."
+  },
+  {
+    "clause_id": "B005",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 5,
+    "exact_text": "Domain: transport instrumentation",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Correct domain preserved."
+  },
+  {
+    "clause_id": "B007",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 7,
+    "exact_text": "## Project situation",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B009",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 9,
+    "exact_text": "A maintenance team is trialing a battery vibration logger on a cart used along a disused test track. Several warnings cluster near one bend, but the same cart also carries different tool loads on different days. The logger was moved to a new bracket shortly before the warnings increased. The team wants to know whether a research pilot could make the observations interpretable. No raw recordings, sensor specification, track survey, or fault diagnosis are available. This is a synthetic test-track scenario.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 105
+      }
+    ],
+    "independent_assessment": "Synthetic evidence boundary and bend/load/bracket hypotheses are preserved. The battery/disused-track context is not used to infer any safe operating capability."
+  },
+  {
+    "clause_id": "B011",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 11,
+    "exact_text": "## Request",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B013",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 13,
+    "exact_text": "Spend the 60-minute research window producing a proposal to investigate the reliability and meaning of these vibration observations. Explain the sensing and mechanical mechanisms, compare useful instrumentation and observation alternatives, and examine implementation history that could matter. Propose a controlled later study that can inform whether further engineering inspection is warranted; do not create a monitoring product.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 56
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "Substantive research proposal explains mechanisms, compares instruments/observations, investigates implementation history and proposes conditional later study. No product built. The 60-minute envelope is a time/protocol dimension; early completion is explicitly permitted by stage assignments and is not a scientific defect."
+  },
+  {
+    "clause_id": "B015",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 15,
+    "exact_text": "## Requirements to preserve",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B017",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 17,
+    "exact_text": "- Distinguish detecting an unusual signal, locating a repeatable event, and diagnosing a physical defect.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 16
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      }
+    ],
+    "independent_assessment": "Warning emission, repeatable surveyed location and fault-specific diagnosis have distinct evidence requirements."
+  },
+  {
+    "clause_id": "B018",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 18,
+    "exact_text": "- Compare changes in sensor mounting or acquisition with a repeatable-pass protocol and a useful independent observation or reference-instrument alternative.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 34
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 35
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 38
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 39
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 40
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      }
+    ],
+    "independent_assessment": "Bench mount comparison and acquisition audit are compared with repeats, rigid-point/track references and independent markers/video."
+  },
+  {
+    "clause_id": "B019",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 19,
+    "exact_text": "- Address speed, load, mounting, sample timing, and background machine behavior as possible interacting explanations.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      }
+    ],
+    "independent_assessment": "All five factors are included, with interacting mechanical/acquisition explanations and balanced or crossed future comparisons."
+  },
+  {
+    "clause_id": "B020",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 20,
+    "exact_text": "- Investigate the bracket change and the operating history of comparable implementations, including what evidence supports transfer to this cart.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 52
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 88
+      }
+    ],
+    "independent_assessment": "Recovery of bracket move/installation records, conditional old/new transfer test, actual version-specific acquisition incident and rail histories. Transfer is method-level, not numerical or diagnostic."
+  },
+  {
+    "clause_id": "B021",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 21,
+    "exact_text": "- Propose synchronized comparisons, controls, and a meaningful escalation decision; report future validation separately from any desk simulation or data check actually executed.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 133
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 137
+      }
+    ],
+    "independent_assessment": "Synchronize clock/filter delays; use control segment/state and no-event passes; referral requires repeatability/corroboration and artifact checks. All empirical work remains proposed."
+  },
+  {
+    "clause_id": "B023",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 23,
+    "exact_text": "## Boundaries",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B025",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 25,
+    "exact_text": "- Do not diagnose track or wheel safety, authorize vehicle use, or substitute the proposal for a qualified inspection.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 112
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "No safety diagnosis/use authorization; qualified authority retains access, stop and inspection decisions."
+  },
+  {
+    "clause_id": "B026",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 26,
+    "exact_text": "- Do not run the cart, access a live railway, install sensors, or tune a field warning threshold in this assignment.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 113
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "No cart/track operation, installation or threshold tuning is credited. Later sensor comparisons are conditional proposals, not performed activities."
+  },
+  {
+    "clause_id": "B027",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 27,
+    "exact_text": "- Do not assume warnings are true defects or fabricate sensor readings, frequencies, or sampling capability.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 114
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      }
+    ],
+    "independent_assessment": "No warnings assumed to be defects; quoted numeric specifications remain named examples. No cart readings, frequencies, rates or accuracy invented."
+  },
+  {
+    "clause_id": "B029",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 29,
+    "exact_text": "## Still unresolved",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "B031",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+    "line": 31,
+    "exact_text": "The logger range, sampling and timestamp behavior, mounting rigidity, wheel condition, path repeatability, speeds, loads, and warning logic are unspecified. We have not decided whether the relevant future outcome is repeatability, location accuracy, or diagnostic utility. Identify these dependencies.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 141
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      }
+    ],
+    "independent_assessment": "All supplied logger, mount, wheel, path, speed/load, warning-rule and endpoint unknowns remain explicit external dependencies."
+  },
+  {
+    "clause_id": "P001",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 1,
+    "exact_text": "# Intermittent vibration warnings on a maintenance cart",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P003",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 3,
+    "exact_text": "Case ID: ER12-D-R1-02-FRESH",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 3
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Same case ID; C1 corrected the draft metadata error."
+  },
+  {
+    "clause_id": "P004",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 4,
+    "exact_text": "Slot ID: D-R1-02",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Correct slot preserved."
+  },
+  {
+    "clause_id": "P005",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 5,
+    "exact_text": "Domain: transport instrumentation",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Correct domain preserved."
+  },
+  {
+    "clause_id": "P007",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 7,
+    "exact_text": "## Concealed prospective design record",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P009",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 9,
+    "exact_text": "Keep this file outside the candidate-facing research packet. It preserves the authored request and open design opportunities. It is not a completed research proposal, a source list, a result, or an evaluation answer key. Nothing here selects an eventual research method. No empirical validation has been executed in authoring this case.",
+    "disposition": "PROCESS_CONTEXT",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 133
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "Concealed prospective-record status is not an answer key or a selected method. The reveal record reports discovery frozen before release; pre-release access ordering remains protocol UNKNOWN without a trace."
+  },
+  {
+    "clause_id": "P011",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 11,
+    "exact_text": "## Exact original request and clauses",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P013",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 13,
+    "exact_text": "The original brief follows verbatim between the delimiters. These bytes define the original obligations; later clarification must not silently replace them.",
+    "disposition": "PROCESS_CONTEXT",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 102
+      }
+    ],
+    "independent_assessment": "The original and revealed plan are byte-identical, and the brief block matches the original brief. Independent clause review below uses the original; candidate paraphrases do not replace it."
+  },
+  {
+    "clause_id": "P015",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 15,
+    "exact_text": "BEGIN ORIGINAL BRIEF",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Opening delimiter of the preserved original-brief block."
+  },
+  {
+    "clause_id": "P017",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 17,
+    "exact_text": "# Intermittent vibration warnings on a maintenance cart",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P019",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 19,
+    "exact_text": "Case ID: ER12-D-R1-02-FRESH",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 3
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Same case ID; C1 corrected the draft metadata error."
+  },
+  {
+    "clause_id": "P020",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 20,
+    "exact_text": "Slot ID: D-R1-02",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Correct slot preserved."
+  },
+  {
+    "clause_id": "P021",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 21,
+    "exact_text": "Domain: transport instrumentation",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 4
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Correct domain preserved."
+  },
+  {
+    "clause_id": "P023",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 23,
+    "exact_text": "## Project situation",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P025",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 25,
+    "exact_text": "A maintenance team is trialing a battery vibration logger on a cart used along a disused test track. Several warnings cluster near one bend, but the same cart also carries different tool loads on different days. The logger was moved to a new bracket shortly before the warnings increased. The team wants to know whether a research pilot could make the observations interpretable. No raw recordings, sensor specification, track survey, or fault diagnosis are available. This is a synthetic test-track scenario.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 105
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Synthetic evidence boundary and bend/load/bracket hypotheses are preserved. The battery/disused-track context is not used to infer any safe operating capability."
+  },
+  {
+    "clause_id": "P027",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 27,
+    "exact_text": "## Request",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P029",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 29,
+    "exact_text": "Spend the 60-minute research window producing a proposal to investigate the reliability and meaning of these vibration observations. Explain the sensing and mechanical mechanisms, compare useful instrumentation and observation alternatives, and examine implementation history that could matter. Propose a controlled later study that can inform whether further engineering inspection is warranted; do not create a monitoring product.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 56
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Substantive research proposal explains mechanisms, compares instruments/observations, investigates implementation history and proposes conditional later study. No product built. The 60-minute envelope is a time/protocol dimension; early completion is explicitly permitted by stage assignments and is not a scientific defect."
+  },
+  {
+    "clause_id": "P031",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 31,
+    "exact_text": "## Requirements to preserve",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P033",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 33,
+    "exact_text": "- Distinguish detecting an unusual signal, locating a repeatable event, and diagnosing a physical defect.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 16
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Warning emission, repeatable surveyed location and fault-specific diagnosis have distinct evidence requirements."
+  },
+  {
+    "clause_id": "P034",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 34,
+    "exact_text": "- Compare changes in sensor mounting or acquisition with a repeatable-pass protocol and a useful independent observation or reference-instrument alternative.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 34
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 35
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 38
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 39
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 40
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Bench mount comparison and acquisition audit are compared with repeats, rigid-point/track references and independent markers/video."
+  },
+  {
+    "clause_id": "P035",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 35,
+    "exact_text": "- Address speed, load, mounting, sample timing, and background machine behavior as possible interacting explanations.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; All five factors are included, with interacting mechanical/acquisition explanations and balanced or crossed future comparisons."
+  },
+  {
+    "clause_id": "P036",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 36,
+    "exact_text": "- Investigate the bracket change and the operating history of comparable implementations, including what evidence supports transfer to this cart.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 52
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 88
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Recovery of bracket move/installation records, conditional old/new transfer test, actual version-specific acquisition incident and rail histories. Transfer is method-level, not numerical or diagnostic."
+  },
+  {
+    "clause_id": "P037",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 37,
+    "exact_text": "- Propose synchronized comparisons, controls, and a meaningful escalation decision; report future validation separately from any desk simulation or data check actually executed.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 133
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 137
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; Synchronize clock/filter delays; use control segment/state and no-event passes; referral requires repeatability/corroboration and artifact checks. All empirical work remains proposed."
+  },
+  {
+    "clause_id": "P039",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 39,
+    "exact_text": "## Boundaries",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P041",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 41,
+    "exact_text": "- Do not diagnose track or wheel safety, authorize vehicle use, or substitute the proposal for a qualified inspection.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 11
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 112
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; No safety diagnosis/use authorization; qualified authority retains access, stop and inspection decisions."
+  },
+  {
+    "clause_id": "P042",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 42,
+    "exact_text": "- Do not run the cart, access a live railway, install sensors, or tune a field warning threshold in this assignment.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 113
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; No cart/track operation, installation or threshold tuning is credited. Later sensor comparisons are conditional proposals, not performed activities."
+  },
+  {
+    "clause_id": "P043",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 43,
+    "exact_text": "- Do not assume warnings are true defects or fabricate sensor readings, frequencies, or sampling capability.",
+    "disposition": "HONORED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 43
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 114
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; No warnings assumed to be defects; quoted numeric specifications remain named examples. No cart readings, frequencies, rates or accuracy invented."
+  },
+  {
+    "clause_id": "P045",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 45,
+    "exact_text": "## Still unresolved",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P047",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 47,
+    "exact_text": "The logger range, sampling and timestamp behavior, mounting rigidity, wheel condition, path repeatability, speeds, loads, and warning logic are unspecified. We have not decided whether the relevant future outcome is repeatability, location accuracy, or diagnostic utility. Identify these dependencies.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 141
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      }
+    ],
+    "independent_assessment": "Verbatim original-brief clause; All supplied logger, mount, wheel, path, speed/load, warning-rule and endpoint unknowns remain explicit external dependencies."
+  },
+  {
+    "clause_id": "P049",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 49,
+    "exact_text": "END ORIGINAL BRIEF",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Closing delimiter of the preserved original-brief block."
+  },
+  {
+    "clause_id": "P051",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 51,
+    "exact_text": "## Research question and incompleteness",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P053",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 53,
+    "exact_text": "What research and later comparison design would establish the evidential meaning of an intermittent vibration warning before any physical-fault claim is made?",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 16
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 56
+      }
+    ],
+    "independent_assessment": "Evidence-gathering sequence establishes warning meaning before diagnosis; diagnosis is a distinct conditional endpoint."
+  },
+  {
+    "clause_id": "P055",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 55,
+    "exact_text": "The future test authorization, acquisition access, physical inspection reference, and primary endpoint remain open. The proposal should choose an evidence-gathering sequence that has value even if the logger cannot support the originally imagined diagnosis.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 62
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 141
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 143
+      }
+    ],
+    "independent_assessment": "Authorization, acquisition access, independent inspection and endpoint remain open. Context mapping, authentic acquisition audit and repeatability provide value without diagnostic capability."
+  },
+  {
+    "clause_id": "P057",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 57,
+    "exact_text": "## Meaningful useful alternatives",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P059",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 59,
+    "exact_text": "Consider improving mounting characterization, acquisition or time synchronization, repeatable passes with documented load and speed, position-reference observations, and independent inspection or a reference sensor. Recording operating context without changing the logger is a useful first step when attribution is weak. A simpler manual event map may be preferable to additional automated processing for some decisions. No sensor or analysis method is predetermined.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 33
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 34
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 35
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 36
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 37
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 38
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 39
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 40
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 41
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      }
+    ],
+    "independent_assessment": "Competing no-change/manual approach, bench mount/acquisition work, repeated passes and independent instruments/position are compared. No method/sensor chosen prematurely."
+  },
+  {
+    "clause_id": "P061",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 61,
+    "exact_text": "## Mechanism opportunity",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P063",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 63,
+    "exact_text": "Investigate how excitation, mounting transfer, cart dynamics, sample timing, and location estimates contribute to a measured event. Aliasing, clipping, bracket resonance, and varying exposure are hypotheses to evaluate against actual specifications, not claimed causes. Explain which kinds of evidence support event detection versus location or diagnosis, and which comparisons could reveal a sensing artifact.",
+    "disposition": "COVERED_WITH_LIMITATIONS",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 15
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 16
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 17
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 25
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 27
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      }
+    ],
+    "independent_assessment": "Excitation, mechanical transfer, cart dynamics, sampling and position are explained; aliasing/clipping/resonance are hypotheses. Varying exposure is addressed implicitly through pass-time/context, matched segments and predefined windows, rather than an explicit exposure denominator (L3). No warning-rate conclusion is made."
+  },
+  {
+    "clause_id": "P065",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 65,
+    "exact_text": "## Implementation and history opportunity",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P067",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 67,
+    "exact_text": "Seek implementation histories with sensor placement, acquisition settings, vehicle conditions, reference observations, and failure or drift reports. Results from a different vehicle or infrastructure context may not transfer. The bracket relocation motivates recovery of installation dates and practices, but no before-and-after evidence is already supplied. Historical algorithm performance without the sensing chain and operating context is insufficient to justify a field claim.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 49
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 50
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 51
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 52
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 54
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 60
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 88
+      }
+    ],
+    "independent_assessment": "Specific setup histories include placement, acquisition, vehicle/load/speed and references; the Linux lost-interrupt report supplies a concrete implementation failure lead. Cart records remain missing, and prior algorithm performance alone is not treated as a field justification."
+  },
+  {
+    "clause_id": "P069",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 69,
+    "exact_text": "## Proposed versus executed validation",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P071",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 71,
+    "exact_text": "A later authorized test-track pilot could coordinate repeat passes, documented speed and load, timestamp or position references, and reversible mounting comparisons. It should explain independent observation, repeated events, false warnings, and inspection escalation without presuming ground-truth faults. Simulated signals or a sampling illustration performed during the hour count only as desk checks under explicit assumptions; no field detection accuracy, safety, or defect diagnosis has been validated.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 66
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 68
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 72
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 74
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 78
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 80
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 137
+      }
+    ],
+    "independent_assessment": "Conditional authorized repeats, controlled speed/load, time/position references and reversible mount comparison are coherent. Nonrecurring/uncorroborated warnings are recorded without calling them false in the absence of independent truth. Desk/field validation is not claimed."
+  },
+  {
+    "clause_id": "P073",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 73,
+    "exact_text": "Authoring status: only synthetic input files have been prepared. No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case. Future researchers must state the actual extent of any work they execute.",
+    "disposition": "COVERED",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 5
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 133
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 137
+      }
+    ],
+    "independent_assessment": "The authoring-status statement concerns preparation of the synthetic input, not a prohibition on candidate desk search. Candidate research is separated from zero case-specific empirical execution."
+  },
+  {
+    "clause_id": "P075",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 75,
+    "exact_text": "## Scope and release boundary",
+    "disposition": "STRUCTURAL",
+    "final_locators": [],
+    "independent_assessment": "Original document heading; retained for exact navigation, not an additional scientific obligation."
+  },
+  {
+    "clause_id": "P077",
+    "document": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+    "line": 77,
+    "exact_text": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design. The proposal may contain reasoned provisional choices, but the case provides no predetermined winner. It requests no product build. Preserve brief.md and plan.md exactly for later paired freezes. D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes. Input readiness does not assert that those release conditions have been satisfied.",
+    "disposition": "COVERED_SCIENCE_PROCESS_UNKNOWN",
+    "final_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 9
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 19
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 23
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 29
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 47
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 56
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 135
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+        "line": 141
+      }
+    ],
+    "independent_assessment": "Full discovery, causal analysis, alternatives, bounded history and future validation remain; no predetermined winner/product. Original files are unchanged. Recipe/budget-lock and absence of designer feedback before candidate completion are protocol conditions not proved by these science artifacts, so UNKNOWN rather than guessed compliance."
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "checks": [
+    "deduplicated 0/100/100/150 cumulative max, never 350",
+    "latest observation and blocked terminal preserved",
+    "retained author overlaps final context",
+    "created lifetime differs from started context",
+    "missing final retains failure cost without delivery time",
+    "queue and handoff separate",
+    "original heterogeneous judgments unchanged",
+    "malformed originals and capture metadata reported",
+    "finite missing capture files explicit",
+    "no science read sentinel",
+    "immutable synthetic inputs and source pins",
+    "billing unknown and root not aggregate",
+    "exact host manifest and science entry rejected",
+    "malformed manifest bounded",
+    "missing-final exactshape investigator-only terminal is 29 seconds",
+    "incomplete owned terminal intervals remain unknown",
+    "no-manifest quiet final delivery unknown raw interval preserved",
+    "blocked plus root-delivered keeps interval delivery and invalid judgments separate",
+    "manifest hashes and pointers are attestations only",
+    "mismatched declared task rejects entire delivery manifest",
+    "duplicate delivery rows reject entire manifest",
+    "malformed delivery metadata rejected",
+    "delivery row count exactly eighty",
+    "original extractor immutable"
+  ],
+  "campaign_run": false
+}

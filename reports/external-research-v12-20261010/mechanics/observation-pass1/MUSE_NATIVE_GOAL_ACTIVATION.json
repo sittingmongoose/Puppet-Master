@@ -1,0 +1,35 @@
+{
+  "sourceThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+  "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-DISC-M-01-treatment-role-v1%253Aordinal%253A1%3A01a123f3-32a1-7000-a8af-2e7fd51f587e%3A01a123f3-9258-7791-9ac0-fc47b7a26e07",
+  "position": 7,
+  "activityUpdatedAt": "2026-10-10T03:55:27.824Z",
+  "recovery": {
+    "initial_offset": 0,
+    "initial_chars": 1,
+    "continuation_offset": 1,
+    "complete": true
+  },
+  "exact_tool_record": {
+    "toolName": "create_goal",
+    "input": {
+      "objective": "ER12 B-DISC-M-01/treatment: execute ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal."
+    },
+    "output": "{\"goal\": {\"created_at_ms\": 1791604527743, \"current_work\": null, \"goal_id\": \"goal-01a123f3-927f-7c31-8ae3-db627047f3e1\", \"last_progress_at_ms\": null, \"next_work\": null, \"objective\": \"ER12 B-DISC-M-01/treatment: execute ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.\", \"percent_complete\": 0, \"session_id\": \"01a123f3-21e8-7000-88e1-d062a9bffd29\", \"status\": \"active\", \"token_budget\": null, \"tokens_used\": 0, \"updated_at_ms\": 1791604527743}}"
+  },
+  "native_output": {
+    "goal": {
+      "created_at_ms": 1791604527743,
+      "current_work": null,
+      "goal_id": "goal-01a123f3-927f-7c31-8ae3-db627047f3e1",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "ER12 B-DISC-M-01/treatment: execute ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "percent_complete": 0,
+      "session_id": "01a123f3-21e8-7000-88e1-d062a9bffd29",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791604527743
+    }
+  }
+}

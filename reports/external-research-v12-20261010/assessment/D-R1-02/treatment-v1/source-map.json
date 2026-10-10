@@ -1,0 +1,867 @@
+{
+  "schema_version": "er12-independent-review-source-map-v1",
+  "assessment_id": "D-R1-02-treatment-v1",
+  "independence": "Reviewer retrieval and judgments; S01–S08 candidate IDs mapped to R01–R08 without silent rebinding",
+  "sources": [
+    {
+      "source_id": "R01",
+      "candidate_ids": [
+        "investigator:S01",
+        "critic:S01",
+        "reviser:S01"
+      ],
+      "title": "ADXL354/ADXL355 manufacturer datasheet",
+      "exact_url": "https://www.analog.com/media/en/technical-documentation/data-sheets/adxl354_adxl355.pdf",
+      "version": "Rev D; June 2025 C-to-D revision",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "printed p.1 and p.5/Table 2 (ADXL355 digital ranges)",
+        "printed p.2 revision history",
+        "printed p.23/Digital Output (power-up defaults)",
+        "printed pp.26–27/Table 10 (digital group delay)",
+        "printed p.29/I2C Protocol and Reading Data",
+        "printed pp.32–34/synchronization, Tables 13–14"
+      ],
+      "checks": [
+        {
+          "claim": "ADXL355 selectable ±2/±4/±8 g",
+          "result": "SUPPORTED",
+          "condition": "Digital ADXL355; the analog ADXL354 variants have different range choices."
+        },
+        {
+          "claim": "Power-up HPF disabled; LPF 1000 Hz; ODR 4000 Hz",
+          "result": "SUPPORTED",
+          "condition": "Configurable defaults, not an unidentified logger capability; standby/configuration behavior must be considered before acquisition."
+        },
+        {
+          "claim": "0.63 ms digital-filter group delay at programmed ODR 4000 Hz",
+          "result": "SUPPORTED",
+          "condition": "Table 10 digital-path delay, not universal total mechanical-to-host latency; other ODR and interpolation modes differ."
+        },
+        {
+          "claim": "400 kHz I2C recommended maximum ODR 800 Hz; over-rate may miss samples/add noise",
+          "result": "SUPPORTED",
+          "condition": "Communication limit scales with bus speed; does not apply universally to SPI or all ADXL355 configurations."
+        },
+        {
+          "claim": "Asynchronous XYZ register reads need not describe one sample instant; synchronization has mode-dependent delayed sample semantics",
+          "result": "SUPPORTED",
+          "condition": "p.29 continuity caveat; Tables 13–14 distinguish sync/clock/interpolation settings, group delay and initial sample corruption."
+        },
+        {
+          "claim": "June 2025 revision changed zero-g offset versus temperature specifications",
+          "result": "SUPPORTED",
+          "condition": "Documentation revision; no cart or general firmware fix inferred."
+        }
+      ],
+      "applicability": "Example-device conditions justify an authentic acquisition audit and a conditional reference alternative. The candidate does not identify the cart logger as ADXL355 or choose a cart rate.",
+      "evidence_files": [
+        "evidence/primary_batch1.txt",
+        "evidence/primary_context1.txt",
+        "evidence/primary_context3.txt",
+        "evidence/primary_context7.txt"
+      ]
+    },
+    {
+      "source_id": "R02",
+      "candidate_ids": [
+        "investigator:S02",
+        "critic:S02",
+        "reviser:S02"
+      ],
+      "title": "NI, Measuring Vibration with Accelerometers",
+      "exact_url": "https://www.ni.com/en/shop/data-acquisition/sensor-fundamentals/measuring-vibration-with-accelerometers.html",
+      "version": "Current online vendor guide; no release/commit pin displayed",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "Choosing the Right Accelerometer / Sensitivity / Weight",
+        "Mounting Options, including typical 100 mV/g table",
+        "Signal Conditioning"
+      ],
+      "checks": [
+        {
+          "claim": "Piezoelectric/IEPE and triaxial sensing are useful alternatives with matching conditioning, range and calibration",
+          "result": "SUPPORTED",
+          "condition": "A selected IEPE chain requires suitable excitation and conditioning; no sensor purchase or install is prescribed."
+        },
+        {
+          "claim": "Mount compliance and added base/sensor mass affect resonance and usable frequency",
+          "result": "SUPPORTED",
+          "condition": "Consult the selected sensor and structure; NI's mount-frequency figures are examples for a typical 100 mV/g accelerometer, not universal limits."
+        },
+        {
+          "claim": "Stud attachment generally needs permanent installation; temporary mounts have lower usable frequency",
+          "result": "SUPPORTED",
+          "condition": "General vendor guidance; a reversible bracket comparison must respect actual fastening and authorization."
+        }
+      ],
+      "applicability": "Supports mount characterization and reference-chain selection; cannot attribute the cart warnings to its bracket.",
+      "evidence_files": [
+        "evidence/primary_context1.txt",
+        "evidence/primary_context7.txt"
+      ]
+    },
+    {
+      "source_id": "R03",
+      "candidate_ids": [
+        "investigator:S03",
+        "critic:S03",
+        "reviser:S03"
+      ],
+      "title": "ADI EngineerZone original EVAL-ADXL355Z Linux sample-frequency support posts",
+      "exact_url": "https://ez.analog.com/linux-software-drivers/f/q-a/569014/eval-adxl355z-linux-command-line-for-setting-the-sample-frequency/493909",
+      "independently_accessed_url": "https://ez.analog.com/linux-software-drivers/f/q-a/569014/eval-adxl355z-linux-command-line-for-setting-the-sample-frequency",
+      "version": "Original user posts April 12/19, 2023; ADI support reply May 15, 2023",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "FC64 original setup/report, browser lines 277–298 and 320–325",
+        "rbolboac/ADI reply May 15, lines 344–359"
+      ],
+      "checks": [
+        {
+          "claim": "4 kHz configured versus ~2 kHz effective in EVAL-ADXL355Z/Kria KR260, PetaLinux 2022.2, kernel 5.15.36, IIO/SPI 6.25 MHz",
+          "result": "SUPPORTED",
+          "condition": "Original user's measured-output report, not merely register readback and not a universal sensor issue."
+        },
+        {
+          "claim": "Support reproduced missed data-ready interrupts on Raspberry Pi and proposed FIFO-full handling",
+          "result": "SUPPORTED",
+          "condition": "Vendor identified a non-real-time system limitation and future work. The thread does not demonstrate a shipped fix or prove the identical causal mechanism on every platform."
+        }
+      ],
+      "applicability": "A concrete operating-history failure report motivating configured-versus-effective rate/loss verification. The AI-generated page summary was not used as proof.",
+      "evidence_files": [
+        "evidence/primary_context5.txt",
+        "evidence/direct-retrieval-log.json"
+      ]
+    },
+    {
+      "source_id": "R04",
+      "candidate_ids": [
+        "investigator:S04",
+        "critic:S04",
+        "reviser:S04"
+      ],
+      "title": "Auersch, simultaneous vehicle/track/soil railway measurements",
+      "exact_url": "https://onlinelibrary.wiley.com/doi/10.1155/2017/1959286",
+      "version": "2017 version of record; DOI 10.1155/2017/1959286; campaign 1994",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "Sections 2.1–2.4",
+        "Sections 4–5 / speed and position comparisons"
+      ],
+      "checks": [
+        {
+          "claim": "Vehicle piezoelectric accelerometers, track/soil geophones, simultaneous positions and varied speeds",
+          "result": "SUPPORTED",
+          "condition": "Specific German high-speed passenger train, 3 km test section, surface/bridge/tunnel structures; measuring-car axle load 100 kN and wheelset mass 1500 kg."
+        },
+        {
+          "claim": "72-channel 2 kHz acquisition",
+          "result": "SUPPORTED_AS_QUALIFIED",
+          "condition": "Surface-line section only; smaller 16-channel systems in vehicle and other sections. Final and draft preserve this condition."
+        },
+        {
+          "claim": "Response/spectra vary with speed, location and subsystem",
+          "result": "SUPPORTED",
+          "condition": "Train/track-specific physical responses; no cart amplitude, band, threshold, accuracy or safety result transfers."
+        }
+      ],
+      "applicability": "Supports simultaneous references, site context and speed comparisons as methods. Bench impulse and loaded passage conditions differ.",
+      "evidence_files": [
+        "evidence/primary_context1.txt",
+        "evidence/primary_context2.txt"
+      ]
+    },
+    {
+      "source_id": "R05",
+      "candidate_ids": [
+        "investigator:S05",
+        "critic:S05",
+        "reviser:S05"
+      ],
+      "title": "Lamas-Lopez et al., field accelerometer/geophone displacement integration assessment",
+      "exact_url": "https://jzus.zju.edu.cn/article.php?doi=10.1631/jzus.A1600212",
+      "retrieved_content_url": "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212",
+      "independent_alternate_url": "https://link.springer.com/article/10.1631/jzus.A1600212",
+      "version": "2017 VOR, 18(7), pp.553–566, DOI 10.1631/jzus.A1600212; publisher date July 7, 2017",
+      "access_utc": "2026-10-10T07:01:32.370993+00:00 (direct PDF request start); publisher browser check subsequently",
+      "locators": [
+        "Abstract p.553",
+        "Methods pp.555–557 / Table 1",
+        "Results pp.562–563 / Table 3",
+        "Conclusions p.564"
+      ],
+      "checks": [
+        {
+          "claim": "Accelerometer/geophone-derived displacement compared with sleeper LVDT; filtering, speed, load and repeatability investigated",
+          "result": "SUPPORTED",
+          "condition": "Track-bed displacement in a conventional French railway, with distinct sensor placements and integration/filter assumptions, not arbitrary cart vibration or defects."
+        },
+        {
+          "claim": "Critic map: 1790 intercity passages and 80–200 km/h, 105–225 kN/axle validity",
+          "result": "SUPPORTED",
+          "condition": "Conclusions explicitly restrict the method and note underestimation for slower trains when energetic components are filtered. Final makes no numerical transfer."
+        },
+        {
+          "claim": "Reviser could not directly retrieve S05 and disclosed reliance on carried maps/critic",
+          "result": "DISCLOSED_ACCESS_LIMIT",
+          "condition": "Review browser also timed out; independent direct HTTPS retrieved the official journal PDF successfully and confirmed the bounded final claim."
+        }
+      ],
+      "applicability": "An independent-reference and operating-validity precedent only. LVDT displacement agreement is not a cart fault oracle.",
+      "evidence_files": [
+        "evidence/S05-full.pdf",
+        "evidence/S05-full.txt",
+        "evidence/S05-landing.txt",
+        "evidence/direct-retrieval-log.json",
+        "evidence/primary_context6.txt"
+      ],
+      "pdf_sha256": "6bb1183df7dc89672c4655d1ec7eb860e624d254e90c9bedfee007c0764e9c7c"
+    },
+    {
+      "source_id": "R06",
+      "candidate_ids": [
+        "investigator:S06",
+        "critic:S06",
+        "reviser:S06"
+      ],
+      "title": "Mihăilescu et al., wagon wheel-to-rail comfort study",
+      "exact_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10574946/",
+      "version": "Sensors 23(19):8064, September 25, 2023; DOI 10.3390/s23198064",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "Sections 2.2–2.4; Tables 2–3",
+        "Sections 3.1–3.2 and Tables 4–5",
+        "Discussion, 50 ms (20 Hz) statement"
+      ],
+      "checks": [
+        {
+          "claim": "Multiple axle/body sensor positions and empty/loaded comparisons",
+          "result": "SUPPORTED",
+          "condition": "A particular tank wagon/test ring and differing speeds; comparisons are not a clean isolated load-effect experiment."
+        },
+        {
+          "claim": "The paper reports 50 ms (20 Hz) recorded collection intervals",
+          "result": "SUPPORTED_WITH_SOURCE_CONFLICT",
+          "condition": "Discussion says 50 ms/20 Hz; Section 2.4/Table 3 uses 0.02 s increments (50 Hz); amplifier table lists 19.2 kS/s capability. Actual recording/processing chain is unresolved from this inconsistent paper."
+        },
+        {
+          "claim": "This study does not establish high-frequency defect-impact capture on the cart",
+          "result": "SUPPORTED",
+          "condition": "Reviewer inference from study scope and acquisition ambiguity; final neither prescribes 20 Hz nor claims it proves defect detection."
+        },
+        {
+          "claim": "Candidate maps say current HTML notes updates through 2026-08-27",
+          "result": "NOT_INDEPENDENTLY_SUPPORTED_NONMATERIAL",
+          "condition": "No such update statement appears in the independently retrieved article. Publication identity is confirmed; mutable-page update provenance remains unknown."
+        }
+      ],
+      "applicability": "A load/placement comparison precedent only. Source ambiguity is limitation L1, and unverified page-update metadata is L2.",
+      "evidence_files": [
+        "evidence/primary_batch2.txt",
+        "evidence/primary_context1.txt",
+        "evidence/primary_context7.txt",
+        "evidence/primary_context8.txt"
+      ]
+    },
+    {
+      "source_id": "R07",
+      "candidate_ids": [
+        "investigator:S07",
+        "critic:S07",
+        "reviser:S07"
+      ],
+      "title": "Dewesoft X order-tracking vendor manual",
+      "exact_url": "https://manual.dewesoft.com/x/setupmodule/modules/machinery/ordertracking",
+      "version": "Current online module manual; no dated release/commit pinned",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "Overview / hardware and setup rate, lines 45–58",
+        "Frequency channel settings / RPM and signal tracking, lines 85–103"
+      ],
+      "checks": [
+        {
+          "claim": "Manual calls for vibration input and angle/RPM input; 10 kHz in many cases",
+          "result": "SUPPORTED_AS_SCOPED",
+          "condition": "Vendor-module guidance, not a universal sampling law or a selected cart requirement."
+        },
+        {
+          "claim": "Signal-tracked or RPM-only input lacks zero-angle phase",
+          "result": "SUPPORTED",
+          "condition": "Signal tracking can estimate RPM from suitable measured analog data; it is an exception to requiring an additional physical angle sensor. Candidate discovery/draft and maps retain this distinction."
+        }
+      ],
+      "applicability": "Optional wheel-synchronous analysis only; suitable RPM input may be estimated, whereas absolute phase needs additional conditions. No route-location or fault proof.",
+      "evidence_files": [
+        "evidence/primary_context1.txt",
+        "evidence/primary_context2.txt"
+      ]
+    },
+    {
+      "source_id": "R08",
+      "candidate_ids": [
+        "investigator:S08",
+        "critic:S08",
+        "reviser:S08"
+      ],
+      "title": "Escalona, camera/inertial track-geometry methodology",
+      "exact_url": "https://arxiv.org/abs/2008.03763v1",
+      "retrieved_content_url": "https://arxiv.org/pdf/2008.03763v1",
+      "alternate_rendering": "https://arxiv.org/html/2008.03763v1",
+      "version": "arXiv:2008.03763v1, submitted August 9, 2020; PDF marked August 11, 2020",
+      "access_utc": {
+        "exact": "UNKNOWN",
+        "bounded_interval_start_utc": "2026-10-10T06:58:56Z",
+        "bounded_interval_end_utc": "2026-10-10T07:05:20Z",
+        "basis": "Observed reviewer clock timestamps bracket the completed source-retrieval batches; individual web-call UTC was not exposed or separately logged."
+      },
+      "locators": [
+        "Abstract/introduction and Section 2 / printed pp.1–2",
+        "Sections 8–10 / odometry, sensor fusion and calibration",
+        "Section 11 / printed p.22 input requirements"
+      ],
+      "checks": [
+        {
+          "claim": "A proposed system combines cameras, lasers, IMU and independent route-position signal (odometer/GNSS/wheel encoder)",
+          "result": "SUPPORTED",
+          "condition": "Visible rail heads, rigid shared installation, calibration and known ideal geometry; theory/method precedent rather than deployed cart validation."
+        },
+        {
+          "claim": "Rigid/calibrated optical mounting and visibility are necessary",
+          "result": "SUPPORTED",
+          "condition": "Version-pinned PDF independently confirms the physical conditions; experimental HTML shows a later rendering date, which is not treated as a different scientific revision."
+        },
+        {
+          "claim": "Critic pinned v1 while retaining original unversioned source ID",
+          "result": "SUPPORTED",
+          "condition": "No silent rebinding; v1 identity is in critic/reviser source maps, and independent PDF content supports the bounded precedent."
+        }
+      ],
+      "applicability": "Motivates independent position rather than vibration-derived location. Does not establish cart localization accuracy or diagnose a fault.",
+      "evidence_files": [
+        "evidence/primary_context3.txt",
+        "evidence/primary_context8.txt",
+        "evidence/primary_context9.txt"
+      ]
+    }
+  ],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613441551784743
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613441551895806
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 7696,
+      "sha256": "42f215535ca5f9d5977aa0fe2f53f8c32ae8267bac6b76c10f9182815c7ca006",
+      "mtime_ns": 1791615518660857430
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/inputs/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613441750257258
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "1d339f019dd78863bc36c8a285315340cf9228df797fb05f1da7d0d3978d5e00",
+      "mtime_ns": 1791613442281261514
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/discovery.md",
+      "bytes": 8415,
+      "sha256": "06b7459f26729b550c5e0a22d95609a1df1af57794fc4be778e260bfb3977b9b",
+      "mtime_ns": 1791613779215527936
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/dispatch.json",
+      "bytes": 6552,
+      "sha256": "75f77b6d3c2240162908d07cfc0cac8b9c719dfe5895b7159c88bd7e8f152b89",
+      "mtime_ns": 1791613443843374629
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/draft.md",
+      "bytes": 18336,
+      "sha256": "24b3862dd27031e88f08a7ee93eb28df3cc0d92cdd7842626f6ba642c7faf1f6",
+      "mtime_ns": 1791614064891465669
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4665,
+      "sha256": "1d9427d8faf8434db4788167bd3bc68018964eb7f7d920bfe975b49eaa1c5383",
+      "mtime_ns": 1791613442281449998
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/freeze.json",
+      "bytes": 1838,
+      "sha256": "d000939d955d898a6021bfda298d4ad56f9371bec54300a0c480f7971ea76f40",
+      "mtime_ns": 1791613442280084948
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/goal-binding-guard.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614078936122880
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "1cc924a4f15265304e7882fd8594dfe4bbfe4e86313cecafa570ede8db74ed54",
+      "mtime_ns": 1791613442280742313
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3086,
+      "sha256": "fb8477d0006a8c154d89981d9348b3864284e86b9cf5db1425d6961e0b4d3c98",
+      "mtime_ns": 1791613442084267201
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/native-goal-activation.json",
+      "bytes": 484,
+      "sha256": "ae272ec10e17ba78bebf0b45a087100e3622ac7ddaaf01c91dc1b5d66c109514",
+      "mtime_ns": 1791613534883310106
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/native-goal-completion.json",
+      "bytes": 813,
+      "sha256": "6315eb52248b47177113ffda1940ef7e6acd4d73b570dd4588ea90e33c9e0e27",
+      "mtime_ns": 1791614091893187388
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 432,
+      "sha256": "489e1165a0a84a3ce7b9686c2e3884fc5158b40a49a2ce8fcb38bf04e0910ab5",
+      "mtime_ns": 1791613783365756541
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/request.json",
+      "bytes": 3198,
+      "sha256": "8eb5ad71e8aa8d51c2e97c3e0989f250c0e3d2e0e2d1e2e432f5e428b4773e37",
+      "mtime_ns": 1791613442278953763
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613783365568502
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 497,
+      "sha256": "a7cbfbe2e348660204b1dd451bf09794b6d586f68dbe81a3d71048c5f8755592",
+      "mtime_ns": 1791613441891005840
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/source-map.json",
+      "bytes": 8281,
+      "sha256": "d9ee0389957fd229897bdd9d46fcf56fcc0cd96fe67a71be447e4202494313f6",
+      "mtime_ns": 1791613779222527971
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/status.json",
+      "bytes": 4446,
+      "sha256": "c0d51c946ce3de7741a14a8ae6ccb835dda7f4f601474836b7e6b54b2d6a996e",
+      "mtime_ns": 1791614191879836987
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 1752,
+      "sha256": "65f1dc854b5132bd98650a1301c77eb2c05c5635923f00509d65c9ace57cd29c",
+      "mtime_ns": 1791613779228528001
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/assignment.md",
+      "bytes": 5533,
+      "sha256": "420daa4bba08279a55d38f9bae50d25b9b31a46e3835c6a1c10d5b9dacd6bd00",
+      "mtime_ns": 1791614192819668721
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/critique.md",
+      "bytes": 8441,
+      "sha256": "1e9550e2a1ae3452cec049adc2aa81bd0b6669b6ace235035cf5d5e22b5af7ce",
+      "mtime_ns": 1791614802474886269
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/dispatch.json",
+      "bytes": 6426,
+      "sha256": "755af7ce4ed6560274573425689f02de8839624063fdde2594549b06a2af4a39",
+      "mtime_ns": 1791614193752766394
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4599,
+      "sha256": "321e8e333e90dbbf04ee83c6372dd5253a80774a8c361b8b9ac0d65d1903b34c",
+      "mtime_ns": 1791614192819857047
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/freeze.json",
+      "bytes": 3346,
+      "sha256": "5aa886114aacab70dd46ef04cef763501ed64cf6cbaaa3066312429d6bd5fe27",
+      "mtime_ns": 1791614192817983417
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/goal-binding-guard.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614793554910449
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "3cd41175ec1c8a1ac184676f2b0d977230dd455419caa3c962e671ba1eb1dac8",
+      "mtime_ns": 1791614192818892527
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3044,
+      "sha256": "7a9bf3614bea9fa35d5085e5d89910841b70382ae972c89c54cc282b8dd50276",
+      "mtime_ns": 1791614192615839846
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 472,
+      "sha256": "684fe1dc7de7115de79d31a0be01028cdcd32327455fe471f76911fb64c3d548",
+      "mtime_ns": 1791614793554837911
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 801,
+      "sha256": "7beb1f9f38a08f8ee842dc55da1e6bb35d76f69e59c2c6fa33753efcad14ade1",
+      "mtime_ns": 1791614815511260423
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/request.json",
+      "bytes": 3144,
+      "sha256": "27bb9c5cc49cb98cbe3c5e858bcc7fdfe6e4a26574b4ae6425dc954b45142967",
+      "mtime_ns": 1791614192817108413
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/service-tier-change.json",
+      "bytes": 485,
+      "sha256": "3d84cca5c5cb92b13df5da10daf5bf28d033c41b1488cc036669e691035ccdfb",
+      "mtime_ns": 1791614192405270543
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/source-map.json",
+      "bytes": 10622,
+      "sha256": "562b35e007d9f6323ae94c157b5333a1deb27fdfcfd7de8a5bacaf4525130b95",
+      "mtime_ns": 1791614793554565772
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/status.json",
+      "bytes": 4266,
+      "sha256": "ef031e876e2985fb20873ede4a2da10fbe2de88f5b0e8efe34387429b8424d9e",
+      "mtime_ns": 1791614839450466712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/critic/sources/index.md",
+      "bytes": 1825,
+      "sha256": "d852981f50e69e0ae5438032c47494fff502a12cd48cab80cc60740c29fe2f38",
+      "mtime_ns": 1791614793554741000
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/assignment.md",
+      "bytes": 5518,
+      "sha256": "5e00a73d12e3c2455f4d49256fcad9fa8262c2c5ff482ef2410e81df33ee3091",
+      "mtime_ns": 1791614840397645238
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/dispatch.json",
+      "bytes": 6447,
+      "sha256": "e0b45cb3f66371a754699cc15ad3628f55f8dba339ab5bd01f90d5552d6add84",
+      "mtime_ns": 1791614841746487677
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4610,
+      "sha256": "717200803c34c8d5ad42d87f71f52431a13161c3f69a56ac077d76571b309cb6",
+      "mtime_ns": 1791614840397841259
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+      "bytes": 24024,
+      "sha256": "48be78bca2c689c9729c57cd9e52e9f722b3b1ec000c1eb9c6829be3ab2d8cb9",
+      "mtime_ns": 1791615471534766088
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/freeze.json",
+      "bytes": 4131,
+      "sha256": "789bec666c6bb228abdad70e566cae6b10cb70bf7cf03e9f2ec410d5b9f1113d",
+      "mtime_ns": 1791614840396647947
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "aed43ae41bf95cb4b2671be93d0c9505f73bac0dca24cc80feb88e7ae9141608",
+      "mtime_ns": 1791614840397173284
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3051,
+      "sha256": "e3ae40a0221ee4201486902e62900a339b44343b642f61c83dec21558a52008f",
+      "mtime_ns": 1791614840205573325
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/native-goal-activation-response.json",
+      "bytes": 473,
+      "sha256": "f7ebefdf3ee6ea5d6cbffe0d5693885a705892c23746b3aac6994126160008bc",
+      "mtime_ns": 1791615430043647423
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/native-goal-completion-response.json",
+      "bytes": 802,
+      "sha256": "cc498464a37f604d7bc51df767ed462a8fab31bef136b4e56386fc2feaae65d5",
+      "mtime_ns": 1791615489527010588
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/request.json",
+      "bytes": 3153,
+      "sha256": "78b4c960adb6096eb9b2e1088df465d01681c8df745ca3476aa302154d08347f",
+      "mtime_ns": 1791614840395954755
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 487,
+      "sha256": "81878b3a9e04c4ee3b131a6609fe6a134e334459b83ef1c9a4c43d8c97345703",
+      "mtime_ns": 1791614839983503136
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/source-map.json",
+      "bytes": 14177,
+      "sha256": "27918fb33bdb5d31481e05883c59c3ae940fac61a5fa0001334a0fc30d9dd679",
+      "mtime_ns": 1791615430043439190
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 2156,
+      "sha256": "04c69407cb778a1e4812c051e25b579f310a434f2b6aae97ee1ccd61c98be427",
+      "mtime_ns": 1791615406230922797
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "path": "evidence/S05-full.pdf",
+      "bytes": 2610016,
+      "sha256": "6bb1183df7dc89672c4655d1ec7eb860e624d254e90c9bedfee007c0764e9c7c"
+    },
+    {
+      "path": "evidence/S05-full.txt",
+      "bytes": 70490,
+      "sha256": "8ff33e7d11ed98c4db69a5f9156f985dbd9a233526dfbbe99eec181a79be25c5"
+    },
+    {
+      "path": "evidence/S05-landing.txt",
+      "bytes": 14965,
+      "sha256": "6219e78c74fec2d3446d9250fb7916f4a82cc2cdf1204c798940089537d2b334"
+    },
+    {
+      "path": "evidence/S05-publisher.txt",
+      "bytes": 322,
+      "sha256": "379c086845e9325ef371cd6ff21a268597a7c86a8e0df241fd98762a9e32bc74"
+    },
+    {
+      "path": "evidence/direct-retrieval-log.json",
+      "bytes": 1652,
+      "sha256": "98f9bc6b8575e00f0787e57c7a7d4278a35de2fae6660d143d6bf2db5a29bff3"
+    },
+    {
+      "path": "evidence/exact-clause-dispositions.json",
+      "bytes": 71569,
+      "sha256": "105601386b0c035aa0fc4e640280980072b22525b12f796ef998c0c745da57c1"
+    },
+    {
+      "path": "evidence/freeze-integrity-check.json",
+      "bytes": 7755,
+      "sha256": "ea9666c2b5ff5c5b03dbfd99ffd40560643d977892e0d0b5f0b28e3933c48d97"
+    },
+    {
+      "path": "evidence/independent-source-checks.json",
+      "bytes": 18266,
+      "sha256": "0f5b090df91a4c960682ec9f6d162fc259b9252d844be69a29268555add4a22f"
+    },
+    {
+      "path": "evidence/index.md",
+      "bytes": 17855,
+      "sha256": "06e6654046979f80d9639c43905118995faa90af9074dbb16673356a2f15ef12"
+    },
+    {
+      "path": "evidence/original-artifact-inventory.json",
+      "bytes": 14391,
+      "sha256": "c69a91de6ee64adcea9f1e6547a58a117c19d9e815aa0474747b20c4dda8f79f"
+    },
+    {
+      "path": "evidence/primary_batch1.json",
+      "bytes": 25686,
+      "sha256": "3025f8996f37a6d2c3bee179d5c8b87503a731ca18cdceaebf5e629de91d3724"
+    },
+    {
+      "path": "evidence/primary_batch1.txt",
+      "bytes": 25229,
+      "sha256": "d60bb525cbf288cff3abe956b1dd42f3e977664ec578c7a29a11c5e62cb8359f"
+    },
+    {
+      "path": "evidence/primary_batch2.json",
+      "bytes": 30628,
+      "sha256": "1f38cc9338b8ade5f1a76821f8a2f09d01bc758e93fa9c633dfe799ab63f6a26"
+    },
+    {
+      "path": "evidence/primary_batch2.txt",
+      "bytes": 30248,
+      "sha256": "8a37079ae71baf864b66f3dedcfd93cb52e7a58ab39162bcb7ecc6bbb1341f62"
+    },
+    {
+      "path": "evidence/primary_context1.json",
+      "bytes": 29236,
+      "sha256": "ff305708ec56f47890dbb9ada59b5c33a108403b5e0e5be631b8b9cf7724b91f"
+    },
+    {
+      "path": "evidence/primary_context1.txt",
+      "bytes": 28790,
+      "sha256": "f6033f4169c9226e870a9ac8c8296179263b2fd7a0b9267eb827c829a8ea944e"
+    },
+    {
+      "path": "evidence/primary_context2.json",
+      "bytes": 35174,
+      "sha256": "bcadbae5a26eb5e815d2b4a8072afad2e45f5fa69601b54745858db1ad6d9538"
+    },
+    {
+      "path": "evidence/primary_context2.txt",
+      "bytes": 34885,
+      "sha256": "680666f2c814881a716da15b660f7bcb7798133753c4837bf26440029f813236"
+    },
+    {
+      "path": "evidence/primary_context3.json",
+      "bytes": 26151,
+      "sha256": "c72cf0efbe19917592ef199718dba342b24a6d291598ef08abef982fc86a5556"
+    },
+    {
+      "path": "evidence/primary_context3.txt",
+      "bytes": 25606,
+      "sha256": "dfb0fbb02dd7c8cd5688bc056122ad8c39ec72a122b44bcc2dd912d0528107e9"
+    },
+    {
+      "path": "evidence/primary_context4.json",
+      "bytes": 31610,
+      "sha256": "a6f6ef2f490f9217faac3d4e559b17ea48aaa22740f304ec782f54db5cd23aec"
+    },
+    {
+      "path": "evidence/primary_context4.txt",
+      "bytes": 31038,
+      "sha256": "0104fda8ae2f630c1e412da762247a1c489f3f7e31ad54f08ea473eb55b12629"
+    },
+    {
+      "path": "evidence/primary_context5.json",
+      "bytes": 21175,
+      "sha256": "8c5e2c17e66d916d51a55051df398b6f4f454410432a7e435824cded394be06b"
+    },
+    {
+      "path": "evidence/primary_context5.txt",
+      "bytes": 20937,
+      "sha256": "c70ff8a2b1daa2ef22e43fe64d8d140ccdb133f22cc2888f9a2f8838fea2b3a5"
+    },
+    {
+      "path": "evidence/primary_context6.json",
+      "bytes": 20990,
+      "sha256": "761a57418b3d26b703750af45204f2688af68ff18dab312d35dc3f7560d64321"
+    },
+    {
+      "path": "evidence/primary_context6.txt",
+      "bytes": 20742,
+      "sha256": "efb19375180bcf432411b0c8f5c0ccad597d0a3a12c74c49ebc515a50a8c9096"
+    },
+    {
+      "path": "evidence/primary_context7.json",
+      "bytes": 30296,
+      "sha256": "5b8acdd6a2ce60d45a6c18398b99a2353ba207b64e312a933fdd88bc947c249d"
+    },
+    {
+      "path": "evidence/primary_context7.txt",
+      "bytes": 29927,
+      "sha256": "252e4f8e7ed4b9b82cca7cf973f756c59cedf1af47a1466ccb67a4d8f372fc1e"
+    },
+    {
+      "path": "evidence/primary_context8.json",
+      "bytes": 29609,
+      "sha256": "a7c6ecf8a1f6cd60705b5bcecb0a7476600992bee78dabf492c360997a8ace60"
+    },
+    {
+      "path": "evidence/primary_context8.txt",
+      "bytes": 28994,
+      "sha256": "7008f760671396778a32321f235ace1297af69473bff0d627e0794a9ba4ca095"
+    },
+    {
+      "path": "evidence/primary_context9.json",
+      "bytes": 24233,
+      "sha256": "81e15551624f2db4fc3cf0fbd101b23ca1bedde4d5c085c5d061991dd72a9023"
+    },
+    {
+      "path": "evidence/primary_context9.txt",
+      "bytes": 23645,
+      "sha256": "200b58851a8010da1f76a5846d1c4147761dd541ac66eef556a2973ab33520c0"
+    },
+    {
+      "path": "evidence/reviewer-native-goal-completion.json",
+      "bytes": 1524,
+      "sha256": "8b0b3cb65f37c3b733a0f2060009035a149a652731e05a85ce87fcede8e7c01f"
+    },
+    {
+      "path": "evidence/reviewer-native-goal-observed.json",
+      "bytes": 1201,
+      "sha256": "8cc50add2f2f84ba7f5d7c9b300ad012fe7dfbd7d5eaf5711bfb1bdfe732ee9e"
+    },
+    {
+      "path": "evidence/save-validation.json",
+      "bytes": 866,
+      "sha256": "8881a1a98ac77c7d58ebb56796c858d743917f50f36fd5b3cd3eafd16552439f"
+    }
+  ],
+  "clause_map": "evidence/exact-clause-dispositions.json",
+  "evidence_index": "evidence/index.md",
+  "locators": "Original file path + exact line or JSON pointer; primary page/section/table; local captured output companions. Hashes prove identity only."
+}

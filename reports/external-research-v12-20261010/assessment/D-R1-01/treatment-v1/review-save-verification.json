@@ -1,0 +1,413 @@
+{
+  "recorded_utc": "2026-10-10T07:43:09.989528+00:00",
+  "scope": "Artifact save/identity/navigation verification only; semantic judgment is in assessment.md/json and independently inspected evidence",
+  "checks": {
+    "six_axes_complete": true,
+    "no_unassessed_axes": true,
+    "exact_clauses": true,
+    "all_criticism_dispositions": true,
+    "primary_evidence_records": true,
+    "original_freezes_unchanged": true,
+    "evidence_hashes_match": true,
+    "locator_integrity": true,
+    "remaining_material_issues": true
+  },
+  "errors": [],
+  "original_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/brief.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/terminal-science-freeze-root.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/inputs/brief.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/assignment.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/input-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/freeze.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/source-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/sources/index.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/assignment.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/input-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/freeze.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/source-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/sources/index.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/assignment.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/input-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/freeze.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/source-map.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/sources/index.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/discovery.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/draft.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal-response.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-create-response.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-post-completion-get-response.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-record.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-binding-guard-response.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/critique.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/native-goal-activation.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/native-goal-completion.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/goal-binding-guard-output.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/final.md",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-activation.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-completion.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-active-observation.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/invocation-clarification.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/service-tier-change.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/invocation-clarification.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/service-tier-change.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/invocation-clarification.json",
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/service-tier-change.json",
+      "match": true
+    }
+  ],
+  "evidence_references": [
+    {
+      "source_id": "I01",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-05.txt",
+      "match": true
+    },
+    {
+      "source_id": "I01",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+      "match": true
+    },
+    {
+      "source_id": "I02",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.html",
+      "match": true
+    },
+    {
+      "source_id": "I02",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.txt",
+      "match": true
+    },
+    {
+      "source_id": "I03",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-07.txt",
+      "match": true
+    },
+    {
+      "source_id": "I04",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.html",
+      "match": true
+    },
+    {
+      "source_id": "I04",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.txt",
+      "match": true
+    },
+    {
+      "source_id": "I05",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.html",
+      "match": true
+    },
+    {
+      "source_id": "I05",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.txt",
+      "match": true
+    },
+    {
+      "source_id": "I06",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.pdf",
+      "match": true
+    },
+    {
+      "source_id": "I06",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.txt",
+      "match": true
+    },
+    {
+      "source_id": "I06",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-09.txt",
+      "match": true
+    },
+    {
+      "source_id": "I07",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.pdf",
+      "match": true
+    },
+    {
+      "source_id": "I07",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.txt",
+      "match": true
+    },
+    {
+      "source_id": "I07",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-09.txt",
+      "match": true
+    },
+    {
+      "source_id": "I08",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.html",
+      "match": true
+    },
+    {
+      "source_id": "I08",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I08-Ilhan.txt",
+      "match": true
+    },
+    {
+      "source_id": "I08",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-07.txt",
+      "match": true
+    },
+    {
+      "source_id": "I09",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.html",
+      "match": true
+    },
+    {
+      "source_id": "I09",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I09-F2096.txt",
+      "match": true
+    },
+    {
+      "source_id": "I10",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.html",
+      "match": true
+    },
+    {
+      "source_id": "I10",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I10-F2095.txt",
+      "match": true
+    },
+    {
+      "source_id": "I11",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.html",
+      "match": true
+    },
+    {
+      "source_id": "I11",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I11-F88.txt",
+      "match": true
+    },
+    {
+      "source_id": "I12",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.html",
+      "match": true
+    },
+    {
+      "source_id": "I12",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.txt",
+      "match": true
+    },
+    {
+      "source_id": "I13",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.html",
+      "match": true
+    },
+    {
+      "source_id": "I13",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.txt",
+      "match": true
+    },
+    {
+      "source_id": "I14",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-06.txt",
+      "match": true
+    },
+    {
+      "source_id": "I14",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+      "match": true
+    },
+    {
+      "source_id": "I15",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-06.txt",
+      "match": true
+    },
+    {
+      "source_id": "I15",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/direct-retrievals-02.json",
+      "match": true
+    },
+    {
+      "source_id": "I16",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.html",
+      "match": true
+    },
+    {
+      "source_id": "I16",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.txt",
+      "match": true
+    },
+    {
+      "source_id": "I17",
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/web-batch-11.txt",
+      "match": true
+    }
+  ],
+  "locators_checked": 329,
+  "reviewer_native_goal_completion": "PENDING: full judgment saved before completion",
+  "saved_judgment_artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.md",
+      "bytes": 105874,
+      "sha256": "d67fa962afd56b4b7d5db9f000c845aa82b426c56746fd835a871b29c2a68f46"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/assessment.json",
+      "bytes": 203286,
+      "sha256": "0d8545917a3920f402b64648cc2de7ddb3045aa5a1dd360e21d5914cb67f586d"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/source-map.json",
+      "bytes": 34743,
+      "sha256": "a873bde7124e7b9d7a25816fb83f671260b4e34280cc7175800e1ec6df9b7728"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/clause-inventory.json",
+      "bytes": 56965,
+      "sha256": "27cecc54d7a4cda3ef4039452f3e9312a12d185afe261960459137001ba5e1e5"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/original-inspected-hashes.json",
+      "bytes": 30141,
+      "sha256": "c37fddbc6a3f71c9434e3fe285bf51bdf3794df2babaa99fb93a2bb7b7455413"
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/index.md",
+      "bytes": 17176,
+      "sha256": "b1a967b43db5c562953a61fabb8e38dcd6d6c0a86865e4aa123156882a19a19b"
+    }
+  ]
+}

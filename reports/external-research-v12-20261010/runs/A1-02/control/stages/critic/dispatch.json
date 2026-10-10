@@ -20,48 +20,45 @@
     "task": "Execute only the assigned reference stage. Read ER12_RUNTIME/runs/A1-02/control/stages/critic/assignment.md and its input-map.json. Create one actual native Goal under 4,000 characters referring to the assignment; save required outputs before native terminal. No nested agents or parent-history use."
   },
   "raw_response": {
-    "content": [
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
       {
-        "type": "text",
-        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-control-critic-v1:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"gpt-6-luna\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
+          "status": "running",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna"
+        }
       }
     ],
-    "structuredContent": {
-      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-      "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-control-critic-v1:ordinal:1",
-      "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-      "status": "running",
-      "workState": "working",
-      "hasPendingChildRuns": false,
-      "latestTerminalRunId": null,
-      "latestTerminalStatus": null,
-      "latestTerminalSummary": null,
-      "latestTerminalResultContextTransferId": null,
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "gpt-6-luna",
-      "summary": null,
-      "resultContextTransferId": null,
-      "waitTimedOut": false
-    },
-    "isError": false
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "adf8ea8fd731d7a3865d4373dba75095a190ec67b81e5cd7983ea039bb04378a"
   },
   "returned": {
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A1-02-control-critic-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
-    "status": "running",
-    "workState": "working",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": null,
-    "latestTerminalStatus": null,
-    "latestTerminalSummary": null,
-    "latestTerminalResultContextTransferId": null,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": null,
-    "resultContextTransferId": null,
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-critic-v1",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "f9b65773f184190375929781fbd8bbf0add01b607d33f94b854eca5299a39727"
   }
 }

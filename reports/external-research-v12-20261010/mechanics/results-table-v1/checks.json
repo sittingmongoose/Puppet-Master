@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checks": [
+    "incomplete evaluator excludes existing judgment bytes",
+    "absent, unstarted, unassessed remain separate",
+    "retained A2 original and A7 finalizer",
+    "unknown telemetry never becomes zero or billing",
+    "both-source-pass paired latency is survivorship, eligibility separate",
+    "semantic FAIL unchanged despite quiet delivery; pair excluded",
+    "conflicting schema labels are unknown, never regraded",
+    "incomplete candidate checkpoint does not relabel launched queue arm unstarted"
+  ],
+  "count": 8,
+  "temporary_fixture_cleanup": true
+}

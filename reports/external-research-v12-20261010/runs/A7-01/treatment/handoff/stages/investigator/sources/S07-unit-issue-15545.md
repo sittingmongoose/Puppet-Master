@@ -1,9 +1,20 @@
-# S07 — PrusaSlicer 3MF unit issue #15545
-
-- **Source:** [3MF import: unit attribute is applied to mesh vertices but not to transform translations](https://github.com/prusa3d/PrusaSlicer/issues/15545)
-- **Version:** Reported on PrusaSlicer 2.9.6 Windows x64 portable; issue opened 2026-07-28.
-- **Access:** 2026-10-10T04:14:03Z, read-only issue/reproducer review.
-- **Locator:** Description, expected/actual bounds, control matrix, tested build/hash, activity through 2026-09-29.
-- **Observed operation:** Report and embedded source/repro steps read. No fixture, binary, or script run.
-- **Reported condition:** With a Core 3MF in inches, vertices convert to mm but translation terms for a build item/component do not; an object may be displaced/off-plate. The issue closed after inactivity and has no linked repair in the record.
-- **Applicability:** A specific 2.9.6 importer report, not independent verification and not a claim about a later fixed release. Directly motivates explicit mm output and transform-placement checks.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+  "rawSHA256": "352ddaf44d0e938acf785479b4df276e20b8d3503e5550b7d3abae0cd829049a",
+  "original_bytes": 1032,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S07-unit-issue-15545.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

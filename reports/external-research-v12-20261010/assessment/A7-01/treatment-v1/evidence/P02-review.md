@@ -1,14 +1,20 @@
-# P02 — 3MF Materials and Properties extension
-
-[Governing primary source](https://github.com/3MFConsortium/spec_materials/blob/d4d42dd75ca07da40284dc87e3204b2993d2f862/3MF%20Materials%20Extension.md)
-
-**Version:** M&P 1.2.1; file revision d4d42dd75ca07da40284dc87e3204b2993d2f862
-
-**Locator:** Preface; raw lines 5–7, 64–96
-
-**Independent assessment:** The extension preface restricts use to Core 1.2. The final identifies this exact condition and declines to infer Core 1.4 compatibility. Its optional exclusion from the baseline leaves Core labels and the authorized preview/note intact.
-
-**Evidence captures:**
-
-- [P02-materials.md](P02-materials.md) — SHA-256 `1821fe3bd6bdc021a1460ff9e3b01bd8f331b38d730707f199169d956329b772`
-- [P19-materials-commit.json](P19-materials-commit.json) — SHA-256 `353f8c600bd21006833a92bc31e0bd16c2757175090aa343be60b1064082befa`
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "988a2bc9f5e037c6d9a5318466d02d7a03a572da88553507a1eb85ec21052dc9",
+  "rawSHA256": "988a2bc9f5e037c6d9a5318466d02d7a03a572da88553507a1eb85ec21052dc9",
+  "original_bytes": 876,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P02-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

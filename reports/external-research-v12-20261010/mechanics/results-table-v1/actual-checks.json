@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": {
+    "A": 32,
+    "B": 24,
+    "C": 8,
+    "D": 16
+  },
+  "rows": 80,
+  "finite_semantic_checks": 8,
+  "source_labels": {
+    "PASS_WITH_LIMITATIONS": 35,
+    "FAIL": 21,
+    "UNKNOWN": 24
+  },
+  "accounting_snapshot": "2026-10-10T05:43:10.489164+00:00",
+  "paired_survivorship_ratios": 9,
+  "schema_mismatch_rows": 57,
+  "input_changes_during_join": [],
+  "utility_lines": 145
+}

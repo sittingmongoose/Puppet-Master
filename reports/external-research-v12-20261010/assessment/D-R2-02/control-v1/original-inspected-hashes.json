@@ -1,0 +1,391 @@
+{
+  "recorded_utc": "2026-10-10T07:26:47.328600+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "bytes": 2609,
+      "mtime_ns": 1791615425642602554,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "bytes": 6807,
+      "mtime_ns": 1791615425642707880,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "bytes": 2609,
+      "mtime_ns": 1791615428131923418,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/assignment.md",
+      "sha256": "433c37baee93d83c75c033af6c0336cd7125fbb4838879b786af5a51a1502abc",
+      "bytes": 8569,
+      "mtime_ns": 1791616379968407252,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+      "bytes": 10311,
+      "mtime_ns": 1791616653878568028,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/dispatch.json",
+      "sha256": "57635dd184dc0a1a29dc7c6ebfb724dfe318587755e703468cf9696b04ec8ad7",
+      "bytes": 9521,
+      "mtime_ns": 1791616381066551214,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Returned transport fields and requested route inspected; duplicated task text not claimed fully inspected."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/exact-activation-capture-v2-1.json",
+      "sha256": "73d8370f16863398e8eafadbf70b44d33caba82dc1f11d3fcd42d882d735698b",
+      "bytes": 7669,
+      "mtime_ns": 1791616379968589748,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/exact-goal-binding-guard.json",
+      "sha256": "e54e44249eb755081a77ad0749edc499c565313350cadd6bba5f96cb0a9dfbc8",
+      "bytes": 4577,
+      "mtime_ns": 1791616379771820343,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/freeze.json",
+      "sha256": "5e19e1777462115f22c62279da32ee9b3dd8365b0c8b215339136aa2ef3d5ab0",
+      "bytes": 3314,
+      "mtime_ns": 1791616379967351527,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/input-map.json",
+      "sha256": "f33b6b38113b724e4310007a77b72b72a885d70f163229df852a2172def37394",
+      "bytes": 1477,
+      "mtime_ns": 1791616379967886523,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/invocation-clarification.json",
+      "sha256": "00e9e84ed5d2610da8454f0897b3093149efce4932a08ed1e8f6a17b2241b428",
+      "bytes": 3030,
+      "mtime_ns": 1791616379558021134,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/native-goal-complete.json",
+      "sha256": "d74fa13950b44e0040bdd8a70a05b010d470809574ed6d73b04ed27b7952e9e3",
+      "bytes": 796,
+      "mtime_ns": 1791616674461192938,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/native-goal-create.json",
+      "sha256": "0aac0151c5ea528a1f3e9678822e4e4cca18ae3db0b8334f68ae6f0756baaa9c",
+      "bytes": 467,
+      "mtime_ns": 1791616392875283337,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/request.json",
+      "sha256": "8f77d74fd8a34fbd15a3e7163730efb2835779c08cec35cc6bbb5a0546f3af17",
+      "bytes": 6263,
+      "mtime_ns": 1791616379966798263,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/service-tier-change.json",
+      "sha256": "cd0484aeb7afbfc85cd72e03d651942b835276de92a83e2c9b34c67bb7deef5d",
+      "bytes": 481,
+      "mtime_ns": 1791616379354174917,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+      "sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+      "bytes": 15797,
+      "mtime_ns": 1791616653879265356,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/sources/index.md",
+      "sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+      "bytes": 8790,
+      "mtime_ns": 1791616653878930876,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/status.json",
+      "sha256": "50f4684d81c188623118f21239fd879e6098eddd1313b2554a22c6d8150649eb",
+      "bytes": 3802,
+      "mtime_ns": 1791616709867751698,
+      "full_semantic_inspection": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/assignment.md",
+      "sha256": "e52dc41560be1a5492ad2a247ecf10057cb653c2d2c56e19bd5e190ea4c185d5",
+      "bytes": 9021,
+      "mtime_ns": 1791615429032870217,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+      "sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+      "bytes": 13769,
+      "mtime_ns": 1791615752567538723,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/dispatch.json",
+      "sha256": "d0248fa0b9061493f380be494511cedb589f74c3b7a483357a59eac7462bf7a9",
+      "bytes": 9659,
+      "mtime_ns": 1791615430448869064,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Returned transport fields and requested route inspected; duplicated task text not claimed fully inspected."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+      "sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+      "bytes": 27450,
+      "mtime_ns": 1791616307293629621,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/exact-activation-capture-v2-1.json",
+      "sha256": "48cc67155404f7d2e4ed71112b55b2140fb0485b9f02dd8c70dc100588faa9f4",
+      "bytes": 7741,
+      "mtime_ns": 1791615429033078187,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/exact-goal-binding-guard.json",
+      "sha256": "f9af542ab3d11077867ed6218c2e8f0d759399d01a2afa1efbc6befbbc75692a",
+      "bytes": 4643,
+      "mtime_ns": 1791615428842740570,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/freeze.json",
+      "sha256": "56136a3a9ae20429ae9e6425cbe8f7d80e503318374b1e86018bff408e218aea",
+      "bytes": 1819,
+      "mtime_ns": 1791615429031263608,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/input-map.json",
+      "sha256": "d533b8543ca62d2636fe07af68a3029505dd5e0ae2b93f67c7145bf7a1af179b",
+      "bytes": 789,
+      "mtime_ns": 1791615429032148616,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/invocation-clarification.json",
+      "sha256": "e5f76138a34b198aeb1d91df004fae252ef214f2afcdb916b83e04f430d0f73f",
+      "bytes": 3072,
+      "mtime_ns": 1791615428638707848,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/native-goal-complete.json",
+      "sha256": "d89de695300ac94ff0b75df10a275ac15bd6965dbdfe4a7081b922705bb4db10",
+      "bytes": 808,
+      "mtime_ns": 1791616339332704265,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/native-goal-create.json",
+      "sha256": "80e077432f559a8865915b41b05f0076440763a4f3d1568607586cac6e6f5fb5",
+      "bytes": 479,
+      "mtime_ns": 1791615447595638303,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+      "sha256": "12d243827dfab41f06c243aa7a2a6a1281bb89c2dea360195a3972d6e156c13c",
+      "bytes": 431,
+      "mtime_ns": 1791615761919434068,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/request.json",
+      "sha256": "df8e6ef0b4e6ddc9e4092642e55b9119ae6cdf0b2e5a42ddb76ef7076fb01722",
+      "bytes": 6329,
+      "mtime_ns": 1791615429030562287,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "bytes": 6807,
+      "mtime_ns": 1791615761919320476,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/service-tier-change.json",
+      "sha256": "a6a357cd1380b880ebe546f41ea6be4ae26be6badb7b557115477a9e097b0eee",
+      "bytes": 493,
+      "mtime_ns": 1791615428433022958,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+      "sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+      "bytes": 20867,
+      "mtime_ns": 1791616339196526488,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/sources/index.md",
+      "sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+      "bytes": 9877,
+      "mtime_ns": 1791616307293314591,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/status.json",
+      "sha256": "cb66a219a4976a9d1acb510d0149020bb490449cb93ff81c288ae9400664dff3",
+      "bytes": 4828,
+      "mtime_ns": 1791616378810289730,
+      "full_semantic_inspection": false
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/assignment.md",
+      "sha256": "1a847423bd02b82f76efd1ba8c07a60efefe204d2c6426c602fddb5af143e7c9",
+      "bytes": 8556,
+      "mtime_ns": 1791616710954904267,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/dispatch.json",
+      "sha256": "787adddce863e81149333f7dfa75a4ce2d55ee3bf297d836d1cc0b79f2f6d847",
+      "bytes": 9544,
+      "mtime_ns": 1791616711974200712,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Returned transport fields and requested route inspected; duplicated task text not claimed fully inspected."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/exact-activation-capture-v2-1.json",
+      "sha256": "e7e34f786b89faf1da6f4e654f9856c8e9ac156acc954b54f02efeecfd1b02ad",
+      "bytes": 7681,
+      "mtime_ns": 1791616710955094287,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/exact-goal-binding-guard.json",
+      "sha256": "34170b07111db1a8e6d2c6d2d26ca9f8455b5892a473995f3c8d5cafea0f44f8",
+      "bytes": 4588,
+      "mtime_ns": 1791616710767020286,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+      "bytes": 37151,
+      "mtime_ns": 1791617028911326373,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/freeze.json",
+      "sha256": "bcdb60400ddbde5ef1163d3c65cfd71ea1e7ea93a4db2c9fad5082a565b8c1f4",
+      "bytes": 4093,
+      "mtime_ns": 1791616710953784233,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/input-map.json",
+      "sha256": "c0a199b431568a39cb6f295e531b3392feba7ef01e47b9ed4554f93ed16b9ddd",
+      "bytes": 1794,
+      "mtime_ns": 1791616710954345455,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/invocation-clarification.json",
+      "sha256": "2965a08d5fe58f5335c1e2f55ada0934fc9d68a471e4b9416fe13ab2d952901b",
+      "bytes": 3037,
+      "mtime_ns": 1791616710573690829,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-before-complete.json",
+      "sha256": "fc0b043efe977a6f6c422c02490dc1c9929e0881c269cf6977c846e1b889fb71",
+      "bytes": 476,
+      "mtime_ns": 1791617054598012687,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-complete.json",
+      "sha256": "5d1067a4ca269d1ba2bc54fefb5f702179c1d029ae94e89d31701cc80f19ca6b",
+      "bytes": 798,
+      "mtime_ns": 1791617054727679653,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-create.json",
+      "sha256": "13cbb9316cf16e7054f02509c0d4d0ddd41fe56560c9557f4be4b9ce3e8baf69",
+      "bytes": 469,
+      "mtime_ns": 1791616723037445074,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/request.json",
+      "sha256": "319ccf7ea9475179559b0478e42784221f027a62e498a1b084e04c6c43bfbd02",
+      "bytes": 6274,
+      "mtime_ns": 1791616710953218936,
+      "full_semantic_inspection": false,
+      "inspection_scope": "Inventoried/hashed; complete stage assignment/input-map/freeze inspected. Ancillary duplicated mechanics not used as semantic proof."
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/service-tier-change.json",
+      "sha256": "bc234db37bdf71c0a0aee3a7d62356367d21875f0ab33e7e842b9c7723a03b01",
+      "bytes": 483,
+      "mtime_ns": 1791616710356955943,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/source-map.json",
+      "sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+      "bytes": 23572,
+      "mtime_ns": 1791617028910637757,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/sources/index.md",
+      "sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+      "bytes": 18383,
+      "mtime_ns": 1791616974269032708,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/terminal-science-freeze-root.json",
+      "sha256": "82a070664e103ccb54e842073f52d5a53b0a9f2fad8e890d238c8c72d6a92b1c",
+      "bytes": 8064,
+      "mtime_ns": 1791617072727804062,
+      "full_semantic_inspection": true
+    }
+  ]
+}

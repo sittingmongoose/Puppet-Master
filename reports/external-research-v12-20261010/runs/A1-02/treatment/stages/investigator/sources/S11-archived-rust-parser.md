@@ -1,11 +1,20 @@
-# S11 — archived Rust ical parser
-
-- URL: https://docs.rs/ical/0.11.0/ical/
-- Related repository: https://github.com/Peltoche/ical-rs
-- Version/state: crate `ical` 0.11.0; upstream repository archived 2024-08-17.
-- Access observation: 2026-10-10T04:00:34Z.
-- Locator: crate overview/parser warning; repository archive status.
-
-**Observed approach and limitation.** The crate exposes line, property and component parsing. Its documentation warns that the parsers parse content and uppercase case-insensitive fields but do not check field validity. Upstream is archived/read-only.
-
-**Applicability.** An alternative syntax parser only if wrapped with validation and recurrence/time-zone logic. Not suitable alone for the required occurrence adapter; caldata notes it is a hard fork with substantial divergence.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "013273c015bcde4014b24c6385b98cdcbd0c7a9ace4be917b4f86f8b4516c73e",
+  "rawSHA256": "013273c015bcde4014b24c6385b98cdcbd0c7a9ace4be917b4f86f8b4516c73e",
+  "original_bytes": 811,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S11-archived-rust-parser.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

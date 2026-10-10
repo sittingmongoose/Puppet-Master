@@ -1,18 +1,20 @@
-# M1: independent XML help/history/implementation reconciliation
-
-The final ([line 45](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md:45)) accurately reports a warning present in [the rolling help](https://mediaarea.net/BWFMetaEdit/xml_chunks), but does not reconcile its operation/version applicability. It carries that broad warning as a tool condition. Discovery line 23 uses it to advise avoiding the XML path without additional approved controls; draft line 51 and the critic XML record repeat it.
-
-Governing released evidence is the v26.08 tag at **318d800d92c4a3cc8a814f6fdceba0ed8b3416ec**, independently retrieved through the repository API. The current product listing is 26.08.1; no binary was installed/run, so packaged-binary behavior is untested. The distinction below is supported by static released code and named historical changes, not by tag/hash equality alone.
-
-| Evidence | Exact operation and limitation |
-|---|---|
-| [Released Riff_Handler.cpp](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp#L2927), lines 2927–2932 | Nonempty axml/ixml/xmp fields are parsed with TinyXML2. A failed parse populates the warning channel with an XML diagnosis and line. This is a basic syntax check, not schema/format validation. |
-| [Handler result path](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Riff/Riff_Handler.cpp#L3205), lines 3205–3211 | Only errors make IsValid return false. XML warning alone is nonblocking; a syntax check is not enforced rejection or semantic correctness. |
-| [Released Core.cpp](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/Common/Core.cpp#L1573), lines 1573–1615 | Core forwards IsValid to the handler and exposes LastWarning; the GUI uses this path. |
-| [Released TextEditDialog](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp#L112), lines 112–156 | OnAccept/OnTextChanged validate entered text; when there is no blocking error, the warning is displayed and OK remains enabled. This is directly relevant to editing, rather than only reading a stored file. |
-| [GUI condition messages](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/Source/GUI/Qt/GUI_Main_xxxx_TextEditDialog.cpp#L83), lines 83–88 | The message concerns absent format-specific rules and undo. These limitations are not equivalent to an absence of all XML syntax verification. |
-| [Released history](https://github.com/MediaArea/BWFMetaEdit/blob/318d800d92c4a3cc8a814f6fdceba0ed8b3416ec/History_GUI.txt), 20.08 and 21.07 entries, captured lines 99–104 and 61–64 | Named changes introduce XML checking and a warning for invalid XML-based data entry. This surrounding context was already present in the candidate’s cited HISTORY source. |
-
-The issue is a **material unresolved source condition**, not a fabricated quote, a claim of a deployed defect, or an instruction to repair the candidate. It affects original obligation 3 and the original requirement to use relevant public source code/released history where they bear on the proposal. A broad no-verification premise is incomplete despite retaining a prudent sidecar-first recommendation. Format/schema conformance, reversibility and exact target-reader round trips still need their own checks.
-
-Raw captures, URLs, access timestamps and SHA-256s are in [the evidence index](index.md) under IND-XML, IND-HISTORY, IND-PINNED-HISTORY, IND-CODE-HANDLER, IND-CODE-GUI and IND-CODE-CORE. Original authored bytes are unchanged. No code was compiled or executed and no candidate received feedback.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0e1380a51f612932ecdc8d39753dde501f549924a250a7cc2ad23a61d859fe4e",
+  "rawSHA256": "0e1380a51f612932ecdc8d39753dde501f549924a250a7cc2ad23a61d859fe4e",
+  "original_bytes": 3809,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A5-01/treatment-v1/evidence/xml-conflict.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

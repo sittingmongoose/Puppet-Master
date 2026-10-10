@@ -1,1 +1,22 @@
-{"activation_note":"Exact unmodified native Goal activation response, preserved before any case/source input or inference. One Goal only; no replacement.","activation_response":{"goal":{"created_at_ms":1791608960332,"current_work":null,"goal_id":"goal-01a12437-354c-7f53-91e2-fc92218cbd52","last_progress_at_ms":null,"next_work":null,"objective":"ER12 B-APPL-G-02/treatment: execute ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.","percent_complete":0,"session_id":"01a12437-0d8d-7000-a213-d80a581a0fdd","status":"active","token_budget":null,"tokens_used":0,"updated_at_ms":1791608960332}},"activation_tool":"AUTHORIZED_PROVIDER_INSTANCE.create_goal","frozen_objective":"ER12 B-APPL-G-02/treatment: execute ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.","provenance":"UNKNOWN where not directly observed"}
+{
+  "activation_note": "Exact unmodified native Goal activation response, preserved before any case/source input or inference. One Goal only; no replacement.",
+  "activation_response": {
+    "goal": {
+      "created_at_ms": 1791608960332,
+      "current_work": null,
+      "goal_id": "goal-01a12437-354c-7f53-91e2-fc92218cbd52",
+      "last_progress_at_ms": null,
+      "next_work": null,
+      "objective": "ER12 B-APPL-G-02/treatment: execute ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+      "percent_complete": 0,
+      "session_id": "01a12437-0d8d-7000-a213-d80a581a0fdd",
+      "status": "active",
+      "token_budget": null,
+      "tokens_used": 0,
+      "updated_at_ms": 1791608960332
+    }
+  },
+  "activation_tool": "AUTHORIZED_PROVIDER_INSTANCE.create_goal",
+  "frozen_objective": "ER12 B-APPL-G-02/treatment: execute ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+  "provenance": "UNKNOWN where not directly observed"
+}

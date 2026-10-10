@@ -1,0 +1,580 @@
+{
+  "review_id": "D-R2-02-treatment-v1",
+  "independent": true,
+  "candidate_final": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "sources": [
+    {
+      "id": "R1",
+      "candidate_source_id": "S1",
+      "title": "Recommended International Code of Practice for Packaging and Transport of Fresh Fruit and Vegetables",
+      "url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+      "released_version": "CAC/RCP 44-1995, Amendment 1-2004, in FAO/WHO Fresh Fruits and Vegetables, first edition, Rome 2007",
+      "governing_locator": "Printed pp. 145-148, especially §§2.13-2.19.1; §2.19 is PDF zero-based page 155 / one-based page 156, printed p.148; extracted S1.txt lines 7365-7426",
+      "access_utc": "2026-10-10T07:41:35.360860+00:00",
+      "observed_operation": "Independently fetched official PDF (HTTP 200), extracted text and inspected transport, loading, air circulation, logger placement and adjacent exceptions.",
+      "conditions_defaults_types_exceptions": "If available: small AIR recorder between packages in warmest area. Separate recorder-company example: top of load, side wall, one-third in from rear, away from direct refrigerated discharge. Rail-car and high-humidity/top-ice exceptions are distinct. Attachment state is not specified. Pre-cooling is conditional on produce requiring it; compatibility and ventilation matter.",
+      "applicability": "Supports environmental placement, documenting readings and conditional preconditioning. It supplies no local mounting facts, crop thresholds, product-core conversion, compliance conclusion or permission to change deliveries.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S1.pdf",
+          "relative_path": "evidence/S1.pdf",
+          "sha256": "56f5387c5e1be362a576390cfd54642e6da0077ed0e4ceec27aa06ee66b38a52",
+          "bytes": 1581035
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S1.txt",
+          "relative_path": "evidence/S1.txt",
+          "sha256": "55ce028712dcf673afca9dcda97cddec8f341324288e6f45810a5380b5c88b85",
+          "bytes": 483119
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R2",
+      "candidate_source_id": "S2",
+      "title": "The role of post-harvest management in assuring the quality and safety of horticultural produce",
+      "url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+      "released_version": "FAO-hosted chapter 3 web text; page edition/date UNKNOWN",
+      "governing_locator": "§§3.1-3.4; packaging airflow paragraph, crop-dependent cooling/chilling context, refrigerated transport/storage paragraphs",
+      "access_utc": "2026-10-10T07:41:35.159249+00:00",
+      "observed_operation": "Independently fetched complete official chapter (HTTP 200), extracted and inspected packaging, crop-dependent cooling and commodity-versus-air passages.",
+      "conditions_defaults_types_exceptions": "Packaging affects airflow. Commodity and air temperatures differ. Cooling/temperature/RH requirements vary with crop and mixed loads; general numerical tables are not a threshold for unidentified produce.",
+      "applicability": "Supports separate actual product measurements, starting-state records and ventilation-compatible comparisons; no local temperature limit or shelf-life result.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S2.html",
+          "relative_path": "evidence/S2.html",
+          "sha256": "38438c607e642609d53f75083854e00e19e712418a256c293e055c621387281c",
+          "bytes": 32240
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S2.txt",
+          "relative_path": "evidence/S2.txt",
+          "sha256": "c6397692689661337bfae7ed8c04ac142bb044fdb836cb7acd986e859a394a86",
+          "bytes": 18227
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R3",
+      "candidate_source_id": "S3",
+      "title": "Section 6: Temperature and relative humidity control",
+      "url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+      "released_version": "FAO-hosted manual chapter; page edition/date UNKNOWN; chapter cites Kader 1992 and other historical material",
+      "governing_locator": "§6 opening mechanism/packaging paragraphs and cooling-method applicability; extracted text; web lines 16-27, 40-68",
+      "access_utc": "2026-10-10T07:41:35.156192+00:00",
+      "observed_operation": "Independently fetched official chapter (HTTP 200), extracted and inspected heat-transfer, shade, liners/vent alignment and commodity-dependent cooling context.",
+      "conditions_defaults_types_exceptions": "Conduction, convection, radiation and evaporation are mechanisms. Extra packaging can impede cooling; aligned vents and commodity tolerance matter. Shade and preconditioning are conditional; no generic crop-safe setting is inferred.",
+      "applicability": "Supports mechanism trade-offs and feasible alternatives, not a guaranteed effect or specific design for the unknown crate.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S3.html",
+          "relative_path": "evidence/S3.html",
+          "sha256": "6f8e8f0baeab05f030d5c6cd4cbaddcc1743d22fcbe675aecd1e213d7f0cf620",
+          "bytes": 37353
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S3.txt",
+          "relative_path": "evidence/S3.txt",
+          "sha256": "59db1dbe7d230201d8e896ae1cff52c604ba9f904273d3194a7692a4845e892a",
+          "bytes": 23560
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R4",
+      "candidate_source_id": "S4",
+      "title": "Real-Time Temperature and Humidity Measurements during the Short-Range Distribution of Perishable Food Products as a Tool for Supply-Chain Energy Improvements",
+      "url": "https://doi.org/10.3390/pr10112286",
+      "released_version": "Processes 2022, 10(11), 2286; published 4 November 2022",
+      "governing_locator": "Official PDF abstract, §§2.1-2.4, §§3-4; sensing-system mesh/air and five-minute transmission, crate mapping, route/stops and conclusions",
+      "access_utc": "2026-10-10T07:41:35.317711+00:00",
+      "observed_operation": "Independently retrieved official mdpi-res PDF (HTTP 200), read governing methods, route context and conclusions. Direct web HTML open returned an internal error; PDF access is separate from candidate indexed-only access.",
+      "conditions_defaults_types_exceptions": "18 distributed T/RH modules; SHT30 in ventilated cases in direct contact with surrounding AIR. Five-stop refrigerated-van distribution, about 4 h 30 m; measurements every five minutes. June setting; diverse produce and nonuniform load/vehicle conditions. Methods do not measure product cores or delivered quality.",
+      "applicability": "Confirms contextualized air sensing and event/initial-condition interpretation. It is not a matched test of the synthetic case or a numerical quality oracle.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S4.pdf",
+          "relative_path": "evidence/S4.pdf",
+          "sha256": "35ba13a93ee5a89adce0cb81ce32977be94b2fd4a3ca796d282b5ee532d5ced7",
+          "bytes": 8030513
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S4.txt",
+          "relative_path": "evidence/S4.txt",
+          "sha256": "1d9ac6e72183a203c92ca2f9bf30fb1834418d14a3cb8901fb59d1c186161da5",
+          "bytes": 339025
+        }
+      ],
+      "limits": [
+        "Candidate HTML-update dates not independently confirmed; original article publication and governing scientific text were confirmed."
+      ]
+    },
+    {
+      "id": "R5",
+      "candidate_source_id": "S5",
+      "title": "Thermal Management of Short-Range Distribution of Perishable Food Products Using Phase Change Materials in Packaging: Real-Time Field Data Acquisition",
+      "url": "https://doi.org/10.3390/en16135191",
+      "released_version": "Energies 2023, 16(13), 5191; published 5 July 2023",
+      "governing_locator": "Official PDF §§2.1-2.4.3, Tables 1-3, §§3-5; especially p.7 sensor type, pp.10-11 averaging/recovery, p.11 reuse/autonomy",
+      "access_utc": "2026-10-10T07:41:35.189147+00:00",
+      "observed_operation": "Independently retrieved official publisher PDF (HTTP 200), inspected methods, sensor arrangement, route, controls, results and surrounding discussion.",
+      "conditions_defaults_types_exceptions": "Orange crates with RT5HC-filled versus empty alveoli; overnight conditioning near 5°C; one winter route, 08:00-14:05, six unloads, refrigeration off, sunny 1-10°C conditions. SHT30 modules measure AIR around oranges at five-minute intervals. PCM reserve is inferred from temperature behavior, not directly measured phase state. Unloading peaks are similar; recovery/background readings differ; four-reading moving average is used.",
+      "applicability": "Supports a bounded passive-package AIR-buffering concept with conditioning/reuse/autonomy limits. No orange-core, quality or cooperative-effect claim follows.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S5.pdf",
+          "relative_path": "evidence/S5.pdf",
+          "sha256": "91b1b963f7b3249e33947b593c60c6c41095c2b5caf835b647309c55fa2c2d9b",
+          "bytes": 981828
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S5.txt",
+          "relative_path": "evidence/S5.txt",
+          "sha256": "20dd103db5de07c209278de5b199524778ab2d3b398693e59c55461f54fa14ff",
+          "bytes": 53575
+        }
+      ],
+      "limits": [
+        "Do not read the general lower-variation summary as a demonstrated reduction of every unloading peak. Candidate final makes no peak-size or transferred-effect claim.",
+        "Later HTML-update dates were not independently confirmed."
+      ]
+    },
+    {
+      "id": "R6",
+      "candidate_source_id": "S6",
+      "title": "Artificial fruit for monitoring the thermal history of horticultural produce in the cold chain",
+      "url": "https://doi.org/10.1016/j.jfoodeng.2017.07.012",
+      "released_version": "Journal of Food Engineering 215 (December 2017), pp.51-60",
+      "governing_locator": "Canonical ScienceDirect record S0260877417303035, abstract and visible introduction/limitations snippets",
+      "access_utc": "UNKNOWN exact second; bounded original publisher-index retrieval occurred between 2026-10-10T07:41:35Z and 2026-10-10T07:42:36Z",
+      "observed_operation": "Independently queried and read publisher-indexed record/abstract. Direct publisher HTTP fetch returned 403 and web open an internal error; full paper was not read.",
+      "conditions_defaults_types_exceptions": "Fruit-of-interest shell/filling; artificial APPLE during COOLING against 10 real apples. Within-5% figure concerns cooling time in that test. Up-to-16% comparison is described for water-filled simulators; detailed denominator/protocol remains unavailable. No universal crop performance is shown.",
+      "applicability": "Supports considering a separately validated crop-matched surrogate. It is not an applicable calibrated oracle for unknown produce, warming events or this route.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/primary-search.json",
+          "relative_path": "evidence/primary-search.json",
+          "sha256": "791083b98431f3b785cd98afe0f254ce6e69539d9c6d0a157e98c3af5212bda6",
+          "bytes": 34478
+        }
+      ],
+      "limits": [
+        "Publisher-indexed abstract/record only; no full-method confirmation of the 16% denominator.",
+        "Later literal-URL re-query did not return this source; it is not used as source evidence or a new access timestamp."
+      ]
+    },
+    {
+      "id": "R7",
+      "candidate_source_id": "S7",
+      "title": "Adoption challenges of environmental monitoring practices: case study of temperature data loggers in selected Australian vegetable supply chains",
+      "url": "https://doi.org/10.1007/s13201-024-02300-5",
+      "released_version": "Applied Water Science 14, article 260; published 23 November 2024",
+      "governing_locator": "Publisher page methodology (web lines 167-198), cost/mixed-load/data-sharing findings (293-318), human retrieval/analysis and accountability (333-359)",
+      "access_utc": "2026-10-10T07:52:09Z to 2026-10-10T07:52:10Z (bounded re-open)",
+      "observed_operation": "Independently reopened cached publisher full text through web tool, read methods and relevant findings/adjacent context. Direct HTTP 200 response was a JavaScript challenge, not article text; it is not used as scientific proof.",
+      "conditions_defaults_types_exceptions": "Exploratory qualitative 2021/22 Lockyer Valley / Southeast Queensland study: three separate chains, purposive/criterion/critical and snowball selection, twenty-five interviews plus documents. Themes are interview findings, not universal prevalence or observations of the cooperative.",
+      "applicability": "Supports local cost, labor, traceability, data-ownership and accountability QUESTIONS; no case-specific conclusion.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-web-retrieval.json",
+          "relative_path": "evidence/S7-web-retrieval.json",
+          "sha256": "dbf03711868b920ec39ca40c38032ac78c0944abfb14da331343f0c189e8867d",
+          "bytes": 40704
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-methods-retrieval.json",
+          "relative_path": "evidence/S7-methods-retrieval.json",
+          "sha256": "0ae74a10995a76d7d3fc4bf3ec11dec08cbecc12cf865c0b10bf0532c833d184",
+          "bytes": 19223
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-additional-retrieval.json",
+          "relative_path": "evidence/S7-additional-retrieval.json",
+          "sha256": "61b7c9c9ecff58136dc86d29e1bf7e61f353623392073fd80cc5c98c88f751aa",
+          "bytes": 40825
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/bounded-primary-reopen.json",
+          "relative_path": "evidence/bounded-primary-reopen.json",
+          "sha256": "86ab4053ab3b230a3d3d273fd721bba52126e6f553156908bc41f2a0d27b065f",
+          "bytes": 35254
+        }
+      ],
+      "limits": [
+        "Raw direct HTTP page was a challenge; primary text was available through the web tool."
+      ]
+    },
+    {
+      "id": "R8",
+      "candidate_source_id": null,
+      "title": "Experimental study on the heat and mass transfer characteristics in a refrigerated truck",
+      "url": "https://doi.org/10.1016/S0140-7007(01)00015-9",
+      "released_version": "International Journal of Refrigeration 25(3), May 2002, pp.340-350",
+      "governing_locator": "Canonical ScienceDirect publisher record S0140700701000159: abstract and introduction",
+      "access_utc": "UNKNOWN exact second; bounded original publisher-index retrieval occurred between 2026-10-10T07:45:45Z and 2026-10-10T07:47:10Z",
+      "observed_operation": "Independent publisher-indexed primary record retrieved for the optional, previously unlocated strip/curtain concept; not supplied back to candidates.",
+      "conditions_defaults_types_exceptions": "Stationary refrigerated truck, short door-open test, initial air near -10°C; plastic strips and fan air curtain compared with no curtain. Introduction reports access obstruction/nonuse risk for strips. This is not a tested multi-stop produce route or this cooperative.",
+      "applicability": "Shows that door barriers are a researched concept with access trade-offs. Does not authenticate the discovery claim of a particular multi-stop implementation or justify deployment.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/optional-door-search.json",
+          "relative_path": "evidence/optional-door-search.json",
+          "sha256": "454d0b6f4846a29ccbff16966d1efd2252c71cd4b992f2fbe2540223a2c5a335",
+          "bytes": 38271
+        }
+      ],
+      "limits": [
+        "Reviewer-added corroboration of a bounded concept, not retroactive evidence of candidate source access. Full paper not read.",
+        "Later literal-URL re-query did not return this source; it is not used as source evidence or a new access timestamp."
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "subject": "Logger at documented warm cargo location",
+      "operation": "Environmental measurement, not produce/quality conversion",
+      "version": "R1 historical Code text; no latest-edition claim",
+      "units_and_types": "Air sensor; position/attachment distinct; no temperature limit",
+      "domain": "Unknown cooperative vs general transport guidance",
+      "defaults_or_modality": "If available; between-package criterion distinct from recorder-company coordinates; mounting unknown",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 105,
+        "heading": "SCW-1"
+      },
+      "independent_source_ids": [
+        "R1"
+      ],
+      "verdict": "SUPPORTED_SCOPED",
+      "reason": "Final preserves both source relations without equating loose placement with a specified secure mounting."
+    },
+    {
+      "id": "C02",
+      "subject": "Product, air, quality and safety",
+      "operation": "Different observations and inference boundaries",
+      "version": "No crop/device version supplied",
+      "units_and_types": "Air vs surface/core/surrogate vs quality vs safety; no default safe temperature",
+      "domain": "Unidentified produce and missing case observations",
+      "defaults_or_modality": "Actual product/quality measures needed; surrogate must be validated; no trace-to-safety inference",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 17,
+        "heading": "Four observations"
+      },
+      "independent_source_ids": [
+        "R2",
+        "R3",
+        "R6"
+      ],
+      "verdict": "SUPPORTED_SCOPED",
+      "reason": "General postharvest and surrogate evidence support the distinction. No local result or threshold is asserted."
+    },
+    {
+      "id": "C03",
+      "subject": "Insulation, vents, preconditioning and shade",
+      "operation": "Candidate mechanisms for future comparison",
+      "version": "R1-R3 retrieved guidance, not a local package specification",
+      "units_and_types": "Qualitative heat transfer; unknown material properties and initial temperatures",
+      "domain": "Unknown crop/crate/load",
+      "defaults_or_modality": "Insulation slows exchange in both directions; preserve needed ventilation and crop compatibility",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 26,
+        "heading": "Thermal and operational mechanisms"
+      },
+      "independent_source_ids": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "verdict": "SUPPORTED_CONDITIONAL_PROPOSAL",
+      "reason": "Reasoned mechanisms are supported; no numerical thermal benefit or suitable crop setting is invented."
+    },
+    {
+      "id": "C04",
+      "subject": "Conceptual lumped heat balance",
+      "operation": "Qualitative aid, not fitted or executed case model",
+      "version": "No software/model implementation",
+      "units_and_types": "m[kg], cp[J/(kg K)], dT/dt[K/s], hAΔT[W], respiration[W]; no values",
+      "domain": "A lumped approximation with explicitly omitted gradients/radiation/moisture",
+      "defaults_or_modality": "Unknown coefficients/geometry and no numeric solution; omitted terms acknowledged",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 28,
+        "heading": "Conceptual heat balance"
+      },
+      "independent_source_ids": [
+        "R3",
+        "R5",
+        "R6"
+      ],
+      "verdict": "SUPPORTED_QUALITATIVE_INFERENCE",
+      "reason": "Storage and heat-transfer terms are dimensionally coherent. Source evidence supports the mechanisms; the equation is the proposal’s approximation, not a quoted validated case model."
+    },
+    {
+      "id": "C05",
+      "subject": "2022 distributed crate sensing",
+      "operation": "Air measurements along route, implementation analogue",
+      "version": "Processes 2022, 10(11), 2286",
+      "units_and_types": "18 T/RH modules; five stops; 4 h 30 m; 5-minute records",
+      "domain": "Different Portuguese refrigerated-van route and heterogeneous produce",
+      "defaults_or_modality": "Environmental SHT30 modules, not tissue probes; route/weather/process associations are not local causality",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 112,
+        "heading": "SCW-2"
+      },
+      "independent_source_ids": [
+        "R4"
+      ],
+      "verdict": "SUPPORTED",
+      "reason": "Full primary PDF confirms the stated instrument type, deployment and scope. Candidate retrieval limit remains indexed-only as reported."
+    },
+    {
+      "id": "C06",
+      "subject": "2023 orange PCM comparison",
+      "operation": "Crate-air buffering and recovery, not core/quality result",
+      "version": "Energies 2023,16(13),5191; RT5HC",
+      "units_and_types": "Air-sensor readings; 1-10°C ambient; six stops; five-minute readings; no local efficacy percentage",
+      "domain": "Single winter route, refrigeration off, conditioned orange crates vs empty-alveoli controls",
+      "defaults_or_modality": "Peak amplitudes during unloading similar; moving-average/background recovery differ; reserve inference and reuse/autonomy conditional",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 119,
+        "heading": "SCW-3"
+      },
+      "independent_source_ids": [
+        "R5"
+      ],
+      "verdict": "SUPPORTED_WITH_NONMATERIAL_SUMMARY_LIMIT",
+      "reason": "Lower variation in air readings is supported, but is a compressed description of background/recovery behavior. Final does not claim lower every-event peaks, product-core effects or quality improvements."
+    },
+    {
+      "id": "C07",
+      "subject": "Artificial apple surrogate",
+      "operation": "Cooling-time comparison, bounded possible measurement alternative",
+      "version": "J Food Engineering215(2017)51-60",
+      "units_and_types": "10 apples; within5% cooling time; up-to16% water-filled comparison; detailed16% denominator UNKNOWN",
+      "domain": "Apple cooling test, not all crops or route warming",
+      "defaults_or_modality": "Separate crop/use validation mandatory; missing generality is not evidence of generic failure",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 126,
+        "heading": "SCW-4"
+      },
+      "independent_source_ids": [
+        "R6"
+      ],
+      "verdict": "SUPPORTED_WITH_ACCESS_LIMIT",
+      "reason": "Final explicitly preserves the apple/cooling scope, full-paper access limit and denominator uncertainty. No consequential decision depends on those percentages."
+    },
+    {
+      "id": "C08",
+      "subject": "Logger-adoption study population",
+      "operation": "Qualitative implementation themes, not local observations",
+      "version": "Applied Water Science14:260(2024)",
+      "units_and_types": "Three chains; 2021/22; twenty-five interviews; qualitative themes",
+      "domain": "Selected Lockyer Valley/Southeast Queensland chains",
+      "defaults_or_modality": "No prevalence or synthetic-cooperative inference; use as questions",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 133,
+        "heading": "SCW-5"
+      },
+      "independent_source_ids": [
+        "R7"
+      ],
+      "verdict": "SUPPORTED",
+      "reason": "Primary methods and cost/mixed-load/sharing/accountability text confirm the bounded claim."
+    },
+    {
+      "id": "C09",
+      "subject": "Door strip/curtain optional concept",
+      "operation": "Potential handling option subject to vehicle/access fit",
+      "version": "No candidate S1-S7 locator supplied for this concept; R8 independently retrieved",
+      "units_and_types": "No effect, energy-saving, local installation or deployment claim",
+      "domain": "Final optional literature-informed concept; earlier discovery calls it a published multi-stop example",
+      "defaults_or_modality": "Fit, ventilation, access/fire/egress and workflow review before any local option",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 61,
+        "heading": "Paths to compare: handling/route"
+      },
+      "independent_source_ids": [
+        "R8"
+      ],
+      "verdict": "MINOR_LOCATOR_OR_LINEAGE_LIMIT",
+      "reason": "Existing research corroborates the concept, but the candidate-specific multi-stop implementation remains unlocated. Final makes no supported-effect or deployment decision; this is not a remaining material unsupported choice."
+    },
+    {
+      "id": "C10",
+      "subject": "Powered-cooling decision",
+      "operation": "Deferred feasibility/cost proposal after measurement and alternatives",
+      "version": "No product, system capacity or price selected",
+      "units_and_types": "Crop-specific product/quality target and cost per traceable shipment; no invented numeric thresholds",
+      "domain": "Synthetic case with missing data and owner decisions",
+      "defaults_or_modality": "Provisional evidence/cost gate, not a purchase mandate or universal optimum",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 95,
+        "heading": "Costs and decision criterion"
+      },
+      "independent_source_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R5",
+        "R7"
+      ],
+      "verdict": "DEFENSIBLE_REASONED_PROPOSAL",
+      "reason": "Mechanisms and implementation costs justify comparison. It does not claim tested superiority, safe suitability or equipment sizing."
+    },
+    {
+      "id": "C11",
+      "subject": "Proposed pilot oracles",
+      "operation": "Discriminate sensor exposure, product response and delivered quality",
+      "version": "Crop/device/use selection remains unresolved",
+      "units_and_types": "Calibrated/reference air and actual-product channels, validated surrogate if used, agreed quality metrics, event/lot links",
+      "domain": "Later authorized repeated comparable shipments",
+      "defaults_or_modality": "Baseline variability, sensor qualification, matched/randomized blocks and cost criteria before treatment; sensors on one route not independent shipments",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 81,
+        "heading": "Later pilot proposal"
+      },
+      "independent_source_ids": [
+        "R2",
+        "R4",
+        "R5",
+        "R6",
+        "R7"
+      ],
+      "verdict": "MEANINGFUL_FUTURE_VALIDATION_ONLY",
+      "reason": "The checks could distinguish alternatives once unknown facts are resolved. Published air/surrogate results are not substituted for case product or quality outcomes. No pilot execution or result is claimed."
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "SCW-1",
+      "name": "Codex logger location",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 38,
+        "heading": "Codex logger location"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 105,
+        "heading": "Codex logger location"
+      },
+      "candidate_disposition": "ACCEPT with wording amendment",
+      "independent_source_ids": [
+        "R1"
+      ],
+      "independent_verdict": "SUPPORTED_MINOR_CORRECTION",
+      "reason": "Correct separates between-package warmest-area criterion from recorder-company top/side/one-third-from-rear example. Attachment not settled by source; loose placement is not rejected as inherently useless.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-2",
+      "name": "2022 route sensor subsystem",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 55,
+        "heading": "2022 route sensor subsystem"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 112,
+        "heading": "2022 route sensor subsystem"
+      },
+      "candidate_disposition": "ACCEPT; retain original limitation",
+      "independent_source_ids": [
+        "R4"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION",
+      "reason": "Environmental SHT30 modules and mapped crates entail air sensing, contradict reassignment of those measurements to tissue probes, and do not measure quality.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-3",
+      "name": "2023 PCM endpoint",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 72,
+        "heading": "2023 PCM endpoint"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 119,
+        "heading": "2023 PCM endpoint"
+      },
+      "candidate_disposition": "ACCEPT; sharpen crate-air wording",
+      "independent_source_ids": [
+        "R5"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION_WITH_SUMMARY_LIMIT",
+      "reason": "Retains the original air/core/quality boundary. Source discussion separates unloading peaks from recovery and averaged readings; no final local effect is inferred.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-4",
+      "name": "Artificial-fruit product scope",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 89,
+        "heading": "Artificial-fruit product scope"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 126,
+        "heading": "Artificial-fruit product scope"
+      },
+      "candidate_disposition": "ACCEPT scope; AMEND uncertainty",
+      "independent_source_ids": [
+        "R6"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION_AND_UNCERTAINTY",
+      "reason": "Apple cooling test cannot establish all-crop response. Detailed water-filled denominator remains unresolved; final does not declare generic surrogate failure.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-5",
+      "name": "Logger-adoption population",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 106,
+        "heading": "Logger-adoption population"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 133,
+        "heading": "Logger-adoption population"
+      },
+      "candidate_disposition": "ACCEPT; retain questions not local facts",
+      "independent_source_ids": [
+        "R7"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION",
+      "reason": "Selected qualitative Australian chains support themes for local questions; there is no applicable witness for synthetic-cooperative facts.",
+      "wrong_correction_or_rejection": false
+    }
+  ],
+  "original_stage_source_maps": [
+    "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/source-map.json",
+    "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/source-map.json"
+  ],
+  "original_inspected_hashes": "original-inspected-hashes.json",
+  "freeze_integrity": "freeze-integrity-check.json",
+  "evidence_index": "evidence/index.md",
+  "identity_policy": "R1-R7 correspond to candidate S1-S7 without rebinding; R8 is a reviewer-only source for a bounded optional concept. Independent retrieval never upgrades candidate executed-access claims.",
+  "capture_policy": "Official PDFs/HTML and web tool responses are retained as research evidence. Failed challenge bodies are not scientific evidence. Access limits and unknowns are explicit.",
+  "remaining_material_findings": []
+}

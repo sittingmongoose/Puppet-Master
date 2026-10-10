@@ -1,37 +1,82 @@
 {
   "schema": "er12.public-native-lifecycle.v1",
-  "target": null,
-  "original_capture_sha256": "a412436cec48e5e82fa6249958d3fd4fd1d705b4db9720f781f5bcd1b557232f",
-  "private_archive_lineage": "publication-cohort4/private/originals/mechanics/native-thin-timing-completion-v1/host/007.raw.json",
   "observations": [],
   "actual_lifecycle_metadata": [
     {
-      "thread": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
-        "status": "completed",
-        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
-        "activeRunId": null,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6-luna",
-        "pendingRequestCount": 0,
-        "createdAt": "2026-10-10T04:11:12.931Z",
-        "updatedAt": "2026-10-10T04:27:40.348Z"
-      }
-    },
-    {
-      "thread": {
-        "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
-        "status": "completed",
-        "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
-        "activeRunId": null,
-        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-        "model": "gpt-6-luna",
-        "pendingRequestCount": 0,
-        "createdAt": "2026-10-10T04:11:12.931Z",
-        "updatedAt": "2026-10-10T04:27:40.348Z"
+      "structured_content_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:11:12.931Z",
+            "updatedAt": "2026-10-10T04:27:40.348Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna",
+              "requestedAt": "2026-10-10T04:11:12.983Z",
+              "startedAt": "2026-10-10T04:11:13.442Z",
+              "completedAt": "2026-10-10T04:27:13.491Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:11:12.983Z"
+            }
+          ],
+          "nextPosition": 0,
+          "hasMore": true
+        }
+      ],
+      "structuredContent": {
+        "thread": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-investigator-topology-v1",
+          "status": "completed",
+          "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+          "activeRunId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "pendingRequestCount": 0,
+          "createdAt": "2026-10-10T04:11:12.931Z",
+          "updatedAt": "2026-10-10T04:27:40.348Z"
+        },
+        "recentRuns": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+            "ordinal": 1,
+            "status": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "requestedAt": "2026-10-10T04:11:12.983Z",
+            "startedAt": "2026-10-10T04:11:13.442Z",
+            "completedAt": "2026-10-10T04:27:13.491Z"
+          }
+        ],
+        "items": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A7-A7-01-treatment-investigator-topology-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:11:12.983Z"
+          }
+        ],
+        "nextPosition": 0,
+        "hasMore": true
       }
     }
   ],
-  "omission": "Full thread messages/activity bodies, raw meters and source captures private; independently captured focused native Goal receipts remain separately published. No new host read or inference.",
-  "source_body_coverage": "UNKNOWN"
+  "original_capture_sha256": "a412436cec48e5e82fa6249958d3fd4fd1d705b4db9720f781f5bcd1b557232f",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/native-thin-timing-completion-v1/host/007.raw.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-investigator-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-investigator-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-investigator-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-investigator-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-investigator-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "Completed the assigned investigator stage. One native Goal was created with the frozen objective, observed active, and marked complete after the required outputs were saved. Goal thread: `01a12431-fe0a-7080-97e9-c570a5f2a740`. Actual provider provenance was not exposed and is recorded as UNKNOWN.\n\n- [Discovery](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md>) — frozen SHA-256: `c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a`\n- [Source map](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md>)\n- [Draft proposal](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md>)\n- [Native Goal receipt](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/native-goal-receipt.json>)",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:96ebd862-d003-4735-84b2-60502fd66ca3",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "Completed the assigned investigator stage. One native Goal was created with the frozen objective, observed active, and marked complete after the required outputs were saved. Goal thread: `01a12431-fe0a-7080-97e9-c570a5f2a740`. Actual provider provenance was not exposed and is recorded as UNKNOWN.\n\n- [Discovery](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/discovery.md>) — frozen SHA-256: `c8b0aa4e8f87e9823442601ea2312b401fe3da5bc601744c76d3e808d701663a`\n- [Source map](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/sources/index.md>)\n- [Draft proposal](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/draft.md>)\n- [Native Goal receipt](<ER12_RUNTIME/runs/C-R1-02/control/stages/investigator/native-goal-receipt.json>)",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-02-control-investigator-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:96ebd862-d003-4735-84b2-60502fd66ca3",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-investigator-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "ebcc1f990b4fa6dce50399c50ff849fd97c280358074096e8d2e513774e09454",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/C-R1-02/control/stages/investigator/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

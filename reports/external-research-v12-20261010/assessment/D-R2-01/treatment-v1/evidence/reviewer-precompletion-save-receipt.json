@@ -1,0 +1,34 @@
+{
+  "recorded_at_utc": "2026-10-10 07:58:33 UTC",
+  "judgment_already_saved": true,
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "goal_before_completion": {
+    "goal": {
+      "threadId": "01a124bd-3069-7943-a2d2-6e29ef9fd901",
+      "objective": "Independently assess only the completed ER12 D-R2-01 treatment full pipeline against the full assessment/RUBRIC-v1.md and original frozen brief/plan. Read all mapped original authored stages, assignments, input maps, freeze records, critique dispositions/checks, and authored evidence. Assess all six rubric axes and every exact plan clause; retrieve governing primary evidence for consequential claims, recommendations, corrections, and source conditions. Preserve original freeze unchanged. No delegation, feedback/repair, account changes, Git/publication, other arms/results/history, or ER11 rescore. Work within a finite 45-minute envelope including saving. Save complete assessment.md, assessment.json, and independently navigable source-map/evidence only under ER12_RUNTIME/assessment/D-R2-01/treatment-v1. Preserve lineage defects separately from final qualifications. Report missing/unassessed/UNKNOWN rather than guess. Complete this Goal only after saving full judgment, then report result and paths.",
+      "status": "active",
+      "tokensUsed": 355535,
+      "timeUsedSeconds": 1355,
+      "createdAt": 1791617758,
+      "updatedAt": 1791619113
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "required_artifacts": [
+    "assessment.md",
+    "assessment.json",
+    "source-map.json",
+    "evidence/index.md",
+    "plan-clause-assessment.json",
+    "original-artifacts.json"
+  ],
+  "artifact_hashes": {
+    "assessment.md": "d212b0a535ca253c9e692567ce80dd5f59bd3522d3da6f9d9d8f0b2b26dec38b",
+    "assessment.json": "5c2b46bd947f6d284df5f740fcbdc0990090cf46e19374f3f20be4201d23679b",
+    "source-map.json": "025061ce9e0f7e3a5d85fdc07324ba257d5338cbe2d3e6dfb97be8d577617461",
+    "evidence/index.md": "dbfde43c005935279692941ef9a9d658fd4be9be7fa4ef641781961a97c69df1",
+    "plan-clause-assessment.json": "999defd140c60b04f6b5818f7d687dfe8457db0f17c1e56fc5d6e784ac7904fd",
+    "original-artifacts.json": "8a7da6aa604524bc3e3e412a9c1c1302e002b5cae8715cab30b864e89c883aab"
+  }
+}

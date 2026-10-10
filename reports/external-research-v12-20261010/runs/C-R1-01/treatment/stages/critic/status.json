@@ -1,18 +1,18 @@
 {
-  "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
-  "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
-  "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:ordinal:1",
-  "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
-  "status": "completed",
-  "workState": "result_available",
-  "hasPendingChildRuns": false,
-  "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:ordinal:1",
-  "latestTerminalStatus": "completed",
-  "latestTerminalSummary": "The critic stage is complete. The single native Goal was activated and completed; its actual responses are preserved in [goal-lifecycle.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/goal-lifecycle.json). The completion response reports 184,038 tokens and 890 seconds.\n\nRequired outputs were saved before Goal completion:\n\n- [critique.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/sources/index.md)\n\nThe review found one material caveat: a missing vibration signal cannot rule out structural coupling without suitable sensors and placement, consistent with the [FHWA guidance](https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm). It also recommends clarifying that the [Emslie case’s outdoor readings](https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf) were not a matched before-and-after comparison.\n\nI used the immutable objective exactly as supplied. Its embedded path differs from the requested assignment and input-map path; I executed the requested stage path and created no replacement Goal.",
-  "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4531dda0-018c-455d-b47d-769cd7f535cf",
-  "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-  "model": "gpt-6-luna",
-  "summary": "The critic stage is complete. The single native Goal was activated and completed; its actual responses are preserved in [goal-lifecycle.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/goal-lifecycle.json). The completion response reports 184,038 tokens and 890 seconds.\n\nRequired outputs were saved before Goal completion:\n\n- [critique.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/critique.md)\n- [source-map.json](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/C-R1-01/treatment/stages/critic/sources/index.md)\n\nThe review found one material caveat: a missing vibration signal cannot rule out structural coupling without suitable sensors and placement, consistent with the [FHWA guidance](https://www.fhwa.dot.gov/Environment/noise/measurement/handbook.cfm). It also recommends clarifying that the [Emslie case’s outdoor readings](https://www.acoustics.asn.au/conference_proceedings/AAS2008/papers/p64.pdf) were not a matched before-and-after comparison.\n\nI used the immutable objective exactly as supplied. Its embedded path differs from the requested assignment and input-map path; I executed the requested stage path and created no replacement Goal.",
-  "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-treatment-critic-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:4531dda0-018c-455d-b47d-769cd7f535cf",
-  "waitTimedOut": false
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-critic-v1",
+      "status": "completed",
+      "hasPendingChildRuns": false,
+      "latestTerminalStatus": "completed",
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna"
+    }
+  ],
+  "original_capture_sha256": "4111a74d7a66316b6cd5675068b6c1a01dcd774b4b7c18839acc819b4499fbd1",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/C-R1-01/treatment/stages/critic/status.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

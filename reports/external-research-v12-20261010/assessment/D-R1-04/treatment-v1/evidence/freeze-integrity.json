@@ -1,0 +1,77 @@
+{
+  "observed_at_utc": "2026-10-10T07:17:15.910027+00:00",
+  "all_original_hashes_and_mtimes_unchanged": true,
+  "terminal_science_artifacts": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+      "expected_sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+      "observed_sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+      "expected_sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+      "observed_sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+      "observed_sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "observed_sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/draft.md",
+      "expected_sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "observed_sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "observed_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "observed_sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+      "observed_sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+      "expected_sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "observed_sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+      "observed_sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+      "observed_sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+      "matches": true
+    }
+  ],
+  "all_terminal_science_hashes_match": true,
+  "brief_copy_byte_identical": true,
+  "revealed_plan_byte_identical": true,
+  "embedded_brief_byte_identical": true,
+  "note": "Integrity checks establish the inspected bytes, not source meaning or execution authenticity."
+}

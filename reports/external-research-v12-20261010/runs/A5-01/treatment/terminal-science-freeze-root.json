@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A5-01",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The full proposal, source map, and navigable source index are saved in the assigned directory:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight obligations and dispositions every critic finding, including the interviewer-notes gap and independent checks of EBU, BagIt, and MetaEdit claims. Required outputs were saved before native Goal completion. The Goal tool returned **complete** (thread ID `01a12419-a02a-7732-b1e5-4f218af5b4bd`); no nested agents or parent-history sources were used.\n\nNative Goal usage: 99,889 tokens over 8m 15s.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:64f14fbb-c005-4b26-9799-59bed332752c",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The full proposal, source map, and navigable source index are saved in the assigned directory:\n\n- [final.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/sources/index.md)\n\nThe proposal addresses all eight obligations and dispositions every critic finding, including the interviewer-notes gap and independent checks of EBU, BagIt, and MetaEdit claims. Required outputs were saved before native Goal completion. The Goal tool returned **complete** (thread ID `01a12419-a02a-7732-b1e5-4f218af5b4bd`); no nested agents or parent-history sources were used.\n\nNative Goal usage: 99,889 tokens over 8m 15s.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:64f14fbb-c005-4b26-9799-59bed332752c",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "b83cffe99809398b50c5510f6c305e2d8471d4f3467066cb8a3e21857d3f645f"
   }
 }

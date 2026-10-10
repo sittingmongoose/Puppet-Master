@@ -1,0 +1,2369 @@
+{
+  "schema_version": "independent-assessment-v1",
+  "assessment_id": "C-R2-02/control-v1",
+  "case_id": "ER12-C-R2-02-FRESH",
+  "slot": "C-R2-02",
+  "arm": "control",
+  "reviewer_identity": "codex-er12-c-r2-02-control-review-v1",
+  "review_started_at_utc": "2026-10-10T06:36:58Z",
+  "review_saved_at_utc": "2026-10-10T06:52:12.219933+00:00",
+  "review_deadline_utc": "2026-10-10T07:21:58Z",
+  "review_envelope_minutes": 45,
+  "capped": false,
+  "unassessed_axes": [],
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "source_judgment_rationale": "No remaining material scientific error, omission or unsupported consequential decision established in the final prospective proposal. Corrected material draft inconsistency is retained in lineage. Traceability wording, compressed optional pair-audit detail and source-access limits remain explicit and nonmaterial to this qualified proposal. This is not evidence that a pilot was executed or that a route improves global coverage.",
+  "final_artifact": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+  "delivery_judgment": "PRESENT_COMPLETE_FINAL; all required authored science and maps present/read",
+  "coverage_judgment": "ALL_SIX_AXES_ASSESSED; every exact non-heading plan sentence/bullet mapped",
+  "material_findings_remaining_in_final": [],
+  "corrected_lineage_findings": [
+    {
+      "id": "DRAFT-EFFORT",
+      "material_in_original_stage": true,
+      "remaining_in_final": false,
+      "description": "Equal-time claim contradicted by overlapping C/D allocation and unbounded curator preparation. C-02 is substantively valid and explicitly corrected.",
+      "criticism_id": "C-02"
+    },
+    {
+      "id": "UPSTREAM-DEFAULT",
+      "material_in_original_stage": false,
+      "remaining_in_final": false,
+      "description": "Unspecified OpenAlex default field scope; final R01 and primary source distinguish API/scoped/website request subject."
+    },
+    {
+      "id": "CRITIC-OPPORTUNITY",
+      "material_in_original_stage": false,
+      "remaining_in_final": true,
+      "description": "C-01/C-03 mandatory-attribution overstatement remains a nonmaterial traceability limitation, not an original missing execution obligation.",
+      "limitation_id": "L01"
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "kind": "nonmaterial plan-attribution/critique-classification error",
+      "axes": [
+        1,
+        4
+      ],
+      "finding": "C-01/C-03 and final alignment language elevate the original opportunity to consider multiple indexes into a mandatory two-index arm. A proposed two-index commitment is permissible and independently supported as a comparison mechanism; claiming it was originally required is not exact.",
+      "why_nonmaterial": "The actual protocol is still within the brief, retains all alternatives/owner scope choices and asserts no superior route or observed coverage. This is an attribution error, not an unsupported scientific winner or remaining broken effort comparison.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+          "line": 59,
+          "section_or_text": "Consider revised controlled"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 123,
+          "section_or_text": "C-01:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 129,
+          "section_or_text": "three material alignment"
+        }
+      ]
+    },
+    {
+      "id": "L02",
+      "kind": "nonmaterial preservation/sampling specificity limit",
+      "axes": [
+        5,
+        6
+      ],
+      "finding": "Discovery explicitly proposes blinded pair adjudication and sampling negative pairs; draft explicitly offers a blinded sample of noncandidate identity pairs. Final retains probability identity sampling, sampled missed-link outcomes and frame/design limits, but those specific optional words and the pair-negative frame are not explicit.",
+      "why_nonmaterial": "The audit purpose is retained and no measured false-negative estimate, global recall, or definitive identity accuracy is claimed. The proposal already conditions estimates on a prespecified sampling frame/design and leaves capacity/sample design to owners. Its final text alone does not establish a complete missed-link estimator; that limit must not be mistaken for executed validation.",
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+          "line": 26,
+          "section_or_text": "Create a blinded adjudication set"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+          "line": 108,
+          "section_or_text": "noncandidate identity pairs"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 83,
+          "section_or_text": "After retrieval, freeze"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 92,
+          "section_or_text": "sampled missed links"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "A missed-item estimate is valid"
+        }
+      ]
+    },
+    {
+      "id": "L03",
+      "kind": "honestly bounded external source access",
+      "axes": [
+        2,
+        3,
+        6
+      ],
+      "finding": "TARCiS exact before/after Recommendation5 wording, full PRESS PDF, full review publisher bodies/supplements and I15 backward-citation/municipal-report-specific details are not independently verified. Direct failures/shells and primary indexed corroboration are retained distinctly.",
+      "why_nonmaterial": "Candidate expressly defers corrected Recommendation5 and treats prior reviews as disclosure examples rather than coverage/effectiveness benchmarks. Other primary methods and index/identity sources independently support the consequential protocol choices.",
+      "source_ids": [
+        "I03",
+        "I04",
+        "I14",
+        "I15",
+        "I17"
+      ]
+    },
+    {
+      "id": "L04",
+      "kind": "wording/lineage source-strength precision",
+      "axes": [
+        2,
+        5
+      ],
+      "finding": "Discovery’s wording about the 2024 ASReview spelling-variant report is stronger than the user’s causal guess; final correctly frames it as a reported historical issue. Final’s “After retrieval, freeze written inclusion rules” is locally ambiguous, while earlier decisions/schedule and future-validation text repeatedly freeze eligibility before results.",
+      "why_nonmaterial": "The final neither treats the anecdote as a controlled performance result nor authorizes outcome-informed eligibility changes in its overall protocol. The governing pre-run freeze is explicit.",
+      "source_ids": [
+        "I13"
+      ],
+      "locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+          "line": 31,
+          "section_or_text": "a 2024 user report shows"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 83,
+          "section_or_text": "After retrieval, freeze"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 52,
+          "section_or_text": "Lock eligibility"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 117,
+          "section_or_text": "Future validation proposal:"
+        }
+      ]
+    },
+    {
+      "id": "L05",
+      "kind": "prospective design breadth and readiness limit",
+      "axes": [
+        1,
+        3,
+        6
+      ],
+      "finding": "Controlled vocabulary, municipal portal implementations, fixed seed availability, exact queries, pair frame, translations and sample sizes are less operationally resolved than the generic routes/tool histories. The original leaves intervention/jurisdiction/language/access/screening decisions open and supplies no seed records.",
+      "why_nonmaterial": "The output is a study proposal, not a deployment-ready search or a finished review. It investigates concrete mechanisms and complementary sources; no unrun route performance or complete benchmark is substituted for those external decisions."
+    }
+  ],
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All original requirements and boundaries are substantively addressed as a prospective discovery study. Scope variables remain honestly external; provisional syntax/alias checks are separate. No systematic-review completion, invented-corpus recall, effect inference, product, title-only merge or deletion is claimed. Paired-index choice is an elective design, not an original prerequisite. Full historic prohibited-action audit is UNKNOWN.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 11,
+          "section_or_text": "Decisions required"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 143,
+          "section_or_text": "Original boundaries:"
+        },
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+          "line": 59,
+          "section_or_text": "Consider revised controlled"
+        }
+      ],
+      "limitations": [
+        "L01",
+        "L05"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: exact subject/operation/version/default/unit/type/domain/exceptions",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent governing primary checks corroborate the operational search/metadata/identity conditions. OpenAlex API versus website/scoped behavior, free snapshot versus live API cadence, Crossref deposits/typed relations and non-DOI validation limits, Zotero library-local candidates, and pinned ASReview hiding/export behavior are distinguished. Reporting frameworks are not coverage oracles and health guidance is qualified. No material unsupported consequential recommendation remains. Indexed-only and unverified conditions are explicit rather than assumed.",
+      "source_ids": [
+        "I01",
+        "I02",
+        "I03",
+        "I04",
+        "I05",
+        "I06",
+        "I07",
+        "I08",
+        "I09",
+        "I10",
+        "I11",
+        "I12",
+        "I13",
+        "I14",
+        "I15",
+        "I16",
+        "I17"
+      ],
+      "limitations": [
+        "L03",
+        "L04"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Discovery is substantive: separate units/outcomes, field/vocabulary/locality mismatch, citation seed dependence, portal metadata/access failures, curator geographic/language bias, conservative relation-based candidates and screening defaults. Competing lexical, repository/citation and curator routes are discriminated with yield/workload/identity outcomes. Index collection launch/cutover and software issue/fix histories are meaningful analogous implementations; dated review methods give bounded related-collection leads. No arbitrary winner or vacuous “investigate later” substitutes for mechanisms. Municipal histories/controlled-vocabulary mechanisms remain less developed, within explicitly open scope.",
+      "source_ids": [
+        "I05",
+        "I07",
+        "I09",
+        "I10",
+        "I11",
+        "I12",
+        "I13",
+        "I17"
+      ],
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+          "line": 9,
+          "section_or_text": "Candidate retrieval routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        }
+      ],
+      "limitations": [
+        "L03",
+        "L05"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "All C-01–C-05 were individually reassessed. C-02 is a real material draft inconsistency and is corrected. C-04’s field-scope correction is valid. C-05 properly retains access uncertainty. C-01/C-03 overstate an optional design opportunity; the final’s voluntary two-index design is defensible but its original-obligation attribution is inaccurate. Rejected shortcuts are within the original boundaries; no source-backed valid method is wrongly prohibited as a winner. Exact plan text and individual dispositions are preserved in plan-clause-map.json and the markdown matrix.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 14,
+          "section_or_text": "Material issues"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 119,
+          "section_or_text": "Independent critique dispositions"
+        }
+      ],
+      "limitations": [
+        "L01"
+      ],
+      "dispositions_file": "criticism-dispositions.json"
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery/draft/critique/final",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final is self-contained and retains substantive units, variants/aliases, complementary sources, IDs/provenance, relation uncertainty, version history, conservative links, probability screening, separate workload/yield/identity outcomes, owner decisions, rejected shortcuts and proposed/executed distinctions. It preserves stable S-identities with attached critic/reviser observations rather than silently rebinding them. The draft effort defect is corrected without erasing its lineage. Optional blinded noncandidate-pair wording is compressed, and the ASReview anecdote is properly qualified in the final.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+          "line": 6,
+          "section_or_text": "Main finding"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+          "line": 103,
+          "section_or_text": "Optional improvements"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 129,
+          "section_or_text": "The critic's positive findings"
+        }
+      ],
+      "limitations": [
+        "L02",
+        "L04"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Executed case searches, record export, screening, matching, empirical coverage/workload validation and outcome analysis are not claimed. Stage maps report documentation desk checks; their historical execution traces are not independently authenticated. Proposed validation has scope/query/route/time freeze, disjoint effort, candidate inclusions plus sampled exclusions, pair adjudication, frame probabilities, independent manual leads, bounded uncertainty and discriminating study-level/marginal/workload outcomes. Curator, union, overlap, DOI and software flags are not gold standards. Human adjudication is a bounded oracle with unresolved labels, not established truth. No statistical estimator or software accuracy is validated by this review.",
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 113,
+          "section_or_text": "Actually executed in the supplied"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 117,
+          "section_or_text": "Future validation proposal:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "Route overlap is agreement"
+        }
+      ],
+      "limitations": [
+        "L02",
+        "L03",
+        "L05"
+      ]
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C-01",
+      "original_classification": "material incomplete",
+      "candidate_final_disposition": "Accept and amend",
+      "reviewer_disposition": "QUALIFY; the missing explicit paired-index comparison was a real undeveloped opportunity, but the exact plan says consider, not require a particular number of indexes. The final’s paired-index design is an admissible and source-supported elective pilot commitment; its attribution as an original mandatory clause is overstated. No winning index or coverage outcome is asserted.",
+      "remaining_material_issue": false,
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+          "line": 59,
+          "section_or_text": "Consider revised controlled"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 16,
+          "section_or_text": "C-01 —"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 7,
+          "section_or_text": "The index comparison is a required factor"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 123,
+          "section_or_text": "C-01:"
+        }
+      ],
+      "primary_sources": [
+        "I06",
+        "I08",
+        "I02"
+      ],
+      "limitation": "L01"
+    },
+    {
+      "id": "C-02",
+      "original_classification": "material incomplete",
+      "candidate_final_disposition": "Accept and amend",
+      "reviewer_disposition": "VALID LINEAGE DEFECT, CORRECTED. Draft promises equal time while assigning C two blocks and D shared/unbounded preparation. Final gives D/A/B/C ten disjoint active minutes each and shared 5+15 overhead, including D preparation; C has two five-minute suboperations. Arithmetic and source text support the correction. This does not establish any measured efficiency.",
+      "remaining_material_issue": false,
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+          "line": 5,
+          "section_or_text": "four routes under equal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+          "line": 43,
+          "section_or_text": "41–53 min"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 26,
+          "section_or_text": "C-02 —"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 57,
+          "section_or_text": "05–15 | Route D"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 60,
+          "section_or_text": "35–45 | Route C"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 63,
+          "section_or_text": "Each route receives ten active minutes"
+        }
+      ],
+      "primary_sources": []
+    },
+    {
+      "id": "C-03",
+      "original_classification": "material wrong",
+      "candidate_final_disposition": "Accept and correct",
+      "reviewer_disposition": "PARTLY VALID TRACEABILITY CRITICISM, OVERSTATED ORIGINAL OBLIGATION. Draft says Accepted for its own paraphrased multiple-index comparison without defining it; the final actually adds the comparison. Neither draft paraphrase nor critic may turn the original consider clause into an execution requirement. Final’s claim of three material alignment problems is therefore overbroad; the useful design itself remains permissible.",
+      "remaining_material_issue": false,
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+          "line": 59,
+          "section_or_text": "Consider revised controlled"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+          "line": 146,
+          "section_or_text": "multiple public indexes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 34,
+          "section_or_text": "C-03 —"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 125,
+          "section_or_text": "C-03:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 129,
+          "section_or_text": "three material alignment"
+        }
+      ],
+      "primary_sources": [],
+      "limitation": "L01"
+    },
+    {
+      "id": "C-04",
+      "original_classification": "minor locator/wording",
+      "candidate_final_disposition": "Accept and amend",
+      "reviewer_disposition": "VALID AMBIGUITY, CORRECTED IN OPERATIONAL FINAL. Official documentation distinguishes API generic search from website/scoped defaults. Final names modes and keeps them fixed within comparisons; R01 supplies field-specific conditions. Retained upstream S06 text is historical alongside explicit correction, not silently rebound.",
+      "remaining_material_issue": false,
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 42,
+          "section_or_text": "C-04 —"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 32,
+          "section_or_text": "OpenAlex has distinct search parameters"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 126,
+          "section_or_text": "C-04:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/source-map.json",
+          "line": 180,
+          "section_or_text": "R01"
+        }
+      ],
+      "primary_sources": [
+        "I06"
+      ]
+    },
+    {
+      "id": "C-05",
+      "original_classification": "honestly unresolved external input",
+      "candidate_final_disposition": "Retain uncertainty",
+      "reviewer_disposition": "VALID BOUNDED UNCERTAINTY. Independently verified both source identities and indexed I17 method boundaries. I15 abstract supports U.S./peer-reviewed/WoS scope; its backward-citation/municipal-report particulars remain independently unverified. Full publisher bodies/supplements are inaccessible. No coverage/effect result or definitive winner relies on them.",
+      "remaining_material_issue": false,
+      "evidence": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+          "line": 48,
+          "section_or_text": "C-05 —"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section_or_text": "Two prior urban-heat review examples"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 127,
+          "section_or_text": "C-05:"
+        }
+      ],
+      "primary_sources": [
+        "I15",
+        "I17"
+      ],
+      "limitation": "L03"
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "id": "P001",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 3,
+      "exact_clause": "Case ID: ER12-C-R2-02-FRESH",
+      "disposition": "IDENTITY",
+      "assessment": "Assigned case identity, unchanged.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P002",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 4,
+      "exact_clause": "Slot ID: C-R2-02",
+      "disposition": "IDENTITY",
+      "assessment": "Assigned slot identity, unchanged.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P003",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 5,
+      "exact_clause": "Domain: scholarly information retrieval",
+      "disposition": "IDENTITY",
+      "assessment": "Scholarly information-retrieval scope retained.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P004",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 9,
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+      "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P005",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 9,
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+      "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P006",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 9,
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+      "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P007",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 9,
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+      "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P008",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 9,
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+      "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P009",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 13,
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "PRESERVED",
+      "assessment": "Original brief bytes equal the embedded/released copies; original obligations govern this review. The plan’s opportunity verbs are not silently promoted to requirements by this assessor.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        }
+      ]
+    },
+    {
+      "id": "P010",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 13,
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "PRESERVED",
+      "assessment": "Original brief bytes equal the embedded/released copies; original obligations govern this review. The plan’s opportunity verbs are not silently promoted to requirements by this assessor.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        }
+      ]
+    },
+    {
+      "id": "P011",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 19,
+      "exact_clause": "Case ID: ER12-C-R2-02-FRESH",
+      "disposition": "IDENTITY",
+      "assessment": "Same case identity in embedded original brief.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P012",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 20,
+      "exact_clause": "Slot ID: C-R2-02",
+      "disposition": "IDENTITY",
+      "assessment": "Same slot identity in embedded original brief.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P013",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 21,
+      "exact_clause": "Domain: scholarly information retrieval",
+      "disposition": "IDENTITY",
+      "assessment": "Same domain in embedded original brief.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        }
+      ]
+    },
+    {
+      "id": "P014",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 25,
+      "exact_clause": "A university group is preparing an evidence collection about urban heat interventions.",
+      "disposition": "ADDRESSED",
+      "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P015",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 25,
+      "exact_clause": "Their first search returned many general reviews and few local observational studies, although a collaborator remembers several municipal reports.",
+      "disposition": "ADDRESSED",
+      "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P016",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 25,
+      "exact_clause": "Titles in the working list sometimes differ between repositories, and the team is unsure which items are duplicates.",
+      "disposition": "ADDRESSED",
+      "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P017",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 25,
+      "exact_clause": "There is no supplied search export or known complete reference set.",
+      "disposition": "ADDRESSED",
+      "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P018",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 25,
+      "exact_clause": "This is a synthetic planning situation, not a request to conclude whether an intervention works.",
+      "disposition": "ADDRESSED",
+      "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        }
+      ]
+    },
+    {
+      "id": "P019",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 29,
+      "exact_clause": "Use the 60-minute research window to propose an evidence-discovery study that can tell us how to improve coverage without losing the identity and provenance of individual studies.",
+      "disposition": "ADDRESSED_AS_PROPOSAL",
+      "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 50,
+          "section_or_text": "A feasible 60-minute"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        }
+      ]
+    },
+    {
+      "id": "P020",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 29,
+      "exact_clause": "Explain retrieval and screening mechanisms, compare useful routes, and investigate the implementation history of related collection efforts.",
+      "disposition": "ADDRESSED_AS_PROPOSAL",
+      "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 50,
+          "section_or_text": "A feasible 60-minute"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        }
+      ]
+    },
+    {
+      "id": "P021",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 29,
+      "exact_clause": "Provide a reproducible pilot protocol rather than an application or a finished review.",
+      "disposition": "ADDRESSED_AS_PROPOSAL",
+      "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 50,
+          "section_or_text": "A feasible 60-minute"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        }
+      ]
+    },
+    {
+      "id": "P022",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 33,
+      "exact_clause": "- Distinguish discovery coverage, screening workload, and correct study identity; increased record counts alone do not establish improvement.",
+      "disposition": "ADDRESSED",
+      "assessment": "Study-level observed yield, screening cost and identity errors/uncertainty are distinct; rows alone never establish improvement.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 9,
+          "section_or_text": "The pilot has three separate outcomes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 87,
+          "section_or_text": "Report, for each route"
+        }
+      ]
+    },
+    {
+      "id": "P023",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 34,
+      "exact_clause": "- Compare terminology or database search changes with citation or repository-based discovery and a useful manual or expert-curated alternative.",
+      "disposition": "ADDRESSED",
+      "assessment": "A/B lexical changes, C citations/public repositories and D independent curator are meaningful alternatives. The two-index factor is the proposed design choice, not an additional original requirement.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 46,
+          "section_or_text": "Manual or expert-curated leads"
+        }
+      ]
+    },
+    {
+      "id": "P024",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 35,
+      "exact_clause": "- Address reports, multiple versions, ambiguous titles, and geographic terminology without treating every similar title as a duplicate.",
+      "disposition": "ADDRESSED",
+      "assessment": "Alias table, record/report/study model, document versions, conservative human linking, rationale and unresolved states cover all named cases. Similar title alone never authorizes a merge.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 34,
+          "section_or_text": "Terminology and locality"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        }
+      ]
+    },
+    {
+      "id": "P025",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 36,
+      "exact_clause": "- Explain what a prior search strategy or collection implementation would need to disclose for its claimed coverage to be informative here.",
+      "disposition": "ADDRESSED",
+      "assessment": "Disclosures include query/date/platform/scope/grey sources/versions/decisions/failures. Qualified history examples do not benchmark coverage.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 97,
+          "section_or_text": "What prior strategies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        }
+      ]
+    },
+    {
+      "id": "P026",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 37,
+      "exact_clause": "- Propose an auditable sampling and comparison design, provenance recording, and uncertainty treatment; label searches or desk checks actually executed separately from future validation.",
+      "disposition": "ADDRESSED_WITH_LIMITATIONS",
+      "assessment": "Probability sampling and inclusion probabilities, route provenance, human screening/link adjudication and sensitivity views are prospective. Desk checks and not-executed case work are separated. Explicit blinded/noncandidate-pair audit wording is compressed (L02).",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 81,
+          "section_or_text": "Screening, sampling"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 111,
+          "section_or_text": "Actual work and proposed validation"
+        }
+      ]
+    },
+    {
+      "id": "P027",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 41,
+      "exact_clause": "- Do not claim a comprehensive systematic review, calculate recall against an invented complete corpus, or infer intervention effectiveness from search yield.",
+      "disposition": "PRESERVED",
+      "assessment": "No comprehensive-review/completeness claim, invented-corpus recall, or intervention-effect inference. Observed route union and sensitivity counts are expressly bounded.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "Route overlap is agreement"
+        }
+      ]
+    },
+    {
+      "id": "P028",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 42,
+      "exact_clause": "- Do not scrape restricted services, use private accounts, contact authors, or create a search product.",
+      "disposition": "PRESERVED_IN_PROPOSAL;HISTORICAL_ACTION_AUDIT_UNKNOWN",
+      "assessment": "Public sources and account-free provisional routes are proposed. No author contact, restricted scraping or search product is authorized; no forbidden action is evidenced in the inspected science package. This is not an exhaustive historical action audit.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 19,
+          "section_or_text": "Public sources and access"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 143,
+          "section_or_text": "Original boundaries:"
+        }
+      ]
+    },
+    {
+      "id": "P029",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 43,
+      "exact_clause": "- Do not delete ambiguous records merely to make the collection look cleaner.",
+      "disposition": "PRESERVED",
+      "assessment": "Additive raw rows, confirmed grouped views and unresolved links preserve ambiguous records.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 77,
+          "section_or_text": "Generate candidate links"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 117,
+          "section_or_text": "Keep every ambiguous record"
+        }
+      ]
+    },
+    {
+      "id": "P030",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 47,
+      "exact_clause": "The intervention scope, languages, jurisdictions, date limits, review inclusion rules, access routes, and time available for later screening are undecided.",
+      "disposition": "HONEST_OWNER_DECISIONS",
+      "assessment": "Interventions, languages, jurisdictions, date/inclusion rules, access and subsequent-screening capacity are listed before comparative claims. Syntax/alias checks are provisional; no numerical thresholds/sample sizes fabricated.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 11,
+          "section_or_text": "Decisions required"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 24,
+          "section_or_text": "A syntax or alias check"
+        }
+      ]
+    },
+    {
+      "id": "P031",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 47,
+      "exact_clause": "We want the proposal to identify which decisions must precede a meaningful coverage comparison and which can be tested provisionally.",
+      "disposition": "HONEST_OWNER_DECISIONS",
+      "assessment": "Interventions, languages, jurisdictions, date/inclusion rules, access and subsequent-screening capacity are listed before comparative claims. Syntax/alias checks are provisional; no numerical thresholds/sample sizes fabricated.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 11,
+          "section_or_text": "Decisions required"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 24,
+          "section_or_text": "A syntax or alias check"
+        }
+      ]
+    },
+    {
+      "id": "P032",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 53,
+      "exact_clause": "Can a bounded discovery experiment reveal meaningful missed evidence and manageable identity handling when no complete ground-truth corpus exists?",
+      "disposition": "ADDRESSED",
+      "assessment": "A bounded multi-route discovery/identity comparison answers missed-evidence and workload questions without a complete ground truth.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 81,
+          "section_or_text": "Screening, sampling"
+        }
+      ]
+    },
+    {
+      "id": "P033",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 55,
+      "exact_clause": "The unit of evidence, definition of useful local evidence, screening capacity, and scope boundaries remain open.",
+      "disposition": "ADDRESSED",
+      "assessment": "Unit/useful evidence/scope/capacity remain owner decisions; mechanisms and prospective route criteria are nevertheless concrete, not merely requests to decide later.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 11,
+          "section_or_text": "Decisions required"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "A route is promising only"
+        }
+      ]
+    },
+    {
+      "id": "P034",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 55,
+      "exact_clause": "A defensible proposal may stage the scope decision first, but must still explain the substantive discovery alternatives and how later observations would choose between them.",
+      "disposition": "ADDRESSED",
+      "assessment": "Unit/useful evidence/scope/capacity remain owner decisions; mechanisms and prospective route criteria are nevertheless concrete, not merely requests to decide later.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 11,
+          "section_or_text": "Decisions required"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "A route is promising only"
+        }
+      ]
+    },
+    {
+      "id": "P035",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 59,
+      "exact_clause": "Consider revised controlled and free-text vocabulary, multiple public indexes, citation following, municipal repository exploration, and a small manually curated reference exercise.",
+      "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+      "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 147,
+          "section_or_text": "Released design opportunity: consider"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 145,
+          "section_or_text": "Released design opportunity: keep useful"
+        }
+      ]
+    },
+    {
+      "id": "P036",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 59,
+      "exact_clause": "An expert-produced seed list can be useful but may inherit the expert's geographic and language preferences.",
+      "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+      "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 147,
+          "section_or_text": "Released design opportunity: consider"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 145,
+          "section_or_text": "Released design opportunity: keep useful"
+        }
+      ]
+    },
+    {
+      "id": "P037",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 59,
+      "exact_clause": "A scope-narrowing exercise may be more valuable than expanding searches indiscriminately.",
+      "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+      "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 147,
+          "section_or_text": "Released design opportunity: consider"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 145,
+          "section_or_text": "Released design opportunity: keep useful"
+        }
+      ]
+    },
+    {
+      "id": "P038",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 59,
+      "exact_clause": "No search route or deduplication procedure is prespecified as superior.",
+      "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+      "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 147,
+          "section_or_text": "Released design opportunity: consider"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 145,
+          "section_or_text": "Released design opportunity: keep useful"
+        }
+      ]
+    },
+    {
+      "id": "P039",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 63,
+      "exact_clause": "Investigate indexing coverage, term mismatch, citation connectivity, repository metadata, and the distinction between a document version and an independent study.",
+      "disposition": "ADDRESSED",
+      "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "Route overlap is agreement"
+        }
+      ]
+    },
+    {
+      "id": "P040",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 63,
+      "exact_clause": "Ask how each route could expose different missingness and how screening rules interact with yield.",
+      "disposition": "ADDRESSED",
+      "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "Route overlap is agreement"
+        }
+      ]
+    },
+    {
+      "id": "P041",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 63,
+      "exact_clause": "A coverage proxy should state what it measures; overlap between routes is not automatically true recall or completeness.",
+      "disposition": "ADDRESSED",
+      "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 26,
+          "section_or_text": "Discovery routes"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 67,
+          "section_or_text": "Records, reports, studies"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 95,
+          "section_or_text": "Route overlap is agreement"
+        }
+      ]
+    },
+    {
+      "id": "P042",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 67,
+      "exact_clause": "Look for public search histories and evidence-collection implementation descriptions with query dates, database boundaries, inclusion rules, version handling, and changes over time.",
+      "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+      "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section_or_text": "Two prior urban-heat review examples"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 20,
+          "section_or_text": "Seeds and route inputs"
+        }
+      ]
+    },
+    {
+      "id": "P043",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 67,
+      "exact_clause": "An older implementation may differ because repositories, terms, and indexing changed.",
+      "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+      "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section_or_text": "Two prior urban-heat review examples"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 20,
+          "section_or_text": "Seeds and route inputs"
+        }
+      ]
+    },
+    {
+      "id": "P044",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 67,
+      "exact_clause": "The remembered municipal reports can motivate future provenance checks but are not a hidden reference set or a supplied list of winning sources.",
+      "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+      "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 103,
+          "section_or_text": "Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 109,
+          "section_or_text": "Two prior urban-heat review examples"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 20,
+          "section_or_text": "Seeds and route inputs"
+        }
+      ]
+    },
+    {
+      "id": "P045",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 71,
+      "exact_clause": "A later pilot could prerecord a provisional scope, run several discovery routes, retain route provenance, sample screened and rejected records, and examine independently identified useful additions.",
+      "disposition": "PROPOSED_NOT_EXECUTED",
+      "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 81,
+          "section_or_text": "Screening, sampling"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 111,
+          "section_or_text": "Actual work and proposed validation"
+        }
+      ]
+    },
+    {
+      "id": "P046",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 71,
+      "exact_clause": "Specify how manual adjudication would handle versions and uncertain identity, and how workload and misses would be estimated with limited coverage.",
+      "disposition": "PROPOSED_NOT_EXECUTED",
+      "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 81,
+          "section_or_text": "Screening, sampling"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 111,
+          "section_or_text": "Actual work and proposed validation"
+        }
+      ]
+    },
+    {
+      "id": "P047",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 71,
+      "exact_clause": "Searches actually run during the hour must be logged with dates and limitations; the final proposal must not present a planned multi-route experiment as executed or a union of found records as complete ground truth.",
+      "disposition": "PROPOSED_NOT_EXECUTED",
+      "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 81,
+          "section_or_text": "Screening, sampling"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 111,
+          "section_or_text": "Actual work and proposed validation"
+        }
+      ]
+    },
+    {
+      "id": "P048",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 73,
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "PRESERVED",
+      "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 113,
+          "section_or_text": "Actually executed in the supplied"
+        }
+      ]
+    },
+    {
+      "id": "P049",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 73,
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "PRESERVED",
+      "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 113,
+          "section_or_text": "Actually executed in the supplied"
+        }
+      ]
+    },
+    {
+      "id": "P050",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 73,
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "PRESERVED",
+      "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 115,
+          "section_or_text": "Not executed:"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 113,
+          "section_or_text": "Actually executed in the supplied"
+        }
+      ]
+    },
+    {
+      "id": "P051",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    },
+    {
+      "id": "P052",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    },
+    {
+      "id": "P053",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "It requests no product build.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    },
+    {
+      "id": "P054",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    },
+    {
+      "id": "P055",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "C inputs remain sealed until the recipe freeze.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    },
+    {
+      "id": "P056",
+      "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "source_line": 77,
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+      "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+      "final_or_lineage_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 3,
+          "section_or_text": "Recommendation and status"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+          "line": 131,
+          "section_or_text": "Clause-by-clause coverage"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+          "line": 2,
+          "section_or_text": "revealed_at_utc"
+        }
+      ]
+    }
+  ],
+  "useful_discoveries_and_alternatives": [
+    {
+      "mechanism": "Record/report/study separation with additive provenance and unresolved links",
+      "discriminating_value": "Avoids interpreting version/row multiplicity as independent studies.",
+      "sources": [
+        "I02",
+        "I09",
+        "I10"
+      ]
+    },
+    {
+      "mechanism": "Lexical/scoped-keyword/locality comparisons within indexes plus public-index factor",
+      "discriminating_value": "Separates query changes from source/field-specific blind spots; preserves exact query mode and partial cutoffs.",
+      "sources": [
+        "I06",
+        "I08",
+        "I16"
+      ]
+    },
+    {
+      "mechanism": "Citation versus direct portals/site search",
+      "discriminating_value": "Citation connectivity and local unindexed grey reports have different failure modes; seed and access bias logged.",
+      "sources": [
+        "I02",
+        "I03",
+        "I08",
+        "I17"
+      ]
+    },
+    {
+      "mechanism": "Independent curator/manual alternative and scope narrowing",
+      "discriminating_value": "Can find locality aliases/catalogues and diagnose question mismatch, while retaining curator bias and no gold-standard assertion.",
+      "sources": [
+        "I02"
+      ],
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 46,
+        "section_or_text": "Manual or expert-curated leads"
+      }
+    },
+    {
+      "mechanism": "Data-state and software release-history capture",
+      "discriminating_value": "OpenAlex launch/cutover, current merge/deletion behavior, ASReview migration fixes and historical duplicate discussion explain why IDs/exports/versions must be retained.",
+      "sources": [
+        "I05",
+        "I07",
+        "I11",
+        "I12",
+        "I13"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "id": "U01",
+      "subject": "Candidate native/protocol provenance",
+      "status": "UNKNOWN",
+      "basis": "Stage receipts are present and identity-consistent; guard explicitly does not independently prove provenance. No full historical trace inspected; exact pre-input/one-Goal/order/unauthorized-assistance audit cannot be certified."
+    },
+    {
+      "id": "U02",
+      "subject": "Candidate effective service tier and billing/inference savings",
+      "status": "UNKNOWN",
+      "basis": "Requested default tier and dispatch provider/model labels are available; effective tier, billed tokens, cost and comparative savings are not."
+    },
+    {
+      "id": "U03",
+      "subject": "Full prior-review/Recommendation5/PRESS source conditions",
+      "status": "PARTLY_UNKNOWN",
+      "basis": "Direct failures/shells and independently retrieved indexed primary context are separated in I03/I04/I14/I15/I17."
+    },
+    {
+      "id": "U04",
+      "subject": "Pilot observations and empirical performance",
+      "status": "NOT_EXECUTED_AS_REPORTED;NO_OBSERVED_RESULTS",
+      "basis": "No case data/reference corpus supplied; all numeric yield/recall/workload/identity/effect outcomes remain absent, not inferred."
+    },
+    {
+      "id": "U05",
+      "subject": "Original scope/access/seed/screening decisions",
+      "status": "HONESTLY_UNRESOLVED_EXTERNAL_CHOICES",
+      "basis": "Candidate enumerates these before primary comparison and does not invent data or deploy a product."
+    }
+  ],
+  "native_and_runtime": {
+    "candidate_stages": [
+      {
+        "stage": "investigator",
+        "evidence_activation_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/native-goal-activation.json",
+        "evidence_completion_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/native-goal-completion.json",
+        "activation_receipt_status": "active",
+        "completion_receipt_status": "complete",
+        "same_receipt_thread_and_objective": true,
+        "tokensUsed_reported": 247424,
+        "timeUsedSeconds_reported": 1342,
+        "createdAt_raw": 1791611354,
+        "updatedAt_raw": 1791612697,
+        "native_UTC_timestamp": "UNKNOWN; units/provenance not independently certified",
+        "native_authenticity_and_pre_input_order": "UNKNOWN; saved receipts are not an independent tool trace",
+        "required_science_files_mtime_before_completion_receipt_file": true,
+        "mtime_order_limit": "Filesystem ordering is consistent with save-before-completion but does not authenticate actual native operation order.",
+        "stage_deadline_utc": "2026-10-10T06:18:51.016Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model": "Saved T3 dispatch response reports AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna; actual underlying inference route UNKNOWN",
+        "effective_service_tier": "UNKNOWN; only requested default is evidenced",
+        "billing_cost_or_savings": "UNKNOWN"
+      },
+      {
+        "stage": "critic",
+        "evidence_activation_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/native-goal-activation.json",
+        "evidence_completion_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/native-goal-completion.json",
+        "activation_receipt_status": "active",
+        "completion_receipt_status": "complete",
+        "same_receipt_thread_and_objective": true,
+        "tokensUsed_reported": 111502,
+        "timeUsedSeconds_reported": 496,
+        "createdAt_raw": 1791612921,
+        "updatedAt_raw": 1791613417,
+        "native_UTC_timestamp": "UNKNOWN; units/provenance not independently certified",
+        "native_authenticity_and_pre_input_order": "UNKNOWN; saved receipts are not an independent tool trace",
+        "required_science_files_mtime_before_completion_receipt_file": true,
+        "mtime_order_limit": "Filesystem ordering is consistent with save-before-completion but does not authenticate actual native operation order.",
+        "stage_deadline_utc": "2026-10-10T06:26:59.479Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model": "Saved T3 dispatch response reports AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna; actual underlying inference route UNKNOWN",
+        "effective_service_tier": "UNKNOWN; only requested default is evidenced",
+        "billing_cost_or_savings": "UNKNOWN"
+      },
+      {
+        "stage": "reviser",
+        "evidence_activation_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/source-map.json#/native_goal/activation_response",
+        "evidence_completion_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/native-goal-completion.json",
+        "activation_receipt_status": "active",
+        "completion_receipt_status": "complete",
+        "same_receipt_thread_and_objective": true,
+        "tokensUsed_reported": 98872,
+        "timeUsedSeconds_reported": 633,
+        "createdAt_raw": 1791613489,
+        "updatedAt_raw": 1791614122,
+        "native_UTC_timestamp": "UNKNOWN; units/provenance not independently certified",
+        "native_authenticity_and_pre_input_order": "UNKNOWN; saved receipts are not an independent tool trace",
+        "required_science_files_mtime_before_completion_receipt_file": true,
+        "mtime_order_limit": "Filesystem ordering is consistent with save-before-completion but does not authenticate actual native operation order.",
+        "stage_deadline_utc": "2026-10-10T06:42:32.468Z",
+        "requested_route": {
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "gpt-6-luna",
+          "options": {
+            "reasoningEffort": "max",
+            "serviceTier": "default"
+          }
+        },
+        "effective_provider_model": "Saved T3 dispatch response reports AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna; actual underlying inference route UNKNOWN",
+        "effective_service_tier": "UNKNOWN; only requested default is evidenced",
+        "billing_cost_or_savings": "UNKNOWN"
+      }
+    ],
+    "T3_terminal": "Root freeze reports final reviser completed/result_available/no pending at2026-10-10T06:36:36.815088+00:00; not a fresh live observation or native completion proof.",
+    "whole_deadline_utc": "2026-10-10T06:48:48.875Z",
+    "time_judgment": "Frozen root terminal observation precedes whole deadline; authored-file mtimes precede listed stage deadlines. Precise native UTC/protocol occupancy and effective/billing claims remain UNKNOWN.",
+    "protocol_judgment": "No unauthorized scientific feedback/repair is evidenced in inspected assigned-arm artifacts. Complete historical compliance UNKNOWN. Reviewer complied with assigned scope; no nested delegation, Git/publication, account changes, candidate edits, roster or other arm/history inspection.",
+    "requested_options": "gpt-6-luna / reasoningEffort max / serviceTier default; requested route only",
+    "billing_judgment": "UNKNOWN; no inference/cost savings from occupancy, tokensUsed or T3 labels."
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T03:56:48.938287+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+      "mtime_ns": 1791611328856692665,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:48.856693+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+      "mtime_ns": 1791611328856807378,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:48.856807+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/terminal-science-freeze-root.json",
+      "bytes": 7242,
+      "sha256": "233c0792a6d8f7013c3cbbccedbb4e31e70ce37fec19bf859017b1060e71100f",
+      "mtime_ns": 1791614196815408370,
+      "fully_read": true,
+      "read_basis": "Full root science-freeze and its assigned-arm final task observation; no other status/outcome material inspected.",
+      "mtime_utc": "2026-10-10T06:36:36.815408+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/inputs/brief.md",
+      "bytes": 2549,
+      "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+      "mtime_ns": 1791611331015511962,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.015512+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "96c8546afea8488e50e3f49feded75707b94b58324bbe3eb9276a824edaed9dd",
+      "mtime_ns": 1791611331587116595,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.587116+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "f2c8156da0b3b8e70490d37ba713c987ed056fc9dc97086def570143a31f0597",
+      "mtime_ns": 1791611331586553056,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.586553+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "bcb372094c2052fc4f6cee6b45182f195fdb9b419f82e081c8d2f5a02e94dd37",
+      "mtime_ns": 1791611331586057978,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.586058+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/source-map.json",
+      "bytes": 22102,
+      "sha256": "ffc80d41d0ef12bde01afefe27ace0b58540ce5c2423c7c08d17069a16198ab0",
+      "mtime_ns": 1791612554001976169,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:09:14.001976+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/sources/index.md",
+      "bytes": 13645,
+      "sha256": "407e34da210e34490d07439d816f9d4f964f0ff1cd27dc752e6070e5a6dc84b0",
+      "mtime_ns": 1791612587542496703,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:09:47.542497+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "b6a4504c6fb434c5f2191f42d716b4ed0cd3382d86662bd174978c2684de08e3",
+      "mtime_ns": 1791611331585557982,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.585558+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "9e10137428d090cef912db81625a5f914557f6419b2210bac7051c911c111b83",
+      "mtime_ns": 1791611332709180113,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:52.709180+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "ed70912daf8a96c6f818f15ba362297a02018d38fbac9265e078bf73fa5cc882",
+      "mtime_ns": 1791611331405566560,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.405566+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "36f82cfb04b32367d0c1e82b16d70da673d73bc2b3be7da5c4a42680c9e0d6a6",
+      "mtime_ns": 1791611331197925784,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.197926+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "a5cbab86b46715474ca7b5d3e3c22287fdee5d4b7219dbd261c0c2e612e4c56b",
+      "mtime_ns": 1791611331587291675,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:48:51.587292+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/native-goal-activation.json",
+      "bytes": 479,
+      "sha256": "d4a9233d4c03d84a8dc0e552e609ae624771f3cd82562ff910023c5e4e487dcf",
+      "mtime_ns": 1791611852686368487,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:57:32.686368+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/native-goal-lifecycle.json",
+      "bytes": 1101,
+      "sha256": "c5a708df0885f7a78da63d48033bae9ce044629295d36d2e653e55b77122bff5",
+      "mtime_ns": 1791612697125295482,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:11:37.125295+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/native-goal-completion.json",
+      "bytes": 810,
+      "sha256": "39cbd25016bede3e677d7b695ba04e7893f1c1690c4ad4e502013260df27976c",
+      "mtime_ns": 1791612697249131437,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:11:37.249131+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-release.json",
+      "bytes": 413,
+      "sha256": "b8ab834b8cc5c53ecf0eed771fb575a78262a3941e52b4d5978c123f6d8fb5fb",
+      "mtime_ns": 1791611883490622211,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:58:03.490622+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 431,
+      "sha256": "d8e68c53ff1d11998367501b9b07590efc5e0ebb60cc0f53ac35761f4674ec0e",
+      "mtime_ns": 1791611865885510088,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:57:45.885510+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6612,
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+      "mtime_ns": 1791611865885384241,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:57:45.885384+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/discovery.md",
+      "bytes": 10313,
+      "sha256": "ef9e2d003e66e95137b44825f881ed21f304b8a3d43e37af0eba667426aeab00",
+      "mtime_ns": 1791611852686690944,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:57:32.686691+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/draft.md",
+      "bytes": 26180,
+      "sha256": "f4ca41c7912ad4fe361a060b9768032e4fa85a38b90a5f559eb8b3d3fd27aeac",
+      "mtime_ns": 1791612554118321005,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:09:14.118321+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/goal-binding-guard.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791611852686491975,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T05:57:32.686492+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "cb023973f5f3151275603e39a62a44978073cf82f47697688a4ee68e53dcb532",
+      "mtime_ns": 1791612900083696751,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.083697+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "466603eef29f2cddfe88f7f7d92e396c8444f8805e6c2e62027b2f36e059c041",
+      "mtime_ns": 1791612900083167256,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.083167+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/freeze.json",
+      "bytes": 3314,
+      "sha256": "be7ecd8df45e95563374ab40a0b5e1c13377550fe780d49d367b7159196dc12e",
+      "mtime_ns": 1791612900081382824,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.081383+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/source-map.json",
+      "bytes": 9790,
+      "sha256": "8c30fb9830d87cf0c426550c0014ba0ca629d522dfcef4c4ceec9e0c8e0c1fc7",
+      "mtime_ns": 1791613384184144364,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:23:04.184144+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/sources/index.md",
+      "bytes": 2654,
+      "sha256": "c61b6b805c84a9058ab1a09338406d119aba26b815f7d356d5f2c8f4fc9cf06f",
+      "mtime_ns": 1791613384184144364,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:23:04.184144+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "6c0875712b20273cbce7d7319ddacc7e68490bb79f037f894735682c527d6d78",
+      "mtime_ns": 1791612900080348173,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.080348+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "b4f588f2d2eebea11b9be3a86f8d57ae87460dd024dc71789b8c8757f88dfe7e",
+      "mtime_ns": 1791612900907766901,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.907767+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "a0aeee177f29ee647d526f874933a69eb0dbeb9fc6cb4b5c2ce80a1938228000",
+      "mtime_ns": 1791612899883368005,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:14:59.883368+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "a62a4277c38c3e71717b926361f2bf2d81f7f6658e30f1ecf503a8835b035e38",
+      "mtime_ns": 1791612899665716055,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:14:59.665716+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "46a7e1b0e3cfb514b601704c17a93770269efec425bef5843d4fbeaf79084c71",
+      "mtime_ns": 1791612900083856557,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:00.083857+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 467,
+      "sha256": "73a42a1159c2d8af324050781b1b33cef94ed9fb8ad9701ea6e466c4cb3d48ad",
+      "mtime_ns": 1791612958815257408,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:15:58.815257+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 796,
+      "sha256": "595cdb7311d0b328623758e1473be227c8d2581c4cbfaef6dab9287fc8350d8f",
+      "mtime_ns": 1791613417549302264,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:23:37.549302+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/critic/critique.md",
+      "bytes": 9973,
+      "sha256": "a03b65ed11298812c41e3b84d2e63340f994bde4534024c17e958b99ff77aa5e",
+      "mtime_ns": 1791613384185508066,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:23:04.185508+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "964613791bf5b7340a9df2cb431b4513cea7e4be4b2182184b8691e9c56fc246",
+      "mtime_ns": 1791613473080671714,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:33.080672+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "e2d1660783998a1dcf72cac7a058909534880d136b5ad7ecff37aff2b21fa632",
+      "mtime_ns": 1791613473080228659,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:33.080229+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/freeze.json",
+      "bytes": 4091,
+      "sha256": "8191828bde30d4d6c9863816fe84e41a310b0e4d3c5e8b6163926cf5d7172e04",
+      "mtime_ns": 1791613473079763034,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:33.079763+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/source-map.json",
+      "bytes": 43509,
+      "sha256": "05112887abf571242a32bdd9289ea560bcbff43702fbedf77f29a4a3454207e5",
+      "mtime_ns": 1791614064991053461,
+      "fully_read": true,
+      "read_basis": "Full text read in reviewer tool outputs; reviser source map read as all top-level fields and both complete source-array segments.",
+      "mtime_utc": "2026-10-10T06:34:24.991054+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/sources/index.md",
+      "bytes": 5193,
+      "sha256": "40784096e05532132a24e43595518ffbb98769a711dcc4db2c3e4f9824c923bc",
+      "mtime_ns": 1791614064851762830,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:34:24.851763+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "cf23ef47933e7fd541a3d92e367198b582c4efe692e7fdf2107879575639796a",
+      "mtime_ns": 1791613473079287458,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:33.079288+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "a93f1ad75035aa7e5e45e3094ce94f79c5b7afc485b30a81825514dd51e8e1a4",
+      "mtime_ns": 1791613474932800041,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:34.932800+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "94a4a5aa6f7430421f3b76ab7636cec8114b2e53f7852dc57b25e83ebd76ca9a",
+      "mtime_ns": 1791613472871725813,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:32.871726+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "30e6177b213093fb51fa7235ae670fba9a5c648e8615348e8d9bd5b1ed91d669",
+      "mtime_ns": 1791613472650216585,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:32.650217+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "b637cda86fa6ec7787d26b7dda80d1ed786d4b76f2a03b65802e0f30da31c35b",
+      "mtime_ns": 1791613473080814168,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:24:33.080814+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 798,
+      "sha256": "74c1f4da963d0f5b39d5f5c53f7ecbed4865d66d7a20d8e99bdca98462198857",
+      "mtime_ns": 1791614122649457068,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:35:22.649457+00:00"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+      "bytes": 29617,
+      "sha256": "e3c499622ab6c485dfea7d83f8eb37b5f40a1ec3551baab46e6b623512f4ed63",
+      "mtime_ns": 1791614064694901437,
+      "fully_read": true,
+      "read_basis": "Full authored text read in reviewer tool outputs.",
+      "mtime_utc": "2026-10-10T06:34:24.694901+00:00"
+    }
+  ],
+  "independent_source_map": "source-map.json",
+  "navigable_evidence_index": "evidence/index.md",
+  "integrity_evidence": "evidence/freeze-integrity-check.json",
+  "reviewer_native_goal_active_evidence": "evidence/reviewer-native-goal-active.json",
+  "save_before_native_completion": true,
+  "later_dispute_policy": "Preserve this assessment; later dispute disposition must be a separate artifact."
+}

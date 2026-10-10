@@ -1,9 +1,20 @@
-# S12 — Cura multiple-object 3MF position issue #19456
-
-- **Source:** [3MF export with multiple objects doesn't work well](https://github.com/Ultimaker/Cura/issues/19456)
-- **Version/commit:** Reproduction opened 2024-07-31 against Cura 5.7.2; follow-ups mention 5.8.0, 5.8.1, and 5.9.
-- **Access:** 2026-10-10T04:18:00Z, read-only issue review.
-- **Locator:** Reproduction steps and status; comments describing project-open versus Import Models behavior.
-- **Observed operation:** Read issue/comments; attached project was not downloaded and no import was reproduced.
-- **Reported condition:** After splitting an STL into parts and exporting as 3MF, a re-import changed positions/rotations. Comments report opening as a project preserves layout while Import Models invokes auto-arrange; issue status is duplicate/under investigation and no linked resolution is shown in this issue.
-- **Applicability:** Specific multi-object layout reports. Cura 5.7.0's own release notes document different import modes; pilot acceptance must pin which mode it tests.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+  "rawSHA256": "582256aef60f160c185fe3c42dfaf988f65fa0210e933b6d5e058262bce8e3ec",
+  "original_bytes": 1055,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S12-cura-3mf-position-issue.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

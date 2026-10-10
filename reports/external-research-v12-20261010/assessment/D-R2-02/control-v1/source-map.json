@@ -1,0 +1,1219 @@
+{
+  "schema_version": "ER12-independent-assessment-source-map-v1",
+  "assessment_id": "D-R2-02-control-v1",
+  "run_id": "D-R2-02-control",
+  "created_utc": "2026-10-10T07:46:59.374236+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "navigation": {
+    "assessment": "assessment.md",
+    "evidence_index": "evidence/index.md",
+    "clauses": "clause-dispositions.json",
+    "critic_dispositions": "criticism-dispositions.json",
+    "lineage": "lineage-preservation.json",
+    "original_hash_manifest": "original-inspected-hashes.json"
+  },
+  "sources": [
+    {
+      "evidence_id": "E01",
+      "candidate_source_id": "S01",
+      "governing_primary_url": "https://www.ars.usda.gov/is/np/CommercialStorage/CommercialStorage.pdf",
+      "version": "USDA-ARS Agriculture Handbook 66, revised February 2016",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "web open/find and surrounding primary PDF context",
+      "primary_locator": "PDF page index 20 (printed p.11), Initial Cooling Methods, lines 1013–1053; page index 22 (printed p.13), Forced-Air Cooling, lines 1060–1136",
+      "subject": "Initial produce cooling and package-dependent forced-air heat removal",
+      "quantity_unit_type": "Cooling operation; airflow/product diameter/package resistance; no case temperatures",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Commodity and package determine suitability. Highway trailers are distinguished from refrigerated ships/containers. Water contact and water-resistant packages constrain hydrocooling. Room-cooling exceptions include citrus and CA-stored apples.",
+      "governing_exceptions_and_limits": "General 2016 reference; not a test of the cooperative or a universal cooling prescription.",
+      "independent_semantic_result": "Supports separating initial field-heat removal from transport and checking starting state/airflow before purchase. The final uses these qualitative mechanisms without importing crop setpoints.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 50
+        }
+      ],
+      "capture_paths": [
+        "evidence/web05-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E02",
+      "candidate_source_id": "S02",
+      "governing_primary_url": "https://ask.ifas.ufl.edu/publication/HS1328",
+      "version": "HS1328 current HTML retrieved 2026-10-10; DOI 10.32473/EDIS-HS1328-2019; HTML metadata datePublished 2026-03-27, LAST_UPDATE 2026-10-02. Metadata is not a demonstrated scientific revision history.",
+      "access_utc": "2026-10-10T07:28:27.758323+00:00",
+      "retrieval_operation": "web open/find; independent HTTP 200 HTML retrieval",
+      "primary_locator": "Air Temperature vs. Product Temperature, lines 483–496; Temperature Recording and Tracking, lines 802–823; Preface",
+      "subject": "Cargo air, in-carton environment and product pulp; transport recorder placement",
+      "quantity_unit_type": "Different temperature measurands; date/time and mapped recorder locations, not interchangeable channels",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Air outside cartons changes faster than pulp or carton environment. Sensor range/accuracy/resolution/location matter. Wall placement can elevate readings; three recorder positions concern pallets in trailers/containers/railcars.",
+      "governing_exceptions_and_limits": "Guidance rather than case data. Candidate accurately says a visible revision date is not established; embedded metadata gives a more precise retrieval identity, not proof of a changed recommendation.",
+      "independent_semantic_result": "Supports paired, synchronized, mapped channels and logger metadata. Final does not turn the three-position layout into a universal requirement for a small route.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 16
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 60
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 75
+        }
+      ],
+      "capture_paths": [
+        "evidence/web05-governing.txt",
+        "evidence/S02-independent.html",
+        "evidence/S02-independent.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record"
+    },
+    {
+      "evidence_id": "E03",
+      "candidate_source_id": "S03",
+      "governing_primary_url": "https://research.wur.nl/en/publications/identifying-cooling-heterogeneity-during-precooling-and-refrigera/",
+      "version": "Food Control 165 (November 2024), 110672; DOI 10.1016/j.foodcont.2024.110672",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "web open of official university publication record; surrounding complete abstract read",
+      "primary_locator": "Official WUR author record, Abstract lines 26–29 and publication metadata lines 30–52",
+      "subject": "Air and fruit measurements in a commercial Greece–Switzerland citrus supply chain",
+      "quantity_unit_type": "108 sensors in one shipment; rear air/fruit in 30 further shipments; 24 h precooling",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Large refrigerated trailer and citrus; spatial variability; incomplete room precooling and middle-trailer reheating associated with insufficient pallet ventilation.",
+      "governing_exceptions_and_limits": "Abstract-level reviewer access; no case-specific causal estimate or quality/safety oracle.",
+      "independent_semantic_result": "The candidate accurately preserves the shipment scope, initial-cooling and ventilation findings, with no numeric benefit or crop target transferred.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 35
+        }
+      ],
+      "capture_paths": [
+        "evidence/web07-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E04",
+      "candidate_source_id": "S04",
+      "governing_primary_url": "https://www.mdpi.com/1996-1073/16/13/5191",
+      "version": "Energies 16(13) (2023), 5191; DOI 10.3390/en16135191. Publisher notes distinguish 5 July 2023 version of record and 6 July updated PDF; independently retrieved publisher-hosted PDF.",
+      "access_utc": "2026-10-10T07:29:11.514412+00:00",
+      "retrieval_operation": "Independent publisher-hosted PDF HTTP 200, pdftotext; full main text read. Candidate repository endpoint later timed out; its earlier web retrieval exposed the same publication.",
+      "primary_locator": "PDF pp.1,3–11: sections 2.1–2.4, Tables 1–3, Results/Discussion/Conclusions; publisher version notes",
+      "subject": "RT5HC PCM alveoli versus empty alveoli in orange crates; crate-area air stability",
+      "quantity_unit_type": "PP crate 600×400×90 mm; 48 oranges/set; PCM 5–6 °C; SHT30 air sensor ±0.3 °C; five-minute collection/transmission; times 08:00–14:05",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Winter insulated IVECO van, reefer off; crates held about 5 °C overnight, on floor near rear door/right wall; sunny 1–10 °C, six stops. Sensors sample surrounding air, not pulp. Four-reading moving average smooths peaks.",
+      "governing_exceptions_and_limits": "No measured delivered-quality endpoint. Conditioning state, thermal capacity/autonomy, route/crop/weather and reuse must be checked; fewer fluctuations are not quality or safety proof.",
+      "independent_semantic_result": "Supports a bounded PCM pilot candidate and event logging. Final correctly does not import a quality benefit or product-core result and retains abstract 8 h versus methods 08:00–14:05 discrepancy.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 87
+        }
+      ],
+      "capture_paths": [
+        "evidence/S04a-independent.pdf",
+        "evidence/S04a-independent.txt",
+        "evidence/direct-retrievals-2.json",
+        "evidence/web08-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "candidate_condition_issue": "Candidate S04 governing-condition records say about 48 oranges per crate; primary section 2.2 states 48 oranges per comparison set of crates. Reviewer does not silently repair the original maps."
+    },
+    {
+      "evidence_id": "E05",
+      "candidate_source_id": "S05",
+      "governing_primary_url": "https://www.sciencedirect.com/science/article/abs/pii/S0260877417303035",
+      "version": "Journal of Food Engineering 215 (December 2017), pp.51–60; DOI 10.1016/j.jfoodeng.2017.07.012",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "Primary publisher search-rendered abstract read; direct article open HTTP 403",
+      "primary_locator": "Publisher indexed Abstract and Introduction",
+      "subject": "Biomimetic artificial apple with shell/filling and integrated loggers",
+      "quantity_unit_type": "Cooling-time comparison: artificial apple within 5% of ten real apples; water simulators differ up to 16%",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Validation concerns an apple-like prototype during cooling; uniform geometry/sensor location enables repeatability. Air/surface temperatures react faster than fruit core.",
+      "governing_exceptions_and_limits": "Reviewer did not access full article. Cooling validation is not heating validation for another commodity, quality or safety proof.",
+      "independent_semantic_result": "A useful unfamiliar measurement alternative; final requires crop/transition-specific validation rather than treating an apple simulator as an oracle for unknown produce.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "capture_paths": [
+        "evidence/web03-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E06",
+      "candidate_source_id": "S06",
+      "governing_primary_url": "https://revista.sangregorio.edu.ec/index.php/REVISTASANGREGORIO/article/view/1251",
+      "version": "Revista San Gregorio 1(37) (2020); record date 2020-04-04, PDF publication line 2020-04-03",
+      "access_utc": "2026-10-10T07:28:28.453833+00:00",
+      "retrieval_operation": "Publisher indexed abstract plus independent publisher PDF HTTP 200; Abstract/Methods read",
+      "primary_locator": "Publisher abstract; downloaded PDF printed pp.61–64, Abstract and Methods",
+      "subject": "Air heat/moisture exchange during multi-drop dill/parsley transport",
+      "quantity_unit_type": "11 m³ truck body; air temperature/velocity/RH; empty-body heat calculation",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Specific Gazelle body and herb study; transported herbs plus later storage; air/empty-body calculations differ from loaded produce-core measurements.",
+      "governing_exceptions_and_limits": "Not a general food-safety or quality oracle; date and author-list metadata need care, without changing the bounded recommendation.",
+      "independent_semantic_result": "Supports recording openings, stops and humidity/temperature together. Final imports no heat-gain or microbiological numeric result.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 28
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 58
+        }
+      ],
+      "capture_paths": [
+        "evidence/S06-independent.pdf",
+        "evidence/S06-independent.txt",
+        "evidence/direct-retrievals.json",
+        "evidence/web04-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record"
+    },
+    {
+      "evidence_id": "E07",
+      "candidate_source_id": "S07",
+      "governing_primary_url": "https://www.fao.org/4/i0930e/i0930e00.htm",
+      "version": "FAO RAP Publication 2009/08; ISBN 978-92-5-106312-5",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "web open of official FAO record and full abstract",
+      "primary_locator": "Official publication title/metadata lines 2–24; Abstract lines 37–40",
+      "subject": "Reusable plastic-crate handling, cleaning, sanitization and returnable management",
+      "quantity_unit_type": "Management/handling guidance, no thermal performance quantity",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "RPC service providers and fresh produce handling chains; local crate construction/ownership/reuse cycle absent.",
+      "governing_exceptions_and_limits": "Official abstract only; no local crate history or measured thermal benefit.",
+      "independent_semantic_result": "Appropriate history lead; final does not claim the cooperative uses RPCs or that the guide proves thermal performance.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 39
+        }
+      ],
+      "capture_paths": [
+        "evidence/web02-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E08",
+      "candidate_source_id": "S08",
+      "governing_primary_url": "https://www.ukdr.uplb.edu.ph/journal-articles/5138/",
+      "version": "Philippine Journal of Crop Science 43(2) (August 2018), pp.47–55; university record 5138",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "web open of official university repository and full abstract",
+      "primary_locator": "Repository Abstract lines 25–29; issue metadata 30–68; availability line 70",
+      "subject": "Duck-cloth-wrapped single-crate evaporative cooler",
+      "quantity_unit_type": "54×36×30 cm crate in source; lettuce/rambutan/bitter gourd/eggplant; no result transferred",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Specific produce and setup; accessible record lacks full methods and governing weather/route details.",
+      "governing_exceptions_and_limits": "Full document explicitly unavailable there; not a proven local intervention or safety/shelf-life claim.",
+      "independent_semantic_result": "The final retains a screening lead requiring crop/climate/water/handling fit. It does not adopt the abstract’s shelf-life/weight-loss numbers for the cooperative.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 54
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "capture_paths": [
+        "evidence/web02-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E09",
+      "candidate_source_id": "S09",
+      "governing_primary_url": "https://www.sciencedirect.com/science/article/pii/S2666154324003764",
+      "version": "Journal of Agriculture and Food Research 18 (December 2024), 101339; DOI 10.1016/j.jafr.2024.101339",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "Primary publisher search-rendered abstract and official university metadata read; direct publisher open HTTP 403",
+      "primary_locator": "Publisher indexed Abstract/Highlights; KMITL repository record a471f939-3068-4037-9c50-bd2e567310ff",
+      "subject": "Wet-fabric evaporative cooling in a simulated Thai transport chamber",
+      "quantity_unit_type": "29–30 °C, 70–73% RH; 0.8–3.6 m/s inlet air; three-hour test, every-minute readings; hollow plastic balls as main load; separate lettuce mass loss",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Fixed climate and simulated airflow; approximately 3–4 °C air reduction in source, not a produce-core field effect.",
+      "governing_exceptions_and_limits": "Abstract-level access; surrogate/model agreement cannot validate this cooperative or prove product-core or quality improvement.",
+      "independent_semantic_result": "The map and final correctly distinguish surrogate thermal load and separate lettuce endpoint, and keep evaporation conditional on local crop/climate/water/airflow.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 54
+        }
+      ],
+      "capture_paths": [
+        "evidence/web04-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E10",
+      "candidate_source_id": "S10",
+      "governing_primary_url": "https://www.sciencedirect.com/science/article/abs/pii/S1537511017306797",
+      "version": "Biosystems Engineering 169 (May 2018), pp.115–125; DOI 10.1016/j.biosystemseng.2018.02.003",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "Primary publisher search-rendered abstract/context read; direct publisher and Empa accepted manuscript HTTP 403",
+      "primary_locator": "Publisher indexed Abstract/Highlights/Introduction; facility and conclusion section snippets",
+      "subject": "Commercial forced-air citrus precooling and fruit/carton/wrapping comparisons",
+      "quantity_unit_type": "40 pallets; three citrus types; 42% faster outflow cooling contrasts Nova/Opentop with similarly sized Eureka/Supervent",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Both fruit species and carton differ; inflow/outflow and wrapping change cooling; similarity in fruit size does not isolate package alone.",
+      "governing_exceptions_and_limits": "Full article not accessed. Carried S10 base description still uses broad package/fruit-size shorthand, but explicit final correction and recheck prevent consequential misapplication.",
+      "independent_semantic_result": "C03 is supported. Final accurately qualifies the cross-fruit/carton contrast and preserves useful airflow/wrapping findings without a local effect forecast.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 196
+        }
+      ],
+      "capture_paths": [
+        "evidence/web04-governing.txt",
+        "evidence/direct-retrievals.json"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    },
+    {
+      "evidence_id": "E11",
+      "candidate_source_id": "S11",
+      "governing_primary_url": "https://www.sciencedirect.com/science/article/pii/S1359431121006438",
+      "version": "Applied Thermal Engineering 195 (August 2021), 117204; DOI 10.1016/j.applthermaleng.2021.117204",
+      "access_utc": "UNKNOWN at per-request resolution",
+      "retrieval_operation": "Primary publisher search-rendered complete abstract and surrounding introduction/section snippets read; direct open HTTP 403",
+      "primary_locator": "Publisher indexed Abstract/Introduction/Charging facility/Charging process",
+      "subject": "PCM storage plates in integrated road–rail container, separately charged",
+      "quantity_unit_type": "Reported discharge up to 94.6 h; 40-ft ISO container and ten plates/1260 kg PCM in introduction; separate electrically powered charging plant",
+      "default": "No local default or numeric operating setpoint is established by this source.",
+      "domain_and_conditions": "Vehicle-scale real long-distance transport with four fresh produce kinds; passive container depends on upstream refrigeration/HTF charging.",
+      "governing_exceptions_and_limits": "Full methods not accessed; crop identities and detailed route conditions unresolved at the candidate’s abstract level, so no local prediction is justified.",
+      "independent_semantic_result": "Supports counting conditioning energy/infrastructure and autonomy; final does not transfer runtime, cost or energy percentages to crate inserts.",
+      "supports_final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 52
+        }
+      ],
+      "capture_paths": [
+        "evidence/web09-governing.txt"
+      ],
+      "evidence_type": "independently retrieved primary publication or official institutional record",
+      "observed_access_window_utc": {
+        "start": "2026-10-10T07:24:47Z",
+        "end": "2026-10-10T07:30:40Z",
+        "basis": "Reviewer observed clock calls before and after these web requests; browser tool did not expose request timestamps."
+      }
+    }
+  ],
+  "claim_mappings": [
+    {
+      "candidate_source_id": "S01",
+      "independent_evidence_id": "E01",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 24
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 50
+        }
+      ],
+      "independent_result": "Supports separating initial field-heat removal from transport and checking starting state/airflow before purchase. The final uses these qualitative mechanisms without importing crop setpoints.",
+      "limits": "General 2016 reference; not a test of the cooperative or a universal cooling prescription."
+    },
+    {
+      "candidate_source_id": "S02",
+      "independent_evidence_id": "E02",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 16
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 60
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 75
+        }
+      ],
+      "independent_result": "Supports paired, synchronized, mapped channels and logger metadata. Final does not turn the three-position layout into a universal requirement for a small route.",
+      "limits": "Guidance rather than case data. Candidate accurately says a visible revision date is not established; embedded metadata gives a more precise retrieval identity, not proof of a changed recommendation."
+    },
+    {
+      "candidate_source_id": "S03",
+      "independent_evidence_id": "E03",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 35
+        }
+      ],
+      "independent_result": "The candidate accurately preserves the shipment scope, initial-cooling and ventilation findings, with no numeric benefit or crop target transferred.",
+      "limits": "Abstract-level reviewer access; no case-specific causal estimate or quality/safety oracle."
+    },
+    {
+      "candidate_source_id": "S04",
+      "independent_evidence_id": "E04",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 52
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 87
+        }
+      ],
+      "independent_result": "Supports a bounded PCM pilot candidate and event logging. Final correctly does not import a quality benefit or product-core result and retains abstract 8 h versus methods 08:00–14:05 discrepancy.",
+      "limits": "No measured delivered-quality endpoint. Conditioning state, thermal capacity/autonomy, route/crop/weather and reuse must be checked; fewer fluctuations are not quality or safety proof."
+    },
+    {
+      "candidate_source_id": "S05",
+      "independent_evidence_id": "E05",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "independent_result": "A useful unfamiliar measurement alternative; final requires crop/transition-specific validation rather than treating an apple simulator as an oracle for unknown produce.",
+      "limits": "Reviewer did not access full article. Cooling validation is not heating validation for another commodity, quality or safety proof."
+    },
+    {
+      "candidate_source_id": "S06",
+      "independent_evidence_id": "E06",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 28
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 58
+        }
+      ],
+      "independent_result": "Supports recording openings, stops and humidity/temperature together. Final imports no heat-gain or microbiological numeric result.",
+      "limits": "Not a general food-safety or quality oracle; date and author-list metadata need care, without changing the bounded recommendation."
+    },
+    {
+      "candidate_source_id": "S07",
+      "independent_evidence_id": "E07",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 39
+        }
+      ],
+      "independent_result": "Appropriate history lead; final does not claim the cooperative uses RPCs or that the guide proves thermal performance.",
+      "limits": "Official abstract only; no local crate history or measured thermal benefit."
+    },
+    {
+      "candidate_source_id": "S08",
+      "independent_evidence_id": "E08",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 54
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "independent_result": "The final retains a screening lead requiring crop/climate/water/handling fit. It does not adopt the abstract’s shelf-life/weight-loss numbers for the cooperative.",
+      "limits": "Full document explicitly unavailable there; not a proven local intervention or safety/shelf-life claim."
+    },
+    {
+      "candidate_source_id": "S09",
+      "independent_evidence_id": "E09",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 54
+        }
+      ],
+      "independent_result": "The map and final correctly distinguish surrogate thermal load and separate lettuce endpoint, and keep evaporation conditional on local crop/climate/water/airflow.",
+      "limits": "Abstract-level access; surrogate/model agreement cannot validate this cooperative or prove product-core or quality improvement."
+    },
+    {
+      "candidate_source_id": "S10",
+      "independent_evidence_id": "E10",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 196
+        }
+      ],
+      "independent_result": "C03 is supported. Final accurately qualifies the cross-fruit/carton contrast and preserves useful airflow/wrapping findings without a local effect forecast.",
+      "limits": "Full article not accessed. Carried S10 base description still uses broad package/fruit-size shorthand, but explicit final correction and recheck prevent consequential misapplication."
+    },
+    {
+      "candidate_source_id": "S11",
+      "independent_evidence_id": "E11",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 26
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+          "line": 52
+        }
+      ],
+      "independent_result": "Supports counting conditioning energy/infrastructure and autonomy; final does not transfer runtime, cost or energy percentages to crate inserts.",
+      "limits": "Full methods not accessed; crop identities and detailed route conditions unresolved at the candidate’s abstract level, so no local prediction is justified."
+    }
+  ],
+  "original_artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "mtime_ns": 1791604608938287266,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "bytes": 2609,
+      "mtime_ns": 1791615425642602554,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "bytes": 6807,
+      "mtime_ns": 1791615425642707880,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "bytes": 2609,
+      "mtime_ns": 1791615428131923418,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/assignment.md",
+      "sha256": "433c37baee93d83c75c033af6c0336cd7125fbb4838879b786af5a51a1502abc",
+      "bytes": 8569,
+      "mtime_ns": 1791616379968407252,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+      "bytes": 10311,
+      "mtime_ns": 1791616653878568028,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/freeze.json",
+      "sha256": "5e19e1777462115f22c62279da32ee9b3dd8365b0c8b215339136aa2ef3d5ab0",
+      "bytes": 3314,
+      "mtime_ns": 1791616379967351527,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/input-map.json",
+      "sha256": "f33b6b38113b724e4310007a77b72b72a885d70f163229df852a2172def37394",
+      "bytes": 1477,
+      "mtime_ns": 1791616379967886523,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/native-goal-complete.json",
+      "sha256": "d74fa13950b44e0040bdd8a70a05b010d470809574ed6d73b04ed27b7952e9e3",
+      "bytes": 796,
+      "mtime_ns": 1791616674461192938,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/native-goal-create.json",
+      "sha256": "0aac0151c5ea528a1f3e9678822e4e4cca18ae3db0b8334f68ae6f0756baaa9c",
+      "bytes": 467,
+      "mtime_ns": 1791616392875283337,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/service-tier-change.json",
+      "sha256": "cd0484aeb7afbfc85cd72e03d651942b835276de92a83e2c9b34c67bb7deef5d",
+      "bytes": 481,
+      "mtime_ns": 1791616379354174917,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+      "sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+      "bytes": 15797,
+      "mtime_ns": 1791616653879265356,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/sources/index.md",
+      "sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+      "bytes": 8790,
+      "mtime_ns": 1791616653878930876,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/assignment.md",
+      "sha256": "e52dc41560be1a5492ad2a247ecf10057cb653c2d2c56e19bd5e190ea4c185d5",
+      "bytes": 9021,
+      "mtime_ns": 1791615429032870217,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+      "sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+      "bytes": 13769,
+      "mtime_ns": 1791615752567538723,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+      "sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+      "bytes": 27450,
+      "mtime_ns": 1791616307293629621,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/freeze.json",
+      "sha256": "56136a3a9ae20429ae9e6425cbe8f7d80e503318374b1e86018bff408e218aea",
+      "bytes": 1819,
+      "mtime_ns": 1791615429031263608,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/input-map.json",
+      "sha256": "d533b8543ca62d2636fe07af68a3029505dd5e0ae2b93f67c7145bf7a1af179b",
+      "bytes": 789,
+      "mtime_ns": 1791615429032148616,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/native-goal-complete.json",
+      "sha256": "d89de695300ac94ff0b75df10a275ac15bd6965dbdfe4a7081b922705bb4db10",
+      "bytes": 808,
+      "mtime_ns": 1791616339332704265,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/native-goal-create.json",
+      "sha256": "80e077432f559a8865915b41b05f0076440763a4f3d1568607586cac6e6f5fb5",
+      "bytes": 479,
+      "mtime_ns": 1791615447595638303,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+      "sha256": "12d243827dfab41f06c243aa7a2a6a1281bb89c2dea360195a3972d6e156c13c",
+      "bytes": 431,
+      "mtime_ns": 1791615761919434068,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "bytes": 6807,
+      "mtime_ns": 1791615761919320476,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/service-tier-change.json",
+      "sha256": "a6a357cd1380b880ebe546f41ea6be4ae26be6badb7b557115477a9e097b0eee",
+      "bytes": 493,
+      "mtime_ns": 1791615428433022958,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+      "sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+      "bytes": 20867,
+      "mtime_ns": 1791616339196526488,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/sources/index.md",
+      "sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+      "bytes": 9877,
+      "mtime_ns": 1791616307293314591,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/assignment.md",
+      "sha256": "1a847423bd02b82f76efd1ba8c07a60efefe204d2c6426c602fddb5af143e7c9",
+      "bytes": 8556,
+      "mtime_ns": 1791616710954904267,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+      "bytes": 37151,
+      "mtime_ns": 1791617028911326373,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/freeze.json",
+      "sha256": "bcdb60400ddbde5ef1163d3c65cfd71ea1e7ea93a4db2c9fad5082a565b8c1f4",
+      "bytes": 4093,
+      "mtime_ns": 1791616710953784233,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/input-map.json",
+      "sha256": "c0a199b431568a39cb6f295e531b3392feba7ef01e47b9ed4554f93ed16b9ddd",
+      "bytes": 1794,
+      "mtime_ns": 1791616710954345455,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-before-complete.json",
+      "sha256": "fc0b043efe977a6f6c422c02490dc1c9929e0881c269cf6977c846e1b889fb71",
+      "bytes": 476,
+      "mtime_ns": 1791617054598012687,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-complete.json",
+      "sha256": "5d1067a4ca269d1ba2bc54fefb5f702179c1d029ae94e89d31701cc80f19ca6b",
+      "bytes": 798,
+      "mtime_ns": 1791617054727679653,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/native-goal-create.json",
+      "sha256": "13cbb9316cf16e7054f02509c0d4d0ddd41fe56560c9557f4be4b9ce3e8baf69",
+      "bytes": 469,
+      "mtime_ns": 1791616723037445074,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/service-tier-change.json",
+      "sha256": "bc234db37bdf71c0a0aee3a7d62356367d21875f0ab33e7e842b9c7723a03b01",
+      "bytes": 483,
+      "mtime_ns": 1791616710356955943,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/source-map.json",
+      "sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+      "bytes": 23572,
+      "mtime_ns": 1791617028910637757,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/sources/index.md",
+      "sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+      "bytes": 18383,
+      "mtime_ns": 1791616974269032708,
+      "full_semantic_inspection": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/terminal-science-freeze-root.json",
+      "sha256": "82a070664e103ccb54e842073f52d5a53b0a9f2fad8e890d238c8c72d6a92b1c",
+      "bytes": 8064,
+      "mtime_ns": 1791617072727804062,
+      "full_semantic_inspection": true
+    }
+  ],
+  "original_freeze_integrity": {
+    "verified_utc": "2026-10-10T07:46:59.343953+00:00",
+    "missing_required_artifacts": [],
+    "stage_frozen_input_checks": [
+      {
+        "stage": "investigator",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "investigator",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/assignment.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "investigator",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/input-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/assignment.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/input-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "critic",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/inputs/brief.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/assignment.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/input-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/plan-reveal.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      },
+      {
+        "stage": "reviser",
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+        "exists": true,
+        "hash_matches": true,
+        "bytes_match": true
+      }
+    ],
+    "terminal_science_checks": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+        "expected_sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+        "actual_sha256": "f4aae5210cb3992878f3580cb8b6ab004dae920f5f4ef721d95929d76183b939",
+        "matches": true,
+        "bytes": 10311
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/source-map.json",
+        "expected_sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+        "actual_sha256": "6101f77f6886c45b74aa9e075104bb4bd33ce004a27e68eb9f83a7d7bbcb948a",
+        "matches": true,
+        "bytes": 15797
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/sources/index.md",
+        "expected_sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+        "actual_sha256": "997be2fed696c2edde7418f1eb29f6f4bc45c4402ccaade4655df363c36cf3cb",
+        "matches": true,
+        "bytes": 8790
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/discovery.md",
+        "expected_sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+        "actual_sha256": "445cf3919d3e867dad2c684acf155d52ba845c540c0b98ee26f83aa391abcfa8",
+        "matches": true,
+        "bytes": 13769
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/draft.md",
+        "expected_sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+        "actual_sha256": "a49b76fb8223b63ce8b19f872f9fbd3f72a01b041fd0960013a72dcb9700a536",
+        "matches": true,
+        "bytes": 27450
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/revealed-plan.md",
+        "expected_sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+        "actual_sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+        "matches": true,
+        "bytes": 6807
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/source-map.json",
+        "expected_sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+        "actual_sha256": "73bb9c218b10cc71982e8fc43b2c679194a0b7d566a4b8e2a885d75062d707bd",
+        "matches": true,
+        "bytes": 20867
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/investigator/sources/index.md",
+        "expected_sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+        "actual_sha256": "6664b704577663ed963bda0b95c063a8921b5a7ebaddab700617e42a7ec0229e",
+        "matches": true,
+        "bytes": 9877
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+        "expected_sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+        "actual_sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+        "matches": true,
+        "bytes": 37151
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/source-map.json",
+        "expected_sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+        "actual_sha256": "42cd0de779004a5f8d1f2e2ce360f7912aaeb20e19b7e388135306bdd0a5edf8",
+        "matches": true,
+        "bytes": 23572
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/sources/index.md",
+        "expected_sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+        "actual_sha256": "b859b916f89b2eb7e2cd1ba36998607877fb7eea23d3bcff17d6be4842cfa864",
+        "matches": true,
+        "bytes": 18383
+      }
+    ],
+    "original_brief_copy_exact": true,
+    "original_revealed_plan_exact": true,
+    "all_science_freeze_hashes_match": true,
+    "all_mapped_inputs_match": true,
+    "semantic_proof": false,
+    "note": "Identity/integrity checks show which bytes were reviewed; source/coverage judgments rest on semantic inspection and governing primary context."
+  },
+  "evidence_files": [
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S02-independent.html",
+      "sha256": "2a1af33103f5f28dda7e9fe17e9f757e81c3b6850cdaa40d160567d663cc4cf7",
+      "bytes": 1737259
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S02-independent.txt",
+      "sha256": "dfd4f330728bb5ca0986f10099ad9b40b674730f013c3a45ebe4d57726fed2f5",
+      "bytes": 374371
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S04a-independent.pdf",
+      "sha256": "91b1b963f7b3249e33947b593c60c6c41095c2b5caf835b647309c55fa2c2d9b",
+      "bytes": 981828
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S04a-independent.txt",
+      "sha256": "20dd103db5de07c209278de5b199524778ab2d3b398693e59c55461f54fa14ff",
+      "bytes": 53575
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S06-independent.pdf",
+      "sha256": "8f0b62506a7a0ad699b87bc3fc98cec5211712edfbafcf7fdb5dd80ebe9ea37a",
+      "bytes": 1323651
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/S06-independent.txt",
+      "sha256": "9233b0beafe26cec9df1da216630a75b998586e65b2fce55071cb88135120ab9",
+      "bytes": 48240
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/direct-retrievals-2.json",
+      "sha256": "434073feee48c66aa1742b6ab4deb5fcf430559caf0b6db96624b55735d5fa0f",
+      "bytes": 1173
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/direct-retrievals.json",
+      "sha256": "2bbfedf380bfcb6a8da802ee2d9c25424ddfff6ba6b035a193afb5157fc020fe",
+      "bytes": 2662
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web01-governing.txt",
+      "sha256": "a0d76d749947263311846e79899563e927bfd4c1b59258a06b6ab3b6d8a25f75",
+      "bytes": 31170
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web01.txt",
+      "sha256": "9dd2db501346814683d298024ae4592bfa06dc4263a5c0002df929157e336db6",
+      "bytes": 31401
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web02-governing.txt",
+      "sha256": "fb8e187b0b3e76e3d8fad95842081d6df05c1182345dde3bcc4702f94f61dcdc",
+      "bytes": 28223
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web02.txt",
+      "sha256": "09c583a3baef0374f523aaa43fe7206e8a6a0a09f9f6a5bfdbb2de35b3ea0f2a",
+      "bytes": 30107
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web03-governing.txt",
+      "sha256": "03444bbccaf7bcebc42908f5fdbadeafa36737a9c69a6853ece7c925e1625092",
+      "bytes": 25771
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web03.txt",
+      "sha256": "fdf16e6603d8e34f1a477ef397e0c10743e62178be5760f9ca9c8d1333532275",
+      "bytes": 36399
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web04-governing.txt",
+      "sha256": "623cf87e5a65abab730fc8e3318b397b51f2edf8672d3052724028bcf2dc278e",
+      "bytes": 26030
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web04.txt",
+      "sha256": "329fbd185c0cfbc3a32e52738ca60266807445db00bb6f34d8d12b2fdd83fb65",
+      "bytes": 36015
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web05-governing.txt",
+      "sha256": "49aa0f540ec1696fdb11a05f192f67ffd31051d1136945ad51b367b9df870252",
+      "bytes": 31416
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web05.txt",
+      "sha256": "82b880363d75e306c808ffff04132c5242dbc84d7df826c084b125db935f3a93",
+      "bytes": 31404
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web06-governing.txt",
+      "sha256": "c5ccd1a6054ebacfd02244a2fb1178395353c1059f201f801a192a0f1533ae38",
+      "bytes": 2917
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web06.txt",
+      "sha256": "6c83b8b7bcb3ee4f24f582637c261aae308d1b51728bf76ef8dc09a56e65dd55",
+      "bytes": 29066
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web07-governing.txt",
+      "sha256": "122ea886e42c2924de79b60ddf52968ff5d2248ada7e9faaeb0ddde69a7f1315",
+      "bytes": 15082
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web07.txt",
+      "sha256": "567e3ac7385cccafaeccbabf12adeb7fec3bab962e9517c60020d391490fea8b",
+      "bytes": 16039
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web08-governing.txt",
+      "sha256": "3a6ffff861f672b62663545aeb78352cea27b44b800056dde76f3ddd09cf5764",
+      "bytes": 24121
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web08.txt",
+      "sha256": "76f1975f30dc5bea57ede9ea00b61b60bb1a745e82258a5c61d67f616fde1cfd",
+      "bytes": 34403
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web09-governing.txt",
+      "sha256": "221b61f88493ba76d2577ed79140848159839641626b4851fbad7aa56bdb2a06",
+      "bytes": 22468
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/web09.txt",
+      "sha256": "1a60fbe055d1034030a6953e04f824c13dd07889446196e155b5311dc6f32546",
+      "bytes": 38670
+    },
+    {
+      "path": "ER12_RUNTIME/assessment/D-R2-02/control-v1/evidence/index.md",
+      "sha256": "999f3a4b1ad6f61756311f2383f428df9a92dcef06f160752359cf9761d3284a",
+      "bytes": 20908
+    }
+  ],
+  "unavailable_evidence": "Full primary methods for some abstract-level sources; authenticated candidate native/runtime/billing/action telemetry. Unknowns are explicit, not filled from other arms or statuses.",
+  "semantic_proof_warning": "Hashes/counts/critic agreement are not the source judgment; the independently stated measurands, operations, conditions, applicability and exact clause adjudications are its basis."
+}

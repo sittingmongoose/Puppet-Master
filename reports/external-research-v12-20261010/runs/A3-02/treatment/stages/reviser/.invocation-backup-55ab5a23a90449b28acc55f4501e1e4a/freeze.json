@@ -80,7 +80,7 @@
   "native_goal_objective": "ER12 reviser stage, run A3-02-treatment: execute ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
   "native_goal_status": "UNKNOWN until directly observed",
   "method_id": "A3",
-  "stage_prompt_delta": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on \u201cnot supported,\u201d \u201call,\u201d \u201conly,\u201d \u201cnever,\u201d or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
+  "stage_prompt_delta": "Inside the existing critic/reviser budget, replace redundant rereading with a targeted challenge to recommendations that depend on “not supported,” “all,” “only,” “never,” or a supposedly unavoidable default. Inspect governing current/version-pinned documentation, adjacent exception sections, and relevant released history. Record source conflicts rather than assuming the newest-looking page wins. Keep normal full-scope review.",
   "time_contract": "fixed_stage_caps",
   "available_stage_seconds_at_prepare": 1080.0,
   "prospective_service_tier_revision": "user-standard-20261010-v1"

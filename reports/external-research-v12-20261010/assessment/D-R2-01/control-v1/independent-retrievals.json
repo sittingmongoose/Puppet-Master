@@ -1,0 +1,39 @@
+[
+  {
+    "id": "S5",
+    "url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf?inlineView=true&pdfJsInlineViewToken=998458394",
+    "access_utc": "2026-10-10T07:23:39.700964+00:00",
+    "status": 200,
+    "final_url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf?inlineView=true&pdfJsInlineViewToken=998458394",
+    "content_type": "text/html",
+    "bytes": 1444,
+    "sha256": "3aea628c1399df74086e76c9240894f93c0c04db407c90b0c55f85e1a3086da7",
+    "error": "not PDF"
+  },
+  {
+    "id": "S6",
+    "url": "https://mdpi-res.com/d_attachment/agronomy/agronomy-09-00667/article_deploy/agronomy-09-00667.pdf",
+    "access_utc": "2026-10-10T07:23:39.702782+00:00",
+    "status": 200,
+    "final_url": "https://mdpi-res.com/d_attachment/agronomy/agronomy-09-00667/article_deploy/agronomy-09-00667.pdf",
+    "content_type": "application/pdf",
+    "bytes": 2355059,
+    "sha256": "518c124fd07fc65cb2f7539e3b7630b29ac17e661616c81fd11c715a01d304c4",
+    "text_sha256": "b1a328041f2ef81c7d36f8121408f656fe5ab632e2f358ecc33a8e956119b80f"
+  },
+  {
+    "id": "S5",
+    "url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/53/4/article-p552.pdf",
+    "operation": "curl -L --max-time 30; independent official-publisher PDF retrieval followed by pdftotext -layout",
+    "access_utc_window": {
+      "start": "2026-10-10T07:24:00Z",
+      "end": "2026-10-10T07:25:50Z",
+      "precision": "bounded by surrounding calls, not an exact request timestamp"
+    },
+    "content_type_observed": "PDF magic verified; header not separately captured",
+    "bytes": 781019,
+    "sha256": "a32224e2c8352620d7c565f6a7b16c04f0972abad93da973dd6e0b219a483517",
+    "text_sha256": "e484de58e13fa1bf2bacf36a40d46735b7639cdd7a88ac75799c28a877a17317",
+    "raw_retention": "Temporary review scratch; bounded independent notes will be retained instead of republishing article."
+  }
+]

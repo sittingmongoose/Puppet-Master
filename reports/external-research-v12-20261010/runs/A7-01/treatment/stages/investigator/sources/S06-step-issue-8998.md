@@ -1,9 +1,20 @@
-# S06 — PrusaSlicer STEP issue #8998
-
-- **Source:** [STEP import excludes big chunk of part](https://github.com/prusa3d/PrusaSlicer/issues/8998)
-- **Version:** Reported against PrusaSlicer 2.5.0, opened 2022-10-03.
-- **Access:** 2026-10-10T04:14:03Z, read-only issue/comment review.
-- **Locator:** Description, reproduce/details, Oct 2022 comments, and later same-version report.
-- **Observed operation:** Public report read; attachments not downloaded; no reproduction performed.
-- **Reported condition:** A STEP input had 127 open edges and missing hinge/conical features; the comparable STL worked. Discussion attributed importer quality to the OpenCASCADE path. No confirmed fix/commit was identified in this record.
-- **Applicability:** Bounded early-release defect history. It motivates sentinels for STEP, not a claim that present releases have the same failure.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+  "rawSHA256": "b57175041d61ac0c5c55f4b66ce049d82cce9f419ff114627498188d3d608a01",
+  "original_bytes": 872,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S06-step-issue-8998.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

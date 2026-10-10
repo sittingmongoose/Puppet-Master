@@ -1,0 +1,608 @@
+{
+  "recorded_utc": "2026-10-10T07:28:00.022885+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "lines": 12,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/brief.md",
+      "bytes": 2684,
+      "sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "lines": 31,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-01/plan.md",
+      "bytes": 7045,
+      "sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "lines": 77,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7495,
+      "sha256": "37478330ae33bdad8d3fd8e6af8fe321a4b097044192005b15ead1cadf2ad981",
+      "lines": 94,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/inputs/brief.md",
+      "bytes": 2684,
+      "sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "lines": 31,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "66bd997eabc9c6e8733f8337a8e731914e3f4e917684e2a90e7fd0b33f920439",
+      "lines": 19,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "1e5819351ae1a0d0070cd9a016085a00a7a04d5c91639cf363725f82856e56ca",
+      "lines": 21,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/freeze.json",
+      "bytes": 1837,
+      "sha256": "e5e20912ee8d041016cde2e4b85b0759df5501f63f6affdb1eb5bdb9ae0a2540",
+      "lines": 42,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/source-map.json",
+      "bytes": 20864,
+      "sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "lines": 181,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 4487,
+      "sha256": "1730a76ba5900a2dc9d97cd858249c9e49124024aaf593487dfc68e778a56f6a",
+      "lines": 26,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/assignment.md",
+      "bytes": 5533,
+      "sha256": "9197313b1b609a51f48b18fb1820d5e140c175c3547574e3e08927b9be02a397",
+      "lines": 19,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "16fd3cd2d9df48d62693263ae564e22ce9efe29ffb598df7352c297f01235be3",
+      "lines": 28,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/freeze.json",
+      "bytes": 3347,
+      "sha256": "1cff9a06e9eaa9305f149485394746addff51aae74f21d88657ef2a41582a365",
+      "lines": 73,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/source-map.json",
+      "bytes": 36970,
+      "sha256": "b9e452b42df0bb9f522f1980b4421cf2b9ea7a3c9fac3e589bee77430f2fa7a5",
+      "lines": 352,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/sources/index.md",
+      "bytes": 4273,
+      "sha256": "75f909ae561745cd2380551c39570fa230ce28bb74b45936b6a2c7eaa99c016b",
+      "lines": 24,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/assignment.md",
+      "bytes": 5518,
+      "sha256": "5ad9155a776fddbfd387716a4bafea59fbabd615a988d137f8933e4153504c21",
+      "lines": 19,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "c4bba37abe437830a748ec2d6e794804e795ee06afebf0af1e9bd60c570d0265",
+      "lines": 31,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/freeze.json",
+      "bytes": 4134,
+      "sha256": "bc6e5913aec34dbd0b5ece722c022b407d9d2e4bee35a7de378bb4b0eae15a7a",
+      "lines": 88,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/source-map.json",
+      "bytes": 61400,
+      "sha256": "fe481e52bf892d72f31bcb25862e66e6addc33b8d781491eae4c0ecc04c67c7c",
+      "lines": 675,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 5164,
+      "sha256": "7ccaf288317139fb18b722400bf88ed9387d059fb7fa3f8d153ec6803225934a",
+      "lines": 46,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/discovery.md",
+      "bytes": 11452,
+      "sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "lines": 52,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/draft.md",
+      "bytes": 27845,
+      "sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "lines": 129,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 7045,
+      "sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "lines": 77,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "24e8cf87c10a2d93c087481ac6c38bb8b887dd2f966fdea567d0cffaa0c3684e",
+      "lines": 10,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal-response.json",
+      "bytes": 415,
+      "sha256": "afa68eb5d3a942d27a237585034219e1ba12aca69c252d6836f30b658cf7adec",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-create-response.json",
+      "bytes": 484,
+      "sha256": "aad9645806bb2a1ca57734484913ad96940d2cb222510488bc6e11184cbaae7c",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-post-completion-get-response.json",
+      "bytes": 493,
+      "sha256": "69ed66a74b7db5ea48dd2389b5744eefd8a6a73dd69103f126586c4088914fe7",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-record.md",
+      "bytes": 1880,
+      "sha256": "f406d4e99486f00d70623fe56c250e546c53037b130ae8a94fd20607b9366ac7",
+      "lines": 11,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4665,
+      "sha256": "ceda2d1560aa43b4a1df0bc66d513a2768f502833f11b709f053ced5dec2ba45",
+      "lines": 39,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/native-goal-binding-guard-response.json",
+      "bytes": 52,
+      "sha256": "18045c8d0b63332cef1c4258e599be3a0120d40bf3eeae74a5445c28c42c8b1a",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/critique.md",
+      "bytes": 11887,
+      "sha256": "eeaea49b30e456106a1b5fe4de4c9480f4a3187f7b9ba535017fcf72c8ca95ef",
+      "lines": 59,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 472,
+      "sha256": "06df3968c98f7e0e69220da8ef9460782ca995c5b9d9da706dcab2640980a8ff",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 800,
+      "sha256": "2ce4dc80eb42ee312b6723fff7cc05c2b29448f72830974eaba81a807f4f3162",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4599,
+      "sha256": "4f9d370c9ac599bc76994dc69ba1ba8bbdafd9412a87ef4ead2a666e7cddee27",
+      "lines": 39,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/goal-binding-guard-output.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/final.md",
+      "bytes": 39520,
+      "sha256": "0679ca559b9974a2ed2ad45f20fa28783fdd0c26da700fcd00b8d42c7b787a45",
+      "lines": 186,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 474,
+      "sha256": "7e0af5b24e2641049802e642d8b12c54eed279454d2e68dccd7a77f832746baf",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 804,
+      "sha256": "e584d73096d96bd364add8c37748545c3110b0eda50a307400028284d45db741",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/native-goal-active-observation.json",
+      "bytes": 533,
+      "sha256": "32c1346a95d2a4871acea4f198b0c2a056b713985dcadfbcb9d6fa391e04fb07",
+      "lines": 1,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4610,
+      "sha256": "ffbf563177fbcf41c95013e3d52ff80a323bd900634d103c3f8b86719ad2b66d",
+      "lines": 39,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3086,
+      "sha256": "72ebde0edba3b1d96bb3fe8639c7e12fc72a002dd7f83f566894448acd2ffe58",
+      "lines": 43,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 497,
+      "sha256": "76c09962f6b13ae53472ec21f47d99423f7d008d222071727311ccef8798f05b",
+      "lines": 9,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3044,
+      "sha256": "5083977409e2ce81608b84dcef9320efcd2565fcf70e31da67fb4f47138ef01b",
+      "lines": 43,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/service-tier-change.json",
+      "bytes": 485,
+      "sha256": "b49f21255b8cb1fea9820506ac08f0bd965bde75b1244c863888f2dfe3c88d3f",
+      "lines": 9,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3051,
+      "sha256": "14e8ee226fa6d0a116318a96fa71e91a2332f03784cbe193e4c80f0473e1ddf4",
+      "lines": 43,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 487,
+      "sha256": "734560cba676b1e9cbce33c5adc2d6b0ec34f00d6fd0134e727161de1441bb96",
+      "lines": 9,
+      "inspection": "FULL content read; structured records parsed in full where applicable"
+    }
+  ],
+  "freeze_identity_checks": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/critique.md",
+      "expected_sha256": "eeaea49b30e456106a1b5fe4de4c9480f4a3187f7b9ba535017fcf72c8ca95ef",
+      "observed_sha256": "eeaea49b30e456106a1b5fe4de4c9480f4a3187f7b9ba535017fcf72c8ca95ef",
+      "expected_bytes": 11887,
+      "observed_bytes": 11887,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/source-map.json",
+      "expected_sha256": "b9e452b42df0bb9f522f1980b4421cf2b9ea7a3c9fac3e589bee77430f2fa7a5",
+      "observed_sha256": "b9e452b42df0bb9f522f1980b4421cf2b9ea7a3c9fac3e589bee77430f2fa7a5",
+      "expected_bytes": 36970,
+      "observed_bytes": 36970,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/sources/index.md",
+      "expected_sha256": "75f909ae561745cd2380551c39570fa230ce28bb74b45936b6a2c7eaa99c016b",
+      "observed_sha256": "75f909ae561745cd2380551c39570fa230ce28bb74b45936b6a2c7eaa99c016b",
+      "expected_bytes": 4273,
+      "observed_bytes": 4273,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "observed_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "expected_bytes": 11452,
+      "observed_bytes": 11452,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "observed_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "expected_bytes": 27845,
+      "observed_bytes": 27845,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "observed_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "expected_bytes": 7045,
+      "observed_bytes": 7045,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "observed_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "expected_bytes": 20864,
+      "observed_bytes": 20864,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/sources/index.md",
+      "expected_sha256": "1730a76ba5900a2dc9d97cd858249c9e49124024aaf593487dfc68e778a56f6a",
+      "observed_sha256": "1730a76ba5900a2dc9d97cd858249c9e49124024aaf593487dfc68e778a56f6a",
+      "expected_bytes": 4487,
+      "observed_bytes": 4487,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/final.md",
+      "expected_sha256": "0679ca559b9974a2ed2ad45f20fa28783fdd0c26da700fcd00b8d42c7b787a45",
+      "observed_sha256": "0679ca559b9974a2ed2ad45f20fa28783fdd0c26da700fcd00b8d42c7b787a45",
+      "expected_bytes": 39520,
+      "observed_bytes": 39520,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/source-map.json",
+      "expected_sha256": "fe481e52bf892d72f31bcb25862e66e6addc33b8d781491eae4c0ecc04c67c7c",
+      "observed_sha256": "fe481e52bf892d72f31bcb25862e66e6addc33b8d781491eae4c0ecc04c67c7c",
+      "expected_bytes": 61400,
+      "observed_bytes": 61400,
+      "match": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/sources/index.md",
+      "expected_sha256": "7ccaf288317139fb18b722400bf88ed9387d059fb7fa3f8d153ec6803225934a",
+      "observed_sha256": "7ccaf288317139fb18b722400bf88ed9387d059fb7fa3f8d153ec6803225934a",
+      "expected_bytes": 5164,
+      "observed_bytes": 5164,
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/inputs/brief.md",
+      "expected_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "observed_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "expected_bytes": 2684,
+      "observed_bytes": 2684,
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/assignment.md",
+      "expected_sha256": "66bd997eabc9c6e8733f8337a8e731914e3f4e917684e2a90e7fd0b33f920439",
+      "observed_sha256": "66bd997eabc9c6e8733f8337a8e731914e3f4e917684e2a90e7fd0b33f920439",
+      "expected_bytes": 5977,
+      "observed_bytes": 5977,
+      "match": true
+    },
+    {
+      "freeze_stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/input-map.json",
+      "expected_sha256": "1e5819351ae1a0d0070cd9a016085a00a7a04d5c91639cf363725f82856e56ca",
+      "observed_sha256": "1e5819351ae1a0d0070cd9a016085a00a7a04d5c91639cf363725f82856e56ca",
+      "expected_bytes": 797,
+      "observed_bytes": 797,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/inputs/brief.md",
+      "expected_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "observed_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "expected_bytes": 2684,
+      "observed_bytes": 2684,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/assignment.md",
+      "expected_sha256": "9197313b1b609a51f48b18fb1820d5e140c175c3547574e3e08927b9be02a397",
+      "observed_sha256": "9197313b1b609a51f48b18fb1820d5e140c175c3547574e3e08927b9be02a397",
+      "expected_bytes": 5533,
+      "observed_bytes": 5533,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/input-map.json",
+      "expected_sha256": "16fd3cd2d9df48d62693263ae564e22ce9efe29ffb598df7352c297f01235be3",
+      "observed_sha256": "16fd3cd2d9df48d62693263ae564e22ce9efe29ffb598df7352c297f01235be3",
+      "expected_bytes": 1497,
+      "observed_bytes": 1497,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "observed_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "expected_bytes": 11452,
+      "observed_bytes": 11452,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "observed_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "expected_bytes": 27845,
+      "observed_bytes": 27845,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "observed_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "expected_bytes": 20864,
+      "observed_bytes": 20864,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "observed_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "expected_bytes": 7045,
+      "observed_bytes": 7045,
+      "match": true
+    },
+    {
+      "freeze_stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "24e8cf87c10a2d93c087481ac6c38bb8b887dd2f966fdea567d0cffaa0c3684e",
+      "observed_sha256": "24e8cf87c10a2d93c087481ac6c38bb8b887dd2f966fdea567d0cffaa0c3684e",
+      "expected_bytes": 433,
+      "observed_bytes": 433,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/inputs/brief.md",
+      "expected_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "observed_sha256": "76cf5f3a96fa4ef4188d9465cec47f75cc268d451ee21201924c3aea881e3fbd",
+      "expected_bytes": 2684,
+      "observed_bytes": 2684,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/assignment.md",
+      "expected_sha256": "5ad9155a776fddbfd387716a4bafea59fbabd615a988d137f8933e4153504c21",
+      "observed_sha256": "5ad9155a776fddbfd387716a4bafea59fbabd615a988d137f8933e4153504c21",
+      "expected_bytes": 5518,
+      "observed_bytes": 5518,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/input-map.json",
+      "expected_sha256": "c4bba37abe437830a748ec2d6e794804e795ee06afebf0af1e9bd60c570d0265",
+      "observed_sha256": "c4bba37abe437830a748ec2d6e794804e795ee06afebf0af1e9bd60c570d0265",
+      "expected_bytes": 1820,
+      "observed_bytes": 1820,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/discovery.md",
+      "expected_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "observed_sha256": "e82d9a17a4e5dd4b1fb30eddd416c2897b0785a0dfcc0cd3f4aee716b0165691",
+      "expected_bytes": 11452,
+      "observed_bytes": 11452,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/draft.md",
+      "expected_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "observed_sha256": "ed7f36b33ff738f2d18eb93fbec1fb35584dce7fbdccd488df5fb250a33a4993",
+      "expected_bytes": 27845,
+      "observed_bytes": 27845,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/source-map.json",
+      "expected_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "observed_sha256": "0a0621d5808ac37c640ba76c9cbdaab80877d2906877e7ee4312ce39981acb87",
+      "expected_bytes": 20864,
+      "observed_bytes": 20864,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/revealed-plan.md",
+      "expected_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "observed_sha256": "7f2980800860c2808ddcf581875fef06a0a821cf8d93b44d1747205026c24e95",
+      "expected_bytes": 7045,
+      "observed_bytes": 7045,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/investigator/plan-reveal.json",
+      "expected_sha256": "24e8cf87c10a2d93c087481ac6c38bb8b887dd2f966fdea567d0cffaa0c3684e",
+      "observed_sha256": "24e8cf87c10a2d93c087481ac6c38bb8b887dd2f966fdea567d0cffaa0c3684e",
+      "expected_bytes": 433,
+      "observed_bytes": 433,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/critique.md",
+      "expected_sha256": "eeaea49b30e456106a1b5fe4de4c9480f4a3187f7b9ba535017fcf72c8ca95ef",
+      "observed_sha256": "eeaea49b30e456106a1b5fe4de4c9480f4a3187f7b9ba535017fcf72c8ca95ef",
+      "expected_bytes": 11887,
+      "observed_bytes": 11887,
+      "match": true
+    },
+    {
+      "freeze_stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/critic/source-map.json",
+      "expected_sha256": "b9e452b42df0bb9f522f1980b4421cf2b9ea7a3c9fac3e589bee77430f2fa7a5",
+      "observed_sha256": "b9e452b42df0bb9f522f1980b4421cf2b9ea7a3c9fac3e589bee77430f2fa7a5",
+      "expected_bytes": 36970,
+      "observed_bytes": 36970,
+      "match": true
+    }
+  ],
+  "hashes_are_identity_only": true,
+  "semantic_proof": "Independent primary evidence and semantic assessment, not these hashes"
+}

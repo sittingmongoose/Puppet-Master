@@ -1,1 +1,44 @@
-{"ref":"refs/tags/v3.10.16","node_id":"MDM6UmVmMTI0NzA2OTI6cmVmcy90YWdzL3YzLjEwLjE2","url":"https://api.github.com/repos/uklibraries/ohms-viewer/git/refs/tags/v3.10.16","object":{"sha":"3343b7884d5e18b5925681d84ea0dab8bb165038","type":"commit","url":"https://api.github.com/repos/uklibraries/ohms-viewer/git/commits/3343b7884d5e18b5925681d84ea0dab8bb165038"}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://api.github.com/repos/uklibraries/ohms-viewer/git/ref/tags/v3.10.16"
+  ],
+  "source_urls": [
+    "https://api.github.com/repos/uklibraries/ohms-viewer/git/ref/tags/v3.10.16"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E18.lines.txt"
+    },
+    {
+      "line_text_sha256": "b7168432607c2e1876db250afcea2847b062c412e34bf08b668527a348dd65da"
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A5-01/control-v1/evidence/retrieval-records.json",
+      "source_id": "UNKNOWN",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "line_text_path": "ER12_RUNTIME/assessment/A5-01/control-v1/evidence/E18.lines.txt"
+    },
+    {
+      "line_text_sha256": "b7168432607c2e1876db250afcea2847b062c412e34bf08b668527a348dd65da"
+    }
+  ],
+  "raw_sha256": "fb36eea5c1fe2dca05c9e48f30ce3e0fa937d3a31f061ba4f5ba0878a05e361d",
+  "rawSHA256": "fb36eea5c1fe2dca05c9e48f30ce3e0fa937d3a31f061ba4f5ba0878a05e361d",
+  "original_bytes": 359,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A5-01/control-v1/evidence/E18.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

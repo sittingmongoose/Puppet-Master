@@ -1,26 +1,23 @@
 {
-  "native_tool": "update_goal",
-  "arguments": {
-    "status": "complete"
-  },
-  "actual_response": {
-    "goal": {
-      "threadId": "01a12413-fd59-70f1-a698-452000818fb9",
-      "objective": "Independently assess the single completed ER12 A1-02 control full pipeline within a finite 45-minute envelope. Read the full rubric, frozen original brief/plan, terminal science freeze, every original authored stage, mapped input/assignment/freeze, critique dispositions/checks, and authored source evidence. Assess all six rubric axes and every exact plan clause; retrieve independent governing primary evidence for consequential claims, recommendations, corrections and source conditions. Distinguish final qualification from lineage defects. Save complete assessment.md, assessment.json and navigable independent source evidence/map only under ER12_RUNTIME/assessment/A1-02/control-v1, keeping original freeze unchanged. Report material issues, limitations, unknowns and original inspected hashes. No delegation, repairs, Git/publication, account changes, other arms/results/history, or ER11 rescoring. Complete this Goal only after all assessment artifacts are saved.",
-      "status": "complete",
-      "tokensUsed": 245834,
-      "timeUsedSeconds": 841,
-      "createdAt": 1791606662,
-      "updatedAt": 1791607504
-    },
-    "remainingTokens": null,
-    "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
-  },
-  "full_judgment_saved_before_completion": true,
-  "judgment_files": [
-    "assessment.md",
-    "assessment.json",
-    "source-map.json"
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "arguments": {
+        "status": "complete"
+      },
+      "actual_response": {
+        "goal": {
+          "threadId": "01a12413-fd59-70f1-a698-452000818fb9",
+          "status": "complete",
+          "createdAt": 1791606662,
+          "updatedAt": 1791607504
+        }
+      }
+    }
   ],
-  "usage_interpretation": "Raw native Goal usage fields only; not proof of inference tokens, billed tokens, billing cost or savings."
+  "original_capture_sha256": "3e8808a6c4bb4e7fbfdc324502775da8bdd2f3a04466163e2b4fbb6836c9a72e",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A1-02/control-v1/reviewer-native-completion.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

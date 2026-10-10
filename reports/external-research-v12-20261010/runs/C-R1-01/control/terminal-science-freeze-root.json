@@ -64,25 +64,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "C-R1-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the assigned reviser stage. The single native Goal was activated with the exact objective and completed. Its activation and completion responses are preserved.\n\n- [Final proposal](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md>)\n- [Activation response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json>) and [completion response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json>)\n\nCI-01 was accepted and amended with a conditional specialist diagnostic; the proposal states its limits and that it was not performed. The independent primary-source checks are recorded in the source map ([S08](https://www.sciencedirect.com/science/article/pii/S0022460X17301207), [S09](https://www.sintef.no/en/publications/publication/1450011/)). No site measurements or interventions were executed.\n\nNative Goal usage: 119,773 tokens over 10 minutes 11 seconds.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2be98ba9-a59e-43b5-983d-0a0ea664914d",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the assigned reviser stage. The single native Goal was activated with the exact objective and completed. Its activation and completion responses are preserved.\n\n- [Final proposal](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/sources/index.md>)\n- [Activation response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-activation-response.json>) and [completion response](<ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/native-goal-completion-response.json>)\n\nCI-01 was accepted and amended with a conditional specialist diagnostic; the proposal states its limits and that it was not performed. The independent primary-source checks are recorded in the source map ([S08](https://www.sciencedirect.com/science/article/pii/S0022460X17301207), [S09](https://www.sintef.no/en/publications/publication/1450011/)). No site measurements or interventions were executed.\n\nNative Goal usage: 119,773 tokens over 10 minutes 11 seconds.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-C-R1-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:2be98ba9-a59e-43b5-983d-0a0ea664914d",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "81d4c3ff29cfa9fc8e3d112ed87be331b3fdd4e1a4e54957f2eb02d7da012e19"
   }
 }

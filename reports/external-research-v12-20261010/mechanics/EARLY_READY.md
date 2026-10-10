@@ -1,0 +1,1 @@
+Early ready copy saved before optional extensions: helpers/er12-v1. prepare.py/bootstrap.js have ER12 labels; reveal.py is byte-identical. R0 substantive requirements, 1800/720/1080 budgets and one-use reveal unchanged. Root dispatch only. Configuration and frozen science still required.

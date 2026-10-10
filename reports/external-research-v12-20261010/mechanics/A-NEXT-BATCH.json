@@ -1,0 +1,62 @@
+[
+  {
+    "slot": "A1-02",
+    "method": "A1",
+    "source": "ER12_RUNTIME/cases/ER12-A1-02-FRESH",
+    "frozen": "ER12_RUNTIME/frozen-inputs/A1-02",
+    "launch_order": [
+      "treatment",
+      "control"
+    ],
+    "arms": [
+      {
+        "arm": "treatment",
+        "config": "ER12_RUNTIME/configs/A1-02-treatment.json"
+      },
+      {
+        "arm": "control",
+        "config": "ER12_RUNTIME/configs/A1-02-control.json"
+      }
+    ]
+  },
+  {
+    "slot": "A4-01",
+    "method": "A4",
+    "source": "ER12_RUNTIME/cases-rest/A4-01",
+    "frozen": "ER12_RUNTIME/frozen-inputs/A4-01",
+    "launch_order": [
+      "control",
+      "treatment"
+    ],
+    "arms": [
+      {
+        "arm": "control",
+        "config": "ER12_RUNTIME/configs/A4-01-control.json"
+      },
+      {
+        "arm": "treatment",
+        "config": "ER12_RUNTIME/configs/A4-01-treatment.json"
+      }
+    ]
+  },
+  {
+    "slot": "A6-01",
+    "method": "A6",
+    "source": "ER12_RUNTIME/cases-rest/A6-01",
+    "frozen": "ER12_RUNTIME/frozen-inputs/A6-01",
+    "launch_order": [
+      "treatment",
+      "control"
+    ],
+    "arms": [
+      {
+        "arm": "treatment",
+        "config": "ER12_RUNTIME/configs/A6-01-treatment.json"
+      },
+      {
+        "arm": "control",
+        "config": "ER12_RUNTIME/configs/A6-01-control.json"
+      }
+    ]
+  }
+]

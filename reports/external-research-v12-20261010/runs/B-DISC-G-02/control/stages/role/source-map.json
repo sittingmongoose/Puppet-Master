@@ -99,12 +99,16 @@
     }
   ],
   "checks": {
-    "executed": ["Retrieved and inspected the cited public documentation pages."],
+    "executed": [
+      "Retrieved and inspected the cited public documentation pages."
+    ],
     "proposed_not_executed": [
       "Negative cases for missing provenance, wrong source, wrong builder, changed parameters, digest mismatch, and dependency mismatch.",
       "Cosign blob-bundle and in-toto verification prototypes against a bounded installer fixture matrix.",
       "Compatibility check across the producer output and installed verifier versions."
     ],
-    "not_performed": ["No code downloaded or executed; no software installed; no local artifact verification run."]
+    "not_performed": [
+      "No code downloaded or executed; no software installed; no local artifact verification run."
+    ]
   }
 }

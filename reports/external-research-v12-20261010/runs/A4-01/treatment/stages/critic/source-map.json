@@ -6,7 +6,9 @@
   "sources": [
     {
       "id": "C01",
-      "investigator_source_ids": ["S01"],
+      "investigator_source_ids": [
+        "S01"
+      ],
       "title": "Amazon S3: Uploading objects",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
@@ -18,7 +20,9 @@
     },
     {
       "id": "C02",
-      "investigator_source_ids": ["S02"],
+      "investigator_source_ids": [
+        "S02"
+      ],
       "title": "Amazon S3 multipart upload limits",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
@@ -30,7 +34,9 @@
     },
     {
       "id": "C03",
-      "investigator_source_ids": ["S05"],
+      "investigator_source_ids": [
+        "S05"
+      ],
       "title": "Checking object integrity for data uploads in Amazon S3",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity-upload.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
@@ -42,7 +48,9 @@
     },
     {
       "id": "C04",
-      "investigator_source_ids": ["S06"],
+      "investigator_source_ids": [
+        "S06"
+      ],
       "title": "Amazon S3 CompleteMultipartUpload API",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html",
       "version_or_commit": "AWS S3 API reference live documentation; page version not stated",
@@ -54,7 +62,9 @@
     },
     {
       "id": "C05",
-      "investigator_source_ids": ["S07"],
+      "investigator_source_ids": [
+        "S07"
+      ],
       "title": "Uppy AWS S3 plugin documentation",
       "url": "https://uppy.io/docs/aws-s3/",
       "version_or_commit": "Current unversioned documentation; page example pins CDN files to Uppy v5.2.1",
@@ -66,7 +76,9 @@
     },
     {
       "id": "C06",
-      "investigator_source_ids": ["S08"],
+      "investigator_source_ids": [
+        "S08"
+      ],
       "title": "Uppy Golden Retriever documentation",
       "url": "https://uppy.io/docs/golden-retriever/",
       "version_or_commit": "Current unversioned documentation; page example pins Uppy v5.2.1",
@@ -78,7 +90,9 @@
     },
     {
       "id": "C07",
-      "investigator_source_ids": ["S09"],
+      "investigator_source_ids": [
+        "S09"
+      ],
       "title": "tus Resumable Upload Protocol 1.0.x",
       "url": "https://tus.io/protocols/resumable-upload",
       "version_or_commit": "tus protocol 1.0.0, dated 2016-03-25",
@@ -90,7 +104,9 @@
     },
     {
       "id": "C08",
-      "investigator_source_ids": ["S10"],
+      "investigator_source_ids": [
+        "S10"
+      ],
       "title": "tusd v2.10.1 S3 storage backend",
       "url": "https://github.com/tus/tusd/blob/v2.10.1/docs/_storage-backends/aws-s3.md",
       "version_or_commit": "tusd tag v2.10.1",
@@ -102,7 +118,9 @@
     },
     {
       "id": "C09",
-      "investigator_source_ids": ["S19"],
+      "investigator_source_ids": [
+        "S19"
+      ],
       "title": "tusd v2.10.1 release",
       "url": "https://github.com/tus/tusd/releases/tag/v2.10.1",
       "version_or_commit": "Tag v2.10.1, commit 388a27c; released 2026-09-16",
@@ -114,7 +132,9 @@
     },
     {
       "id": "C10",
-      "investigator_source_ids": ["S17"],
+      "investigator_source_ids": [
+        "S17"
+      ],
       "title": "MinIO issue #20455: trailing checksum not retrievable",
       "url": "https://github.com/minio/minio/issues/20455",
       "version_or_commit": "Public issue report; reporter used RELEASE.2024-09-13T20-26-02Z",
@@ -126,7 +146,9 @@
     },
     {
       "id": "C11",
-      "investigator_source_ids": ["S18"],
+      "investigator_source_ids": [
+        "S18"
+      ],
       "title": "MinIO commit f246ee7: Fix PutObject Trailing checksum",
       "url": "https://github.com/minio/minio/commit/f246ee7",
       "version_or_commit": "Commit f246ee7; commit message links issue #20455; no containing release tag established by this page",
@@ -138,7 +160,9 @@
     },
     {
       "id": "C12",
-      "investigator_source_ids": ["S03"],
+      "investigator_source_ids": [
+        "S03"
+      ],
       "title": "Amazon S3 multipart upload overview",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
@@ -150,7 +174,9 @@
     },
     {
       "id": "C13",
-      "investigator_source_ids": ["S11"],
+      "investigator_source_ids": [
+        "S11"
+      ],
       "title": "Amazon S3 conditional writes",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-writes.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",
@@ -162,7 +188,9 @@
     },
     {
       "id": "C14",
-      "investigator_source_ids": ["S14"],
+      "investigator_source_ids": [
+        "S14"
+      ],
       "title": "AWS CLI v2 S3 configuration",
       "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-config.html",
       "version_or_commit": "AWS CLI v2 reference page identifies v2.37.6",
@@ -174,7 +202,9 @@
     },
     {
       "id": "C15",
-      "investigator_source_ids": ["S15"],
+      "investigator_source_ids": [
+        "S15"
+      ],
       "title": "AWS CLI v2 S3 FAQ: checksum validation",
       "url": "https://docs.aws.amazon.com/cli/latest/topic/s3-faq.html",
       "version_or_commit": "AWS CLI v2 reference page identifies v2.37.5",
@@ -186,7 +216,9 @@
     },
     {
       "id": "C16",
-      "investigator_source_ids": ["S16"],
+      "investigator_source_ids": [
+        "S16"
+      ],
       "title": "AWS CLI v2 cp command reference",
       "url": "https://docs.aws.amazon.com/cli/latest/reference/s3/cp.html",
       "version_or_commit": "AWS CLI v2 reference page identifies v2.37.10",
@@ -198,7 +230,9 @@
     },
     {
       "id": "C17",
-      "investigator_source_ids": ["S12"],
+      "investigator_source_ids": [
+        "S12"
+      ],
       "title": "Cloudflare R2 upload objects",
       "url": "https://developers.cloudflare.com/r2/objects/upload-objects/",
       "version_or_commit": "Live R2 page last updated 2026-07-29",
@@ -210,7 +244,9 @@
     },
     {
       "id": "C18",
-      "investigator_source_ids": ["S13"],
+      "investigator_source_ids": [
+        "S13"
+      ],
       "title": "Cloudflare R2 platform limits",
       "url": "https://developers.cloudflare.com/r2/platform/limits/",
       "version_or_commit": "Live R2 page last updated 2026-06-08",
@@ -222,7 +258,9 @@
     },
     {
       "id": "C19",
-      "investigator_source_ids": ["S04"],
+      "investigator_source_ids": [
+        "S04"
+      ],
       "title": "Amazon S3 Lifecycle configuration examples",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html",
       "version_or_commit": "AWS S3 User Guide live documentation; page version not stated",

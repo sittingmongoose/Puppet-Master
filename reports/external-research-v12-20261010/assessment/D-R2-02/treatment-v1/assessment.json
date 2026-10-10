@@ -1,0 +1,2178 @@
+{
+  "schema_version": "ER12-independent-treatment-assessment-v1",
+  "review_id": "D-R2-02-treatment-v1",
+  "slot_id": "D-R2-02",
+  "case_id": "ER12-D-R2-02-FRESH",
+  "arm": "treatment",
+  "scope": "ONE completed full pipeline; ordinary investigator -> critic -> reviser final located by actual input maps",
+  "rubric_path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+  "original_brief_path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+  "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+  "final_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "full_pipeline_source_qualification": true,
+  "remaining_material_issue": false,
+  "material_findings": [],
+  "decision_basis": "Independent semantic assessment of full frozen authored lineage and governing primary sources. No material remaining error, omission, false correction/rejection, meaning loss or unsupported consequential final decision identified. Minor corrected lineage/navigation and bounded source-access/summary limitations remain. Hashes and agreements were used only for artifact identity and never as semantic proof.",
+  "delivery_judgment": "DELIVERED: complete final and mapped stage science/source records inspected",
+  "axis_coverage": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "assessment": "The final provides a research proposal with mechanisms, implementation context, measurement/passive/operational comparisons, a useful no-purchase path and a staged traceable pilot. It preserves missing case facts and owner decisions. No safety/storage/shelf-life/compliance/suitability conclusion, routing build, present-shipment instruction or empirical local outcome appears. Negative action claims are preserved in authored records; complete external tool conduct is not independently audited.",
+      "evidence": [
+        "C01",
+        "C02",
+        "C03",
+        "C10",
+        "C11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 7,
+          "heading": "Recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 54,
+          "heading": "Paths to compare"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 140,
+          "heading": "Complete brief-scope coverage"
+        }
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims and applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Primary text confirms the consequential subject, operation, measurement type, historical version and transfer conditions. Codex attribution is corrected. 2022/2023 studies measure crate-near air, not tissue or quality; the apple cooling percentages and qualitative case population stay bounded. Abstract-only access, a compressed PCM result summary and the optional curtain locator are nonmaterial limits. No unsupported local efficacy/default/limit or purchased design remains.",
+      "evidence": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10",
+        "C11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 43,
+          "heading": "Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 101,
+          "heading": "Criticism dispositions"
+        }
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, alternatives, implementation/history and breadth",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The work is more than caution: it finds crop-matched biomimetic thermal sensing, contextualized distributed air sensing, conditioned PCM with finite reserve/reuse costs, historic placement/ventilation guidance and qualitative retrieval/accountability barriers. It compares measure-only, preconditioning, packaging, handling/route and powered feasibility paths. Local historical records are unavailable and correctly proposed for later investigation. Published deployment coverage lacks delivered-quality efficacy and cannot prove it; the proposal explicitly avoids such transfer.",
+      "evidence": [
+        "C01",
+        "C03",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C10"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 43,
+          "heading": "Relevant implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading": "Future local records review"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 54,
+          "heading": "Paths to compare"
+        }
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism, corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Every SCW-1–5 disposition was independently checked. SCW-1 is a supported minor attribution/coordinate amendment. SCW-2–5 retain existing supported limits rather than inventing errors. Missing cross-species/local evidence is kept undetermined, not used as an absence witness. SCW-3’s selected sentence exists in the draft’s mechanism section rather than its announced history locator: minor navigation defect, no semantic substitution. All exact original brief and additional plan clauses are adjudicated below; release/custody mechanics are kept separate as UNKNOWN where not evidenced.",
+      "evidence": [
+        "C01",
+        "C05",
+        "C06",
+        "C07",
+        "C08"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 101,
+          "heading": "All selected criticism dispositions"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 168,
+          "heading": "Revealed-plan dispositions"
+        }
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning across discovery, draft, critique and final",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "assessment": "Measurement-first meaning, paired warm-zone/crate/product channels, passive and operational options, finite PCM scope, apple-specific surrogate qualification, local history questions, practical cost categories and future-only validation survive the full lineage. The final corrects Codex shorthand and sharpens air-endpoint wording; it does not discard top-position air monitoring, generic-surrogate possibilities pending validation or compatible route options. No material meaning is lost and no unsupported efficacy is added.",
+      "evidence": [
+        "C01",
+        "C03",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C10",
+        "C11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/discovery.md",
+          "line": 5,
+          "heading": "Independent discovery/history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/draft.md",
+          "line": 5,
+          "heading": "Recommendation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+          "line": 123,
+          "heading": "Full ordinary review"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 7,
+          "heading": "Complete final"
+        }
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "judgment": "PASS",
+      "assessment": "The executed work is literature/package review and proposal writing, not data analysis or calibration. Proposed checks have discriminating roles: synchronized exposure/event channels, actual product readings at loading/receipt, qualified sensor response, validated crop-matched surrogate if used, partner-defined independent quality observations, repeated blocked/randomized shipment comparisons, uncertainty and actual costs. No supplied route, crop, trace, quality result or independent pilot oracle exists. Published air buffering and apple cooling tests cannot validate this case. Deferring sample size/thresholds until endpoints, variability and costs are known is an honest prerequisite, not vacuous caution.",
+      "evidence": [
+        "C02",
+        "C05",
+        "C06",
+        "C07",
+        "C11"
+      ],
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 81,
+          "heading": "Later pilot"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 185,
+          "heading": "Work performed and validation status"
+        }
+      ]
+    }
+  ],
+  "unassessed_axes": [],
+  "exact_original_brief_dispositions": [
+    {
+      "id": "B01",
+      "section": "Project situation",
+      "exact_clause": "A produce cooperative uses insulated crates on a morning delivery route.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Synthetic setup only; no crate/route properties inferred."
+    },
+    {
+      "id": "B02",
+      "section": "Project situation",
+      "exact_clause": "A few logger traces reportedly show brief warm excursions near the middle of the route, but the logger sometimes travels loose on top of the load.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 17,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Local logger exposure, placement and response remain unresolved; no product excursion inferred."
+    },
+    {
+      "id": "B03",
+      "section": "Project situation",
+      "exact_clause": "Delivery order changed recently, and customers also began receiving smaller batches.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 36,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Concurrent order and batch changes treated as confounders; dated records requested."
+    },
+    {
+      "id": "B04",
+      "section": "Project situation",
+      "exact_clause": "The cooperative wants a research proposal before purchasing powered cooling.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 95,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Measurement and cost gates precede a separate powered-cooling feasibility proposal."
+    },
+    {
+      "id": "B05",
+      "section": "Project situation",
+      "exact_clause": "There are no raw traces, product-temperature readings, route records, or verified quality outcomes.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 3,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Absent traces, route, product and quality data explicitly preserved."
+    },
+    {
+      "id": "B06",
+      "section": "Project situation",
+      "exact_clause": "The project setting is synthetic.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 3,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Synthetic case; no real outcome or deployment invented."
+    },
+    {
+      "id": "B07",
+      "section": "Request",
+      "exact_clause": "Spend the 60-minute research window developing a proposal to investigate the excursions and compare feasible ways to improve route conditions.",
+      "disposition": "COVERED; TIME_SEPARATE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Full proposal delivered; actual research-window mechanics are separately qualified below."
+    },
+    {
+      "id": "B08",
+      "section": "Request",
+      "exact_clause": "Explain the transport and measurement mechanisms, research relevant implementation history, and propose a later pilot with defensible endpoints.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 26,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Transport/measurement mechanisms, contextual implementations and later product/quality pilot provided."
+    },
+    {
+      "id": "B09",
+      "section": "Request",
+      "exact_clause": "Provide a useful alternative if powered cooling is unjustified.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 64,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Useful no-purchase measurement and conditional handling/initial-state path."
+    },
+    {
+      "id": "B10",
+      "section": "Request",
+      "exact_clause": "Do not build a routing system or issue operating instructions for today's shipments.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 13,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "No routing system or current-shipment instruction; future arms conditional."
+    },
+    {
+      "id": "B11",
+      "section": "Requirements to preserve",
+      "exact_clause": "Distinguish logger air readings, actual product temperature, delivered quality, and food safety.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 17,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Air, actual product, delivered quality and safety kept separate."
+    },
+    {
+      "id": "B12",
+      "section": "Requirements to preserve",
+      "exact_clause": "Compare passive packaging or preconditioning changes with route or handling changes and a useful measurement-placement alternative.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 54,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Measurement, preconditioning/passive and route/handling paths compared with costs and conditions."
+    },
+    {
+      "id": "B13",
+      "section": "Requirements to preserve",
+      "exact_clause": "Consider door or crate opening, load size, initial conditions, route timing, and sensor response rather than treating every short spike as a product excursion.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 26,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Openings, load, initial state, route timing, response and sampling all retained."
+    },
+    {
+      "id": "B14",
+      "section": "Requirements to preserve",
+      "exact_clause": "Investigate the route and packaging history and the conditions reported by comparable implementations before transferring their claimed benefits.",
+      "disposition": "COVERED_WITH_LIMITS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 43,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Published implementations contextualized; local manifests/packing history missing and proposed for review; no effects transferred."
+    },
+    {
+      "id": "B15",
+      "section": "Requirements to preserve",
+      "exact_clause": "Propose a pilot with a baseline, traceable shipments, relevant measurements, practical costs, and a decision criterion; label future validation separately from analysis actually executed.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 81,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Baseline, lot/crate/event links, distinct measures, actual costs and decision criteria; future vs executed explicit."
+    },
+    {
+      "id": "B16",
+      "section": "Boundaries",
+      "exact_clause": "Do not declare safe storage limits, shelf life, compliance, or product suitability from unverified air-temperature traces.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 22,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "No safe limits, shelf life, compliance or suitability declared from traces."
+    },
+    {
+      "id": "B17",
+      "section": "Boundaries",
+      "exact_clause": "Do not alter deliveries, enter customer systems, contact customers, purchase cooling equipment, or run a live trial.",
+      "disposition": "PRESERVED_IN_PROPOSAL; EXTERNAL_ACTION_AUDIT_UNKNOWN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 13,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "No such action or authorization in the proposal or reported work; comprehensive tool audit unavailable."
+    },
+    {
+      "id": "B18",
+      "section": "Boundaries",
+      "exact_clause": "Do not invent route timings, thermal properties, produce types, logger response, or quality results.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 32,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Case timings, thermal values, products, response and outcomes remain unknown; analogue numbers clearly attributed."
+    },
+    {
+      "id": "B19",
+      "section": "Still unresolved",
+      "exact_clause": "Product types, initial temperatures, crate construction, logger specifications, packing practice, stop durations, outdoor conditions, and acceptable quality loss are unknown.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 66,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Every enumerated unknown included in prerequisites and measurement plan."
+    },
+    {
+      "id": "B20",
+      "section": "Still unresolved",
+      "exact_clause": "There is no supplied cost ceiling or agreement that route order may change.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 69,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Cost ceiling and route/departure permissions are explicit owner decisions."
+    },
+    {
+      "id": "B21",
+      "section": "Still unresolved",
+      "exact_clause": "Identify which questions must be resolved before alternatives can be fairly compared.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 66,
+        "heading": "Substantive coverage"
+      },
+      "reviewer_reason": "Ten concrete prerequisite questions guide fair comparison."
+    }
+  ],
+  "exact_additional_plan_dispositions": [
+    {
+      "id": "P01",
+      "section": "Concealed prospective design record",
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "SEMANTICALLY_PRESERVED; EXTERNAL_CUSTODY_UNKNOWN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 170,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Final is an internal stage artifact and leaves the plan separate; no external-publication audit."
+    },
+    {
+      "id": "P02",
+      "section": "Concealed prospective design record",
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 140,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Authored request and open options retained; B01-B21 map the verbatim original brief."
+    },
+    {
+      "id": "P03",
+      "section": "Concealed prospective design record",
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 170,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Design record is distinguished from proposal/results/key; no plan selected result treated as evidence."
+    },
+    {
+      "id": "P04",
+      "section": "Concealed prospective design record",
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Provisional measurement-first sequence is reasoned, not a method predetermined by the plan."
+    },
+    {
+      "id": "P05",
+      "section": "Concealed prospective design record",
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 185,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Authoring-time absence of empirical validation is distinguished from later literature review."
+    },
+    {
+      "id": "P06",
+      "section": "Exact original request and clauses",
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "VERIFIED_INSPECTED_COPIES",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 140,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Original brief inside plan equals frozen brief after delimiters; carried brief and revealed plan match original bytes."
+    },
+    {
+      "id": "P07",
+      "section": "Exact original request and clauses",
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 140,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "No later source/critique narrows the 21 exact original clauses."
+    },
+    {
+      "id": "P08",
+      "section": "Research question and incompleteness",
+      "exact_clause": "Can a bounded thermal and operational study determine whether the reported excursions represent an actionable product problem and which low-complexity intervention is worth testing?",
+      "disposition": "COVERED; ANSWER_OPEN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Design can discriminate actionable product problem; no result is assumed."
+    },
+    {
+      "id": "P09",
+      "section": "Research question and incompleteness",
+      "exact_clause": "The product-specific endpoint, access to measurements, acceptable operational variation, and cost comparison remain open.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 66,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Endpoints/access/variation/costs remain real owner/evidence decisions."
+    },
+    {
+      "id": "P10",
+      "section": "Research question and incompleteness",
+      "exact_clause": "The proposal should sequence measurement interpretation and intervention testing so that equipment expenditure does not become the assumed solution.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 81,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Interpret measurement and establish baseline before intervention or equipment feasibility."
+    },
+    {
+      "id": "P11",
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Consider improving logger placement and interpretation, crate packing or insulation, preconditioning, managing openings, departure timing, and delivery-order or load-size changes.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 54,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Placement, packing/insulation, preconditioning, openings, timing, order/load size retained as paths or measured factors; no unsupported load/order change."
+    },
+    {
+      "id": "P12",
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Powered cooling is one option to investigate against energy, capital, handling, and maintenance costs.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 60,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Powered-cooling capital, energy, maintenance, payload/handling and reliability included; no equipment selected."
+    },
+    {
+      "id": "P13",
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "Better measurement with unchanged operations is a useful alternative if the apparent signal is not yet tied to product conditions.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 64,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Documented sensing with unchanged operations is useful without a product/quality signal."
+    },
+    {
+      "id": "P14",
+      "section": "Meaningful useful alternatives",
+      "exact_clause": "No cooling or routing strategy is the expected outcome.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "No cooling or routing strategy declared the expected winning outcome."
+    },
+    {
+      "id": "P15",
+      "section": "Mechanism opportunity",
+      "exact_clause": "Investigate heat transfer, initial thermal state, thermal mass, opening exposure, sensor response and placement, and the relationship between air and product observations.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 26,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Heat transfer, starting state, mass, exposure and sensor air/product distinctions considered."
+    },
+    {
+      "id": "P16",
+      "section": "Mechanism opportunity",
+      "exact_clause": "An air spike may reflect a real exposure without establishing the magnitude of product heating.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 17,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Real air exposure does not establish product heating magnitude."
+    },
+    {
+      "id": "P17",
+      "section": "Mechanism opportunity",
+      "exact_clause": "Smaller batches and different route order can change multiple factors simultaneously.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 36,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Batch and route changes treated as simultaneous changes affecting several factors."
+    },
+    {
+      "id": "P18",
+      "section": "Mechanism opportunity",
+      "exact_clause": "Explain discriminating evidence and limits of any simplified thermal model.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 28,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Distinct channels and event-linked pilot discriminate causes; lumped model limitations explicit."
+    },
+    {
+      "id": "P19",
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Seek implementation reports with actual products, packing, weather, dwell times, measurement placement, route practices, and quality endpoints.",
+      "disposition": "COVERED_WITH_IMPLEMENTATION_LIMITS",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 43,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Actual field products, packaging, weather, measurement and route contexts considered. Chosen thermal studies lack delivered-quality efficacy; final acknowledges this and does not transfer it. Crop-specific quality endpoint remains future."
+    },
+    {
+      "id": "P20",
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Procurement claims about insulation or cooling require operating context.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 54,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "No procurement/thermal benefit estimate accepted without local operating context and baseline."
+    },
+    {
+      "id": "P21",
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Investigate past route manifests and packing routines as future evidence; recollection of a changed route is not a validated causal comparison.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 52,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Dated route/packing/initial-state/logger/outcome records requested as future evidence; recollection not causal proof."
+    },
+    {
+      "id": "P22",
+      "section": "Implementation and history opportunity",
+      "exact_clause": "Consider operational failures and ongoing maintenance, not only initial equipment performance.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 95,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Reliability, labor/retrieval, maintenance, loss/damage, reconditioning/reuse and accountability enter implementation/cost design."
+    },
+    {
+      "id": "P23",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "A later authorized pilot could document shipments, initial conditions, selected air and product measurements where feasible, openings and stops, and quality observations defined by an appropriate partner.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 83,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Traceable future shipments with initial state, air and actual product measures, events and partner-approved quality criteria."
+    },
+    {
+      "id": "P24",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Explain repeated routes, comparable loads and weather, sensor checks, and how costs enter the decision.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 91,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Repeated comparable blocks, sensor/reference checks, weather/load matching and cost rule explicitly proposed."
+    },
+    {
+      "id": "P25",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "An assumed heat-balance illustration or toy trace analysis actually executed in the research hour cannot establish real product temperatures, food safety, or delivered-quality improvement.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 28,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Conceptual heat balance not run/fitted and not a temperature, safety or quality oracle."
+    },
+    {
+      "id": "P26",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 185,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Authoring synthetic-input status retained as authoring-time status."
+    },
+    {
+      "id": "P27",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 185,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "No authoring-time scientific or empirical work falsely claimed; later literature work described separately."
+    },
+    {
+      "id": "P28",
+      "section": "Proposed versus executed validation",
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "COVERED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 185,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Each stage reports literature/review work and denies unrun empirical/model/pilot validation."
+    },
+    {
+      "id": "P29",
+      "section": "Scope and release boundary",
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "COVERED; TIME_SEPARATE",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 7,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Substantive proposal covers the full topic scope; a sixty-minute sizing statement is not proof of actual elapsed/effective time."
+    },
+    {
+      "id": "P30",
+      "section": "Scope and release boundary",
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 54,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Reasoned provisional sequencing; no predetermined winner."
+    },
+    {
+      "id": "P31",
+      "section": "Scope and release boundary",
+      "exact_clause": "It requests no product build.",
+      "disposition": "PRESERVED",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 13,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "No product/routing build."
+    },
+    {
+      "id": "P32",
+      "section": "Scope and release boundary",
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "VERIFIED_INSPECTED_COPIES; CAMPAIGN_CUSTODY_UNKNOWN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 140,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Frozen original/carried inputs and terminal science hashes agree; broader paired-freeze custody not inspected."
+    },
+    {
+      "id": "P33",
+      "section": "Scope and release boundary",
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "disposition": "NO_RELEASE_CLAIM; PROTOCOL_UNKNOWN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 168,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Final does not assert recipe/budget lock readiness or give designer feedback. Campaign locking and any external assistance cannot be proved from this packet."
+    },
+    {
+      "id": "P34",
+      "section": "Scope and release boundary",
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "PRESERVED; PROTOCOL_UNKNOWN",
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 168,
+        "heading": "Plan coverage"
+      },
+      "reviewer_reason": "Input readiness is not used to assert the release boundary was met."
+    }
+  ],
+  "plan_original_brief_inclusion": "B01-B21 also assess the original brief reproduced verbatim in the plan; original embedded and frozen brief text identity verified",
+  "criticism_dispositions": [
+    {
+      "id": "SCW-1",
+      "name": "Codex logger location",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 38,
+        "heading": "Codex logger location"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 105,
+        "heading": "Codex logger location"
+      },
+      "candidate_disposition": "ACCEPT with wording amendment",
+      "independent_source_ids": [
+        "R1"
+      ],
+      "independent_verdict": "SUPPORTED_MINOR_CORRECTION",
+      "reason": "Correct separates between-package warmest-area criterion from recorder-company top/side/one-third-from-rear example. Attachment not settled by source; loose placement is not rejected as inherently useless.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-2",
+      "name": "2022 route sensor subsystem",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 55,
+        "heading": "2022 route sensor subsystem"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 112,
+        "heading": "2022 route sensor subsystem"
+      },
+      "candidate_disposition": "ACCEPT; retain original limitation",
+      "independent_source_ids": [
+        "R4"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION",
+      "reason": "Environmental SHT30 modules and mapped crates entail air sensing, contradict reassignment of those measurements to tissue probes, and do not measure quality.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-3",
+      "name": "2023 PCM endpoint",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 72,
+        "heading": "2023 PCM endpoint"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 119,
+        "heading": "2023 PCM endpoint"
+      },
+      "candidate_disposition": "ACCEPT; sharpen crate-air wording",
+      "independent_source_ids": [
+        "R5"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION_WITH_SUMMARY_LIMIT",
+      "reason": "Retains the original air/core/quality boundary. Source discussion separates unloading peaks from recovery and averaged readings; no final local effect is inferred.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-4",
+      "name": "Artificial-fruit product scope",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 89,
+        "heading": "Artificial-fruit product scope"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 126,
+        "heading": "Artificial-fruit product scope"
+      },
+      "candidate_disposition": "ACCEPT scope; AMEND uncertainty",
+      "independent_source_ids": [
+        "R6"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION_AND_UNCERTAINTY",
+      "reason": "Apple cooling test cannot establish all-crop response. Detailed water-filled denominator remains unresolved; final does not declare generic surrogate failure.",
+      "wrong_correction_or_rejection": false
+    },
+    {
+      "id": "SCW-5",
+      "name": "Logger-adoption population",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+        "line": 106,
+        "heading": "Logger-adoption population"
+      },
+      "final_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 133,
+        "heading": "Logger-adoption population"
+      },
+      "candidate_disposition": "ACCEPT; retain questions not local facts",
+      "independent_source_ids": [
+        "R7"
+      ],
+      "independent_verdict": "SUPPORTED_RETENTION",
+      "reason": "Selected qualitative Australian chains support themes for local questions; there is no applicable witness for synthetic-cooperative facts.",
+      "wrong_correction_or_rejection": false
+    }
+  ],
+  "consequential_claim_checks": [
+    {
+      "id": "C01",
+      "subject": "Logger at documented warm cargo location",
+      "operation": "Environmental measurement, not produce/quality conversion",
+      "version": "R1 historical Code text; no latest-edition claim",
+      "units_and_types": "Air sensor; position/attachment distinct; no temperature limit",
+      "domain": "Unknown cooperative vs general transport guidance",
+      "defaults_or_modality": "If available; between-package criterion distinct from recorder-company coordinates; mounting unknown",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 105,
+        "heading": "SCW-1"
+      },
+      "independent_source_ids": [
+        "R1"
+      ],
+      "verdict": "SUPPORTED_SCOPED",
+      "reason": "Final preserves both source relations without equating loose placement with a specified secure mounting."
+    },
+    {
+      "id": "C02",
+      "subject": "Product, air, quality and safety",
+      "operation": "Different observations and inference boundaries",
+      "version": "No crop/device version supplied",
+      "units_and_types": "Air vs surface/core/surrogate vs quality vs safety; no default safe temperature",
+      "domain": "Unidentified produce and missing case observations",
+      "defaults_or_modality": "Actual product/quality measures needed; surrogate must be validated; no trace-to-safety inference",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 17,
+        "heading": "Four observations"
+      },
+      "independent_source_ids": [
+        "R2",
+        "R3",
+        "R6"
+      ],
+      "verdict": "SUPPORTED_SCOPED",
+      "reason": "General postharvest and surrogate evidence support the distinction. No local result or threshold is asserted."
+    },
+    {
+      "id": "C03",
+      "subject": "Insulation, vents, preconditioning and shade",
+      "operation": "Candidate mechanisms for future comparison",
+      "version": "R1-R3 retrieved guidance, not a local package specification",
+      "units_and_types": "Qualitative heat transfer; unknown material properties and initial temperatures",
+      "domain": "Unknown crop/crate/load",
+      "defaults_or_modality": "Insulation slows exchange in both directions; preserve needed ventilation and crop compatibility",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 26,
+        "heading": "Thermal and operational mechanisms"
+      },
+      "independent_source_ids": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "verdict": "SUPPORTED_CONDITIONAL_PROPOSAL",
+      "reason": "Reasoned mechanisms are supported; no numerical thermal benefit or suitable crop setting is invented."
+    },
+    {
+      "id": "C04",
+      "subject": "Conceptual lumped heat balance",
+      "operation": "Qualitative aid, not fitted or executed case model",
+      "version": "No software/model implementation",
+      "units_and_types": "m[kg], cp[J/(kg K)], dT/dt[K/s], hAΔT[W], respiration[W]; no values",
+      "domain": "A lumped approximation with explicitly omitted gradients/radiation/moisture",
+      "defaults_or_modality": "Unknown coefficients/geometry and no numeric solution; omitted terms acknowledged",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 28,
+        "heading": "Conceptual heat balance"
+      },
+      "independent_source_ids": [
+        "R3",
+        "R5",
+        "R6"
+      ],
+      "verdict": "SUPPORTED_QUALITATIVE_INFERENCE",
+      "reason": "Storage and heat-transfer terms are dimensionally coherent. Source evidence supports the mechanisms; the equation is the proposal’s approximation, not a quoted validated case model."
+    },
+    {
+      "id": "C05",
+      "subject": "2022 distributed crate sensing",
+      "operation": "Air measurements along route, implementation analogue",
+      "version": "Processes 2022, 10(11), 2286",
+      "units_and_types": "18 T/RH modules; five stops; 4 h 30 m; 5-minute records",
+      "domain": "Different Portuguese refrigerated-van route and heterogeneous produce",
+      "defaults_or_modality": "Environmental SHT30 modules, not tissue probes; route/weather/process associations are not local causality",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 112,
+        "heading": "SCW-2"
+      },
+      "independent_source_ids": [
+        "R4"
+      ],
+      "verdict": "SUPPORTED",
+      "reason": "Full primary PDF confirms the stated instrument type, deployment and scope. Candidate retrieval limit remains indexed-only as reported."
+    },
+    {
+      "id": "C06",
+      "subject": "2023 orange PCM comparison",
+      "operation": "Crate-air buffering and recovery, not core/quality result",
+      "version": "Energies 2023,16(13),5191; RT5HC",
+      "units_and_types": "Air-sensor readings; 1-10°C ambient; six stops; five-minute readings; no local efficacy percentage",
+      "domain": "Single winter route, refrigeration off, conditioned orange crates vs empty-alveoli controls",
+      "defaults_or_modality": "Peak amplitudes during unloading similar; moving-average/background recovery differ; reserve inference and reuse/autonomy conditional",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 119,
+        "heading": "SCW-3"
+      },
+      "independent_source_ids": [
+        "R5"
+      ],
+      "verdict": "SUPPORTED_WITH_NONMATERIAL_SUMMARY_LIMIT",
+      "reason": "Lower variation in air readings is supported, but is a compressed description of background/recovery behavior. Final does not claim lower every-event peaks, product-core effects or quality improvements."
+    },
+    {
+      "id": "C07",
+      "subject": "Artificial apple surrogate",
+      "operation": "Cooling-time comparison, bounded possible measurement alternative",
+      "version": "J Food Engineering215(2017)51-60",
+      "units_and_types": "10 apples; within5% cooling time; up-to16% water-filled comparison; detailed16% denominator UNKNOWN",
+      "domain": "Apple cooling test, not all crops or route warming",
+      "defaults_or_modality": "Separate crop/use validation mandatory; missing generality is not evidence of generic failure",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 126,
+        "heading": "SCW-4"
+      },
+      "independent_source_ids": [
+        "R6"
+      ],
+      "verdict": "SUPPORTED_WITH_ACCESS_LIMIT",
+      "reason": "Final explicitly preserves the apple/cooling scope, full-paper access limit and denominator uncertainty. No consequential decision depends on those percentages."
+    },
+    {
+      "id": "C08",
+      "subject": "Logger-adoption study population",
+      "operation": "Qualitative implementation themes, not local observations",
+      "version": "Applied Water Science14:260(2024)",
+      "units_and_types": "Three chains; 2021/22; twenty-five interviews; qualitative themes",
+      "domain": "Selected Lockyer Valley/Southeast Queensland chains",
+      "defaults_or_modality": "No prevalence or synthetic-cooperative inference; use as questions",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 133,
+        "heading": "SCW-5"
+      },
+      "independent_source_ids": [
+        "R7"
+      ],
+      "verdict": "SUPPORTED",
+      "reason": "Primary methods and cost/mixed-load/sharing/accountability text confirm the bounded claim."
+    },
+    {
+      "id": "C09",
+      "subject": "Door strip/curtain optional concept",
+      "operation": "Potential handling option subject to vehicle/access fit",
+      "version": "No candidate S1-S7 locator supplied for this concept; R8 independently retrieved",
+      "units_and_types": "No effect, energy-saving, local installation or deployment claim",
+      "domain": "Final optional literature-informed concept; earlier discovery calls it a published multi-stop example",
+      "defaults_or_modality": "Fit, ventilation, access/fire/egress and workflow review before any local option",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 61,
+        "heading": "Paths to compare: handling/route"
+      },
+      "independent_source_ids": [
+        "R8"
+      ],
+      "verdict": "MINOR_LOCATOR_OR_LINEAGE_LIMIT",
+      "reason": "Existing research corroborates the concept, but the candidate-specific multi-stop implementation remains unlocated. Final makes no supported-effect or deployment decision; this is not a remaining material unsupported choice."
+    },
+    {
+      "id": "C10",
+      "subject": "Powered-cooling decision",
+      "operation": "Deferred feasibility/cost proposal after measurement and alternatives",
+      "version": "No product, system capacity or price selected",
+      "units_and_types": "Crop-specific product/quality target and cost per traceable shipment; no invented numeric thresholds",
+      "domain": "Synthetic case with missing data and owner decisions",
+      "defaults_or_modality": "Provisional evidence/cost gate, not a purchase mandate or universal optimum",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 95,
+        "heading": "Costs and decision criterion"
+      },
+      "independent_source_ids": [
+        "R1",
+        "R2",
+        "R3",
+        "R5",
+        "R7"
+      ],
+      "verdict": "DEFENSIBLE_REASONED_PROPOSAL",
+      "reason": "Mechanisms and implementation costs justify comparison. It does not claim tested superiority, safe suitability or equipment sizing."
+    },
+    {
+      "id": "C11",
+      "subject": "Proposed pilot oracles",
+      "operation": "Discriminate sensor exposure, product response and delivered quality",
+      "version": "Crop/device/use selection remains unresolved",
+      "units_and_types": "Calibrated/reference air and actual-product channels, validated surrogate if used, agreed quality metrics, event/lot links",
+      "domain": "Later authorized repeated comparable shipments",
+      "defaults_or_modality": "Baseline variability, sensor qualification, matched/randomized blocks and cost criteria before treatment; sensors on one route not independent shipments",
+      "candidate_locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+        "line": 81,
+        "heading": "Later pilot proposal"
+      },
+      "independent_source_ids": [
+        "R2",
+        "R4",
+        "R5",
+        "R6",
+        "R7"
+      ],
+      "verdict": "MEANINGFUL_FUTURE_VALIDATION_ONLY",
+      "reason": "The checks could distinguish alternatives once unknown facts are resolved. Published air/surrogate results are not substituted for case product or quality outcomes. No pilot execution or result is claimed."
+    }
+  ],
+  "lineage_preservation": [
+    {
+      "theme": "Air/product/quality/safety",
+      "discovery": "Separate channels and no case data",
+      "draft": "Explicit core/quality separation and conceptual model only",
+      "critique": "Confirms limits under ordinary review and SCW-2/3",
+      "final": "Preserved with direct product measures and no safety inference",
+      "status": "PRESERVED"
+    },
+    {
+      "theme": "Codex air placement",
+      "discovery": "Compressed likely warm top/side/rear summary",
+      "draft": "Same shorthand; useful air monitoring retained",
+      "critique": "Minor between-package/company-coordinate correction",
+      "final": "Both relations and attachment uncertainty retained",
+      "status": "MINOR_LINEAGE_DEFECT_CORRECTED"
+    },
+    {
+      "theme": "PCM",
+      "discovery": "One winter orange field analogy with air/finite-reserve limits",
+      "draft": "Passive path with conditioning/reuse costs; no local/core/quality efficacy",
+      "critique": "SCW-3 confirms air endpoint",
+      "final": "Air endpoint sharper; practical option retained conditionally",
+      "status": "PRESERVED_WITH_SUMMARY_LIMIT"
+    },
+    {
+      "theme": "Surrogate",
+      "discovery": "Apple prototype and crop-matched option",
+      "draft": "Qualification and separate validation required",
+      "critique": "SCW-4 refuses all-produce transfer",
+      "final": "Option retained and 16% basis uncertainty added",
+      "status": "PRESERVED_AND_QUALIFIED"
+    },
+    {
+      "theme": "Implementation costs/history",
+      "discovery": "Qualitative adoption barriers and route/load confounding",
+      "draft": "Dated local records request and cost categories",
+      "critique": "SCW-5 limits population",
+      "final": "Local questions, traceability, maintenance/reuse/retrieval and permissions retained",
+      "status": "PRESERVED"
+    },
+    {
+      "theme": "Pilot and non-powered path",
+      "discovery": "Baseline followed by conditional low-cost comparisons",
+      "draft": "Traceable blocked/randomized shipments, product/quality endpoint and cost gate",
+      "critique": "Ordinary full-scope check accepts design",
+      "final": "Complete usable staged proposal with all still-open owner decisions",
+      "status": "PRESERVED"
+    },
+    {
+      "theme": "Executed validation",
+      "discovery": "Literature review only",
+      "draft": "Source access limits and no case/model/pilot checks",
+      "critique": "Independent source review only",
+      "final": "Both own and upstream performed/proposed distinctions retained",
+      "status": "PRESERVED"
+    }
+  ],
+  "lineage_and_nonmaterial_findings": [
+    {
+      "id": "L01",
+      "severity": "minor corrected lineage defect",
+      "remaining_material": false,
+      "finding": "Discovery/draft Codex shorthand conflates Code criterion with recorder-company coordinates and omits the one-third-in detail. Critic flags it; final SCW-1 correctly separates them.",
+      "source_ids": [
+        "R1"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/draft.md",
+          "line": 32,
+          "heading": "Comparable implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 105,
+          "heading": "SCW-1"
+        }
+      ],
+      "resolution": "Corrected in final. Source locator should be understood as printed148 / zero-basedPDF155 / one-basedPDF156; the candidate uses PDF155 without naming convention."
+    },
+    {
+      "id": "L02",
+      "severity": "nonmaterial summary limit",
+      "remaining_material": false,
+      "finding": "PCM lower-variation shorthand compresses a source that distinguishes similar unloading peak amplitudes from recovery and averaged background temperature.",
+      "source_ids": [
+        "R5"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 48,
+          "heading": "S5 implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 119,
+          "heading": "SCW-3"
+        }
+      ],
+      "resolution": "Final attributes the air-reading result, preserves one-route conditions and makes no claim about every spike amplitude or product/quality efficacy. This does not justify a material FAIL."
+    },
+    {
+      "id": "L03",
+      "severity": "access/denominator limitation",
+      "remaining_material": false,
+      "finding": "Artificial-fruit numerical summaries use the publisher abstract. The detailed denominator and protocol behind the up-to16% water-filled figure remain unresolved.",
+      "source_ids": [
+        "R6"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 126,
+          "heading": "SCW-4"
+        }
+      ],
+      "resolution": "Explicitly acknowledged; apple/cooling scope and separate crop/use validation retained. No consequential local decision uses the percentage."
+    },
+    {
+      "id": "L04",
+      "severity": "minor lineage/source-navigation limit",
+      "remaining_material": false,
+      "finding": "Optional door strip/curtain is not assigned a candidate S1-S7 locator; discovery mentions a published multi-stop example without a navigable match. Independent R8 confirms a stationary door-opening research concept, not that exact deployment.",
+      "source_ids": [
+        "R8"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/discovery.md",
+          "line": 16,
+          "heading": "Handling and route factors"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 61,
+          "heading": "Handling/route path"
+        }
+      ],
+      "resolution": "The final keeps it only as a fit/workflow-gated optional concept with no efficacy/deployment estimate. Candidate source access is not retroactively upgraded by reviewer retrieval."
+    },
+    {
+      "id": "L05",
+      "severity": "minor critic locator issue",
+      "remaining_material": false,
+      "finding": "SCW-3’s selected exact sentence is in the draft mechanism discussion; its announced Comparable implementation history locator is inaccurate.",
+      "source_ids": [
+        "R5"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+          "line": 24,
+          "heading": "Locked selection"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/draft.md",
+          "line": 26,
+          "heading": "Packaging mechanisms"
+        }
+      ],
+      "resolution": "The selected text and its air/core limitation are present, and final recheck addresses the same substantive claim. No semantic substitution or false correction follows."
+    },
+    {
+      "id": "L06",
+      "severity": "metadata verification limit",
+      "remaining_material": false,
+      "finding": "Original publication/version identities are verified, but later MDPI HTML-update dates recorded in stage source maps were not independently confirmed; direct version-note opens failed.",
+      "source_ids": [
+        "R4",
+        "R5"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/source-map.json",
+          "line": 1,
+          "heading": "Source metadata"
+        }
+      ],
+      "resolution": "No consequential recommendation depends on an HTML update date or a claimed latest version; original governing PDF text was inspected."
+    },
+    {
+      "id": "L07",
+      "severity": "bounded implementation-evidence limit",
+      "remaining_material": false,
+      "finding": "Selected deployment papers substantiate air-sensing/packaging history, not delivered-quality efficacy or the local cooperative history.",
+      "source_ids": [
+        "R4",
+        "R5",
+        "R7"
+      ],
+      "candidate_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 43,
+          "heading": "Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading": "Local history records"
+        }
+      ],
+      "resolution": "The lack is explicit. Future actual product/quality observations and history review are specified, and no external quality benefit is transferred."
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "discovery": "Retain a documented warm-zone air channel while adding crate-air and actual product channels",
+      "utility": "Separates historical/logger exposure from package buffering and product response instead of discarding the old channel.",
+      "source_ids": [
+        "R1",
+        "R2",
+        "R4"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "discovery": "Crop-matched biomimetic artificial fruit",
+      "utility": "Potentially repeatable sacrificial-probe alternative; apple-specific cooling test and separate validation prevent generic-proxy substitution.",
+      "source_ids": [
+        "R6"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "discovery": "Conditioned PCM and reuse/autonomy limits",
+      "utility": "Real passive option with air-sensor field history and reconditioning/mass/reuse costs, not an assumed substitute for removing initial heat.",
+      "source_ids": [
+        "R5"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "discovery": "Distributed monitoring across a heterogeneous route",
+      "utility": "Crate/location/event mapping can reveal operational and starting-state effects not visible in a single vehicle display.",
+      "source_ids": [
+        "R4"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "discovery": "Logger adoption is also retrieval, labor, sharing and accountability",
+      "utility": "Improves the pilot’s practical costing and data-ownership questions without treating qualitative external findings as local facts.",
+      "source_ids": [
+        "R7"
+      ],
+      "preserved_in_final": true
+    },
+    {
+      "discovery": "Historic conditional placement/pre-cooling/ventilation guidance",
+      "utility": "Provides implementation-history checks and exceptions; leaves commodity, package and local requirements unresolved.",
+      "source_ids": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "preserved_in_final": true
+    }
+  ],
+  "meaningful_alternatives": [
+    {
+      "path": "Measurement with unchanged operations",
+      "comparison": "First clarify air exposure versus actual product response; secured documented location, crate channel, calibrated product measurement/validated crop-matched surrogate",
+      "costs": "Devices/reference checks, placement/retrieval, data handling, damage and validation",
+      "condition": "Unknown logger response/placement and no product/quality signal; useful even if powered cooling is not justified"
+    },
+    {
+      "path": "Preconditioning/passive packaging",
+      "comparison": "Measured starting-state control and crop-compatible pre-cooling versus vent-preserving cover/insulation/PCM",
+      "costs": "Material, payload/space, energy/labor, returns/reconditioning/replacement; cooling/ventilation penalty",
+      "condition": "Identified crop, compatible process, baseline product-proximate exposure and practical cost fit"
+    },
+    {
+      "path": "Handling/route",
+      "comparison": "Shade/staging/opening management and later permission-gated order/departure arms; load-size/timing recorded as concurrent factors",
+      "costs": "Staff/driver time, windows, feasibility, access, opportunity cost",
+      "condition": "Event-linked mechanism and owner/receiver permission; no current delivery changes"
+    },
+    {
+      "path": "Powered cooling feasibility",
+      "comparison": "Active heat removal considered alongside low-complexity measures, not bought from an air spike",
+      "costs": "Capital, energy/fuel, maintenance/reliability, installation, handling/payload and lifecycle",
+      "condition": "Remaining agreed product/quality gap and costed comparison; no capacity or equipment predetermined"
+    }
+  ],
+  "validation_checks": [
+    {
+      "check": "Literature and governing source review",
+      "status": "EXECUTED_AS_REPORTED_BY_STAGES; INDEPENDENT_REVIEWER_RETRIEVAL_EXECUTED",
+      "oracle": "Primary texts for bounded source claims; not a local product or quality oracle",
+      "applicability": "Supports mechanisms and published context only"
+    },
+    {
+      "check": "Case logger-trace/route/quality analysis",
+      "status": "NOT_EXECUTED; INPUTS_ABSENT",
+      "oracle": "No supplied empirical dataset",
+      "applicability": "No local temperatures, causal effect, delivered quality or safety can be established"
+    },
+    {
+      "check": "Sensor accuracy/response and synchronized placement qualification",
+      "status": "PROPOSED_ONLY",
+      "oracle": "Appropriate reference and known selected-device/crop measurement protocol, still to be resolved",
+      "applicability": "Needed to interpret brief spikes; inherited air sensor examples cannot calibrate the unknown logger"
+    },
+    {
+      "check": "Actual product/surrogate thermal observations",
+      "status": "PROPOSED_ONLY",
+      "oracle": "Calibrated actual-product method; surrogate only after crop/use-specific validation",
+      "applicability": "Apple cooling validation does not cover all crops or warming routes"
+    },
+    {
+      "check": "Delivery/optional holding quality score",
+      "status": "PROPOSED_ONLY",
+      "oracle": "Partner-approved crop-specific acceptance/defect/firmness/color/mass-loss/saleable criterion, separate from air",
+      "applicability": "No quality criterion/threshold was supplied; defining it is an honest external decision"
+    },
+    {
+      "check": "Repeated baseline and treatment comparisons",
+      "status": "PROPOSED_ONLY",
+      "oracle": "Traceable shipment blocks, events, crop/initial/load/weather/route matching, declared uncertainty and inclusion rules",
+      "applicability": "Multiple sensors on one route are not independent shipment replication; no tested candidate effect exists"
+    },
+    {
+      "check": "Cost/advance criterion",
+      "status": "PROPOSED_ONLY",
+      "oracle": "Actual quotes/records and agreed cost ceiling/product-quality target",
+      "applicability": "No invented prices, improvement threshold or investment return"
+    },
+    {
+      "check": "Numeric thermal model/toy trace/pilot/live deployment",
+      "status": "NOT_EXECUTED",
+      "oracle": "Conceptual heat equation is not a validated case oracle",
+      "applicability": "No model, trial, quality improvement, safety or deployment result asserted"
+    }
+  ],
+  "unknowns": [
+    "All case-specific produce/cultivar/maturity, initial temperatures, crate construction/vents/packing, fill/mass and route/event/weather details remain unknown.",
+    "Logger make/model/configuration/accuracy/response/sampling/mounting and historic placement remain unknown.",
+    "Crop-specific acceptable quality loss/target, scoring owner/time, cost ceiling, data/traceability access and route/departure permission remain external unresolved choices.",
+    "No case product temperature, delivered quality, safety, shelf life, compliance, suitability or intervention efficacy result exists.",
+    "S6 full article and detailed water-filled comparison denominator remain unverified; cross-crop and route-warming surrogate applicability remain unvalidated.",
+    "Exact source behind the candidate discovery’s multi-stop door-curtain example remains unlocated.",
+    "Later MDPI HTML-version update dates unconfirmed; original scientific publication/version texts confirmed.",
+    "Candidate native provenance/freshness, complete protocol ordering/conduct, effective provider/options, inference/queue/setup time, billing and actual end-to-end occupancy remain UNKNOWN."
+  ],
+  "mechanics": {
+    "native_judgment": "UNKNOWN beyond saved-response evidence",
+    "native_evidence": "Each stage carries matching active/complete responses with the frozen objective and same per-stage Goal ID. These are observed files; full native-tool trace/freshness/provenance and absence of replacement Goals are not independently authenticated.",
+    "stage_native_records": [
+      {
+        "stage": "investigator",
+        "create_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/native-goal-create.json",
+        "complete_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/native-goal-complete.json",
+        "recorded_create_response": {
+          "goal": {
+            "threadId": "01a12499-e54a-79b2-a70d-8a2baa809a4f",
+            "objective": "ER12 investigator stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791615437,
+            "updatedAt": 1791615437
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "recorded_complete_response": {
+          "goal": {
+            "threadId": "01a12499-e54a-79b2-a70d-8a2baa809a4f",
+            "objective": "ER12 investigator stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 113958,
+            "timeUsedSeconds": 265,
+            "createdAt": 1791615437,
+            "updatedAt": 1791615703
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "same_recorded_goal_id": true,
+        "objective_matches_current_freeze": true,
+        "recorded_deadline_utc": "2026-10-10T07:27:05.877Z",
+        "provenance_and_freshness": "UNKNOWN",
+        "exactly_one_and_pre_input_order_independently_verified": "UNKNOWN"
+      },
+      {
+        "stage": "critic",
+        "create_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/native-goal-create.json",
+        "complete_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/native-goal-complete.json",
+        "recorded_create_response": {
+          "goal": {
+            "threadId": "01a124a0-4932-7193-9a08-45a4c17efcf8",
+            "objective": "ER12 critic stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791615861,
+            "updatedAt": 1791615861
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "recorded_complete_response": {
+          "goal": {
+            "threadId": "01a124a0-4932-7193-9a08-45a4c17efcf8",
+            "objective": "ER12 critic stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 236422,
+            "timeUsedSeconds": 1292,
+            "createdAt": 1791615861,
+            "updatedAt": 1791617153
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "same_recorded_goal_id": true,
+        "objective_matches_current_freeze": true,
+        "recorded_deadline_utc": "2026-10-10T07:39:05.877Z",
+        "provenance_and_freshness": "UNKNOWN",
+        "exactly_one_and_pre_input_order_independently_verified": "UNKNOWN"
+      },
+      {
+        "stage": "reviser",
+        "create_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/native-goal-create.json",
+        "complete_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/native-goal-complete.json",
+        "recorded_create_response": {
+          "goal": {
+            "threadId": "01a124b7-7c4e-7a81-8532-37d37e4d1da0",
+            "objective": "ER12 reviser stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "active",
+            "tokensUsed": 0,
+            "timeUsedSeconds": 0,
+            "createdAt": 1791617388,
+            "updatedAt": 1791617388
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": null
+        },
+        "recorded_complete_response": {
+          "goal": {
+            "threadId": "01a124b7-7c4e-7a81-8532-37d37e4d1da0",
+            "objective": "ER12 reviser stage, run D-R2-02-treatment: execute ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+            "status": "complete",
+            "tokensUsed": 234281,
+            "timeUsedSeconds": 524,
+            "createdAt": 1791617388,
+            "updatedAt": 1791617913
+          },
+          "remainingTokens": null,
+          "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+        },
+        "same_recorded_goal_id": true,
+        "objective_matches_current_freeze": true,
+        "recorded_deadline_utc": "2026-10-10T07:57:05.658Z",
+        "provenance_and_freshness": "UNKNOWN",
+        "exactly_one_and_pre_input_order_independently_verified": "UNKNOWN"
+      }
+    ],
+    "t3_delivery": {
+      "evidence_path": "ER12_RUNTIME/runs/D-R2-02/treatment/terminal-science-freeze-root.json",
+      "root_observed_at_utc": "2026-10-10T07:39:33.550080+00:00",
+      "recorded_final_task_status": "completed",
+      "recorded_has_pending_child_runs": false,
+      "independent_runtime_query": "NOT_RUN",
+      "native_completion_implied_by_t3": "NO"
+    },
+    "protocol_judgment": "UNKNOWN for complete candidate execution; no unauthorized assistance evidenced by inspected packet",
+    "protocol_limits": [
+      "Pre-input activation and prospective SCW selection ordering cannot be authenticated from final prose/hash/mtime alone.",
+      "No full candidate tool transcript was requested or available in the mapped science packet; cannot certify no unlisted reads/actions or external feedback.",
+      "Original/carried inputs and terminal outputs agree byte-for-byte; this establishes identity, not semantic quality or all campaign release controls.",
+      "Current assignments contain common mechanics instructions; no science repair/feedback by this reviewer occurred."
+    ],
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "default",
+      "basis": "All current stage input maps, freezes and parsed request records; requested, not effective"
+    },
+    "effective_route": "UNKNOWN",
+    "effective_service_tier": "UNKNOWN",
+    "billing": "UNKNOWN",
+    "inference_time": "UNKNOWN",
+    "queue_or_setup_duration": "UNKNOWN",
+    "full_actual_occupancy": "UNKNOWN",
+    "time_note": "Saved native responses expose recorded createdAt/updatedAt/timeUsedSeconds and tokensUsed only. They are retained above, not treated as authenticated end-to-end timings, billed tokens, cost or speed savings. No other arm was inspected or compared.",
+    "reviewer_protocol": {
+      "native_goal": "One actual create_goal in this review turn; active response saved as reviewer-goal-active.json; completion will follow science saving",
+      "started_at_utc": "2026-10-10T07:39:55Z",
+      "deadline_utc": "2026-10-10T08:24:55Z",
+      "assessment_saved_at_utc": "2026-10-10T08:04:46.160686+00:00",
+      "deadline_cap_used": false,
+      "unassessed_axes": [],
+      "delegation": false,
+      "candidate_feedback_or_repair": false,
+      "git_or_publication": false,
+      "account_changes": false,
+      "other_arms_outcomes_history_or_er11": "NOT_READ",
+      "mail_identity": "codex-er12-dr202-treatment-review",
+      "coordination": "Unique reserved path supplied by root; own inbox only; no roster read"
+    }
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "bytes": 2609,
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "bytes": 6807,
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/terminal-science-freeze-root.json",
+      "bytes": 8673,
+      "sha256": "bfc52e11fe483cff4d3498af0d379bd5af4e88d5aa7485582e4ea478a232b3e8",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/inputs/brief.md",
+      "bytes": 2609,
+      "sha256": "a6052972dacbc690c96c09521fdf3c8d1ffd2069f8347fe1efe5c105ec7893c9",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/assignment.md",
+      "bytes": 9043,
+      "sha256": "e0bc4319abf616838b6ccd4d50cf71a06860ea7616e106b678e9086ff3de0a05",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "e9f11cb0fd79dac6fcbed4613f12357cfaa069f4495a42a73602f5d3516def2c",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "72f826a3d5e8c7677ab92bd00a7effa67cc93dd72171f76215094359df29aa25",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/discovery.md",
+      "bytes": 7819,
+      "sha256": "273be0bb27ab5800390bc2dc2747487959deb91c97653e4785cd6d2346b11af9",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/draft.md",
+      "bytes": 24956,
+      "sha256": "dc28394e5e99296c8e2dc193fd8decd1c5ef6f433f454dc4a58af2a2ce0b6a62",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/source-map.json",
+      "bytes": 8935,
+      "sha256": "c1b3e9c378f6b88d2145b05e3d5dddd942391f02ae63a97fd1a8f2d50d07d87a",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/sources/index.md",
+      "bytes": 1894,
+      "sha256": "a8d3f034a2e9069540cd19f5fa057cf455cf98cdcb15d2ae1c17331e8f6c0918",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6807,
+      "sha256": "5989b2caa419ae56554908cc9a8d5b2e2259b36a77b74b3b65477bec4074b271",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 432,
+      "sha256": "b21fd357e3eff35261166cf52f61938904388bfba157fee003a1be3f5e54521c",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/native-goal-create.json",
+      "bytes": 483,
+      "sha256": "1e2f5aa53b76f789e03d846dc30978beba409f1b43dbb58fd3cc86e3ceed72c2",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/native-goal-complete.json",
+      "bytes": 812,
+      "sha256": "b78e3138db05b8507a7b0eba736c1adb710a02d0f54b8a7289dcbc875c8556f5",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/assignment.md",
+      "bytes": 11986,
+      "sha256": "ab38e9e3ed05014bc5601c6052631de5b91dbbee9e4acec1b8d7414497e0665a",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "6ad1da28bc834ecf5ef09886dff057cd0a97306df94f3ef6c3822e6e1d15bdd6",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/freeze.json",
+      "bytes": 6024,
+      "sha256": "0ab206f15f0757330e11ca5164f592fd84d3d1c0cde61dae7e84063dc0c9a6f6",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/critique.md",
+      "bytes": 17526,
+      "sha256": "55914a4fd59f0f6a0ff285f920e636ab05e8e938c4e95f101ddf96c5955f1a97",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/source-map.json",
+      "bytes": 10220,
+      "sha256": "b084c71ff830d8f57445310803dd087649b9699d8aae4e72c6e8f1ffb6f9ce6a",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/sources/index.md",
+      "bytes": 2636,
+      "sha256": "d7d5d17f6f3102ff6f844e8f105e7acf8b8c3bb3950bcbb82976f592fe0bf375",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/native-goal-create.json",
+      "bytes": 471,
+      "sha256": "b2752eb49c263eb2173be13c5553de4d693eb6f9aa7b91604b056fd9f7448c25",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/native-goal-complete.json",
+      "bytes": 801,
+      "sha256": "cdff2c0edf49a9ad843c40beae3d8134760743c8b3166e1a738489f18b432749",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/assignment.md",
+      "bytes": 10290,
+      "sha256": "4f5deabb29a76e81f1cd17a5a484ddd5e88e4372c9319c8ed8b03f5b544da4b2",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "c05475b599d09f865faad0716f0c96683c07e87eacb35309caa50f568c58f5be",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/freeze.json",
+      "bytes": 6824,
+      "sha256": "eee1a7a61df600fe127048c8679c233eac00c6dfbebd94126a9de71f926e2318",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+      "bytes": 35741,
+      "sha256": "dd618bb1c611e62e88a4bc7e1bf758a6e501ae7deced4aea68cca97e492091ea",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/source-map.json",
+      "bytes": 14200,
+      "sha256": "557e451157a20a1eab3c9ac4a6ae15b285ece44c307f44f06fbd1769def5aad0",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/sources/index.md",
+      "bytes": 3012,
+      "sha256": "e2d11aa94735b59a485c98661047c2f08132c075d947787142a7bb3d27e391fa",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/native-goal-create.json",
+      "bytes": 473,
+      "sha256": "8714bc457639582c2d6139b3a37fc9ecd58a3ce39d5ca731bd9c62f3bfdda02e",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/native-goal-complete.json",
+      "bytes": 802,
+      "sha256": "5f2e5325946ff980db66fc2d5279aa41dc0a8c78c850a659c61c8eca9de6298b",
+      "inspection": "full content; identical input copies checked byte-for-byte"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/request.json",
+      "bytes": 6377,
+      "sha256": "3b734da479d91f77ccf2c2da6e2875c9c6c033c6b4113136d386beaa8d832005",
+      "inspection": "parsed full JSON; mechanically repeated task body inspected in assignment; route fields inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/request.json",
+      "bytes": 6311,
+      "sha256": "a76eaa8c93556833cb99c7862a02386cbe6d8831cfecc1c6e975609928f6bf16",
+      "inspection": "parsed full JSON; mechanically repeated task body inspected in assignment; route fields inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/request.json",
+      "bytes": 6322,
+      "sha256": "44b510b901be77b2624b44c6438b2117de20bdfe1c511ade4125f2886c7abbe1",
+      "inspection": "parsed full JSON; mechanically repeated task body inspected in assignment; route fields inspected"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "sha256": "49ccdf9d2da60a8b783206b3449f6188b84d194f2bb1b08ed557cba5eebb05ad",
+      "bytes": 4678,
+      "inspection": "partial textual inspection of current root integration metadata; not used as actual execution/native proof or scientific evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/critic/exact-goal-binding-guard.json",
+      "sha256": "d9dea83cddc6ff946fa5e242c5c83d45ccfeeb75a3e42fdbc217b3a8250e9da0",
+      "bytes": 4612,
+      "inspection": "partial textual inspection of current root integration metadata; not used as actual execution/native proof or scientific evidence"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "sha256": "76e29540f695efb6a65414680f4b78d38ab832cf5e4775284d6fcbe9c0216d2a",
+      "bytes": 4623,
+      "inspection": "partial textual inspection of current root integration metadata; not used as actual execution/native proof or scientific evidence"
+    }
+  ],
+  "source_urls_versions_and_evidence": [
+    {
+      "id": "R1",
+      "candidate_source_id": "S1",
+      "title": "Recommended International Code of Practice for Packaging and Transport of Fresh Fruit and Vegetables",
+      "url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+      "released_version": "CAC/RCP 44-1995, Amendment 1-2004, in FAO/WHO Fresh Fruits and Vegetables, first edition, Rome 2007",
+      "governing_locator": "Printed pp. 145-148, especially §§2.13-2.19.1; §2.19 is PDF zero-based page 155 / one-based page 156, printed p.148; extracted S1.txt lines 7365-7426",
+      "access_utc": "2026-10-10T07:41:35.360860+00:00",
+      "observed_operation": "Independently fetched official PDF (HTTP 200), extracted text and inspected transport, loading, air circulation, logger placement and adjacent exceptions.",
+      "conditions_defaults_types_exceptions": "If available: small AIR recorder between packages in warmest area. Separate recorder-company example: top of load, side wall, one-third in from rear, away from direct refrigerated discharge. Rail-car and high-humidity/top-ice exceptions are distinct. Attachment state is not specified. Pre-cooling is conditional on produce requiring it; compatibility and ventilation matter.",
+      "applicability": "Supports environmental placement, documenting readings and conditional preconditioning. It supplies no local mounting facts, crop thresholds, product-core conversion, compliance conclusion or permission to change deliveries.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S1.pdf",
+          "relative_path": "evidence/S1.pdf",
+          "sha256": "56f5387c5e1be362a576390cfd54642e6da0077ed0e4ceec27aa06ee66b38a52",
+          "bytes": 1581035
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S1.txt",
+          "relative_path": "evidence/S1.txt",
+          "sha256": "55ce028712dcf673afca9dcda97cddec8f341324288e6f45810a5380b5c88b85",
+          "bytes": 483119
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R2",
+      "candidate_source_id": "S2",
+      "title": "The role of post-harvest management in assuring the quality and safety of horticultural produce",
+      "url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+      "released_version": "FAO-hosted chapter 3 web text; page edition/date UNKNOWN",
+      "governing_locator": "§§3.1-3.4; packaging airflow paragraph, crop-dependent cooling/chilling context, refrigerated transport/storage paragraphs",
+      "access_utc": "2026-10-10T07:41:35.159249+00:00",
+      "observed_operation": "Independently fetched complete official chapter (HTTP 200), extracted and inspected packaging, crop-dependent cooling and commodity-versus-air passages.",
+      "conditions_defaults_types_exceptions": "Packaging affects airflow. Commodity and air temperatures differ. Cooling/temperature/RH requirements vary with crop and mixed loads; general numerical tables are not a threshold for unidentified produce.",
+      "applicability": "Supports separate actual product measurements, starting-state records and ventilation-compatible comparisons; no local temperature limit or shelf-life result.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S2.html",
+          "relative_path": "evidence/S2.html",
+          "sha256": "38438c607e642609d53f75083854e00e19e712418a256c293e055c621387281c",
+          "bytes": 32240
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S2.txt",
+          "relative_path": "evidence/S2.txt",
+          "sha256": "c6397692689661337bfae7ed8c04ac142bb044fdb836cb7acd986e859a394a86",
+          "bytes": 18227
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R3",
+      "candidate_source_id": "S3",
+      "title": "Section 6: Temperature and relative humidity control",
+      "url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+      "released_version": "FAO-hosted manual chapter; page edition/date UNKNOWN; chapter cites Kader 1992 and other historical material",
+      "governing_locator": "§6 opening mechanism/packaging paragraphs and cooling-method applicability; extracted text; web lines 16-27, 40-68",
+      "access_utc": "2026-10-10T07:41:35.156192+00:00",
+      "observed_operation": "Independently fetched official chapter (HTTP 200), extracted and inspected heat-transfer, shade, liners/vent alignment and commodity-dependent cooling context.",
+      "conditions_defaults_types_exceptions": "Conduction, convection, radiation and evaporation are mechanisms. Extra packaging can impede cooling; aligned vents and commodity tolerance matter. Shade and preconditioning are conditional; no generic crop-safe setting is inferred.",
+      "applicability": "Supports mechanism trade-offs and feasible alternatives, not a guaranteed effect or specific design for the unknown crate.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S3.html",
+          "relative_path": "evidence/S3.html",
+          "sha256": "6f8e8f0baeab05f030d5c6cd4cbaddcc1743d22fcbe675aecd1e213d7f0cf620",
+          "bytes": 37353
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S3.txt",
+          "relative_path": "evidence/S3.txt",
+          "sha256": "59db1dbe7d230201d8e896ae1cff52c604ba9f904273d3194a7692a4845e892a",
+          "bytes": 23560
+        }
+      ],
+      "limits": []
+    },
+    {
+      "id": "R4",
+      "candidate_source_id": "S4",
+      "title": "Real-Time Temperature and Humidity Measurements during the Short-Range Distribution of Perishable Food Products as a Tool for Supply-Chain Energy Improvements",
+      "url": "https://doi.org/10.3390/pr10112286",
+      "released_version": "Processes 2022, 10(11), 2286; published 4 November 2022",
+      "governing_locator": "Official PDF abstract, §§2.1-2.4, §§3-4; sensing-system mesh/air and five-minute transmission, crate mapping, route/stops and conclusions",
+      "access_utc": "2026-10-10T07:41:35.317711+00:00",
+      "observed_operation": "Independently retrieved official mdpi-res PDF (HTTP 200), read governing methods, route context and conclusions. Direct web HTML open returned an internal error; PDF access is separate from candidate indexed-only access.",
+      "conditions_defaults_types_exceptions": "18 distributed T/RH modules; SHT30 in ventilated cases in direct contact with surrounding AIR. Five-stop refrigerated-van distribution, about 4 h 30 m; measurements every five minutes. June setting; diverse produce and nonuniform load/vehicle conditions. Methods do not measure product cores or delivered quality.",
+      "applicability": "Confirms contextualized air sensing and event/initial-condition interpretation. It is not a matched test of the synthetic case or a numerical quality oracle.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S4.pdf",
+          "relative_path": "evidence/S4.pdf",
+          "sha256": "35ba13a93ee5a89adce0cb81ce32977be94b2fd4a3ca796d282b5ee532d5ced7",
+          "bytes": 8030513
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S4.txt",
+          "relative_path": "evidence/S4.txt",
+          "sha256": "1d9ac6e72183a203c92ca2f9bf30fb1834418d14a3cb8901fb59d1c186161da5",
+          "bytes": 339025
+        }
+      ],
+      "limits": [
+        "Candidate HTML-update dates not independently confirmed; original article publication and governing scientific text were confirmed."
+      ]
+    },
+    {
+      "id": "R5",
+      "candidate_source_id": "S5",
+      "title": "Thermal Management of Short-Range Distribution of Perishable Food Products Using Phase Change Materials in Packaging: Real-Time Field Data Acquisition",
+      "url": "https://doi.org/10.3390/en16135191",
+      "released_version": "Energies 2023, 16(13), 5191; published 5 July 2023",
+      "governing_locator": "Official PDF §§2.1-2.4.3, Tables 1-3, §§3-5; especially p.7 sensor type, pp.10-11 averaging/recovery, p.11 reuse/autonomy",
+      "access_utc": "2026-10-10T07:41:35.189147+00:00",
+      "observed_operation": "Independently retrieved official publisher PDF (HTTP 200), inspected methods, sensor arrangement, route, controls, results and surrounding discussion.",
+      "conditions_defaults_types_exceptions": "Orange crates with RT5HC-filled versus empty alveoli; overnight conditioning near 5°C; one winter route, 08:00-14:05, six unloads, refrigeration off, sunny 1-10°C conditions. SHT30 modules measure AIR around oranges at five-minute intervals. PCM reserve is inferred from temperature behavior, not directly measured phase state. Unloading peaks are similar; recovery/background readings differ; four-reading moving average is used.",
+      "applicability": "Supports a bounded passive-package AIR-buffering concept with conditioning/reuse/autonomy limits. No orange-core, quality or cooperative-effect claim follows.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S5.pdf",
+          "relative_path": "evidence/S5.pdf",
+          "sha256": "91b1b963f7b3249e33947b593c60c6c41095c2b5caf835b647309c55fa2c2d9b",
+          "bytes": 981828
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S5.txt",
+          "relative_path": "evidence/S5.txt",
+          "sha256": "20dd103db5de07c209278de5b199524778ab2d3b398693e59c55461f54fa14ff",
+          "bytes": 53575
+        }
+      ],
+      "limits": [
+        "Do not read the general lower-variation summary as a demonstrated reduction of every unloading peak. Candidate final makes no peak-size or transferred-effect claim.",
+        "Later HTML-update dates were not independently confirmed."
+      ]
+    },
+    {
+      "id": "R6",
+      "candidate_source_id": "S6",
+      "title": "Artificial fruit for monitoring the thermal history of horticultural produce in the cold chain",
+      "url": "https://doi.org/10.1016/j.jfoodeng.2017.07.012",
+      "released_version": "Journal of Food Engineering 215 (December 2017), pp.51-60",
+      "governing_locator": "Canonical ScienceDirect record S0260877417303035, abstract and visible introduction/limitations snippets",
+      "access_utc": "UNKNOWN exact second; bounded original publisher-index retrieval occurred between 2026-10-10T07:41:35Z and 2026-10-10T07:42:36Z",
+      "observed_operation": "Independently queried and read publisher-indexed record/abstract. Direct publisher HTTP fetch returned 403 and web open an internal error; full paper was not read.",
+      "conditions_defaults_types_exceptions": "Fruit-of-interest shell/filling; artificial APPLE during COOLING against 10 real apples. Within-5% figure concerns cooling time in that test. Up-to-16% comparison is described for water-filled simulators; detailed denominator/protocol remains unavailable. No universal crop performance is shown.",
+      "applicability": "Supports considering a separately validated crop-matched surrogate. It is not an applicable calibrated oracle for unknown produce, warming events or this route.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/primary-search.json",
+          "relative_path": "evidence/primary-search.json",
+          "sha256": "791083b98431f3b785cd98afe0f254ce6e69539d9c6d0a157e98c3af5212bda6",
+          "bytes": 34478
+        }
+      ],
+      "limits": [
+        "Publisher-indexed abstract/record only; no full-method confirmation of the 16% denominator.",
+        "Later literal-URL re-query did not return this source; it is not used as source evidence or a new access timestamp."
+      ]
+    },
+    {
+      "id": "R7",
+      "candidate_source_id": "S7",
+      "title": "Adoption challenges of environmental monitoring practices: case study of temperature data loggers in selected Australian vegetable supply chains",
+      "url": "https://doi.org/10.1007/s13201-024-02300-5",
+      "released_version": "Applied Water Science 14, article 260; published 23 November 2024",
+      "governing_locator": "Publisher page methodology (web lines 167-198), cost/mixed-load/data-sharing findings (293-318), human retrieval/analysis and accountability (333-359)",
+      "access_utc": "2026-10-10T07:52:09Z to 2026-10-10T07:52:10Z (bounded re-open)",
+      "observed_operation": "Independently reopened cached publisher full text through web tool, read methods and relevant findings/adjacent context. Direct HTTP 200 response was a JavaScript challenge, not article text; it is not used as scientific proof.",
+      "conditions_defaults_types_exceptions": "Exploratory qualitative 2021/22 Lockyer Valley / Southeast Queensland study: three separate chains, purposive/criterion/critical and snowball selection, twenty-five interviews plus documents. Themes are interview findings, not universal prevalence or observations of the cooperative.",
+      "applicability": "Supports local cost, labor, traceability, data-ownership and accountability QUESTIONS; no case-specific conclusion.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-web-retrieval.json",
+          "relative_path": "evidence/S7-web-retrieval.json",
+          "sha256": "dbf03711868b920ec39ca40c38032ac78c0944abfb14da331343f0c189e8867d",
+          "bytes": 40704
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-methods-retrieval.json",
+          "relative_path": "evidence/S7-methods-retrieval.json",
+          "sha256": "0ae74a10995a76d7d3fc4bf3ec11dec08cbecc12cf865c0b10bf0532c833d184",
+          "bytes": 19223
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/S7-additional-retrieval.json",
+          "relative_path": "evidence/S7-additional-retrieval.json",
+          "sha256": "61b7c9c9ecff58136dc86d29e1bf7e61f353623392073fd80cc5c98c88f751aa",
+          "bytes": 40825
+        },
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/bounded-primary-reopen.json",
+          "relative_path": "evidence/bounded-primary-reopen.json",
+          "sha256": "86ab4053ab3b230a3d3d273fd721bba52126e6f553156908bc41f2a0d27b065f",
+          "bytes": 35254
+        }
+      ],
+      "limits": [
+        "Raw direct HTTP page was a challenge; primary text was available through the web tool."
+      ]
+    },
+    {
+      "id": "R8",
+      "candidate_source_id": null,
+      "title": "Experimental study on the heat and mass transfer characteristics in a refrigerated truck",
+      "url": "https://doi.org/10.1016/S0140-7007(01)00015-9",
+      "released_version": "International Journal of Refrigeration 25(3), May 2002, pp.340-350",
+      "governing_locator": "Canonical ScienceDirect publisher record S0140700701000159: abstract and introduction",
+      "access_utc": "UNKNOWN exact second; bounded original publisher-index retrieval occurred between 2026-10-10T07:45:45Z and 2026-10-10T07:47:10Z",
+      "observed_operation": "Independent publisher-indexed primary record retrieved for the optional, previously unlocated strip/curtain concept; not supplied back to candidates.",
+      "conditions_defaults_types_exceptions": "Stationary refrigerated truck, short door-open test, initial air near -10°C; plastic strips and fan air curtain compared with no curtain. Introduction reports access obstruction/nonuse risk for strips. This is not a tested multi-stop produce route or this cooperative.",
+      "applicability": "Shows that door barriers are a researched concept with access trade-offs. Does not authenticate the discovery claim of a particular multi-stop implementation or justify deployment.",
+      "captures": [
+        {
+          "path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/evidence/optional-door-search.json",
+          "relative_path": "evidence/optional-door-search.json",
+          "sha256": "454d0b6f4846a29ccbff16966d1efd2252c71cd4b992f2fbe2540223a2c5a335",
+          "bytes": 38271
+        }
+      ],
+      "limits": [
+        "Reviewer-added corroboration of a bounded concept, not retroactive evidence of candidate source access. Full paper not read.",
+        "Later literal-URL re-query did not return this source; it is not used as source evidence or a new access timestamp."
+      ]
+    }
+  ],
+  "missing_or_incomplete_science_artifacts": [],
+  "authored_source_evidence_inventory": "Each of the three mapped sources/ directories contains only its authored index.md; all three indexes and all three source-map.json files were read. No separate criticism dispositions/check file exists in the discovered stage inventory; the complete SCW checks/dispositions are embedded in critique.md and final.md. No alternative A2/A7 retained-final/handoff route is present in these maps.",
+  "independent_source_map_path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/source-map.json",
+  "original_inspected_hashes_path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/original-inspected-hashes.json",
+  "freeze_integrity_path": "ER12_RUNTIME/assessment/D-R2-02/treatment-v1/freeze-integrity-check.json",
+  "assessment_saved_at_utc": "2026-10-10T08:04:46.160686+00:00"
+}

@@ -1,0 +1,282 @@
+{
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "structured_content_metadata": [
+        {
+          "thread": {
+            "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-treatment-role-v1",
+            "status": "completed",
+            "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "activeRunId": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "pendingRequestCount": 0,
+            "createdAt": "2026-10-10T04:02:12.047Z",
+            "updatedAt": "2026-10-10T04:09:37.224Z"
+          },
+          "recentRuns": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "ordinal": 1,
+              "status": "completed",
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+              "requestedAt": "2026-10-10T04:02:12.048Z",
+              "startedAt": "2026-10-10T04:02:17.079Z",
+              "completedAt": "2026-10-10T04:09:28.584Z"
+            }
+          ],
+          "items": [
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:04:57.846Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:05:02.679Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:05:11.142Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:05:14.377Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:05:18.605Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:05:25.259Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:06:24.888Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:06:29.732Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:06:37.645Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:07:51.988Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:01.427Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:08:52.757Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:08:52.953Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:08:53.245Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:01.521Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:05.572Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:12.827Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:15.553Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:27.692Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:28.486Z"
+            },
+            {
+              "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+              "status": "completed",
+              "updatedAt": "2026-10-10T04:09:28.584Z"
+            }
+          ],
+          "nextPosition": 40,
+          "hasMore": false
+        }
+      ],
+      "structuredContent": {
+        "thread": {
+          "threadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-treatment-role-v1",
+          "status": "completed",
+          "latestRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+          "activeRunId": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+          "pendingRequestCount": 0,
+          "createdAt": "2026-10-10T04:02:12.047Z",
+          "updatedAt": "2026-10-10T04:09:37.224Z"
+        },
+        "recentRuns": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "ordinal": 1,
+            "status": "completed",
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+            "requestedAt": "2026-10-10T04:02:12.048Z",
+            "startedAt": "2026-10-10T04:02:17.079Z",
+            "completedAt": "2026-10-10T04:09:28.584Z"
+          }
+        ],
+        "items": [
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:04:57.846Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:05:02.679Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:05:11.142Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:05:14.377Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:05:18.605Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:05:25.259Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:06:24.888Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:06:29.732Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:06:37.645Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:07:51.988Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:01.427Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:08:52.757Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:08:52.953Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:08:53.245Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:01.521Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:05.572Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:12.827Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:15.553Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:27.692Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:28.486Z"
+          },
+          {
+            "runId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-01-treatment-role-v1:ordinal:1",
+            "status": "completed",
+            "updatedAt": "2026-10-10T04:09:28.584Z"
+          }
+        ],
+        "nextPosition": 40,
+        "hasMore": false
+      }
+    }
+  ],
+  "original_capture_sha256": "a27b64f11374d470c5a883450029e200544279d0d3a9c37538d185141e089501",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/mechanics/terminal-evidence-pass2/B-FINAL-G-01-activity-02.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
+}

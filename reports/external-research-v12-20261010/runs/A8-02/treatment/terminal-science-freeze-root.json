@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A8-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-A8-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the A8-02 reviser stage. The single native Goal was activated with the exact objective and completed after the required outputs were saved.\n\n- [Complete proposal and plan/critique dispositions](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal activation receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-activation.json>) and [completion receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-completion.json>)\n\nResearch was read-only; no product validation was run. Native Goal usage: 163,511 tokens and 7m 39s.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3ec61304-fa76-43aa-a38d-d1c5b345536c",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the A8-02 reviser stage. The single native Goal was activated with the exact objective and completed after the required outputs were saved.\n\n- [Complete proposal and plan/critique dispositions](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal activation receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-activation.json>) and [completion receipt](<ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/native-goal-completion.json>)\n\nResearch was read-only; no product validation was run. Native Goal usage: 163,511 tokens and 7m 39s.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-A8-A8-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:3ec61304-fa76-43aa-a38d-d1c5b345536c",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "04383ee0d8df1f4da20c6be126dca87893a34a0cab5d8c4538eaca805705fe5a"
   }
 }

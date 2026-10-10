@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a12483-eede-76a3-8d26-859927026b84",
+    "objective": "Independently assess only ER12 C-R2-01 treatment full pipeline within a finite 45-minute envelope, reading the full rubric, frozen brief/plan, terminal freeze, mapped authored stages, assignments/input maps/freezes, critique dispositions/checks and authored source evidence. Verify consequential claims and recommendations against governing primary evidence; assess all six rubric axes and every exact plan clause, distinguish corrected lineage defects from final issues, and record material findings, limitations, unknowns, inspected hashes and navigable independent evidence. Save complete assessment.md, assessment.json and source-map/evidence only under ER12_RUNTIME/assessment/C-R2-01/treatment-v1, preserving the source freeze. No delegation, repairs, Git/publication, other arms/history or ER11 rescore. Complete the Goal only after saving.",
+    "status": "complete",
+    "tokensUsed": 319597,
+    "timeUsedSeconds": 1107,
+    "createdAt": 1791614000,
+    "updatedAt": 1791615107
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

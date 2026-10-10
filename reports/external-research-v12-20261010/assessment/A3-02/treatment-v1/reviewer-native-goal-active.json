@@ -1,17 +1,21 @@
 {
-  "tool": "get_goal",
-  "observed_at_utc": "2026-10-10 06:03:21 UTC",
-  "actual_response": {
-    "goal": {
-      "threadId": "01a1244e-8417-7963-b124-eb75f8be9d34",
-      "objective": "Independently assess ONE completed ER12 full pipeline, A3-02 treatment, against the complete RUBRIC-v1 and original frozen brief/plan. Read all required frozen stage artifacts and authored evidence, inspect all six axes and every exact plan clause, independently retrieve governing primary evidence for consequential claims/corrections/conditions, preserve lineage defects and final qualifications, distinguish semantic judgment from protocol/time/billing UNKNOWNs, and save complete assessment.md, assessment.json, navigable source map and evidence only under ER12_RUNTIME/assessment/A3-02/treatment-v1. Preserve the original source freeze. No delegation, candidate feedback/repair, Git/publication, account changes, other arms/results/history or ER11 rescore. Complete the native Goal only after saving the full judgment, within a finite 45-minute review envelope.",
-      "status": "active",
-      "tokensUsed": 383541,
-      "timeUsedSeconds": 1663,
-      "createdAt": 1791610505,
-      "updatedAt": 1791612168
-    },
-    "remainingTokens": null,
-    "completionBudgetReport": null
-  }
+  "schema": "er12.public-native-lifecycle.v1",
+  "observations": [],
+  "actual_lifecycle_metadata": [
+    {
+      "observed_at_utc": "2026-10-10 06:03:21 UTC",
+      "actual_response": {
+        "goal": {
+          "threadId": "01a1244e-8417-7963-b124-eb75f8be9d34",
+          "status": "active",
+          "createdAt": 1791610505,
+          "updatedAt": 1791612168
+        }
+      }
+    }
+  ],
+  "original_capture_sha256": "2b214eabe05b023ad899cf9893b6dde75d056f2c876a088bdebb3451d39fc588",
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A3-02/treatment-v1/reviewer-native-goal-active.json",
+  "omitted_activity_message_bodies": true,
+  "omitted_source_coverage": "UNKNOWN"
 }

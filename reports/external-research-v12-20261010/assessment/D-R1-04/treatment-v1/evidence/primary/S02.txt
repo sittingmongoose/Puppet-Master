@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://stormwater.pca.state.mn.us/overview_for_bioretention"
+  ],
+  "source_urls": [
+    "https://stormwater.pca.state.mn.us/overview_for_bioretention"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-04/treatment-v1/evidence/primary/retrieval-manifest.json",
+      "source_id": "S02",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "7d563e45d592d80fe0ec59d2113adac48aee59155ab43dd46e8e8246d4c7a692",
+  "rawSHA256": "7d563e45d592d80fe0ec59d2113adac48aee59155ab43dd46e8e8246d4c7a692",
+  "original_bytes": 17210,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-04/treatment-v1/evidence/primary/S02.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

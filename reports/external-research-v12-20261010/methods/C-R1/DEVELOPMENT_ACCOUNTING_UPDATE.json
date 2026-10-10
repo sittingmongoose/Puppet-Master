@@ -1,0 +1,65 @@
+{
+  "generated_at_utc": "2026-10-10T05:45:49.343828+00:00",
+  "accounting_snapshot_sha256": "4e0066d7a22956f9f2af0a013eff8e4917a10140133ed971ff6c3ce4aa6bcc4d",
+  "rows": [
+    {
+      "slot": "A1-01",
+      "arm": "control",
+      "candidate_latency_seconds": 2243.868,
+      "complete_occupied_context_sum_seconds": 2164.379,
+      "tier_stratum": "priority"
+    },
+    {
+      "slot": "A1-01",
+      "arm": "treatment",
+      "candidate_latency_seconds": 1999.314,
+      "complete_occupied_context_sum_seconds": 1954.674,
+      "tier_stratum": "priority"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "control",
+      "candidate_latency_seconds": 1975.688,
+      "complete_occupied_context_sum_seconds": 1748.565,
+      "tier_stratum": "priority"
+    },
+    {
+      "slot": "A1-02",
+      "arm": "treatment",
+      "candidate_latency_seconds": 2703.317,
+      "complete_occupied_context_sum_seconds": 2621.645,
+      "tier_stratum": "priority"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "control",
+      "candidate_latency_seconds": 1837.464,
+      "complete_occupied_context_sum_seconds": 1757.964,
+      "tier_stratum": "mixed"
+    },
+    {
+      "slot": "A8-01",
+      "arm": "treatment",
+      "candidate_latency_seconds": 1632.419,
+      "complete_occupied_context_sum_seconds": 1590.004,
+      "tier_stratum": "priority"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "control",
+      "candidate_latency_seconds": 2306.591,
+      "complete_occupied_context_sum_seconds": 2228.522,
+      "tier_stratum": "default"
+    },
+    {
+      "slot": "A8-02",
+      "arm": "treatment",
+      "candidate_latency_seconds": 2170.761,
+      "complete_occupied_context_sum_seconds": 2100.639,
+      "tier_stratum": "default"
+    }
+  ],
+  "A1_all_assigned_case_latency_control_s": 4219.5560000000005,
+  "A1_all_assigned_case_latency_treatment_s": 4702.631,
+  "interpretation": "A1 first paired both-source-pass10.9%shorter; second control source-failed and treatment slower. All-assigned latency/occupancy sums preserve that failure; no same-quality pooled speed win. A8 second semantic judgments remain pending at this record and cannot authorize selection. Raw native meters and billing/effective settings remain separate/UNKNOWN. C-R1 initial selection lock unchanged."
+}

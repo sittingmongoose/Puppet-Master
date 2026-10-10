@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-cleanup-inventory-mechanics-v1",
+  "title": "ER12 owned cleanup inventory",
+  "mode": "async",
+  "role": "general",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "medium",
+      "serviceTier": "default"
+    }
+  },
+  "task": "ONE bounded read-only ER12 mechanics assignment, maximum10minutes. Create one actual native Goal under4000chars referring to this assignment; save exact activation/completion responses, complete after outputs. No nested delegation, account switching, Git mutation, source research, candidates/evaluations/ER11 rescore, process termination, archive/deletion, T3 server changes. Write ONLY ER12_RUNTIME/mechanics/cleanup-inventory-v1/. Read current AGENTS.md and ER12_RUNTIME/mechanics/BRANCH_BASE_ALIGNMENT.json, root-checkpoint.json metadata and task ownership/path metadata needed. DO NOT read any fresh D scientific input or future-cases/cases-rest contents. Prepare ownership-gated archive/cleanup inventory: this runtime root, explicit campaign-made helper caches/scratch, owned local worktrees/clones if evidenced, cwd goal_activation.err/json, and uncertain .AUTHORIZED_PROVIDER_INSTANCE/acp. Inspect only finite owned path lists/metadata, project git worktree list/current branch/binding; do not audit accounts/providerprofiles/sibling work. Processes: only bounded owned PID/cwd/executable metadata; redact sensitive arguments. Identify exact ownership evidence, dependency/liveness, archive necessity, safe later removal commands and UNKNOWN/preserve exceptions. Root's T3-bound cwd may need a measured exception if supported safe unbinding/removal is unavailable; don't claim cleanup already done. Proposed raw-evidence archive destination ER12_RUNTIME; preserve full unique prompts/configs/authored outputs/source captures/receipts/transcripts/scientific judgments+hashes and actual GitHub/cleanuprecords, protect canon/main/Concepts/WorkNodes/accounts/sharedclone/siblings. No repeated full-tree polling. Save inventory.json, cleanup-recipe.md, uncertainty list and small READY.json. Own metadata/support work is separately costed, not an80th science arm. For mailbox use own codex-er12-cleanup-prep, register/inbox and no unrequested external messages."
+}

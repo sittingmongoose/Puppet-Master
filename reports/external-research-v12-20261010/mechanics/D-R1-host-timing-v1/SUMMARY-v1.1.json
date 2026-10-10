@@ -1,0 +1,305 @@
+{
+  "captured_at": "2026-10-10T07:17:44.102Z",
+  "host_capture_sha256": "b5a7554816f4694ad71cff011bf8a2e3f02a6eb63ec6edf8d6cc35c9c1a5b107",
+  "arms": [
+    {
+      "slot": "D-R1-01",
+      "arm": "control",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-investigator-v1",
+          "requestedAt": "2026-10-10T06:23:56.816Z",
+          "startedAt": "2026-10-10T06:23:59.186Z",
+          "completedAt": "2026-10-10T06:48:35.128Z",
+          "createdAt": "2026-10-10T06:23:56.814Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-critic-v1",
+          "requestedAt": "2026-10-10T06:48:58.307Z",
+          "startedAt": "2026-10-10T06:48:59.031Z",
+          "completedAt": "2026-10-10T06:54:19.122Z",
+          "createdAt": "2026-10-10T06:48:58.305Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-reviser-v1",
+          "requestedAt": "2026-10-10T06:54:31.417Z",
+          "startedAt": "2026-10-10T06:54:32.080Z",
+          "completedAt": "2026-10-10T07:02:09.813Z",
+          "createdAt": "2026-10-10T06:54:31.392Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 2292.997,
+      "delivery_proxy_latency_seconds": 2292.997,
+      "started_to_completed_context_sum_seconds": 2253.766,
+      "created_to_completed_context_sum_seconds": 2257.552,
+      "whole_deadline_utc": "2026-10-10T07:23:54.759Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-01",
+      "arm": "treatment",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-treatment-investigator-v1",
+          "requestedAt": "2026-10-10T06:23:59.023Z",
+          "startedAt": "2026-10-10T06:24:00.288Z",
+          "completedAt": "2026-10-10T06:43:17.005Z",
+          "createdAt": "2026-10-10T06:23:59.021Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-treatment-critic-v1",
+          "requestedAt": "2026-10-10T06:43:25.268Z",
+          "startedAt": "2026-10-10T06:43:26.274Z",
+          "completedAt": "2026-10-10T06:53:10.364Z",
+          "createdAt": "2026-10-10T06:43:25.266Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-treatment-reviser-v1",
+          "requestedAt": "2026-10-10T06:53:27.815Z",
+          "startedAt": "2026-10-10T06:53:28.559Z",
+          "completedAt": "2026-10-10T07:17:10.085Z",
+          "createdAt": "2026-10-10T06:53:27.813Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 3191.062,
+      "delivery_proxy_latency_seconds": 3191.062,
+      "started_to_completed_context_sum_seconds": 3162.333,
+      "created_to_completed_context_sum_seconds": 3165.354,
+      "whole_deadline_utc": "2026-10-10T07:23:54.760Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-02",
+      "arm": "treatment",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-treatment-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:03.374Z",
+          "startedAt": "2026-10-10T06:24:04.346Z",
+          "completedAt": "2026-10-10T06:35:13.360Z",
+          "createdAt": "2026-10-10T06:24:03.373Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-treatment-critic-v1",
+          "requestedAt": "2026-10-10T06:36:33.353Z",
+          "startedAt": "2026-10-10T06:36:33.981Z",
+          "completedAt": "2026-10-10T06:47:11.784Z",
+          "createdAt": "2026-10-10T06:36:33.351Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-treatment-reviser-v1",
+          "requestedAt": "2026-10-10T06:47:21.158Z",
+          "startedAt": "2026-10-10T06:47:22.051Z",
+          "completedAt": "2026-10-10T06:58:28.174Z",
+          "createdAt": "2026-10-10T06:47:21.156Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 2064.8,
+      "delivery_proxy_latency_seconds": 2064.8,
+      "started_to_completed_context_sum_seconds": 1972.94,
+      "created_to_completed_context_sum_seconds": 1975.438,
+      "whole_deadline_utc": "2026-10-10T07:24:01.564Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-02",
+      "arm": "control",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-control-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:05.265Z",
+          "startedAt": "2026-10-10T06:24:05.949Z",
+          "completedAt": "2026-10-10T06:39:28.648Z",
+          "createdAt": "2026-10-10T06:24:05.264Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-control-critic-v1",
+          "requestedAt": "2026-10-10T06:39:51.488Z",
+          "startedAt": "2026-10-10T06:39:52.219Z",
+          "completedAt": "2026-10-10T06:45:18.182Z",
+          "createdAt": "2026-10-10T06:39:51.486Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-control-reviser-v1",
+          "requestedAt": "2026-10-10T06:45:58.540Z",
+          "startedAt": "2026-10-10T06:45:59.289Z",
+          "completedAt": "2026-10-10T06:58:04.166Z",
+          "createdAt": "2026-10-10T06:45:58.538Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 2038.901,
+      "delivery_proxy_latency_seconds": 2038.901,
+      "started_to_completed_context_sum_seconds": 1973.539,
+      "created_to_completed_context_sum_seconds": 1975.708,
+      "whole_deadline_utc": "2026-10-10T07:24:01.564Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-03",
+      "arm": "control",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-control-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:09.161Z",
+          "startedAt": "2026-10-10T06:24:09.767Z",
+          "completedAt": "2026-10-10T06:45:42.668Z",
+          "createdAt": "2026-10-10T06:24:09.159Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-control-critic-v1",
+          "requestedAt": "2026-10-10T06:46:02.867Z",
+          "startedAt": "2026-10-10T06:46:03.600Z",
+          "completedAt": "2026-10-10T06:54:46.257Z",
+          "createdAt": "2026-10-10T06:46:02.866Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-control-reviser-v1",
+          "requestedAt": "2026-10-10T06:54:58.552Z",
+          "startedAt": "2026-10-10T06:54:59.344Z",
+          "completedAt": "2026-10-10T07:07:33.101Z",
+          "createdAt": "2026-10-10T06:54:58.551Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 2603.94,
+      "delivery_proxy_latency_seconds": 2603.94,
+      "started_to_completed_context_sum_seconds": 2569.315,
+      "created_to_completed_context_sum_seconds": 2571.45,
+      "whole_deadline_utc": "2026-10-10T07:24:07.792Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-03",
+      "arm": "treatment",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-treatment-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:10.985Z",
+          "startedAt": "2026-10-10T06:24:11.684Z",
+          "completedAt": "2026-10-10T06:27:28.887Z",
+          "createdAt": "2026-10-10T06:24:10.983Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 197.902,
+      "delivery_proxy_latency_seconds": "UNKNOWN",
+      "started_to_completed_context_sum_seconds": 197.203,
+      "created_to_completed_context_sum_seconds": 197.904,
+      "whole_deadline_utc": "2026-10-10T07:24:07.792Z",
+      "whole_final_delivery_before_deadline": false,
+      "source_judgment": "UNASSESSED_MISSING_FINAL",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "MISSING_PRE_INPUT_GUARD_FAILURE"
+    },
+    {
+      "slot": "D-R1-04",
+      "arm": "treatment",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:15.044Z",
+          "startedAt": "2026-10-10T06:24:16.054Z",
+          "completedAt": "2026-10-10T06:42:05.990Z",
+          "createdAt": "2026-10-10T06:24:15.042Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-critic-v1",
+          "requestedAt": "2026-10-10T06:42:31.830Z",
+          "startedAt": "2026-10-10T06:42:32.711Z",
+          "completedAt": "2026-10-10T06:48:34.832Z",
+          "createdAt": "2026-10-10T06:42:31.828Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-reviser-v1",
+          "requestedAt": "2026-10-10T06:48:44.883Z",
+          "startedAt": "2026-10-10T06:48:45.950Z",
+          "completedAt": "2026-10-10T06:55:26.379Z",
+          "createdAt": "2026-10-10T06:48:44.882Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 1871.335,
+      "delivery_proxy_latency_seconds": 1871.335,
+      "started_to_completed_context_sum_seconds": 1832.4859999999999,
+      "created_to_completed_context_sum_seconds": 1835.449,
+      "whole_deadline_utc": "2026-10-10T07:24:13.622Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    },
+    {
+      "slot": "D-R1-04",
+      "arm": "control",
+      "contexts": [
+        {
+          "stage": "investigator",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-control-investigator-v1",
+          "requestedAt": "2026-10-10T06:24:17.169Z",
+          "startedAt": "2026-10-10T06:24:17.987Z",
+          "completedAt": "2026-10-10T06:46:42.968Z",
+          "createdAt": "2026-10-10T06:24:17.168Z"
+        },
+        {
+          "stage": "critic",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-control-critic-v1",
+          "requestedAt": "2026-10-10T06:47:03.773Z",
+          "startedAt": "2026-10-10T06:47:04.378Z",
+          "completedAt": "2026-10-10T06:55:40.387Z",
+          "createdAt": "2026-10-10T06:47:03.734Z"
+        },
+        {
+          "stage": "reviser",
+          "task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-control-reviser-v1",
+          "requestedAt": "2026-10-10T06:55:55.786Z",
+          "startedAt": "2026-10-10T06:55:56.454Z",
+          "completedAt": "2026-10-10T07:00:37.560Z",
+          "createdAt": "2026-10-10T06:55:55.785Z"
+        }
+      ],
+      "attempt_terminal_latency_seconds": 2180.391,
+      "delivery_proxy_latency_seconds": 2180.391,
+      "started_to_completed_context_sum_seconds": 2142.096,
+      "created_to_completed_context_sum_seconds": 2144.228,
+      "whole_deadline_utc": "2026-10-10T07:24:13.621Z",
+      "whole_final_delivery_before_deadline": true,
+      "source_judgment": "PENDING_ORIGINAL_REVIEW",
+      "native_provenance": "UNKNOWN beyond local receipts",
+      "delivery": "DELIVERED"
+    }
+  ],
+  "definition": "All originally owned contexts counted; pre-input failed attempt retained; request-to-quiet final proxy differs from exact file timing UNKNOWN. Created lifetimes include queue; started occupied includes stage waits. Original source judgments joined later unchanged.",
+  "original_summary_sha256": "583758ab14c55b00f3cba981ecf6216f616fe2fa337d969ca511c9e65d50f595",
+  "mechanical_label_correction": "No source review is pending for pre-input missing-final; source is unassessed, preserving original mechanical missing sidecar."
+}

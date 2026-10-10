@@ -1,17 +1,54 @@
-# R2: Redis SET (live primary, retrieved by treatment arm)
-
-URL: https://redis.io/docs/latest/commands/set/
-Version/scope: Live command reference at retrieval time; target deployment Redis Open Source 7.2. Live metadata includes options newer than the target (e.g. IFEQ/IFNE/IFDEQ/IFDNE `"since":"8.4.0"`), so live syntax alone does not establish 7.2 availability — each option is checked against its `since`.
-Retrieval: HTTPS GET via harness web fetch, 2026-10-10 ~03:57Z (approx.; harness WebFetch, no JS executed, no code run).
-
-## Verbatim passages relied on
-
-Description:
-"Set key to hold the string value. If key already holds a value, it is overwritten, regardless of its type. Any previous time to live associated with the key is discarded on successful SET operation."
-
-Options:
-"The condition options (NX, XX, ...) are mutually exclusive, as are the expiration options (EX, PX, EXAT, PXAT, KEEPTTL)."
-"KEEPTTL — Retain the time to live associated with the key."
-Metadata: keepttl token `"since":"6.0.0"`; EX/PX `"since":"2.6.12"`; EXAT/PXAT `"since":"6.2.0"`; GET `"since":"6.2.0"`.
-
-Corpus agreement: S2's verbatim excerpt ("Retain the time to live associated with the key.") matches this page's KEEPTTL text word for word (9 words).
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://redis.io/docs/latest/commands/set/"
+  ],
+  "source_urls": [
+    "https://redis.io/docs/latest/commands/set/"
+  ],
+  "version": [
+    {
+      "version_scope": "Live command reference at retrieval; KEEPTTL since 6.0.0; live-only options IFEQ/IFNE/IFDEQ/IFDNE since 8.4.0 excluded from 7.2 applicability",
+      "conditions_exceptions": "TTL discard scoped to successful SET; expiration options mutually exclusive",
+      "applicability": "KEEPTTL (6.0.0) applicable to 7.2; 8.4.0 options not applicable"
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Description ('Any previous time to live ... discarded on successful SET operation'); Optional arguments / KEEPTTL; option since metadata"
+    }
+  ],
+  "conditions": [
+    {
+      "version_scope": "Live command reference at retrieval; KEEPTTL since 6.0.0; live-only options IFEQ/IFNE/IFDEQ/IFDNE since 8.4.0 excluded from 7.2 applicability",
+      "conditions_exceptions": "TTL discard scoped to successful SET; expiration options mutually exclusive",
+      "applicability": "KEEPTTL (6.0.0) applicable to 7.2; 8.4.0 options not applicable"
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-APPL-G-01/treatment/stages/role/source-map.json",
+      "source_id": "R2",
+      "existing_authored_summary_fields": {
+        "version_scope": "Live command reference at retrieval; KEEPTTL since 6.0.0; live-only options IFEQ/IFNE/IFDEQ/IFDNE since 8.4.0 excluded from 7.2 applicability",
+        "conditions_exceptions": "TTL discard scoped to successful SET; expiration options mutually exclusive",
+        "applicability": "KEEPTTL (6.0.0) applicable to 7.2; 8.4.0 options not applicable"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Description ('Any previous time to live ... discarded on successful SET operation'); Optional arguments / KEEPTTL; option since metadata"
+    }
+  ],
+  "raw_sha256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+  "rawSHA256": "874b244078739686a5781dae59763f37b8e0b9adbaec0e818ada614973faed30",
+  "original_bytes": 1249,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-APPL-G-01/treatment/stages/role/sources/R2-set.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

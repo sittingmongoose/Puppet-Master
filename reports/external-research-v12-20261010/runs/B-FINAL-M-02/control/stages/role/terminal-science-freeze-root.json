@@ -118,25 +118,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-FINAL-M-02",
-    "arm": "control",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-control-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-control-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the bounded role review. The 559-word replacement section includes dispositions for all six critiques; its acceptance checks are prospective only.\n\n- [Final section and dispositions](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/source-map.json) and [S1 evidence](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S1.md), [S2 evidence](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S2.md)\n- Exact [native activation response](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-completion.json)\n\nThe single native Goal completed. It reported 45,478 tokens used and 4m 19s elapsed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1084b555-f3b3-4288-ba63-9898a0aad00c",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the bounded role review. The 559-word replacement section includes dispositions for all six critiques; its acceptance checks are prospective only.\n\n- [Final section and dispositions](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/final-section.md)\n- [Source map](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/source-map.json) and [S1 evidence](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S1.md), [S2 evidence](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/sources/S2.md)\n- Exact [native activation response](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-activation.json) and [completion response](ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/native-goal-completion.json)\n\nThe single native Goal completed. It reported 45,478 tokens used and 4m 19s elapsed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-02-control-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:1084b555-f3b3-4288-ba63-9898a0aad00c",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "1f80aa9a31a8967e1f786c15bd5251bdce07f419e95d6723f3dbcb71da026d10"
   }
 }

@@ -1,15 +1,20 @@
-# P11 — Cura release inventory
-
-[Governing primary source](https://github.com/Ultimaker/Cura/releases)
-
-**Version:** At review: latest stable 5.13.0; next entry 5.14.0-alpha.0 prerelease
-
-**Locator:** First two release objects and prerelease/published_at fields; independent web index
-
-**Independent assessment:** The version snapshot is supported. Exact pilot versions and modes remain legitimate owner decisions; the final requires rechecking the inventory at selection.
-
-**Evidence captures:**
-
-- [P11-cura-releases.json](P11-cura-releases.json) — SHA-256 `96702f206419cdfba623d5ef9ae4de4dedfc7ee0733085676ff59007af380359`
-
-**Independently resolved release commit:** `1fb8a7610460e03ec62da950d1c173a249b23b59` from [5.13.0](https://api.github.com/repos/Ultimaker/Cura/commits/5.13.0). [Saved metadata](version-cura513.json), SHA-256 `82bf46cbb5c349a9f894aec913287cac08cab46db3af0e6ea20c7cfdee82fdbc`. This identifies source version, not product fidelity.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "4f29df87bbb810f192aaf63999060d857be1426820881d6aed7b025c10e04956",
+  "rawSHA256": "4f29df87bbb810f192aaf63999060d857be1426820881d6aed7b025c10e04956",
+  "original_bytes": 962,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P11-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

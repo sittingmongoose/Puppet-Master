@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.cerealsgrains.org/publications/cfw/2019/November-December/Documents/CFW-64-6-0078.pdf"
+  ],
+  "source_urls": [
+    "https://www.cerealsgrains.org/publications/cfw/2019/November-December/Documents/CFW-64-6-0078.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-01/treatment-v1/evidence/direct-retrievals.json",
+      "source_id": "I07-BRICE",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "58b3e2ba7cdca306bcc86b1a961a76be0e83c2676a2c0b624dd28c1c6215a793",
+  "rawSHA256": "58b3e2ba7cdca306bcc86b1a961a76be0e83c2676a2c0b624dd28c1c6215a793",
+  "original_bytes": 1046683,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-01/treatment-v1/evidence/I07-BRICE.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,10 +1,20 @@
-# S10 — icalendar 7.3.0 implementation history
-
-- URL: https://github.com/collective/icalendar/blob/v7.3.0/CHANGES.rst
-- Version: icalendar 7.3.0, dated 2026-08-19.
-- Access observation: 2026-10-10T04:00:20Z.
-- Locator: release bug fixes around unknown properties, TZID vendor prefixes and parameter round-trip.
-
-**Observed history.** The release notes say previously unrecognized and `X-` property values were changed by escaping during parse/serialize and conversion to/from jCal; the fix preserves these values verbatim. They also record a vendor-prefixed TZID treated as naive until a fix resolved its Olson identifier, and an earlier parameter loss on jCal round-trip.
-
-**Applicability.** This is Python library history, not a defect report for Rust. It establishes that opaque-field and zone round-trip errors have occurred in real implementations. Therefore test value, parameter, timezone, and component preservation in the exact selected Rust versions.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "aa8cba2f5cd9129715824a8b71cd0dffb733e0c9ded4528bc42688d6c4aa5ea9",
+  "rawSHA256": "aa8cba2f5cd9129715824a8b71cd0dffb733e0c9ded4528bc42688d6c4aa5ea9",
+  "original_bytes": 964,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S10-icalendar-history.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,14 +1,64 @@
-# S02 — Oxford Common File Layout (OCFL) specification
-
-- URL: https://ocfl.io/1.1/spec/
-- Released version: OCFL 1.1 series; latest release listed during this research was 1.1.1 (tag `1.1.1`, commit `c3f88b3`); see S04. Relevant rules are stable in the 1.1 specification family. The live HTML is an official rendering, accessed 2026-10-10T04:14:43Z.
-- Locators: §§3.3, 3.5.1–3.5.3, 3.6, 3.8; especially lines 163–174, 191–220, 231–248, 291–315.
-- Observed operation: Read official specification and release-pinned history link; no OCFL validator or implementation was run.
-
-## Evidence and conditions
-
-An OCFL object is a filesystem structure with one or more continuous version directories (`v1`, `v2`, …). Existing versions are expected to be immutable. Every file under a version's designated content directory must appear in that version's inventory manifest. The inventory has a stable object ID (must not change between versions), the digest algorithm, `head`, a manifest mapping digests to stored paths, and per-version state mapping digests to logical paths. Inventory paths use `/` and have path-safety restrictions (`.`, `..`, empty elements, leading/trailing slash, and conflicting paths are prohibited). Each inventory has a matching digest sidecar written after inventory changes. An optional `logs/` directory can hold local records of actions; its format is explicitly outside the object specification.
-
-## Applicability
-
-OCFL offers first-class version history while remaining a transparent filesystem layout, so it can be copied as files. It is more structured and validation-dependent than a single BagIt deposit and requires careful updating of inventories and sidecars. For a small pilot with a few corrected captions it is a credible alternative, but likely excess process unless the gallery wants reconstructable accumulated version states. It does not by itself settle which exhibition assets ought to be included or prove offsite restore success.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://ocfl.io/1.1/spec/"
+  ],
+  "source_urls": [
+    "https://ocfl.io/1.1/spec/"
+  ],
+  "version": [
+    {
+      "released_version_or_commit": "OCFL 1.1 series; latest listed release 1.1.1, tag 1.1.1, commit c3f88b3 (release record S04)",
+      "governing_condition_default_exception": "Versions are continuous directories and expected immutable; each version's content files must be referenced by its inventory manifest. The stable object id must not change. Inventories map digests to stored paths and version states to logical paths, use UTF-8 JSON and slash paths with path safety constraints, and require matching digest sidecars written after inventory edits. An optional logs directory can hold local action records whose format is outside the spec.",
+      "applicability": "Filesystem-native structured version history; suitable if the gallery needs accumulated/reconstructable history, with greater update and validator discipline than one BagIt deposit per correction."
+    }
+  ],
+  "selector": [
+    {
+      "locator": [
+        "§3.3",
+        "§3.5.1–3.5.3",
+        "§3.6",
+        "§3.8"
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "released_version_or_commit": "OCFL 1.1 series; latest listed release 1.1.1, tag 1.1.1, commit c3f88b3 (release record S04)",
+      "governing_condition_default_exception": "Versions are continuous directories and expected immutable; each version's content files must be referenced by its inventory manifest. The stable object id must not change. Inventories map digests to stored paths and version states to logical paths, use UTF-8 JSON and slash paths with path safety constraints, and require matching digest sidecars written after inventory edits. An optional logs directory can hold local action records whose format is outside the spec.",
+      "applicability": "Filesystem-native structured version history; suitable if the gallery needs accumulated/reconstructable history, with greater update and validator discipline than one BagIt deposit per correction."
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/A8-01/treatment/stages/investigator/source-map.json",
+      "source_id": "S02",
+      "existing_authored_summary_fields": {
+        "released_version_or_commit": "OCFL 1.1 series; latest listed release 1.1.1, tag 1.1.1, commit c3f88b3 (release record S04)",
+        "governing_condition_default_exception": "Versions are continuous directories and expected immutable; each version's content files must be referenced by its inventory manifest. The stable object id must not change. Inventories map digests to stored paths and version states to logical paths, use UTF-8 JSON and slash paths with path safety constraints, and require matching digest sidecars written after inventory edits. An optional logs directory can hold local action records whose format is outside the spec.",
+        "applicability": "Filesystem-native structured version history; suitable if the gallery needs accumulated/reconstructable history, with greater update and validator discipline than one BagIt deposit per correction."
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": [
+        "§3.3",
+        "§3.5.1–3.5.3",
+        "§3.6",
+        "§3.8"
+      ]
+    }
+  ],
+  "raw_sha256": "867b9b0ebd37ba4399fe9254aa52b905d43a3b80da5db44dc29bb27c873e6686",
+  "rawSHA256": "867b9b0ebd37ba4399fe9254aa52b905d43a3b80da5db44dc29bb27c873e6686",
+  "original_bytes": 1988,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A8-01/treatment/stages/investigator/sources/S02-ocfl-spec-1.1.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

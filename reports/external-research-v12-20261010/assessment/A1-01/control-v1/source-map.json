@@ -112,7 +112,7 @@
         ]
       ],
       "subject_operation": "AWS multipart part sizes/numbers and listing page sizes",
-      "conditions": "5 MiB\u20135 GiB parts; last part has no minimum; 10,000 parts numbered 1\u201310,000; ListParts page maximum 1,000. Current maximum object 48.8 TiB. These are binary units where stated.",
+      "conditions": "5 MiB–5 GiB parts; last part has no minimum; 10,000 parts numbered 1–10,000; ListParts page maximum 1,000. Current maximum object 48.8 TiB. These are binary units where stated.",
       "applicability": "AWS only. 6 GiB / 16 MiB = 384; 20 MiB = 16 + 4 MiB final part; preliminary 64 MiB gives 96 parts. Arithmetic is not throughput or vendor qualification.",
       "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html",
       "access_utc": "2026-10-10T04:33:59.877370+00:00",
@@ -525,7 +525,7 @@
       "id": "R14",
       "title": "AWS Go SDK service/s3 v1.73.0 changelog",
       "version": "Pinned tag service/s3/v1.73.0; release entry 2025-01-15",
-      "locator": "First v1.73.0 release entry, lines 1\u20135",
+      "locator": "First v1.73.0 release entry, lines 1–5",
       "lines": [
         [
           1,

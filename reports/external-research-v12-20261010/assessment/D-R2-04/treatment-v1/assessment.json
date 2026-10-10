@@ -1,0 +1,2253 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "slot_id": "D-R2-04",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "reviewer": "codex-er12-d-r2-04-review-v1",
+  "review_started_utc": "2026-10-10T07:33:04Z",
+  "review_deadline_utc": "2026-10-10T08:18:04Z",
+  "judgment_saved_utc": "2026-10-10T07:47:14.323628+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "full_pipeline_qualified": true,
+  "source_judgment_basis": "No remaining material error, material omission or unsupported consequential decision found after full assigned science and independent governing-source review. Minor final issues and honest prospective limits retained separately. Not based on hashes, source counts, agreements or native status.",
+  "delivery": {
+    "status": "DELIVERED",
+    "actual_final_path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+    "all_mapped_science_inputs_present": true,
+    "terminal_freeze_matches": true,
+    "missing_scientific_inputs": []
+  },
+  "coverage": {
+    "axes_assessed": 6,
+    "axes_unassessed": [],
+    "all_declared_science_read_full": true,
+    "plan_clause_count": 52,
+    "not_capped": true,
+    "scope_exclusions": "No other arms/outcomes/history/ER11; no nested delegation, candidate assistance/repair, account/Git/publication change; original inputs unchanged."
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "FULL",
+      "judgment": "PASS",
+      "assessment": "All original product obligations are met in the final substance: investigation before revision, separate fee/status/task/confidence outcomes, A/B/C/D alternatives, heterogeneity, future history recovery, accessible research and revision decisions. No finished notice, translation, form or deployment is supplied; no invented center scores, demographics or equivalence are stated. Policies remain fixed. Actual external action absence is declared, not authenticated by a complete event log.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 154,
+          "heading_or_text": "## Exact brief obligation"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ],
+      "evidence": [
+        "original brief/plan",
+        "P01",
+        "P02",
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "limitations": [
+        "L03"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims, precise scope and conditions",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independently reopened all eleven governing source bindings and the RMIT project page. The final treats CDC/DfE/GOV.UK/HHS as bounded method/analogical sources, fixed WCAG criteria as proposed web checks, city pages as policy examples and RMIT as subjective document-specific evidence. Version, units, operation, audience/domain and applicable exceptions were checked. No material source error or unsupported selected winner remains. Minor comparator wording/self-containment limits are recorded.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 186,
+          "heading_or_text": "## Critique and SCW-6"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ],
+      "evidence": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P11-project"
+      ],
+      "limitations": [
+        "L01",
+        "L02"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful discovery, competing/analogous approaches, history and opportunity breadth",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Useful alternatives are operational rather than vacuous: content/order against fixed words in changed presentation, unchanged notice, standardized support and owner clarification. Discovery identifies process-state distinctions and accessibility/language-support methods; post-reveal supplementation adds an empirical multilingual production comparison. Actual notice/translation/policy/channel/staff history is a future evidence request because no records exist in the packet. Independent investigation supports these leads; no case cause or universal template is inferred. Cost and independence consequences are qualitative (review/translation/device effort; recurring staff support and unassisted measurement), with budget honestly unresolved.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        }
+      ],
+      "evidence": [
+        "P02",
+        "P04",
+        "P06",
+        "P08",
+        "P09",
+        "P10",
+        "P11"
+      ],
+      "limitations": [
+        "L01",
+        "L04"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticism/corrections/rejections and exact plan dispositions",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Every criticism is adjudicated below. The SCW diagnostics do not become forced corrections or universal prohibitions. The WCAG locator correction is supported. Every exact plan sentence/bullet is independently dispositioned in the clause appendix. Product scope is preserved; release-protocol language is limited by L03 and unavailable event telemetry.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 186,
+          "heading_or_text": "## Critique and SCW-6"
+        }
+      ],
+      "evidence": [
+        "original plan",
+        "P04",
+        "P05",
+        "P11"
+      ],
+      "limitations": [
+        "L03"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery, draft, critique and final",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final preserves independent discovery’s fact/uncertainty boundary, five mechanisms, policy gate, meaningful comparisons and four outcomes; draft supplementation and transfer limits survive; critique clarifications survive without narrowing the authorized report. It remains a complete later-study proposal. Incidental sampling/session details are provisional, not guaranteed results. Corrected locator/wording defects and post-reveal evidence lineage are retained as H01–H03 rather than erased.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 186,
+          "heading_or_text": "## Critique and SCW-6"
+        }
+      ],
+      "evidence": [
+        "full discovery",
+        "full draft",
+        "full critique",
+        "full final",
+        "P04",
+        "P05",
+        "P11"
+      ],
+      "limitations": [
+        "L01"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Proposed versus executed validation and oracle applicability",
+      "coverage": "FULL",
+      "judgment": "PASS_WITH_LIMITATIONS",
+      "assessment": "Actually recorded scientific work is desk reading/source checking and writing, plus release/hash checks; no participant or actual notice/form/policy/translation/mobile/accessibility test is claimed. The proposed oracle is an approved fee/status fact map, not source agreement, readability or preferences. Separate observable outcomes, critical errors, uncertainty, assistance, first exposures, counterbalancing, language/access cells and revision gates are meaningful. Technical checks apply only to relevant web content and do not replace participant comprehension testing. Unpowered issue-finding and descriptive D changes are not population/causal proof.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 115,
+          "heading_or_text": "### Gate and sequence"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ],
+      "evidence": [
+        "original plan",
+        "P01",
+        "P02",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P11"
+      ],
+      "limitations": [
+        "L04"
+      ]
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L01",
+      "category": "minor self-containment",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 108,
+        "heading_or_text": "**E11 — Australian multilingual public-service communication study.**"
+      },
+      "finding": "The final reports numbered RMIT methods without defining all four in the prose. Their definitions remain in the final source map and official report. This weakens stand-alone readability of the comparator, but does not choose a method or change the proposed A/B/C/D study.",
+      "evidence": [
+        "P11"
+      ],
+      "remaining_in_final": true
+    },
+    {
+      "id": "L02",
+      "category": "minor source-scope wording",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 107,
+        "heading_or_text": "**E10 — Austin Parks and Recreation registration FAQ.**"
+      },
+      "finding": "The shorthand about spaces not being held across routes should be read as the FAQ’s allocation-by-registration-method rule. It does not establish that submitted/paid places are never held. The final makes no such broader assertion and does not transfer Austin policy.",
+      "evidence": [
+        "P10"
+      ],
+      "remaining_in_final": true
+    },
+    {
+      "id": "L03",
+      "category": "minor protocol wording, separate from source qualification",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 184,
+        "heading_or_text": "D inputs remain sealed until the exact recipe"
+      },
+      "finding": "The final plan-disposition cell says no D inputs were accessed in this stage, despite the mapped brief/revealed-plan inputs and its own reading record. Read literally, that blanket sentence is inaccurate. It is not evidence of unauthorized access; it cannot certify release compliance. The scientific scope and original input bytes remain intact.",
+      "evidence": [
+        "original stage input maps",
+        "final Validation and provenance"
+      ],
+      "remaining_in_final": true
+    },
+    {
+      "id": "L04",
+      "category": "honest prospective design limit",
+      "material": false,
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 127,
+        "heading_or_text": "As an initial planning heuristic only"
+      },
+      "finding": "The sample targets are explicitly unvalidated, not powered/representative; budget/language cells and critical-error/endpoint priorities remain to be settled before recruitment. Supported-route changes are descriptive before/after observations and cannot by themselves isolate assistance from practice. No causal assistance effect or population estimate is claimed.",
+      "evidence": [
+        "P06",
+        "P08",
+        "original plan"
+      ],
+      "remaining_in_final": true
+    }
+  ],
+  "lineage_findings": [
+    {
+      "id": "H01",
+      "stage": "investigator/critic source map",
+      "issue": "SC 1.4.4 was omitted from the investigator top-level WCAG locator while zoom was proposed.",
+      "final_status": "CORRECTED: final prose/map explicitly add SC 1.4.4, retaining bounded web-only applicability.",
+      "evidence": [
+        "P05"
+      ],
+      "material_remaining": false
+    },
+    {
+      "id": "H02",
+      "stage": "critic SCW-2 evidence identity",
+      "issue": "The phrase same-page separation is awkward; the source directs GOV.UK publishers against mixing translated and English text on one page.",
+      "final_status": "CLARIFIED: final gives the accurate direction and system scope.",
+      "evidence": [
+        "P04"
+      ],
+      "material_remaining": false
+    },
+    {
+      "id": "H03",
+      "stage": "investigator release lineage",
+      "issue": "E11 was added after the concealed plan was released; it is absent from the immutable discovery.",
+      "final_status": "DISCLOSED SUPPLEMENT: draft and maps state the post-release addition; final carries it. Do not attribute E11 discovery to the brief-only pre-reveal artifact.",
+      "evidence": [
+        "discovery.md",
+        "draft.md",
+        "plan-reveal.json",
+        "P11"
+      ],
+      "material_remaining": false
+    }
+  ],
+  "critic_dispositions": [
+    {
+      "id": "SCW-1",
+      "critic": "Intended document-specific preference result ENTAILS; generalized-course-notice diagnostic UNDETERMINED; retain original.",
+      "final": "Accept intended result; reject broader diagnostic as unsupported.",
+      "independent": "SUPPORTED: Table 3 and discussion support the bounded result. Rejection is refusal to generalize, not a contradiction finding about every other notice.",
+      "evidence": [
+        "P11"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 190,
+        "heading_or_text": "### SCW-1"
+      }
+    },
+    {
+      "id": "SCW-2",
+      "critic": "System-specific presentation option ENTAILS; all-web-systems requirement UNDETERMINED; retain scoped option.",
+      "final": "Accept scoped option; reject universal default.",
+      "independent": "SUPPORTED: governing GOV.UK context does not eliminate compatible mixed-language alternatives elsewhere.",
+      "evidence": [
+        "P04"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 194,
+        "heading_or_text": "### SCW-2"
+      }
+    },
+    {
+      "id": "SCW-3",
+      "critic": "Recruitment channel not named in inspected methods ENTAILS; whole-report absence UNDETERMINED.",
+      "final": "Retain methods-bounded wording and uncertainty about whole-report absence.",
+      "independent": "SUPPORTED for inspected methods. Neither failed search nor absent mention authenticates a global negative.",
+      "evidence": [
+        "P11"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 198,
+        "heading_or_text": "### SCW-3"
+      }
+    },
+    {
+      "id": "C04",
+      "critic": "Sample targets unsupported as an evidence-derived/powered size; preserve heuristic qualification.",
+      "final": "Explicitly unvalidated planning heuristic.",
+      "independent": "ACCEPT: no demonstrated minimum/power is claimed; final size remains contingent.",
+      "evidence": [
+        "P06",
+        "P08"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 205,
+        "heading_or_text": "**Sample-size heuristic:**"
+      }
+    },
+    {
+      "id": "C05",
+      "critic": "Minor WCAG locator omission and images-of-text exceptions.",
+      "final": "Add 1.4.4 and preserve technology/customizable/essential exceptions.",
+      "independent": "ACCEPT CORRECTION: exact fixed Recommendation supports it. No failed actual notice check is invented.",
+      "evidence": [
+        "P05"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 206,
+        "heading_or_text": "**WCAG locator correction:**"
+      }
+    },
+    {
+      "id": "C06",
+      "critic": "Brief/plan completeness met; no material wrong/incomplete claim found.",
+      "final": "Accept completeness and retain scientific scope.",
+      "independent": "Independently met, subject to L01–L04. The verdict follows original clauses and primary sources, not critic agreement.",
+      "evidence": [
+        "original brief/plan",
+        "all six independent axes"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 204,
+        "heading_or_text": "**Overall completeness:**"
+      }
+    },
+    {
+      "id": "C07",
+      "critic": "External inputs honestly unresolved.",
+      "final": "Retain owner decisions/stop conditions.",
+      "independent": "ACCEPT: actual policy, texts, language/audience/access distribution, process history, recruitment resources, local ethics/privacy and endpoint weighting cannot be resolved from fictional inputs. Necessary comparator/method investigation was performed.",
+      "evidence": [
+        "original brief/plan",
+        "P01",
+        "P02",
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "locator": {
+        "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+        "line": 207,
+        "heading_or_text": "**External unknowns:**"
+      }
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "clause_id": "PCL-001",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 9,
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "SCOPE_BOUNDARY",
+      "independent_assessment": "The plan is a concealed prospective record, not evidence, answer key or a chosen method. Candidate assignment requires brief-only discovery followed by authorized reveal. File placement/pre-input access chronology remain protocol UNKNOWN; final preserves the no-method/no-empirical-result meaning.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-002",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 9,
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "SCOPE_BOUNDARY",
+      "independent_assessment": "The plan is a concealed prospective record, not evidence, answer key or a chosen method. Candidate assignment requires brief-only discovery followed by authorized reveal. File placement/pre-input access chronology remain protocol UNKNOWN; final preserves the no-method/no-empirical-result meaning.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-003",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 9,
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "SCOPE_BOUNDARY",
+      "independent_assessment": "The plan is a concealed prospective record, not evidence, answer key or a chosen method. Candidate assignment requires brief-only discovery followed by authorized reveal. File placement/pre-input access chronology remain protocol UNKNOWN; final preserves the no-method/no-empirical-result meaning.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-004",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 9,
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "SCOPE_BOUNDARY",
+      "independent_assessment": "The plan is a concealed prospective record, not evidence, answer key or a chosen method. Candidate assignment requires brief-only discovery followed by authorized reveal. File placement/pre-input access chronology remain protocol UNKNOWN; final preserves the no-method/no-empirical-result meaning.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-005",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 9,
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "SCOPE_BOUNDARY",
+      "independent_assessment": "The plan is a concealed prospective record, not evidence, answer key or a chosen method. Candidate assignment requires brief-only discovery followed by authorized reveal. File placement/pre-input access chronology remain protocol UNKNOWN; final preserves the no-method/no-empirical-result meaning.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-006",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 13,
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "PRESERVED",
+      "independent_assessment": "Original brief meanings are reproduced and separately dispositioned; no later clarification replaces them. Exact source bytes remain intact and revealed plan equals the frozen original.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 18,
+          "heading_or_text": "## Original brief retained"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 154,
+          "heading_or_text": "## Exact brief obligation"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-007",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 13,
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "PRESERVED",
+      "independent_assessment": "Original brief meanings are reproduced and separately dispositioned; no later clarification replaces them. Exact source bytes remain intact and revealed plan equals the frozen original.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 18,
+          "heading_or_text": "## Original brief retained"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 154,
+          "heading_or_text": "## Exact brief obligation"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-008",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 25,
+      "exact_clause": "A community center offers short courses and prints a bilingual enrollment notice.",
+      "disposition": "MET",
+      "independent_assessment": "Final keeps every supplied fictional situation fact, both question types, concurrent revisions/partial mobile move and the absence of logs/interviews/stable old notices. It invents no historical control or cause.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-009",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 25,
+      "exact_clause": "Staff say readers often ask whether materials fees are included and whether a place is reserved after submitting the form.",
+      "disposition": "MET",
+      "independent_assessment": "Final keeps every supplied fictional situation fact, both question types, concurrent revisions/partial mobile move and the absence of logs/interviews/stable old notices. It invents no historical control or cause.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-010",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 25,
+      "exact_clause": "The notice was shortened when the translation was also revised, and distribution moved partly to mobile messages.",
+      "disposition": "MET",
+      "independent_assessment": "Final keeps every supplied fictional situation fact, both question types, concurrent revisions/partial mobile move and the absence of logs/interviews/stable old notices. It invents no historical control or cause.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-011",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 25,
+      "exact_clause": "There are no response logs, participant interviews, or stable older notices available in this packet.",
+      "disposition": "MET",
+      "independent_assessment": "Final keeps every supplied fictional situation fact, both question types, concurrent revisions/partial mobile move and the absence of logs/interviews/stable old notices. It invents no historical control or cause.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-012",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 25,
+      "exact_clause": "This is a fictional community-service setting.",
+      "disposition": "MET",
+      "independent_assessment": "Final keeps every supplied fictional situation fact, both question types, concurrent revisions/partial mobile move and the absence of logs/interviews/stable old notices. It invents no historical control or cause.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-013",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 29,
+      "exact_clause": "Use the 60-minute research window to develop a proposal for investigating the communication problem before the center rewrites or deploys anything.",
+      "disposition": "MET",
+      "independent_assessment": "Final supplies a pre-revision research proposal, plausible mechanisms, useful alternatives, bounded implementations and an ethical later study. No product/translation/notice is delivered. The 60-minute window is a ceiling/envelope, not a duty to occupy all 60 minutes.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-014",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 29,
+      "exact_clause": "Explain plausible comprehension and presentation mechanisms, compare meaningful useful alternatives, and research relevant implementation history.",
+      "disposition": "MET",
+      "independent_assessment": "Final supplies a pre-revision research proposal, plausible mechanisms, useful alternatives, bounded implementations and an ethical later study. No product/translation/notice is delivered. The 60-minute window is a ceiling/envelope, not a duty to occupy all 60 minutes.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-015",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 29,
+      "exact_clause": "Give us a later study with realistic participants, outcomes, and ethical boundaries, not a website, a finished translation, or a ready-to-publish notice.",
+      "disposition": "MET",
+      "independent_assessment": "Final supplies a pre-revision research proposal, plausible mechanisms, useful alternatives, bounded implementations and an ethical later study. No product/translation/notice is delivered. The 60-minute window is a ceiling/envelope, not a duty to occupy all 60 minutes.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-016",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 33,
+      "exact_clause": "Separate comprehension of fees, comprehension of reservation status, task completion, and reader confidence.",
+      "disposition": "MET",
+      "independent_assessment": "Four distinct outcomes and recording/scoring rules; confidence is not correctness.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-017",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 34,
+      "exact_clause": "Compare wording or information-structure changes with presentation or channel changes and a useful assisted or unchanged-notice alternative.",
+      "disposition": "MET",
+      "independent_assessment": "A unchanged notice; B wording/order in same medium; C same words changed layout/channel; D structured support after independent measurement.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-018",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 35,
+      "exact_clause": "Address language proficiency, literacy, mobile viewing, and staff explanation without treating either language group as homogeneous.",
+      "disposition": "MET",
+      "independent_assessment": "Reading/speaking preference and literacy/experience variation within language groups; mobile/access needs and staff assistance recorded. No homogeneous demographic proxy.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-019",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 36,
+      "exact_clause": "Investigate notice and service-process history and comparable implementations, including how differences in audience and delivery limit transfer.",
+      "disposition": "MET",
+      "independent_assessment": "Future history retrieval covers notices, translation, policy, channels and staff. City policy examples and multilingual empirical comparator disclose or preserve unknown audience/delivery details and limits.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-020",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 37,
+      "exact_clause": "Propose a comparison study, accessible recruitment and consent, meaningful task measures, and a revision decision; clearly distinguish proposed participant validation from desk checks actually executed.",
+      "disposition": "MET",
+      "independent_assessment": "Accessible recruitment/consent, plausible participants, tasks, separate metrics and a revision/critical-error gate are proposed; source reading is separated from unexecuted participant validation.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-021",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 41,
+      "exact_clause": "Do not recruit or contact participants, collect personal data, publish a notice, deploy a form, or contact the community center.",
+      "disposition": "MET_IN_DELIVERABLE_ACTION_LOG_UNKNOWN",
+      "independent_assessment": "No forbidden action is reported or evidenced in the assigned scientific artifacts. Complete external-action telemetry is unavailable; the proposal places future contact/recruitment behind authorization and review.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 131,
+          "heading_or_text": "### Recruitment, consent, and privacy"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-022",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 42,
+      "exact_clause": "Do not invent comprehension scores, participant preferences, translation equivalence, or representative audience demographics.",
+      "disposition": "MET",
+      "independent_assessment": "No center comprehension scores, preferences, translation equivalence or representative demographics are invented; external findings remain source-bounded.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-023",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 43,
+      "exact_clause": "Do not change fee or reservation policy to make the wording easier, and do not claim accessibility or legal compliance from a readability score.",
+      "disposition": "MET",
+      "independent_assessment": "Fixed owner-approved rules across conditions. No readability computation or accessibility/legal claim from a score.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-024",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 47,
+      "exact_clause": "The language pair, policy details, audience distribution, assistive-technology use, reading contexts, current notice, and feasible recruitment budget are not supplied.",
+      "disposition": "HONEST_EXTERNAL_DECISION",
+      "independent_assessment": "All missing inputs and the understanding-versus-inquiries priority remain explicit. Provisional A/B/C/D comparisons and unavailable-cell branches remain useful.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 220,
+          "heading_or_text": "## Open decisions and stop conditions"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-025",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 47,
+      "exact_clause": "There is no agreed priority between fewer staff questions and better reader understanding.",
+      "disposition": "HONEST_EXTERNAL_DECISION",
+      "independent_assessment": "All missing inputs and the understanding-versus-inquiries priority remain explicit. Provisional A/B/C/D comparisons and unavailable-cell branches remain useful.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 220,
+          "heading_or_text": "## Open decisions and stop conditions"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-026",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 47,
+      "exact_clause": "State what must be established and which provisional comparisons remain useful.",
+      "disposition": "HONEST_EXTERNAL_DECISION",
+      "independent_assessment": "All missing inputs and the understanding-versus-inquiries priority remain explicit. Provisional A/B/C/D comparisons and unavailable-cell branches remain useful.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 220,
+          "heading_or_text": "## Open decisions and stop conditions"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-027",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 53,
+      "exact_clause": "How could a later comparison establish whether misunderstanding arises from policy ambiguity, wording, presentation, channel, or assistance differences without replacing the intended service rules?",
+      "disposition": "MET",
+      "independent_assessment": "Gate distinguishes policy uncertainty from wording, rendering/channel and support without replacing fees/reservation rules. Comparisons isolate meaningful factors where materials permit.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 10,
+          "heading_or_text": "## Proposal"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 115,
+          "heading_or_text": "### Gate and sequence"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-028",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 55,
+      "exact_clause": "The policy text, language pair, participant access, consent arrangements, assistive needs, and primary endpoint remain undecided.",
+      "disposition": "MET_WITH_EXTERNAL_CHOICES",
+      "independent_assessment": "Missing policies/languages/access/consent/endpoint are retained; owner fact approval precedes stimuli/study. Presentation alone is not presumed sufficient; owner clarification and support remain branches.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 220,
+          "heading_or_text": "## Open decisions and stop conditions"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-029",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 55,
+      "exact_clause": "The proposal should provide a useful sequence from policy clarification to study design and preserve the possibility that presentation changes alone will not resolve the problem.",
+      "disposition": "MET_WITH_EXTERNAL_CHOICES",
+      "independent_assessment": "Missing policies/languages/access/consent/endpoint are retained; owner fact approval precedes stimuli/study. Presentation alone is not presumed sufficient; owner clarification and support remain branches.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 220,
+          "heading_or_text": "## Open decisions and stop conditions"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-030",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 59,
+      "exact_clause": "Investigate clearer sequencing or wording, explicit policy explanations, bilingual presentation choices, mobile-friendly delivery, and a structured assisted explanation.",
+      "disposition": "MET",
+      "independent_assessment": "All named useful alternatives survive. Review/translation/device effort and sustainable staff support express qualitative cost/dependence differences; actual budget remains unknown. No translation/layout/readability/channel is selected as a universal solution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-031",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 59,
+      "exact_clause": "Keeping the present notice while standardizing staff explanations or clarifying the underlying policy may be a useful branch.",
+      "disposition": "MET",
+      "independent_assessment": "All named useful alternatives survive. Review/translation/device effort and sustainable staff support express qualitative cost/dependence differences; actual budget remains unknown. No translation/layout/readability/channel is selected as a universal solution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-032",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 59,
+      "exact_clause": "These alternatives have different cost and independence implications.",
+      "disposition": "MET",
+      "independent_assessment": "All named useful alternatives survive. Review/translation/device effort and sustainable staff support express qualitative cost/dependence differences; actual budget remains unknown. No translation/layout/readability/channel is selected as a universal solution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-033",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 59,
+      "exact_clause": "No translation, layout, readability metric, or delivery channel is chosen as the correct solution.",
+      "disposition": "MET",
+      "independent_assessment": "All named useful alternatives survive. Review/translation/device effort and sustainable staff support express qualitative cost/dependence differences; actual budget remains unknown. No translation/layout/readability/channel is selected as a universal solution.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 86,
+          "heading_or_text": "## Alternatives worth"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 123,
+          "heading_or_text": "### Participants, sample, and access"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 148,
+          "heading_or_text": "### Revision decision"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-034",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 63,
+      "exact_clause": "Examine how readers form expectations about payment and reservation, how information order and ambiguity affect inference, and how channel constraints and language familiarity interact with presentation.",
+      "disposition": "MET",
+      "independent_assessment": "Fee/status expectations, ambiguity/order, mobile preview and language familiarity are hypotheses. Initial answer/evidence, task observation, error types and post-support answers distinguish mechanisms; confirmation-seeking and process inconsistency remain possible. Confidence and inquiry reduction stay separate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-035",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 63,
+      "exact_clause": "A staff question can signal misunderstanding, cautious confirmation, or a process inconsistency.",
+      "disposition": "MET",
+      "independent_assessment": "Fee/status expectations, ambiguity/order, mobile preview and language familiarity are hypotheses. Initial answer/evidence, task observation, error types and post-support answers distinguish mechanisms; confirmation-seeking and process inconsistency remain possible. Confidence and inquiry reduction stay separate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-036",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 63,
+      "exact_clause": "Explain what tasks and observations distinguish these mechanisms without treating confidence or fewer questions as equivalent to correct understanding.",
+      "disposition": "MET",
+      "independent_assessment": "Fee/status expectations, ambiguity/order, mobile preview and language familiarity are hypotheses. Initial answer/evidence, task observation, error types and post-support answers distinguish mechanisms; confirmation-seeking and process inconsistency remain possible. Confidence and inquiry reduction stay separate.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 72,
+          "heading_or_text": "## Plausible mechanisms"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 137,
+          "heading_or_text": "### Tasks and separate"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-037",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 67,
+      "exact_clause": "Investigate prior notice revisions, translation processes, fee and reservation policy changes, distribution channels, and staff explanation practices as future evidence.",
+      "disposition": "MET",
+      "independent_assessment": "Future records address every named history stream; comparable reports disclose audience/languages/recruitment intent/task/assistance/outcomes or acknowledge absent information. Concurrent changes bar a simple causal before/after story; no comparator is a proven template.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-038",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 67,
+      "exact_clause": "Comparable implementation reports should disclose audience, language context, recruitment, tasks, assistance, and outcomes.",
+      "disposition": "MET",
+      "independent_assessment": "Future records address every named history stream; comparable reports disclose audience/languages/recruitment intent/task/assistance/outcomes or acknowledge absent information. Concurrent changes bar a simple causal before/after story; no comparator is a proven template.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-039",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 67,
+      "exact_clause": "The concurrent shortening and translation revision make a simple before-and-after story unreliable without supporting records.",
+      "disposition": "MET",
+      "independent_assessment": "Future records address every named history stream; comparable reports disclose audience/languages/recruitment intent/task/assistance/outcomes or acknowledge absent information. Concurrent changes bar a simple causal before/after story; no comparator is a proven template.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-040",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 67,
+      "exact_clause": "No example notice or source is supplied as a successful template.",
+      "disposition": "MET",
+      "independent_assessment": "Future records address every named history stream; comparable reports disclose audience/languages/recruitment intent/task/assistance/outcomes or acknowledge absent information. Concurrent changes bar a simple causal before/after story; no comparator is a proven template.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 52,
+          "heading_or_text": "## What is known"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 100,
+          "heading_or_text": "## Implementation history"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-041",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 71,
+      "exact_clause": "A future consented study could establish the intended policies, prepare authorized comparable draft stimuli, recruit with appropriate language and accessibility support, and test comprehension and task decisions while recording assistance and confidence separately.",
+      "disposition": "MET_WITH_PROSPECTIVE_LIMIT",
+      "independent_assessment": "Consented future study, verified facts/comparable stimuli, language/access support and separate measures are proposed. Small purposive sampling/untested cells, learning/counterbalancing, privacy and conditional revision are explicit. Desk checks never stand in for participants or equivalence. L04 records the heuristic and assisted-change limits.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-042",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 71,
+      "exact_clause": "Explain feasible sampling, unequal language groups, learning effects, privacy, and how findings inform revision without overstating population generality.",
+      "disposition": "MET_WITH_PROSPECTIVE_LIMIT",
+      "independent_assessment": "Consented future study, verified facts/comparable stimuli, language/access support and separate measures are proposed. Small purposive sampling/untested cells, learning/counterbalancing, privacy and conditional revision are explicit. Desk checks never stand in for participants or equivalence. L04 records the heuristic and assisted-change limits.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-043",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 71,
+      "exact_clause": "Readability calculations, literature searches, or hypothetical stimuli examined during the hour are desk checks, not executed participant validation or verified translation equivalence.",
+      "disposition": "MET_WITH_PROSPECTIVE_LIMIT",
+      "independent_assessment": "Consented future study, verified facts/comparable stimuli, language/access support and separate measures are proposed. Small purposive sampling/untested cells, learning/counterbalancing, privacy and conditional revision are explicit. Desk checks never stand in for participants or equivalence. L04 records the heuristic and assisted-change limits.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 113,
+          "heading_or_text": "## Proposed later study"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-044",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 73,
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "AUTHORING_STATUS_PRESERVED",
+      "independent_assessment": "The original authoring status is not scientific evidence or a permanent ban on later searches. Candidate desk research is explicitly executed; no case pilot/data/implementation/performance validation is claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-045",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 73,
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "AUTHORING_STATUS_PRESERVED",
+      "independent_assessment": "The original authoring status is not scientific evidence or a permanent ban on later searches. Candidate desk research is explicitly executed; no case pilot/data/implementation/performance validation is claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-046",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 73,
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "AUTHORING_STATUS_PRESERVED",
+      "independent_assessment": "The original authoring status is not scientific evidence or a permanent ban on later searches. Candidate desk research is explicitly executed; no case pilot/data/implementation/performance validation is claimed.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-047",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-048",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-049",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "It requests no product build.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-050",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-051",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    },
+    {
+      "clause_id": "PCL-052",
+      "original_plan_path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "original_plan_line": 77,
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "MET_SCIENTIFIC_SCOPE_RELEASE_PROTOCOL_UNKNOWN",
+      "independent_assessment": "Full research/proposal breadth and provisional choices without winner/build are retained; original brief/plan are byte-identical. Actual recipe/budget lock, pre-reveal concealment and no-feedback event history are not independently established by packet hashes. L03 identifies inaccurate blanket input-access wording; no unauthorized input/feedback is inferred.",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 171,
+          "heading_or_text": "## Exact revealed-plan"
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+          "line": 210,
+          "heading_or_text": "## Validation and provenance"
+        }
+      ]
+    }
+  ],
+  "plan_metadata": {
+    "case_id": "ER12-D-R2-04-FRESH",
+    "slot_id": "D-R2-04",
+    "domain": "language and accessibility research",
+    "title_preserved": true,
+    "structural_markers": "All headings plus BEGIN/END ORIGINAL BRIEF delimiters inspected. They are structure, not extra scientific obligations."
+  },
+  "useful_discoveries": [
+    {
+      "id": "D01",
+      "discovery": "Receipt, waitlist, offer/payment and confirmation are distinct policy states that must be locally established.",
+      "sources": [
+        "P09",
+        "P10"
+      ],
+      "lineage": "Present in original independent discovery; bounded service analogies, not case outcomes."
+    },
+    {
+      "id": "D02",
+      "discovery": "Communication Index scoring and readability-like desk guidance cannot replace intended-audience pretesting.",
+      "sources": [
+        "P01",
+        "P02"
+      ],
+      "lineage": "Independent discovery carried into design; no actual notice scored."
+    },
+    {
+      "id": "D03",
+      "discovery": "Within-language literacy and access variation require tailored consent, neutral tasks and qualified language support.",
+      "sources": [
+        "P06",
+        "P07",
+        "P08"
+      ],
+      "lineage": "Independent discovery carried into recruitment/design."
+    },
+    {
+      "id": "D04",
+      "discovery": "Multilingual production methods and reader reception can vary by document and presentation; preference is not an objective comprehension oracle.",
+      "sources": [
+        "P11"
+      ],
+      "lineage": "E11 added in draft after reveal, retained with transfer limits; L01 covers final numeric method labels."
+    },
+    {
+      "id": "D05",
+      "discovery": "System-specific bilingual page guidance and web criteria leave compatible print/mobile/web options open.",
+      "sources": [
+        "P04",
+        "P05"
+      ],
+      "lineage": "Independent discovery, SCW recheck and final scoped qualification."
+    }
+  ],
+  "alternatives": [
+    {
+      "condition": "A",
+      "meaning": "Recovered current notice/actual route; unavailable if not recoverable."
+    },
+    {
+      "condition": "B",
+      "meaning": "Owner-approved wording/order change in same medium; fixed policy."
+    },
+    {
+      "condition": "C",
+      "meaning": "Same A words in realistic alternate presentation/channel; preview+destination journey."
+    },
+    {
+      "condition": "D",
+      "meaning": "Consistent approved support after independent answer; record change/assistance."
+    },
+    {
+      "condition": "Owner clarification",
+      "meaning": "Resolve existing policy ambiguity before stimuli; do not change service rules to win."
+    }
+  ],
+  "validation": {
+    "actually_recorded": "Desk reading/checking/writing; reveal and digest checks. No actual participant, notice, translation, form, policy, mobile or conformance validation. Candidate actions beyond the packet are not authenticated.",
+    "proposed": "Fact/history recovery, language review, accessible recruitment/consent, neutral task rehearsal, independent A/B/C first exposure, supported D, narrow relevant-web checks and a post-revision participant round.",
+    "oracle": "Owner-approved fee/status facts and observable task choices; confidence/assistance separate. Literature, subjective preference, readability and hashes are not a comprehension oracle.",
+    "future_validation_executed": false
+  },
+  "native": {
+    "status": "CAPTURED_ACTIVE_AND_COMPLETE_RECEIPTS_ALL_THREE_STAGES",
+    "authenticated_backend_provenance": "UNKNOWN",
+    "observations_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/native-observations.json",
+    "records": [
+      {
+        "stage": "investigator",
+        "captured_create_fields": {
+          "threadId": "01a1249a-2840-7eb3-af9d-286a8585320f",
+          "objective": "ER12 investigator stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791615456,
+          "updatedAt": 1791615456
+        },
+        "captured_completion_fields": {
+          "threadId": "01a1249a-2840-7eb3-af9d-286a8585320f",
+          "objective": "ER12 investigator stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 288237,
+          "timeUsedSeconds": 809,
+          "createdAt": 1791615456,
+          "updatedAt": 1791616266
+        },
+        "matching_thread_and_objective": true,
+        "stage_deadline_utc": "2026-10-10T07:27:22.858Z",
+        "required_artifact_mtimes_utc": {
+          "discovery.md": "2026-10-10T07:06:55.705951+00:00",
+          "draft.md": "2026-10-10T07:10:34.078573+00:00",
+          "source-map.json": "2026-10-10T07:08:59.192309+00:00"
+        },
+        "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+      },
+      {
+        "stage": "critic",
+        "captured_create_fields": {
+          "threadId": "01a124a7-2c7d-7951-b73e-02ace1517df4",
+          "objective": "ER12 critic stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791616311,
+          "updatedAt": 1791616311
+        },
+        "captured_completion_fields": {
+          "threadId": "01a124a7-2c7d-7951-b73e-02ace1517df4",
+          "objective": "ER12 critic stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 209036,
+          "timeUsedSeconds": 440,
+          "createdAt": 1791616311,
+          "updatedAt": 1791616752
+        },
+        "matching_thread_and_objective": true,
+        "stage_deadline_utc": "2026-10-10T07:39:22.858Z",
+        "required_artifact_mtimes_utc": {
+          "critique.md": "2026-10-10T07:19:04.911536+00:00",
+          "source-map.json": "2026-10-10T07:18:08.704803+00:00"
+        },
+        "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+      },
+      {
+        "stage": "reviser",
+        "captured_create_fields": {
+          "threadId": "01a124ae-90b9-76e3-afb6-4f2586ad4cc5",
+          "objective": "ER12 reviser stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791616793,
+          "updatedAt": 1791616793
+        },
+        "captured_completion_fields": {
+          "threadId": "01a124ae-90b9-76e3-afb6-4f2586ad4cc5",
+          "objective": "ER12 reviser stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 220707,
+          "timeUsedSeconds": 754,
+          "createdAt": 1791616793,
+          "updatedAt": 1791617548
+        },
+        "matching_thread_and_objective": true,
+        "stage_deadline_utc": "2026-10-10T07:57:22.654Z",
+        "required_artifact_mtimes_utc": {
+          "final.md": "2026-10-10T07:29:44.285430+00:00",
+          "source-map.json": "2026-10-10T07:30:25.778486+00:00"
+        },
+        "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+      }
+    ],
+    "reviewer_actual_native_goal_observed": true,
+    "reviewer_active_receipt_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/reviewer-native-goal-active.json",
+    "reviewer_completion_response_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/reviewer-native-goal-complete.json",
+    "reviewer_completion_observed_status": "complete"
+  },
+  "t3": {
+    "status": "ROOT_CAPTURED_TERMINAL_COMPLETED",
+    "evidence_path": "ER12_RUNTIME/runs/D-R2-04/treatment/terminal-science-freeze-root.json",
+    "observed_at_utc": "2026-10-10T07:32:45.844477+00:00",
+    "stage": "reviser",
+    "task_status": "completed",
+    "has_pending_child_runs": false,
+    "native_proof_inferred_from_t3": false
+  },
+  "protocol": {
+    "assessment": "NO_UNAUTHORIZED_SCIENTIFIC_ASSISTANCE_OR_REPAIR_FOUND_IN_ASSIGNED_PACKET; FULL_EXECUTION_COMPLIANCE_UNKNOWN",
+    "reason": "Common prospective mechanical prompts are in assignments. Full event histories were not authorized/inspected. Receipt/guard assertions are not tool provenance proof. L03 cannot certify sealed-input compliance.",
+    "reviewer": "Independent native Goal created before scientific reads; unique own inbox only; no delegation/repair; output confined to reserved assessment path."
+  },
+  "time": {
+    "source": "Absolute deadlines in assignments/freezes; local authored-artifact mtimes; captured native createdAt/updatedAt and timeUsedSeconds; root terminal observation.",
+    "candidate_whole_deadline_utc": "2026-10-10T07:57:22.654Z",
+    "candidate_final_native_updated_utc": "2026-10-10T07:32:28Z",
+    "root_terminal_observed_utc": "2026-10-10T07:32:45.844477+00:00",
+    "within_declared_deadlines_on_available_records": true,
+    "effective_inference_time": "UNKNOWN",
+    "paired_latency_or_speed_claim": "NOT_ASSESSED; no other arm read"
+  },
+  "effective": {
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
+      "serviceTier": "default"
+    },
+    "backend_effective_route": "UNKNOWN",
+    "note": "Freeze/request labels and root-captured T3 model field do not authenticate executed backend settings."
+  },
+  "billing": {
+    "status": "UNKNOWN",
+    "note": "Captured native tokensUsed are retained without treating them as billable inference, cost, or savings. Occupancy is not billing."
+  },
+  "unknowns": [
+    {
+      "id": "U01",
+      "domain": "external product/study inputs",
+      "unknown": "Actual policy facts/exceptions, current/older notice, languages/variants, audience/access/reading distributions, translation/channel/staff history, budget/recruitment route, local ethics/privacy and primary endpoint/priority.",
+      "impact": "Future approval/stimuli/sampling/decision necessary; no case cause, winner, equivalence or population effect established."
+    },
+    {
+      "id": "U02",
+      "domain": "native provenance/protocol",
+      "unknown": "Independent authentication of captured native receipt provenance/freshness, complete tool-event ordering, one-and-only-one Goal count, activation before scientific input, SCW preselection-before-fetch chronology and save-before-complete ordering.",
+      "impact": "Response fields and local mtimes are available; they do not fully authenticate execution protocol."
+    },
+    {
+      "id": "U03",
+      "domain": "effective runtime/billing",
+      "unknown": "Effective backend model/reasoning/service tier, inference-active time, billable tokens/cache units, charges and savings.",
+      "impact": "Requested route and frozen T3 model labels plus native aggregate fields are not billing/effective-runtime proof."
+    },
+    {
+      "id": "U04",
+      "domain": "source access/version",
+      "unknown": "HHS linked PDF contents after HTTP 503; exact RMIT public final-release date beyond cover date/project dates; live-page historical bytes at candidate access times.",
+      "impact": "HTML supports used CLAS claims; current independent primary retrieval supports remaining claims. No material unresolved consequential choice depends on unavailable PDF or release date."
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "bytes": 2790,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-04/brief.md",
+      "sha256": "e7969f35bee28f129f6ef2ed76a30f9c3680910a4f4dbc4ed9ff968e1d0e00a1",
+      "bytes": 2652,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-04/plan.md",
+      "sha256": "72b52c88f5e170e7300d8965e3a823ad369e36e42c3103cdcf20b4d8eeb78cf6",
+      "bytes": 7069,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/terminal-science-freeze-root.json",
+      "sha256": "26d6e0a51378b19040931fbd466234ea957002674c098165c7e60071f60e2181",
+      "bytes": 9149,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/inputs/brief.md",
+      "sha256": "e7969f35bee28f129f6ef2ed76a30f9c3680910a4f4dbc4ed9ff968e1d0e00a1",
+      "bytes": 2652,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/assignment.md",
+      "sha256": "4cd9c574db7f33e2dbc99e0dc68e31fab7a17b0e680c982954c9ef3df5e4b2df",
+      "bytes": 9043,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/input-map.json",
+      "sha256": "011f035b8e924fcabfb6b9183ac9b0e91d9e8e81bcb914ef7e5654a1f9a98e2c",
+      "bytes": 797,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/freeze.json",
+      "sha256": "12b027a602e7f8bce037157696d375d9f89753e275fa63a68fe7124e744c3498",
+      "bytes": 4300,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/source-map.json",
+      "sha256": "9789ee3d361ce2c529abb8aa158c19106792838a0731baf8e250a22b7b0922c4",
+      "bytes": 14499,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/sources/index.md",
+      "sha256": "cf0b43cdccb0f16dd925ffe1f3ec4999d5caa8e4e10ad93cac9faa9cf3f183d4",
+      "bytes": 3929,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/native-goal-create.json",
+      "sha256": "bc1636240ca263142d0d88d5fac8abe8b19b816d33a889ae13f4416e1f3ff2fb",
+      "bytes": 483,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/native-goal-complete.json",
+      "sha256": "9dd6a122a852f44caef93664a842abe5d1b79914bffc0e804fb5222068882906",
+      "bytes": 812,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/assignment.md",
+      "sha256": "7f7e07ed67bda1d161cd3933b9233b52d3c383c96ac4b955f1434d88523f62c3",
+      "bytes": 11986,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/input-map.json",
+      "sha256": "41991f84fa25d338beddb978a96052e3834f6737b338890927891b5a07c98a49",
+      "bytes": 1497,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/freeze.json",
+      "sha256": "fabda1549d87eea80bb2b68a6e8fd08ea477fac6c4b184fce81fb32f97494338",
+      "bytes": 6026,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/source-map.json",
+      "sha256": "6897389b0b623d25122c3543fe9618389febabb7dd4182d75328c8c23e9c7707",
+      "bytes": 22905,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/index.md",
+      "sha256": "4edcf466d19e03fbba7d491f702c8a9c1feb13c9c957f61d17f70fa278a307c0",
+      "bytes": 2996,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/sources/reviewed-evidence.md",
+      "sha256": "6996e6d124e2eec4a9dc5b0f6966a1af174f455655c11743b2726bb14cc23708",
+      "bytes": 9459,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/native-goal-create.json",
+      "sha256": "1a997d9cce47c896733a117335d3edc7eb1ec345e06bd9425c3dde8dac81a573",
+      "bytes": 471,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/native-goal-completion.json",
+      "sha256": "4c547eb70da7d6e610a7104175569bab85397c4e9885dcc5a37b0ffbb8cb59c4",
+      "bytes": 800,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/native-goal-before-complete.json",
+      "sha256": "919b33ef40ce2ded685b19ec580a0ef6853e55199c91aaa68ed2f959834f3fc0",
+      "bytes": 478,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/assignment.md",
+      "sha256": "edc8e9e2dddb20848b52401567265e665092e6706bd9920ce97bb907fd202cdf",
+      "bytes": 10290,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/input-map.json",
+      "sha256": "806283f6d613dfd29191eb29df16460aac39afb149a21582d256ef61e2c056ba",
+      "bytes": 1820,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/freeze.json",
+      "sha256": "76eaf1a7106d6592a9672e9dd404fec4a0fadf901a344adbb3580ab608aa024f",
+      "bytes": 6826,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/source-map.json",
+      "sha256": "dbf9868ef96bbcdd3ef14dd069c934ee3ce608d445a5a8ebc4dd38216a4fe2ec",
+      "bytes": 29949,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/index.md",
+      "sha256": "c45631c824da343d55ac112a2d98cf7696007d16ad550e51264b05f8d7c0ca34",
+      "bytes": 3227,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/sources/rechecked-evidence.md",
+      "sha256": "01b47d87cdc68ff9ec243bcf66cff7b6d5ff30277c3fa3cca000dc501f0ddbf5",
+      "bytes": 4231,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/native-goal-create.json",
+      "sha256": "b6afbde51908c2e5c9bd1a967972473b0437e12734b3840125f6e50034f89040",
+      "bytes": 473,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/native-goal-completion.json",
+      "sha256": "0b47e603c2c8a0e390b15c4f623bdf998661fec1faf51e6aab91682e06f1b9d1",
+      "bytes": 802,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/discovery.md",
+      "sha256": "911a62f69703115d3f405732f49fcd328f6e98184f6d0bd70050f614e812cba2",
+      "bytes": 14976,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/draft.md",
+      "sha256": "6516daeeaf8e8b2af6c26f02edd5bb8506740b2b78e712abd39ee9086ecd1d31",
+      "bytes": 25491,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "72b52c88f5e170e7300d8965e3a823ad369e36e42c3103cdcf20b4d8eeb78cf6",
+      "bytes": 7069,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "7f7c66bb87dba03fb50287df41ee7e6741ed93b604665986b4deb56c7e2151d2",
+      "bytes": 433,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/critique.md",
+      "sha256": "529602f836da879c4a0de70dd8edd4e4cb611c8c3fd65f368d064764f016f470",
+      "bytes": 13505,
+      "read_status": "FULL"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+      "sha256": "f1b4cb04dd68c7f34145291912e7d5b2fc1fe652a778cedd25ddc5c1a7a659f6",
+      "bytes": 39139,
+      "read_status": "FULL"
+    }
+  ],
+  "primary_sources": [
+    {
+      "id": "E01",
+      "requested_url": "https://www.cdc.gov/ccindex/pdf/full-index-score-sheet.pdf",
+      "access_utc_start": "2026-10-10T07:35:53.120953+00:00",
+      "status": 200,
+      "final_url": "https://www.cdc.gov/ccindex/pdf/full-index-score-sheet.pdf",
+      "content_type": "application/pdf",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E01.pdf",
+      "bytes": 1495143,
+      "sha256": "214b5f7be1e8d930e86b483108d77cc6a5d169a15bc49e7357ea3e0f457a5129",
+      "access_utc_end": "2026-10-10T07:35:53.331840+00:00",
+      "source_id": "P01",
+      "candidate_source_binding": "E01",
+      "title": "CDC Clear Communication Index Score Sheet",
+      "version_or_release": "Revised July 2014",
+      "inspected_locator": "PDF pp. 1–3, 5; required audience/objective/message fields; conditional scoring parts",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Communication-design checklist. Four initial fields govern scoring; different translation audiences require separate materials/scoring; Parts B–D are conditional. Where literacy information is absent the sheet permits an average-to-low health-literacy assumption. No score or case demographic inference was made.",
+      "applicability_limit": "Health-communication checklist; no comprehension, accessibility or legal oracle.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E01.txt"
+    },
+    {
+      "id": "E02",
+      "requested_url": "https://www.cdc.gov/ccindex/tool/develop.html",
+      "access_utc_start": "2026-10-10T07:35:53.121939+00:00",
+      "status": 200,
+      "final_url": "https://www.cdc.gov/ccindex/tool/develop.html",
+      "content_type": "text/html",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E02.html",
+      "bytes": 78758,
+      "sha256": "224bf8557b46b85d135c963043e66a5f8ed897abee157e4fd0890b4ddb5ca026",
+      "access_utc_end": "2026-10-10T07:35:54.663390+00:00",
+      "source_id": "P02",
+      "candidate_source_binding": "E02",
+      "title": "CDC Developing Effective Communication Products quick check",
+      "version_or_release": "Live page; no visible release date",
+      "inspected_locator": "Questions 1–5, pretesting qualification",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Audience research, objectives, delivery fit and intended-audience pretesting are explicit. The Index does not replace formative research or pretesting.",
+      "applicability_limit": "Method prompt; no case effects or selected channel.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E02.txt"
+    },
+    {
+      "id": "E03",
+      "requested_url": "https://thinkculturalhealth.hhs.gov/clas/standards",
+      "access_utc_start": "2026-10-10T07:35:53.123504+00:00",
+      "status": 200,
+      "final_url": "https://thinkculturalhealth.hhs.gov/clas/standards",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E03.html",
+      "bytes": 56348,
+      "sha256": "bbb554d956468762080f4baae221219a01eeb109f9eaae46ca45542f6d20efcf",
+      "access_utc_end": "2026-10-10T07:35:53.224090+00:00",
+      "source_id": "P03",
+      "candidate_source_binding": "E03",
+      "title": "HHS National CLAS Standards",
+      "version_or_release": "Live HTML; linked PDF filename Revised_June2025; linked PDF retrieval 503",
+      "inspected_locator": "Heading; Standards 1, 5–8, 11, 13",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "HTML governs the claims used: health and health-care organization frame, language assistance, competent support, understandable print/digital material and community involvement. Independent web attempt of linked PDF also returned 503; its contents/version cannot be authenticated here.",
+      "applicability_limit": "Health-care analogy only; no local statutory conclusion.",
+      "semantic_verdict": "SUPPORTED_HTML_PDF_UNAVAILABLE",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E03.txt"
+    },
+    {
+      "id": "E04",
+      "requested_url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/consider-translations/",
+      "access_utc_start": "2026-10-10T07:35:53.124686+00:00",
+      "status": 200,
+      "final_url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/consider-translations/",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E04.html",
+      "bytes": 28660,
+      "sha256": "6d392049bde8f92e22ba0f26fcb2eff662ce3afa870f0cee7e66612323ae7ed1",
+      "access_utc_end": "2026-10-10T07:35:53.219145+00:00",
+      "source_id": "P04",
+      "candidate_source_binding": "E04",
+      "title": "GOV.UK Consider translations",
+      "version_or_release": "Live page; no visible release date",
+      "inspected_locator": "Consider translations, same-page direction, content-type exceptions; extracted text lines 45–53",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Translation policy/user need govern GOV.UK publication. The same-page direction applies within that publishing guidance; fatality notices/statistical data sets have content-type exclusions. It does not prove that all mixed-language web pages fail.",
+      "applicability_limit": "Compatible digital option; paper, SMS and other platforms remain open.",
+      "semantic_verdict": "SUPPORTED_SCOPED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E04.txt"
+    },
+    {
+      "id": "E05",
+      "requested_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "access_utc_start": "2026-10-10T07:35:53.125486+00:00",
+      "status": 200,
+      "final_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E05.html",
+      "bytes": 512457,
+      "sha256": "6e3c5fe397257cae509a2fb4752b73062cf8cbeb92c2cec618989b17e4cf7057",
+      "access_utc_end": "2026-10-10T07:35:53.210286+00:00",
+      "source_id": "P05",
+      "candidate_source_binding": "E05",
+      "title": "WCAG 2.2 fixed Recommendation",
+      "version_or_release": "W3C Recommendation, 12 December 2024",
+      "inspected_locator": "SC 1.4.4, 1.4.5, 1.4.10, 3.1.1, 3.1.2",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Web content: text resize without assistive technology to 200%, excluding captions/images of text; text rather than images where technology can achieve presentation, except customizable/essential presentation; reflow at 320 CSS-pixel width for vertical scrolling or 256 CSS-pixel height for horizontal scrolling, except parts needing two-dimensional layout. Page default and passage language must be programmatically determinable, with named part-language exceptions.",
+      "applicability_limit": "Proposed narrow checks; selected criteria alone establish neither comprehension nor whole-site conformance/law.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E05.txt"
+    },
+    {
+      "id": "E06",
+      "requested_url": "https://user-research.education.gov.uk/guidance/inclusive-research/limited-english-and-sign-language",
+      "access_utc_start": "2026-10-10T07:35:53.126460+00:00",
+      "status": 200,
+      "final_url": "https://user-research.education.gov.uk/guidance/inclusive-research/limited-english-and-sign-language",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E06.html",
+      "bytes": 49364,
+      "sha256": "8d091627e6462156711c3cfbe49e0ccb4a5b4195c673f4f79e3f8108af8fc9f0",
+      "access_utc_end": "2026-10-10T07:35:53.522867+00:00",
+      "source_id": "P06",
+      "candidate_source_binding": "E06",
+      "title": "DfE limited-English and sign-language research manual",
+      "version_or_release": "Live page with explicit under-review/outdated-or-incorrect warning",
+      "inspected_locator": "Scoping; recruitment routes; consent/literacy; language services; question rehearsal",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Within-language literacy variation, supported accessible consent, professional language services, realistic budgets/time and translated-question rehearsal are present. Review warning is preserved.",
+      "applicability_limit": "UK research prompts; actual languages, population and local requirements unknown.",
+      "semantic_verdict": "SUPPORTED_WITH_SOURCE_WARNING",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E06.txt"
+    },
+    {
+      "id": "E07",
+      "requested_url": "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research",
+      "access_utc_start": "2026-10-10T07:35:53.210468+00:00",
+      "status": 200,
+      "final_url": "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E07.html",
+      "bytes": 81917,
+      "sha256": "38554f1c37620d65a32eeebc0a191088377cc0d53b128198361823cfcfe5b755",
+      "access_utc_end": "2026-10-10T07:35:53.533977+00:00",
+      "source_id": "P07",
+      "candidate_source_binding": "E07",
+      "title": "GOV.UK informed consent for user research",
+      "version_or_release": "Published 24 May 2016; updated 5 November 2018",
+      "inspected_locator": "Consent information, formats, recording/data, withdrawal, update history",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Understandable usable consent materials, purpose/data/procedure/sharing/retention, voluntary withdrawal, recording/observers and organizational legal/privacy review support the proposed safeguards.",
+      "applicability_limit": "Design guidance, not local ethics approval or legal determination.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E07.txt"
+    },
+    {
+      "id": "E08",
+      "requested_url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "access_utc_start": "2026-10-10T07:35:53.219253+00:00",
+      "status": 200,
+      "final_url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "content_type": "text/html; charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E08.html",
+      "bytes": 87922,
+      "sha256": "bfe7d3b43feea3744f0964f32f97b1a61bc15577020f0fd1ac2e8b97d1d66c80",
+      "access_utc_end": "2026-10-10T07:35:53.777019+00:00",
+      "source_id": "P08",
+      "candidate_source_binding": "E08",
+      "title": "GOV.UK moderated usability testing",
+      "version_or_release": "Published 21 February 2017; updated 3 October 2017",
+      "inspected_locator": "Planning/tasks, neutral facilitation, dummy data and own assistive technology",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Actual/likely users, believable non-leading goal tasks, consistent guide and access support are explicit. Personal assistive technology is normally preferable; fictional data can be used with contextual limits. No case-specific power calculation supports the sample heuristic.",
+      "applicability_limit": "Formative methods, not representative performance evidence.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E08.txt"
+    },
+    {
+      "id": "E09",
+      "requested_url": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs/",
+      "access_utc_start": "2026-10-10T07:35:53.224160+00:00",
+      "status": 200,
+      "final_url": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs/",
+      "content_type": "text/html; charset=UTF-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E09.html",
+      "bytes": 47621,
+      "sha256": "ca9897c2927f1f1031fb84f97cbdd66ff6cb119b362fab427c4255ad21446354",
+      "access_utc_end": "2026-10-10T07:35:53.344478+00:00",
+      "source_id": "P09",
+      "candidate_source_binding": "E09",
+      "title": "Toronto recreation registration",
+      "version_or_release": "Live page modified 2 October 2026",
+      "inspected_locator": "Partial Payments; Waiting Lists; footer",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Programs costing more than $100 permit two installments: 50% at registration, remainder by first activity day. Full activities may have a waitlist; an opening brings email, or phone if no account email, with up to 36 hours to accept/decline. Waitlisting does not guarantee enrollment.",
+      "applicability_limit": "City-specific process example only; no transfer of fees/status or comprehension effectiveness.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E09.txt"
+    },
+    {
+      "id": "E10",
+      "requested_url": "https://www.austintexas.gov/parks/account-creation-online-registration-and-faq",
+      "access_utc_start": "2026-10-10T07:35:53.332286+00:00",
+      "status": 200,
+      "final_url": "https://www.austintexas.gov/parks/account-creation-online-registration-and-faq",
+      "content_type": "text/html; charset=UTF-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E10.html",
+      "bytes": 90547,
+      "sha256": "9cca977766ac4c558cbc723fd02aaf2406c13ec8851c4a26f98af1e949bca7f3",
+      "access_utc_end": "2026-10-10T07:35:53.930541+00:00",
+      "source_id": "P10",
+      "candidate_source_binding": "E10",
+      "title": "Austin account creation/registration FAQ",
+      "version_or_release": "Live page; no visible update date",
+      "inspected_locator": "FAQ: held spaces; full classes; partial payments",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "No spaces are allocated in advance to the online/walk-in/phone registration routes; all operate live subject to availability. Free waitlisting and an offer-payment deadline are explicit; expiry/decline removes the student from the roster. Deposits apply only to eligible classes. The held-space FAQ is not a blanket denial of post-registration reservations.",
+      "applicability_limit": "City-specific allocation/payment example. The proposal does not import its policy.",
+      "semantic_verdict": "SUPPORTED_WITH_WORDING_CAVEAT",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E10.txt"
+    },
+    {
+      "id": "E11",
+      "requested_url": "https://www.rmit.edu.au/content/dam/rmit/au/en/about/schools-colleges/guss/social-equity-research-centre/projects/serc-testing-useability-applicability-aus-multilingual-public-service-communications.pdf",
+      "access_utc_start": "2026-10-10T07:35:53.344548+00:00",
+      "status": 200,
+      "final_url": "https://www.rmit.edu.au/content/dam/rmit/au/en/about/schools-colleges/guss/social-equity-research-centre/projects/serc-testing-useability-applicability-aus-multilingual-public-service-communications.pdf",
+      "content_type": "application/pdf",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11.pdf",
+      "bytes": 1170582,
+      "sha256": "cbb7af3504ffd780908b94d96cb078dd885773d1f59e14df884f01170446be49",
+      "access_utc_end": "2026-10-10T07:35:55.683548+00:00",
+      "source_id": "P11",
+      "candidate_source_binding": "E11",
+      "title": "RMIT multilingual public-service communication report",
+      "version_or_release": "Title page June 2023; actual release date not independently established",
+      "inspected_locator": "PDF pp. 9–15 methods/sample; Table 3 pp. 15–17 and discussion p. 18; pp. 19–23; Appendix IV pp. 52–55",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Four methods, seven languages and 21 readers. Table 3’s subjective preferences favor Methods 3/4 on A–C, with a D reversal. Sequential exposure, small cells and subjective measures limit inference. Appendix IV elicits main points but supplies no scored objective accuracy or task-completion oracle. Methods describe recruitment intent/sample, not its channel.",
+      "applicability_limit": "Source-bounded implementation lead, not a best translation method for course notices.",
+      "semantic_verdict": "SUPPORTED_SCOPED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11.txt",
+      "visual_evidence": [
+        "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11-table-16.png",
+        "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11-table-17.png"
+      ]
+    },
+    {
+      "id": "E11-project",
+      "requested_url": "https://www.rmit.edu.au/about/schools-colleges/global-urban-and-social-studies/research/social-equity-research-centre/projects/testing-useability-applicability-aus-multilingual-public-service-comms",
+      "access_utc_start": "2026-10-10T07:35:53.522960+00:00",
+      "status": 200,
+      "final_url": "https://www.rmit.edu.au/about/schools-colleges/global-urban-and-social-studies/research/social-equity-research-centre/projects/testing-useability-applicability-aus-multilingual-public-service-comms",
+      "content_type": "text/html;charset=utf-8",
+      "path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11-project.html",
+      "bytes": 225014,
+      "sha256": "d3a5cf6ae5bc77f90e736ff681873a2d25e2dc95f14b5a71bc99e1e4381ce48f",
+      "access_utc_end": "2026-10-10T07:35:55.259804+00:00",
+      "source_id": "P11-project",
+      "candidate_source_binding": "E11-project",
+      "title": "RMIT project page",
+      "version_or_release": "Project dates April 2023–June 2024",
+      "inspected_locator": "Project description, methods, dates and funding",
+      "observed_operation": "Independent official-URL retrieval; read governing extracted context. RMIT Table 3 also inspected in locally rendered PDF pages.",
+      "verified_scope_conditions": "Official page confirms commissioning/funding context and project dates, separate from the report cover date.",
+      "applicability_limit": "Administrative frame; not additional outcome validation.",
+      "semantic_verdict": "SUPPORTED",
+      "extracted_text_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/E11-project.txt"
+    }
+  ],
+  "original_freeze_preserved": true,
+  "evidence_index_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/evidence/index.md",
+  "source_map_path": "ER12_RUNTIME/assessment/D-R2-04/treatment-v1/source-map.json",
+  "review_completed_utc": "2026-10-10T07:48:56.364868+00:00",
+  "review_elapsed_seconds": 951
+}

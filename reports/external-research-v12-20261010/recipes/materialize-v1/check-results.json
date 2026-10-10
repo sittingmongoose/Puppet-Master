@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-10-10T05:29:37.934349+00:00",
+  "checked_at_utc": "2026-10-10T05:20:56.816894+00:00",
   "passed": true,
   "checks": [
     {
@@ -222,5 +222,14 @@
   "live_catalog_observed": false,
   "leaf_native_goals_observed": false,
   "production_qualified": false,
-  "scratch_removed": true
+  "scratch_removed": true,
+  "original_helpers_unchanged": true,
+  "python_sources_parse": true,
+  "bounded_public_template_scan": {
+    "files_checked": 12,
+    "actual_runtime_path_matches": 0,
+    "actual_current_route_matches": 0,
+    "routing_email_pattern_matches": 0,
+    "full_publication_privacy_review": "root performs later"
+  }
 }

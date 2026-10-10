@@ -1,0 +1,32 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.epa.gov/sites/default/files/2016-11/documents/final_gi_maintenance_508.pdf",
+    "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf"
+  ],
+  "source_urls": [
+    "https://www.epa.gov/sites/default/files/2016-11/documents/final_gi_maintenance_508.pdf",
+    "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-04/treatment-v1/evidence/primary/retrieval-manifest.json",
+      "source_id": "S05",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "02253f3762085b7743c71dabd96d96b1fbfb535c7efd420cb933bf4ab8852a17",
+  "rawSHA256": "02253f3762085b7743c71dabd96d96b1fbfb535c7efd420cb933bf4ab8852a17",
+  "original_bytes": 69752,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-04/treatment-v1/evidence/primary/S05.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

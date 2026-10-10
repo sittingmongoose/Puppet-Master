@@ -1,0 +1,19 @@
+{
+  "run_id": "D-R2-01-treatment",
+  "initialized_at_utc": "2026-10-10T06:57:00.040Z",
+  "whole_deadline_utc": "2026-10-10T07:56:57.963Z",
+  "brief_sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+  "brief_bytes": 2665,
+  "requested_route": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6-luna",
+    "options": {
+      "reasoningEffort": "max",
+      "serviceTier": "priority"
+    }
+  },
+  "runtime_mode_requested": "full-access",
+  "native_goal_status": "UNKNOWN until directly observed",
+  "method_id": "A1",
+  "stage_prompt_deltas": {}
+}

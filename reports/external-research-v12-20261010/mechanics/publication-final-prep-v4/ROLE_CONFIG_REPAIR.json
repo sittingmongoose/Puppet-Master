@@ -1,0 +1,11 @@
+{
+  "at_utc": "2026-10-10T08:45:00.601140+00:00",
+  "reason": "Actual B ROLE configuration resides in authentic stages/role/request.json args rather than an invented standalone configs filename. Preserve original native request and check exact equality to authentic dispatch args; expose that actual path in method mapping.",
+  "standalone_B_configs": "ABSENT",
+  "actual_role_config_request_count": 24,
+  "new_config_files_fabricated": 0,
+  "source_labels_unchanged": 79,
+  "candidate_retries": 0,
+  "prior_v3_refusal": "actual config missing, before staging",
+  "new_code_sha256": "27af19bfb19deb9519a1f303a1933f09ff11e9c5f275b48aa967481d2a4a1c09"
+}

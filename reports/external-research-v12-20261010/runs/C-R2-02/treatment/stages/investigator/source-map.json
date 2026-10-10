@@ -1,0 +1,118 @@
+{
+  "schema": "ER12 bounded source map v1",
+  "run_id": "C-R2-02-treatment",
+  "stage": "investigator",
+  "access_observation_note": "access_utc is the exact UTC clock value captured immediately after each web-open batch returned. It records when the source content had been observed in this session, not a server publication timestamp. Mutable docs are not frozen; pin their live revision before any pilot.",
+  "sources": [
+    {
+      "id": "S001",
+      "title": "PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews",
+      "url": "https://doi.org/10.1186/s13643-020-01542-z",
+      "version_or_commit": "Final journal article, Systematic Reviews 10, 39 (2021), DOI 10.1186/s13643-020-01542-z; publisher version.",
+      "locator": "Items 4, 5, 7, 8, 11, and 16; lines 202-210, 233-249, 266-307, 356-369, 442-454.",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "Reporting guidance: asks for named sources and exact strategies for each source; purposefully browsed sites and web searches; citation search method/base records; adapted prior strategies; and deduplication software/process.",
+      "governing_condition_default_exception": "Applies to systematic-review literature-search reporting and is intended to supplement PRISMA 2020. It does not prescribe a search algorithm or prove that a search is exhaustive. It explicitly recognizes that some web/search-tool results cannot be exactly reproduced later and still asks that the method be declared.",
+      "applicability": "Use as the pilot’s audit log and disclosure checklist for database queries, repository/site searches, citations, and record deduplication."
+    },
+    {
+      "id": "S002",
+      "title": "Cochrane Handbook, Chapter 4: Searching for and selecting studies",
+      "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+      "version_or_commit": "Version 6.5.1; chapter last updated March 2025 (as identified on the chapter page).",
+      "locator": "Sections 4.3.5, 4.4.11; especially lines 495-501 on iterative search development, inadequately evaluated stopping rules, scarce evidence caution, known-item checks, and citation/reference checking.",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "Methodological guidance on broad source discovery, grey sources, search-performance checking, and search stopping.",
+      "governing_condition_default_exception": "Cochrane-specific conduct guidance. It describes suggestions such as stopping after no new relevant records or low precision but says there has been little formal evaluation; it cautions that scarce evidence requires more careful stopping decisions.",
+      "applicability": "Supports explicit pilot stop rules, independently chosen known-item checks, and treating citation findings as adequacy evidence rather than a full-corpus denominator."
+    },
+    {
+      "id": "S003",
+      "title": "Cochrane Handbook Technical Supplement to Chapter 4",
+      "url": "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+      "version_or_commit": "Handbook version 6.5; technical supplement last updated September 2024 (cover/citation, PDF pp. 0-1).",
+      "locator": "Contents pp. 5-15 and 25-37 on source classes, including citation indexes, grey-literature sources, handsearching, references, and general web search; PDF pp. 13-15 on grey-literature scope and feasibility; section 4 on managing references.",
+      "access_utc": "2026-10-10T05:56:49Z",
+      "observed_operation": "A source taxonomy and implementation guidance for bibliographic, citation, regional, grey-literature, web, and manual routes; notes diversity/volume and need to tailor grey searches to question and resources.",
+      "governing_condition_default_exception": "There is no single gold-standard rigorous grey-literature search method; sources should be tailored to the question and feasible resources. Google Scholar may locate volume/known items but should not be the only systematic-review resource. Organizational reports may matter for implementation questions.",
+      "applicability": "Supports separate finite repository/manual arms and a realistic time budget, especially for municipal implementation material."
+    },
+    {
+      "id": "S004",
+      "title": "Urban Heat Island Mitigation Strategies: 2021 Update",
+      "url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "version_or_commit": "Institut national de santé publique du Québec, 2021 Update, Appendix 1, printed pp. 126-128 / PDF pp. 139-141.",
+      "locator": "Appendix 1, lines 4554-4575 for databases, query concepts, dates, and scientific records; lines 4605-4623 for grey sources, bilingual search, operators, and stopping rule.",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "Primary public-health institute report describing an implemented literature collection with librarian assistance, six scholarly databases/platforms, free and controlled terms, bilingual grey search through Google/Google Scholar and named government/lab sites, and a relevance-based manual stopping rule.",
+      "governing_condition_default_exception": "The work targets measures potentially applicable in Québec; its language, climate, publication-date, inclusion, and chosen-review criteria are specific to that project. 4,487 and 985 duplicate counts describe the scientific-literature stream; the cited passage does not give grey-route yield by portal.",
+      "applicability": "Close implementation comparator for urban heat. Reuse the disclosure model, not the Québec-specific eligibility or its subjective gray-search stopping rule."
+    },
+    {
+      "id": "S005",
+      "title": "OpenAlex API Search — Querying",
+      "url": "https://help.openalex.org/api/searching/",
+      "version_or_commit": "Mutable official documentation; no document version or commit displayed. Captured live on access date.",
+      "locator": "Sections What gets searched and Keywords in search (lines 32-53); phrase/fuzzy/wildcard and relevance/rerank sections (lines 94-159).",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "Current OpenAlex works-search documentation says search can cover title, abstract, full text, and keywords, with field-scoped variants, phrase/wildcard/fuzzy options, and semantic search; default result order is relevance and citation count contributes to score.",
+      "governing_condition_default_exception": "Full text is only available for a subset; keyword matching can retrieve works without the exact text phrase; default relevance is ranked rather than exhaustive, and citation counts affect ordering. Documentation is mutable and API behavior/pricing may change.",
+      "applicability": "Useful open scholarly discovery and term-expansion comparison arm. Freeze request, date, result pagination, query form, and versioned response; do not treat as a municipal-report denominator."
+    },
+    {
+      "id": "S006",
+      "title": "Crossref REST API documentation",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "version_or_commit": "Official mutable API documentation. Page itself says last updated 2020-04-08; it describes the live API, so schema/behavior version must be rechecked before a pilot.",
+      "locator": "REST API overview and endpoints, lines 112-147; documentation says member-deposited metadata and no sign-up at lines 114-119.",
+      "access_utc": "2026-10-10T05:56:49Z",
+      "observed_operation": "Public REST API to search/filter registered scholarly metadata, with works, DOI, member, and type endpoints; metadata comes from members and trusted sources.",
+      "governing_condition_default_exception": "Coverage is conditioned on Crossref registration/deposit and metadata practices. Public API does not imply a complete set of municipal reports. Some abstracts can carry copyright restrictions.",
+      "applicability": "Supplemental identifier/report-metadata route and cross-source linking, not sole grey-literature search."
+    },
+    {
+      "id": "S007",
+      "title": "Crossref REST API filters",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "version_or_commit": "Official documentation page last updated 2025-10-16; current filter reference, not a pinned API schema.",
+      "locator": "Works filters: approved-date conditions for dissertation, standard, and report at lines 166-180; type/type-name filters at lines 256-265; record date and exact-value filter notes at lines 155-165 and 238-243.",
+      "access_utc": "2026-10-10T05:56:49Z",
+      "observed_operation": "Defines Crossref work filtering by type and registered metadata dates; permits a report-typed search only for items carrying that metadata type.",
+      "governing_condition_default_exception": "Type/date filters operate on existing Crossref records and their submitted fields; missing or miscoded report records remain outside the result. Type filtering cannot discover unregistered local documents.",
+      "applicability": "Use to identify indexed report-like works and test metadata gaps; maintain a separate portal/repository route."
+    },
+    {
+      "id": "S008",
+      "title": "Zotero Duplicate Detection",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "version_or_commit": "Mutable main-branch documentation; exact commit was not exposed by browser/API lookup (API lookup returned an internal error). Pin a revision before applying to a pilot.",
+      "locator": "Finding Duplicates and Merging Duplicates, lines 190-210.",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "The documented matcher uses title, DOI, and ISBN fields, then publication years within one year and creator-list overlap; matches are confined to one library. Human merge can select master fields; docs say false positives cannot be marked as non-duplicates.",
+      "governing_condition_default_exception": "Candidate detection only within one library; distinct group libraries do not cross-match. Documentation describes possible algorithm evolution. Do not treat an algorithm flag or merge as proof of same study.",
+      "applicability": "Optional candidate-pair generator. Retain raw items, adjudicate versions separately, and avoid destructive auto-merging."
+    },
+    {
+      "id": "S009",
+      "title": "ASReview LAB Progress and Results",
+      "url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+      "version_or_commit": "Stable documentation page labeled ASReview LAB 3.0.8 in the page title/navigation; implementation version should be pinned to release tag/commit.",
+      "locator": "Stop screening, lines 58-66; export and label/ranking semantics, lines 85-125.",
+      "access_utc": "2026-10-10T05:55:01Z",
+      "observed_operation": "Optional active-learning screening dashboard; stop threshold measures consecutive irrelevant records since the last relevant one, is not set by default, and reaching it prompts a human to stop or continue. Dataset export preserves labels and unreviewed records/ranking.",
+      "governing_condition_default_exception": "Threshold must be chosen by a user and guidance says its ideal value is still researched. It prioritizes screening among retrieved records; it does not expand search coverage or certify recall.",
+      "applicability": "Only a workload aid after records are discovered; compare against conventional screening and audit unseen records."
+    },
+    {
+      "id": "S010",
+      "title": "ASReview release history",
+      "url": "https://github.com/asreview/asreview/releases",
+      "version_or_commit": "Observed tags/verified short commits: v3.0.5 516290b; v3.0.6 f1d388e; v3.0.7 05b68eb; v3.0.8 d3e863c. Release page shows day/month and verified commit; year is not rendered in the observed section.",
+      "locator": "v3.0.5 decision migration/project-import/export fixes (lines 360-380); v3.0.6 database lock (296-314); v3.0.7 dropped ranking table (241-260); v3.0.8 corrupted saved ranking record_id (177-195).",
+      "access_utc": "2026-10-10T05:57:21Z",
+      "observed_operation": "Official signed GitHub release history showing concrete fixes to decision migration, import retry behavior, database locking, ranking persistence, and saved ranking record identifiers.",
+      "governing_condition_default_exception": "Release notes establish what maintainers say changed, not that all failure modes are absent. Pin and test the selected release with a small export/import/reopen and label-retention check.",
+      "applicability": "Implementation history relevant to screening state and auditability; not evidence of search-source coverage."
+    }
+  ]
+}

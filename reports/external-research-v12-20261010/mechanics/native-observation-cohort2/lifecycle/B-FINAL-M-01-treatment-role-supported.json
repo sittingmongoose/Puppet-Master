@@ -1,0 +1,143 @@
+{
+  "frozen_identity": {
+    "slot": "B-FINAL-M-01",
+    "arm": "treatment",
+    "stage": "role",
+    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-treatment-role-v2",
+    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-treatment-role-v2",
+    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-M-01-treatment-role-v2:ordinal:1",
+    "requestedProvider": "AUTHORIZED_PROVIDER_INSTANCE",
+    "requestedModel": "muse-spark-1.3-contributor"
+  },
+  "receipts": [
+    {
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a12408-8fe3-70d0-aac9-859036b8ddcd",
+      "position": 7,
+      "host_updatedAt": "2026-10-10T04:18:23.465Z",
+      "tool": "create_goal",
+      "input": {
+        "objective": "ER12 B-FINAL-M-01/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal."
+      },
+      "output": {
+        "goal": {
+          "created_at_ms": 1791605903366,
+          "current_work": null,
+          "goal_id": "goal-01a12408-9006-7eb3-8be3-07dcf3b09b05",
+          "last_progress_at_ms": null,
+          "next_work": null,
+          "objective": "ER12 B-FINAL-M-01/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 0,
+          "session_id": "01a12408-259a-7000-9298-672db418ffdb",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 0,
+          "updated_at_ms": 1791605903366
+        }
+      },
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/lifecycle/24-item-7.json",
+      "source_sha256": "3c8964b02aba99b4777e5f975267500a8755e4fa3aa7f36cee360d7db2520bc8"
+    },
+    {
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240b-7c68-7c02-b288-d3c73df63868",
+      "position": 44,
+      "host_updatedAt": "2026-10-10T04:21:35.046Z",
+      "tool": "get_goal",
+      "input": {},
+      "output": {
+        "goal": {
+          "created_at_ms": 1791605903366,
+          "current_work": "Investigating curl primary docs for retry/deadline/HTTP-failure adjudication",
+          "goal_id": "goal-01a12408-9006-7eb3-8be3-07dcf3b09b05",
+          "last_progress_at_ms": 1791605986091,
+          "next_work": "Save final-section.md, source-map.json, sources evidence, activation receipt, then complete goal",
+          "objective": "ER12 B-FINAL-M-01/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 40,
+          "session_id": "01a12408-259a-7000-9298-672db418ffdb",
+          "status": "active",
+          "token_budget": null,
+          "tokens_used": 2130248,
+          "updated_at_ms": 1791606094951
+        }
+      },
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/lifecycle/24-item-44.json",
+      "source_sha256": "6b8042ac2f927b8d5d4abe56a27e91a4247dbaa0db1131643d0a40cac00fd08b"
+    },
+    {
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240d-6a09-7160-80eb-80b9645b00dd",
+      "position": 59,
+      "host_updatedAt": "2026-10-10T04:23:41.394Z",
+      "tool": "update_goal",
+      "input": {
+        "status": "complete"
+      },
+      "output": {
+        "goal": {
+          "created_at_ms": 1791605903366,
+          "current_work": "Verifying final-section word counts and writing source map plus activation receipt",
+          "goal_id": "goal-01a12408-9006-7eb3-8be3-07dcf3b09b05",
+          "last_progress_at_ms": 1791606144194,
+          "next_work": "Save source-map.json and receipt, verify all artifacts, then complete the native Goal",
+          "objective": "ER12 B-FINAL-M-01/treatment: execute ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/assignment.md; save the complete bounded role output and source map before completing this actual native Goal.",
+          "percent_complete": 100,
+          "session_id": "01a12408-259a-7000-9298-672db418ffdb",
+          "status": "complete",
+          "token_budget": null,
+          "tokens_used": 3506604,
+          "updated_at_ms": 1791606221357
+        }
+      },
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/lifecycle/24-item-59.json",
+      "source_sha256": "c6f532f83c35fc7b4dde1cb188e310f385aabfc10890839bb8390e75d7447679"
+    }
+  ],
+  "same_original_goal_identity": true,
+  "save_order_anchors": [
+    {
+      "position": 47,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240b-c74f-79b1-86b0-7acce0e9332e",
+      "path_line": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/S1-manpage-excerpts.md",
+      "host_updatedAt": "2026-10-10T04:21:54.211Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/24-page-1.json",
+      "source_sha256": "63a49e033630c97eadc1e58b4649da657de4605a62f8f2f9f6f3b2f23c26a5e4",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 48,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240b-da61-7d80-8d00-2261ef7efca8",
+      "path_line": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/sources/S2-optionsall-excerpts.md",
+      "host_updatedAt": "2026-10-10T04:21:59.120Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/24-page-1.json",
+      "source_sha256": "63a49e033630c97eadc1e58b4649da657de4605a62f8f2f9f6f3b2f23c26a5e4",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 50,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240c-1fae-7c20-a4a5-fa5455e330a9",
+      "path_line": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/final-section.md",
+      "host_updatedAt": "2026-10-10T04:22:16.815Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/24-page-1.json",
+      "source_sha256": "63a49e033630c97eadc1e58b4649da657de4605a62f8f2f9f6f3b2f23c26a5e4",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 54,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240d-10bf-78f3-b2ed-43b4e468cf66",
+      "path_line": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/source-map.json",
+      "host_updatedAt": "2026-10-10T04:23:18.543Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/24-page-1.json",
+      "source_sha256": "63a49e033630c97eadc1e58b4649da657de4605a62f8f2f9f6f3b2f23c26a5e4",
+      "content_read_for_grade": false
+    },
+    {
+      "position": 55,
+      "itemId": "turn-item:provider:AUTHORIZED_PROVIDER_INSTANCE:native-item:AUTHORIZED_PROVIDER_INSTANCE%3Aprovider-thread%3Aprovider%3Amuse%3Anative-thread%3Apending%253Arun%253Athread%253Athread%25253Adelegated-task%25253Acommand%2525253Amcp%2525253A39c31430-71a8-4158-b353-1fe1bb3dad4d%2525253Adelegate-task%2525253Aer12-B-FINAL-M-01-treatment-role-v2%253Aordinal%253A1%3A01a12408-2fdc-7000-b0ac-181b3acb8182%3A01a1240d-262c-7800-843e-f054b3a0d5f0",
+      "path_line": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/goal-activation-receipt.json",
+      "host_updatedAt": "2026-10-10T04:23:24.039Z",
+      "source_path": "ER12_RUNTIME/mechanics/native-observation-cohort2/activity/24-page-1.json",
+      "source_sha256": "63a49e033630c97eadc1e58b4649da657de4605a62f8f2f9f6f3b2f23c26a5e4",
+      "content_read_for_grade": false
+    }
+  ],
+  "science_before_complete": "OBSERVED_FILE_CHANGE_ORDER_ONLY",
+  "no_science_grade": true
+}

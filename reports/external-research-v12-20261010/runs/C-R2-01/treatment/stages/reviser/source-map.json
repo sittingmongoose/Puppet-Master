@@ -1,0 +1,225 @@
+{
+  "case_id": "ER12-C-R2-01-FRESH",
+  "run_id": "C-R2-01-treatment",
+  "stage": "reviser",
+  "research_basis": "The exact supplied brief only. Independent discovery was completed before the plan-release step; no unreleased plan, parent conversation, other candidate, evaluation, or campaign history was consulted.",
+  "raw_source_capture": "No full raw webpages/PDFs copied. Bounded evidence notes are stored under sources/; note hashes below are hashes of these local notes, not hashes of publisher originals.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Library of Congress Preservation Supply Specifications index",
+      "url": "https://www.loc.gov/preservation/resources/specifications/index.html",
+      "source_kind": "official procurement-specification index",
+      "version_or_release": "Dynamic web page; no revision date displayed. Accessed 2026-10-10T05:56:16Z. Page states linked PDFs are the most recent specifications; listed label specs are dated 2016-09-30.",
+      "locator": "Label Stock table, entries 700-701 through 700-714.",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened official index; read specification titles, application substrates, printer types, and dates.",
+      "governing_conditions_defaults_exceptions": "Select a document by both substrate (paper/box-board or plastic/metal) and printer process (laser or thermal transfer). Index is not product certification.",
+      "applicability": "Directly shows that a label solution's substrate and printer process must be matched. The case sleeve resin and printer technology are unknown.",
+      "evidence_path": "sources/S01-loc-index.md",
+      "evidence_note_sha256": "f934203f4e40bf15c056f49b4ccd94536650c375fd21515136d5f31343fa3e21",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the official LoC index; checked the label-specification table, scope, and statement that linked PDFs are the most recent posted versions.",
+        "applicability_adjudication": "Substrate/printer classes guide source selection but do not identify the case materials."
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Specification 700-713–16: Pressure Sensitive Adhesive Labels for Plastic and Metal Substrates for Use in Thermal Transfer Printers",
+      "url": "https://www.loc.gov/preservation/resources/specifications/specs/700-713_16.pdf",
+      "source_kind": "official procurement specification",
+      "version_or_release": "Specification Number 700-713–16; revision history records changes dated 2016-09-30; no commit identifier. Index lists as most recent PDF.",
+      "locator": "Scope and §§1.1–1.2 (PDF p. 1); §§2.4–2.7 (PDF pp. 1–3); package info §4.1 and revision history §5.5 (PDF p. 6).",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened and read official PDF scope, test procedures, printer conditions, and version history.",
+      "governing_conditions_defaults_exceptions": "LoC purchasing only; plastic/metal collection storage containers; thermal-transfer printer; excludes rare/high-value and photographic uses; no implied commercial endorsement. Specifies face stock selected for use, compatible vendor-recommended ribbon, and named printer. Initial dwell 7 days at 23°C/50% RH; accelerated aging 80°C/50% RH for 28 days then 24 hours at 23°C/50% RH. Bond, curl/lift/ooze, print fastness and abrasion are separate criteria.",
+      "applicability": "Useful test-design and traceability precedent, not a product recommendation, safety guarantee, case-specific acceptance threshold, or lifetime conversion. Accelerated conditions are not ordinary room storage and are not proposed for collection labels.",
+      "evidence_path": "sources/S02-loc-700-713.md",
+      "evidence_note_sha256": "907187ba787172e5c25c8aecee4ff0870385696d57a62ea45e83b69857032a8e",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the official 700-713 PDF; checked scope, §2.5 accelerated test, panels, conditioning, and absence of a years-conversion procedure in this specification.",
+        "applicability_adjudication": "Accelerated procurement test is distinct from ordinary storage and supplies no case lifetime conversion."
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Specification 700-703–16: Pressure Sensitive Adhesive Labels for Plastic and Metal Substrates for Use in Laser Printers",
+      "url": "https://www.loc.gov/preservation/resources/specifications/specs/700-703_16.pdf",
+      "source_kind": "official procurement specification",
+      "version_or_release": "Specification Number 700-703–16; revision history records changes dated 2016-09-30; no commit identifier.",
+      "locator": "Scope and §§1.1–1.2 (PDF p. 1); §§2.4–2.6 and 3.5–3.7 (PDF pp. 1–4); §§4.1 and 5.5 (PDF pp. 4–6).",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened and reviewed official PDF scope, package information, shelf-life and printer requirements.",
+      "governing_conditions_defaults_exceptions": "LoC purchasing only; plastic/metal collection storage containers; laser printer; rare/high-value and photographic uses excluded. Its §1.2 specifies a high-permanence acrylic PSA intended to remain permanently affixed and be removable only with difficulty. Inner package identifies item type/size/count, manufacturer/supplier, year and manufacturing batch. One-year shelf-life condition is limited to materials meeting this spec and ambient storage.",
+      "applicability": "Shows product batch, manufacture date, supply and printer compatibility as useful history fields. It does not establish suitability or shelf-life for the unidentified case product.",
+      "evidence_path": "sources/S03-loc-700-703.md",
+      "evidence_note_sha256": "91f74c5291637d47c28146030b090aab927257d5e76c8ef34ba1556ba093af1a",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the official 700-703 PDF; checked scope/exclusions and §1.2 high-permanence acrylic description.",
+        "applicability_adjudication": "High-permanence adhesive requirement is limited to this LoC laser/plastic-metal procurement scope; rare/high-value/photo use is excluded."
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Lindner, Factors affecting the hygroexpansion of paper",
+      "url": "https://link.springer.com/article/10.1007/s10853-017-1358-1",
+      "source_kind": "peer-reviewed review",
+      "version_or_release": "Published online 2017-08-01; Journal of Materials Science 53, 1–26 (2018); DOI 10.1007/s10853-017-1358-1.",
+      "locator": "Abstract; sections Measurement of single fiber and paper sheet hygroexpansion and Fiber orientation; conclusions.",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened publisher page and reviewed metadata plus relevant full-text sections.",
+      "governing_conditions_defaults_exceptions": "Review synthesizes many papers, grades and manufacturing processes; does not characterize this label stock.",
+      "applicability": "Supports recording known grain/roll direction and measuring dimensions by direction and out-of-plane curl; gives no case-specific magnitude or causal diagnosis.",
+      "evidence_path": "sources/S04-lindner-hygroexpansion.md",
+      "evidence_note_sha256": "1dc15acea2c4438670d175687b4b519815ee4e8d861b30bd07fc70fc79e2a877",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the publisher-hosted review; checked the fiber-orientation and drying passages and their paper-grade/process scope.",
+        "applicability_adjudication": "Directional tendency supports measuring known directions only; actual stock magnitude remains unknown."
+      }
+    },
+    {
+      "id": "S05",
+      "title": "de Ruvo et al., Influence of Temperature and Humidity on the Elastic and Expansional Properties of Paper and the Constituent Fibre",
+      "url": "https://bioresources.cnr.ncsu.edu/wp-content/uploads/2022/03/1973.2.785.pdf",
+      "source_kind": "primary experimental paper",
+      "version_or_release": "Vth Fundamental Research Symposium, Cambridge, 1973, pp. 785–806; reprint shown by BioResources in 2018 and PDF re-hosted 2022; no commit identifier.",
+      "locator": "PDF pp. 785–806, especially humidity/anisotropy pp. 794–797 and transient conditions.",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened citation page and linked PDF; reviewed experimental paper.",
+      "governing_conditions_defaults_exceptions": "Findings describe tested fiber/sheet specimens and controlled atmospheric conditions, not the case stock.",
+      "applicability": "Primary support for tracking humidity/temperature history and transient conditions; cannot establish that the anecdotal room caused failure.",
+      "evidence_path": "sources/S05-de-ruvo-1973.md",
+      "evidence_note_sha256": "8488482b5dc5d66a684de2f28f1962fff7f028fe9a651359dbb51b24418e9b01",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the primary experimental PDF; checked humidity/anisotropy discussion for tested sheets/fibers, not the case stock.",
+        "applicability_adjudication": "Experimental environmental response is for tested specimens, not the case stock or room."
+      }
+    },
+    {
+      "id": "S06",
+      "title": "Maass & Hirn, Long term curl of printing paper due to ink solvent migration",
+      "url": "https://www.sciencedirect.com/science/article/pii/S0264127523010092",
+      "source_kind": "primary experimental paper (publisher-indexed abstract)",
+      "version_or_release": "Materials & Design 237 (January 2024), article 112593; DOI 10.1016/j.matdes.2023.112593; no commit identifier.",
+      "locator": "Publisher-indexed abstract and experiment description.",
+      "accessed_utc": "2026-10-10T06:00:22Z",
+      "observed_operation": "Publisher search result supplied metadata and abstract; direct page-open attempts returned an internal error, and the full text was not inspected.",
+      "governing_conditions_defaults_exceptions": "Used A4 sheets with sprayed water/glycerol model ink; measured curl with 2D laser and layer glycerol distribution with HPLC over one week; mechanism proposed for inkjet print.",
+      "applicability": "Primary, conditional hypothesis only if the changed process used similar aqueous ink. It is not evidence that the unidentified case printer was inkjet or that the case mechanism is the same.",
+      "evidence_path": "sources/S06-maass-hirn-2024.md",
+      "evidence_note_sha256": "5a69a66a1a96a07cd5cb929ae88858f3409e83f6d499fd5a00b9efbe0cdce402",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened publisher page (internal error) and queried the publisher domain; indexed abstract described A4 water/glycerol model-ink sheets. Full text remained unread.",
+        "applicability_adjudication": "Model inkjet mechanism remains conditional; case printer/ink and full-text evidence are unavailable."
+      }
+    },
+    {
+      "id": "S07",
+      "title": "National Archives, Paper-Based Records",
+      "url": "https://www.archives.gov/preservation/holdings-maintenance/paper",
+      "source_kind": "official archival handling guidance",
+      "version_or_release": "Dynamic page, no revision date or commit shown; accessed 2026-10-10T05:56:16Z.",
+      "locator": "Using Polyester L-Sleeves; Unstable and Acidic Paper Records; facsimile/insert guidance.",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened and reviewed relevant sections of official page.",
+      "governing_conditions_defaults_exceptions": "Concerns fragile/unstable records and polyester L-sleeves; warns about static/media transfer/handling and calls for supervisor discussion before moving, copying, or discarding originals.",
+      "applicability": "Context for evaluating a separate index, loose support card, or verified copy; not an instruction to insert a card in the case sleeves. Fit, contact, visibility, static and owner approval remain unknown.",
+      "evidence_path": "sources/S07-nara-paper-guidance.md",
+      "evidence_note_sha256": "4c1c5904cfb05ba350c596a57ede747155bf768c64348bf61dd39f13e0a9058d",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened NARA official guidance and checked L-sleeve eligibility, static/media-transfer limits, and copy/supervisor conditions.",
+        "applicability_adjudication": "L-sleeve guidance does not establish fit or suitability for all unidentified sleeves."
+      }
+    },
+    {
+      "id": "S08",
+      "title": "Canon imageRUNNER LBP5280 e-Manual, Paper Curls",
+      "url": "https://downloads.canon.com/cpr/pdf/Manuals/eManuals/LBP5280_eManual/us_LBP5280_Manual/contents/13130010.html",
+      "source_kind": "manufacturer's model-specific manual",
+      "version_or_release": "Document identifier 0264-0CF; no publication date/version shown.",
+      "locator": "Troubleshooting: Paper Curls, Causes 1–4.",
+      "accessed_utc": "2026-10-10T05:56:16Z",
+      "observed_operation": "Opened Canon-hosted model manual.",
+      "governing_conditions_defaults_exceptions": "For LBP5280 only; lists damp/unsupported paper, paper type and environment as possible factors; setting changes may reduce toner fixation, cause faint output, or slow printing.",
+      "applicability": "History-gathering example only; actual model, firmware, driver and vendor instructions must be recovered before proposing setting changes.",
+      "evidence_path": "sources/S08-canon-printer-manual.md",
+      "evidence_note_sha256": "b4428f96534cf8f7d51377fbe5510792758c71fe0acb839060464db751d78787",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened Canon-hosted LBP5280 manual; checked paper-curl causes and cautions for setting changes.",
+        "applicability_adjudication": "LBP5280 recommendations do not transfer to the unidentified store printer."
+      }
+    },
+    {
+      "id": "S09",
+      "title": "Kuno et al., Improvement of Dimensional Stability of Paper in a Drying Process (Third Report)",
+      "url": "https://www.jstage.jst.go.jp/article/jtappij1955/55/2/55_2_215/_article/-char/en",
+      "source_kind": "primary experimental paper",
+      "version_or_release": "Japan Technical Association of the Pulp and Paper Industry Journal 55(2), 215–225 (2001); DOI 10.2524/jtappij.55.215; available on J-STAGE since 2010-10-27.",
+      "locator": "Abstract, cross-directional shrinkage/hygro-expansion and offset register test.",
+      "accessed_utc": "2026-10-10T05:53:40Z",
+      "observed_operation": "Opened J-STAGE article page and read bibliographic record and abstract.",
+      "governing_conditions_defaults_exceptions": "Commercial newsprint web position/drying restraint and offset printing; does not examine labels or adhesive adhesion.",
+      "applicability": "Supports asking for batch/roll traceability; the observed result is not transferable proof of variation in the case stock.",
+      "evidence_path": "sources/S09-jstage-paper-history.md",
+      "evidence_note_sha256": "55a36df948b90697ef612ec0638ff6125c3584c28adb446040a123ce8cfc4f11",
+      "reviser_recheck": {
+        "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+        "observed_operation": "Reopened the J-STAGE primary article page; checked bibliographic record and abstract on commercial newsprint machine-position tests.",
+        "applicability_adjudication": "Newsprint roll-position finding supports a traceability question but is not a label-stock result."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Specification 700-714–16: Pressure Sensitive Adhesive Labels for Application to Single Paper Sheets and Text Pages of Bound Books for Use in Thermal Transfer Printers",
+      "url": "https://www.loc.gov/preservation/resources/specifications/specs/700-714_16.pdf",
+      "source_kind": "official procurement specification",
+      "version_or_release": "Specification Number 700-714–16; revision history records changes dated 2016-09-30; LoC index listed it as a most-recent posted PDF at reviser access. No commit identifier.",
+      "locator": "Scope and §§1.1–1.2, PDF p. 1; §§2.4–2.11, PDF pp. 1–5; configuration history §5.5, PDF p. 8.",
+      "accessed_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z (individual fetch timestamp not exposed)",
+      "observed_operation": "Opened and read the official PDF and current LoC specification index.",
+      "governing_conditions_defaults_exceptions": "LoC purchasing; pressure-sensitive labels applied to paper sheets/text pages of bound books designated General Collections; thermal-transfer printing; excludes rare/high-value and photographic materials; specifies high-permanence acrylic PSA and vendor-compatible ribbon. Separate tests cover bond, curl/lift/ooze, print fastness, offsetting, migration/staining and adjacent-page damage. Initial bond uses a 7-day 23°C/50% RH dwell; selected accelerated tests use 80°C/50% RH for 28 days followed by 24 hours at 23°C/50% RH.",
+      "applicability": "Technical precedent for distinct endpoints and traceable printer/substrate selection. It concerns paper-page substrates, not the unidentified sleeve; not product advice, conservation-safety evidence, or a lifetime conversion.",
+      "evidence_path": "sources/S10-loc-700-714.md",
+      "evidence_note_sha256": "13232cf31b10fbc25b52bfc0d398893ac10faa1d4c015339c3ce872bf5474944"
+    }
+  ],
+  "source_id_policy": "Preserve investigator S01–S09 exact identities and URLs; S10 is additive and no prior ID is rebound.",
+  "reviser_review_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+  "inputs_reviewed": [
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/input-map.json",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/inputs/brief.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/discovery.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/draft.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/source-map.json",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/revealed-plan.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/investigator/plan-reveal.json",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/critique.md",
+    "ER12_RUNTIME/runs/C-R2-01/treatment/stages/critic/source-map.json"
+  ],
+  "bounded_search": {
+    "access_window_utc": "2026-10-10T06:24:30Z–2026-10-10T06:28:44Z; web tool did not expose individual per-request fetch timestamps.",
+    "queries": [
+      "site:loc.gov/preservation pressure sensitive labels paper conservation adhesive labels technical report",
+      "\"Adhesives for paper labels 1870-1920\" conservation materials study",
+      "museum collection storage paper self-adhesive label substrate adhesive study test conservator"
+    ],
+    "result": "This bounded search did not establish a directly matching modern case report for paper labels on an unidentified polymer sleeve. S10 is a useful but materially different LoC procurement specification. The search is not exhaustive and does not support a claim that no matching report exists."
+  },
+  "native_goal": {
+    "thread_id": "01a1247a-4cb7-7252-9b90-9e9c520d9ed0",
+    "objective": "ER12 reviser stage, run C-R2-01-treatment: execute ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "activation_response_path": "native-goal-activation.json",
+    "binding_gate_path": "goal-binding.json",
+    "activation_response_provenance_independently_proved_by_gate": false
+  },
+  "scw_selection_procedure": "Critique records the ordered SCW claims were materialized after new source fetching began; this reviser accepts that they are not a source-blind preregistration and makes no representativeness claim."
+}

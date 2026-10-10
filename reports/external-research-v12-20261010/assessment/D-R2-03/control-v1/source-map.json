@@ -1,0 +1,614 @@
+{
+  "schema": "ER12 independent semantic assessment source map v1",
+  "assignment": "D-R2-03/control-v1 only",
+  "original_run_root": "ER12_RUNTIME/runs/D-R2-03/control",
+  "original_final": "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/final.md",
+  "independence": "This map is reviewer-authored; inherited IDs identify candidate claims but are not semantic authority. All primary checks were retrieved independently. Candidate originals are unchanged.",
+  "sources": [
+    {
+      "id": "I-AIJ-PAPER-2017",
+      "candidate_source_id": "AIJ-PAPER-2017",
+      "title": "AstroImageJ: Image Processing and Photometric Extraction for Ultra-Precise Astronomical Light Curves (Expanded Edition)",
+      "url": "https://arxiv.org/pdf/1701.04817",
+      "final_url": "https://arxiv.org/pdf/1701.04817",
+      "observed_version": "arXiv:1701.04817 expanded 2017 paper; retrieved PDF header inspected",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.873872+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.856277+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-PAPER-2017.txt",
+      "evidence_sha256": "bdebef4e3efe34176855f97223566900de1b9a8e3812272dbe5cbef94c21e68a",
+      "text_line_ranges": [
+        [
+          372,
+          396
+        ],
+        [
+          1012,
+          1050
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:36; draft.md:34",
+      "semantic_check": "AIJ differential flux and its error model need the actual detector gain, dark current and read noise. Ensemble manipulation without repeating aperture extraction is an implementation capability, not independent observations. Circular-aperture support in this old paper does not describe every later release.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-PAPER-2017.pdf",
+      "raw_sha256": "e30ddcb182ede283cafa805aaffb1b9dce5113b138066688d408d94da9030dad",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-AIJ-GUIDE-LEGACY",
+      "candidate_source_id": "AIJ-GUIDE-LEGACY",
+      "title": "AstroImageJ Legacy User Guide",
+      "url": "https://astroimagej.com/guides/legacy/",
+      "final_url": "https://astroimagej.com/guides/legacy/",
+      "observed_version": "Official legacy guide; self-identifies as very out of date; variable-aperture note names AIJ 2.1.4",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.874992+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.149758+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-GUIDE-LEGACY.txt",
+      "evidence_sha256": "36c20343826aa6b9d7ca9fa446fc2180ceb8645cee1e7f46c15b0733945ca293",
+      "text_line_ranges": [
+        [
+          163,
+          168
+        ],
+        [
+          1740,
+          1772
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:36",
+      "semantic_check": "The FWHM estimate uses pixels inside the initial fixed aperture; that aperture must exceed the largest sequence FWHM. Historical multipliers and the guide itself are not current universal defaults. The final preserves this limitation and recommends recovering the installed version.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-GUIDE-LEGACY.html",
+      "raw_sha256": "3b362ada1a5f604cd8b8c499da6b0c75e80e33ce34b6e2bbcfd79345965be42e",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-AIJ-RELEASE-5.4.0",
+      "candidate_source_id": "AIJ-RELEASE-5.4.0",
+      "title": "AIJ Release 5.4.0.00",
+      "url": "https://astroimagej.com/releases/54000/",
+      "final_url": "https://astroimagej.com/releases/54000/",
+      "observed_version": "5.4.0.00, 2024-12-12, ImageJ 1.54h2 / Java 23",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.881594+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.006968+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-5.4.0.txt",
+      "evidence_sha256": "da6d56f73536f4260e30e5175b43f2be7ed2442022983ac86594758ad3cd9d99",
+      "text_line_ranges": [
+        [
+          7,
+          34
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:36; discovery.md:15",
+      "semantic_check": "The BJD correction is specifically for TESS TICA full-frame images. Generalizing it to ground FITS or all TESS products would be wrong; the candidate does not do so. Other entries document freeform apertures and FITS product handling.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-5.4.0.html",
+      "raw_sha256": "becd7b899cfb92de61de3aa30f3cfce103b8479e5cdcd191658779b1b94b5adf",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-AIJ-RELEASE-6.0.10",
+      "candidate_source_id": "AIJ-RELEASE-6.0.10",
+      "title": "AIJ Release 6.0.10.00",
+      "url": "https://astroimagej.com/releases/601000/",
+      "final_url": "https://astroimagej.com/releases/601000/",
+      "observed_version": "6.0.10.00, 2026-07-23, ImageJ 1.54s / Java 25",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.972692+00:00",
+      "access_finished_utc": "2026-10-10T07:24:10.060224+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-6.0.10.txt",
+      "evidence_sha256": "c73f86be1d5311123046e5eff29375d14746311d3d6cef040f9885172a095ff4",
+      "text_line_ranges": [
+        [
+          7,
+          34
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:36",
+      "semantic_check": "Observatory latitude/longitude header options require the selected keywords and correct values. The release also revises external BJD conversion and carries a specific Prism WCS caveat. Final uses this as dated history, not a claim about the teaching system.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-6.0.10.html",
+      "raw_sha256": "023b8de6bb1892fed41df835a26f445bde3c70818b69fe854da199b6bb8a69d8",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-AIJ-RELEASE-6.0.11",
+      "candidate_source_id": "AIJ-RELEASE-6.0.11",
+      "title": "AIJ Release 6.0.11.00",
+      "url": "https://astroimagej.com/releases/601100/",
+      "final_url": "https://astroimagej.com/releases/601100/",
+      "observed_version": "6.0.11.00, 2026-09-10, ImageJ 1.54s / Java 26",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.880164+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.020104+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-6.0.11.txt",
+      "evidence_sha256": "f178972243371071293598b3af4a573b7456814326eb404c49bd33080d5195eb",
+      "text_line_ranges": [
+        [
+          7,
+          35
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:36; source-map.json inherited records",
+      "semantic_check": "Optional flip detection uses a changing measurement-table value such as PIERSIDE. FITS opening, comparison-column display and plotting changes are explicitly release-specific. The final does not claim these caused the reported pattern.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AIJ-RELEASE-6.0.11.html",
+      "raw_sha256": "0802af04b9291e1b8176529da369798ef6d342d6fc751e2e0918c6ad7bed7214",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-CCDPROC-2.5.1",
+      "candidate_source_id": "CCDPROC-2.5.1",
+      "title": "ccdproc v2.5.1 Reduction Toolbox",
+      "url": "https://ccdproc.readthedocs.io/en/2.5.1/reduction_toolbox.html",
+      "final_url": "https://ccdproc.readthedocs.io/en/2.5.1/reduction_toolbox.html",
+      "observed_version": "Official versioned ccdproc 2.5.1 docs, built 2025-07-05",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.885570+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.078714+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/CCDPROC-2.5.1.txt",
+      "evidence_sha256": "af765e23ef34dfb80490d08e7971ce2eadbf6d90297e24eb9171ed259259d80e",
+      "text_line_ranges": [
+        [
+          569,
+          701
+        ],
+        [
+          702,
+          788
+        ],
+        [
+          785,
+          910
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:27; final.md:37; final.md:54",
+      "semantic_check": "subtract_dark defaults to no scaling; explicit scale=True and exposure metadata/units are needed for exposure scaling. The worked route assumes a bias-subtracted master dark. flat_correct uses mean normalization by default; its floor is optional. Calibration units must match the post-gain image; uncertainty propagates. The final does not choose scaling for an unidentified CMOS/CCD camera.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/CCDPROC-2.5.1.html",
+      "raw_sha256": "2b6be56aba1c52f42480fe6a5b8daefec7078441b1a4357c444050237a151d7d",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-FORS2-ROTATING-ILLUMINATION",
+      "candidate_source_id": "FORS2-ROTATING-ILLUMINATION",
+      "title": "Static and rotating illumination corrections in FORS2@VLT photometry",
+      "url": "https://arxiv.org/pdf/1311.6467",
+      "final_url": "https://arxiv.org/pdf/1311.6467",
+      "observed_version": "arXiv:1311.6467v1, 2013-11-25; FORS2 B,V,R,I standard-field study",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:08.888149+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.181153+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/FORS2-ROTATING-ILLUMINATION.txt",
+      "evidence_sha256": "2b0509039bdca833672f82fb5aa6ccc32acade8970c0f503804bfef04dc50114",
+      "text_line_ranges": [
+        [
+          27,
+          44
+        ],
+        [
+          178,
+          226
+        ],
+        [
+          570,
+          593
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:26; final.md:66",
+      "semantic_check": "The study supports static/rotating illumination tests and star-based flux-scale checks, not transfer of coefficients or a promised improvement. Its full fit needs suitable spatial offsets; rotation alone can leave radial terms degenerate. Coefficients vary with filter and era, and wrong-era application can worsen results. Candidate proposes diagnostic residual comparisons, not this coefficient-fitting algorithm.",
+      "assessment": "SUPPORTED_WITH_TRANSFER_LIMIT",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/FORS2-ROTATING-ILLUMINATION.pdf",
+      "raw_sha256": "3244bfb9477fbde7872d7f214a00a000b5c4e39abf1c69f9f48c433ae6f5ac2e",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-DOME-FLAT-STANDARDS",
+      "candidate_source_id": "DOME-FLAT-STANDARDS",
+      "title": "Flattening Scientific CCD Imaging Data with a Dome Flat Field System",
+      "url": "https://arxiv.org/pdf/astro-ph/0510233",
+      "final_url": "https://arxiv.org/pdf/astro-ph/0510233",
+      "observed_version": "arXiv:astro-ph/0510233v1, 2005-10-07",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.011111+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.304131+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/DOME-FLAT-STANDARDS.txt",
+      "evidence_sha256": "59f606d60a2f74cf6642cc7dcb4790ec54fbf497a478fca4718ddced55627ddd",
+      "text_line_ranges": [
+        [
+          14,
+          33
+        ],
+        [
+          74,
+          86
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:26; final.md:55",
+      "semantic_check": "Agreement between two flats can coexist with erroneous calibration. Known stars across positions supply an external performance check. The result for the particular dome-screen instrument does not select a universal flat technology here.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/DOME-FLAT-STANDARDS.pdf",
+      "raw_sha256": "197b9fb34955869d279b2a27627e50b0f9c6639b09226f6e27536f9d497d0ca2",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-DIFF-PHOTOMETRY-2023",
+      "candidate_source_id": "DIFF-PHOTOMETRY-2023",
+      "title": "Optimized temporal binning of comparison star measurements for differential photometry",
+      "url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+      "final_url": "https://academic.oup.com/mnras/article/526/3/3482/7285831",
+      "observed_version": "Hartley & Wilson, MNRAS 526, 3482–3494, DOI 10.1093/mnras/stad2964, 2023",
+      "retrieval_status": 403,
+      "access_started_utc": "2026-10-10T07:24:09.022435+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.154011+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/web-primary-02.json",
+      "evidence_sha256": "0286bd0922ef9cd787ca45a421d267dce1b9c4f016dd359a99ef0725540cad9b",
+      "text_line_ranges": [],
+      "primary_locator": "Publisher article sections 2.5, 3.2, 4.2, 6, 7 in web-primary-02.json",
+      "candidate_locator": "final.md:30; final.md:48; final.md:178",
+      "semantic_check": "Publisher search payload sections 2.5, 3.2, 4.2, 6 and 7 independently inspected after direct open failed. Binning applies to comparison measurements, optimized using a non-varying test star; good conditions, rapid cadence relative to systematics, and unblended sources matter. Rapid-trend intervals can remain unbinned while suitable intervals are binned. The amended final is supported; the original draft blanket-sounding caveat was minor.",
+      "assessment": "SUPPORTED_CORRECTION",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/DIFF-PHOTOMETRY-2023.html",
+      "raw_sha256": "a32fed4a1f6dde982044cda5bfe81e462cd16f3b905d9ba28c1d8548e270dd5b",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-MAST-TESS-PRODUCTS",
+      "candidate_source_id": "MAST-TESS-PRODUCTS",
+      "title": "TESS Data Products (MAST)",
+      "url": "https://archive.stsci.edu/missions-and-data/tess/data-products",
+      "final_url": "https://archive.stsci.edu/missions-and-data/tess/data-products",
+      "observed_version": "Live official MAST product table independently retrieved 2026-10-10",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.080877+00:00",
+      "access_finished_utc": "2026-10-10T07:24:10.548555+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/MAST-TESS-PRODUCTS.txt",
+      "evidence_sha256": "844b5af012b2497bc7a14f56d35bf72df1ac7d478acc43acc1ffa99781990963",
+      "text_line_ranges": [
+        [
+          325,
+          368
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:39; final.md:58",
+      "semantic_check": "Calibrated/uncalibrated FFIs, target-pixel files, light curves and cotrending products are distinct. Availability and product interpretation require field, sector, release and cadence. The proposal does not claim a source search or coverage.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/MAST-TESS-PRODUCTS.html",
+      "raw_sha256": "cb7cdbde4096f80c9efba7c8819c37ca37365ab69892705020a449cd01234f0e",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-MAST-TESS-MISSION",
+      "candidate_source_id": "MAST-TESS-MISSION",
+      "title": "TESS Mission Overview (MAST)",
+      "url": "https://archive.stsci.edu/missions-and-data/tess",
+      "final_url": "https://archive.stsci.edu/missions-and-data/tess",
+      "observed_version": "Live official MAST overview independently retrieved 2026-10-10",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.151926+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.565866+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/MAST-TESS-MISSION.txt",
+      "evidence_sha256": "06bbfa0935d5fe6bd31a30d10ab1f87d9bdc84da1fe09c7c972e8a53be958ffe",
+      "text_line_ranges": [
+        [
+          320,
+          343
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:39",
+      "semantic_check": "Angular sampling is 21 arcseconds per pixel. Its overview includes primary-mission cadence descriptions; candidate wisely makes actual sector/product cadence a future check rather than universalizing a historical cadence. Coarse pixels motivate a blending audit.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/MAST-TESS-MISSION.html",
+      "raw_sha256": "309f91f9e79f9309bb2ab756680e6be7e7bb9f1a2b94c36fce1c3eced73410c6",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-TESS-SDPD-REV-F",
+      "candidate_source_id": "TESS-SDPD-REV-F",
+      "title": "TESS Science Data Products Description Document",
+      "url": "https://archive.stsci.edu/missions/tess/doc/EXP-TESS-ARC-ICD-TM-0014.pdf",
+      "final_url": "https://archive.stsci.edu/missions/tess/doc/EXP-TESS-ARC-ICD-TM-0014.pdf",
+      "observed_version": "Cited URL currently serves NASA/TM–2018–220036, EXP-TESS-ARC-ICD-0014 Rev D, 2018-07-31",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.156710+00:00",
+      "access_finished_utc": "2026-10-10T07:24:10.735198+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/TESS-SDPD-REV-F.txt",
+      "evidence_sha256": "feac98283b375219919f88532982e0fef46b540654b47b9fa70b3b4289ce3645",
+      "text_line_ranges": [
+        [
+          1,
+          31
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "investigator/source-map.json:TESS-SDPD-REV-F; reviser/source-map.json:TESS-SDPD-REV-F; final.md:39",
+      "semantic_check": "Inherited ID says Rev F 2020 but cited URL independently retrieves Rev D. No candidate raw PDF capture exists to establish the exact originally seen bytes. This is a minor revision/locator discrepancy: final uses only generic product/timing caveats, and requires exact-product and current-revision checks before future use. See separate independent exact Rev F record.",
+      "assessment": "MINOR_LOCATOR_VERSION_LIMIT",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/TESS-SDPD-REV-F.pdf",
+      "raw_sha256": "e9ca6c799ceb61a87ba8771cdd3b3fed72d27a2551da3af35d2d8aad244fb946",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-LIGHTKURVE-API",
+      "candidate_source_id": "LIGHTKURVE-API",
+      "title": "Lightkurve io.read API reference",
+      "url": "https://lightkurve.github.io/lightkurve/reference/api/lightkurve.io.read.html",
+      "final_url": "https://lightkurve.github.io/lightkurve/reference/api/lightkurve.io.read.html",
+      "observed_version": "Live unversioned Lightkurve io.read documentation; installed version UNKNOWN",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.184362+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.300659+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/LIGHTKURVE-API.txt",
+      "evidence_sha256": "eb3b7dc84d4d27a75ce8a91e69a0ac0419c60e5fd25e63c23a043cdb7dbb512a",
+      "text_line_ranges": [
+        [
+          262,
+          310
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:39",
+      "semantic_check": "The documented quality_bitmask accepts strings or integer masks; default ignores severe flags, hard can discard good cadences, hardest is discouraged. flux_column defaults to pdcsap_flux for light-curve products only. The candidate restricts these statements to product reading and distinguishes them from v2.5.0 release history.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/LIGHTKURVE-API.html",
+      "raw_sha256": "5fa8a75f3945445c4991557296e9663626efb135f68f3981f9dbd087330d6837",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-LIGHTKURVE-2.5.0",
+      "candidate_source_id": "LIGHTKURVE-2.5.0",
+      "title": "Lightkurve v2.5.0 Release Notes",
+      "url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+      "final_url": "https://github.com/lightkurve/lightkurve/releases/tag/v2.5.0",
+      "observed_version": "v2.5.0, commit f6c5f1e; changelog heading dated 2024-08-19; GitHub release API publication 2024-08-29T17:15:29Z",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.302517+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.675560+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/LIGHTKURVE-2.5.0.txt",
+      "evidence_sha256": "1804899d790a0bc0fae9fd9db948b09fb0a113841360c4f319821a65882ec6c5",
+      "text_line_ranges": [
+        [
+          150,
+          235
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:39; final.md:179",
+      "semantic_check": "Tagged release supports named QLP sector-56-and-later reader, short-cadence search and KEPSEISMIC time-format changes. The time-format fix is not a general fix for all TESS clocks. Final makes the historical claim without claiming a local defect, and retains the old releases-list URL explicitly. The 2024-08-19 date is the changelog heading; GitHub publication metadata is 2024-08-29T17:15:29Z. Candidate source maps call the heading a release date, a minor chronology-label imprecision without effect on the selected fixes or proposal.",
+      "assessment": "SUPPORTED_CORRECTION_WITH_MINOR_DATE_LABEL_LIMIT",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/LIGHTKURVE-2.5.0.html",
+      "raw_sha256": "da1e9510487d84c39b9a57d4bf0fb9133c0dedc4a50836b62e6f3660c7876532",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution.",
+      "release_api_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/LIGHTKURVE-2.5.0-release-api.json"
+    },
+    {
+      "id": "I-EASTMAN-BJD-2010",
+      "candidate_source_id": "EASTMAN-BJD-2010",
+      "title": "Achieving Better Than 1 Minute Accuracy in Heliocentric and Barycentric Julian Dates",
+      "url": "https://arxiv.org/pdf/1005.4415",
+      "final_url": "https://arxiv.org/pdf/1005.4415",
+      "observed_version": "arXiv:1005.4415v3; PASP 122, 935–946 (2010)",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.306348+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.523264+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/EASTMAN-BJD-2010.txt",
+      "evidence_sha256": "c9820c2429ba6def00d870823cfd2e9e041d188acce9538057ed6f0407553260",
+      "text_line_ranges": [
+        [
+          19,
+          34
+        ],
+        [
+          350,
+          377
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:28; final.md:53",
+      "semantic_check": "JD/HJD/BJD location labels do not establish time scale. Preserve site-arrival timing and conversion inputs; exposure midpoint is not always flux-weighted mean under changing flux/transparency. The final requires native shutter convention, clock/site/source coordinates before conversions and claims no achieved timing precision.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/EASTMAN-BJD-2010.pdf",
+      "raw_sha256": "0564fd5c9a46b536864fe86d8cfd5f0ad2e0112e0ffcfd9eca2ef1be2e14c985",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-ASTROPY-LS-8",
+      "candidate_source_id": "ASTROPY-LS-8",
+      "title": "Astropy LombScargle API",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.timeseries.LombScargle.html",
+      "final_url": "https://docs.astropy.org/en/stable/api/astropy.timeseries.LombScargle.html",
+      "observed_version": "Official Astropy v8.0.1 stable API at independent retrieval",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.525445+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.733921+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/ASTROPY-LS-8.txt",
+      "evidence_sha256": "4b8a3c4ec852f52702b242f2242aada47c9ac109ce35fc71b10fc0292f033d51",
+      "text_line_ranges": [
+        [
+          2110,
+          2158
+        ],
+        [
+          2197,
+          2244
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:57",
+      "semantic_check": "Largest-peak FAP estimates depend on a non-varying Gaussian-noise null and search frequency range; methods are approximations (baluev is default), not posterior probability of a true period. PSD normalization also needs supplied errors. Candidate invokes these limits without running a search or treating FAP as a variability classifier.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/ASTROPY-LS-8.html",
+      "raw_sha256": "9e5adc0c1878d4f6b209f99a1a830a60d7c1cb1f3ebea0845c3590015499e53c",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-VANDERPLAS-LS-2018",
+      "candidate_source_id": "VANDERPLAS-LS-2018",
+      "title": "Understanding the Lomb–Scargle Periodogram",
+      "url": "https://arxiv.org/pdf/1703.09824",
+      "final_url": "https://arxiv.org/pdf/1703.09824",
+      "observed_version": "arXiv:1703.09824; ApJS 236, 16 (2018)",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.568154+00:00",
+      "access_finished_utc": "2026-10-10T07:24:10.291563+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/VANDERPLAS-LS-2018.txt",
+      "evidence_sha256": "93d5dc5b7ab0370b213b3af3318c532d6400c21140c96b007adb4b2495b0cfd1",
+      "text_line_ranges": [
+        [
+          1883,
+          1971
+        ],
+        [
+          2580,
+          2596
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:28; final.md:57",
+      "semantic_check": "Structured/nightly windowing causes aliases and harmonics; the largest peak can be wrong. Inspect cadence/window and independent evidence. Candidate does not import the paper simulation percentages into the synthetic case.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/VANDERPLAS-LS-2018.pdf",
+      "raw_sha256": "fe8c5ea41f02dcfdd889d9301b926863ab82eb396882b68dbdd32b68ddcea886",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-PONT-RED-NOISE-2006",
+      "candidate_source_id": "PONT-RED-NOISE-2006",
+      "title": "The effect of red noise on planetary transit detection",
+      "url": "https://arxiv.org/pdf/astro-ph/0608597",
+      "final_url": "https://arxiv.org/pdf/astro-ph/0608597",
+      "observed_version": "arXiv:astro-ph/0608597v1; MNRAS 373, 231–242 (2006)",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.677450+00:00",
+      "access_finished_utc": "2026-10-10T07:24:09.970481+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/PONT-RED-NOISE-2006.txt",
+      "evidence_sha256": "832088d6fe7dd82391a1d80e8c9f1c69113860baac500f06c4f5ece12accc74d",
+      "text_line_ranges": [
+        [
+          175,
+          242
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:57",
+      "semantic_check": "Off-diagonal covariance invalidates iid scaling; adjacent-point means can improve less than n^(-1/2). OGLE transit thresholds and millimagnitude noise are study-specific. Candidate transfers residual dependence/RMS diagnostics rather than its thresholds.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/PONT-RED-NOISE-2006.pdf",
+      "raw_sha256": "777ccb71aa4d8485257c4277c3ad5f47f2a112d341985e9baa95a9d552a9bd57",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-BALUEV-FAP-2008",
+      "candidate_source_id": "BALUEV-FAP-2008",
+      "title": "Assessing the statistical significance of periodogram peaks",
+      "url": "https://arxiv.org/pdf/0711.0330",
+      "final_url": "https://arxiv.org/pdf/0711.0330",
+      "observed_version": "arXiv:0711.0330v1; MNRAS 385, 1279–1285 (2008)",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.735350+00:00",
+      "access_finished_utc": "2026-10-10T07:24:10.133020+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/BALUEV-FAP-2008.txt",
+      "evidence_sha256": "d221a5b251d2822a73754a1f981aa68fd79187dc6e2a08aa94c6210bfea52194",
+      "text_line_ranges": [
+        [
+          35,
+          121
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:57",
+      "semantic_check": "The formulation assumes independent Gaussian errors and tests a searched-frequency maximum. Its bound is not automatic correction for stars, aperture/ensemble variants or post-selected candidate rules. Candidate distinguishes full selection/search modeling from per-periodogram FAP.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/BALUEV-FAP-2008.pdf",
+      "raw_sha256": "51fe062c9db5b39916b4a338463f55e7a0011f8c35e84267c9ee198983427fb7",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-AAVSO-CCD-CMOS-GUIDE-2022",
+      "candidate_source_id": "AAVSO-CCD-CMOS-GUIDE-2022",
+      "title": "AAVSO Guide to CCD/CMOS Photometry with Monochrome Cameras",
+      "url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "final_url": "https://aavso.org/wp-content/uploads/2026/07/CCD-CMOS-English.pdf",
+      "observed_version": "Official Guide Version 1.0 (July 2022), 132 PDF pages",
+      "retrieval_status": 200,
+      "access_started_utc": "2026-10-10T07:24:09.858728+00:00",
+      "access_finished_utc": "2026-10-10T07:24:11.176808+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AAVSO-CCD-CMOS-GUIDE-2022.txt",
+      "evidence_sha256": "eea8fab91ffc5ce726bfa27480edac8a9c01371a2f934f94f8d68a01acfbbab8",
+      "text_line_ranges": [
+        [
+          1,
+          15
+        ],
+        [
+          2090,
+          2210
+        ],
+        [
+          2260,
+          2310
+        ],
+        [
+          3580,
+          3710
+        ]
+      ],
+      "primary_locator": "See text_line_ranges in extracted independently retrieved primary text",
+      "candidate_locator": "final.md:27; final.md:29; final.md:38; final.md:55",
+      "semantic_check": "Calibration removes unwanted signal levels, not their shot noise; calibration-frame noise adds. Matching temperature and applicable CMOS gain/offset/binning/readout is prescribed. Scaled darks isolate bias and assume a scalable response; unscaled raw darks include bias and match exposure. Check stars, standards, color/position trends and independent software support controls. Candidate transfers these checks, not universal camera settings.",
+      "assessment": "SUPPORTED",
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/AAVSO-CCD-CMOS-GUIDE-2022.pdf",
+      "raw_sha256": "4a17c356f6a2b1d81383ff0b7351deadf06a6c6bf9d6ce7829ace66780db91c4",
+      "operation": "Independent HTTP retrieval, text extraction and relevant surrounding-context inspection; web primary retrieval/search separately retained. No photometry or package execution."
+    },
+    {
+      "id": "I-TESS-EXACT-REV-F",
+      "candidate_source_id": "TESS-SDPD-REV-F",
+      "title": "TESS Science Data Products Description Document, exact Rev F",
+      "url": "https://archive.stsci.edu/files/live/sites/mast/filesER12_RUNTIME",
+      "observed_version": "EXP-TESS-ARC-ICD-0014 Rev F, 2020-09-11; NASA/TM–20205008729",
+      "access_utc": "2026-10-10T07:26:32.802449+00:00",
+      "local_evidence": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/TESS-EXACT-REV-F.txt",
+      "evidence_sha256": "a657c9e4ab58a56b37af2e471222acbe89d031eba2e5f16defffe622eef9c14d",
+      "text_line_ranges": [
+        [
+          1,
+          45
+        ],
+        [
+          692,
+          710
+        ],
+        [
+          800,
+          846
+        ]
+      ],
+      "raw_capture": "ER12_RUNTIME/assessment/D-R2-03/control-v1/evidence/TESS-EXACT-REV-F.pdf",
+      "raw_sha256": "e8eca77f16ec90f71d41224c7eaad81ebe1a7b4bf54c97e811bf8d863f61eca2",
+      "primary_locator": "Cover; section 1.1; section 2.4.1, page 16",
+      "semantic_check": "The actual Rev F independently exists at a different official MAST URL. Its SPOC scope and distinction between filename UTC conventions and data timing support the proposal generic product/time audit. No Rev-F-only operation is selected in the final. This independent check does not repair the candidate locator.",
+      "assessment": "SUPPORTS_GENERIC_CONDITIONS; CANDIDATE_LOCATOR_REMAINS_MINOR_LIMIT"
+    }
+  ],
+  "original_artifact_manifest": "ER12_RUNTIME/assessment/D-R2-03/control-v1/original-inspected-hashes.json",
+  "source_evidence_note": "Original source directories contain authored indexes only and explicitly state no raw source captures. Reviewer independently retrieved primary bodies; original access operations/ordering remain reported rather than independently authenticated.",
+  "retrieval_limitations": [
+    "OUP direct HTTP returned 403 and web open returned a non-retryable minimal-page redirect; official publisher search payload supplies the governing temporal-binning sections.",
+    "TESS cited URL retrieves Rev D; exact Rev F independently retrieved separately.",
+    "Live docs are observations at reviewer access, not proof of any installed archive package."
+  ],
+  "all_six_axes_reference": "ER12_RUNTIME/assessment/D-R2-03/control-v1/assessment.json"
+}

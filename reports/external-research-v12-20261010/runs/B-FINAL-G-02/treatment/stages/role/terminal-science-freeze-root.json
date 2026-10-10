@@ -112,25 +112,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-FINAL-G-02",
-    "arm": "treatment",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Role complete. The single native Goal was activated before any case input, all deliverables were saved and validated before completion, and the same Goal is now complete \u2014 well before the 2026-10-10T05:35:06Z deadline.\n\nDeliverables in `.../B-FINAL-G-02/treatment/stages/role/`:\n\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md) \u2014 replacement section (494 words, within 400\u2013650) plus 6 numbered dispositions and remaining-uncertainty statement; 772 words total (<1100). All exact tokens preserved; all of O1\u2013O6 addressed.\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json) \u2014 claim map, retrieval operations, conditions, proposed-vs-executed checks, unresolved evidence (JSON validated).\n- `sources/S1-excerpts.md`, `sources/S2-excerpts.md` \u2014 verbatim primary excerpts with URL/section locators.\n- `records/native-goal-activation.json`, `records/native-goal-completion.json` \u2014 exact unmodified native Goal receipts.\n\nAdjudication: accepted 1 (cone parent-file inclusion), 2 (sparse vs filter distinction, no byte bound), 5 (remove `--depth=1`, protect local changes); rejected 3 (`--depth=1` truncates history), 4 (reapply exists for materialized paths), 6 (sparse index is optional/experimental, not a network control). Citations are to the live git-sparse-checkout and git-clone manuals (retrieved 2026-10-10, 200 OK); no additional primary pages beyond the listed URLs, no commands executed against any repository.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:dede2218-67c7-447f-b672-5423da86406f",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "muse-spark-1.3-contributor",
-    "summary": "Role complete. The single native Goal was activated before any case input, all deliverables were saved and validated before completion, and the same Goal is now complete \u2014 well before the 2026-10-10T05:35:06Z deadline.\n\nDeliverables in `.../B-FINAL-G-02/treatment/stages/role/`:\n\n- [final-section.md](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md) \u2014 replacement section (494 words, within 400\u2013650) plus 6 numbered dispositions and remaining-uncertainty statement; 772 words total (<1100). All exact tokens preserved; all of O1\u2013O6 addressed.\n- [source-map.json](ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/source-map.json) \u2014 claim map, retrieval operations, conditions, proposed-vs-executed checks, unresolved evidence (JSON validated).\n- `sources/S1-excerpts.md`, `sources/S2-excerpts.md` \u2014 verbatim primary excerpts with URL/section locators.\n- `records/native-goal-activation.json`, `records/native-goal-completion.json` \u2014 exact unmodified native Goal receipts.\n\nAdjudication: accepted 1 (cone parent-file inclusion), 2 (sparse vs filter distinction, no byte bound), 5 (remove `--depth=1`, protect local changes); rejected 3 (`--depth=1` truncates history), 4 (reapply exists for materialized paths), 6 (sparse index is optional/experimental, not a network control). Citations are to the live git-sparse-checkout and git-clone manuals (retrieved 2026-10-10, 200 OK); no additional primary pages beyond the listed URLs, no commands executed against any repository.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-FINAL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:dede2218-67c7-447f-b672-5423da86406f",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "67c616c8331176bcdcfac71bc4595483cbe6b1fc1f3a8dfcd8270b1c1dae2264"
   }
 }

@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A5-02",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. The complete proposal is in [final.md](ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md), with the full source record in [source-map.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json) and a navigable [source index](ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md).\n\nC-01 was accepted and amended after independently checking the [GS1 Resolver Standard](https://ref.gs1.org/standards/resolver/); C-02 remains an explicit unresolved owner input. No product validation was run. The native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json).\n\nNative Goal completed: **116,120 tokens**, **7m 32s**.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:71045a26-d7f3-4a35-a839-565d37f5629d",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. The complete proposal is in [final.md](ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md), with the full source record in [source-map.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/source-map.json) and a navigable [source index](ER12_RUNTIME/runs/A5-02/control/stages/reviser/sources/index.md).\n\nC-01 was accepted and amended after independently checking the [GS1 Resolver Standard](https://ref.gs1.org/standards/resolver/); C-02 remains an explicit unresolved owner input. No product validation was run. The native Goal activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A5-02/control/stages/reviser/native-goal-completion.json).\n\nNative Goal completed: **116,120 tokens**, **7m 32s**.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A5-02-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:71045a26-d7f3-4a35-a839-565d37f5629d",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "4e8d1b4a92bf05201c12374cafd4936ba437fdf5e0542cfb0e18887f4d216c87"
   }
 }

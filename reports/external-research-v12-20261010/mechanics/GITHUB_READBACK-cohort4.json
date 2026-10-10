@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-10T06:53:37.657237+00:00",
+  "repository": "sittingmongoose/Puppet-Master",
+  "branch": "research/er12-20261010",
+  "actual_branch_sha": "3b44a99589f4a6ae8da0c0b7f65471008a06913f",
+  "immutable_commit": "3b44a99589f4a6ae8da0c0b7f65471008a06913f",
+  "actual_GitHub_commit_parent": [
+    "20a3a5924f7f2be9fc0affb6ab8d53a912189074"
+  ],
+  "commit_identities": {
+    "author": {
+      "name": "Sittingmongoose",
+      "email": "42017982+sittingmongoose@users.noreply.github.com",
+      "date": "2026-10-10T06:52:02Z"
+    },
+    "committer": {
+      "name": "Sittingmongoose",
+      "email": "42017982+sittingmongoose@users.noreply.github.com",
+      "date": "2026-10-10T06:52:02Z"
+    }
+  },
+  "GitHub_recursive_tree_truncated": false,
+  "all_public_Git_blob_hashes_checked": 5690,
+  "mismatches": [],
+  "actual_content_readbacks": [
+    {
+      "path": "reports/external-research-v12-20261010/README.md",
+      "bytes": 3661,
+      "sha256": "a598aea97979ab83fce7ad714d1a6415783eb8bd68877310130b075b21e8075b",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/SHA256SUMS",
+      "bytes": 694589,
+      "sha256": "de6a8843c52b41c85d5594f9415afe27a12486e957f23f69ee8fc410131cac8e",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/recipes/materialize-v2/materialize.py",
+      "bytes": 16599,
+      "sha256": "523a6084496506f3e8acaa595879a497ac33f159b31e494b85a01d8eafe7c13c",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/recipes/materialize-v2/bundle-manifest.json",
+      "bytes": 4444,
+      "sha256": "4368e32d3dd2fde6c31231531fff4b1ce089e6c79c25f7142e42a98b2662b0fa",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/assessment/A8-01/control-v1/evidence/E06-v160-bagit.py",
+      "bytes": 5285,
+      "sha256": "9ba9eeecc2dafb67de8342e152de1731dd53259cc5b3e7d6aebd4573ebf5dae4",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/assessment/A5-01/treatment-v1/evidence/release-26.08-riff-handler.cpp",
+      "bytes": 3955,
+      "sha256": "ccf1449f65928fd321413f851ada3da8fcfe1fef16972596a2fc18e75dca4bb1",
+      "actual_GitHub_bytes_match": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/analysis/AB-synthesis-v1/analysis.md",
+      "bytes": 32900,
+      "sha256": "5414062723f1b52e6d776f9512be513d94b8fe04b7f09dee2ec006a4b024687f",
+      "actual_GitHub_bytes_match": true
+    }
+  ],
+  "entry_point": "https://github.com/sittingmongoose/Puppet-Master/blob/3b44a99589f4a6ae8da0c0b7f65471008a06913f/reports/external-research-v12-20261010/README.md",
+  "science_edition": "frozen06:25:50;72admitted37full24role60judgments39P21F; not later C2/D1 outcomes",
+  "billing_native_effective": "UNKNOWN where unavailable"
+}

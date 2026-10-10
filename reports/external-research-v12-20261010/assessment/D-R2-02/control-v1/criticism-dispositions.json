@@ -1,0 +1,92 @@
+[
+  {
+    "criticism_id": "C01",
+    "critic_classification": "material incomplete",
+    "critic_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "line": 22,
+      "section": "C01"
+    },
+    "original_issue": "Draft does not explicitly explain a simplified-model disposition/limits.",
+    "candidate_disposition": "accept",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "independent_disposition": "Final clarification supported; critic severity not independently established as a material error.",
+    "reason": "Plan asks for limits of any simplified model, not a mandatory model or execution. Draft already says no model was run and lists missing inputs. Explicitly bounding any future sensitivity illustration is useful; accepting it introduces no fabricated inputs, required computation or scope reduction.",
+    "evidence_ids": [
+      "E01",
+      "E02",
+      "E05"
+    ],
+    "remaining_material_issue": false
+  },
+  {
+    "criticism_id": "C02",
+    "critic_classification": "minor wording",
+    "critic_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "line": 30,
+      "section": "C02"
+    },
+    "original_issue": "Draft thermal endpoint referred to deviation from a product-specific quality target.",
+    "candidate_disposition": "accept",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 87
+    },
+    "independent_disposition": "Supported and corrected.",
+    "reason": "Temperature and quality are different variables. Final names temperature endpoints and an optional pre-agreed crop-specific thermal criterion separately from quality measurements; neither is derived from loose logger air.",
+    "evidence_ids": [
+      "E02",
+      "E05"
+    ],
+    "remaining_material_issue": false
+  },
+  {
+    "criticism_id": "C03",
+    "critic_classification": "minor wording",
+    "critic_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "line": 36,
+      "section": "C03"
+    },
+    "original_issue": "Draft package-comparison shorthand could imply a 42% isolated package effect.",
+    "candidate_disposition": "accept",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 25
+    },
+    "independent_disposition": "Primary-supported qualification; final is correct.",
+    "reason": "Publisher abstract compares similarly sized Nova mandarins in Opentop cartons and Eureka lemons in Supervent cartons at pallet outflow. Both fruit type and carton vary. Final preserves airflow/wrapping discovery while rejecting package-only/local effect interpretation.",
+    "evidence_ids": [
+      "E10"
+    ],
+    "remaining_material_issue": false
+  },
+  {
+    "criticism_id": "C04",
+    "critic_classification": "honestly unresolved external inputs",
+    "critic_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/critic/critique.md",
+      "line": 42,
+      "section": "C04"
+    },
+    "original_issue": "Case inputs, thresholds/cost/permission and independently verifiable elapsed-window evidence are absent.",
+    "candidate_disposition": "retain uncertainty",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 197
+    },
+    "independent_disposition": "Necessary owner/local choices legitimately remain open; protocol/time judged separately from source correctness.",
+    "reason": "No data are supplied from which crop, timings, quality target or budget can be inferred. Recorded native lifecycle/time fields now exist in the arm package but are not independently authenticated execution or billing telemetry. They are reported below without changing the bounded source judgment.",
+    "evidence_ids": [
+      "E01",
+      "E02",
+      "E04",
+      "E05"
+    ],
+    "remaining_material_issue": false
+  }
+]

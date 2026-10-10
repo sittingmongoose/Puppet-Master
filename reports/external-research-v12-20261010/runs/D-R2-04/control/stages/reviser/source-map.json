@@ -1,0 +1,156 @@
+{
+  "schema_version": "er12-source-map-v1",
+  "run_id": "D-R2-04-control",
+  "stage": "reviser",
+  "access_capture_utc": "2026-10-10T07:13:54Z",
+  "source_index": "final.md#source-index",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "Writing for user interfaces — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/design/writing-for-user-interfaces",
+      "version_or_commit": "Live unversioned page; published 2017-10-10, last updated 2018-04-16; no commit/version shown.",
+      "locator": "Think about alternatives before you add more words and Keep copy short and direct (lines 81–96); updates (182–201).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the primary GOV.UK guidance and read the advice and page history. It describes online scanning, advises testing before adding help text, and recommends short direct sentences and putting important words first.",
+      "governing_condition_default_exception": "Guidance is for online user interfaces and transactional scanning; it does not establish that brevity improves comprehension in every medium or permit deleting required policy information.",
+      "applicability_to_case": "Useful as a hypothesis about order and scanning. Print, bilingual layout, and the unspecified messaging format require local testing."
+    },
+    {
+      "id": "S02",
+      "title": "Finding participants for user research — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/find-user-research-participants",
+      "version_or_commit": "Live unversioned page; published 2016-03-01, last updated 2026-09-22.",
+      "locator": "Actual/likely users and access needs (lines 72–78); typical round size (107–109); access and recruitment bias (175–228); updates (241–264).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the live participant guidance, including current update history. It states 4–8 is typical for an interview/usability round and discusses actual/likely users, disabilities, assistive technology, literacy, and recruitment bias.",
+      "governing_condition_default_exception": "The number is a method-dependent planning example, not statistical power or a representation guarantee. The guidance warns that recruitment channels and lead times can exclude people.",
+      "applicability_to_case": "Supports small iterative formative rounds after the true audience and language pair are established; does not justify assuming the case’s age or demographic composition."
+    },
+    {
+      "id": "S03",
+      "title": "Getting informed consent for user research — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research",
+      "version_or_commit": "Live unversioned page; published 2016-05-24, last updated 2018-11-05.",
+      "locator": "Informed consent and accessible information (70–114); accessible consent (124–142); withdrawal/data deletion (149–159); updates (172–191).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened primary consent guidance, including accessible-format requirements and withdrawal handling.",
+      "governing_condition_default_exception": "The guide recommends organization-specific legal/data-protection review. It says withdrawal may occur at any time and describes stopping and deleting research data; it does not state this fictional center’s law.",
+      "applicability_to_case": "Supports a later accessible consent plan and a concrete withdrawal/data-removal process; local legal and safeguarding obligations remain unknown."
+    },
+    {
+      "id": "S04",
+      "title": "Using moderated usability testing — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "version_or_commit": "Live unversioned page; published 2017-02-21, last updated 2017-10-03.",
+      "locator": "Task goals and non-leading tasks (70–117); session length and interpreters/assistants (84–102); updates (195–210).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened moderated-testing guidance. It describes 30–60 minute sessions, believable neutral tasks, actual/likely users, and interpreters or assistants where needed.",
+      "governing_condition_default_exception": "Moderated testing is for issue discovery and task understanding; a small formative round does not estimate population rates.",
+      "applicability_to_case": "Supports proposed diagnostic comprehension and task-completion sessions, with no operational enrollment action."
+    },
+    {
+      "id": "S05",
+      "title": "Planning and writing text messages and emails — GOV.UK Service Manual",
+      "url": "https://www.gov.uk/service-manual/design/sending-emails-and-text-messages",
+      "version_or_commit": "Live unversioned page; published 2017-06-21, last updated 2017-10-03.",
+      "locator": "When to message and transactional definition/examples (71–96); next action and timing (141–163); updates (192–207).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the guidance and checked its delivery conditions, Dial-a-Ride confirmation example, writing guidance, and history.",
+      "governing_condition_default_exception": "Transactional messages relate directly to a user action and must match the actual process. The transport example confirms an existing booking; subscription messages require explicit user request. Sensitive data and delivery channels require service-specific consideration.",
+      "applicability_to_case": "A bounded mobile-message analogue only. It cannot support implying a course seat is reserved or adding a new channel without policy, operational, and audience evidence."
+    },
+    {
+      "id": "S06",
+      "title": "Confirmation pages — GOV.UK Design System",
+      "url": "https://design-system.service.gov.uk/patterns/confirmation-pages/",
+      "version_or_commit": "Current live pattern; page does not display a release version/commit or update date.",
+      "locator": "Pattern use and required next-step/reference/contact/record items (122–145); explicit wider-journey research gap (146–152).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the live pattern, example, requirements, and stated known gap.",
+      "governing_condition_default_exception": "Use at the end of a transaction; the page says research is needed for confirmation within a wider task. It does not decide whether submitting this fictional form reserves a place.",
+      "applicability_to_case": "Useful model for distinguishing received/requested/confirmed states after service facts are established; web transaction context limits transfer."
+    },
+    {
+      "id": "S07",
+      "title": "Confirmation pages — GOV.UK Design System issue (original backlog #40; current #6037)",
+      "url": "https://github.com/alphagov/govuk-design-system-backlog/issues/40",
+      "current_resolved_url": "https://github.com/alphagov/govuk-design-system/issues/6037",
+      "version_or_commit": "Original issue #40 opened 2018-01-12; transferred to current repository as #6037 on 2026-10-08. No release commit. Current issue thread contains discussion through 2026-05-19.",
+      "locator": "Original issue opening and pattern discussion (current page lines 130–159); 2024 payment-pending discussion (343–390); 2025 pending-request ambiguity (394–415); transfer metadata (459–468).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the carried original URL, observed its redirect to issue #6037, and read the 2018 opening, 2024 payment-pending discussion, 2025 comments about a payment request status, and 2026 transfer metadata. The 2024 commenter describes a possible wait up to 24 hours; the 2025 commenter raises sender/recipient and incomplete-step ambiguity.",
+      "governing_condition_default_exception": "The thread is qualitative design discussion and anecdotal implementation history about other services, not a controlled usability study, representative sample, or validated outcome. Comments describe service-specific states and temporary treatments.",
+      "applicability_to_case": "Relevant history for testing the distinction among submitted request, pending processing, payment request, and confirmed completion. Use as questions only; do not infer that the same confusion or treatment applies to the fictional community center.",
+      "reviser_recheck_accessed_utc": "2026-10-10T07:19:50Z"
+    },
+    {
+      "id": "S08",
+      "title": "Appointments service pattern proof of concept — MOJ Design System",
+      "url": "https://design-patterns.service.justice.gov.uk/service-patterns/appointment/",
+      "version_or_commit": "Current live proof-of-concept page; no commit/revision identifier displayed.",
+      "locator": "Proof-of-concept status and intended use (101–134); pending, assisted, payment, and unhappy scenarios (272–321).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the source page and read its scope, reusable-parts caveat, and scenario inventory.",
+      "governing_condition_default_exception": "The page calls the pattern a proof of concept and starting point, requiring local research and validation; contributors and services differ.",
+      "applicability_to_case": "Useful checklist of service states and assistance paths, not evidence for a specific course-enrollment rule or finished notice."
+    },
+    {
+      "id": "S09",
+      "title": "Demography question development for Census 2021 — Office for National Statistics",
+      "url": "https://cy.ons.gov.uk/census/censustransformationprogramme/questiondevelopment/demographyquestiondevelopmentforcensus2021",
+      "version_or_commit": "Census 2021 report; no page revision date/commit exposed. Described Welsh testing took place in 2017–2018.",
+      "locator": "Welsh-language question development (444–459), including variation, specialist translation, and language/policy assurance.",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the ONS report at its Welsh-language development section and checked the study period, participants’ language variation, review group, and terminology recommendations.",
+      "governing_condition_default_exception": "This was a national census, Welsh language, and public-sector assurance process. It demonstrates a method, not a transferable result for an unspecified language pair or small community course.",
+      "applicability_to_case": "Supports reader testing in each actual language with qualified language and policy review; no equivalence or local preferred wording can be inferred."
+    },
+    {
+      "id": "S10",
+      "title": "Web Content Accessibility Guidelines (WCAG) 2.2 — W3C",
+      "url": "https://www.w3.org/TR/WCAG22/?cq_net=g",
+      "version_or_commit": "WCAG 2.2 W3C Recommendation dated 2024-12-12, the version displayed by the current URL; first Recommendation dated 2023-10-05. Dated version permalink is recorded separately.",
+      "locator": "Document status/date and dated-version permalink (lines 0–15); Reflow 1.4.10 (612–630); Text Spacing 1.4.12 (643–663); Language of Page/Parts 3.1.1/3.1.2 (1180–1195); Reading Level 3.1.5, AAA (1212–1219).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the original URL including its query string, the canonical current page and the dated 2024 Recommendation; checked the displayed version date and the cited normative criteria and conditions.",
+      "governing_condition_default_exception": "Applies to web content. Reflow excepts parts requiring two-dimensional layout; Text Spacing concerns markup languages supporting the properties and recognizes language/script exceptions; Reading Level is AAA and conditional on text above the lower-secondary level. The standard does not establish comprehension or legal applicability.",
+      "applicability_to_case": "A proposed desk-check framework only if a web version is later in scope. It does not certify a printed notice or SMS, reader understanding, or local legal compliance.",
+      "canonical_url": "https://www.w3.org/TR/WCAG22/",
+      "dated_version_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "reviser_recheck_accessed_utc": "2026-10-10T07:19:50Z"
+    },
+    {
+      "id": "S11",
+      "title": "GOV.UK Design System live assessment — GOV.UK Service Standard report",
+      "url": "https://www.gov.uk/service-standard-reports/gov-dot-uk-design-system-live-assessment",
+      "version_or_commit": "Assessment dated 2021-03-11; report published 2022-01-10. No source-code commit or exact report revision identifier displayed.",
+      "locator": "Report identity/publication and assessment date (53–67); accessibility findings and research, documentation and end-to-end gaps (329–342).",
+      "accessed_utc": "2026-10-10T07:13:54Z",
+      "observed_operation": "Opened the primary GOV.UK report and checked its displayed assessment/publication dates, accessibility fixes, support-channel findings and continuing research/documentation/end-to-end work.",
+      "governing_condition_default_exception": "Panel assessment of a mature UK government design-system service, not a community-course notice or causal trial. Findings and resources are institution-specific.",
+      "applicability_to_case": "A bounded implementation-history example for recording fixes, ongoing research and documentation gaps; no local effect or legal conclusion follows.",
+      "reviser_recheck_accessed_utc": "2026-10-10T07:19:50Z"
+    }
+  ],
+  "source_lineage": {
+    "investigator_map": "ER12_RUNTIME/runs/D-R2-04/control/stages/investigator/source-map.json",
+    "critic_map": "ER12_RUNTIME/runs/D-R2-04/control/stages/critic/source-map.json",
+    "id_policy": "Preserved S01-S11 without rebinding; original investigator URLs retained, with redirects/canonical or dated versions recorded separately."
+  },
+  "reviser_primary_source_recheck": {
+    "recheck_access_started_utc": "2026-10-10T07:19:50Z",
+    "recheck_completed_utc": "2026-10-10T07:21:25Z",
+    "sources": [
+      "S07",
+      "S10",
+      "S11"
+    ],
+    "method": "Directly opened the source URLs (and the dated WCAG Recommendation) in the primary-source pages; read the specified dated thread, status, and version/date criteria.",
+    "observations": {
+      "S07": "The original #40 URL redirects to current issue #6037. The page identifies opening on 2018-01-12 and transfer on 2026-10-08; the thread includes a 2024 payment-pending discussion with a possible wait up to 24 hours and a 2025 comment about ambiguity in a payment-request-sent state. These are qualitative comments about other services, not controlled user evidence.",
+      "S10": "The current and dated WCAG 2.2 pages identify the Recommendation date as 2024-12-12; the current page records the first Recommendation as 2023-10-05. Rechecked Reflow, Text Spacing, Language of Page/Parts and Reading Level conditions.",
+      "S11": "The report page states assessment date 2021-03-11 and publication date 2022-01-10; rechecked the cited accessibility, research, documentation and end-to-end journey sections."
+    }
+  }
+}

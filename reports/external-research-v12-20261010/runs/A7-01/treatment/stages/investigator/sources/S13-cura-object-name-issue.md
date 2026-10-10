@@ -1,9 +1,20 @@
-# S13 — Cura Core object.name issue #17110
-
-- **Source:** [Support 3MF Core spec for object.name on import and renaming objects](https://github.com/Ultimaker/Cura/issues/17110)
-- **Version/commit:** Issue opened 2023-10-26; no tested release is stated in the issue text.
-- **Access:** 2026-10-10T04:18:00Z, read-only issue review.
-- **Locator:** Description, actual/expected behavior, and status metadata.
-- **Observed operation:** Read public issue; attached example was not downloaded or tested.
-- **Reported condition:** Cura ignored existing Core object.name on imported 3MF and exported generic filename-derived names; issue status is Under Investigation in the retrieved record.
-- **Applicability:** User report about Cura's application behavior, not proof of behavior in any later specific release. Shows that even Core fields require a receiving-version test.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+  "rawSHA256": "23eca2eeddc832da9c6d03fa9c7305f3c6ba358c61a9e6397ba4428c42284aac",
+  "original_bytes": 870,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/investigator/sources/S13-cura-object-name-issue.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

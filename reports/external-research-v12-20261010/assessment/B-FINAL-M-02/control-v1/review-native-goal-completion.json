@@ -1,1 +1,13 @@
-{"goal":{"threadId":"01a12443-b415-7383-ade2-dcd0161fc9b1","objective":"Perform the independent bounded ER12 Track B semantic review for B-FINAL-M-02 control-v1 exactly as assigned by the user: read full rubric, role map/assignment/freeze and all mapped shared assignment, fixture, corpus, authored role artifact, source map and sources; independently retrieve governing primary evidence; hash inspected inputs/science and check terminal-science-freeze-root.json; assess only assigned axes and exact obligations, preserve source/coverage/delivery/native/protocol/time separately, save complete assessment.md, assessment.json, source-map and navigable primary evidence only in ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1, then complete the Goal. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history or ER11 rescore; native/effective/billing UNKNOWN absent actual evidence; finish within 25 minutes.","status":"complete","tokensUsed":78710,"timeUsedSeconds":356,"createdAt":1791609795,"updatedAt":1791610152},"remainingTokens":null,"completionBudgetReport":"Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."}
+{
+  "goal": {
+    "threadId": "01a12443-b415-7383-ade2-dcd0161fc9b1",
+    "objective": "Perform the independent bounded ER12 Track B semantic review for B-FINAL-M-02 control-v1 exactly as assigned by the user: read full rubric, role map/assignment/freeze and all mapped shared assignment, fixture, corpus, authored role artifact, source map and sources; independently retrieve governing primary evidence; hash inspected inputs/science and check terminal-science-freeze-root.json; assess only assigned axes and exact obligations, preserve source/coverage/delivery/native/protocol/time separately, save complete assessment.md, assessment.json, source-map and navigable primary evidence only in ER12_RUNTIME/assessment/B-FINAL-M-02/control-v1, then complete the Goal. No delegation, candidate feedback/repair, accounts, Git/publication, other arms/history or ER11 rescore; native/effective/billing UNKNOWN absent actual evidence; finish within 25 minutes.",
+    "status": "complete",
+    "tokensUsed": 78710,
+    "timeUsedSeconds": 356,
+    "createdAt": 1791609795,
+    "updatedAt": 1791610152
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

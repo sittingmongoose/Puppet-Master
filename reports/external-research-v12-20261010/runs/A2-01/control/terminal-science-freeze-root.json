@@ -64,25 +64,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A2-01",
-    "arm": "control",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed only the assigned reviser stage. The proposal, combined source map, and source index were saved before native Goal completion:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/control/stages/reviser/sources/index.md)\n\nThe revision accepts C-01, C-03, and C-04; it amends C-02 with documented ODK and ArcGIS import building blocks while keeping CSV import optional and unvalidated. All inherited source IDs are preserved, alongside eight direct reviser checks. Frozen input hashes matched.\n\nNative Goal `01a1241c-d41c-7560-b9d-f72585b1404d` was observed active at creation and returned **complete**. Final usage: **153,215 tokens** and **11m 56s**. Product and import validations remain **NOT_RUN**.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b42ceea6-d617-4e46-8f5e-729e6f6b1656",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed only the assigned reviser stage. The proposal, combined source map, and source index were saved before native Goal completion:\n\n- [final.md](ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A2-01/control/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A2-01/control/stages/reviser/sources/index.md)\n\nThe revision accepts C-01, C-03, and C-04; it amends C-02 with documented ODK and ArcGIS import building blocks while keeping CSV import optional and unvalidated. All inherited source IDs are preserved, alongside eight direct reviser checks. Frozen input hashes matched.\n\nNative Goal `01a1241c-d41c-7560-b9d-f72585b1404d` was observed active at creation and returned **complete**. Final usage: **153,215 tokens** and **11m 56s**. Product and import validations remain **NOT_RUN**.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A2-01-control-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:b42ceea6-d617-4e46-8f5e-729e6f6b1656",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "6b6b22283b2e1e57c23471671b06876a637f4094ad44529fb2e60b206c398203"
   }
 }

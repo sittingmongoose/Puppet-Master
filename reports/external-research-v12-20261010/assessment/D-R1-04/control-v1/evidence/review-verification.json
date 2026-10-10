@@ -1,0 +1,42 @@
+{
+  "checked_at_utc": "2026-10-10T07:20:22.367171+00:00",
+  "checks": [
+    {
+      "check": "six axes exactly; all assessed",
+      "ok": true
+    },
+    {
+      "check": "all three criticism IDs have independent final disposition",
+      "ok": true
+    },
+    {
+      "check": "every recorded exact clause literally occurs in frozen original",
+      "ok": true
+    },
+    {
+      "check": "all inspected originals still identical to inspection hash",
+      "ok": true
+    },
+    {
+      "check": "all primary readable evidence matches mapped SHA-256",
+      "ok": true
+    },
+    {
+      "check": "full judgment saved before native completion; current review not capped",
+      "ok": true
+    },
+    {
+      "check": "all mapped primary IDs resolve",
+      "ok": true
+    },
+    {
+      "check": "no missing required science artifacts claimed",
+      "ok": true
+    },
+    {
+      "check": "source/time separation explicit",
+      "ok": true
+    }
+  ],
+  "note": "Structural/integrity verification only; does not substitute for semantic primary-source review."
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "id": "I15-Aucejo",
+    "url": "https://journals.sagepub.com/doi/10.1177/108201320000600211",
+    "started_utc": "2026-10-10T07:25:06.904488+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "error": "HTTP Error 403: Forbidden",
+    "completed_utc": "2026-10-10T07:25:06.977238+00:00"
+  },
+  {
+    "id": "I14-Alves",
+    "url": "https://journals.sagepub.com/doi/10.1177/875608799901500107",
+    "started_utc": "2026-10-10T07:25:06.902559+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "error": "HTTP Error 403: Forbidden",
+    "completed_utc": "2026-10-10T07:25:06.982307+00:00"
+  },
+  {
+    "id": "I05-Balestra",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6801301/",
+    "started_utc": "2026-10-10T07:25:06.898562+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6801301/",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 157731,
+    "sha256": "8670e901bb0cd873557b757e247370563b034241d9eb672c48eec574b3c7620e",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I05-Balestra.txt",
+    "completed_utc": "2026-10-10T07:25:07.129543+00:00"
+  },
+  {
+    "id": "I16-Hagenloch",
+    "url": "https://scholarworks.wmich.edu/honors_theses/2700/",
+    "started_utc": "2026-10-10T07:25:06.906059+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://scholarworks.wmich.edu/honors_theses/2700/",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 31294,
+    "sha256": "340757ed56e90420486bdbb7cf1dd5ef9e46b69082b6a8cb41d41100259c2fec",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I16-Hagenloch.txt",
+    "completed_utc": "2026-10-10T07:25:07.241596+00:00"
+  },
+  {
+    "id": "I04-Baele",
+    "url": "https://biblio.ugent.be/publication/8713140",
+    "started_utc": "2026-10-10T07:25:06.897298+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://biblio.ugent.be/publication/8713140",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 43796,
+    "sha256": "072e55756575d36ab5466753dadc03ff57ee375a666815ce8dcfe8316e50201c",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I04-Baele.txt",
+    "completed_utc": "2026-10-10T07:25:07.556287+00:00"
+  },
+  {
+    "id": "I02-Hough",
+    "url": "https://bibliotecadigital.exactas.uba.ar/collection/paper/document/paper_00224901_v32_n1_p57_Hough",
+    "started_utc": "2026-10-10T07:25:06.896234+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://bibliotecadigital.exactas.uba.ar/collection/paper/document/paper_00224901_v32_n1_p57_Hough",
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 56959,
+    "sha256": "1c46ba2760968eef506ba85759a1b8a11e98290d82cf71571c0fb036f2672e80",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I02-Hough.txt",
+    "completed_utc": "2026-10-10T07:25:08.234145+00:00"
+  },
+  {
+    "id": "I12-F1249",
+    "url": "https://store.astm.org/f1249-25.html",
+    "started_utc": "2026-10-10T07:25:06.899717+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://store.astm.org/f1249-25.html",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 295332,
+    "sha256": "b0f97430f1f6b4b5d3a6a6276eb8255962cfe4a0bb5e9b7cfac8f50856095605",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I12-F1249.txt",
+    "completed_utc": "2026-10-10T07:25:09.261465+00:00"
+  },
+  {
+    "id": "I13-F2338",
+    "url": "https://store.astm.org/f2338-24.html",
+    "started_utc": "2026-10-10T07:25:06.901104+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "status": 200,
+    "final_url": "https://store.astm.org/f2338-24.html",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 322839,
+    "sha256": "9930d8f0982bb775e674068057980668e891e937c27ca0ce5a529e9db75f7f16",
+    "capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.html",
+    "text_capture": "ER12_RUNTIME/assessment/D-R1-01/treatment-v1/evidence/I13-F2338.txt",
+    "completed_utc": "2026-10-10T07:25:09.471017+00:00"
+  },
+  {
+    "id": "I01-Arimi",
+    "url": "https://repository.must.ac.ke/handle/123456789/243?show=full",
+    "started_utc": "2026-10-10T07:25:06.894322+00:00",
+    "operation": "Independent HTTPS GET; no authentication",
+    "error": "The read operation timed out",
+    "completed_utc": "2026-10-10T07:25:25.951648+00:00"
+  }
+]

@@ -1,9 +1,20 @@
-# S01 — 3MF Core Specification & Reference Guide
-
-- **Exact URL:** https://github.com/3MFConsortium/spec_core/blob/master/3MF%20Core%20Specification.md
-- **Released version/commit:** Published Core Specification v1.4.0 (change history dated 2025-02-06); live master page did not surface a commit hash.
-- **Locator:** Sections 1.1-2.1 (OPC/ZIP, parts, thumbnails, PrintTicket); 2.2.1-2.2.2 (recommended/reserved double extensions); 3.1-3.4 (unit, transforms, metadata); 4.2 (components); 5.1 (base materials); 6.1-6.2 (thumbnail/core properties); 2.3.2-2.3.3 (extension behavior).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only browser open/find of the official 3MF Consortium specification; inspected the relevant sections. No implementation or package was run.
-- **Governing condition/default/exception:** 3MF is an OPC ZIP package. Model unit defaults to millimeter; declared alternatives are micron, centimeter, inch, foot and meter. Components reference objects and transforms; manufacturing devices must preserve their relative position. Base-material names convey portable design intent; PrintTicket maps to a consumer environment. Package thumbnail and Description metadata are optional. Core v1.4.0 recommends purpose-signalling suffixes such as .model.3mf and .project.3mf. Unsupported extension data may be ignored; producers should avoid requiring extensions unless key meaning depends on them.
-- **Applicability:** Format-level normative/recommended behavior only; does not guarantee a specific exporter or receiver writes, displays or preserves optional fields, extensions, names or project settings.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "40042bd200feb9e25c63dc80b5be6240747096d74a232c60dae4b4506b526fba",
+  "rawSHA256": "40042bd200feb9e25c63dc80b5be6240747096d74a232c60dae4b4506b526fba",
+  "original_bytes": 1644,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S01-3mf-core.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

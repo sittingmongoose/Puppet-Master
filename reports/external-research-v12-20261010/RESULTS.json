@@ -1,23 +1,24 @@
 {
   "counts": {
-    "admitted_logical_arms": 72,
-    "quiet_full_final_arms": 37,
-    "quiet_role_final_arms": 24,
-    "original_completed_judgments": 60,
+    "attempts": 80,
+    "delivered_original_finals": 79,
+    "original_source_judgments": 79,
+    "unassessed": 1,
     "source_labels": {
-      "FAIL": 21,
-      "PASS_WITH_LIMITATIONS": 39
+      "PASS_WITH_LIMITATIONS": 56,
+      "FAIL": 23
     },
-    "judgment_scopes": {
-      "A": 32,
-      "B": 24,
-      "C1": 4
-    },
-    "full_final_pending_review": "C-R2-01/control"
+    "missing_attempt": {
+      "slot": "D-R1-03",
+      "arm": "treatment",
+      "disposition": "MISSING_PRE_INPUT_GUARD_FAILURE",
+      "assessment_state": "UNASSESSED"
+    }
   },
-  "rows": "mechanics/results-table-v1/table.json",
-  "freeze_sha256": "1dbccec00fad4ae05ed6e03f297dcc25c75c48f72dcfe1e1396c15511e7c7c27",
-  "later_or_active_assessments_excluded": true,
-  "source_grades_original_unregraded": true,
-  "effective_and_billing": "UNKNOWN"
+  "rows": "mechanics/results-table-final/table.json",
+  "original_source_labels_only": true,
+  "source_grading_rerun": false,
+  "billing": "UNKNOWN",
+  "vendor_effective": "UNKNOWN",
+  "no_aggregate_usage_claim": true
 }

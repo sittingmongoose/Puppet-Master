@@ -1,10 +1,20 @@
-# S08 — caldata Rust crate
-
-- URL: https://docs.rs/crate/caldata/0.17.3
-- Version: caldata 0.17.3, release listed as 2026-09-20.
-- Access observation: 2026-10-10T04:00:20Z.
-- Locators: package version/dependency list; owner note on fork; crate module docs at https://docs.rs/caldata/0.17.3/caldata/.
-
-**Observed approach.** Rust iCalendar parser with recurrence module; project describes the fork as adding stricter RFC enforcement, typed date-times, accessors, and recurrence expansion. Owner note says it diverged significantly from archived `ical-rs` and contains a slightly modified, mostly copied `rust-rrule` to do local-timezone calculations in UTC. Package docs report 17.74% item coverage at inspection.
-
-**Applicability.** Useful pinned candidate to prototype for typed parsing/weekly expansion. The inspected public metadata does not prove it preserves every unknown property's value, parameters, order, folds, or bytes. Do not select it for round-trip editing without scoped compatibility tests.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "9bbc82d091e3eb2a053948d994b8b6d38668c54cd5047fcadc00944ccb7e68c4",
+  "rawSHA256": "9bbc82d091e3eb2a053948d994b8b6d38668c54cd5047fcadc00944ccb7e68c4",
+  "original_bytes": 1010,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A1-02/treatment/stages/investigator/sources/S08-caldata.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

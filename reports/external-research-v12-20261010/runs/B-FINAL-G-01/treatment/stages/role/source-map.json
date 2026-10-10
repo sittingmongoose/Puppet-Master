@@ -81,12 +81,65 @@
     }
   ],
   "claim_map": {
-    "critique_1_accept": {"sources": ["M1"], "locators": ["--delete", "--delete-excluded"], "kind": "source"},
-    "critique_2_reject": {"sources": ["M1"], "locators": ["OPTIONS SUMMARY --dry-run", "--max-delete"], "kind": "source + product-constraint inference (O2/O4, preview_required=true)"},
-    "critique_3_accept": {"sources": ["M1"], "locators": ["--delay-updates"], "kind": "source + product-constraint inference (O5, publish_mode=explicit)"},
-    "critique_4_reject": {"sources": ["M1"], "locators": ["USAGE trailing-slash", "--delete whole-directory requirement"], "kind": "source"},
-    "critique_5_accept_qualified": {"sources": ["M1"], "locators": ["--dry-run", "absence of locking semantics"], "kind": "source (absence) + tool-design inference (re-preview binding pass)"},
-    "critique_6_reject": {"sources": ["M1", "S1-snapshot"], "locators": ["--delete"], "kind": "source"}
+    "critique_1_accept": {
+      "sources": [
+        "M1"
+      ],
+      "locators": [
+        "--delete",
+        "--delete-excluded"
+      ],
+      "kind": "source"
+    },
+    "critique_2_reject": {
+      "sources": [
+        "M1"
+      ],
+      "locators": [
+        "OPTIONS SUMMARY --dry-run",
+        "--max-delete"
+      ],
+      "kind": "source + product-constraint inference (O2/O4, preview_required=true)"
+    },
+    "critique_3_accept": {
+      "sources": [
+        "M1"
+      ],
+      "locators": [
+        "--delay-updates"
+      ],
+      "kind": "source + product-constraint inference (O5, publish_mode=explicit)"
+    },
+    "critique_4_reject": {
+      "sources": [
+        "M1"
+      ],
+      "locators": [
+        "USAGE trailing-slash",
+        "--delete whole-directory requirement"
+      ],
+      "kind": "source"
+    },
+    "critique_5_accept_qualified": {
+      "sources": [
+        "M1"
+      ],
+      "locators": [
+        "--dry-run",
+        "absence of locking semantics"
+      ],
+      "kind": "source (absence) + tool-design inference (re-preview binding pass)"
+    },
+    "critique_6_reject": {
+      "sources": [
+        "M1",
+        "S1-snapshot"
+      ],
+      "locators": [
+        "--delete"
+      ],
+      "kind": "source"
+    }
   },
   "retrieval_failures": [],
   "limitations": [

@@ -1,1 +1,30 @@
-{"ref":"refs/tags/1.1","node_id":"MDM6UmVmMTIzMTUwMTAxOnJlZnMvdGFncy8xLjE=","url":"https://api.github.com/repos/OCFL/spec/git/refs/tags/1.1","object":{"sha":"4b0547244d54967d1404c8c1e7bdba403ac08fb7","type":"commit","url":"https://api.github.com/repos/OCFL/spec/git/commits/4b0547244d54967d1404c8c1e7bdba403ac08fb7"}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1"
+  ],
+  "source_urls": [
+    "https://api.github.com/repos/OCFL/spec/git/ref/tags/1.1"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A8-01/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E13-ocfl-tag11",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "acfd10f8362d994adb88513c190f07808bbfd852e5ad33a5bc81f4cbf6aeb2ab",
+  "rawSHA256": "acfd10f8362d994adb88513c190f07808bbfd852e5ad33a5bc81f4cbf6aeb2ab",
+  "original_bytes": 317,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A8-01/treatment-v1/evidence/E13-ocfl-tag11.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

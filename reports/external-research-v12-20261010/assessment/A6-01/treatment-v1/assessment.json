@@ -1633,22 +1633,19 @@
           }
         },
         "t3_returned_metadata": {
-          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
-          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
-          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-investigator-v1:ordinal:1",
-          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
-          "status": "running",
-          "workState": "working",
-          "hasPendingChildRuns": false,
-          "latestTerminalRunId": null,
-          "latestTerminalStatus": null,
-          "latestTerminalSummary": null,
-          "latestTerminalResultContextTransferId": null,
-          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-          "model": "gpt-6-luna",
-          "summary": null,
-          "resultContextTransferId": null,
-          "waitTimedOut": false
+          "schema": "er12.public-native-lifecycle.v1",
+          "actual_lifecycle_metadata": [
+            {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-investigator-v1",
+              "status": "running",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna"
+            }
+          ],
+          "omitted_activity_message_bodies": true,
+          "original_json_value_sha256": "e31f74697cc554e227772a3d36006088213584bd33d3cfc0e85113729f36de1f"
         },
         "native_independent_status": "UNKNOWN",
         "science_map_native_record": "No native fields in investigator source map"
@@ -1665,22 +1662,19 @@
           }
         },
         "t3_returned_metadata": {
-          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
-          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
-          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-critic-v1:ordinal:1",
-          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
-          "status": "running",
-          "workState": "working",
-          "hasPendingChildRuns": false,
-          "latestTerminalRunId": null,
-          "latestTerminalStatus": null,
-          "latestTerminalSummary": null,
-          "latestTerminalResultContextTransferId": null,
-          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-          "model": "gpt-6-luna",
-          "summary": null,
-          "resultContextTransferId": null,
-          "waitTimedOut": false
+          "schema": "er12.public-native-lifecycle.v1",
+          "actual_lifecycle_metadata": [
+            {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-critic-v1",
+              "status": "running",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna"
+            }
+          ],
+          "omitted_activity_message_bodies": true,
+          "original_json_value_sha256": "f7ebcb1a99a5ac3ca594c6d1a7dafc7afcc14a670e836124fcdbc99501459bd0"
         },
         "native_independent_status": "UNKNOWN",
         "science_map_native_record": "Authored native Goal record present; not an independent terminal receipt"
@@ -1697,22 +1691,19 @@
           }
         },
         "t3_returned_metadata": {
-          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-          "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-          "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A6-01-treatment-reviser-v1:ordinal:1",
-          "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
-          "status": "running",
-          "workState": "working",
-          "hasPendingChildRuns": false,
-          "latestTerminalRunId": null,
-          "latestTerminalStatus": null,
-          "latestTerminalSummary": null,
-          "latestTerminalResultContextTransferId": null,
-          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-          "model": "gpt-6-luna",
-          "summary": null,
-          "resultContextTransferId": null,
-          "waitTimedOut": false
+          "schema": "er12.public-native-lifecycle.v1",
+          "actual_lifecycle_metadata": [
+            {
+              "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+              "status": "running",
+              "hasPendingChildRuns": false,
+              "latestTerminalStatus": null,
+              "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+              "model": "gpt-6-luna"
+            }
+          ],
+          "omitted_activity_message_bodies": true,
+          "original_json_value_sha256": "09e45e96f71a76106cc0130b26f63259951b1334ab8bcc35c3a4e2efc42f38c0"
         },
         "native_independent_status": "UNKNOWN",
         "science_map_native_record": "Authored native Goal record present; not an independent terminal receipt"

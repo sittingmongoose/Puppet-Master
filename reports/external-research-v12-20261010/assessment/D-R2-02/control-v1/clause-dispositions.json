@@ -1,0 +1,932 @@
+[
+  {
+    "clause_id": "B01",
+    "exact_clause": "A produce cooperative uses insulated crates on a morning delivery route.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "Insulated morning-route crates remain synthetic context; no crate design or vehicle is assumed."
+  },
+  {
+    "clause_id": "B02",
+    "exact_clause": "A few logger traces reportedly show brief warm excursions near the middle of the route, but the logger sometimes travels loose on top of the load.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED_AND_INVESTIGATED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 16
+    },
+    "assessment": "Local sensor air is separated from product response; marked paired channels and sensor specifications address the loose-top placement. Spike cause remains unknown."
+  },
+  {
+    "clause_id": "B03",
+    "exact_clause": "Delivery order changed recently, and customers also began receiving smaller batches.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED_AND_INVESTIGATED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "Route order and smaller batches are treated as co-occurring/confounded; history, load geometry and stop records precede separate comparisons."
+  },
+  {
+    "clause_id": "B04",
+    "exact_clause": "The cooperative wants a research proposal before purchasing powered cooling.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 8
+    },
+    "assessment": "The recommendation is staged investigation before purchase; no equipment winner or invented budget is supplied."
+  },
+  {
+    "clause_id": "B05",
+    "exact_clause": "There are no raw traces, product-temperature readings, route records, or verified quality outcomes.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "No case traces, product temperatures, manifests or verified quality outcome are invented."
+  },
+  {
+    "clause_id": "B06",
+    "exact_clause": "The project setting is synthetic.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 9,
+      "section": "Project situation"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 25
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "Synthetic context is explicit; literature findings are attributed to their own implementations."
+  },
+  {
+    "clause_id": "B07",
+    "exact_clause": "Spend the 60-minute research window developing a proposal to investigate the excursions and compare feasible ways to improve route conditions.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 13,
+      "section": "Request"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 29
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "SOURCE_SCOPE_ADDRESSED_TIME_SEPARATE",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 110
+    },
+    "assessment": "A substantive proposal exists. Recorded stage receipts are inside configured caps, but independently authenticated original 60-minute execution/occupancy remains UNKNOWN; finishing early is permitted by stage assignments."
+  },
+  {
+    "clause_id": "B08",
+    "exact_clause": "Explain the transport and measurement mechanisms, research relevant implementation history, and propose a later pilot with defensible endpoints.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 13,
+      "section": "Request"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 29
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED_WITH_MINOR_COMPRESSION",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 20
+    },
+    "assessment": "Initial state, airflow, air/pulp response, door events, study comparators and pilot endpoints are covered. Discovery has more explicit heat-transfer-mode/respiration exposition than the final (L03); no local model uses the omitted detail."
+  },
+  {
+    "clause_id": "B09",
+    "exact_clause": "Provide a useful alternative if powered cooling is unjustified.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 13,
+      "section": "Request"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 29
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 89
+    },
+    "assessment": "Unchanged-operation measurement is useful if no product problem is established; conditional existing preconditioning, PCM and handling comparisons supply actionable research alternatives."
+  },
+  {
+    "clause_id": "B10",
+    "exact_clause": "Do not build a routing system or issue operating instructions for today's shipments.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 13,
+      "section": "Request"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 29
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 58
+    },
+    "assessment": "No routing system or current-shipment instructions are delivered. All changes are framed as later approved comparisons."
+  },
+  {
+    "clause_id": "B11",
+    "exact_clause": "Distinguish logger air readings, actual product temperature, delivered quality, and food safety.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 17,
+      "section": "Requirements to preserve"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 33
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 16
+    },
+    "assessment": "Four evidence layers stay separate, including final thermal-versus-quality endpoint qualification at line 87."
+  },
+  {
+    "clause_id": "B12",
+    "exact_clause": "Compare passive packaging or preconditioning changes with route or handling changes and a useful measurement-placement alternative.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 18,
+      "section": "Requirements to preserve"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 34
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 46
+    },
+    "assessment": "Passive/preconditioning, separate approved route/handling and mapped air/in-crate/product-like measurement options are compared with matched tests and operational burdens."
+  },
+  {
+    "clause_id": "B13",
+    "exact_clause": "Consider door or crate opening, load size, initial conditions, route timing, and sensor response rather than treating every short spike as a product excursion.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 19,
+      "section": "Requirements to preserve"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 35
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "Door/opening, load/thermal mass/airflow, initial conditions, timing and sensor response are explicit candidate causes and recorded pilot covariates."
+  },
+  {
+    "clause_id": "B14",
+    "exact_clause": "Investigate the route and packaging history and the conditions reported by comparable implementations before transferring their claimed benefits.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 20,
+      "section": "Requirements to preserve"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 36
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED_WITH_EXTERNAL_INPUTS_OPEN",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 33
+    },
+    "assessment": "Actual history cannot be recovered from absent records. A dated route/packing/logger timeline and contextual literature comparators precede transfer; no remembered change is treated as causal evidence."
+  },
+  {
+    "clause_id": "B15",
+    "exact_clause": "Propose a pilot with a baseline, traceable shipments, relevant measurements, practical costs, and a decision criterion; label future validation separately from analysis actually executed.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 21,
+      "section": "Requirements to preserve"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 37
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 71
+    },
+    "assessment": "Baseline, shipment/lot identifiers, synchronized measurements, repeated matched routes, quality endpoints, practical cost categories and a pre-agreed decision rule are specified. Execution status is separately stated at line 164."
+  },
+  {
+    "clause_id": "B16",
+    "exact_clause": "Do not declare safe storage limits, shelf life, compliance, or product suitability from unverified air-temperature traces.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 25,
+      "section": "Boundaries"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 41
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 16
+    },
+    "assessment": "No safety/storage/shelf-life/compliance/suitability threshold is inferred from air traces; any food-safety question is a separate owner assessment."
+  },
+  {
+    "clause_id": "B17",
+    "exact_clause": "Do not alter deliveries, enter customer systems, contact customers, purchase cooling equipment, or run a live trial.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 26,
+      "section": "Boundaries"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 42
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ARTIFACT_BOUNDARY_PRESERVED_ACTION_TRACE_UNKNOWN",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 164
+    },
+    "assessment": "Artifacts explicitly report no deliveries/customer access/contact/purchase/live trial. Independent operational/tool-history proof of every negative action is unavailable in this bounded package; no contrary action evidence is observed."
+  },
+  {
+    "clause_id": "B18",
+    "exact_clause": "Do not invent route timings, thermal properties, produce types, logger response, or quality results.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 27,
+      "section": "Boundaries"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 43
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "Case timings, crop, properties, response and quality results stay unknown. Numeric literature conditions are confined to their sources."
+  },
+  {
+    "clause_id": "B19",
+    "exact_clause": "Product types, initial temperatures, crate construction, logger specifications, packing practice, stop durations, outdoor conditions, and acceptable quality loss are unknown.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 31,
+      "section": "Still unresolved"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 47
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "HONEST_EXTERNAL_INPUTS",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 133
+    },
+    "assessment": "Each of the eight unknowns has a concrete measurement/owner step, including crop/lot, initial state, crate, logger, packing, stop duration, weather and acceptable loss."
+  },
+  {
+    "clause_id": "B20",
+    "exact_clause": "There is no supplied cost ceiling or agreement that route order may change.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 31,
+      "section": "Still unresolved"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 47
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "HONEST_OWNER_DECISIONS",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 73
+    },
+    "assessment": "Cost ceiling and permission to change route remain genuine cooperative decisions, with costs and permissions needed before comparisons."
+  },
+  {
+    "clause_id": "B21",
+    "exact_clause": "Identify which questions must be resolved before alternatives can be fairly compared.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/brief.md",
+      "line": 31,
+      "section": "Still unresolved"
+    },
+    "embedded_plan_origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 47
+    },
+    "kind": "original brief obligation/context",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 133
+    },
+    "assessment": "The unknowns table and Gate 0 identify prerequisites, rather than using uncertainty to avoid proposing an investigation."
+  },
+  {
+    "clause_id": "P01",
+    "exact_clause": "Keep this file outside the candidate-facing research packet.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 9
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "RELEASE_MECHANICS_PARTLY_OBSERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 1
+    },
+    "assessment": "Investigator assignment withheld the plan until discovery; reveal record freezes discovery then supplies an exact copy. Independent proof of all input-access ordering is UNKNOWN; post-reveal critic/reviser access is authorized."
+  },
+  {
+    "clause_id": "P02",
+    "exact_clause": "It preserves the authored request and open design opportunities.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 9
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 170
+    },
+    "assessment": "The plan is treated as prospective scope/opportunities; no plan text is promoted to a research result."
+  },
+  {
+    "clause_id": "P03",
+    "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 9
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "The final uses primary literature and future case data, not a hidden answer-key interpretation."
+  },
+  {
+    "clause_id": "P04",
+    "exact_clause": "Nothing here selects an eventual research method.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 9
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 10
+    },
+    "assessment": "Method and intervention choice remain conditional; no predetermined option is inferred."
+  },
+  {
+    "clause_id": "P05",
+    "exact_clause": "No empirical validation has been executed in authoring this case.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 9
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 164
+    },
+    "assessment": "No authoring-time empirical validation is claimed; the investigation is desk research and prospective pilot design."
+  },
+  {
+    "clause_id": "P06",
+    "exact_clause": "The original brief follows verbatim between the delimiters.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 13
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "EXACT_INPUT_PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 91
+    },
+    "assessment": "The embedded original brief and frozen brief match; exact revealed plan also matches. This is provenance evidence, separate from semantic fulfillment."
+  },
+  {
+    "clause_id": "P07",
+    "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 13
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 91
+    },
+    "assessment": "Original obligations remain covered; corrections qualify evidence rather than replacing the question or narrowing to a cheaper task."
+  },
+  {
+    "clause_id": "P08",
+    "exact_clause": "Can a bounded thermal and operational study determine whether the reported excursions represent an actionable product problem and which low-complexity intervention is worth testing?",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 53
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED_AS_RESEARCH_QUESTION",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 10
+    },
+    "assessment": "The staged baseline distinguishes local sensor exposure from actionable product/quality problems before comparing low-complexity options."
+  },
+  {
+    "clause_id": "P09",
+    "exact_clause": "The product-specific endpoint, access to measurements, acceptable operational variation, and cost comparison remain open.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 55
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "HONEST_EXTERNAL_INPUTS",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 73
+    },
+    "assessment": "Product endpoint, measurement access, permissible variation and economic criterion require owner/quality-partner input; specifics are not invented."
+  },
+  {
+    "clause_id": "P10",
+    "exact_clause": "The proposal should sequence measurement interpretation and intervention testing so that equipment expenditure does not become the assumed solution.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 55
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 89
+    },
+    "assessment": "Measurement interpretation precedes intervention/purchase; powered cooling is tested against feasible alternatives, not assumed."
+  },
+  {
+    "clause_id": "P11",
+    "exact_clause": "Consider improving logger placement and interpretation, crate packing or insulation, preconditioning, managing openings, departure timing, and delivery-order or load-size changes.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 59
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 58
+    },
+    "assessment": "Final includes logger placement, crate/insulation/packing, existing preconditioning, openings, departure timing and separately approved route/load-size changes."
+  },
+  {
+    "clause_id": "P12",
+    "exact_clause": "Powered cooling is one option to investigate against energy, capital, handling, and maintenance costs.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 59
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 87
+    },
+    "assessment": "Energy, capital, conditioning, labor, maintenance and total cost per saleable crate enter a conditional powered-cooling comparison. No vendor/price claim is made."
+  },
+  {
+    "clause_id": "P13",
+    "exact_clause": "Better measurement with unchanged operations is a useful alternative if the apparent signal is not yet tied to product conditions.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 59
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 89
+    },
+    "assessment": "Improved measurement with unchanged operation remains a substantive possible outcome if product relevance is not established."
+  },
+  {
+    "clause_id": "P14",
+    "exact_clause": "No cooling or routing strategy is the expected outcome.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 59
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 10
+    },
+    "assessment": "No strategy is declared the winner."
+  },
+  {
+    "clause_id": "P15",
+    "exact_clause": "Investigate heat transfer, initial thermal state, thermal mass, opening exposure, sensor response and placement, and the relationship between air and product observations.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 63
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED_WITH_MINOR_COMPRESSION",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "Thermal state/mass, air/product lag, openings, response and placement are investigated via paired measurements and covariates; generic heat-mode prose is compressed from discovery (L03)."
+  },
+  {
+    "clause_id": "P16",
+    "exact_clause": "An air spike may reflect a real exposure without establishing the magnitude of product heating.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 63
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 8
+    },
+    "assessment": "A local air event is not a measured product-temperature history. Sensor quality/position checks remain necessary; the statement is read conditionally, not as a certification that the unsupplied trace is accurate."
+  },
+  {
+    "clause_id": "P17",
+    "exact_clause": "Smaller batches and different route order can change multiple factors simultaneously.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 63
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "Changing batch and order can alter geometry/airflow and timing/openings together; attribution waits for comparable observations."
+  },
+  {
+    "clause_id": "P18",
+    "exact_clause": "Explain discriminating evidence and limits of any simplified thermal model.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 63
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "The final explicitly declines a decision-grade model from absent inputs; measured-input sensitivity work is optional and bounded by real product-like checks. No model is invented or run."
+  },
+  {
+    "clause_id": "P19",
+    "exact_clause": "Seek implementation reports with actual products, packing, weather, dwell times, measurement placement, route practices, and quality endpoints.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 67
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED_WITH_TRANSFER_LIMITS",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 20
+    },
+    "assessment": "Named comparators include actual study products, packing, weather/route and measurement context where accessible; no absent quality endpoint is invented. Some sources remain abstract-level (L01)."
+  },
+  {
+    "clause_id": "P20",
+    "exact_clause": "Procurement claims about insulation or cooling require operating context.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 67
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 35
+    },
+    "assessment": "Procurement/insulation/cooling claims require operating context, and no generic benefit forecast is transferred."
+  },
+  {
+    "clause_id": "P21",
+    "exact_clause": "Investigate past route manifests and packing routines as future evidence; recollection of a changed route is not a validated causal comparison.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 67
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED_AS_FUTURE_EVIDENCE",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 33
+    },
+    "assessment": "Dated manifests/packing routines and separate route/batch histories are proposed; no case recollection is promoted to a validated comparison."
+  },
+  {
+    "clause_id": "P22",
+    "exact_clause": "Consider operational failures and ongoing maintenance, not only initial equipment performance.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 67
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED_AT_PROPOSAL_LEVEL",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 35
+    },
+    "assessment": "Failures, downtime, repairs/service, spares, conditioning/reuse and recurring costs are explicitly sought. No local history exists. Published PCM conditioning/reuse limits provide nonvacuous implementation context."
+  },
+  {
+    "clause_id": "P23",
+    "exact_clause": "A later authorized pilot could document shipments, initial conditions, selected air and product measurements where feasible, openings and stops, and quality observations defined by an appropriate partner.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 71
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 73
+    },
+    "assessment": "Authorized future pilot records traceable shipments, initial state, air/product measurements, openings/stops and partner-defined quality."
+  },
+  {
+    "clause_id": "P24",
+    "exact_clause": "Explain repeated routes, comparable loads and weather, sensor checks, and how costs enter the decision.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 71
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 75
+    },
+    "assessment": "Repeated representative routes, matched/position-swapped crates, weather/load covariates, sensor metadata/checks and costs govern the proposed comparison; sample size waits for variance and meaningful effect."
+  },
+  {
+    "clause_id": "P25",
+    "exact_clause": "An assumed heat-balance illustration or toy trace analysis actually executed in the research hour cannot establish real product temperatures, food safety, or delivered-quality improvement.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 71
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 18
+    },
+    "assessment": "A toy trace/model is neither executed nor used as a route/quality/safety oracle; future sensitivity illustration is explicitly limited."
+  },
+  {
+    "clause_id": "P26",
+    "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 73
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 14
+    },
+    "assessment": "The supplied input setting remains synthetic."
+  },
+  {
+    "clause_id": "P27",
+    "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 73
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED_NOT_A_RESEARCH_PROHIBITION",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 164
+    },
+    "assessment": "This describes case-authoring status. It does not ban the requested later desk search. No authoring-time deployment or experimental result is inferred."
+  },
+  {
+    "clause_id": "P28",
+    "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 73
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "ADDRESSED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 164
+    },
+    "assessment": "Investigator/critic desk work is attributed to predecessor artifacts; reviser’s independent S10 check and full-text access limit are stated; empirical checks stay unrun."
+  },
+  {
+    "clause_id": "P29",
+    "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "SOURCE_SCOPE_ADDRESSED_TIME_SEPARATE",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 170
+    },
+    "assessment": "Breadth, causal reasoning, implementation context and pilot design are substantive. Native recorded durations and configured envelope are reported separately; no inference/billing savings or minimum 60-minute dwell is inferred."
+  },
+  {
+    "clause_id": "P30",
+    "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 10
+    },
+    "assessment": "Reasoned provisional candidates remain choices to test, not an expected outcome."
+  },
+  {
+    "clause_id": "P31",
+    "exact_clause": "It requests no product build.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 58
+    },
+    "assessment": "The artifact is a proposal; no product or routing build is claimed or delivered."
+  },
+  {
+    "clause_id": "P32",
+    "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "EXACT_INPUTS_PRESERVED",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 189
+    },
+    "assessment": "Original frozen brief and plan are unchanged and match released copies. All reviewer writes are confined to the reserved assessment path."
+  },
+  {
+    "clause_id": "P33",
+    "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "RELEASE_READINESS_UNKNOWN",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 189
+    },
+    "assessment": "Reveal metadata is available, but upstream recipe/budget lock and absence of designer assistance cannot be independently authenticated from this single package. No other arms/status/history were inspected to fill that gap."
+  },
+  {
+    "clause_id": "P34",
+    "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+    "origin": {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-02/plan.md",
+      "line": 77
+    },
+    "kind": "plan opportunity or provenance/release clause",
+    "independent_disposition": "PRESERVED_READINESS_UNKNOWN",
+    "final_locator": {
+      "path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "line": 189
+    },
+    "assessment": "Final does not assert campaign readiness; independent judgment does not convert an input freeze into release authorization."
+  }
+]

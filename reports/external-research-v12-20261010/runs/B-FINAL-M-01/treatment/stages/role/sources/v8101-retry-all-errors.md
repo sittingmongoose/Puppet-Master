@@ -1,40 +1,20 @@
----
-c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
-SPDX-License-Identifier: curl
-Long: retry-all-errors
-Help: Retry all errors (with --retry)
-Added: 7.71.0
-Category: curl
-Multi: boolean
-See-also:
-  - retry
-Example:
-  - --retry 5 --retry-all-errors $URL
----
-
-# `--retry-all-errors`
-
-Retry on any error. This option is used together with --retry.
-
-This option is the "sledgehammer" of retrying. Do not use this option by
-default (for example in your **curlrc**), there may be unintended consequences
-such as sending or receiving duplicate data. Do not use with redirected input
-or output. You might be better off handling your unique problems in a shell
-script. Please read the example below.
-
-**WARNING**: For server compatibility curl attempts to retry failed flaky
-transfers as close as possible to how they were started, but this is not
-possible with redirected input or output. For example, before retrying it
-removes output data from a failed partial transfer that was written to an
-output file. However this is not true of data redirected to a | pipe or \>
-file, which are not reset. We strongly suggest you do not parse or record
-output via redirect in combination with this option, since you may receive
-duplicate data.
-
-By default curl does not return error for transfers with an HTTP response code
-that indicates an HTTP error, if the transfer was successful. For example, if
-a server replies 404 Not Found and the reply is fully received then that is
-not an error. When --retry is used then curl retries on some HTTP response
-codes that indicate transient HTTP errors, but that does not include most 4xx
-response codes such as 404. If you want to retry on all response codes that
-indicate HTTP errors (4xx and 5xx) then combine with --fail.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+  "rawSHA256": "a98f60938760f9d35232b3da2f7b45da4aa239411a142a52e5e8dccf6a5fb916",
+  "original_bytes": 1763,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry-all-errors.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -1,9 +1,20 @@
-# S02 — Fusion: Save bodies in a component as 3MF, OBJ, or STL files
-
-- **Exact URL:** https://help.autodesk.com/view/fusion360/ENU/?contextId=MESH-SAVE-AS-MESH
-- **Released version/commit:** Live Fusion help page; no exact product build/version stated.
-- **Locator:** Save As Mesh steps 1-9, especially Format, Unit Type and Structure (lines 20-55 in retrieved page).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open/find of Autodesk Fusion help; export was not performed.
-- **Governing condition/default/exception:** The workflow offers 3MF, binary/ASCII STL and OBJ; units include cm, mm, m, inch and foot; a component's bodies can be saved as one file or one body per file.
-- **Applicability:** Documents one Fusion UI workflow, not received structure or round-trip fidelity.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "c0e580f2cb357d077905f1959c4dea7c14889d66b17156b1e9c5b4027f9589bd",
+  "rawSHA256": "c0e580f2cb357d077905f1959c4dea7c14889d66b17156b1e9c5b4027f9589bd",
+  "original_bytes": 813,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S02-fusion-mesh.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

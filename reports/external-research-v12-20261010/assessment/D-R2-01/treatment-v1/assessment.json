@@ -1,0 +1,1937 @@
+{
+  "schema": "ER12-independent-full-pipeline-assessment-v1",
+  "case_id": "D-R2-01",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "reviewer_identity": "codex-er12-d-r2-01-review-v1",
+  "saved_at_utc": "2026-10-10T07:56:29.652179+00:00",
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_scope": "Independent semantic/source judgment of the complete ordinary pipeline; not an unqualified assertion that all time/protocol/runtime requirements passed.",
+  "reason": "All six semantic axes and every substantive original-plan sentence were assessed. No remaining material error, material omission or unsupported consequential decision was found. Corrected lineage defects, minor final wording, access limits and separately evidenced time/protocol limits are preserved.",
+  "material_findings": [],
+  "remaining_material_issue_found": false,
+  "unassessed_axes": [],
+  "review_capped": false,
+  "review_envelope": {
+    "native_goal_created_at_utc": "2026-10-10T07:35:58Z",
+    "absolute_review_deadline_utc": "2026-10-10T08:20:58Z",
+    "maximum_seconds": 2700,
+    "finished_scope_early": true,
+    "all_judgment_saved_before_reviewer_native_completion": true
+  },
+  "axes": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "assessment": "The final delivers a research proposal with separate symptoms/growth/water/diagnostic endpoints, concurrent-change and spatial/cohort confounding, concrete alternatives, facility/history questions, interpretable later observations/comparisons and specialist escalation. It retains the hypothetical/unknown case and all chemical, diagnosis, intervention, invented-reading and benefit boundaries. Every substantive original-plan sentence is inventoried independently. The literal sixty-minute request is not fulfilled by observed occupancy; this is recorded as a time limitation, not hidden by the clause table. Sealing/no-feedback assertions beyond captured records remain protocol UNKNOWN.",
+      "final_locators": [
+        "F8–18",
+        "F22–100",
+        "F136–182"
+      ],
+      "evidence": [
+        "Original brief and plan",
+        "plan-clause-assessment.json",
+        "Captured native records"
+      ]
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source claims: exact subject, operation, version, default, unit, type, domain and exceptions",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "assessment": "Independent primary retrieval supports the consequential final recommendations and corrections. HAF mixing is distinguished from ventilation exchange; dew-point consistency is distinct from hydathode/root-pressure physiology or splash. Measurement devices are aids with placement/calibration/media context, not cause oracles. S09 and S10 retain their actual crops, media, seasons, grower controls and adverse/no-saving histories. S10 salt causation is not asserted after qualification. Subirrigation benefits are conditional, closed-system runoff is not universal, and recirculating disease risks preserve host/pathogen/contamination-route exceptions. S17 concerns tomato fruit and S18 a controlled flat surface; neither validates herb leaves. S19 reports specific humidity, not a substituted numeric RH. CR03 is a trained auxiliary-input classifier for dew/rain/irrigation, not bare LWD or guttation capability. No unprovided default, dose, controller setting or effect is prescribed. Some evidence is abstract-level and several web editions lack displayed dates; those limits are explicit. F120 overstates what variable significance can disprove, a minor wording issue without a consequential choice.",
+      "final_locators": [
+        "F22–57",
+        "F66–78",
+        "F108–123"
+      ],
+      "evidence": [
+        "E-S01",
+        "E-S02",
+        "E-S03",
+        "E-S04",
+        "E-S05",
+        "E-S06",
+        "E-S07",
+        "E-S08",
+        "E-S09",
+        "E-S10",
+        "E-S11",
+        "E-S12",
+        "E-S13",
+        "E-S14",
+        "E-S15",
+        "E-S16",
+        "E-S17",
+        "E-S18",
+        "E-S19",
+        "E-S20",
+        "E-S21",
+        "E-CR01",
+        "E-CR02",
+        "E-CR03",
+        "E-CR04",
+        "E-CR05"
+      ]
+    },
+    {
+      "axis": 3,
+      "name": "Useful unfamiliar discovery, competing/analogous approaches, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS",
+      "assessment": "Discovery is substantive rather than generic caution: distribution/pressure/capture audits, substrate-specific moisture sensing and pot mass, canopy mapping and fan-role inquiry, wetness-duration instrumentation versus trained classification, closed-system feasibility and operator adoption history supply distinct information paths. Actual commercial sensor implementations include no water saving despite labor value and severe crop-specific losses despite reduced irrigation. Pepper and Brazilian cooling studies provide analogous gradients with transfer limits. Structured waiting has an information benefit and a safety gate; historical routine restoration and specialist referral are conditional branches. The final retains the optional approaches and does not force a winner, generic product build or unnecessary equipment purchase.",
+      "final_locators": [
+        "F12",
+        "F22–57",
+        "F61–90"
+      ],
+      "evidence": [
+        "E-S05",
+        "E-S06",
+        "E-S07",
+        "E-S08",
+        "E-S09",
+        "E-S10",
+        "E-S11",
+        "E-S19",
+        "E-S20",
+        "E-CR02",
+        "E-CR03"
+      ]
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticisms/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "assessment": "All six SCWs, F01–F11 and SCW_NOT_RUN are independently disposed. The final appropriately narrows the salt condition, fixes citation/metadata and retains original supported measurements, alternatives and study-scoped findings. SCW-05 is explicitly nondiscriminating rather than evidence of error. The critic overstates material severity for a general disease-risk concern and a conventional wetness-logger statement; final qualification does not wrongly reject those supported meanings. F120 has a minor overstatement about significance variation, but main proposal scope remains correct and no disease-based decision or option removal follows. The independent clause ledger distinguishes content satisfaction, external decisions, time limitation and unproved release protocol instead of trusting the final's self-audit.",
+      "final_locators": [
+        "F108–172"
+      ],
+      "evidence": [
+        "criticism_dispositions in assessment.json",
+        "plan-clause-assessment.json",
+        "E-S10",
+        "E-S11",
+        "E-CR01",
+        "E-CR02",
+        "E-CR03",
+        "E-CR04",
+        "E-CR05"
+      ]
+    },
+    {
+      "axis": 5,
+      "name": "Supported discovery/draft/critique/final meaning preservation",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS_WITH_LIMITATIONS",
+      "assessment": "The full pre-reveal discovery and draft retain the observation-first inquiry, distinct irrigation/microclimate mechanisms, owner facts, real adverse implementation lessons, analogues, optional sensing/subirrigation and proposed independent comparisons. Critique adds bounded evidence and conditions; final is self-contained rather than a list of predecessor IDs. Corrected lineage defects remain recorded: missing EC damage qualifier, mismatched citation bundle, inaccurate S01 revision metadata and overbroad possible readings. The final keeps sensor-based source classification as a separately validated capability and nested-zone replication as a supported design principle. No supported optional branch, authoring status or diagnostic boundary is silently lost.",
+      "final_locators": [
+        "F22–100",
+        "F108–130",
+        "F176–184"
+      ],
+      "evidence": [
+        "Original discovery.md",
+        "Original draft.md",
+        "Original critique.md",
+        "Original final.md",
+        "E-S01",
+        "E-S09",
+        "E-S10",
+        "E-CR01",
+        "E-CR03"
+      ]
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed versus executed validation and oracle applicability",
+      "coverage": "ASSESSED_COMPLETE",
+      "source_result": "PASS",
+      "assessment": "The later baseline would map pots/sensors, record cohorts/history and repeated mornings, examine delivery and root-zone water, and score symptoms/growth/water separately. A limited pilot waits for owner/specialist permission and safe reference; independently assigned irrigation or ventilation units, matching/blocking, one-factor changes, welfare stops and missing/deviation records support interpretable comparisons. Single-zone time series remain weather/time confounded. Dew-point checks, basic wetness signals, classifiers and clinic evidence have distinct roles; no desk/source check is treated as diagnosis, causal proof or crop improvement. Executed work in the retained artifacts is desk research, source comparisons and file integrity; there are no crop logs, samples, pilots or measured outcomes. No deployment, sample result or executable algorithm witness is required or invented.",
+      "final_locators": [
+        "F61–100",
+        "F176–180"
+      ],
+      "evidence": [
+        "E-S04",
+        "E-S05",
+        "E-CR01",
+        "E-CR02",
+        "E-CR03",
+        "E-S14",
+        "Full stage outputs"
+      ]
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "id": "P009.01",
+      "plan_line": 9,
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "status": "CONTEXT_PRESERVED",
+      "final_locators": "F136,F166,F176–180",
+      "independent_disposition": "Prospective authoring status is preserved. Concealment is a release/protocol fact, not an answer-key method mandate; actual prior sealing is not independently authenticated."
+    },
+    {
+      "id": "P009.02",
+      "plan_line": 9,
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "status": "CONTEXT_PRESERVED",
+      "final_locators": "F136,F166,F176–180",
+      "independent_disposition": "Prospective authoring status is preserved. Concealment is a release/protocol fact, not an answer-key method mandate; actual prior sealing is not independently authenticated."
+    },
+    {
+      "id": "P009.03",
+      "plan_line": 9,
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "status": "CONTEXT_PRESERVED",
+      "final_locators": "F136,F166,F176–180",
+      "independent_disposition": "Prospective authoring status is preserved. Concealment is a release/protocol fact, not an answer-key method mandate; actual prior sealing is not independently authenticated."
+    },
+    {
+      "id": "P009.04",
+      "plan_line": 9,
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "status": "CONTEXT_PRESERVED",
+      "final_locators": "F136,F166,F176–180",
+      "independent_disposition": "Prospective authoring status is preserved. Concealment is a release/protocol fact, not an answer-key method mandate; actual prior sealing is not independently authenticated."
+    },
+    {
+      "id": "P009.05",
+      "plan_line": 9,
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "status": "CONTEXT_PRESERVED",
+      "final_locators": "F136,F166,F176–180",
+      "independent_disposition": "Prospective authoring status is preserved. Concealment is a release/protocol fact, not an answer-key method mandate; actual prior sealing is not independently authenticated."
+    },
+    {
+      "id": "P013.01",
+      "plan_line": 13,
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "status": "PRESERVED",
+      "final_locators": "F136–138; original-artifacts.json",
+      "independent_disposition": "Frozen original bytes govern this review. The released plan matches the original; candidate corrections do not replace the request."
+    },
+    {
+      "id": "P013.02",
+      "plan_line": 13,
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "status": "PRESERVED",
+      "final_locators": "F136–138; original-artifacts.json",
+      "independent_disposition": "Frozen original bytes govern this review. The released plan matches the original; candidate corrections do not replace the request."
+    },
+    {
+      "id": "P025.01",
+      "plan_line": 25,
+      "exact_clause": "A teaching greenhouse has a bench of potted herbs with pale lower leaves and occasional visible droplets on some mornings.",
+      "status": "SATISFIED",
+      "final_locators": "F8,F18,F22–25,F43–48,F92,F180",
+      "independent_disposition": "Retains hypothetical herbs, lower-leaf symptoms, occasional morning droplets, simultaneous changes, informal door pattern and absence of case data; no event is invented."
+    },
+    {
+      "id": "P025.02",
+      "plan_line": 25,
+      "exact_clause": "The irrigation timer and the circulation-fan schedule were both changed before the symptoms were noticed.",
+      "status": "SATISFIED",
+      "final_locators": "F8,F18,F22–25,F43–48,F92,F180",
+      "independent_disposition": "Retains hypothetical herbs, lower-leaf symptoms, occasional morning droplets, simultaneous changes, informal door pattern and absence of case data; no event is invented."
+    },
+    {
+      "id": "P025.03",
+      "plan_line": 25,
+      "exact_clause": "Plants closest to the door seem less affected, but the observations were informal.",
+      "status": "SATISFIED",
+      "final_locators": "F8,F18,F22–25,F43–48,F92,F180",
+      "independent_disposition": "Retains hypothetical herbs, lower-leaf symptoms, occasional morning droplets, simultaneous changes, informal door pattern and absence of case data; no event is invented."
+    },
+    {
+      "id": "P025.04",
+      "plan_line": 25,
+      "exact_clause": "The instructor wants a research proposal before changing the teaching crop protocol.",
+      "status": "SATISFIED",
+      "final_locators": "F8,F18,F22–25,F43–48,F92,F180",
+      "independent_disposition": "Retains hypothetical herbs, lower-leaf symptoms, occasional morning droplets, simultaneous changes, informal door pattern and absence of case data; no event is invented."
+    },
+    {
+      "id": "P025.05",
+      "plan_line": 25,
+      "exact_clause": "This is a hypothetical setting with no diagnostic samples, environmental logs, or treatment results.",
+      "status": "SATISFIED",
+      "final_locators": "F8,F18,F22–25,F43–48,F92,F180",
+      "independent_disposition": "Retains hypothetical herbs, lower-leaf symptoms, occasional morning droplets, simultaneous changes, informal door pattern and absence of case data; no event is invented."
+    },
+    {
+      "id": "P029.01",
+      "plan_line": 29,
+      "exact_clause": "Use a full 60-minute research window to propose an investigation of the competing environmental and crop-management explanations.",
+      "status": "SATISFIED_WITH_TIME_EXCEPTION",
+      "final_locators": "F22–57,F61–100,F182",
+      "independent_disposition": "Substantive mechanisms, alternatives, operating history, future observation/pilot and referral are delivered. The full 60-minute occupancy requirement is separately unmet; this sentence is not marked wholly satisfied."
+    },
+    {
+      "id": "P029.02",
+      "plan_line": 29,
+      "exact_clause": "Explain plausible mechanisms, compare useful non-chemical alternatives, and investigate operating or implementation history that could affect transfer of evidence.",
+      "status": "SATISFIED",
+      "final_locators": "F22–57,F61–100,F182",
+      "independent_disposition": "Substantive mechanisms, alternatives, operating history, future observation/pilot and referral are delivered. The full 60-minute occupancy requirement is separately unmet; this sentence is not marked wholly satisfied."
+    },
+    {
+      "id": "P029.03",
+      "plan_line": 29,
+      "exact_clause": "Design a later observational or reversible pilot and identify when specialist diagnosis would be needed.",
+      "status": "SATISFIED",
+      "final_locators": "F22–57,F61–100,F182",
+      "independent_disposition": "Substantive mechanisms, alternatives, operating history, future observation/pilot and referral are delivered. The full 60-minute occupancy requirement is separately unmet; this sentence is not marked wholly satisfied."
+    },
+    {
+      "id": "P029.04",
+      "plan_line": 29,
+      "exact_clause": "We need a research proposal, not instructions to treat the plants today.",
+      "status": "SATISFIED",
+      "final_locators": "F22–57,F61–100,F182",
+      "independent_disposition": "Substantive mechanisms, alternatives, operating history, future observation/pilot and referral are delivered. The full 60-minute occupancy requirement is separately unmet; this sentence is not marked wholly satisfied."
+    },
+    {
+      "id": "P033.01",
+      "plan_line": 33,
+      "exact_clause": "Separate visible leaf symptoms, plant growth, water use, and the possibility of a condition requiring diagnosis; symptom reduction alone does not identify a cause.",
+      "status": "SATISFIED",
+      "final_locators": "F10,F67,F78,F92",
+      "independent_disposition": "Symptoms, growth, water use and diagnostic concern remain separate endpoints; improvement does not identify cause."
+    },
+    {
+      "id": "P034.01",
+      "plan_line": 34,
+      "exact_clause": "Compare irrigation or substrate-management inquiry with ventilation or microclimate inquiry and a useful observation-first alternative.",
+      "status": "SATISFIED",
+      "final_locators": "F12,F33–37,F61–78",
+      "independent_disposition": "Distinct irrigation/substrate, ventilation/microclimate and observation-first paths have concrete information benefits and conditional comparisons."
+    },
+    {
+      "id": "P035.01",
+      "plan_line": 35,
+      "exact_clause": "Account for plant position, watering distribution, morning conditions, crop age, and the simultaneous schedule changes without assuming droplets prove one explanation.",
+      "status": "SATISFIED",
+      "final_locators": "F22–25,F43–48,F63–78",
+      "independent_disposition": "Position, output distribution, mornings, species/age cohorts and concurrent schedules are explicitly investigated; droplets are not diagnostic."
+    },
+    {
+      "id": "P036.01",
+      "plan_line": 36,
+      "exact_clause": "Include greenhouse operating history and comparable implementation evidence, stating differences in crop, substrate, climate, and controls.",
+      "status": "SATISFIED",
+      "final_locators": "F43–57",
+      "independent_disposition": "Facility-history questions and actual comparable implementations identify crop, substrate, climate, control and staffing limits."
+    },
+    {
+      "id": "P037.01",
+      "plan_line": 37,
+      "exact_clause": "Propose an interpretable baseline, observation plan, limited comparison, and escalation criteria; distinguish proposed crop validation from any literature or desk checks actually executed.",
+      "status": "SATISFIED",
+      "final_locators": "F61–78,F98–100,F176–180",
+      "independent_disposition": "Mapped baseline, repeated observations, limited independent comparisons, stop/referral and executed desk-versus-proposed crop checks are explicit."
+    },
+    {
+      "id": "P041.01",
+      "plan_line": 41,
+      "exact_clause": "Do not diagnose a pathogen or deficiency, prescribe pesticides or fertilizer doses, or conduct a crop intervention in this assignment.",
+      "status": "SATISFIED",
+      "final_locators": "F94,F100,F178–180",
+      "independent_disposition": "No pathogen/deficiency diagnosis, chemical dose or executed crop intervention is given."
+    },
+    {
+      "id": "P042.01",
+      "plan_line": 42,
+      "exact_clause": "Do not claim food safety, disease prevention, or yield improvement from the anecdotal pattern.",
+      "status": "SATISFIED",
+      "final_locators": "F55,F94,F100",
+      "independent_disposition": "No food-safety, disease-prevention or yield benefit is assigned to the anecdote; disease-study results remain study-scoped."
+    },
+    {
+      "id": "P043.01",
+      "plan_line": 43,
+      "exact_clause": "Do not invent humidity, moisture, temperature, symptom prevalence, or measured treatment response.",
+      "status": "SATISFIED",
+      "final_locators": "F18,F65–68,F92,F180",
+      "independent_disposition": "No humidity, moisture, temperature, prevalence or treatment response is invented; prospective readings and missing data are labeled."
+    },
+    {
+      "id": "P047.01",
+      "plan_line": 47,
+      "exact_clause": "The species and age mix, substrates, irrigation delivery, climate-control behavior, sensor placement, seasonal conditions, and bench map are not supplied.",
+      "status": "SATISFIED_AS_EXTERNAL_DECISIONS",
+      "final_locators": "F18,F43–48,F84–88",
+      "independent_disposition": "All supplied unknowns and welfare/water/teaching objective remain explicit. Decisions are linked to data needed and pilot feasibility, not empty caution."
+    },
+    {
+      "id": "P047.02",
+      "plan_line": 47,
+      "exact_clause": "The instructor has not defined whether the immediate decision concerns plant welfare, water use, or teaching reliability.",
+      "status": "SATISFIED_AS_EXTERNAL_DECISIONS",
+      "final_locators": "F18,F43–48,F84–88",
+      "independent_disposition": "All supplied unknowns and welfare/water/teaching objective remain explicit. Decisions are linked to data needed and pilot feasibility, not empty caution."
+    },
+    {
+      "id": "P047.03",
+      "plan_line": 47,
+      "exact_clause": "Make these dependencies explicit.",
+      "status": "SATISFIED_AS_EXTERNAL_DECISIONS",
+      "final_locators": "F18,F43–48,F84–88",
+      "independent_disposition": "All supplied unknowns and welfare/water/teaching objective remain explicit. Decisions are linked to data needed and pilot feasibility, not empty caution."
+    },
+    {
+      "id": "P053.01",
+      "plan_line": 53,
+      "exact_clause": "Which environmental observations and later comparisons would make the symptom pattern informative while preserving the distinction between management hypotheses and plant diagnosis?",
+      "status": "SATISFIED",
+      "final_locators": "F22–27,F61–78,F98–100",
+      "independent_disposition": "Discriminating environmental observations and later comparisons are proposed while keeping plant diagnosis independent."
+    },
+    {
+      "id": "P055.01",
+      "plan_line": 55,
+      "exact_clause": "The crop endpoint, diagnostic access, measurement permissions, acceptable comparison conditions, and plant-protection stop criteria remain undecided.",
+      "status": "SATISFIED_AS_EXTERNAL_DECISIONS",
+      "final_locators": "F14,F61,F76,F84–88,F98",
+      "independent_disposition": "Endpoints, diagnostic access, permissions, acceptable comparisons and stops have named owners and consequences; no treatable cause is presumed."
+    },
+    {
+      "id": "P055.02",
+      "plan_line": 55,
+      "exact_clause": "The proposal should support a useful first inquiry without pretending that the current anecdote identifies a treatable cause.",
+      "status": "SATISFIED_AS_EXTERNAL_DECISIONS",
+      "final_locators": "F14,F61,F76,F84–88,F98",
+      "independent_disposition": "Endpoints, diagnostic access, permissions, acceptable comparisons and stops have named owners and consequences; no treatable cause is presumed."
+    },
+    {
+      "id": "P059.01",
+      "plan_line": 59,
+      "exact_clause": "Investigate watering distribution and timing, substrate moisture and drainage, airflow or schedule changes, plant placement, and a structured observation log.",
+      "status": "SATISFIED",
+      "final_locators": "F12,F33–37,F43–48,F61–78,F98",
+      "independent_disposition": "All named inquiry paths remain. Prior routine is conditional on history/suitability; referral and monitoring are meaningful branches, with no selected intervention."
+    },
+    {
+      "id": "P059.02",
+      "plan_line": 59,
+      "exact_clause": "Restoring a documented stable operating routine may be useful only if its past conditions and suitability are established.",
+      "status": "SATISFIED",
+      "final_locators": "F12,F33–37,F43–48,F61–78,F98",
+      "independent_disposition": "All named inquiry paths remain. Prior routine is conditional on history/suitability; referral and monitoring are meaningful branches, with no selected intervention."
+    },
+    {
+      "id": "P059.03",
+      "plan_line": 59,
+      "exact_clause": "Referral for diagnosis can be an appropriate branch when environmental explanations are insufficient.",
+      "status": "SATISFIED",
+      "final_locators": "F12,F33–37,F43–48,F61–78,F98",
+      "independent_disposition": "All named inquiry paths remain. Prior routine is conditional on history/suitability; referral and monitoring are meaningful branches, with no selected intervention."
+    },
+    {
+      "id": "P059.04",
+      "plan_line": 59,
+      "exact_clause": "No management change is preselected, and waiting with better monitoring must have a concrete information benefit.",
+      "status": "SATISFIED",
+      "final_locators": "F12,F33–37,F43–48,F61–78,F98",
+      "independent_disposition": "All named inquiry paths remain. Prior routine is conditional on history/suitability; referral and monitoring are meaningful branches, with no selected intervention."
+    },
+    {
+      "id": "P063.01",
+      "plan_line": 63,
+      "exact_clause": "Explore how moisture availability, root-zone conditions, air movement, temperature and humidity cycles, and plant physiology could produce or correlate with observations.",
+      "status": "SATISFIED",
+      "final_locators": "F22–27,F54,F63–78",
+      "independent_disposition": "Moisture/root-zone, airflow, temperature/humidity, physiology, interactions and gradients generate hypotheses and prospective checks rather than confirmations."
+    },
+    {
+      "id": "P063.02",
+      "plan_line": 63,
+      "exact_clause": "Visible droplets have more than one possible explanation and cannot establish a diagnosis.",
+      "status": "SATISFIED",
+      "final_locators": "F22–27,F54,F63–78",
+      "independent_disposition": "Moisture/root-zone, airflow, temperature/humidity, physiology, interactions and gradients generate hypotheses and prospective checks rather than confirmations."
+    },
+    {
+      "id": "P063.03",
+      "plan_line": 63,
+      "exact_clause": "Consider interactions and spatial gradients, with predictions to investigate rather than statements that a mechanism has been confirmed.",
+      "status": "SATISFIED",
+      "final_locators": "F22–27,F54,F63–78",
+      "independent_disposition": "Moisture/root-zone, airflow, temperature/humidity, physiology, interactions and gradients generate hypotheses and prospective checks rather than confirmations."
+    },
+    {
+      "id": "P067.01",
+      "plan_line": 67,
+      "exact_clause": "Seek implementation accounts describing crop and substrate, environmental controls, sensor locations, schedules, and observed plant outcomes.",
+      "status": "SATISFIED",
+      "final_locators": "F43–57",
+      "independent_disposition": "Actual implementations and future facility records cover crop/media, controls, sensors, schedules, outcomes, maintenance, movement and teaching. Transfer assumptions are not success guarantees."
+    },
+    {
+      "id": "P067.02",
+      "plan_line": 67,
+      "exact_clause": "Investigate old timer and fan settings, maintenance, plant movements, and changes in teaching practice as future evidence.",
+      "status": "SATISFIED",
+      "final_locators": "F43–57",
+      "independent_disposition": "Actual implementations and future facility records cover crop/media, controls, sensors, schedules, outcomes, maintenance, movement and teaching. Transfer assumptions are not success guarantees."
+    },
+    {
+      "id": "P067.03",
+      "plan_line": 67,
+      "exact_clause": "A climate-control result from another crop or season needs transfer assumptions.",
+      "status": "SATISFIED",
+      "final_locators": "F43–57",
+      "independent_disposition": "Actual implementations and future facility records cover crop/media, controls, sensors, schedules, outcomes, maintenance, movement and teaching. Transfer assumptions are not success guarantees."
+    },
+    {
+      "id": "P067.04",
+      "plan_line": 67,
+      "exact_clause": "No supplied success story or reference confirms how this greenhouse should be operated.",
+      "status": "SATISFIED",
+      "final_locators": "F43–57",
+      "independent_disposition": "Actual implementations and future facility records cover crop/media, controls, sensors, schedules, outcomes, maintenance, movement and teaching. Transfer assumptions are not success guarantees."
+    },
+    {
+      "id": "P071.01",
+      "plan_line": 71,
+      "exact_clause": "A later authorized pilot could map plant and sensor positions, record environmental and watering conditions, define repeatable symptom and growth observations, and stage limited reversible comparisons with independent diagnostic escalation when indicated.",
+      "status": "SATISFIED",
+      "final_locators": "F61–78,F98,F176–180",
+      "independent_disposition": "Later authorized pilot includes map/conditions/endpoint records, reversible comparisons, diagnosis and stopping. Spatial/age/time confounding is addressed; desk work is not crop validation."
+    },
+    {
+      "id": "P071.02",
+      "plan_line": 71,
+      "exact_clause": "Explain spatial confounding, plant age, time trends, and the ethical stopping point for stressed plants.",
+      "status": "SATISFIED",
+      "final_locators": "F61–78,F98,F176–180",
+      "independent_disposition": "Later authorized pilot includes map/conditions/endpoint records, reversible comparisons, diagnosis and stopping. Spatial/age/time confounding is addressed; desk work is not crop validation."
+    },
+    {
+      "id": "P071.03",
+      "plan_line": 71,
+      "exact_clause": "Literature review or a hypothetical daily-cycle sketch executed during the hour must not be called tested crop improvement or diagnostic validation.",
+      "status": "SATISFIED",
+      "final_locators": "F61–78,F98,F176–180",
+      "independent_disposition": "Later authorized pilot includes map/conditions/endpoint records, reversible comparisons, diagnosis and stopping. Spatial/age/time confounding is addressed; desk work is not crop validation."
+    },
+    {
+      "id": "P073.01",
+      "plan_line": 73,
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "status": "PRESERVED",
+      "final_locators": "F166,F176–180",
+      "independent_disposition": "Authoring synthetic-input status is separate from researcher desk searching; no authoring experiment or case empirical result is invented. Actual stage work is disclosed as review, not crop validation."
+    },
+    {
+      "id": "P073.02",
+      "plan_line": 73,
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "status": "PRESERVED",
+      "final_locators": "F166,F176–180",
+      "independent_disposition": "Authoring synthetic-input status is separate from researcher desk searching; no authoring experiment or case empirical result is invented. Actual stage work is disclosed as review, not crop validation."
+    },
+    {
+      "id": "P073.03",
+      "plan_line": 73,
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "status": "PRESERVED",
+      "final_locators": "F166,F176–180",
+      "independent_disposition": "Authoring synthetic-input status is separate from researcher desk searching; no authoring experiment or case empirical result is invented. Actual stage work is disclosed as review, not crop validation."
+    },
+    {
+      "id": "P077.01",
+      "plan_line": 77,
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "status": "SUBSTANTIVE_SCOPE_SATISFIED_TIME_UNMET",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    },
+    {
+      "id": "P077.02",
+      "plan_line": 77,
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "status": "SATISFIED",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    },
+    {
+      "id": "P077.03",
+      "plan_line": 77,
+      "exact_clause": "It requests no product build.",
+      "status": "SATISFIED",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    },
+    {
+      "id": "P077.04",
+      "plan_line": 77,
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "status": "PRESERVED_INPUT_BYTES",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    },
+    {
+      "id": "P077.05",
+      "plan_line": 77,
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "status": "PROTOCOL_UNKNOWN_PRESERVED_BOUNDARY",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    },
+    {
+      "id": "P077.06",
+      "plan_line": 77,
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "status": "PROTOCOL_UNKNOWN_PRESERVED_BOUNDARY",
+      "final_locators": "F94,F168–172,F176–182; native records",
+      "independent_disposition": "Broad substantive scope, provisional/no-winner status and no-build boundary are preserved. Original input bytes remain unchanged. Full hour is unmet. Pre-candidate sealing, recipe/budget release and no-feedback lifecycle beyond retained records remain UNKNOWN."
+    }
+  ],
+  "plan_metadata": [
+    {
+      "line": 1,
+      "exact_text": "# Uneven leaf symptoms in a teaching greenhouse",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 3,
+      "exact_text": "Case ID: ER12-D-R2-01-FRESH",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 4,
+      "exact_text": "Slot ID: D-R2-01",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 5,
+      "exact_text": "Domain: controlled-environment horticulture",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 7,
+      "exact_text": "## Concealed prospective design record",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 11,
+      "exact_text": "## Exact original request and clauses",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 15,
+      "exact_text": "BEGIN ORIGINAL BRIEF",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 17,
+      "exact_text": "# Uneven leaf symptoms in a teaching greenhouse",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 19,
+      "exact_text": "Case ID: ER12-D-R2-01-FRESH",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 20,
+      "exact_text": "Slot ID: D-R2-01",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 21,
+      "exact_text": "Domain: controlled-environment horticulture",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 23,
+      "exact_text": "## Project situation",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 27,
+      "exact_text": "## Request",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 31,
+      "exact_text": "## Requirements to preserve",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 39,
+      "exact_text": "## Boundaries",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 45,
+      "exact_text": "## Still unresolved",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 49,
+      "exact_text": "END ORIGINAL BRIEF",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 51,
+      "exact_text": "## Research question and incompleteness",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 57,
+      "exact_text": "## Meaningful useful alternatives",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 61,
+      "exact_text": "## Mechanism opportunity",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 65,
+      "exact_text": "## Implementation and history opportunity",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 69,
+      "exact_text": "## Proposed versus executed validation",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    },
+    {
+      "line": 75,
+      "exact_text": "## Scope and release boundary",
+      "classification": "heading, identifier or original-brief delimiter; no additional product obligation inferred"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "SCW-01",
+      "final_disposition": "Amend",
+      "independent_assessment": "C and herb-transfer C* were undetermined as loss-cause claims. Full S10 supports irrigation/loss history but not salt causation. The final restores the EC qualification without deleting the useful drought/capture history.",
+      "final_locators": "F108,F53",
+      "evidence": [
+        "E-S10"
+      ],
+      "classification": "Corrected lineage qualification"
+    },
+    {
+      "id": "SCW-02",
+      "final_disposition": "Retain with transfer limit",
+      "independent_assessment": "S09 supports the study-scoped no-water-reduction/operator history. Unknown herbs remain undetermined. Retention is justified rather than accepting a transfer counterfactual as a refutation.",
+      "final_locators": "F109,F52",
+      "evidence": [
+        "E-S09"
+      ],
+      "classification": "Supported retention"
+    },
+    {
+      "id": "SCW-03",
+      "final_disposition": "Amend",
+      "independent_assessment": "S11 supports conditional closed-system runoff and reported benefits. CR04/CR05 show why contamination, host, pathogen, route and system matter. Final retains subirrigation feasibility without a universal effect.",
+      "final_locators": "F110,F37,F55",
+      "evidence": [
+        "E-S11",
+        "E-CR04",
+        "E-CR05"
+      ],
+      "classification": "Supported qualification"
+    },
+    {
+      "id": "SCW-04",
+      "final_disposition": "Retain with explicit transfer limit",
+      "independent_assessment": "The source-configured gradients are supported; substituting this facility is undetermined. Final retains study findings and mapping opportunity without predicting a door or fan effect.",
+      "final_locators": "F111,F54",
+      "evidence": [
+        "E-S19",
+        "E-S20"
+      ],
+      "classification": "Supported retention"
+    },
+    {
+      "id": "SCW-05",
+      "final_disposition": "Amend for precision",
+      "independent_assessment": "Both C and C* entail plants nested within a treated zone being subsamples. This is a nondiscriminating witness, not a discovered defect. Final independently assigned-zone wording preserves the original sound rule.",
+      "final_locators": "F112,F74",
+      "evidence": [
+        "E-CR01"
+      ],
+      "classification": "No original substantive error"
+    },
+    {
+      "id": "SCW-06",
+      "final_disposition": "Amend",
+      "independent_assessment": "Basic duration output alone lacks a source label. IEEE demonstrates a separate auxiliary-input/model approach, not universal bare-sensor capability or herb/guttation validation. Final preserves both compatible meanings.",
+      "final_locators": "F113,F27,F66",
+      "evidence": [
+        "E-CR02",
+        "E-CR03",
+        "E-S17",
+        "E-S18"
+      ],
+      "classification": "Supported qualification; criticism severity overstated"
+    },
+    {
+      "id": "F01",
+      "final_disposition": "Accept amendment",
+      "independent_assessment": "Original salt-contributor grouping omitted the below-damage EC qualifier. The final correctly distinguishes an author discussion from a demonstrated loss cause. Draft did not diagnose the herbs; do not inflate the lineage defect into that claim.",
+      "final_locators": "F119,F53",
+      "evidence": [
+        "E-S10"
+      ],
+      "classification": "Corrected incomplete source condition"
+    },
+    {
+      "id": "F02",
+      "final_disposition": "Accept amendment",
+      "independent_assessment": "The draft called disease movement a concern, not a universal outcome; the critic's material label overstates what that wording proves. The final adds useful contamination/route scope and retains the alternative. F120's phrase that variable suppression results rule out a universal direction is too categorical: significance in three of five trials does not prove no effect or an opposite effect in the other two. The main proposal only makes conditional risk claims.",
+      "final_locators": "F120,F37,F55",
+      "evidence": [
+        "E-S11",
+        "E-CR04",
+        "E-CR05"
+      ],
+      "classification": "Minor final interpretive wording; no material decision follows"
+    },
+    {
+      "id": "F03",
+      "final_disposition": "Accept citation correction",
+      "independent_assessment": "S09/S10 are sensor-irrigation studies, not direct subirrigation support. The final cites S11 for that alternative and uses S09/S10 for implementation history.",
+      "final_locators": "F121,F37,F52–53",
+      "evidence": [
+        "E-S09",
+        "E-S10",
+        "E-S11"
+      ],
+      "classification": "Corrected minor locator issue"
+    },
+    {
+      "id": "F04",
+      "final_disposition": "Accept amendment",
+      "independent_assessment": "A conventional-logger reading of the draft was sound; its universal reading was ambiguous. Calling it materially wrong is excessive. The final's narrower signal wording and retained classifier are supported.",
+      "final_locators": "F122,F27,F66",
+      "evidence": [
+        "E-CR02",
+        "E-CR03"
+      ],
+      "classification": "No harmful correction or lost capability"
+    },
+    {
+      "id": "F05",
+      "final_disposition": "Accept metadata correction only",
+      "independent_assessment": "The official S01 footer shows the 2015 revision. Stable identity and mechanism content remain; final corrects only the inaccurate no-later-revision field.",
+      "final_locators": "F123; final source map S01",
+      "evidence": [
+        "E-S01"
+      ],
+      "classification": "Corrected minor metadata issue"
+    },
+    {
+      "id": "F06",
+      "final_disposition": "Retain process limitation",
+      "independent_assessment": "Captured native timestamps confirm the reviser had at most 34m12.963s to its deadline and actually ran 12m11s. All stages together occupied less than an hour. Disclosure is appropriate; it cannot be counted as literal completion of sixty minutes. Stage assignments also explicitly authorized early completion.",
+      "final_locators": "F124,F138,F168,F182",
+      "evidence": [
+        "Native receipts and stage assignments"
+      ],
+      "classification": "Time tracked separately from source correctness"
+    },
+    {
+      "id": "F07",
+      "final_disposition": "Retain",
+      "independent_assessment": "Observation-first, irrigation/substrate, microclimate and conditional previous routine remain distinct and useful. Subirrigation is retained as optional feasibility, not a selected conversion.",
+      "final_locators": "F125,F33–37",
+      "evidence": [
+        "E-S05",
+        "E-S06",
+        "E-S07",
+        "E-S11"
+      ],
+      "classification": "No material issue"
+    },
+    {
+      "id": "F08",
+      "final_disposition": "Retain",
+      "independent_assessment": "The differential remains non-diagnostic: condensation/guttation/splash, root/media, crop age/species and possible disease concerns generate observations rather than treatment advice.",
+      "final_locators": "F126,F22–27,F94",
+      "evidence": [
+        "E-S01",
+        "E-S12",
+        "E-S13",
+        "E-S15",
+        "E-S16"
+      ],
+      "classification": "No material issue"
+    },
+    {
+      "id": "F09",
+      "final_disposition": "Retain with F01 amendment",
+      "independent_assessment": "Operating history, actual implementation outcomes and transfer restrictions survive. S10 qualification is corrected without erasing the adverse adoption lesson or S09's labor/threshold history.",
+      "final_locators": "F127,F43–57",
+      "evidence": [
+        "E-S09",
+        "E-S10",
+        "E-S19",
+        "E-S20"
+      ],
+      "classification": "No remaining material issue"
+    },
+    {
+      "id": "F10",
+      "final_disposition": "Retain",
+      "independent_assessment": "Baseline, separated endpoints, independently assignable units, reversibility, missing-data handling and welfare/referral stops are proposals. No crop outcome, classifier validation or causal oracle is claimed executed.",
+      "final_locators": "F128,F61–78,F98,F176–180",
+      "evidence": [
+        "E-S04",
+        "E-CR01",
+        "E-S14"
+      ],
+      "classification": "No material issue"
+    },
+    {
+      "id": "F11",
+      "final_disposition": "Retain",
+      "independent_assessment": "Content boundaries are preserved and original bytes unchanged. Retained records do not establish the entire pre-release/no-feedback lifecycle; that protocol portion is UNKNOWN, not inferred from source correctness.",
+      "final_locators": "F129,F94,F100,F170–172",
+      "evidence": [
+        "Original inputs",
+        " stage maps/assignments"
+      ],
+      "classification": "Science boundary satisfied; protocol limited"
+    },
+    {
+      "id": "SCW_NOT_RUN",
+      "final_disposition": "No selected claim skipped",
+      "independent_assessment": "The non-witness items are explicitly adjudicated under F02–F05. Six witnesses are not a completeness oracle; this review separately examined the full authored pipeline and all six axes.",
+      "final_locators": "F130",
+      "evidence": [
+        "E-S01",
+        "E-S11",
+        "E-CR02",
+        "E-CR03",
+        "E-CR04",
+        "E-CR05"
+      ],
+      "classification": "Ordinary assessment completed"
+    }
+  ],
+  "lineage_defects_and_preservation": [
+    {
+      "id": "LD01",
+      "original_locator": "Draft L47; discovery study summary; investigator source-map S10",
+      "defect": "S10 contributor grouping lacked the below-damage EC qualifier; evidence does not establish salt causation.",
+      "final_locator": "F53,F108,F119",
+      "status": "CORRECTED",
+      "evidence": [
+        "E-S10"
+      ]
+    },
+    {
+      "id": "LD02",
+      "original_locator": "Draft subirrigation alternative row",
+      "defect": "Citation bundle S09–S11 mixed sensor implementations with direct subirrigation support.",
+      "final_locator": "F37,F121",
+      "status": "CORRECTED_MINOR",
+      "evidence": [
+        "E-S09",
+        "E-S10",
+        "E-S11"
+      ]
+    },
+    {
+      "id": "LD03",
+      "original_locator": "Investigator source-map S01 version field",
+      "defect": "No-later-revision metadata conflicted with official 2015 revision footer.",
+      "final_locator": "Final source-map S01,F123",
+      "status": "CORRECTED_MINOR",
+      "evidence": [
+        "E-S01"
+      ]
+    },
+    {
+      "id": "LD04",
+      "original_locator": "Draft wetness-sensor and disease-risk wording; critic F02/F04",
+      "defect": "Possible universal readings warranted scope qualification, but intended logger/risk meanings were supported; critic material severity is overstated.",
+      "final_locator": "F27,F37,F55,F113,F120,F122",
+      "status": "SUPPORTED_ORIGINAL_MEANING_RETAINED_AND_QUALIFIED",
+      "evidence": [
+        "E-S11",
+        "E-CR02",
+        "E-CR03",
+        "E-CR04",
+        "E-CR05"
+      ]
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "approach": "Observation-first cohort and morning-cycle map",
+      "usefulness": "Separates position, age, timing and concurrent-control hypotheses before choosing a reversible pilot; safety gate prevents waiting through deterioration.",
+      "final_locators": [
+        "F12",
+        "F33",
+        "F61–68"
+      ],
+      "evidence": [
+        "E-S04",
+        "E-S13",
+        "E-S14"
+      ]
+    },
+    {
+      "approach": "Distribution, pressure, capture and root-ball audit",
+      "usefulness": "A timer change need not equal delivered/retained water change; conditional overhead catch cans, emitter output and pot mass can expose gradients.",
+      "final_locators": [
+        "F34",
+        "F65–67"
+      ],
+      "evidence": [
+        "E-S05",
+        "E-S06",
+        "E-S07"
+      ]
+    },
+    {
+      "approach": "Substrate-specific sensor placement and calibration",
+      "usefulness": "A local probe may not represent the pot/root zone; crop/media and cross-check determine interpretation.",
+      "final_locators": [
+        "F34",
+        "F67",
+        "F90"
+      ],
+      "evidence": [
+        "E-S04",
+        "E-S08",
+        "E-S10"
+      ]
+    },
+    {
+      "approach": "Circulation versus exchange and analogous spatial studies",
+      "usefulness": "Find the actual fan role and canopy pattern instead of assuming the door or mixing changes humidity uniformly.",
+      "final_locators": [
+        "F24",
+        "F35",
+        "F54",
+        "F66"
+      ],
+      "evidence": [
+        "E-S02",
+        "E-S03",
+        "E-S19",
+        "E-S20"
+      ]
+    },
+    {
+      "approach": "Basic wetness duration versus trained source classifier",
+      "usefulness": "A duration signal is useful without being diagnostic; a separate classifier is a compatible research option needing input and transfer validation.",
+      "final_locators": [
+        "F27",
+        "F66",
+        "F90"
+      ],
+      "evidence": [
+        "E-S17",
+        "E-S18",
+        "E-CR02",
+        "E-CR03"
+      ]
+    },
+    {
+      "approach": "Commercial adoption and adverse outcome histories",
+      "usefulness": "Water reduction, crop outcome, support/training and labor objectives can diverge; implementation accounts expose those tradeoffs.",
+      "final_locators": [
+        "F43–53"
+      ],
+      "evidence": [
+        "E-S09",
+        "E-S10"
+      ]
+    },
+    {
+      "approach": "Conditional previous routine and longer-term subirrigation feasibility",
+      "usefulness": "Documented prior suitability is a potential safe reference; closed-loop delivery is an optional branch with salt, hygiene and contamination-route limits.",
+      "final_locators": [
+        "F36–37",
+        "F55",
+        "F75",
+        "F90"
+      ],
+      "evidence": [
+        "E-S11",
+        "E-CR04",
+        "E-CR05"
+      ]
+    },
+    {
+      "approach": "Diagnostic referral independent of environmental attribution",
+      "usefulness": "Progression or consequential decisions require clinic evidence rather than symptom improvement or a sensor-derived cause claim.",
+      "final_locators": [
+        "F76",
+        "F98–100"
+      ],
+      "evidence": [
+        "E-S12",
+        "E-S13",
+        "E-S14",
+        "E-S16"
+      ]
+    }
+  ],
+  "limitations": [
+    {
+      "id": "L01",
+      "type": "SOURCE_APPLICABILITY",
+      "material": false,
+      "detail": "Named ornamental/nursery crops, media, seasons, cooling systems and deliberate inoculation do not establish effects for the unknown herbs. Final preserves these transfer limits.",
+      "evidence": [
+        "E-S09",
+        "E-S10",
+        "E-S19",
+        "E-S20",
+        "E-CR04",
+        "E-CR05"
+      ]
+    },
+    {
+      "id": "L02",
+      "type": "SOURCE_ACCESS",
+      "material": false,
+      "detail": "Several consequential bounded capability/analogue claims are supported at primary abstract level. No full-article method, default or facility validation is inferred from those abstracts. Initial resolver placeholders/access denials are distinguished from usable evidence.",
+      "evidence": [
+        "E-S08",
+        "E-S17",
+        "E-S18",
+        "E-S19",
+        "E-S20",
+        "E-CR01",
+        "E-CR03",
+        "E-CR04",
+        "E-CR05"
+      ]
+    },
+    {
+      "id": "L03",
+      "type": "MINOR_FINAL_WORDING",
+      "material": false,
+      "detail": "F120 overstates the inferential force of CR04 significance in only three of five experiments by saying it rules out a universal direction. That pattern does not establish an opposite or absent effect in other trials. Main proposal language correctly remains conditional; no consequential option is rejected or treatment chosen.",
+      "evidence": [
+        "E-CR04"
+      ],
+      "final_locator": "F120"
+    },
+    {
+      "id": "L04",
+      "type": "CRITIQUE_CALIBRATION",
+      "material": false,
+      "detail": "F02/F04 material labels overstate the proven defect in the original qualified risk/conventional-logger meanings; SCW-05 is correctly nondiscriminating. Final adds supported precision while retaining the compatible originals.",
+      "evidence": [
+        "E-S11",
+        "E-CR01",
+        "E-CR02",
+        "E-CR03"
+      ]
+    },
+    {
+      "id": "L05",
+      "type": "TIME_NOT_SOURCE_FAILURE",
+      "material": false,
+      "detail": "Full literal sixty-minute occupancy is not met by the captured pipeline. Stage assignments authorize early completion and final discloses the limitation. This is not evidence of a scientific omission, effective research time, lower billing or speed savings.",
+      "evidence": [
+        "Captured native records",
+        "Stage assignments",
+        "F124,F182"
+      ]
+    },
+    {
+      "id": "L06",
+      "type": "METADATA_AND_PROVENANCE",
+      "material": false,
+      "detail": "Some retrieved official web bodies do not expose edition dates. Exact individual web-tool fetch times are unavailable; preservation times and review window are retained without inventing fetch timestamps. Native ordering, complete method protocol, effective configuration and billing remain separately UNKNOWN.",
+      "evidence": [
+        "source-map.json",
+        "pipeline_observations in assessment.json"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Herb species/varieties, ages, pots/media, root-zone and water status, delivery, actual fan function, season/weather and bench map",
+    "Instructor endpoint priority, safe baseline duration/reference, permissions, independent zones, welfare stops and receiving clinic access",
+    "Actual cause of pallor/droplets; no case logs, samples or treatment outcomes exist in this package",
+    "Local wetness-classifier validation, guttation classes and unfamiliar herb-domain performance",
+    "Full text behind some abstract-supported papers; hidden methods and transferable defaults are not inferred",
+    "Original live native provenance/order, full sealing/no-feedback protocol, effective effort/tier, true research time and billing"
+  ],
+  "pipeline_observations": {
+    "delivery": {
+      "status": "COMPLETE_FROZEN_ORDINARY_PIPELINE",
+      "actual_final": "runs/D-R2-01/treatment/stages/reviser/final.md",
+      "root_freeze_basis": "Root-captured final T3 task terminal/no pending; this is separate from native Goal evidence. No fresh live T3 status request was made.",
+      "mapped_science_missing": [],
+      "A2_or_A7_paths": "NOT_APPLICABLE to the actual ordinary investigator→critic→reviser maps"
+    },
+    "native": {
+      "status": "CAPTURED_ACTIVE_AND_COMPLETE_RECORDS_FOR_ALL_THREE_STAGES",
+      "stages": [
+        {
+          "stage": "investigator",
+          "evidence": "evidence/originals/runs/D-R2-01/treatment/stages/investigator",
+          "thread_id_in_capture": "01a12499-d289-7e01-8c27-821ce36f5d1d",
+          "captured_activation_status": "active",
+          "captured_completion_status": "complete",
+          "same_thread_and_objective": true,
+          "objective_matches_freeze": true,
+          "created_at_utc": "2026-10-10T06:57:17+00:00",
+          "completed_at_utc": "2026-10-10T07:08:25+00:00",
+          "reported_native_time_used_seconds": 668,
+          "reported_native_tokens_used": 249810,
+          "stage_deadline_utc": "2026-10-10T07:27:00.040Z",
+          "nominal_stage_budget_seconds": 1800,
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+          "returned_model": "gpt-6-luna",
+          "effective_reasoning_effort": "UNKNOWN",
+          "effective_service_tier": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "provenance_limit": "Retained native-shaped responses inspected; no live original runtime transcript independently authenticates pre-input ordering, exactly-one activation across all history, guard execution or response provenance."
+        },
+        {
+          "stage": "critic",
+          "evidence": "evidence/originals/runs/D-R2-01/treatment/stages/critic",
+          "thread_id_in_capture": "01a124a4-d41c-7c91-99df-5405d26408aa",
+          "captured_activation_status": "active",
+          "captured_completion_status": "complete",
+          "same_thread_and_objective": true,
+          "objective_matches_freeze": true,
+          "created_at_utc": "2026-10-10T07:09:16+00:00",
+          "completed_at_utc": "2026-10-10T07:22:10+00:00",
+          "reported_native_time_used_seconds": 774,
+          "reported_native_tokens_used": 401176,
+          "stage_deadline_utc": "2026-10-10T07:39:00.040Z",
+          "nominal_stage_budget_seconds": 720,
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+          "returned_model": "gpt-6-luna",
+          "effective_reasoning_effort": "UNKNOWN",
+          "effective_service_tier": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "provenance_limit": "Retained native-shaped responses inspected; no live original runtime transcript independently authenticates pre-input ordering, exactly-one activation across all history, guard execution or response provenance."
+        },
+        {
+          "stage": "reviser",
+          "evidence": "evidence/originals/runs/D-R2-01/treatment/stages/reviser",
+          "thread_id_in_capture": "01a124b1-353a-74a2-be76-f304f6984e28",
+          "captured_activation_status": "active",
+          "captured_completion_status": "complete",
+          "same_thread_and_objective": true,
+          "objective_matches_freeze": true,
+          "created_at_utc": "2026-10-10T07:22:45+00:00",
+          "completed_at_utc": "2026-10-10T07:34:56+00:00",
+          "reported_native_time_used_seconds": 731,
+          "reported_native_tokens_used": 204537,
+          "stage_deadline_utc": "2026-10-10T07:56:57.963Z",
+          "nominal_stage_budget_seconds": 1080,
+          "requested_route": {
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "gpt-6-luna",
+            "options": {
+              "reasoningEffort": "max",
+              "serviceTier": "default"
+            }
+          },
+          "returned_provider": "AUTHORIZED_PROVIDER_INSTANCE",
+          "returned_model": "gpt-6-luna",
+          "effective_reasoning_effort": "UNKNOWN",
+          "effective_service_tier": "UNKNOWN",
+          "billing": "UNKNOWN",
+          "provenance_limit": "Retained native-shaped responses inspected; no live original runtime transcript independently authenticates pre-input ordering, exactly-one activation across all history, guard execution or response provenance."
+        }
+      ],
+      "independent_live_original_authentication": "UNKNOWN"
+    },
+    "protocol": {
+      "status": "PARTIALLY_OBSERVED_REMAINDER_UNKNOWN",
+      "supported": "Assignments/maps are bounded to this pipeline; captured native objectives match frozen objectives; scientific input hashes match terminal freeze; revelation record is present; no scientific feedback or prohibited assistance is visible in the retained mapped package. Mechanical root clarification/capture/guard material is explicitly labeled mechanics.",
+      "unknown": [
+        "Actual pre-input ordering and guard invocation result",
+        "Exhaustive exactly-one-Goal lifecycle and no hidden assistance",
+        "Historical D sealing and recipe/budget lock before release",
+        "No designer feedback or other candidate access across entire runtime history"
+      ],
+      "not_proof": "exact-goal-binding-guard.json is integration metadata with root_only_integration=true and dispatch_performed=false, not a successful runtime assertion receipt."
+    },
+    "time": {
+      "source_grade_separate": true,
+      "observed_basis": "Captured native createdAt/updatedAt and timeUsedSeconds; frozen stage deadlines",
+      "whole_native_first_activation_to_last_completion_seconds": 2259,
+      "sum_reported_native_active_seconds": 2173,
+      "full_sixty_minutes_of_actual_research": "NOT_OBSERVED; captured occupancy is shorter than 3600 seconds",
+      "literal_original_full_hour_occupancy_clause": "UNMET",
+      "stage_early_completion": "Explicitly authorized by assignments once complete; do not call shorter occupancy an unauthorized early stop",
+      "all_captured_native_completions_before_absolute_deadlines": true,
+      "reviser_maximum_after_activation_seconds": 2052.963,
+      "effective_research_seconds_excluding_setup_tools_writing": "UNKNOWN",
+      "billing_or_speed_savings_inference": "NONE"
+    },
+    "effective_configuration": {
+      "requested": "AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna / max / default service tier",
+      "returned": "AUTHORIZED_PROVIDER_INSTANCE / gpt-6-luna in dispatch records",
+      "effective_effort": "UNKNOWN",
+      "effective_service_tier": "UNKNOWN",
+      "account_billing_cost": "UNKNOWN"
+    }
+  },
+  "validation": {
+    "executed_candidate_evidence": "Desk/source retrieval, qualitative scope comparison and file-integrity checks claimed and retained; no crop data or field experiment in the authored package.",
+    "executed_independent_review": "Full mapped authored-stage/input/freeze reading; independent primary retrieval and contextual source assessment; original hash preservation check.",
+    "proposed_only": "Mapped baseline, repeated symptom/growth/water measurements, independent limited reversible comparison and receiving-clinic diagnosis.",
+    "oracle_limits": "Dew-point compatibility, probe/LWD signals and trained classification are not a cause oracle; clinic evidence is prospective and service-dependent. Uncontrolled before/after is not causal proof."
+  },
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "snapshot": "evidence/originals/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+      "snapshot": "evidence/originals/frozen-inputs/D-R2-01/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "mtime_ns": 1791615417951472494
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+      "snapshot": "evidence/originals/frozen-inputs/D-R2-01/plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "mtime_ns": 1791615417951580741
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/terminal-science-freeze-root.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7497,
+      "sha256": "7d16f9295a5b1eb9fa814e3b0c129fa15c4a6d4184fc28d99c5ba109efca0189",
+      "mtime_ns": 1791617740052289901
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/inputs/brief.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/inputs/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "mtime_ns": 1791615420040651947
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/assignment.md",
+      "bytes": 9043,
+      "sha256": "73f2363d47abc98a2b2f9cb2dd67105788bf281bcdeef4bc1b901e06873a534a",
+      "mtime_ns": 1791615420851125231
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "1932fb6de588d12c8aa607671ce433b94340cdfa903053cca76e2d8156e733a6",
+      "mtime_ns": 1791615420850569706
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "d990f5b610de0a0edd3cb60070845c83c97697d0a8c00bc32f8ffee777050fe9",
+      "mtime_ns": 1791615420850011109
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/source-map.json",
+      "bytes": 24818,
+      "sha256": "ca7a09e10a2b65e4b3cc08d26038076ad809776c88d756ed09ef2fb8aa84faa4",
+      "mtime_ns": 1791616047494438121
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/request.json",
+      "bytes": 6377,
+      "sha256": "8380cc03b19510f0a00eb32ea5315b30518adad9109b3426f9b0766719c08ed5",
+      "mtime_ns": 1791615420848435663
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 9887,
+      "sha256": "243c06dbdc3c36c06e137fe1543c7abd86f2d88c639f252eb1696fe8f2736340",
+      "mtime_ns": 1791615423286843108
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "fa14496f79679e2ba3fd68203bbd31115c63efa3702fe401be523e723df3f113",
+      "mtime_ns": 1791615420432620268
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "93a7eceb9725af76ba19909cf7b46ed854b2f3544629a33487bf24928aec5e9d",
+      "mtime_ns": 1791615420199176575
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/exact-activation-capture-v2-1.json",
+      "bytes": 7778,
+      "sha256": "604a55ed1b075262eebd4f0e066df880b6ffe748c41fedd79ddd7df0af694e12",
+      "mtime_ns": 1791615420851310927
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "c75ddb9b06fa13bb340884fdcf968134aa90520869125dfb5a3ed20872c3491b",
+      "mtime_ns": 1791615420653456091
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/native-goal-create.json",
+      "bytes": 483,
+      "sha256": "9aafc4facd6aa256f0d023d71b3f54306e6be0bc7a4b2077a2b99e8c970e108a",
+      "mtime_ns": 1791615437408797307
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/native-goal-complete.json",
+      "bytes": 812,
+      "sha256": "9f7654556eb127e909aa7aabe564110f7c5cfda63aa76f196c5e384817cff92e",
+      "mtime_ns": 1791616105480748980
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 21660,
+      "sha256": "1ad565dd3e90dce70e0c2e13a4ead4eb3ca4033684a119149c555bcad34e3d59",
+      "mtime_ns": 1791616047495151206
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/assignment.md",
+      "bytes": 11986,
+      "sha256": "30b73d7431ba3ca7b36b9bff16ebc17689cec0b03228f68b4f2a147ebb90485b",
+      "mtime_ns": 1791616143655058853
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "80b980b75e4741c3f0b354dd6f0bc19873651cbf625c9262375d930fe4d52c3f",
+      "mtime_ns": 1791616143654550812
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "f98259a00b1ef2c09d3d23d5431c55f9810fafe55464a1df41037d9b5fda207e",
+      "mtime_ns": 1791616143653999747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/source-map.json",
+      "bytes": 32531,
+      "sha256": "ad24aff5a4aac303b210d071d16382b33251a12431bfa357fe191a266b6d14d5",
+      "mtime_ns": 1791616795830890055
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/request.json",
+      "bytes": 6311,
+      "sha256": "6d879d1f6767b25b202f38f1fc74727f1b849df97cae6f845bde919d9112a5b8",
+      "mtime_ns": 1791616143653384862
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/dispatch.json",
+      "bytes": 9749,
+      "sha256": "56613f79aecbc35662afb085055da75e720a36981ec67a534bda3f1a2ff7d77e",
+      "mtime_ns": 1791616144585840800
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "836d4f85194ab99bf0db7ae7a8e42523292ccf68f41737e0f9bf7961e8739482",
+      "mtime_ns": 1791616143281300117
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "943e3acf26558bcb9cbece928e4e95bd86a962e2b69dca90e7c60c2fd22fb606",
+      "mtime_ns": 1791616143066779642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/exact-activation-capture-v2-1.json",
+      "bytes": 7706,
+      "sha256": "4678ab928735b845d4e472c77f11f47961ddd9e483e9dbdf0e733c527eea95cf",
+      "mtime_ns": 1791616143655256258
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "1c606ba37d738e3f7741721b1fb39ae6b55eab95cd4b3e13cd685909a96dc350",
+      "mtime_ns": 1791616143462625236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/native-goal-create.json",
+      "bytes": 471,
+      "sha256": "dd5c097165bc6596a6bb2ed5a0872b2361315e1a3c90317d792935c4a27f92a7",
+      "mtime_ns": 1791616156115950926
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/native-goal-complete.json",
+      "bytes": 800,
+      "sha256": "8bd43d10d54385889e905c7c9525077c9a6d429083fa206cf151f1d8a7f3fcc4",
+      "mtime_ns": 1791616930671325696
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/sources/index.md",
+      "bytes": 11151,
+      "sha256": "bb07917782d57ee39892c73d76265a5ac356294965a9f4758089b6b6bc20491c",
+      "mtime_ns": 1791616824414729242
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/assignment.md",
+      "bytes": 10290,
+      "sha256": "12116fd45506a9962b9efa36e5a2e01034948a78c633c966c9b6170c6f9f5381",
+      "mtime_ns": 1791616952925778860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "78ec77a937f1cd239fbc122b095851ede873e9e053cccf80949ab5d2b136584c",
+      "mtime_ns": 1791616952925293913
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/freeze.json",
+      "bytes": 6825,
+      "sha256": "95e4865330b18001bc0732601fe4288196b0642804b2b278dfd7e08e10d15e54",
+      "mtime_ns": 1791616952924748866
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/source-map.json",
+      "bytes": 48601,
+      "sha256": "444b69bebfab72a328a941bb1ec6d1a73c66f935f1b8d6eb60e43fae53763bce",
+      "mtime_ns": 1791617494165855718
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/request.json",
+      "bytes": 6322,
+      "sha256": "47860d5cd9856550344380ac676f7f43ef0b68d6ac986651868d18c0aa8b5753",
+      "mtime_ns": 1791616952924209541
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 9772,
+      "sha256": "5e9b368517631e880639b64c1b163188c50585707f1788b3c96fade3ebd402f3",
+      "mtime_ns": 1791616955549904175
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "326c17b9237e1ad5a069115ca07ba97396cbb87284fad543759d1577d1a66216",
+      "mtime_ns": 1791616952572072333
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "ae20a6fa49cfc14d498ede8d488fa9d4db0a6b4f0bf38dd8ec1e02dd1a6aa94d",
+      "mtime_ns": 1791616952368930752
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/exact-activation-capture-v2-1.json",
+      "bytes": 7718,
+      "sha256": "9f837de36e0583ac63a53dd8558c79f9e82620419fb96e92dbf75a09fa955104",
+      "mtime_ns": 1791616952925975087
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "f9fad4c4915105c044ebef3d6fab071c7fed56b881404d4fab1f8a412d228ef0",
+      "mtime_ns": 1791616952751165631
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/native-goal-create.json",
+      "bytes": 473,
+      "sha256": "5e202ed1ccff557e8ed9d8507fa4da0b9345648460b79a71ed87413863129c5c",
+      "mtime_ns": 1791616965797160553
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/native-goal-complete.json",
+      "bytes": 802,
+      "sha256": "264dcf28bfaae721bb916fb9bb704b57f7440ff97edf39caad579097cd089f38",
+      "mtime_ns": 1791617696993179809
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 43792,
+      "sha256": "1fde84672cce394e0959aaeee7fe170644a56af2e348f1be8b2a8aee061d95a5",
+      "mtime_ns": 1791617494166430872
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/discovery.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9315,
+      "sha256": "6105008ffc67d833989810a6b4bf3edef299c226074ef08bd4c094e8786eee2c",
+      "mtime_ns": 1791615830945204060
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/draft.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/draft.md",
+      "bytes": 30253,
+      "sha256": "ce29e769468f07e69107b9841b5dd855ca55218cf529c4a3373ea73f0222cfd6",
+      "mtime_ns": 1791616070817860660
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "mtime_ns": 1791615846213840065
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 432,
+      "sha256": "5d6348c7bbd6585539b9544ac908a1e2ff18feca745b6904e7ee18880e6e2bde",
+      "mtime_ns": 1791615846213969712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/critique.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/critique.md",
+      "bytes": 24868,
+      "sha256": "d99081a8183a83398dfa885ca1f8e978f1cf8d0473b7ca5cc416e61300f4b765",
+      "mtime_ns": 1791616925474422158
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/final.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/final.md",
+      "bytes": 36359,
+      "sha256": "60c867f3a9cbe326f321f95f2ff73728fd9cf09a0fd285f071eee421b5eca656",
+      "mtime_ns": 1791617666478299285
+    }
+  ],
+  "original_integrity": "evidence/original-integrity-check.json",
+  "independent_source_map": "source-map.json",
+  "sources": [
+    {
+      "evidence_id": "E-S01",
+      "candidate_id": "S01",
+      "title": "Guttation: A Pressure Relief for Plants",
+      "identity_url": "https://ipm.missouri.edu/meg/2009/6/Guttation-A-Pressure-Relief-for-Plants/index.cfm",
+      "verified_version_or_limit": "2009-06-01 publication; 2015-09-30 revision shown in footer",
+      "retrieval_extent": "Official extension full text",
+      "text": "evidence/primary/S01.txt",
+      "text_sha256": "68e2a00d1e28849ffee58dd4c51bf2d68319540f981c11129ec39a768369405a"
+    },
+    {
+      "evidence_id": "E-S02",
+      "candidate_id": "S02",
+      "title": "Controlling the Greenhouse Environment",
+      "identity_url": "https://www.uaf.edu/ces/publications/database/gardening/files/pdfs/HGA-00336-Controlling%20GreenHouse%2011-27-24.pdf",
+      "verified_version_or_limit": "HGA-00336; retrieved PDF filename 2024-11-27",
+      "retrieval_extent": "Official extension full PDF",
+      "text": "evidence/primary/S02.txt",
+      "text_sha256": "8b41f731786d931ac76c10a66637b0597d6cbb69dd6d33ab5426e4c971e88c53"
+    },
+    {
+      "evidence_id": "E-S03",
+      "candidate_id": "S03",
+      "title": "Greenhouse Ventilation",
+      "identity_url": "https://ask.ifas.ufl.edu/publication/AE030/pdf",
+      "verified_version_or_limit": "AE-10/AE030; DOI edition 10.32473/edis-ae030-2019",
+      "retrieval_extent": "Official extension full PDF",
+      "text": "evidence/primary/S03.txt",
+      "text_sha256": "075b2c0062dfd130f793c72caa4fb70bffb1fd189ed382a4c97fda480d130606"
+    },
+    {
+      "evidence_id": "E-S04",
+      "candidate_id": "S04",
+      "title": "Guidelines for measuring and reporting environmental parameters for experiments in greenhouses",
+      "identity_url": "https://doi.org/10.1186/s13007-015-0083-5",
+      "verified_version_or_limit": "Plant Methods 11:43 (2015); DOI 10.1186/s13007-015-0083-5",
+      "retrieval_extent": "Full primary article XML via Europe PMC",
+      "text": "evidence/primary/S04-epmc.txt",
+      "text_sha256": "b4236914fad4f65367794710e2e8064072885b00fbcacc17ad0ee3d2bba0128d"
+    },
+    {
+      "evidence_id": "E-S05",
+      "candidate_id": "S05",
+      "title": "Measuring the Sprinkler Irrigation Requirement of Container-Grown Nursery Plants",
+      "identity_url": "https://ask.ifas.ufl.edu/publication/EP458",
+      "verified_version_or_limit": "ENH1197/EP458; exact revision date not displayed in retrieved body",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S05.txt",
+      "text_sha256": "b3784d4031b9e83f405166cb30091c780ec1dc462d8f661a9db373fcf806f77f"
+    },
+    {
+      "evidence_id": "E-S06",
+      "candidate_id": "S06",
+      "title": "Field Evaluation of Container Nursery Irrigation Systems: Measuring Uniformity of Water Application of Sprinkler Systems",
+      "identity_url": "https://ask.ifas.ufl.edu/publication/AE194",
+      "verified_version_or_limit": "FS98-2/AE194; exact revision date not displayed in retrieved body",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S06.txt",
+      "text_sha256": "25e9d5d3c85b2f16d1f9de1683e667730624f11f869947a39fe957542badb02b"
+    },
+    {
+      "evidence_id": "E-S07",
+      "candidate_id": "S07",
+      "title": "Irrigation System Check-ups",
+      "identity_url": "https://www.extension.umd.edu/resource/irrigation-system-check-ups",
+      "verified_version_or_limit": "University of Maryland; updated 2021-03-30",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S07.txt",
+      "text_sha256": "b6f1ca874376a75fc1257e8a7cb94f0de7418419438856202348486d75c2899f"
+    },
+    {
+      "evidence_id": "E-S08",
+      "candidate_id": "S08",
+      "title": "The Use of Soil Moisture Probes for Improved Uniformity and Irrigation Control in Greenhouses",
+      "identity_url": "https://doi.org/10.17660/ActaHortic.2011.893.119",
+      "verified_version_or_limit": "Acta Horticulturae 893 (2011), article 119; DOI 10.17660/ActaHortic.2011.893.119",
+      "retrieval_extent": "Official ISHS primary abstract",
+      "text": "evidence/primary/S08.txt",
+      "text_sha256": "1b5e9fcbc8929da8d14e46580ff3b9094927211b32c910caa9ebe4451409c5d7"
+    },
+    {
+      "evidence_id": "E-S09",
+      "candidate_id": "S09",
+      "title": "Implementation of Sensor-based Automated Irrigation in Commercial Floriculture Production: A Case Study",
+      "identity_url": "https://doi.org/10.21273/HORTTECH04114-18",
+      "verified_version_or_limit": "HortTechnology 28(6), 2018; DOI 10.21273/HORTTECH04114-18",
+      "retrieval_extent": "Full primary published article reprint",
+      "text": "evidence/primary/S09.txt",
+      "text_sha256": "16c553cd5cf5443a93ffac0dcdd6b41be427f2c6039b1b41027926d35953417b"
+    },
+    {
+      "evidence_id": "E-S10",
+      "candidate_id": "S10",
+      "title": "Implementation of Soil Moisture Sensor Based Automated Irrigation in Woody Ornamental Production",
+      "identity_url": "https://doi.org/10.24266/0738-2898-38.1.1",
+      "verified_version_or_limit": "Journal of Environmental Horticulture 38(1):1–7, 2020; DOI 10.24266/0738-2898-38.1.1",
+      "retrieval_extent": "Full official primary published PDF",
+      "text": "evidence/primary/S10.txt",
+      "text_sha256": "6ecf879b045bab0a92421187fc28865ce9e32b3e2d31b1236c489b29603fa3d5"
+    },
+    {
+      "evidence_id": "E-S11",
+      "candidate_id": "S11",
+      "title": "Subirrigation for Greenhouse Crops",
+      "identity_url": "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/subirrigation-for-greenhouse-crops",
+      "verified_version_or_limit": "UMass subirrigation factsheet; publication/update date not shown, footer copyright is not an edition date",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S11.txt",
+      "text_sha256": "1d75bfaf70b04b677f46196546acd647be7936ca3e13e92ebe7ad641a2a880e6"
+    },
+    {
+      "evidence_id": "E-S12",
+      "candidate_id": "S12",
+      "title": "Root Diseases of Greenhouse Crops",
+      "identity_url": "https://www.umass.edu/agriculture-food-environment/greenhouse-floriculture/fact-sheets/root-diseases-of-greenhouse-crops",
+      "verified_version_or_limit": "UMass root-disease factsheet; exact revision date not shown",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S12.txt",
+      "text_sha256": "8b9ef104b83a1195ce8e57e09ce7688313737077caf6e9a80c640c5690c3197a"
+    },
+    {
+      "evidence_id": "E-S13",
+      "candidate_id": "S13",
+      "title": "Diagnostics System for Crop History and Disorders in Greenhouses and Nurseries",
+      "identity_url": "https://fieldreport.caes.uga.edu/publications/B1273/diagnostics-system-for-crop-history-and-disorders-in-greenhouses-and-nurseries/",
+      "verified_version_or_limit": "UGA Diagnostics System for Crop History and Disorders in Greenhouses and Nurseries; retrieved current text, exact edition date not established here",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S13.txt",
+      "text_sha256": "02bfa0f50706fab6f628c45d5ec3ba8eb2e50bd41a51c40a034c2492539e5900"
+    },
+    {
+      "evidence_id": "E-S14",
+      "candidate_id": "S14",
+      "title": "Diagnosing Horticultural Plant Problems",
+      "identity_url": "https://www.udel.edu/academics/colleges/canr/cooperative-extension/fact-sheets/diagnosing-horticultural-plant-problems/",
+      "verified_version_or_limit": "University of Delaware; reviewed March 2025",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S14.txt",
+      "text_sha256": "891256289402ec91c7feeaa31d64525bc2745dc4b5a326cfddc2a51a65061ba4"
+    },
+    {
+      "evidence_id": "E-S15",
+      "candidate_id": "S15",
+      "title": "Pest Management for Herb Bedding Plants Grown in the Greenhouse",
+      "identity_url": "https://ipm.cahnr.uconn.edu/herbs-greenhouse/",
+      "verified_version_or_limit": "UConn greenhouse-herb guidance; retrieved current page, exact edition date not established here",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S15.txt",
+      "text_sha256": "49fe36a5c022be138a09baa255d6ac3ca2036b8c473d42c5f813a7279da81b8a"
+    },
+    {
+      "evidence_id": "E-S16",
+      "candidate_id": "S16",
+      "title": "Basil downy mildew",
+      "identity_url": "https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/basil-downy-mildew",
+      "verified_version_or_limit": "University of Minnesota basil downy mildew guidance; retrieved current page, exact edition date not established here",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S16.txt",
+      "text_sha256": "32766b0c4229f72fb4df28b10e0597308e1e9ffe856d648c4b1ebc07c068814d"
+    },
+    {
+      "evidence_id": "E-S17",
+      "candidate_id": "S17",
+      "title": "A Wetness Sensor for Detecting Condensation on Tomato Plants in Greenhouses",
+      "identity_url": "https://doi.org/10.1006/jaer.1995.1047",
+      "verified_version_or_limit": "Journal of Agricultural Engineering Research 61 (1995); DOI 10.1006/jaer.1995.1047",
+      "retrieval_extent": "Primary publisher abstract via independent web retrieval",
+      "text": "evidence/primary/S17-web.txt",
+      "text_sha256": "56d30318ce6814b68935b3bb404daba1b8d8537c3c5a032ea3fc9e45d6d14184"
+    },
+    {
+      "evidence_id": "E-S18",
+      "candidate_id": "S18",
+      "title": "Development of a method for condensation rate measurement on flat surfaces",
+      "identity_url": "https://doi.org/10.1016/j.inpa.2018.06.003",
+      "verified_version_or_limit": "Information Processing in Agriculture 5(4):490–497 (2018); DOI 10.1016/j.inpa.2018.06.003",
+      "retrieval_extent": "Primary publisher abstract via independent web retrieval",
+      "text": "evidence/primary/S18-web.txt",
+      "text_sha256": "79d3410c1a0865ff68a8eebf3bd7641ff7079daae7e55580c1c6a1d4fce11f41"
+    },
+    {
+      "evidence_id": "E-S19",
+      "candidate_id": "S19",
+      "title": "Temperature and Humidity Gradients in Fan Ventilated Greenhouses under Two Cooling Modes",
+      "identity_url": "https://doi.org/10.17660/ActaHortic.2003.614.70",
+      "verified_version_or_limit": "Acta Horticulturae 614 (2003), article 70; DOI 10.17660/ActaHortic.2003.614.70",
+      "retrieval_extent": "Official ISHS primary abstract",
+      "text": "evidence/primary/S19.txt",
+      "text_sha256": "31a9ccced9854d805ffd85a2cfd42902c8867d035732e949eba6a18fad4cbaa1"
+    },
+    {
+      "evidence_id": "E-S20",
+      "candidate_id": "S20",
+      "title": "Wireless sensor network to map the meteorological variability in a greenhouse with evaporative cooling",
+      "identity_url": "https://doi.org/10.17660/ActaHortic.2017.1154.28",
+      "verified_version_or_limit": "Acta Horticulturae 1154 (2017), article 28; DOI 10.17660/ActaHortic.2017.1154.28",
+      "retrieval_extent": "Official ISHS primary abstract",
+      "text": "evidence/primary/S20.txt",
+      "text_sha256": "1f181c1f03fa52a04f29960a2436d455f34f1322b97b6160ec863ff5e175d7f6"
+    },
+    {
+      "evidence_id": "E-S21",
+      "candidate_id": "S21",
+      "title": "Measuring Nursery Plant Water Use in Containers",
+      "identity_url": "https://www.pubs.ext.vt.edu/content/pubs_ext_vt_edu/en/SPES/spes-750.html",
+      "verified_version_or_limit": "Virginia Tech container-water guidance; retrieved current web text, exact edition date not established here",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/S21.txt",
+      "text_sha256": "3d54e25172b054e345786d4ee622e56eff9934d808097f06c365ea6b51b90d34"
+    },
+    {
+      "evidence_id": "E-CR01",
+      "candidate_id": "CR01",
+      "title": "Pseudoreplication and the Design of Ecological Field Experiments",
+      "identity_url": "https://doi.org/10.2307/1942661",
+      "verified_version_or_limit": "Ecological Monographs 54(2):187–211 (1984); DOI 10.2307/1942661",
+      "retrieval_extent": "Primary Wiley/ESA publisher abstract; independently downloaded scanned reprint also retained",
+      "text": "evidence/primary/CR01-web.txt",
+      "text_sha256": "10fba735def4ecd88743d7d41090e5efee818cae7ff55a301a24a5d0315bf997"
+    },
+    {
+      "evidence_id": "E-CR02",
+      "candidate_id": "CR02",
+      "title": "How to Avoid Common Problems with Leaf Wetness Sensor Installation and Maintenance",
+      "identity_url": "https://ask.ifas.ufl.edu/publication/AE538",
+      "verified_version_or_limit": "UF/IFAS AE538; retrieved current text, visible body lacks edition date",
+      "retrieval_extent": "Official extension full web text",
+      "text": "evidence/primary/CR02.txt",
+      "text_sha256": "108eb968650aa62a4461e11dfe5f2c66882a39d78d3f6c4be2c3e8dc711f908d"
+    },
+    {
+      "evidence_id": "E-CR03",
+      "candidate_id": "CR03",
+      "title": "Identifying the Source of Water on Plant Using the Leaf Wetness Sensor and via Deep Learning-Based Ensemble Method",
+      "identity_url": "https://ieeexplore.ieee.org/document/10381613",
+      "verified_version_or_limit": "IEEE Sensors Journal 24(5):7009–7017 (2024); DOI 10.1109/JSEN.2023.3343574; online 2024-01-04, issue 2024-03-01",
+      "retrieval_extent": "Primary IEEE publisher abstract via independent web retrieval; Crossref identity metadata also retained",
+      "text": "evidence/primary/CR03-web.txt",
+      "text_sha256": "68e172ce24125fa39d4153eece5494d135bb7ecd9f50ab570a8e044339ccd496"
+    },
+    {
+      "evidence_id": "E-CR04",
+      "candidate_id": "CR04",
+      "title": "Partial saturation under ebb and flow irrigation suppresses Pythium root rot of ornamentals",
+      "identity_url": "https://www.sciencedirect.com/science/article/pii/S0261219411003371",
+      "verified_version_or_limit": "Crop Protection 33:29–33 (March 2012); DOI 10.1016/j.cropro.2011.10.010",
+      "retrieval_extent": "Primary ScienceDirect publisher abstract and introductory context",
+      "text": "evidence/primary/CR04-web.txt",
+      "text_sha256": "03b50353ab09f2f9f7dc427f6d82692ac3e06d292114763bb81a680769458d5d"
+    },
+    {
+      "evidence_id": "E-CR05",
+      "candidate_id": "CR05",
+      "title": "Phytophthora nicotianae transmission and growth of potted kalanchoe in two recirculating subirrigation systems",
+      "identity_url": "https://www.sciencedirect.com/science/article/pii/S0304423808002793",
+      "verified_version_or_limit": "Scientia Horticulturae 119(1):75–78 (2008-12-10); DOI 10.1016/j.scienta.2008.07.026",
+      "retrieval_extent": "Primary ScienceDirect publisher abstract and record",
+      "text": "evidence/primary/CR05-web.txt",
+      "text_sha256": "583f2516491cfae8490afe66eeb214cf8baba6aed5882f34bf09ff64ddeb17d0"
+    }
+  ],
+  "scope_controls": {
+    "other_arms_results_history_ER11_read": false,
+    "nested_delegation": false,
+    "candidate_feedback_or_repair": false,
+    "account_git_publication_changes": false,
+    "original_sources_modified": false,
+    "output_root": "ER12_RUNTIME/assessment/D-R2-01/treatment-v1",
+    "shared_roster_read": false,
+    "own_inbox_only": true
+  },
+  "missing_original_science_artifacts": [],
+  "authored_evidence_extent": "All three source-map.json and sources/index.md files read in full. The mapped source directories contain indexes, not raw downloaded source captures; that lack of raw captures is recorded, not guessed around. Independent reviewer retrievals supply separate primary evidence."
+}

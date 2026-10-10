@@ -1,0 +1,355 @@
+{
+  "captured_at_utc": "2026-10-10T07:04:38.692863+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613441551784743,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-02/plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613441551895806,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/terminal-science-freeze-root.json",
+      "bytes": 8519,
+      "sha256": "75d9d7fcbdc4b32231a239a7338422231dbb867b5708e906639e3985e7c55460",
+      "mtime_ns": 1791615495737009263,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/inputs/brief.md",
+      "bytes": 2536,
+      "sha256": "8134d8057d18234430a73538714e7e497ecd4c2a397f177d2bf8e94863a54149",
+      "mtime_ns": 1791613444034493084,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/control/run.json",
+      "bytes": 582,
+      "sha256": "044e4916a3e6874513fe0cc844fe94b1486fdf317f660ebc9b04a6f3ef539245",
+      "mtime_ns": 1791613444034810726,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/assignment.md",
+      "bytes": 5959,
+      "sha256": "ebc7bf5e768b7a9c92fd0ff745148b9e6a00c550ea57416fe2e7c24350ab7dae",
+      "mtime_ns": 1791613444724966280,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/input-map.json",
+      "bytes": 789,
+      "sha256": "d5a4a3a8d65f142540a1e0b315524bf01d59e734feb89c7c5b37181fbdcafabe",
+      "mtime_ns": 1791613444724105538,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/freeze.json",
+      "bytes": 1819,
+      "sha256": "6d710dd87d9d9e5c94b0dca78c7e815efd3ff99636b2c7bec129e5770bd87c0d",
+      "mtime_ns": 1791613444723334657,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/source-map.json",
+      "bytes": 16115,
+      "sha256": "c98413ebb33a3ac7b8534cf6a3838ecf26b92222f8adf9c9b58c993dd508d9e1",
+      "mtime_ns": 1791614191541580371,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/sources/index.md",
+      "bytes": 3507,
+      "sha256": "ee5377ca43cb4b5dbb75af81bc3825d92ea72ff3f858d3b78404b0123e174699",
+      "mtime_ns": 1791614006268101701,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/request.json",
+      "bytes": 3180,
+      "sha256": "8840b5cc7aa7c3f0b5b9c27c9ee9825c1279f2c35a128f01be7a56fa64d965be",
+      "mtime_ns": 1791613444722768872,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/dispatch.json",
+      "bytes": 6510,
+      "sha256": "da9de0d05bb55b2c921638c95109b03fdc1156bc624e7e8294c9f392668c0285",
+      "mtime_ns": 1791613445639517833,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-activation.json",
+      "bytes": 480,
+      "sha256": "80555e2c065dcd60bb6ee4e7f82daf7dee76dc3967c5f29c30ee22f1765d2f7b",
+      "mtime_ns": 1791613502624907027,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/native-goal-completion.json",
+      "bytes": 809,
+      "sha256": "265504a263c2b80451769b35c4cd56a4fa2559075ad2e3eb610bb77c34a84602",
+      "mtime_ns": 1791614345634562899,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4643,
+      "sha256": "99cc3de4511823754ed71640bb5af28c14b8b823f1cb30c699458695bb96125d",
+      "mtime_ns": 1791613444725222282,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/invocation-clarification.json",
+      "bytes": 3072,
+      "sha256": "5684f4ce479320a25c662ae08777486f4f4c5bc624a29fa59b608844ab40ee25",
+      "mtime_ns": 1791613444496462371,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/service-tier-change.json",
+      "bytes": 493,
+      "sha256": "821cca4e8383d65df81ebf37df8c54fc5ffdad45d73888f10bc51586ec9fbc8c",
+      "mtime_ns": 1791613444212289940,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/assignment.md",
+      "bytes": 5519,
+      "sha256": "de0f1a084aac4c619ef2c57eb34c9b60dbdef27ee368e2470a6364a82217447a",
+      "mtime_ns": 1791614391063708491,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/input-map.json",
+      "bytes": 1477,
+      "sha256": "636da11617861cbe58e0ce695586dd9473774da1dd38ae89276c7ff6e91e2e40",
+      "mtime_ns": 1791614391063214649,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/freeze.json",
+      "bytes": 3313,
+      "sha256": "f1023657154bb5046d8ec194177907f1cec6d865b1c4a3eb48e43a6dc82531e6",
+      "mtime_ns": 1791614391062737930,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/source-map.json",
+      "bytes": 22503,
+      "sha256": "b4b0ac3560dc30029efbac7d8fdcf9209d1c98c67ae475bfa0f7dfb44a770563",
+      "mtime_ns": 1791614700978709907,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/sources/index.md",
+      "bytes": 3174,
+      "sha256": "a9725560993f842499a693d1d231cac8dce7c192830f479ee68f7b1e760fb260",
+      "mtime_ns": 1791614701098887060,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/request.json",
+      "bytes": 3126,
+      "sha256": "d7aebb14c7f0935585d8039a7b79a4b8eb20b1303c3ec007e159dafeca9ced98",
+      "mtime_ns": 1791614391062245271,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/dispatch.json",
+      "bytes": 6384,
+      "sha256": "c3e4eafb3362619d293a9a6a9662b77ac33ea1a469dbc5342921ea27aeca4d05",
+      "mtime_ns": 1791614391928636340,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-activation.json",
+      "bytes": 467,
+      "sha256": "67dadf7ef02dcfd22512aef55c5f9ba5efe1d52f642913fc1d85fc4037179bc8",
+      "mtime_ns": 1791614701232948838,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/native-goal-completion.json",
+      "bytes": 796,
+      "sha256": "48b991a44528c4510bfec4f74562ced0ef2c3fd02b05f310d779e3173e36faef",
+      "mtime_ns": 1791614708848571988,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4577,
+      "sha256": "18cd60bb77fdc6e533e29ccad4efcf10e4bc3fe7b5e1dd275dcb801db43dcb4a",
+      "mtime_ns": 1791614391063857462,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/invocation-clarification.json",
+      "bytes": 3030,
+      "sha256": "b071714190251263c33ed1bf012cf4ed904ed4a53da4b42abafd8d2b0b669ea1",
+      "mtime_ns": 1791614390871668283,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/service-tier-change.json",
+      "bytes": 481,
+      "sha256": "19ae9a6c42744196f255b74091319354a97f8511ffd569db31962c61d464e119",
+      "mtime_ns": 1791614390638656926,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/assignment.md",
+      "bytes": 5504,
+      "sha256": "95ebb21cd5dcc7c36326e820092bccd8361b7ee791a19007d2deb78dfdf209cc",
+      "mtime_ns": 1791614758091230953,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/input-map.json",
+      "bytes": 1794,
+      "sha256": "71d68dab1379429f049ed4d63870ce6fbbda609db2b69c3b84a19e2bea8a14e3",
+      "mtime_ns": 1791614758090507920,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/freeze.json",
+      "bytes": 4091,
+      "sha256": "56ffaeae35e3c1cd8a0f7214d5c1e7001b05c23e9f71f3f25d9fdbf11daf3709",
+      "mtime_ns": 1791614758089994863,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/source-map.json",
+      "bytes": 30367,
+      "sha256": "bdd16fdd0a8117c9d13edea1889b3db3e42ef44f0a066bfafc4492ceaf80de9c",
+      "mtime_ns": 1791615440947907093,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/sources/index.md",
+      "bytes": 3792,
+      "sha256": "26e55e15665582d4e153bd031005ef538b897dd525da2474f0d77b83edafd9a8",
+      "mtime_ns": 1791615121351502614,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/request.json",
+      "bytes": 3135,
+      "sha256": "cef651214b20a7106e637291751c6b0b0214e831d28323ab1345fea19a377cb3",
+      "mtime_ns": 1791614758089292176,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/dispatch.json",
+      "bytes": 6405,
+      "sha256": "7c52aaf3ebe9e50635b4ba68a16aa646c33c2163f32661ccdc99aa273b281a7b",
+      "mtime_ns": 1791614759029847821,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-activation.json",
+      "bytes": 469,
+      "sha256": "5f60eee0c53d2e11eb71218d8e97faf956b26369ada566df1a35f8af75a2d90d",
+      "mtime_ns": 1791614825700875737,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/native-goal-completion.json",
+      "bytes": 798,
+      "sha256": "77cb482a9ab1ec920d08aebe754820f21ccf1ec326c8c60697b36dde823b4eff",
+      "mtime_ns": 1791615464095184939,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4588,
+      "sha256": "6552088523bc15b3feb79054728260622fc41f3fd5466e14188329d35e2a1888",
+      "mtime_ns": 1791614758091472024,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/invocation-clarification.json",
+      "bytes": 3037,
+      "sha256": "c9731227078e392526379402812135a22c019e7e0fd867d6d64075949327a184",
+      "mtime_ns": 1791614757884155757,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/service-tier-change.json",
+      "bytes": 483,
+      "sha256": "cdcb28b376453f03c950a4cdac489a86ef69925d73fce8dd3bd4fe55ffe9a412",
+      "mtime_ns": 1791614757673295947,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/discovery.md",
+      "bytes": 8670,
+      "sha256": "d90437743f7e0de7b1573ff8e0bef49393a9dd9b028c04b7718b5afac1ef0003",
+      "mtime_ns": 1791613752439642139,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/draft.md",
+      "bytes": 21076,
+      "sha256": "aecdf46fc4d166f29b1ed7ff2b23f8aba9f84937fbeb427e40659ee4627e8100",
+      "mtime_ns": 1791614311680492604,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/revealed-plan.md",
+      "bytes": 6714,
+      "sha256": "e36e6b3f57dc6773ea3d65d44d3a91777614aefa2c548635892441bd7de1eafc",
+      "mtime_ns": 1791613760975465324,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-reveal.json",
+      "bytes": 430,
+      "sha256": "0b461e0b9f2cadc96bbd334263ba6508e902c4402455aee2de45caf96063cdfb",
+      "mtime_ns": 1791613760975600797,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/plan-release.json",
+      "bytes": 397,
+      "sha256": "841f349384b0907bf595581742f52c0594015eab3b2b9dc80382bb9c80798728",
+      "mtime_ns": 1791614149276496698,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/critic/critique.md",
+      "bytes": 8264,
+      "sha256": "2d34e28b8dac35fb0bf7ee3c6be1d0aeba6b173261e503e07e58431cc94be72f",
+      "mtime_ns": 1791614700849580934,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+      "bytes": 25510,
+      "sha256": "4c7059e70709a117f6a872a14113241e60a9cca068ca942600a88d5f43fc20eb",
+      "mtime_ns": 1791615440946455824,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/goal-binding-guard.stdout.txt",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614825701028213,
+      "inspection": "full contents inspected; hashes identify original bytes, not semantic proof"
+    }
+  ]
+}

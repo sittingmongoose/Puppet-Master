@@ -1,9 +1,20 @@
-# S15 — PrusaSlicer release index
-
-- **Exact URL:** https://github.com/prusa3d/PrusaSlicer/releases
-- **Released version/commit:** At access the list shows stable 2.9.6 (commit b028299) and pre-release 3.0.0-alpha12 (commit 30ef591).
-- **Locator:** Release list and stable/alpha labels/commits (lines 137-181, 376-409).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Read-only open/find of the official release index; no release was installed or run.
-- **Governing condition/default/exception:** The 3.0.0-alpha12 entry is explicitly pre-release; 2.9.6 is labeled Latest in the retrieved list.
-- **Applicability:** Version snapshot for this access time; re-check when selecting the receiving matrix.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "1988a085d51af21e317f10c6804fb9248120c5d81cf4749edea3e129adeda892",
+  "rawSHA256": "1988a085d51af21e317f10c6804fb9248120c5d81cf4749edea3e129adeda892",
+  "original_bytes": 720,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S15-prusaslicer-releases.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

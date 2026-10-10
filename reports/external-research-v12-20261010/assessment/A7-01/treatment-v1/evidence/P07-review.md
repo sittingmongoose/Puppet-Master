@@ -1,15 +1,20 @@
-# P07 — Prusa saving projects as 3MF
-
-[Governing primary source](https://help.prusa3d.com/article/saving-projects-as-3mf_1773?product=sl1)
-
-**Version:** PrusaSlicer 2.9 legacy help context; exact build UNKNOWN
-
-**Locator:** Save Project and format sections; web lines 350–366
-
-**Independent assessment:** Supports the distinction between geometry and a Prusa project snapshot with settings/modifiers. The same-G-code sharing claim is documentation, not workshop machine approval. The geometry-only STL description supports rejection of STL as the complete project record.
-
-**Evidence captures:**
-
-- [P07-prusa-project.html](P07-prusa-project.html) — SHA-256 `f6aebabf2701e80c3523663e4c89d98e4b90d425024b6810c2bbc2d153c7e73c`
-- [web-official-docs.json](web-official-docs.json) — SHA-256 `4a7b5ba6832d7d333718bb3563e6025e6e4b3462f4a54983895f2ea1b94e90f3`
-- [web-additional-primary.json](web-additional-primary.json) — SHA-256 `41eeca0a853e1a4f05c388263826bc2eaae4f2c58555992b4dd881cb505cf2a5`
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "1fd84a262a9dc5013ef134d6bcb2667f516b3273156e5bf1b422cde29b2002be",
+  "rawSHA256": "1fd84a262a9dc5013ef134d6bcb2667f516b3273156e5bf1b422cde29b2002be",
+  "original_bytes": 1001,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P07-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

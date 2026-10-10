@@ -1,0 +1,14 @@
+[
+  {
+    "key": "s003-elsevier-full",
+    "url": "https://api.elsevier.com/content/article/pii/S2214289416300011?view=FULL",
+    "observed_request_start_utc": "2026-10-10T07:14:38.904233+00:00",
+    "error": "<HTTPError 401: 'Unauthorized'>"
+  },
+  {
+    "key": "s003-library-deposit",
+    "url": "https://eld.bl.uk/catalog/100031122710_0x000001",
+    "observed_request_start_utc": "2026-10-10T07:14:38.905991+00:00",
+    "error": "URLError(TimeoutError('timed out'))"
+  }
+]

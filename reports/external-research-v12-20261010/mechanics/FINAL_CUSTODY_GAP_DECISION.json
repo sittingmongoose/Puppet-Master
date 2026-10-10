@@ -1,0 +1,21 @@
+{
+  "schema": "er12.explicit-current-custody-decision.v1",
+  "at_utc": "2026-10-10T08:28:57.680161+00:00",
+  "historical_missing_role_custody_count": 9,
+  "whitelist": [
+    "B-APPL-M-02/control",
+    "B-APPL-M-02/treatment",
+    "B-DISC-G-01/control",
+    "B-DISC-G-01/treatment",
+    "B-DISC-M-02/control",
+    "B-DISC-M-02/treatment",
+    "B-FINAL-G-01/control",
+    "B-FINAL-M-01/control",
+    "B-FINAL-M-01/treatment"
+  ],
+  "decision": "current root freeze plus genuine original reviewer hash evidence; retain historical gaps explicitly",
+  "historical_identity_and_unlisted_coverage": "UNKNOWN",
+  "allowed_scientific_changes": false,
+  "allowed_new_source_judgments": false,
+  "source_or_efficiency_qualification_inferred": false
+}

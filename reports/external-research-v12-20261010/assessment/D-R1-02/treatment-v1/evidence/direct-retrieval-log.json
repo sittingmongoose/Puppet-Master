@@ -1,0 +1,39 @@
+[
+  {
+    "source_id": "S03-thread",
+    "requested_url": "https://ez.analog.com/linux-software-drivers/f/q-a/569014/eval-adxl355z-linux-command-line-for-setting-the-sample-frequency",
+    "access_utc": "2026-10-10T07:01:32.364517+00:00",
+    "error": "HTTPSConnectionPool(host='ez.analog.com', port=443): Read timed out. (read timeout=25)"
+  },
+  {
+    "source_id": "S05-landing",
+    "requested_url": "https://jzus.zju.edu.cn/article.php?doi=10.1631/jzus.A1600212",
+    "access_utc": "2026-10-10T07:01:32.365826+00:00",
+    "status": 200,
+    "final_url": "https://jzus.zju.edu.cn/article.php?doi=10.1631/jzus.A1600212",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 59620,
+    "text_file": "S05-landing.txt"
+  },
+  {
+    "source_id": "S05-full",
+    "requested_url": "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212",
+    "access_utc": "2026-10-10T07:01:32.370993+00:00",
+    "status": 200,
+    "final_url": "https://jzus.zju.edu.cn/openiptxt.php?doi=10.1631/jzus.A1600212",
+    "content_type": "application/pdf",
+    "bytes": 2610016,
+    "pdf_file": "S05-full.pdf"
+  },
+  {
+    "source_id": "S05-publisher",
+    "requested_url": "https://link.springer.com/article/10.1631/jzus.A1600212",
+    "access_utc": "2026-10-10T07:01:32.375173+00:00",
+    "status": 200,
+    "final_url": "https://link.springer.com/article/10.1631/jzus.A1600212",
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 3038,
+    "text_file": "S05-publisher.txt",
+    "content_assessment": "Client Challenge page; not scientific evidence despite HTTP 200. Publisher browser response in primary_context6 supplies abstract/identity."
+  }
+]

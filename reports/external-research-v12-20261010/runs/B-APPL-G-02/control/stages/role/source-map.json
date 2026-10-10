@@ -14,8 +14,23 @@
       "title": "systemd.timer manual source",
       "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.timer.xml",
       "version": "Pinned upstream tag v257; target systemd 257",
-      "sections": ["Description", "OnUnitInactiveSec= monotonic timer directive table", "OnCalendar=", "AccuracySec=", "RandomizedDelaySec=", "Persistent=", "WakeSystem="],
-      "supports_claims": [1, 2, 3, 4, 5, 6],
+      "sections": [
+        "Description",
+        "OnUnitInactiveSec= monotonic timer directive table",
+        "OnCalendar=",
+        "AccuracySec=",
+        "RandomizedDelaySec=",
+        "Persistent=",
+        "WakeSystem="
+      ],
+      "supports_claims": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
       "local_evidence": "sources/S1-evidence.md",
       "retrieval_conditions": "Direct upstream tag page; no login or source execution."
     },
@@ -24,19 +39,43 @@
       "title": "systemd.time manual source",
       "url": "https://github.com/systemd/systemd/blob/v257/man/systemd.time.xml",
       "version": "Pinned upstream tag v257; target systemd 257",
-      "sections": ["Calendar Events", "special calendar expressions", "systemd-analyze calendar validation"],
-      "supports_claims": [6],
+      "sections": [
+        "Calendar Events",
+        "special calendar expressions",
+        "systemd-analyze calendar validation"
+      ],
+      "supports_claims": [
+        6
+      ],
       "local_evidence": "sources/S2-evidence.md",
       "retrieval_conditions": "Direct upstream tag page; no login or source execution."
     }
   ],
   "claim_map": {
-    "1": ["S1: Persistent="],
-    "2": ["S1: Persistent=; monotonic timer directives; WakeSystem="],
-    "3": ["S1: Description"],
-    "4": ["S1: AccuracySec=; RandomizedDelaySec="],
-    "5": ["S1: OnUnitInactiveSec= monotonic timer directive table"],
-    "6": ["S1: OnCalendar=; AccuracySec=; Persistent=", "S2: Calendar Events and daily shorthand"]
+    "1": [
+      "S1: Persistent="
+    ],
+    "2": [
+      "S1: Persistent=; monotonic timer directives; WakeSystem="
+    ],
+    "3": [
+      "S1: Description"
+    ],
+    "4": [
+      "S1: AccuracySec=; RandomizedDelaySec="
+    ],
+    "5": [
+      "S1: OnUnitInactiveSec= monotonic timer directive table"
+    ],
+    "6": [
+      "S1: OnCalendar=; AccuracySec=; Persistent=",
+      "S2: Calendar Events and daily shorthand"
+    ]
   },
-  "missing_case_evidence": ["effective unit configuration and drop-ins", "host clock and timezone/synchronization state", "boot, timer elapse, service start and finish logs", "measured upper bound on cleanup duration and hardware timing"]
+  "missing_case_evidence": [
+    "effective unit configuration and drop-ins",
+    "host clock and timezone/synchronization state",
+    "boot, timer elapse, service start and finish logs",
+    "measured upper bound on cleanup duration and hardware timing"
+  ]
 }

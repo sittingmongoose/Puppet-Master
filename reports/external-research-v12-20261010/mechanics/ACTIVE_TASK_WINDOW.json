@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-10T06:49:54.903138+00:00",
+  "sole_dispatch_owner": "root",
+  "active_task_registry_only": true,
+  "workers": {
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-treatment-critic-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-control-reviser-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-control-critic-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-control-critic-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-treatment-reviser-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-reviser-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-critic-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R2-01-control-full-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R2-01-treatment-full-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R2-02-control-full-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-eval-C-R2-02-treatment-full-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      },
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-publication-prior-code-capture-repair-v1",
+        "status": "running",
+        "hasPendingChildRuns": false
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "2826b4a9a5957a89a6c9533f72a30e1d6f3830c06b2c496c802da3925dbd0c66"
+  },
+  "no_full_tree_poll": true
+}

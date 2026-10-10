@@ -1,0 +1,30 @@
+{
+  "observed_at_utc": "2026-10-10T06:01:52.843828+00:00",
+  "slot": "C-R2-02",
+  "arm": "treatment",
+  "stage": "investigator",
+  "local_captured_receipts": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_activation.json",
+      "sha256": "f58e7449e46efe3ab1d9bd65975326f9929294f928ef255001f61e16caae8af7",
+      "goal_status": "active",
+      "objective_matches": true,
+      "native_thread_id": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+      "createdAt": 1791611359,
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/native_goal_completion.json",
+      "sha256": "ab4b72f1bd48419d7670b1ae16e52a29692e69df44cb96fcd495f9d1572b47aa",
+      "goal_status": "complete",
+      "objective_matches": true,
+      "native_thread_id": "01a1245b-60b5-7cd0-b068-1f05dc967cd6",
+      "createdAt": 1791611359,
+      "tokensUsed": 189696,
+      "timeUsedSeconds": 715
+    }
+  ],
+  "host_direct_native_provenance": "UNKNOWN; local captures not upgraded to host proof",
+  "guard_marker_present": true
+}

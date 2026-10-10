@@ -1,0 +1,27 @@
+{
+  "verified_at_utc": "2026-10-10T05:37:01.586335+00:00",
+  "branch": "research/er12-20261010",
+  "commit": "c174d5fc7e8f634619d58096eb13310a5195f176",
+  "actual_GitHub_ref_matches": true,
+  "readbacks": [
+    {
+      "path": "reports/external-research-v12-20261010/README.md",
+      "bytes": 2382,
+      "sha256": "d135302dc58cd90d2952f68d87180ce5b1aa9755ed8c82c801551e052a9371a0",
+      "actual_GitHub_immutable_bytes_equal_committed": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/SHA256SUMS",
+      "bytes": 353854,
+      "sha256": "12103ce13010df136a8735fd723016c8794e822639ca2ec0c98fdad9fe39ba34",
+      "actual_GitHub_immutable_bytes_equal_committed": true
+    },
+    {
+      "path": "reports/external-research-v12-20261010/RESULTS.json",
+      "bytes": 106802,
+      "sha256": "d65cb93a44ca790d51cdcaba920de2268cc1de2c68cdabc97a09f9511f7f2b4c",
+      "actual_GitHub_immutable_bytes_equal_committed": true
+    }
+  ],
+  "known_packaging_limitation": "Some fetched source bodies passed extension filter; original commit preserved, corrective owned source-evidence packaging task active. No science judgment repaired."
+}

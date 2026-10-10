@@ -1,14 +1,20 @@
-# Evidence S1: Yjs docs home
-
-- URL: https://docs.yjs.dev/
-- Publisher: Yjs project. Status: 200 OK. Retrieved: 2026-10-10 (UTC; exact time UNKNOWN).
-- Locator: Introduction page.
-
-Verbatim excerpts (bounded):
-
-- "Yjs is a high-performance CRDT for building collaborative applications that sync automatically."
-- "It exposes its internal CRDT model as shared data types that can be manipulated concurrently."
-- "They can be manipulated, fire events when changes happen, and automatically merge without merge conflicts."
-- "Yjs doesn't make any assumptions about the network technology you are using. As long as all changes eventually arrive, the documents will sync. The order in which document updates are applied doesn't matter."
-- "Most shared editing solutions depend on a single source of truth - a central server - to perform conflict resolution. Yjs doesn't need a central source of truth."
-- Docs hint: "The best source of information is still the Yjs README and the yjs-demos repository."
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "547cf37ca64e31265241e6191e6b7664233220f5b648f5f2550796f99223ba03",
+  "rawSHA256": "547cf37ca64e31265241e6191e6b7664233220f5b648f5f2550796f99223ba03",
+  "original_bytes": 998,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-01/treatment/stages/role/sources/ev-01-yjs-intro.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

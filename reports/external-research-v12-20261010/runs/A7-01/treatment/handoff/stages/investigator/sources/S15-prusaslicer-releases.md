@@ -1,8 +1,20 @@
-# S15 — PrusaSlicer release index
-
-- **Source:** [PrusaSlicer releases](https://github.com/prusa3d/PrusaSlicer/releases)
-- **Version:** Retrieved release list includes stable 2.9.6 and pre-release 3.0.0-alpha12.
-- **Access:** 2026-10-10T04:18:00Z, read-only web open.
-- **Locator:** Release list near the top of the page.
-- **Observed operation:** Read only; no releases installed or run.
-- **Applicability:** Version selection snapshot for the date accessed; choose an exact stable build for a pilot and rerun this check when selecting the matrix.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+  "rawSHA256": "e7748ad281c9a6bb09a4dc6bff0948c0a3892a41b21cdccb3e9be7f7f733d2f1",
+  "original_bytes": 551,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S15-prusaslicer-releases.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

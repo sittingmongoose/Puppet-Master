@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://pdfs.semanticscholar.org/2017/8835b7ce4d6cda54ea236c1101aaf287563f.pdf"
+  ],
+  "source_urls": [
+    "https://pdfs.semanticscholar.org/2017/8835b7ce4d6cda54ea236c1101aaf287563f.pdf"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R1-01/treatment-v1/evidence/direct-retrievals.json",
+      "source_id": "I06-Jo-mirror",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "1d59fcaafffb737cce2a0d75538adccbaad54ce206c27028fb6cc5b427cff994",
+  "rawSHA256": "1d59fcaafffb737cce2a0d75538adccbaad54ce206c27028fb6cc5b427cff994",
+  "original_bytes": 2427576,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R1-01/treatment-v1/evidence/I06-Jo-mirror.pdf",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

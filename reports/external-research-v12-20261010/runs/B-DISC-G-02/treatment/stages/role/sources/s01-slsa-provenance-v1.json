@@ -1,1 +1,20 @@
-{"evidence_kind":"bounded-primary-excerpt","excerpt_observed":["\"predicateType\": \"https://slsa.dev/provenance/v1\"","Provenance is an attestation that a particular build platform produced a set of software artifacts through execution of the `buildDefinition`.","The `builder.id` identifies this platform, representing the transitive closure of all entities that are trusted to faithfully run the build and record the provenance.","Version 1.2 is the current version. [Retired status on v1.0 page]"],"id":"s01-slsa-provenance-v1","retrieval":"provider web_fetch GET, Status 200 OK, text/html; exact per-source UTC UNKNOWN within 2026-10-10T04:57:10Z/04:58:30Z window","supports":["SLSA predicateType and model","buildDefinition/runDetails/builder.id","v1.0 Retired -> v1.2 current"],"url":"https://slsa.dev/spec/v1.0/provenance","version":"SLSA 1.0"}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "ca468eaebb1d69c21fedec116f3e7d7135340f7f53a8d685aa066cefe5b648ea",
+  "rawSHA256": "ca468eaebb1d69c21fedec116f3e7d7135340f7f53a8d685aa066cefe5b648ea",
+  "original_bytes": 852,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-DISC-G-02/treatment/stages/role/sources/s01-slsa-provenance-v1.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

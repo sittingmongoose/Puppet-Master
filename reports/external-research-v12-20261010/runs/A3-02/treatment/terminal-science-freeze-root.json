@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A3-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. The complete plan, source map, and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md)\n\nThe one native Goal completed with the same thread ID. Exact activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json). The completion response reports 153,513 tokens and 14m 49s.\n\nNo browser or microphone tests were run; the validation matrix is proposed only.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a9fb7d67-d1ea-4db8-aabd-35d15d72981a",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. The complete plan, source map, and navigable source index are saved:\n\n- [final.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md)\n- [source-map.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/source-map.json)\n- [sources/index.md](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/sources/index.md)\n\nThe one native Goal completed with the same thread ID. Exact activation and completion responses are preserved in [native-goal-activation.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-activation.json) and [native-goal-completion.json](ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/native-goal-completion.json). The completion response reports 153,513 tokens and 14m 49s.\n\nNo browser or microphone tests were run; the validation matrix is proposed only.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A3-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:a9fb7d67-d1ea-4db8-aabd-35d15d72981a",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "3e9400aba660935bb54ce21051f604d31aa8bbf9071471f2bc7aed20554e7a70"
   }
 }

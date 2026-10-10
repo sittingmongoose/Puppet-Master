@@ -1,0 +1,87 @@
+[
+  {
+    "stage": "investigator",
+    "captured_create_fields": {
+      "threadId": "01a1249a-2840-7eb3-af9d-286a8585320f",
+      "objective": "ER12 investigator stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791615456,
+      "updatedAt": 1791615456
+    },
+    "captured_completion_fields": {
+      "threadId": "01a1249a-2840-7eb3-af9d-286a8585320f",
+      "objective": "ER12 investigator stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 288237,
+      "timeUsedSeconds": 809,
+      "createdAt": 1791615456,
+      "updatedAt": 1791616266
+    },
+    "matching_thread_and_objective": true,
+    "stage_deadline_utc": "2026-10-10T07:27:22.858Z",
+    "required_artifact_mtimes_utc": {
+      "discovery.md": "2026-10-10T07:06:55.705951+00:00",
+      "draft.md": "2026-10-10T07:10:34.078573+00:00",
+      "source-map.json": "2026-10-10T07:08:59.192309+00:00"
+    },
+    "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+  },
+  {
+    "stage": "critic",
+    "captured_create_fields": {
+      "threadId": "01a124a7-2c7d-7951-b73e-02ace1517df4",
+      "objective": "ER12 critic stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791616311,
+      "updatedAt": 1791616311
+    },
+    "captured_completion_fields": {
+      "threadId": "01a124a7-2c7d-7951-b73e-02ace1517df4",
+      "objective": "ER12 critic stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 209036,
+      "timeUsedSeconds": 440,
+      "createdAt": 1791616311,
+      "updatedAt": 1791616752
+    },
+    "matching_thread_and_objective": true,
+    "stage_deadline_utc": "2026-10-10T07:39:22.858Z",
+    "required_artifact_mtimes_utc": {
+      "critique.md": "2026-10-10T07:19:04.911536+00:00",
+      "source-map.json": "2026-10-10T07:18:08.704803+00:00"
+    },
+    "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+  },
+  {
+    "stage": "reviser",
+    "captured_create_fields": {
+      "threadId": "01a124ae-90b9-76e3-afb6-4f2586ad4cc5",
+      "objective": "ER12 reviser stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791616793,
+      "updatedAt": 1791616793
+    },
+    "captured_completion_fields": {
+      "threadId": "01a124ae-90b9-76e3-afb6-4f2586ad4cc5",
+      "objective": "ER12 reviser stage, run D-R2-04-treatment: execute ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "complete",
+      "tokensUsed": 220707,
+      "timeUsedSeconds": 754,
+      "createdAt": 1791616793,
+      "updatedAt": 1791617548
+    },
+    "matching_thread_and_objective": true,
+    "stage_deadline_utc": "2026-10-10T07:57:22.654Z",
+    "required_artifact_mtimes_utc": {
+      "final.md": "2026-10-10T07:29:44.285430+00:00",
+      "source-map.json": "2026-10-10T07:30:25.778486+00:00"
+    },
+    "provenance_note": "Preserved response files, not independently authenticated backend telemetry. Filesystem mtime supports only local ordering; pre-input activation and save ordering not proved by tool-event trace."
+  }
+]

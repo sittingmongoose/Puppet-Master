@@ -1,0 +1,124 @@
+{
+  "schema": "er12.consolidated-root-analysis-provenance.v1",
+  "source_judgments": {
+    "PASS_WITH_LIMITATIONS": 56,
+    "FAIL": 23,
+    "UNASSESSED_MISSING_FINAL": 1
+  },
+  "complete_six_axis_original_reviews": 79,
+  "no_new_grades": true,
+  "full_qualification": "NO_VERIFIED_FULLY_QUALIFIED_FINAL; per-qualified cost UNKNOWN",
+  "root_authored_consolidation": true,
+  "references": [
+    {
+      "path": "ER12_RUNTIME/analysis/AB-synthesis-v1/analysis.md",
+      "sha256": "4d052fe8507fa5b76c9d534f706935a8e16d708d981c163ce433019eff470a26",
+      "bytes": 34656
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/analysis.md",
+      "sha256": "b166b6dc478c8a8e81ab59e9b0f59f283353dcc0daf2bfa1a0aca246e5cae6c9",
+      "bytes": 53706
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/index.json",
+      "sha256": "4b4c02583c9ec6787c312d101a7f510a4047c9cc501d8ec6442908ddd5b73fa9",
+      "bytes": 18629
+    },
+    {
+      "path": "ER12_RUNTIME/analysis/CD-synthesis-prep-v1/ROOT_REVIEW.json",
+      "sha256": "3c7daeb687bbd0a8e46c8fec51c595d28b3c132edd3f8100bbdf5c5582d63de7",
+      "bytes": 856
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/final-owned-tree-audit-v1/SUMMARY.json",
+      "sha256": "ba314b89c089e27fb5fdb21a7357ca0fd0a573202810e10a7a4d622d949b68df",
+      "bytes": 435
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/results-table-final/ROOT_VERIFICATION.json",
+      "sha256": "5f183151d9c3b2fa1579266e085ec377bd50fc71d3d1b706bbbdadee066a804b",
+      "bytes": 691
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/accounting-extractor-final-v2/ROOT_VERIFICATION.json",
+      "sha256": "755e443bd6907554770f683cbb361d0492b59eb3043b1aa9ea610dfd5b1ac8b8",
+      "bytes": 766
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/publication-final-prep-v2/ROOT_VERIFICATION.json",
+      "sha256": "3311aa73ea3c3c37e30869e1c8aa8382e5c71df2e3ed3cd6f9e504f1b88678ce",
+      "bytes": 762
+    },
+    {
+      "path": "ER12_RUNTIME/mechanics/cleanup-final-prep-v2/ROOT_VERIFICATION.json",
+      "sha256": "95933b2397cf0e5617c4883e32236b2b1d116b9a3a62e7f43835d5065e0f4d4b",
+      "bytes": 1616
+    }
+  ],
+  "later_reviews_separate_from_historical_CD_draft": [
+    "D-R2-01/treatment",
+    "D-R2-02/treatment",
+    "D-R2-03/treatment",
+    "D-R2-04/control"
+  ],
+  "historical_role_custody_gap": {
+    "count": 9,
+    "original_custody": "ABSENT",
+    "current_final_freeze": "SEPARATE; not backdated",
+    "reviewer_hash_matches": "direct matches only; unlisted history UNKNOWN"
+  },
+  "candidate_context_per_source_pass_signals": {
+    "C2_started_percent_change": -41.02996285291483,
+    "D1_started_percent_change": 6.8753,
+    "D1_created_percent_change": 6.8901,
+    "D2_started_percent_change": 100.0745716018467,
+    "D2_created_percent_change": 99.83430759693871,
+    "scope": "candidate contexts only; all assigned failed/missing attempt costs retained",
+    "production_qualification": false
+  },
+  "final_actual_accounting": {
+    "category_totals": {
+      "candidate": {
+        "declared_tasks": 186,
+        "complete_context_sum_seconds": 131382.039,
+        "complete_started_to_completed_context_sum_seconds": 131179.159,
+        "missing_context_lifetimes": 0
+      },
+      "preparation": {
+        "declared_tasks": 20,
+        "complete_context_sum_seconds": 7513.239,
+        "complete_started_to_completed_context_sum_seconds": 7488.168,
+        "missing_context_lifetimes": 0
+      },
+      "root": {
+        "declared_tasks": 1,
+        "complete_context_sum_seconds": "UNKNOWN",
+        "complete_started_to_completed_context_sum_seconds": "UNKNOWN",
+        "missing_context_lifetimes": 1
+      },
+      "evaluation": {
+        "declared_tasks": 79,
+        "complete_context_sum_seconds": 70812.474,
+        "complete_started_to_completed_context_sum_seconds": 70732.824,
+        "missing_context_lifetimes": 0
+      },
+      "publication": {
+        "declared_tasks": 10,
+        "complete_context_sum_seconds": 4274.469,
+        "complete_started_to_completed_context_sum_seconds": 4265.463,
+        "missing_context_lifetimes": 0
+      },
+      "support": {
+        "declared_tasks": 16,
+        "complete_context_sum_seconds": 4185.388,
+        "complete_started_to_completed_context_sum_seconds": 4174.229,
+        "missing_context_lifetimes": 0
+      }
+    },
+    "complete_campaign_total": "UNKNOWN",
+    "native_identity_groups": 142,
+    "root_still_active": true,
+    "original_guard_failure_native_proof": "UNKNOWN"
+  }
+}

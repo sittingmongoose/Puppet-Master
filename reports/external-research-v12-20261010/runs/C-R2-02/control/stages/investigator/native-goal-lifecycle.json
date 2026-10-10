@@ -1,0 +1,19 @@
+{
+  "run_id": "C-R2-02-control",
+  "stage": "investigator",
+  "objective": "ER12 investigator stage, run C-R2-02-control: execute ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+  "activation_response_file": "native-goal-activation.json",
+  "directly_observed_activation_fields": {
+    "threadId": "01a1245b-67e1-7a62-a2d7-72115b057044",
+    "status": "active",
+    "tokensUsed": 0,
+    "timeUsedSeconds": 0,
+    "createdAt": 1791611354,
+    "updatedAt": 1791611354,
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "activation_utc_timestamp": "UNKNOWN (the native response exposed createdAt/updatedAt numeric fields but no direct UTC activation field; values are preserved without conversion)",
+  "provenance": "UNKNOWN / not independently proved; binding guard response is preserved in goal-binding-guard.json and reports provenance_independently_proved=false",
+  "completion_response_file": "native-goal-completion.json"
+}

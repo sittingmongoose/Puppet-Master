@@ -1,0 +1,1284 @@
+{
+  "rows": [
+    {
+      "armId": "A1-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A1-01/control/stages/reviser/final.md",
+      "sha256": "48bebb0ce2a78a16f9846d6f292005e056875262a4bf0227efb6567e483294b1",
+      "observed_at": "2026-10-10T04:32:18.309459+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A1-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/0"
+      }
+    },
+    {
+      "armId": "A1-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A1-01/treatment/stages/reviser/final.md",
+      "sha256": "8f49f36c41ce0bd7ce36ee9263233744ea1523379b147715c3f3c5104e9751ff",
+      "observed_at": "2026-10-10T04:28:14.324084+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A1-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/1"
+      }
+    },
+    {
+      "armId": "A1-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A1-02/control/stages/reviser/final.md",
+      "sha256": "24932690420c985ee24bfd669222a5f91bc35f4b5ebb274bc43c6689e475f369",
+      "observed_at": "2026-10-10T04:30:51.416127+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A1-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/2"
+      }
+    },
+    {
+      "armId": "A1-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A1-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A1-02/treatment/stages/reviser/final.md",
+      "sha256": "d635630d4404dfe2492461233e72c6f704c5897612a7a3074aa33d6583b72cd9",
+      "observed_at": "2026-10-10T04:42:46.074813+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A1-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/3"
+      }
+    },
+    {
+      "armId": "A2-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A2-01/control/stages/reviser/final.md",
+      "sha256": "acf82a78824f59c9bbf06215d5324b593cf0638ef5ccae2422a579325ef3c45d",
+      "observed_at": "2026-10-10T04:53:55.022736+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A2-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/4"
+      }
+    },
+    {
+      "armId": "A2-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-01-treatment-investigator-topology-v1",
+      "final_path": "ER12_RUNTIME/runs/A2-01/treatment/stages/investigator/final/final.md",
+      "sha256": "98078e8fd7b329a5d314e003cb64907088ed39e4a83f314fd2e9b76b665b4bfe",
+      "observed_at": "2026-10-10T04:48:59.059956+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A2-A2-01-treatment-investigator-topology-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/5"
+      }
+    },
+    {
+      "armId": "A2-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A2-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A2-02/control/stages/reviser/final.md",
+      "sha256": "afc64d11268e3d8776203423863bcaedbdc0b6dd5e85caa4b7590441b90fb189",
+      "observed_at": "2026-10-10T05:42:53.164641+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A2-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/6"
+      }
+    },
+    {
+      "armId": "A2-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A2-A2-02-treatment-investigator-topology-v1",
+      "final_path": "ER12_RUNTIME/runs/A2-02/treatment/stages/investigator/final/final.md",
+      "sha256": "00067eed02c45c85004316d78b5b2bf9b664d24c95cff6e198f5174d567e147c",
+      "observed_at": "2026-10-10T05:41:31.119454+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A2-A2-02-treatment-investigator-topology-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/7"
+      }
+    },
+    {
+      "armId": "A3-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A3-01/control/stages/reviser/final.md",
+      "sha256": "e8c7dd3e5da59cd11b5cc6fbc3962f533d343ad7f7511661800443f4ef78a0e4",
+      "observed_at": "2026-10-10T04:32:17.421065+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A3-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/8"
+      }
+    },
+    {
+      "armId": "A3-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A3-01/treatment/stages/reviser/final.md",
+      "sha256": "3efbe2d57a4cad1b12562b7b48adacd5545ecf7222c08de58eb8a25a15a3747d",
+      "observed_at": "2026-10-10T04:37:04.508800+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A3-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/9"
+      }
+    },
+    {
+      "armId": "A3-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A3-02/control/stages/reviser/final.md",
+      "sha256": "a0bb1532e129d42e715f99fd51918814deffc3104f3d28e9863f7f3fcec6fc5b",
+      "observed_at": "2026-10-10T05:31:31.049714+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A3-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/10"
+      }
+    },
+    {
+      "armId": "A3-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A3-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A3-02/treatment/stages/reviser/final.md",
+      "sha256": "2f53d66742cbf31eb8c0a2497f2609360e7ba701d458a63eecbade5309f03bc9",
+      "observed_at": "2026-10-10T05:34:47.140961+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A3-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/11"
+      }
+    },
+    {
+      "armId": "A4-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A4-01/control/stages/reviser/final.md",
+      "sha256": "4663ec9377fddfca1fa6f5d764f64bf946307ed9a96ccf90e1bafcc778f52161",
+      "observed_at": "2026-10-10T04:23:29.555367+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A4-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/12"
+      }
+    },
+    {
+      "armId": "A4-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md",
+      "sha256": "d451bf92920f64778176d1d9efc7ba38a07b6e09429c45c301909c20a21ec29a",
+      "observed_at": "2026-10-10T04:39:14.636613+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A4-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/13"
+      }
+    },
+    {
+      "armId": "A4-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A4-02/control/stages/reviser/final.md",
+      "sha256": "b082aa7610d0eaf1dc4a6f42e42767cb38a5064a8ed9fac583c6e361168e61ee",
+      "observed_at": "2026-10-10T05:24:00.081455+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A4-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/14"
+      }
+    },
+    {
+      "armId": "A4-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md",
+      "sha256": "4115d20a6476642c4d4d02a2ee44c388af3baa812bb51551bee7d91c99599364",
+      "observed_at": "2026-10-10T05:48:41.957955+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A4-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/15"
+      }
+    },
+    {
+      "armId": "A5-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A5-01/control/stages/reviser/final.md",
+      "sha256": "dbe19a591e0be226109bb3b20f2b9bb34687c101be5ad0753eef31b187a1dbdf",
+      "observed_at": "2026-10-10T04:50:32.488075+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A5-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/16"
+      }
+    },
+    {
+      "armId": "A5-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A5-01/treatment/stages/reviser/final.md",
+      "sha256": "39e3e803c8b82db918ab3272dc424c18f3a1509b25967bc21584dae6c791d6a9",
+      "observed_at": "2026-10-10T04:46:40.695145+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A5-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/17"
+      }
+    },
+    {
+      "armId": "A5-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A5-02/control/stages/reviser/final.md",
+      "sha256": "772a070ee5b7cc26759535256478dabf09a7564e4cb0b324233cff1c5949d90d",
+      "observed_at": "2026-10-10T05:41:34.688501+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A5-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/18"
+      }
+    },
+    {
+      "armId": "A5-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A5-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A5-02/treatment/stages/reviser/final.md",
+      "sha256": "e3a263aad6a3a0d7c1f2fd302ce985d01c738ec9e0c74d48d45fb93f2d373ae0",
+      "observed_at": "2026-10-10T05:39:46.131443+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A5-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/19"
+      }
+    },
+    {
+      "armId": "A6-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A6-01/control/stages/reviser/final.md",
+      "sha256": "a660dcf2af9b2aaf1d65bb86b137ad696a29498f1f4ef1fbfd4b3b495c00e270",
+      "observed_at": "2026-10-10T04:37:05.387145+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A6-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/20"
+      }
+    },
+    {
+      "armId": "A6-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A6-01/treatment/stages/reviser/final.md",
+      "sha256": "d05d6271b28fa96d51ab939dade5c68f9426cafd432170e707e659f3f344e527",
+      "observed_at": "2026-10-10T04:30:13.909008+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A6-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/21"
+      }
+    },
+    {
+      "armId": "A6-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A6-02/control/stages/reviser/final.md",
+      "sha256": "325c6b4472ee9a02810fa5cf961a2b8adafa7a95e8377bbef4837dd9cec6fbef",
+      "observed_at": "2026-10-10T05:20:05.612841+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A6-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/22"
+      }
+    },
+    {
+      "armId": "A6-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A6-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A6-02/treatment/stages/reviser/final.md",
+      "sha256": "8c420eef0702eaab80dc1e5fe23373a9c05eb12d2119b1a2175227f59cb482ab",
+      "observed_at": "2026-10-10T05:16:15.062685+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A6-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/23"
+      }
+    },
+    {
+      "armId": "A7-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A7-01/control/stages/reviser/final.md",
+      "sha256": "9b96a8ba94e1567069ad240b192f203ec7b7a360e7aaa95c1fa11c7c43793383",
+      "observed_at": "2026-10-10T04:53:53.834607+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A7-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/24"
+      }
+    },
+    {
+      "armId": "A7-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-01-treatment-critic-finalizer-topology-v1",
+      "final_path": "ER12_RUNTIME/runs/A7-01/treatment/stages/critic-finalizer/final.md",
+      "sha256": "3571f30137e3e7abee055360f231dd50b99a5fc98219ca762ddf914d5cbeff08",
+      "observed_at": "2026-10-10T04:52:45.934829+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A7-A7-01-treatment-critic-finalizer-topology-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/25"
+      }
+    },
+    {
+      "armId": "A7-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A7-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A7-02/control/stages/reviser/final.md",
+      "sha256": "3c7da9f34980d358317532d7711dbcbc40257e1ccd3a0b0c4bb83bd8cfabe66a",
+      "observed_at": "2026-10-10T05:11:12.934137+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A7-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/26"
+      }
+    },
+    {
+      "armId": "A7-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A7-A7-02-treatment-critic-finalizer-topology-v1",
+      "final_path": "ER12_RUNTIME/runs/A7-02/treatment/stages/critic-finalizer/final.md",
+      "sha256": "87c78f9d594f1506980830ea7cdd802c701a088a010d049b5d8381cb673045dd",
+      "observed_at": "2026-10-10T05:03:11.687656+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A7-A7-02-treatment-critic-finalizer-topology-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/27"
+      }
+    },
+    {
+      "armId": "A8-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A8-01/control/stages/reviser/final.md",
+      "sha256": "1ef15b43b4015d0bed2bfb9a21113f8a2a892f19c5b4c44be13f4cef507595aa",
+      "observed_at": "2026-10-10T04:42:25.405359+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A8-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/28"
+      }
+    },
+    {
+      "armId": "A8-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A8-01/treatment/stages/reviser/final.md",
+      "sha256": "064113d7792459e3f86ba0901b558d015c65a5b9c88f87747e409b0410be349f",
+      "observed_at": "2026-10-10T04:38:49.380414+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A8-A8-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/29"
+      }
+    },
+    {
+      "armId": "A8-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A8-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A8-02/control/stages/reviser/final.md",
+      "sha256": "59bafb53a834012095b00ad1b9e91e083cbc1f248d6e3a78ce05225fc6e6deef",
+      "observed_at": "2026-10-10T05:34:47.949665+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-A8-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/30"
+      }
+    },
+    {
+      "armId": "A8-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-A8-A8-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/A8-02/treatment/stages/reviser/final.md",
+      "sha256": "665159e3beb71c21a489fdb03a1c7055c32df43d5afb18ef8b3def7ebe9616ef",
+      "observed_at": "2026-10-10T05:32:31.035906+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-A8-A8-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/31"
+      }
+    },
+    {
+      "armId": "B-APPL-G-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-control-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/verification.md",
+      "sha256": "92f8edc209c9a2d2fe427ab8f34991e04af6f28b44e52c55a80647492402b1b5",
+      "observed_at": "2026-10-10T04:01:00.207018+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-G-01-control-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/32"
+      }
+    },
+    {
+      "armId": "B-APPL-G-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-01-treatment-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/verification.md",
+      "sha256": "0877ec905c20c11957faafbdf561aec949b71c239417d4806df88cdd4ed74b58",
+      "observed_at": "2026-10-10T04:13:02.641665+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-G-01-treatment-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/33"
+      }
+    },
+    {
+      "armId": "B-APPL-G-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-G-02/control/stages/role/verification.md",
+      "sha256": "f14d91ee366b5d371555d05d590b15d0358866147afc504881f0530a36fd6ef9",
+      "observed_at": "2026-10-10T05:18:02.809464+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-G-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/34"
+      }
+    },
+    {
+      "armId": "B-APPL-G-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-G-02/treatment/stages/role/verification.md",
+      "sha256": "ce2bd9ec7cc9fb1bb2437bdf28db3e66931a4f2aff08a6255d75f967cff55d4a",
+      "observed_at": "2026-10-10T05:12:50.060893+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-G-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/35"
+      }
+    },
+    {
+      "armId": "B-APPL-M-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-control-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-M-01/control/stages/role/verification.md",
+      "sha256": "2fb5c2847aadfe3a848d9e30cb350a4fc737be8353eefba7e98660500545c76c",
+      "observed_at": "2026-10-10T04:06:21.179851+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-M-01-control-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/36"
+      }
+    },
+    {
+      "armId": "B-APPL-M-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-01-treatment-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-M-01/treatment/stages/role/verification.md",
+      "sha256": "893aced79598367c23ab35c8bb199f025d3d388be0b9929a2d10abf6e9ee90c3",
+      "observed_at": "2026-10-10T04:13:02.611185+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-M-01-treatment-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/37"
+      }
+    },
+    {
+      "armId": "B-APPL-M-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-M-02/control/stages/role/verification.md",
+      "sha256": "022b03ad767dfe1a0c89f4c5731367e736e3e91b3b523ff35ffc938a203556b2",
+      "observed_at": "2026-10-10T08:37:35.081515+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-M-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/38"
+      }
+    },
+    {
+      "armId": "B-APPL-M-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-M-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-APPL-M-02/treatment/stages/role/verification.md",
+      "sha256": "93505aab61675dd852483949e4ecbd51ebb8578deab4cbce3427bc648bdc9620",
+      "observed_at": "2026-10-10T08:37:35.093816+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-APPL-M-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/39"
+      }
+    },
+    {
+      "armId": "B-DISC-G-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-G-01/control/stages/role/discovery.md",
+      "sha256": "953c7898fd84f292053f4ae63193d4209ede7b98d58329c334723ffc89679956",
+      "observed_at": "2026-10-10T08:37:35.105231+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-G-01-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/40"
+      }
+    },
+    {
+      "armId": "B-DISC-G-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/discovery.md",
+      "sha256": "c773718f5d0dabfd06e8990ad797afdd7734a28a40c9bc4e08e2af0bbff2e2b6",
+      "observed_at": "2026-10-10T08:37:35.116281+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-G-01-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/41"
+      }
+    },
+    {
+      "armId": "B-DISC-G-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-G-02/control/stages/role/discovery.md",
+      "sha256": "021b0a1e56c4cca4b4c67fd68aed2addd8fa07fa990cff99b28766910b42ffeb",
+      "observed_at": "2026-10-10T05:04:03.723503+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-G-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/42"
+      }
+    },
+    {
+      "armId": "B-DISC-G-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-G-02/treatment/stages/role/discovery.md",
+      "sha256": "683fb7869b0013df2e756c434f8f057893789297cc45e12ef004815566501543",
+      "observed_at": "2026-10-10T05:04:01.523549+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-G-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/43"
+      }
+    },
+    {
+      "armId": "B-DISC-M-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-control-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/discovery.md",
+      "sha256": "3f98d499112c307978eb25f44d7662b8a2a56898ea41405cb9efb414d9d50c92",
+      "observed_at": "2026-10-10T04:06:19.993393+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-M-01-control-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/44"
+      }
+    },
+    {
+      "armId": "B-DISC-M-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-01-treatment-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/discovery.md",
+      "sha256": "487802e58404a83f3d7039dfae6c45b537518490b1651d9a4382b4c5d2c0fe3e",
+      "observed_at": "2026-10-10T04:00:05.730529+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-M-01-treatment-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/45"
+      }
+    },
+    {
+      "armId": "B-DISC-M-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-M-02/control/stages/role/discovery.md",
+      "sha256": "5024038fd01ee33bc9ff2c453de5923be1e7984da16e377d791dbab300d8c43c",
+      "observed_at": "2026-10-10T08:37:35.174790+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-M-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/46"
+      }
+    },
+    {
+      "armId": "B-DISC-M-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-M-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-DISC-M-02/treatment/stages/role/discovery.md",
+      "sha256": "95154750f3d32e40e9dc4292bdc3b253dc143e29fd5a32ced69de1cd70ca136e",
+      "observed_at": "2026-10-10T08:37:35.198441+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-DISC-M-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/47"
+      }
+    },
+    {
+      "armId": "B-FINAL-G-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-control-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-G-01/control/stages/role/final-section.md",
+      "sha256": "307c3f6fd16963857e86505d84ff3ba7011d87b3fd7f19e075c52dc7d3950c56",
+      "observed_at": "2026-10-10T08:37:35.209612+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-G-01-control-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/48"
+      }
+    },
+    {
+      "armId": "B-FINAL-G-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-01-treatment-role-v1",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-G-01/treatment/stages/role/final-section.md",
+      "sha256": "ca88eea59836abdae6bf4e3c232e7f4265b1bca654dffec67f0f28a0da2832f7",
+      "observed_at": "2026-10-10T04:13:02.625852+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-G-01-treatment-role-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/49"
+      }
+    },
+    {
+      "armId": "B-FINAL-G-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-G-02/control/stages/role/final-section.md",
+      "sha256": "b4d525027019c2694cd6c2f1144152fe53d9a8923a4b1239693ac8f1251b26af",
+      "observed_at": "2026-10-10T05:25:41.399238+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-G-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/50"
+      }
+    },
+    {
+      "armId": "B-FINAL-G-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-G-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-G-02/treatment/stages/role/final-section.md",
+      "sha256": "932786a3f7d86488cc9d2fed43ca5233f1ef1b55236e8bf8ee03dde718d90e4e",
+      "observed_at": "2026-10-10T05:23:58.881330+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-G-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/51"
+      }
+    },
+    {
+      "armId": "B-FINAL-M-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-M-01/control/stages/role/final-section.md",
+      "sha256": "bc7a95e640b1ef950cbe0af54dcbdd61ca1eb90911d2edb7e6db781329e6b4c6",
+      "observed_at": "2026-10-10T08:37:35.260973+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-M-01-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/52"
+      }
+    },
+    {
+      "armId": "B-FINAL-M-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-01-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-M-01/treatment/stages/role/final-section.md",
+      "sha256": "a34c9a016a6ac7ffe0fa93e8ab1791d0869e26cbcf054f485e2b1cab79e3e322",
+      "observed_at": "2026-10-10T08:37:35.273571+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-M-01-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/53"
+      }
+    },
+    {
+      "armId": "B-FINAL-M-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-control-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-M-02/control/stages/role/final-section.md",
+      "sha256": "48f56eebda7c8b6cb680a70b5633b258e64b578bbca950817921ebc7933748c7",
+      "observed_at": "2026-10-10T05:22:55.307328+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-M-02-control-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/54"
+      }
+    },
+    {
+      "armId": "B-FINAL-M-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-FINAL-M-02-treatment-role-v2",
+      "final_path": "ER12_RUNTIME/runs/B-FINAL-M-02/treatment/stages/role/final-section.md",
+      "sha256": "fe1b8e7e9f474f6cfa0a6368b76bdd00a705d2a4eb31341d99ed24e44930e992",
+      "observed_at": "2026-10-10T05:22:51.502144+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-B-FINAL-M-02-treatment-role-v2.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/55"
+      }
+    },
+    {
+      "armId": "C-R1-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R1-01/control/stages/reviser/final.md",
+      "sha256": "91f1186fbd5ebf56429f66e8bb25a5bd26eccbb7824f8ef719117505252020e3",
+      "observed_at": "2026-10-10T05:35:46.244487+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R1-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/56"
+      }
+    },
+    {
+      "armId": "C-R1-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R1-01/treatment/stages/reviser/final.md",
+      "sha256": "74a9b2a1a100c9d9d4194c4be881be0ef93189cd374235db4ac796554c4353ca",
+      "observed_at": "2026-10-10T05:49:36.173751+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R1-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/57"
+      }
+    },
+    {
+      "armId": "C-R1-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R1-02/control/stages/reviser/final.md",
+      "sha256": "02f63d6e57d2055fc45f9632e41caa6a9872e66aae7859f766cd1215c0d36c8b",
+      "observed_at": "2026-10-10T05:41:32.186294+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R1-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/58"
+      }
+    },
+    {
+      "armId": "C-R1-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R1-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R1-02/treatment/stages/reviser/final.md",
+      "sha256": "1520ff67861de7fe57d88eea1109ed86d341658e0cca75e8fbe4aa2f7d11c153",
+      "observed_at": "2026-10-10T05:58:09.186994+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R1-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/59"
+      }
+    },
+    {
+      "armId": "C-R2-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R2-01/control/stages/reviser/final.md",
+      "sha256": "3a4158066585cc75d56ba6804bb6cc287b45a849a08f8502f4704ddac41e4235",
+      "observed_at": "2026-10-10T06:25:32.395986+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R2-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/60"
+      }
+    },
+    {
+      "armId": "C-R2-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-C-R2-01-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R2-01/treatment/stages/reviser/final.md",
+      "sha256": "b514999acbca58187f86e29f477a030e06d8b85dda84f8a84493fd490f4d7376",
+      "observed_at": "2026-10-10T06:33:07.777017+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-C-R2-01-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/61"
+      }
+    },
+    {
+      "armId": "C-R2-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-C-R2-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+      "sha256": "e3c499622ab6c485dfea7d83f8eb37b5f40a1ec3551baab46e6b623512f4ed63",
+      "observed_at": "2026-10-10T06:36:36.815088+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-C-R2-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/62"
+      }
+    },
+    {
+      "armId": "C-R2-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-C-R2-02-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md",
+      "sha256": "f1a2f8b3d89f100790bc66d5bef4b36877ea9891a03c6c8134694c0f61294ef0",
+      "observed_at": "2026-10-10T06:38:28.137382+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-C-R2-02-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/63"
+      }
+    },
+    {
+      "armId": "D-R1-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-01/control/stages/reviser/final.md",
+      "sha256": "6d75191a3ba013567d877194f7e369b36456eb8411674aa3a06d1211071cfc90",
+      "observed_at": "2026-10-10T07:04:00.573839+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/64"
+      }
+    },
+    {
+      "armId": "D-R1-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-01-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-01/treatment/stages/reviser/final.md",
+      "sha256": "0679ca559b9974a2ed2ad45f20fa28783fdd0c26da700fcd00b8d42c7b787a45",
+      "observed_at": "2026-10-10T07:17:15.804213+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-01-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/65"
+      }
+    },
+    {
+      "armId": "D-R1-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-02/control/stages/reviser/final.md",
+      "sha256": "4c7059e70709a117f6a872a14113241e60a9cca068ca942600a88d5f43fc20eb",
+      "observed_at": "2026-10-10T06:58:15.736570+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/66"
+      }
+    },
+    {
+      "armId": "D-R1-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-02-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-02/treatment/stages/reviser/final.md",
+      "sha256": "48be78bca2c689c9729c57cd9e52e9f722b3b1ec000c1eb9c6829be3ab2d8cb9",
+      "observed_at": "2026-10-10T06:58:38.660586+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-02-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/67"
+      }
+    },
+    {
+      "armId": "D-R1-03/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/final.md",
+      "sha256": "ff37b0f65d4015187ee3089582e815b5b968dc131fbb1b32584f23cffe5de37f",
+      "observed_at": "2026-10-10T07:07:39.519866+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-03-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/68"
+      }
+    },
+    {
+      "armId": "D-R1-03/treatment",
+      "disposition": "MISSING",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-03-treatment-investigator-v1",
+      "final_path": null,
+      "sha256": null,
+      "observed_at": "2026-10-10T06:29:07.014590+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-03-treatment-investigator-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/69"
+      }
+    },
+    {
+      "armId": "D-R1-04/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-04/control/stages/reviser/final.md",
+      "sha256": "c5201821b44f42b34823083300dbdff2dc780a808ac4ce7cae9105a8afa9f4c7",
+      "observed_at": "2026-10-10T07:03:59.501980+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-04-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/70"
+      }
+    },
+    {
+      "armId": "D-R1-04/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R1-04-treatment-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+      "sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "observed_at": "2026-10-10T06:55:33.145710+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R1-04-treatment-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/71"
+      }
+    },
+    {
+      "armId": "D-R2-01/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-01-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-01/control/stages/reviser/final.md",
+      "sha256": "ab727625d9ade02032e7e8ce738c3e50387373d801da281b9192f365669eea80",
+      "observed_at": "2026-10-10T07:20:42.883083+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R2-01-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/72"
+      }
+    },
+    {
+      "armId": "D-R2-01/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-01-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/final.md",
+      "sha256": "60c867f3a9cbe326f321f95f2ff73728fd9cf09a0fd285f071eee421b5eca656",
+      "observed_at": "2026-10-10T07:35:40.051967+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-D-R2-01-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/73"
+      }
+    },
+    {
+      "armId": "D-R2-02/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-02-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-02/control/stages/reviser/final.md",
+      "sha256": "3b4199a1e58842ff9168ac5b76e778b059a8be56bf2e9522ac5735c96bd23386",
+      "observed_at": "2026-10-10T07:24:32.727133+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R2-02-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/74"
+      }
+    },
+    {
+      "armId": "D-R2-02/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-02-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-02/treatment/stages/reviser/final.md",
+      "sha256": "dd618bb1c611e62e88a4bc7e1bf758a6e501ae7deced4aea68cca97e492091ea",
+      "observed_at": "2026-10-10T07:39:33.550080+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-D-R2-02-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/75"
+      }
+    },
+    {
+      "armId": "D-R2-03/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-03-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-03/control/stages/reviser/final.md",
+      "sha256": "67b4853b7f51d90792a9d5e452e00b342790c8450bcc7dcaf5e17fee96ecf397",
+      "observed_at": "2026-10-10T07:21:31.774538+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R2-03-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/76"
+      }
+    },
+    {
+      "armId": "D-R2-03/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-03-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-03/treatment/stages/reviser/final.md",
+      "sha256": "7d32d502c571d60812c43d26bc7e4c6d1ec9c061a9a971ce6c4bbe1bf12e0142",
+      "observed_at": "2026-10-10T07:50:17.399803+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-D-R2-03-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/77"
+      }
+    },
+    {
+      "armId": "D-R2-04/control",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-D-R2-04-control-reviser-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-04/control/stages/reviser/final.md",
+      "sha256": "3f082065e486bc369a8cca4c5d22c6a1f3eafd7ee291eddf312a0abd66e795da",
+      "observed_at": "2026-10-10T07:30:52.933533+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12ref-D-R2-04-control-reviser-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/78"
+      }
+    },
+    {
+      "armId": "D-R2-04/treatment",
+      "disposition": "DELIVERED",
+      "final_task_id": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-composite-D-R2-04-treatment-reviser-A1-A8-v1",
+      "final_path": "ER12_RUNTIME/runs/D-R2-04/treatment/stages/reviser/final.md",
+      "sha256": "f1b4cb04dd68c7f34145291912e7d5b2fc1fe652a778cedd25ddc5c1a7a659f6",
+      "observed_at": "2026-10-10T07:32:45.844477+00:00",
+      "terminal_task_status_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-native-host-capture-v1/task-status/er12-composite-D-R2-04-treatment-reviser-A1-A8-v1.json",
+        "pointer": "/actual_response/structuredContent"
+      },
+      "root_science_freeze_pointer": {
+        "path": "ER12_RUNTIME/mechanics/final-freeze-prep-v4/root-final-freeze-001/global-root-science-freeze.json",
+        "pointer": "/arms/79"
+      }
+    }
+  ]
+}

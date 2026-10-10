@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a124a8-7034-7d02-bed2-a33c7202ea9e",
+    "objective": "ER12 critic stage, run D-R2-02-control: execute ER12_RUNTIME/runs/D-R2-02/control/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "complete",
+    "tokensUsed": 145656,
+    "timeUsedSeconds": 281,
+    "createdAt": 1791616392,
+    "updatedAt": 1791616674
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

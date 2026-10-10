@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "P001",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 3,
+    "exact_clause": "Case ID: ER12-C-R2-02-FRESH",
+    "disposition": "IDENTITY",
+    "assessment": "Assigned case identity, unchanged.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P002",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 4,
+    "exact_clause": "Slot ID: C-R2-02",
+    "disposition": "IDENTITY",
+    "assessment": "Assigned slot identity, unchanged.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P003",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 5,
+    "exact_clause": "Domain: scholarly information retrieval",
+    "disposition": "IDENTITY",
+    "assessment": "Scholarly information-retrieval scope retained.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P004",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 9,
+    "exact_clause": "Keep this file outside the candidate-facing research packet.",
+    "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+    "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P005",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 9,
+    "exact_clause": "It preserves the authored request and open design opportunities.",
+    "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+    "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P006",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 9,
+    "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+    "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+    "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P007",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 9,
+    "exact_clause": "Nothing here selects an eventual research method.",
+    "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+    "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P008",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 9,
+    "exact_clause": "No empirical validation has been executed in authoring this case.",
+    "disposition": "PRESERVED_WITH_PROTOCOL_UNKNOWN",
+    "assessment": "The record is treated as prospective source authority after controlled release, not an answer key or experimental result. Concealment/release chronology is receipt-reported, not independently reconstructed.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P009",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 13,
+    "exact_clause": "The original brief follows verbatim between the delimiters.",
+    "disposition": "PRESERVED",
+    "assessment": "Original brief bytes equal the embedded/released copies; original obligations govern this review. The plan’s opportunity verbs are not silently promoted to requirements by this assessor.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      }
+    ]
+  },
+  {
+    "id": "P010",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 13,
+    "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+    "disposition": "PRESERVED",
+    "assessment": "Original brief bytes equal the embedded/released copies; original obligations govern this review. The plan’s opportunity verbs are not silently promoted to requirements by this assessor.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      }
+    ]
+  },
+  {
+    "id": "P011",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 19,
+    "exact_clause": "Case ID: ER12-C-R2-02-FRESH",
+    "disposition": "IDENTITY",
+    "assessment": "Same case identity in embedded original brief.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P012",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 20,
+    "exact_clause": "Slot ID: C-R2-02",
+    "disposition": "IDENTITY",
+    "assessment": "Same slot identity in embedded original brief.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P013",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 21,
+    "exact_clause": "Domain: scholarly information retrieval",
+    "disposition": "IDENTITY",
+    "assessment": "Same domain in embedded original brief.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      }
+    ]
+  },
+  {
+    "id": "P014",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 25,
+    "exact_clause": "A university group is preparing an evidence collection about urban heat interventions.",
+    "disposition": "ADDRESSED",
+    "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P015",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 25,
+    "exact_clause": "Their first search returned many general reviews and few local observational studies, although a collaborator remembers several municipal reports.",
+    "disposition": "ADDRESSED",
+    "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P016",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 25,
+    "exact_clause": "Titles in the working list sometimes differ between repositories, and the team is unsure which items are duplicates.",
+    "disposition": "ADDRESSED",
+    "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P017",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 25,
+    "exact_clause": "There is no supplied search export or known complete reference set.",
+    "disposition": "ADDRESSED",
+    "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P018",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 25,
+    "exact_clause": "This is a synthetic planning situation, not a request to conclude whether an intervention works.",
+    "disposition": "ADDRESSED",
+    "assessment": "Local reports, alternate titles and missing complete corpus motivate routes and conservative identity handling. No remembered titles, search export or outcome evidence is invented.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      }
+    ]
+  },
+  {
+    "id": "P019",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 29,
+    "exact_clause": "Use the 60-minute research window to propose an evidence-discovery study that can tell us how to improve coverage without losing the identity and provenance of individual studies.",
+    "disposition": "ADDRESSED_AS_PROPOSAL",
+    "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 50,
+        "section_or_text": "A feasible 60-minute"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      }
+    ]
+  },
+  {
+    "id": "P020",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 29,
+    "exact_clause": "Explain retrieval and screening mechanisms, compare useful routes, and investigate the implementation history of related collection efforts.",
+    "disposition": "ADDRESSED_AS_PROPOSAL",
+    "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 50,
+        "section_or_text": "A feasible 60-minute"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      }
+    ]
+  },
+  {
+    "id": "P021",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 29,
+    "exact_clause": "Provide a reproducible pilot protocol rather than an application or a finished review.",
+    "disposition": "ADDRESSED_AS_PROPOSAL",
+    "assessment": "Substantive mechanisms and comparative protocol are supplied; the 60-minute future pilot is not claimed executed. Index/software histories and two qualified collection-method examples investigate related implementations. No product or finished review.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 50,
+        "section_or_text": "A feasible 60-minute"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      }
+    ]
+  },
+  {
+    "id": "P022",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 33,
+    "exact_clause": "- Distinguish discovery coverage, screening workload, and correct study identity; increased record counts alone do not establish improvement.",
+    "disposition": "ADDRESSED",
+    "assessment": "Study-level observed yield, screening cost and identity errors/uncertainty are distinct; rows alone never establish improvement.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 9,
+        "section_or_text": "The pilot has three separate outcomes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 87,
+        "section_or_text": "Report, for each route"
+      }
+    ]
+  },
+  {
+    "id": "P023",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 34,
+    "exact_clause": "- Compare terminology or database search changes with citation or repository-based discovery and a useful manual or expert-curated alternative.",
+    "disposition": "ADDRESSED",
+    "assessment": "A/B lexical changes, C citations/public repositories and D independent curator are meaningful alternatives. The two-index factor is the proposed design choice, not an additional original requirement.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 46,
+        "section_or_text": "Manual or expert-curated leads"
+      }
+    ]
+  },
+  {
+    "id": "P024",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 35,
+    "exact_clause": "- Address reports, multiple versions, ambiguous titles, and geographic terminology without treating every similar title as a duplicate.",
+    "disposition": "ADDRESSED",
+    "assessment": "Alias table, record/report/study model, document versions, conservative human linking, rationale and unresolved states cover all named cases. Similar title alone never authorizes a merge.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 34,
+        "section_or_text": "Terminology and locality"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      }
+    ]
+  },
+  {
+    "id": "P025",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 36,
+    "exact_clause": "- Explain what a prior search strategy or collection implementation would need to disclose for its claimed coverage to be informative here.",
+    "disposition": "ADDRESSED",
+    "assessment": "Disclosures include query/date/platform/scope/grey sources/versions/decisions/failures. Qualified history examples do not benchmark coverage.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 97,
+        "section_or_text": "What prior strategies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      }
+    ]
+  },
+  {
+    "id": "P026",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 37,
+    "exact_clause": "- Propose an auditable sampling and comparison design, provenance recording, and uncertainty treatment; label searches or desk checks actually executed separately from future validation.",
+    "disposition": "ADDRESSED_WITH_LIMITATIONS",
+    "assessment": "Probability sampling and inclusion probabilities, route provenance, human screening/link adjudication and sensitivity views are prospective. Desk checks and not-executed case work are separated. Explicit blinded/noncandidate-pair audit wording is compressed (L02).",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section_or_text": "Screening, sampling"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 111,
+        "section_or_text": "Actual work and proposed validation"
+      }
+    ]
+  },
+  {
+    "id": "P027",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 41,
+    "exact_clause": "- Do not claim a comprehensive systematic review, calculate recall against an invented complete corpus, or infer intervention effectiveness from search yield.",
+    "disposition": "PRESERVED",
+    "assessment": "No comprehensive-review/completeness claim, invented-corpus recall, or intervention-effect inference. Observed route union and sensitivity counts are expressly bounded.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "Route overlap is agreement"
+      }
+    ]
+  },
+  {
+    "id": "P028",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 42,
+    "exact_clause": "- Do not scrape restricted services, use private accounts, contact authors, or create a search product.",
+    "disposition": "PRESERVED_IN_PROPOSAL;HISTORICAL_ACTION_AUDIT_UNKNOWN",
+    "assessment": "Public sources and account-free provisional routes are proposed. No author contact, restricted scraping or search product is authorized; no forbidden action is evidenced in the inspected science package. This is not an exhaustive historical action audit.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 19,
+        "section_or_text": "Public sources and access"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 143,
+        "section_or_text": "Original boundaries:"
+      }
+    ]
+  },
+  {
+    "id": "P029",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 43,
+    "exact_clause": "- Do not delete ambiguous records merely to make the collection look cleaner.",
+    "disposition": "PRESERVED",
+    "assessment": "Additive raw rows, confirmed grouped views and unresolved links preserve ambiguous records.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 77,
+        "section_or_text": "Generate candidate links"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 117,
+        "section_or_text": "Keep every ambiguous record"
+      }
+    ]
+  },
+  {
+    "id": "P030",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 47,
+    "exact_clause": "The intervention scope, languages, jurisdictions, date limits, review inclusion rules, access routes, and time available for later screening are undecided.",
+    "disposition": "HONEST_OWNER_DECISIONS",
+    "assessment": "Interventions, languages, jurisdictions, date/inclusion rules, access and subsequent-screening capacity are listed before comparative claims. Syntax/alias checks are provisional; no numerical thresholds/sample sizes fabricated.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 11,
+        "section_or_text": "Decisions required"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 24,
+        "section_or_text": "A syntax or alias check"
+      }
+    ]
+  },
+  {
+    "id": "P031",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 47,
+    "exact_clause": "We want the proposal to identify which decisions must precede a meaningful coverage comparison and which can be tested provisionally.",
+    "disposition": "HONEST_OWNER_DECISIONS",
+    "assessment": "Interventions, languages, jurisdictions, date/inclusion rules, access and subsequent-screening capacity are listed before comparative claims. Syntax/alias checks are provisional; no numerical thresholds/sample sizes fabricated.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 11,
+        "section_or_text": "Decisions required"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 24,
+        "section_or_text": "A syntax or alias check"
+      }
+    ]
+  },
+  {
+    "id": "P032",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 53,
+    "exact_clause": "Can a bounded discovery experiment reveal meaningful missed evidence and manageable identity handling when no complete ground-truth corpus exists?",
+    "disposition": "ADDRESSED",
+    "assessment": "A bounded multi-route discovery/identity comparison answers missed-evidence and workload questions without a complete ground truth.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section_or_text": "Screening, sampling"
+      }
+    ]
+  },
+  {
+    "id": "P033",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 55,
+    "exact_clause": "The unit of evidence, definition of useful local evidence, screening capacity, and scope boundaries remain open.",
+    "disposition": "ADDRESSED",
+    "assessment": "Unit/useful evidence/scope/capacity remain owner decisions; mechanisms and prospective route criteria are nevertheless concrete, not merely requests to decide later.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 11,
+        "section_or_text": "Decisions required"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "A route is promising only"
+      }
+    ]
+  },
+  {
+    "id": "P034",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 55,
+    "exact_clause": "A defensible proposal may stage the scope decision first, but must still explain the substantive discovery alternatives and how later observations would choose between them.",
+    "disposition": "ADDRESSED",
+    "assessment": "Unit/useful evidence/scope/capacity remain owner decisions; mechanisms and prospective route criteria are nevertheless concrete, not merely requests to decide later.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 11,
+        "section_or_text": "Decisions required"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "A route is promising only"
+      }
+    ]
+  },
+  {
+    "id": "P035",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 59,
+    "exact_clause": "Consider revised controlled and free-text vocabulary, multiple public indexes, citation following, municipal repository exploration, and a small manually curated reference exercise.",
+    "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+    "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 147,
+        "section_or_text": "Released design opportunity: consider"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 145,
+        "section_or_text": "Released design opportunity: keep useful"
+      }
+    ]
+  },
+  {
+    "id": "P036",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 59,
+    "exact_clause": "An expert-produced seed list can be useful but may inherit the expert's geographic and language preferences.",
+    "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+    "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 147,
+        "section_or_text": "Released design opportunity: consider"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 145,
+        "section_or_text": "Released design opportunity: keep useful"
+      }
+    ]
+  },
+  {
+    "id": "P037",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 59,
+    "exact_clause": "A scope-narrowing exercise may be more valuable than expanding searches indiscriminately.",
+    "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+    "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 147,
+        "section_or_text": "Released design opportunity: consider"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 145,
+        "section_or_text": "Released design opportunity: keep useful"
+      }
+    ]
+  },
+  {
+    "id": "P038",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 59,
+    "exact_clause": "No search route or deduplication procedure is prespecified as superior.",
+    "disposition": "CONSIDERED_WITH_TRACEABILITY_LIMIT",
+    "assessment": "Free text/scoped keywords, multiple indexes, citations, municipal portals and curator are considered; bias and scope staging retained, no winner asserted. Controlled-vocabulary treatment is less explicit than free text. “Consider” is not a mandatory two-index run (L01).",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 147,
+        "section_or_text": "Released design opportunity: consider"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 145,
+        "section_or_text": "Released design opportunity: keep useful"
+      }
+    ]
+  },
+  {
+    "id": "P039",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 63,
+    "exact_clause": "Investigate indexing coverage, term mismatch, citation connectivity, repository metadata, and the distinction between a document version and an independent study.",
+    "disposition": "ADDRESSED",
+    "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "Route overlap is agreement"
+      }
+    ]
+  },
+  {
+    "id": "P040",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 63,
+    "exact_clause": "Ask how each route could expose different missingness and how screening rules interact with yield.",
+    "disposition": "ADDRESSED",
+    "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "Route overlap is agreement"
+      }
+    ]
+  },
+  {
+    "id": "P041",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 63,
+    "exact_clause": "A coverage proxy should state what it measures; overlap between routes is not automatically true recall or completeness.",
+    "disposition": "ADDRESSED",
+    "assessment": "Index/field coverage, lexical/locality mismatch, seed connectivity, portal metadata and report/study identity mechanisms and workload are explained. Overlap/union are bounded proxies, not completeness.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 26,
+        "section_or_text": "Discovery routes"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 67,
+        "section_or_text": "Records, reports, studies"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 95,
+        "section_or_text": "Route overlap is agreement"
+      }
+    ]
+  },
+  {
+    "id": "P042",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 67,
+    "exact_clause": "Look for public search histories and evidence-collection implementation descriptions with query dates, database boundaries, inclusion rules, version handling, and changes over time.",
+    "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+    "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 109,
+        "section_or_text": "Two prior urban-heat review examples"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 20,
+        "section_or_text": "Seeds and route inputs"
+      }
+    ]
+  },
+  {
+    "id": "P043",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 67,
+    "exact_clause": "An older implementation may differ because repositories, terms, and indexing changed.",
+    "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+    "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 109,
+        "section_or_text": "Two prior urban-heat review examples"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 20,
+        "section_or_text": "Seeds and route inputs"
+      }
+    ]
+  },
+  {
+    "id": "P044",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 67,
+    "exact_clause": "The remembered municipal reports can motivate future provenance checks but are not a hidden reference set or a supplied list of winning sources.",
+    "disposition": "INVESTIGATED_WITH_ACCESS_LIMITS",
+    "assessment": "Public index/software collection history and dated review-method examples are investigated. Changed data/terms/indexing are recognized; no municipal lead list is invented. Review full text/supplements and parts of I15 remain unavailable.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 103,
+        "section_or_text": "Implementation history"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 109,
+        "section_or_text": "Two prior urban-heat review examples"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 20,
+        "section_or_text": "Seeds and route inputs"
+      }
+    ]
+  },
+  {
+    "id": "P045",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 71,
+    "exact_clause": "A later pilot could prerecord a provisional scope, run several discovery routes, retain route provenance, sample screened and rejected records, and examine independently identified useful additions.",
+    "disposition": "PROPOSED_NOT_EXECUTED",
+    "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section_or_text": "Screening, sampling"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 111,
+        "section_or_text": "Actual work and proposed validation"
+      }
+    ]
+  },
+  {
+    "id": "P046",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 71,
+    "exact_clause": "Specify how manual adjudication would handle versions and uncertain identity, and how workload and misses would be estimated with limited coverage.",
+    "disposition": "PROPOSED_NOT_EXECUTED",
+    "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section_or_text": "Screening, sampling"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 111,
+        "section_or_text": "Actual work and proposed validation"
+      }
+    ]
+  },
+  {
+    "id": "P047",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 71,
+    "exact_clause": "Searches actually run during the hour must be logged with dates and limitations; the final proposal must not present a planned multi-route experiment as executed or a union of found records as complete ground truth.",
+    "disposition": "PROPOSED_NOT_EXECUTED",
+    "assessment": "Preregistration, route ledger, screened/excluded probability samples, independent curator additions, version adjudication, workload and frame-bounded misses are proposed. No pilot results or complete union claimed. The pair-audit detail is a preservation limitation.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 81,
+        "section_or_text": "Screening, sampling"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 111,
+        "section_or_text": "Actual work and proposed validation"
+      }
+    ]
+  },
+  {
+    "id": "P048",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 73,
+    "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+    "disposition": "PRESERVED",
+    "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 113,
+        "section_or_text": "Actually executed in the supplied"
+      }
+    ]
+  },
+  {
+    "id": "P049",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 73,
+    "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+    "disposition": "PRESERVED",
+    "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 113,
+        "section_or_text": "Actually executed in the supplied"
+      }
+    ]
+  },
+  {
+    "id": "P050",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 73,
+    "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+    "disposition": "PRESERVED",
+    "assessment": "Prepared inputs are not empirical validation; actual extent is documentation research as reported in maps, not case searches or scientific outcomes.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 115,
+        "section_or_text": "Not executed:"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 113,
+        "section_or_text": "Actually executed in the supplied"
+      }
+    ]
+  },
+  {
+    "id": "P051",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  },
+  {
+    "id": "P052",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  },
+  {
+    "id": "P053",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "It requests no product build.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  },
+  {
+    "id": "P054",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  },
+  {
+    "id": "P055",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "C inputs remain sealed until the recipe freeze.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  },
+  {
+    "id": "P056",
+    "source_path": "ER12_RUNTIME/frozen-inputs/C-R2-02/plan.md",
+    "source_line": 77,
+    "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+    "disposition": "ADDRESSED;RELEASE_PROTOCOL_PARTLY_UNKNOWN",
+    "assessment": "Full discovery/proposal scope, reasoned prospective design, mechanisms and later validation preserved. No winner/product invented. Brief and plan/revealed copies are byte-identical; freeze/release receipts inspected. Full sealed-input chronology not independently proved.",
+    "final_or_lineage_locators": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 3,
+        "section_or_text": "Recommendation and status"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/reviser/final.md",
+        "line": 131,
+        "section_or_text": "Clause-by-clause coverage"
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/control/stages/investigator/plan-reveal.json",
+        "line": 2,
+        "section_or_text": "revealed_at_utc"
+      }
+    ]
+  }
+]

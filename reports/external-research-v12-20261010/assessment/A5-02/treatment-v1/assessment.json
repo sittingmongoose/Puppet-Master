@@ -12,7 +12,7 @@
       "name": "Original obligations and negative constraints",
       "coverage": "FULL / ASSESSED",
       "judgment": "PASS",
-      "assessment": "All eight obligations receive substantive treatment: two operational workflows plus resolver analogy; offline/reader tradeoffs; four identities; QR, redirect and replacement; released migration examples; optional care link; named owner authorities; coherent final and honest validation table. Pilot scale, receipt/return, durable legible IDs and legacy identity separation remain. All four prohibitions are binding. The final is a proposal, not an implementation. Source accuracy of a product-specific care-link condition is separately failed under axes 2\u20134. No installation, purchase, production printing or live deployment is required for this brief.",
+      "assessment": "All eight obligations receive substantive treatment: two operational workflows plus resolver analogy; offline/reader tradeoffs; four identities; QR, redirect and replacement; released migration examples; optional care link; named owner authorities; coherent final and honest validation table. Pilot scale, receipt/return, durable legible IDs and legacy identity separation remain. All four prohibitions are binding. The final is a proposal, not an implementation. Source accuracy of a product-specific care-link condition is separately failed under axes 2–4. No installation, purchase, production printing or live deployment is required for this brief.",
       "evidence_ids": [
         "E-O01",
         "E-O02",
@@ -24,7 +24,7 @@
       "locators": [
         "final Recommendation",
         "final Suggested record model",
-        "final Exact plan clause disposition rows 1\u20138",
+        "final Exact plan clause disposition rows 1–8",
         "final Validation status"
       ]
     },
@@ -296,7 +296,7 @@
     },
     {
       "clause": 8,
-      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1\u20138, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
+      "exact_obligation": "Deliver one coherent evidence-backed research proposal covering obligations 1–8, with recommendations, source/version applicability, useful discoveries, unresolved owner inputs, and a validation table separating checks actually executed from checks merely proposed. Do not report research sources or future tests as executed product validation.",
       "exact_frozen_draft_treatment": "The draft currently contains no coherent evidence-backed final proposal. Its proposed demos are research/validation ideas only. A complete revision must preserve every obligation, disclose corrections and retained options, and not confuse documentation review with successful product operation.",
       "candidate_final_disposition": "DELIVER COMPLETE FINAL; RESEARCH ONLY EXECUTED",
       "independent_assessment": "The final is coherent, self-contained and evidence linked with recommendations, alternatives, applicability, unresolved owners and proposed/not-run tests. Delivery is complete; source qualification is FAIL from F1. The absence of a prototype is permitted, not a defect.",
@@ -558,10 +558,10 @@
         "E-S11-settings-validation"
       ],
       "primary_locators": [
-        "v8.8.0 resources/views/partials/labels-new-engine.blade.php lines 118\u2013180: QRCODE choice, prefix control, hardware_id labeled default, plain targets",
-        "v8.8.0 resources/lang/en-US/admin/settings/general.php lines 518\u2013523: prefix help expressly permits external URL; content help distinguishes linked and non-linked values",
-        "v8.8.0 app/View/Label.php lines 126\u2013180: independent 1D tag content, template/type guards, prefix/plain_asset_tag branch, hardware route default",
-        "v8.8.0 SettingsController.php lines 611\u2013630: settings persisted; StoreLabelSettings.php line 52: nullable prefix max 191"
+        "v8.8.0 resources/views/partials/labels-new-engine.blade.php lines 118–180: QRCODE choice, prefix control, hardware_id labeled default, plain targets",
+        "v8.8.0 resources/lang/en-US/admin/settings/general.php lines 518–523: prefix help expressly permits external URL; content help distinguishes linked and non-linked values",
+        "v8.8.0 app/View/Label.php lines 126–180: independent 1D tag content, template/type guards, prefix/plain_asset_tag branch, hardware route default",
+        "v8.8.0 SettingsController.php lines 611–630: settings persisted; StoreLabelSettings.php line 52: nullable prefix max 191"
       ],
       "lineage": "Present in investigator discovery, carried into draft, endorsed as adequate by critic, and repeated in final. Not corrected in this pipeline.",
       "axes": [
@@ -601,10 +601,10 @@
       ],
       "locators": [
         "Issue body What happened; PR body",
-        "v8.7.1 and v8.8.0 app/View/Label.php lines 100\u2013103 versus 136\u2013180",
+        "v8.7.1 and v8.8.0 app/View/Label.php lines 100–103 versus 136–180",
         "DefaultLabel.php write(): barcode2d and title separate branches"
       ],
-      "lineage": "Discovery \u2192 draft \u2192 critique summaries \u2192 final; remains unqualified. The accurate transition and fields are also preserved."
+      "lineage": "Discovery → draft → critique summaries → final; remains unqualified. The accurate transition and fields are also preserved."
     },
     {
       "id": "L2",
@@ -616,7 +616,7 @@
         "line": 3,
         "needle": "\"stage\": \"investigator\""
       },
-      "finding": "The critic source map top-level stage and stage_assignment still identify investigator. The critic_review object, C01\u2013C12 namespace, own file path and own index correctly identify the critic. This is a real attribution defect but does not rebind source IDs or change the science.",
+      "finding": "The critic source map top-level stage and stage_assignment still identify investigator. The critic_review object, C01–C12 namespace, own file path and own index correctly identify the critic. This is a real attribution defect but does not rebind source IDs or change the science.",
       "primary_evidence_ids": [],
       "lineage": "Critic map; explicit provenance in critic_review and reviser map reduces ambiguity, without changing original bytes."
     }
@@ -879,7 +879,7 @@
       }
     },
     "t3_delivery": "Investigator/critic status.json contain completed task records; terminal-science-freeze-root.json captures reviser completed/no pending. T3 completion is distinct from native completion.",
-    "requested_route": "All three stage maps/requests/dispatches specify AUTHORIZED_PROVIDER_INSTANCE, gpt-6-luna, reasoning max and serviceTier default. Local service-tier-change records say priority \u2192 default before dispatch.",
+    "requested_route": "All three stage maps/requests/dispatches specify AUTHORIZED_PROVIDER_INSTANCE, gpt-6-luna, reasoning max and serviceTier default. Local service-tier-change records say priority → default before dispatch.",
     "effective_route_model_build_tier": "UNKNOWN; no effective provider/billing telemetry inspected. Dispatch-reported identifiers are not proof of effective service tier.",
     "protocol": "No source/science feedback or candidate repair detected in scoped artifacts; invocation clarifications alter native activation mechanics only. Full protocol attestation UNKNOWN without complete action traces. Review itself uses no delegation, candidate feedback/repair, accounts, Git commands or publication.",
     "time": "Root science freeze observed 2026-10-10T05:39:46.131443+00:00, before whole deadline 06:04:04.980Z. Final stage file mtimes also precede assigned stage caps; recorded evidence is compatible with on-time delivery. Goal durations are tool-reported occupancy, not inference or billing. Exact dispatch-to-terminal task latency is UNKNOWN.",

@@ -1,31 +1,54 @@
-# S2 evidence — sqlite3_wal_checkpoint_v2 C reference
-URL: https://www.sqlite.org/c3ref/wal_checkpoint_v2.html
-
-Retrieval: provider web_fetch on 2026-10-10 between 04:03:00Z and 04:03:59Z (UTC day-session;
-exact per-fetch second not recorded). Corpus base source S2; unversioned live C API URL.
-
-## PASSIVE (verbatim)
-> "Checkpoint as many frames as possible without waiting for any database readers or
-> writers to finish, then sync the database file if all frames in the log were
-> checkpointed. The busy-handler callback is never invoked in the
-> SQLITE_CHECKPOINT_PASSIVE mode. On the other hand, passive mode might leave the
-> checkpoint unfinished if there are concurrent readers or writers."
-
-## TRUNCATE (verbatim)
-> "This mode works the same way as SQLITE_CHECKPOINT_RESTART with the addition that it
-> also truncates the log file to zero bytes just prior to a successful return."
-> "Note that upon successful completion of an SQLITE_CHECKPOINT_TRUNCATE, the log file
-> will have been truncated to zero bytes and so both *pnLog and *pnCkpt will be set
-> to zero."
-
-## Output parameters (verbatim, condensed)
-pnLog = total frames in log, or -1 if checkpoint could not run (error / not WAL mode).
-pnCkpt = total checkpointed frames (including previously checkpointed), or -1 likewise.
-For attached-database NULL/empty zDb, values written to *pnLog/*pnCkpt are undefined.
-
-## Busy degradation (verbatim, condensed)
-FULL/RESTART/TRUNCATE obtain the exclusive writer lock and invoke the busy handler while
-waiting; if the handler returns 0 before lock/readers clear, "the checkpoint operation
-proceeds from that point in the same way as SQLITE_CHECKPOINT_PASSIVE" and SQLITE_BUSY
-is returned. A concurrent checkpoint in another process returns SQLITE_BUSY without
-invoking any busy handler.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html"
+  ],
+  "source_urls": [
+    "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html"
+  ],
+  "version": [
+    {
+      "applicability": "PASSIVE vs TRUNCATE guarantees; pnLog/pnCkpt output semantics; busy-handler behavior",
+      "conditions": "valid SQLITE_CHECKPOINT_* mode; WAL mode for frame counts",
+      "version": "live C API reference for target SQLite 3.51.3; unversioned URL"
+    }
+  ],
+  "selector": [
+    {
+      "locator": "mode descriptions (PASSIVE/FULL/RESTART/TRUNCATE/NOOP); output parameters; return conditions; busy/lock paragraphs"
+    }
+  ],
+  "conditions": [
+    {
+      "applicability": "PASSIVE vs TRUNCATE guarantees; pnLog/pnCkpt output semantics; busy-handler behavior",
+      "conditions": "valid SQLITE_CHECKPOINT_* mode; WAL mode for frame counts",
+      "version": "live C API reference for target SQLite 3.51.3; unversioned URL"
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "source_id": "S2",
+      "existing_authored_summary_fields": {
+        "applicability": "PASSIVE vs TRUNCATE guarantees; pnLog/pnCkpt output semantics; busy-handler behavior",
+        "conditions": "valid SQLITE_CHECKPOINT_* mode; WAL mode for frame counts",
+        "version": "live C API reference for target SQLite 3.51.3; unversioned URL"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "mode descriptions (PASSIVE/FULL/RESTART/TRUNCATE/NOOP); output parameters; return conditions; busy/lock paragraphs"
+    }
+  ],
+  "raw_sha256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+  "rawSHA256": "183a43bf914ebcbc9fd002e860764bf5b2466cf06aedd5c51634ed2e6f8d80e6",
+  "original_bytes": 1797,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-APPL-M-01/treatment/stages/role/sources/S2-checkpoint-v2-excerpts.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A4-01",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage and completed the native Goal after saving the outputs. It used **124,794 tokens** over **10m 41s**.\n\n- [Final proposal](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md>)\n\nThe proposal addresses all eight obligations and the four critique findings. Provider and product validation remains marked **NOT_RUN**.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7719646c-d784-43ee-9c4c-0614f5a81d7a",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage and completed the native Goal after saving the outputs. It used **124,794 tokens** over **10m 41s**.\n\n- [Final proposal](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/source-map.json>)\n- [Evidence index](<ER12_RUNTIME/runs/A4-01/treatment/stages/reviser/sources/index.md>)\n\nThe proposal addresses all eight obligations and the four critique findings. Provider and product validation remains marked **NOT_RUN**.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-01-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:7719646c-d784-43ee-9c4c-0614f5a81d7a",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-01-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "2eb8daae46a8d31450f5854156274ef8e240dae96e82a2f941bf3dc8e92b44ce"
   }
 }

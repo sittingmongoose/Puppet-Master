@@ -70,25 +70,18 @@
     }
   ],
   "final_stage_task": {
-    "slot": "A4-02",
-    "arm": "treatment",
-    "stage": "reviser",
-    "helper": "ER12_RUNTIME/helpers/er12-screen-v1",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Completed the reviser stage. The full proposal covers all eight clauses and accepts both critic corrections, separating Outlook.com\u2019s approximately 3-hour guidance from Outlook on the web\u2019s approximately 6-hour guidance, and adding Apple\u2019s iPhone calendar-level Event Alerts control. Neither refresh cadence is a guarantee. ([Microsoft Support](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web), [Apple iPhone User Guide](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios))\n\n- [Complete proposal](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal lifecycle responses](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json>)\n\nThe single native Goal completed (ID `01a1244b-827b-7f53-9cc7-f9f839d61ad6`). Product and client validation remain **NOT_RUN**; no product operation was performed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:296111f0-6509-4b19-825c-0b061510fbb3",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "gpt-6-luna",
-    "summary": "Completed the reviser stage. The full proposal covers all eight clauses and accepts both critic corrections, separating Outlook.com\u2019s approximately 3-hour guidance from Outlook on the web\u2019s approximately 6-hour guidance, and adding Apple\u2019s iPhone calendar-level Event Alerts control. Neither refresh cadence is a guarantee. ([Microsoft Support](https://support.microsoft.com/en-us/outlook/import-or-subscribe-to-a-calendar-in-outlook-com-or-outlook-on-the-web), [Apple iPhone User Guide](https://support.apple.com/guide/iphone/use-multiple-calendars-iph3d1110d4/ios))\n\n- [Complete proposal](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/final.md>)\n- [Source map](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/source-map.json>) and [source index](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/sources/index.md>)\n- [Native Goal lifecycle responses](<ER12_RUNTIME/runs/A4-02/treatment/stages/reviser/native-goal-lifecycle.json>)\n\nThe single native Goal completed (ID `01a1244b-827b-7f53-9cc7-f9f839d61ad6`). Product and client validation remain **NOT_RUN**; no product operation was performed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12ref-A4-02-treatment-reviser-v1:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:296111f0-6509-4b19-825c-0b061510fbb3",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12ref-A4-02-treatment-reviser-v1",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "ef96480c6dd20f6d8620fae7023c3cc2b421f28a64e1fc752684ff8500dd2a27"
   }
 }

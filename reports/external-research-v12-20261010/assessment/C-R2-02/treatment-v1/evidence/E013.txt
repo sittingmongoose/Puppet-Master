@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://help.openalex.org/data/works/open-access/"
+  ],
+  "source_urls": [
+    "https://help.openalex.org/data/works/open-access/"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/C-R2-02/treatment-v1/evidence/retrieval-index.json",
+      "source_id": "E013",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "1e99b950c423e268732d9b3b0804f2ee9c6257329e01df811fe9ad2b9add694c",
+  "rawSHA256": "1e99b950c423e268732d9b3b0804f2ee9c6257329e01df811fe9ad2b9add694c",
+  "original_bytes": 9145,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/C-R2-02/treatment-v1/evidence/E013.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

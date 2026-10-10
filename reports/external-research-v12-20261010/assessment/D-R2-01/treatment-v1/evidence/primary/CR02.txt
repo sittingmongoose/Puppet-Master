@@ -1,0 +1,30 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://ask.ifas.ufl.edu/publication/AE538"
+  ],
+  "source_urls": [
+    "https://ask.ifas.ufl.edu/publication/AE538"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/D-R2-01/treatment-v1/evidence/primary/retrieval-manifest.json",
+      "source_id": "CR02",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "108eb968650aa62a4461e11dfe5f2c66882a39d78d3f6c4be2c3e8dc711f908d",
+  "rawSHA256": "108eb968650aa62a4461e11dfe5f2c66882a39d78d3f6c4be2c3e8dc711f908d",
+  "original_bytes": 19359,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/D-R2-01/treatment-v1/evidence/primary/CR02.txt",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

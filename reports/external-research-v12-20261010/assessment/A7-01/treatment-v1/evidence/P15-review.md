@@ -1,15 +1,20 @@
-# P15 — Prusa Bambu-name issue #15662
-
-[Governing primary source](https://github.com/prusa3d/PrusaSlicer/issues/15662)
-
-**Version:** Reported 3.0.0-alpha11; vendor-private metadata
-
-**Locator:** Description, core XML versus Metadata/model_settings.config; version; issue activity
-
-**Independent assessment:** Supports the private-name versus Core object.name distinction. The final does not transfer alpha/vendor-private evidence to stable Core-name behavior.
-
-**Evidence captures:**
-
-- [P15-bambu-issue.json](P15-bambu-issue.json) — SHA-256 `cd7d5b18fce0985c8abc4dcb739631198a70915fbcf38b5a7c4e1444b84de7b9`
-- [P15-bambu-issue.txt](P15-bambu-issue.txt) — SHA-256 `6563554fb912c77f4e6528d7b12b57c8daf78a9b4cefdb02132223aa44147e30`
-- [web-other-primary.json](web-other-primary.json) — SHA-256 `6d40aa5974ab658c4cf45bc9b8c6bb89e52670c80eed1e4e51c853191036be89`
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "583fca230abba86f0ef1b67161aaa532bc058b63b0ad92e0b066bf777cbe0955",
+  "rawSHA256": "583fca230abba86f0ef1b67161aaa532bc058b63b0ad92e0b066bf777cbe0955",
+  "original_bytes": 867,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A7-01/treatment-v1/evidence/P15-review.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

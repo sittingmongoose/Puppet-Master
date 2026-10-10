@@ -1,0 +1,647 @@
+{
+  "schema": "ER12 bounded reviser source map v1",
+  "run_id": "C-R2-02-treatment",
+  "stage": "reviser",
+  "access_observation_note": "Times are UTC clock values captured after each source read batch. Mutable documentation and hosted PDFs are unpinned unless stated. Inherited maps are nested intact under their original stage namespaces; R001-R009 are additive reviser records and do not silently rebind inherited IDs.",
+  "scope_and_package": {
+    "input_map_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/input-map.json",
+    "inputs": [
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/inputs/brief.md",
+        "sha256": "f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+        "bytes": 2549
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/discovery.md",
+        "sha256": "462d79eec60b698f2ee8f8924fb263102da696b69873b3bc7ecbae2aa338caf1",
+        "bytes": 18956
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/draft.md",
+        "sha256": "9fd6fcc7221ee9fa3f65b42fd90c393f55d1d391b00dfb4e111bbe4d7c8659fc",
+        "bytes": 30848
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/source-map.json",
+        "sha256": "c950639df85956ae2482912ae95dbf19d57f304c6e661a4811d8674afaec5c41",
+        "bytes": 12907
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/revealed-plan.md",
+        "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374",
+        "bytes": 6612
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/plan-reveal.json",
+        "sha256": "985435147417b6b395168fce018726aaf5e48f28d498babdc39f32d8ed1b17bb",
+        "bytes": 433
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/index.md",
+        "sha256": "a6faad122e0cc80af14d9c5da64bc5e7bc4a70262d2594527a2a057b5705e896",
+        "bytes": 2220
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/search-log.md",
+        "sha256": "7869133f05e0f151c54563e0358e46978dcae9ad310f525c70738651e086f14a",
+        "bytes": 2505
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/critique.md",
+        "sha256": "6e0928ce6ae1caa0fa80d2facd24298702df0421c43cf1afab3d9e0816a95908",
+        "bytes": 22806
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/source-map.json",
+        "sha256": "3120518a6443e82d22323186bd932c4fc654c47f9b5e625dace1855380e19459",
+        "bytes": 20219
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md",
+        "sha256": "175e8faec118252001fe580fe47126b4d475b2475f70d20e54f774d36ac25af0",
+        "bytes": 7234
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/input-map.json",
+        "sha256": "850163203d304ba07c4b2850459c0eb688aa99679677e6a0be6ea2decbdbf968",
+        "bytes": 1820
+      },
+      {
+        "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/freeze.json",
+        "sha256": "660bc17e13146d1cac86caf7e631b00b445f4043697d94fefeabcce14a5b5a57",
+        "bytes": 6825
+      }
+    ],
+    "released_plan": {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/revealed-plan.md",
+      "sha256": "05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374"
+    },
+    "plan_reveal": {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/plan-reveal.json",
+      "sha256": "985435147417b6b395168fce018726aaf5e48f28d498babdc39f32d8ed1b17bb"
+    },
+    "deadlines_utc": {
+      "stage": "2026-10-10T06:48:48.875Z",
+      "whole": "2026-10-10T06:48:48.875Z"
+    }
+  },
+  "native_goal": {
+    "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "activation_response_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-activation.json",
+    "activation_response": {
+      "goal": {
+        "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+        "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791613640,
+        "updatedAt": 1791613640
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "binding_guard_response_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-binding-guard.json",
+    "binding_guard_response": {
+      "ok": true,
+      "provenance_independently_proved": false
+    },
+    "provenance_independently_proved": false,
+    "completion_response_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-completion.json",
+    "preterminal_response_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/native-goal-preterminal.json",
+    "preterminal_response": {
+      "goal": {
+        "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+        "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 209289,
+        "timeUsedSeconds": 482,
+        "createdAt": 1791613640,
+        "updatedAt": 1791614122
+      },
+      "remainingTokens": null,
+      "completionBudgetReport": null
+    },
+    "directly_observed_activation_fields": {
+      "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+      "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791613640,
+      "updatedAt": 1791613640
+    },
+    "directly_observed_preterminal_fields": {
+      "threadId": "01a1247e-749f-70e3-b83d-877322fa2f5b",
+      "objective": "ER12 reviser stage, run C-R2-02-treatment: execute ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+      "status": "active",
+      "tokensUsed": 209289,
+      "timeUsedSeconds": 482,
+      "createdAt": 1791613640,
+      "updatedAt": 1791614122
+    },
+    "timestamp_semantics": "UNKNOWN; values preserved exactly as returned."
+  },
+  "inherited_source_maps": [
+    {
+      "map_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/source-map.json",
+      "sha256": "c950639df85956ae2482912ae95dbf19d57f304c6e661a4811d8674afaec5c41",
+      "document": {
+        "schema": "ER12 bounded source map v1",
+        "run_id": "C-R2-02-treatment",
+        "stage": "investigator",
+        "access_observation_note": "access_utc is the exact UTC clock value captured immediately after each web-open batch returned. It records when the source content had been observed in this session, not a server publication timestamp. Mutable docs are not frozen; pin their live revision before any pilot.",
+        "sources": [
+          {
+            "id": "S001",
+            "title": "PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews",
+            "url": "https://doi.org/10.1186/s13643-020-01542-z",
+            "version_or_commit": "Final journal article, Systematic Reviews 10, 39 (2021), DOI 10.1186/s13643-020-01542-z; publisher version.",
+            "locator": "Items 4, 5, 7, 8, 11, and 16; lines 202-210, 233-249, 266-307, 356-369, 442-454.",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "Reporting guidance: asks for named sources and exact strategies for each source; purposefully browsed sites and web searches; citation search method/base records; adapted prior strategies; and deduplication software/process.",
+            "governing_condition_default_exception": "Applies to systematic-review literature-search reporting and is intended to supplement PRISMA 2020. It does not prescribe a search algorithm or prove that a search is exhaustive. It explicitly recognizes that some web/search-tool results cannot be exactly reproduced later and still asks that the method be declared.",
+            "applicability": "Use as the pilot’s audit log and disclosure checklist for database queries, repository/site searches, citations, and record deduplication."
+          },
+          {
+            "id": "S002",
+            "title": "Cochrane Handbook, Chapter 4: Searching for and selecting studies",
+            "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+            "version_or_commit": "Version 6.5.1; chapter last updated March 2025 (as identified on the chapter page).",
+            "locator": "Sections 4.3.5, 4.4.11; especially lines 495-501 on iterative search development, inadequately evaluated stopping rules, scarce evidence caution, known-item checks, and citation/reference checking.",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "Methodological guidance on broad source discovery, grey sources, search-performance checking, and search stopping.",
+            "governing_condition_default_exception": "Cochrane-specific conduct guidance. It describes suggestions such as stopping after no new relevant records or low precision but says there has been little formal evaluation; it cautions that scarce evidence requires more careful stopping decisions.",
+            "applicability": "Supports explicit pilot stop rules, independently chosen known-item checks, and treating citation findings as adequacy evidence rather than a full-corpus denominator."
+          },
+          {
+            "id": "S003",
+            "title": "Cochrane Handbook Technical Supplement to Chapter 4",
+            "url": "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+            "version_or_commit": "Handbook version 6.5; technical supplement last updated September 2024 (cover/citation, PDF pp. 0-1).",
+            "locator": "Contents pp. 5-15 and 25-37 on source classes, including citation indexes, grey-literature sources, handsearching, references, and general web search; PDF pp. 13-15 on grey-literature scope and feasibility; section 4 on managing references.",
+            "access_utc": "2026-10-10T05:56:49Z",
+            "observed_operation": "A source taxonomy and implementation guidance for bibliographic, citation, regional, grey-literature, web, and manual routes; notes diversity/volume and need to tailor grey searches to question and resources.",
+            "governing_condition_default_exception": "There is no single gold-standard rigorous grey-literature search method; sources should be tailored to the question and feasible resources. Google Scholar may locate volume/known items but should not be the only systematic-review resource. Organizational reports may matter for implementation questions.",
+            "applicability": "Supports separate finite repository/manual arms and a realistic time budget, especially for municipal implementation material."
+          },
+          {
+            "id": "S004",
+            "title": "Urban Heat Island Mitigation Strategies: 2021 Update",
+            "url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+            "version_or_commit": "Institut national de santé publique du Québec, 2021 Update, Appendix 1, printed pp. 126-128 / PDF pp. 139-141.",
+            "locator": "Appendix 1, lines 4554-4575 for databases, query concepts, dates, and scientific records; lines 4605-4623 for grey sources, bilingual search, operators, and stopping rule.",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "Primary public-health institute report describing an implemented literature collection with librarian assistance, six scholarly databases/platforms, free and controlled terms, bilingual grey search through Google/Google Scholar and named government/lab sites, and a relevance-based manual stopping rule.",
+            "governing_condition_default_exception": "The work targets measures potentially applicable in Québec; its language, climate, publication-date, inclusion, and chosen-review criteria are specific to that project. 4,487 and 985 duplicate counts describe the scientific-literature stream; the cited passage does not give grey-route yield by portal.",
+            "applicability": "Close implementation comparator for urban heat. Reuse the disclosure model, not the Québec-specific eligibility or its subjective gray-search stopping rule."
+          },
+          {
+            "id": "S005",
+            "title": "OpenAlex API Search — Querying",
+            "url": "https://help.openalex.org/api/searching/",
+            "version_or_commit": "Mutable official documentation; no document version or commit displayed. Captured live on access date.",
+            "locator": "Sections What gets searched and Keywords in search (lines 32-53); phrase/fuzzy/wildcard and relevance/rerank sections (lines 94-159).",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "Current OpenAlex works-search documentation says search can cover title, abstract, full text, and keywords, with field-scoped variants, phrase/wildcard/fuzzy options, and semantic search; default result order is relevance and citation count contributes to score.",
+            "governing_condition_default_exception": "Full text is only available for a subset; keyword matching can retrieve works without the exact text phrase; default relevance is ranked rather than exhaustive, and citation counts affect ordering. Documentation is mutable and API behavior/pricing may change.",
+            "applicability": "Useful open scholarly discovery and term-expansion comparison arm. Freeze request, date, result pagination, query form, and versioned response; do not treat as a municipal-report denominator."
+          },
+          {
+            "id": "S006",
+            "title": "Crossref REST API documentation",
+            "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+            "version_or_commit": "Official mutable API documentation. Page itself says last updated 2020-04-08; it describes the live API, so schema/behavior version must be rechecked before a pilot.",
+            "locator": "REST API overview and endpoints, lines 112-147; documentation says member-deposited metadata and no sign-up at lines 114-119.",
+            "access_utc": "2026-10-10T05:56:49Z",
+            "observed_operation": "Public REST API to search/filter registered scholarly metadata, with works, DOI, member, and type endpoints; metadata comes from members and trusted sources.",
+            "governing_condition_default_exception": "Coverage is conditioned on Crossref registration/deposit and metadata practices. Public API does not imply a complete set of municipal reports. Some abstracts can carry copyright restrictions.",
+            "applicability": "Supplemental identifier/report-metadata route and cross-source linking, not sole grey-literature search."
+          },
+          {
+            "id": "S007",
+            "title": "Crossref REST API filters",
+            "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+            "version_or_commit": "Official documentation page last updated 2025-10-16; current filter reference, not a pinned API schema.",
+            "locator": "Works filters: approved-date conditions for dissertation, standard, and report at lines 166-180; type/type-name filters at lines 256-265; record date and exact-value filter notes at lines 155-165 and 238-243.",
+            "access_utc": "2026-10-10T05:56:49Z",
+            "observed_operation": "Defines Crossref work filtering by type and registered metadata dates; permits a report-typed search only for items carrying that metadata type.",
+            "governing_condition_default_exception": "Type/date filters operate on existing Crossref records and their submitted fields; missing or miscoded report records remain outside the result. Type filtering cannot discover unregistered local documents.",
+            "applicability": "Use to identify indexed report-like works and test metadata gaps; maintain a separate portal/repository route."
+          },
+          {
+            "id": "S008",
+            "title": "Zotero Duplicate Detection",
+            "url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+            "version_or_commit": "Mutable main-branch documentation; exact commit was not exposed by browser/API lookup (API lookup returned an internal error). Pin a revision before applying to a pilot.",
+            "locator": "Finding Duplicates and Merging Duplicates, lines 190-210.",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "The documented matcher uses title, DOI, and ISBN fields, then publication years within one year and creator-list overlap; matches are confined to one library. Human merge can select master fields; docs say false positives cannot be marked as non-duplicates.",
+            "governing_condition_default_exception": "Candidate detection only within one library; distinct group libraries do not cross-match. Documentation describes possible algorithm evolution. Do not treat an algorithm flag or merge as proof of same study.",
+            "applicability": "Optional candidate-pair generator. Retain raw items, adjudicate versions separately, and avoid destructive auto-merging."
+          },
+          {
+            "id": "S009",
+            "title": "ASReview LAB Progress and Results",
+            "url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+            "version_or_commit": "Stable documentation page labeled ASReview LAB 3.0.8 in the page title/navigation; implementation version should be pinned to release tag/commit.",
+            "locator": "Stop screening, lines 58-66; export and label/ranking semantics, lines 85-125.",
+            "access_utc": "2026-10-10T05:55:01Z",
+            "observed_operation": "Optional active-learning screening dashboard; stop threshold measures consecutive irrelevant records since the last relevant one, is not set by default, and reaching it prompts a human to stop or continue. Dataset export preserves labels and unreviewed records/ranking.",
+            "governing_condition_default_exception": "Threshold must be chosen by a user and guidance says its ideal value is still researched. It prioritizes screening among retrieved records; it does not expand search coverage or certify recall.",
+            "applicability": "Only a workload aid after records are discovered; compare against conventional screening and audit unseen records."
+          },
+          {
+            "id": "S010",
+            "title": "ASReview release history",
+            "url": "https://github.com/asreview/asreview/releases",
+            "version_or_commit": "Observed tags/verified short commits: v3.0.5 516290b; v3.0.6 f1d388e; v3.0.7 05b68eb; v3.0.8 d3e863c. Release page shows day/month and verified commit; year is not rendered in the observed section.",
+            "locator": "v3.0.5 decision migration/project-import/export fixes (lines 360-380); v3.0.6 database lock (296-314); v3.0.7 dropped ranking table (241-260); v3.0.8 corrupted saved ranking record_id (177-195).",
+            "access_utc": "2026-10-10T05:57:21Z",
+            "observed_operation": "Official signed GitHub release history showing concrete fixes to decision migration, import retry behavior, database locking, ranking persistence, and saved ranking record identifiers.",
+            "governing_condition_default_exception": "Release notes establish what maintainers say changed, not that all failure modes are absent. Pin and test the selected release with a small export/import/reopen and label-retention check.",
+            "applicability": "Implementation history relevant to screening state and auditability; not evidence of search-source coverage."
+          }
+        ]
+      }
+    },
+    {
+      "map_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/critic/source-map.json",
+      "sha256": "3120518a6443e82d22323186bd932c4fc654c47f9b5e625dace1855380e19459",
+      "document": {
+        "schema": "ER12 bounded critic source map v1",
+        "run_id": "C-R2-02-treatment",
+        "stage": "critic",
+        "access_observation_note": "Critic access_utc values are UTC times captured immediately after the relevant local-read or browser/web source batch returned. Mutable documentation is not frozen; pin versions before a future pilot. Local case inputs are identified by path and SHA-256. No topic database/API or municipal portal search was run.",
+        "sources": [
+          {
+            "id": "C001",
+            "title": "Missing local studies in a small evidence collection — released brief",
+            "url": null,
+            "local_path": "ER12_RUNTIME/runs/C-R2-02/treatment/inputs/brief.md",
+            "version_or_commit": "Frozen input; SHA-256 f8e7a04dcbb7e639c873f1291872f13a7d66d3f191247f79a263283fdad2aedf",
+            "locator": "Requirements lines 13-31; especially separate discovery coverage/screening workload/identity and distinguish executed from proposed work.",
+            "access_utc": "2026-10-10T06:12:51Z",
+            "observed_operation": "Read-only review of the released brief and a targeted line search; no edits.",
+            "governing_condition_default_exception": "No search export or known complete reference set; scope and later screening time remain undecided; the task is a synthetic planning proposal, not an effectiveness conclusion.",
+            "applicability": "Authoritative source for the stage's original obligations, boundaries, and unresolved decisions."
+          },
+          {
+            "id": "C002",
+            "title": "Missing local studies — exact revealed design plan",
+            "url": null,
+            "local_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/revealed-plan.md",
+            "version_or_commit": "Released plan SHA-256 05b07646a51d90cfe102deabf5b52dab894ce633469a62455d3f70a351abe374; matches frozen plan and plan-reveal.json.",
+            "locator": "Research question/open decisions lines 53-55; proposed validation and no-ground-truth constraint lines 71; full-session/implementation-history clause lines 77.",
+            "access_utc": "2026-10-10T06:12:51Z",
+            "observed_operation": "Read-only review of the exact revealed plan and targeted line search; no edits.",
+            "governing_condition_default_exception": "The union of found records is not complete ground truth; useful additions are independently identified and scope/time are open.",
+            "applicability": "Authoritative extra design clauses to adjudicate the draft beyond the original brief."
+          },
+          {
+            "id": "C003",
+            "title": "Investigator executed search and desk-check log",
+            "url": null,
+            "local_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/investigator/sources/search-log.md",
+            "version_or_commit": "SHA-256 7869133f05e0f151c54563e0358e46978dcae9ad310f525c70738651e086f14a",
+            "locator": "Public-web queries actually executed; opened primary sources; not-executed section.",
+            "access_utc": "2026-10-10T06:20:22Z",
+            "observed_operation": "Reopened the complete carried log read-only and inspected its executed-query, opened-source, and not-executed sections.",
+            "governing_condition_default_exception": "The browser tool did not expose per-query timestamps; the log says no topic database/API query, municipal portal search, title-level retrieval, screening, or identity adjudication was performed.",
+            "applicability": "Supports the distinction between investigator desk research actually executed and the later pilot actions proposed."
+          },
+          {
+            "id": "S001",
+            "title": "PRISMA-S: an extension to the PRISMA Statement for Reporting Literature Searches in Systematic Reviews",
+            "url": "https://doi.org/10.1186/s13643-020-01542-z",
+            "version_or_commit": "Final journal article, Systematic Reviews 10, 39 (2021); publisher version.",
+            "locator": "Abstract and introduction lines 50-63; item 5 citation searching lines 233-235; item 11 prior work lines 356-364.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened primary publisher article; checked its stated purpose and selected reporting items.",
+            "governing_condition_default_exception": "The extension is specifically for reporting literature searches in systematic reviews and related review types; it is a reporting checklist, not a search algorithm or proof of completeness.",
+            "applicability": "Adaptable disclosure checklist for the pilot's database, portal, citation, prior-strategy, and deduplication logs; label it as adapted guidance."
+          },
+          {
+            "id": "S002",
+            "title": "Cochrane Handbook, Chapter 4: Searching for and selecting studies",
+            "url": "https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-04",
+            "version_or_commit": "Cochrane Handbook version 6.5.1; chapter last updated March 2025 per page citation.",
+            "locator": "Sections 4.2.3, 4.3.4/5, and especially 4.4.11 lines 495-501 on stopping rules, scarce evidence, adequacy checks, and citation/reference checks.",
+            "access_utc": "2026-10-10T06:10:47Z",
+            "observed_operation": "Opened the official chapter and inspected the report/study distinction and full stopping-rule passage.",
+            "governing_condition_default_exception": "Cochrane conduct guidance for intervention systematic reviews; it says stop-rule approaches have little formal evaluation and scarce topics call for caution.",
+            "applicability": "Supports the draft's cautious route-conditional adequacy checks and explicit stop-rule treatment, with scope stated."
+          },
+          {
+            "id": "S003",
+            "title": "Cochrane Handbook Technical Supplement to Chapter 4",
+            "url": "https://training.cochrane.org/chapter04-tech-supplonlinepdfv65270924",
+            "version_or_commit": "Handbook version 6.5; supplement last updated September 2024 per carried source map.",
+            "locator": "PDF pp. 13-15 on grey-literature scope/feasibility; complete locator inherited from investigator source-map.json.",
+            "access_utc": "2026-10-10T06:10:29Z",
+            "observed_operation": "Official PDF open returned title, PDF type, and 121-page metadata; body excerpt was not independently extracted in this critic stage.",
+            "governing_condition_default_exception": "Not relied on for any SCW verdict; full locator and original observation metadata remain in the investigator source map.",
+            "applicability": "Carried source ID preserved without reusing it for another source."
+          },
+          {
+            "id": "S004",
+            "title": "Urban Heat Island Mitigation Strategies: 2021 Update",
+            "url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+            "version_or_commit": "Institut national de santé publique du Québec, November 2021 report; Appendix 1, printed pp. 126-128 / PDF pp. 139-141.",
+            "locator": "Appendix 1 lines 4554-4575 for scope, database/date/language/query details and scientific-stream counts; lines 4605-4623 for selected items and grey-source searches/stopping.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened the primary PDF and inspected surrounding headings, scientific-search counts, gray-literature scope, and stop condition.",
+            "governing_condition_default_exception": "The source says the work targeted measures applicable in Québec; the 4,487/985 counts are in the scientific-literature subsection; the grey passage names engines/sites and a relevance-based stop, but not portal-specific yields or a numerical/page cap.",
+            "applicability": "Close urban-heat implementation comparator; use its disclosure pattern, not its eligibility, geography, term set, or stop practice as a universal default."
+          },
+          {
+            "id": "S005",
+            "title": "OpenAlex API Search — Querying",
+            "url": "https://help.openalex.org/api/searching/",
+            "version_or_commit": "Official mutable help page; current page says last updated October 3, 2026.",
+            "locator": "What gets searched; relevance score; semantic search sections. Critic checked the full page text.",
+            "access_utc": "2026-10-10T06:07:51Z",
+            "observed_operation": "Opened in collaborative preview and read page text; checked work search fields, score components, and semantic-search behavior.",
+            "governing_condition_default_exception": "Works search lists title, abstract, fulltext, and keywords; default relevance score includes text similarity, a capped citation contribution, and a keyword bonus. The page does not specify that the search index coverage equals downloadable full-text coverage.",
+            "applicability": "Candidate scholarly search route; freeze exact requests, paging, returned fields, ranking/sort and current behavior; not a municipal-report denominator."
+          },
+          {
+            "id": "S006",
+            "title": "Crossref REST API documentation",
+            "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+            "version_or_commit": "Official mutable API documentation; page is described in the carried map as last updated 2020-04-08; live behavior must be rechecked.",
+            "locator": "REST API overview, lines 112-119.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened official Crossref documentation and inspected metadata source and public REST API description.",
+            "governing_condition_default_exception": "The API exposes scholarly metadata deposited by Crossref members and trusted sources; records absent from those deposits are not retrieved through it.",
+            "applicability": "Supplemental DOI/report-metadata and linking route, not complete municipal report coverage."
+          },
+          {
+            "id": "S007",
+            "title": "Crossref REST API filters",
+            "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+            "version_or_commit": "Official mutable filter reference; carried source map records page last updated October 16, 2025.",
+            "locator": "Works filters lines 143-150; date/approved-date conditions lines 155-180; type/type-name filters lines 256-265.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened official filter reference and checked relevant heading, type filter, and approved-date constraints.",
+            "governing_condition_default_exception": "The type filter matches metadata records whose type equals a registered type value; approved-date filters are only documented for dissertation, standard, and report types. Unregistered/miscoded reports are not made visible by the filter.",
+            "applicability": "Can test Crossref-deposited report-like records and metadata gaps; direct city portal/repository searches remain separate."
+          },
+          {
+            "id": "S008",
+            "title": "Zotero Duplicate Detection",
+            "url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+            "version_or_commit": "Mutable main branch; GitHub page displayed main/history but no latest commit SHA; not revision-pinned.",
+            "locator": "Finding Duplicates lines 193-201; Merging Duplicates lines 202-205.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened current official Zotero documentation and inspected matcher fields, false-positive limitation, library boundary, and merge guidance.",
+            "governing_condition_default_exception": "Candidate detection uses title/DOI/ISBN and conditions on year/creator; detection only works within one library, does not cross group libraries, and the docs say false-positive matches cannot currently be marked as non-duplicates.",
+            "applicability": "Candidate generation only; preserve source records and adjudicate identity/version links reversibly."
+          },
+          {
+            "id": "S009",
+            "title": "ASReview LAB Progress and Results",
+            "url": "https://asreview.readthedocs.io/en/stable/lab/progress.html",
+            "version_or_commit": "Stable docs labeled ASReview LAB 3.0.8.",
+            "locator": "Stop screening lines 58-62; export fields lines 85-115.",
+            "access_utc": "2026-10-10T06:08:55Z",
+            "observed_operation": "Opened current stable documentation and checked threshold default, stop interaction, threshold guidance, and export behavior.",
+            "governing_condition_default_exception": "Threshold is unset by default; after a user-set threshold is reached, the user is asked whether to stop; ideal threshold is still researched. Export carries labels and missing labels for records not screened.",
+            "applicability": "Workload aid on the retrieved set, not a discovery route or completeness measure."
+          },
+          {
+            "id": "S010",
+            "title": "ASReview release history",
+            "url": "https://github.com/asreview/asreview/releases",
+            "version_or_commit": "Investigator source-map observation: v3.0.5 516290b; v3.0.6 f1d388e; v3.0.7 05b68eb; v3.0.8 d3e863c; year not shown in observed release-history rows.",
+            "locator": "Original locator and access time preserved from investigator source-map.json; individual tag pages were reopened separately as S014-S017.",
+            "access_utc": "2026-10-10T05:57:21Z",
+            "observed_operation": "Carried source identity from investigator map; not independently reopened at this broad URL in the critic stage.",
+            "governing_condition_default_exception": "Release notes are maintainer statements about particular fixes; they do not prove other failure modes are absent.",
+            "applicability": "Source ID preserved; critic's release-history review relies on direct release-tag records S014-S017."
+          },
+          {
+            "id": "S011",
+            "title": "OpenAlex Works attributes",
+            "url": "https://help.openalex.org/data/works/attributes/",
+            "version_or_commit": "Official mutable page; last updated October 7, 2026.",
+            "locator": "has_content, has_fulltext, and content_urls fields lines 198-206.",
+            "access_utc": "2026-10-10T06:09:40Z",
+            "observed_operation": "Opened official attributes page and checked per-work full-text availability indicators.",
+            "governing_condition_default_exception": "The page defines per-work downloadable-content flags and says more than 50 million works have PDF content; it does not state that search-index coverage exactly equals downloadable content coverage.",
+            "applicability": "Adds the per-work content condition to S005; do not conflate downloadable text with exact search-index coverage."
+          },
+          {
+            "id": "S012",
+            "title": "OpenAlex Fulltext",
+            "url": "https://help.openalex.org/access/fulltext/",
+            "version_or_commit": "Official mutable product documentation; last updated September 18, 2026.",
+            "locator": "Overview and content availability lines 34-42; content filter lines 59-70.",
+            "access_utc": "2026-10-10T06:13:03Z",
+            "observed_operation": "Opened official Fulltext product page and checked available corpus, per-work indicator, access and licensing conditions.",
+            "governing_condition_default_exception": "OpenAlex reports cached full text for 50 million-plus open-access works; per-work availability is exposed through has_content/content_urls, and content downloads require an API key and are metered. Copyright remains with the original source.",
+            "applicability": "Shows that downloadable full-text availability is not universal; it does not by itself define fulltext.search index completeness."
+          },
+          {
+            "id": "S013",
+            "title": "OpenAlex Open access — Works",
+            "url": "https://help.openalex.org/data/works/open-access/",
+            "version_or_commit": "Official mutable data-reference page; last updated August 11, 2026.",
+            "locator": "Corpus scale and OA definition lines 41-52; status table lines 55-63.",
+            "access_utc": "2026-10-10T06:13:03Z",
+            "observed_operation": "Opened official OpenAlex data-reference page and checked work count and full-text access conditions.",
+            "governing_condition_default_exception": "Page reports roughly 322 million works and about 121 million OA works; OA has a specific free-to-read definition and is not the same as the full-text search index.",
+            "applicability": "Useful context for why full-text availability cannot be assumed for every work; do not join the OA count to search-index coverage without a stated relation."
+          },
+          {
+            "id": "S014",
+            "title": "ASReview v3.0.8 release",
+            "url": "https://github.com/asreview/asreview/releases/tag/v3.0.8",
+            "version_or_commit": "Tag v3.0.8; verified short commit d3e863c; release page does not expose its year in the observed date.",
+            "locator": "Release page lines 153-172; corrupted saved-ranking record_id fix.",
+            "access_utc": "2026-10-10T06:10:47Z",
+            "observed_operation": "Opened maintainer release page and verified tag, signed commit, and release note.",
+            "governing_condition_default_exception": "Establishes the stated fix for v3.0.8, not a guarantee that all ranking persistence faults are absent.",
+            "applicability": "Implementation-history evidence for screening state, not search-source coverage."
+          },
+          {
+            "id": "S015",
+            "title": "ASReview v3.0.5 release",
+            "url": "https://github.com/asreview/asreview/releases/tag/v3.0.5",
+            "version_or_commit": "Tag v3.0.5; verified short commit 516290b; year not exposed on observed release page.",
+            "locator": "Release page lines 159-181; decision-change migration, retry-safe project import, and export filename fixes.",
+            "access_utc": "2026-10-10T06:16:43Z",
+            "observed_operation": "Opened maintainer release page and checked tag, signed commit, and release note.",
+            "governing_condition_default_exception": "Release note documents the specific fix; it does not validate an actual pilot export/import.",
+            "applicability": "Supports pinning the selected version and testing state preservation."
+          },
+          {
+            "id": "S016",
+            "title": "ASReview v3.0.6 release",
+            "url": "https://github.com/asreview/asreview/releases/tag/v3.0.6",
+            "version_or_commit": "Tag v3.0.6; verified short commit f1d388e; year not exposed on observed release page.",
+            "locator": "Release page lines 159-178; database-locked OperationalError fix.",
+            "access_utc": "2026-10-10T06:16:43Z",
+            "observed_operation": "Opened maintainer release page and checked tag, signed commit, and release note.",
+            "governing_condition_default_exception": "Release note documents the specific database-locking fix.",
+            "applicability": "Supports the draft's bounded tool-history statement; not search-source coverage."
+          },
+          {
+            "id": "S017",
+            "title": "ASReview v3.0.7 release",
+            "url": "https://github.com/asreview/asreview/releases/tag/v3.0.7",
+            "version_or_commit": "Tag v3.0.7; verified short commit 05b68eb; year not exposed on observed release page.",
+            "locator": "Release page lines 159-177; dropped ranking-table-on-lock fix.",
+            "access_utc": "2026-10-10T06:16:43Z",
+            "observed_operation": "Opened maintainer release page and checked tag, signed commit, and release note.",
+            "governing_condition_default_exception": "Release note documents the specific ranking-table fix.",
+            "applicability": "Supports the draft's bounded tool-history statement; not search-source coverage."
+          },
+          {
+            "id": "S018",
+            "title": "Urban Heat Island Mitigation Strategies (2009), predecessor cited by the 2021 report",
+            "url": "https://www.inspq.qc.ca/pdf/publications/1513_UrbanHeatIslandMitigationStrategies.pdf",
+            "version_or_commit": "The 2021 report front matter identifies it as a 2009 publication; no file version retrieved.",
+            "locator": "Citation in 2021 report front matter lines 23-24.",
+            "access_utc": "2026-10-10T06:12:12Z",
+            "observed_operation": "Direct primary-source open attempt returned 404 Not Found.",
+            "governing_condition_default_exception": "A failed URL is not evidence that the report is unavailable elsewhere or that it lacks a search history.",
+            "applicability": "The predecessor's method/version changes remain unresolved; no claims are made from this failed access."
+          }
+        ]
+      }
+    }
+  ],
+  "reviser_rechecks": [
+    {
+      "id": "R001",
+      "title": "OpenAlex API Search — Querying",
+      "url": "https://help.openalex.org/api/searching/",
+      "version_or_commit": "Official mutable help page; last updated 2026-10-03; no commit exposed.",
+      "locator": "Works searchable-fields table; Keywords in search; Relevance score; Semantic search.",
+      "access_utc": "2026-10-10T06:31:55Z",
+      "observed_operation": "Read live official page in T3 preview. Works search lists title, abstract, fulltext, keywords; default relevance combines similarity, capped citation contribution, keyword bonus.",
+      "governing_condition_default_exception": "Searchable fulltext is a field; page does not equate its coverage to downloadable fulltext. Capped citation contribution does not establish general-review preference.",
+      "applicability": "Independent check of SCW-3 and correction of ranking inference; log query/field/sort/paging."
+    },
+    {
+      "id": "R002",
+      "title": "OpenAlex Works attributes",
+      "url": "https://help.openalex.org/data/works/attributes/",
+      "version_or_commit": "Official mutable data reference; last updated 2026-10-07; no commit exposed.",
+      "locator": "has_content, has_fulltext, content_urls fields (inherited locator: page lines 198-206).",
+      "access_utc": "2026-10-10T06:31:13Z",
+      "observed_operation": "Read live field descriptions in T3 preview for per-work downloadable PDF/XML flags and content URLs.",
+      "governing_condition_default_exception": "Downloadable availability is per work; page does not define fulltext search-index coverage as identical.",
+      "applicability": "Together with R001 supports the limited SCW-3 qualification."
+    },
+    {
+      "id": "R003",
+      "title": "Crossref REST API documentation",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+      "version_or_commit": "Official documentation says last updated 2020-04-08; live API behavior should be checked at pilot time.",
+      "locator": "REST overview and /works endpoint description.",
+      "access_utc": "2026-10-10T06:31:16Z",
+      "observed_operation": "Read official REST overview/endpoints in T3 preview.",
+      "governing_condition_default_exception": "The /works endpoint returns content items registered with Crossref. An open API is not a complete municipal-report index.",
+      "applicability": "Independent primary check of SCW-4 source population."
+    },
+    {
+      "id": "R004",
+      "title": "Crossref REST API filters",
+      "url": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/",
+      "version_or_commit": "Official current filter reference; inherited map records 2025-10-16 page update; not a pinned API schema.",
+      "locator": "Works type/type-name metadata filters and approved-date filters for dissertation, standard, and report.",
+      "access_utc": "2026-10-10T06:28:50Z",
+      "observed_operation": "Read filter rules and exact type definitions in T3 preview.",
+      "governing_condition_default_exception": "Type selects existing records whose type equals a registered value; absent or miscoded local documents are not returned by that filter.",
+      "applicability": "Independent primary check of SCW-4; Crossref stays supplemental."
+    },
+    {
+      "id": "R005",
+      "title": "Zotero Duplicate Detection",
+      "url": "https://github.com/zotero/zotero-docs/blob/main/content/duplicate_detection.md",
+      "version_or_commit": "Official documentation on mutable main; no commit SHA exposed.",
+      "locator": "Finding Duplicates and Merging Duplicates sections.",
+      "access_utc": "2026-10-10T06:29:01Z",
+      "observed_operation": "Read current official Zotero documentation in T3 preview.",
+      "governing_condition_default_exception": "Uses title/DOI/ISBN plus conditional year/creator checks; within one library only; no cross-match between group libraries; false-positive matches cannot currently be marked as non-duplicates.",
+      "applicability": "Independent primary check of SCW-5; candidate links only."
+    },
+    {
+      "id": "R006",
+      "title": "Urban Heat Island Mitigation Strategies: 2021 Update",
+      "url": "https://www.inspq.qc.ca/sites/default/files/publications/3327-urban-heat-island-mitigation.pdf",
+      "version_or_commit": "INSPQ official hosted PDF titled 2021 Update, report 3327; hosted file mutable, no hash pin.",
+      "locator": "Appendix 1, printed pp. 126-128 / PDF pp. 139-141; search counts and query method p.126; grey route/stop cue p.127.",
+      "access_utc": "2026-10-10T06:31:23Z",
+      "observed_operation": "Opened official PDF via web and read Appendix 1 in context.",
+      "governing_condition_default_exception": "Québec-applicability target. 4,487/985 counts are scientific stream. Grey passage names engines/sites and relevance-based stop cue, not a measurable predeclared cap or portal-level yield.",
+      "applicability": "Independent check of SCW-6 and implementation comparison; not a universal protocol."
+    },
+    {
+      "id": "R007",
+      "title": "Urban Heat Island Mitigation Strategies (2009), English report",
+      "url": "https://www.inspq.qc.ca/sites/default/files/publications/1513_urbanheatislandmitigationstrategies.pdf",
+      "version_or_commit": "Official INSPQ 93-page PDF identifies July 2009; English catalogue lists 2012-08-14; no hash pin.",
+      "locator": "Methodology printed pp. 3-4 / PDF pp. 18-20; bilingual keywords Appendix 1, printed p.75 / PDF p.90.",
+      "access_utc": "2026-10-10T06:31:23Z",
+      "observed_operation": "Found through official-site query after the old S018 URL returned 404; opened direct PDF and read methods, sources, criteria, keyword appendix.",
+      "governing_condition_default_exception": "Search described for Québec context, run Oct 2008-Jan 2009; source list and eligibility differ from 2021. No comparable per-source counts/full identical strings.",
+      "applicability": "Adds primary P16 history; no like-for-like coverage trend can be inferred."
+    },
+    {
+      "id": "R008",
+      "title": "Urban Heat Island Mitigation Strategies — INSPQ English publication record",
+      "url": "https://www.inspq.qc.ca/en/publications/1513",
+      "version_or_commit": "Current official INSPQ catalogue, accessed 2026-10-10; ISBN 978-2-550-65608-1; page date 2012-08-14.",
+      "locator": "Publication date/ISBN fields, captured page lines 46-56.",
+      "access_utc": "2026-10-10T06:31:28Z",
+      "observed_operation": "Opened the official English catalogue and read bibliographic fields.",
+      "governing_condition_default_exception": "Catalog date and PDF title date are distinct observations; exact translation/edition relationship is unresolved.",
+      "applicability": "Version provenance for R007."
+    },
+    {
+      "id": "R009",
+      "title": "Mesures de lutte aux îlots de chaleur urbains — INSPQ French publication record",
+      "url": "https://www.inspq.qc.ca/publications/988",
+      "version_or_commit": "Current official French catalogue; ISBN 978-2-550-56805-6; date 2009-08-28; correction notes dated 2009-10-26 and 2010-11-09.",
+      "locator": "Catalogue notes lines 32-44, publication date lines 60-70.",
+      "access_utc": "2026-10-10T06:31:28Z",
+      "observed_operation": "Opened official French catalogue and read date and correction notes.",
+      "governing_condition_default_exception": "Does not alone establish the English report’s exact translation/version chain.",
+      "applicability": "Supports unresolved chronology for P16; S018 remains an accurate observation about its old URL only."
+    }
+  ],
+  "navigation": {
+    "investigator_ids": "S001-S010",
+    "critic_ids": "C001-C003 and S001-S018",
+    "reviser_ids": "R001-R009",
+    "ids_are_stage_scoped": true,
+    "index_path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/sources/index.md"
+  },
+  "reviser_searches_executed": [
+    {
+      "query": "site:inspq.qc.ca Urban Heat Island Mitigation Strategies 2009 1513 pdf",
+      "purpose": "Locate the public primary-source predecessor cited by the 2021 update after the inherited exact URL returned 404.",
+      "access_utc": "UNKNOWN; exact query submission time was not captured. Primary opened-source observations are timed in R006-R009."
+    },
+    {
+      "query": "site:inspq.qc.ca \"Urban Heat Island Mitigation Strategies\" 2009",
+      "purpose": "Confirm the official INSPQ record and alternate current PDF path for the 2009 predecessor.",
+      "access_utc": "UNKNOWN; exact query submission time was not captured. Primary opened-source observations are timed in R006-R009."
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/final.md",
+      "sha256": "f1a2f8b3d89f100790bc66d5bef4b36877ea9891a03c6c8134694c0f61294ef0",
+      "bytes": 38691
+    },
+    {
+      "path": "ER12_RUNTIME/runs/C-R2-02/treatment/stages/reviser/sources/index.md",
+      "sha256": "64c1db65ea92c863407cde9d9c2f52f4d07abc0f0aa7837b8e62a49b3e9064c1",
+      "bytes": 4411
+    }
+  ]
+}

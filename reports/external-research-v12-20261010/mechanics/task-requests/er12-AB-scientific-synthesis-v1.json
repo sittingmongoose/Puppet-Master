@@ -1,0 +1,17 @@
+{
+  "clientRequestId": "er12-AB-scientific-synthesis-v1",
+  "title": "ER12 completed A/B scientific synthesis",
+  "role": "general",
+  "mode": "async",
+  "runtimeMode": "full-access",
+  "interactionMode": "default",
+  "target": {
+    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+    "model": "gpt-6.1-sol",
+    "options": {
+      "reasoningEffort": "high",
+      "serviceTier": "default"
+    }
+  },
+  "task": "Create one actual native Goal <4000chars for this bounded synthesis; save complete outputs then complete. No delegation, external research, regrading, candidate feedback/repair, Git/report/canon edits or C/D input/output reading. Finite12min. Write ONLY ER12_RUNTIME/analysis/AB-synthesis-v1/. Read ER12_RUNTIME/mechanics/AB_ORIGINAL_JUDGMENTS_FREEZE.json (56 actually quiet original judgments, hashes mustmatch), existing methods/SELECTION-v1.md, methods/A8/*prompt_delta.txt, mechanics/REALLOCATIONS-v1.json, COUNT_ERRATA.json, STAGE_OVERRUN_ENFORCEMENT.json and existing accounting-extractor-v1/cohort3-thin-snapshot.json/PROGRESS_COUNT_POLICY.json. Read the complete original independent A/B assessment.md/json/source maps referenced by that whitelist; their explicit candidate locators may be inspected if needed only within sameA/Barm. Use existing independently checked source evidence, no new evidence/answer revision. Draft concise standalone A/B scientific result in analysis.md/json: table all8Atechniques with mechanism mapped to both matched originalcase IDs and exactsourcepass/fail, majorfailureconditions/breadth/alternatives; table Bprovider-role originals vsactualroutes, all24labels, Glineage reallocations (allassigned notbestof) and unsupportedGLMnative execution separated fromsource. Actual A32=24P8F, B24=11P13F; old10P14F rootarithmeticerratum frozenmetadata preserved, not regrade. Provide 6–8 concrete useful unfamiliar/domain discoveries drawn from original independent passing findings, naming mechanism, conditions/limits and exact original assessment+candidate+primaryURL/locator refs. Novelty relative to these investigations only, not universal newmethods. Preserve useful alternatives, full original plan obligations, release/version/default/exceptions, proposed-vs-executed validation. Any timing only exact savedcompleteaccounting perarm, originalstrata/late-stage/runtime gaps explicitly, both-source-pass conditional ratios/survivorship/no incompatibleaveraging; no new20%/2xclaim or tokenbilling/economic equivalence. Allrecordedrawnative/rootmeters not aggregatedcampaignbilling. No sciencerepair fromthissynthesis. No C/D outcome/selectioninference; mark outsideboundedphase. Save full original provenance/hashmanifest, support own Goalreceipts separate. This is writing from completed original evidence, not an additional independent adjudication. Root owns finalreview/publication. Own pm-mail inbox only if needed; do notreadsharedroster."
+}

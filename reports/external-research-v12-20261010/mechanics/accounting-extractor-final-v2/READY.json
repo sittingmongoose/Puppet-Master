@@ -1,0 +1,12 @@
+{
+  "status": "READY",
+  "scope": "mechanical repair only",
+  "campaign_extraction_run": false,
+  "requires": "root frozen checkpoint/captures after all quiet; optional frozen exactly-80-row delivery manifest",
+  "offline_checks": 24,
+  "original_checks_retained": 15,
+  "prior_v1_byte_identical": true,
+  "review_findings": "root-review-findings.json",
+  "package_sha256_manifest": "SHA256SUMS.json",
+  "manifest_sha256": "9311b907c18a9a7ec8c334768f65ccff3990882c0e0d776cc17909782699abd0"
+}

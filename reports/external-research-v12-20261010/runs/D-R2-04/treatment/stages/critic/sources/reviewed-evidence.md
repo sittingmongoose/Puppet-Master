@@ -1,0 +1,20 @@
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "6996e6d124e2eec4a9dc5b0f6966a1af174f455655c11743b2726bb14cc23708",
+  "rawSHA256": "6996e6d124e2eec4a9dc5b0f6966a1af174f455655c11743b2726bb14cc23708",
+  "original_bytes": 9459,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/D-R2-04/treatment/stages/critic/sources/reviewed-evidence.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

@@ -11,8 +11,7 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc",
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "3af25138aa7fc20123c238e8485df3210d9a4f3f2bf6419a256d73a1c4176fdc"
+      "original_byte_equivalence_claimed": false
     },
     {
       "relative_path": "sources/helpers/er12-screen-v1/reveal.py",
@@ -25,8 +24,7 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe",
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "ec9579204af96aa6a45caba1eef94c6ca1a799c296a2363b179af359bd908abe"
+      "original_byte_equivalence_claimed": false
     },
     {
       "relative_path": "sources/helpers/er12-screen-v1/bootstrap.js",
@@ -39,8 +37,7 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56",
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "67b8667f5f7d09b854541f95c8453b977f3514a4243d679fdb24a26335fa4c56"
+      "original_byte_equivalence_claimed": false
     },
     {
       "relative_path": "sources/mechanics/native-root-code-mode/standardSpecJS.js",
@@ -53,8 +50,7 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92",
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "02821bc77b08aae08c50203213e88556da8ab50401dc675c1425e0abbe503b92"
+      "original_byte_equivalence_claimed": false
     },
     {
       "relative_path": "sources/mechanics/native-root-code-mode/clarifySpecJS.js",
@@ -67,8 +63,7 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": null,
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "bb25e8ec79588d59aad269b9adff256ed9ea0bf7e4c28080245a2a45ea74556a"
+      "original_byte_equivalence_claimed": false
     },
     {
       "relative_path": "sources/mechanics/invocation-clarification-v1/transform.py",
@@ -81,10 +76,8 @@
         "route -> AUTHORIZED_PROVIDER_INSTANCE"
       ],
       "published_reference_sha256": null,
-      "original_byte_equivalence_claimed": false,
-      "prior_published_sha256": "40d7052fffa5e8830c8c738c751755a0bfb25a63fa68ee4f2518a30dc1716594"
+      "original_byte_equivalence_claimed": false
     }
   ],
-  "scope": "R0/A1 only; no topology/role/A8 dependencies loaded or closed",
-  "publication_projection": "Cohort3 sanitation; prior hashes retained, current public inputs repinned."
+  "scope": "R0/A1 only; no topology/role/A8 dependencies loaded or closed"
 }

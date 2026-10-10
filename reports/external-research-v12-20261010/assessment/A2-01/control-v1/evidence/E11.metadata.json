@@ -1,23 +1,20 @@
 {
-  "id": "E11",
-  "url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
-  "access_started_utc": "2026-10-10T04:55:53.846728+00:00",
-  "operation": "Independent unauthenticated HTTP GET; no product operation or downloaded-code execution",
-  "candidate_ids": [
-    "S11",
-    "C11"
-  ],
-  "http_status": 200,
-  "effective_url": "https://doc.arcgis.com/en/survey123/capture/web-app/editexistingdata.htm",
-  "raw_path": "evidence/E11.html",
-  "raw_sha256": "09cc1ab659fde547b6e53782339462653ef6921539571b27786aa6929b1957b8",
-  "text_path": "evidence/E11.txt",
-  "text_sha256": "fd30e68d8148fe233cfabdd244aca94548185c8e22198408ba221efb05c05938",
-  "response_headers": {
-    "Date": "Sat, 10 Oct 2026 04:55:54 GMT",
-    "Last-Modified": "Mon, 20 Jul 2026 21:37:02 GMT",
-    "ETag": "\"5f03-65711b4f1e4dd\"",
-    "Content-Type": "text/html; charset=UTF-8"
-  },
-  "access_finished_utc": "2026-10-10T04:55:54.339005+00:00"
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "5a977e8f4558468c791b555f91d0ebd5c5ba6eee389f541f0d4206408d4050be",
+  "rawSHA256": "5a977e8f4558468c791b555f91d0ebd5c5ba6eee389f541f0d4206408d4050be",
+  "original_bytes": 946,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A2-01/control-v1/evidence/E11.metadata.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
 }

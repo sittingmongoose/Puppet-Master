@@ -1,0 +1,4067 @@
+{
+  "schema": "ER12-independent-assessment-v1",
+  "case_id": "ER12-D-R1-04-FRESH",
+  "slot": "D-R1-04",
+  "arm": "treatment",
+  "assessment_version": "treatment-v1",
+  "reviewer_identity": "codex-er12-d-r1-04-treatment-v1",
+  "judgment": "PASS_WITH_LIMITATIONS",
+  "per_arm_source_judgment": "PASS_WITH_LIMITATIONS",
+  "judgment_basis": "Independent scientific/semantic assessment of complete original pipeline, not hashes/counts/agreements; no remaining material scientific error, omission or unsupported consequential decision found. Separate provenance/time fields are not blanket passes.",
+  "review_scope": {
+    "one_pipeline": true,
+    "actual_final_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+    "full_authored_documents_read": [
+      "stages/investigator/discovery.md",
+      "stages/investigator/draft.md",
+      "stages/critic/critique.md",
+      "stages/reviser/final.md"
+    ],
+    "full_stage_maps_indexes_assignments_inputs_freezes_read": true,
+    "all_present_critique_dispositions_checks_read": true,
+    "all_six_axes_assessed": true,
+    "unassessed_axes": [],
+    "cap_reached": false,
+    "started_clock_utc": "2026-10-10T06:55:51Z",
+    "45_minute_deadline_utc": "2026-10-10T07:40:50Z",
+    "judgment_saved_at_utc": "2026-10-10T07:18:35.512310+00:00",
+    "no_other_arms_results_history_or_ER11_read": true
+  },
+  "axis_assessments": [
+    {
+      "axis": 1,
+      "name": "Original obligations and negative constraints",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "The final preserves the synthetic-site boundary, separate outcomes, all requested comparison/history/observation duties, and forbidden-action/benefit/value limits. Every exact plan sentence/bullet is individually dispositioned below. Literal full-60-minute use is not certified and is tracked as time, not quietly declared satisfied. P34 is a disclosed opportunity-depth limitation.",
+      "evidence": [
+        "P01–P54",
+        "final L11–152"
+      ],
+      "material_findings": []
+    },
+    {
+      "axis": 2,
+      "name": "Consequential source exactness and applicability",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "All twelve consequential source families were independently checked. Offline capacity-conditioned bypass, guidance-only 48-hour screening, media/groundwater context, flow-specific pretreatment, bounded analog evidence and optional layered/version-specific modeling support the final decisions. No local default, dimension, performance threshold, software latest status or measured benefit is invented. Full UMN report and full publisher article were unavailable; accessible governing primary passages suffice for retained qualitative claims.",
+      "evidence": [
+        "E01–E12"
+      ],
+      "material_findings": []
+    },
+    {
+      "axis": 3,
+      "name": "Useful discovery, alternatives, implementation/history and opportunity breadth",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "Discovery changes practical interpretation: intended bypass, underdrain ambiguity, conditional pretreatment/overflow-maintenance tradeoffs, event/antecedent storage, assessment levels and future modeling constraints. Competing pathways and baseline acceptance are meaningful. Records requests cover design/as-builts/acceptance/media/drains and dated maintenance/delivery history. Runoff generation is less developed than other mechanism links, but arrival observations and no quantitative runoff inference protect the recommendation.",
+      "evidence": [
+        "D1–D7",
+        "alternatives",
+        "P34",
+        "P38–P41"
+      ],
+      "material_findings": []
+    },
+    {
+      "axis": 4,
+      "name": "Wrong criticisms/corrections/rejections and exact plan dispositions",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "All five explicit final criticism dispositions and the complete critique were evaluated. Groundwater support is corrected without diagnosing the site; SWMM is narrowed correctly. Five-minute omission is a conservative access qualification of a supported original detail. A wrong SWMM draft locator is recorded. No remaining material wrong correction, rejection or unsupported consequential plan disposition is found.",
+      "evidence": [
+        "C1–C5",
+        "P01–P54",
+        "E09–E12"
+      ],
+      "material_findings": []
+    },
+    {
+      "axis": 5,
+      "name": "Supported meaning preserved across discovery, draft, critique and final",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "The four complete authored documents preserve separate pathways, hypotheses, alternatives/transfer limits, chronology, event observations, water-balance prerequisites and unexecuted work. Final adds specific groundwater support and exact release operations rather than upgrading hypotheses to site facts. The supported five-minute detail is omitted, with short-interval intensity retained; loss is nonmaterial. Earlier supporting-locator defects remain visible in lineage and are not retroactively erased.",
+      "evidence": [
+        "lineage",
+        "C2–C4",
+        "D1–D7"
+      ],
+      "material_findings": []
+    },
+    {
+      "axis": 6,
+      "name": "Meaningful proposed/executed validation and oracle applicability",
+      "coverage": "ASSESSED_FULL",
+      "source_judgment": "PASS_WITH_LIMITATIONS",
+      "finding": "The feasible permission-gated 4–6-natural-event pilot has meaningful discriminating fields, conditional equipment, timing examples, confounding limits and branch-specific survey/diagnostic escalation. It is a screening design, not a numerical infiltration/performance/compliance oracle. Source review/conceptual balances are desk work; site records/visits/tests/model/repair/outcome validation are not claimed. Original source-operation provenance is limited; independent semantic verification is available.",
+      "evidence": [
+        "validation",
+        "E05",
+        "E06",
+        "E11",
+        "final L80–152"
+      ],
+      "material_findings": []
+    }
+  ],
+  "exact_plan_clauses": [
+    {
+      "id": "P01",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 9,
+      "sentence_in_line": 1,
+      "exact_clause": "Keep this file outside the candidate-facing research packet.",
+      "disposition": "PROTOCOL_UNKNOWN",
+      "final_locators": [],
+      "assessment": "The current investigator map excludes the plan initially; the release receipt binds discovery before plan reveal. Without the original full execution trace, earlier access/concealment cannot independently be proved.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P02",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 9,
+      "sentence_in_line": 2,
+      "exact_clause": "It preserves the authored request and open design opportunities.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 59
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 114
+        }
+      ],
+      "assessment": "The plan is treated as prospective scope, retaining alternatives and unresolved owner choices.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P03",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 9,
+      "sentence_in_line": 3,
+      "exact_clause": "It is not a completed research proposal, a source list, a result, or an evaluation answer key.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 148
+        }
+      ],
+      "assessment": "No plan passage is represented as a source, measurement, completed design, or answer key.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P04",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 9,
+      "sentence_in_line": 4,
+      "exact_clause": "Nothing here selects an eventual research method.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 59
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 70
+        }
+      ],
+      "assessment": "Observation-first is a provisional information sequence, not an asserted predetermined winning retrofit.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P05",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 9,
+      "sentence_in_line": 5,
+      "exact_clause": "No empirical validation has been executed in authoring this case.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "The synthetic authoring boundary remains intact; no authoring validation is claimed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P06",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 13,
+      "sentence_in_line": 1,
+      "exact_clause": "The original brief follows verbatim between the delimiters.",
+      "disposition": "BYTE_VERIFIED",
+      "final_locators": [],
+      "assessment": "The complete embedded brief is byte-identical to frozen brief.md, verified independently.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P07",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 13,
+      "sentence_in_line": 2,
+      "exact_clause": "These bytes define the original obligations; later clarification must not silently replace them.",
+      "disposition": "SEMANTIC_PRESERVED_TIME_SEPARATE",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 142
+        }
+      ],
+      "assessment": "Original scientific obligations and negative constraints survive. The literal full-window instruction is separately recorded at P13, not silently replaced by an elapsed-time claim.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P08",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 25,
+      "sentence_in_line": 1,
+      "exact_clause": "A neighborhood demonstration rain garden appears to receive water through one curb opening during some storms, while flow passes the opening during others.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 95
+        }
+      ],
+      "assessment": "Storm-dependent entry and pass-by remain observations to discriminate, not confirmed capture failure.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P09",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 25,
+      "sentence_in_line": 2,
+      "exact_clause": "Volunteers recently added mulch and cleared nearby leaves, and a construction delivery may have compacted part of the edge.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 64
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        }
+      ],
+      "assessment": "Mulch/leaves/delivery remain unverified leads; chronology and debris observations are proposed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P10",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 25,
+      "sentence_in_line": 3,
+      "exact_clause": "The city partner wants a research proposal before considering repairs.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 9
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 13
+        }
+      ],
+      "assessment": "A research proposal precedes qualified discussion of repairs.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P11",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 25,
+      "sentence_in_line": 4,
+      "exact_clause": "There are no surveyed levels, rainfall records, soil tests, or catchment measurements.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 119
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 120
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        }
+      ],
+      "assessment": "No missing survey/rainfall/soil/catchment values are invented or replaced by literature numbers.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P12",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 25,
+      "sentence_in_line": 5,
+      "exact_clause": "All site details are hypothetical.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "The site remains hypothetical throughout; no deployment or incident is invented.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P13",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 29,
+      "sentence_in_line": 1,
+      "exact_clause": "Use the full 60-minute research window to develop a proposal that distinguishes runoff capture problems from storage or infiltration limitations.",
+      "disposition": "SCIENCE_SATISFIED_TIME_NOT_ESTABLISHED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 142
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 170
+        }
+      ],
+      "assessment": "Capture versus storage/drainage is developed. The packet does not establish literal use of a full 60 minutes. Recorded first preparation to terminal observation is 31m19.378s; current assignments expressly permit early completion. Time remains separate from source judgment.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P14",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 29,
+      "sentence_in_line": 2,
+      "exact_clause": "Explain mechanisms and useful alternatives, investigate installation and maintenance history, and propose a modest later observation or test program.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 59
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 72
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 80
+        }
+      ],
+      "assessment": "Conditional mechanisms/alternatives, specific records/history inquiry, and a modest natural-event pilot are supplied.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P15",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 29,
+      "sentence_in_line": 3,
+      "exact_clause": "The deliverable should support discussion with a qualified site partner, not provide a construction or drainage design.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 112
+        }
+      ],
+      "assessment": "Qualified partner discussion only; no construction/drainage design or final dimensions.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P16",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 33,
+      "sentence_in_line": 1,
+      "exact_clause": "Treat entry capture, temporary storage, infiltration, and downstream effects as separate outcomes.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 17
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 23
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 35
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        }
+      ],
+      "assessment": "Four separate mechanism sections and separate event-log columns preserve the outcome distinction.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P17",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 34,
+      "sentence_in_line": 1,
+      "exact_clause": "Compare inlet or surface-routing ideas with maintenance or soil-management investigation and a useful observation-first alternative.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 64
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 65
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 67
+        }
+      ],
+      "assessment": "Routing review, maintenance/soil inquiry, and a useful observation-first alternative are compared by discriminating value and prerequisites.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P18",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 35,
+      "sentence_in_line": 1,
+      "exact_clause": "Consider storm intensity and duration, antecedent wetness, sediment or leaf accumulation, and local geometry rather than attributing the problem solely to compaction.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 92
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 93
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 94
+        }
+      ],
+      "assessment": "Depth/duration/intensity, antecedent conditions, debris and geometry are explicit; compaction is only one possible explanation.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P19",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 36,
+      "sentence_in_line": 1,
+      "exact_clause": "Investigate original installation and recent maintenance history and explain the limits of transferring evidence from other rain gardens.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 78
+        }
+      ],
+      "assessment": "A dated installation/maintenance records program and explicit limits on guidance/study transfer are provided; records cannot be actually obtained for a hypothetical site.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P20",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 37,
+      "sentence_in_line": 1,
+      "exact_clause": "Propose comparisons across events, feasible measurements, uncertainties, and an escalation or stop condition; distinguish proposed field validation from research or modeling actually executed.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 90
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "Pilot measurements/event comparison and permission/safety/escalation conditions are concrete; proposed field work is distinguished from reported desk research.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P21",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 41,
+      "sentence_in_line": 1,
+      "exact_clause": "Do not excavate, change a curb, redirect runoff, perform infiltration tests, or prescribe final civil-engineering dimensions.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 112
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "No forbidden work is prescribed/executed. A separately authorized future qualified diagnostic is a conditional escalation, not an infiltration test in this proposal.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P22",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 42,
+      "sentence_in_line": 1,
+      "exact_clause": "Do not claim flood protection, pollutant removal, or regulatory compliance from visible ponding or a literature example.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 37
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 57
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "Ponding and analog literature are expressly denied as flood/pollutant/compliance oracles.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P23",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 43,
+      "sentence_in_line": 1,
+      "exact_clause": "Do not fabricate rainfall, soil properties, catchment area, grade, or construction damage.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 119
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "No hypothetical rainfall, soil, catchment, grade, or damage values are asserted.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P24",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 47,
+      "sentence_in_line": 1,
+      "exact_clause": "We do not know the drainage boundary, slopes, inlet geometry, plant and soil layers, overflow route, storm distribution, public-access limits, or observation permissions.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 119
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 120
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 121
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 124
+        }
+      ],
+      "assessment": "Each listed site/access unknown is retained.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P25",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 47,
+      "sentence_in_line": 2,
+      "exact_clause": "The city has not identified whether entry failure or slow drawdown is its main concern.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 125
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 127
+        }
+      ],
+      "assessment": "Entry versus drawdown priority is a necessary partner decision; acceptance criteria/ranking wait for it.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P26",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 47,
+      "sentence_in_line": 3,
+      "exact_clause": "State the consequences for study design.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 119
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 120
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 121
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 122
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 125
+        }
+      ],
+      "assessment": "Unknowns are tied to consequences for quantification, interpretation, feasibility and criteria rather than merely listed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P27",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 53,
+      "sentence_in_line": 1,
+      "exact_clause": "What first research and observation sequence would distinguish water failing to enter the feature from water entering but being retained or transmitted differently than expected?",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 110
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "assessment": "Records-first and natural-event observations separate approach/entry/bypass from storage/recession and guide different qualified follow-ups.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P28",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 55,
+      "sentence_in_line": 1,
+      "exact_clause": "The relevant storm class, owner objective, authorized access, measurement equipment, and minimum evidence for escalation remain unresolved.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 100
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 124
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 125
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 127
+        }
+      ],
+      "assessment": "Storm class, access/equipment and escalation evidence remain external choices, with a bounded pilot and specified decision gates.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P29",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 55,
+      "sentence_in_line": 2,
+      "exact_clause": "The proposal should preserve an observation-first route while comparing practical interventions conditionally and exposing data gaps.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 65
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 67
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 70
+        }
+      ],
+      "assessment": "Observation-first is actionable under permission; alternatives remain conditional and information gaps are explicit.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P30",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 59,
+      "sentence_in_line": 1,
+      "exact_clause": "Investigate inlet clearing and documented maintenance, surface-routing or inlet geometry assessment, soil condition and infiltration inquiry, and staged event observation before changing anything.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 64
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 65
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 67
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        }
+      ],
+      "assessment": "Inquiry precedes change. Routine necessary maintenance is logged, not experimentally manipulated or withheld.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P31",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 59,
+      "sentence_in_line": 2,
+      "exact_clause": "Accepting limited capture for some storms could be a useful baseline if it is consistent with the actual objective.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 70
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 110
+        }
+      ],
+      "assessment": "Some-event bypass can be an acceptable owner/design baseline, not automatically a failure or this site's established intent.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P32",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 59,
+      "sentence_in_line": 3,
+      "exact_clause": "A qualified survey or diagnostic study may be more valuable than an immediate repair.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 112
+        }
+      ],
+      "assessment": "Survey/diagnosis is an information alternative to immediate repair.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P33",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 59,
+      "sentence_in_line": 4,
+      "exact_clause": "No inlet, soil treatment, or retrofit is preselected.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 70
+        }
+      ],
+      "assessment": "No retrofit, inlet or soil treatment is selected.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P34",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 63,
+      "sentence_in_line": 1,
+      "exact_clause": "Develop an account of runoff generation, approach flow, entry geometry, storage, overflow, and soil-water movement.",
+      "disposition": "PARTIALLY_DEVELOPED_NONMATERIAL",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 118
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 133
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 134
+        }
+      ],
+      "assessment": "Approach/entry/storage/overflow/soil-water pathways are developed. Runoff generation is thinner: event forcing, unknown contributing boundary and observed arrival are addressed, but contributing-surface/initial-loss processes are not developed. The omission does not support a wrong diagnosis or recommendation: no arrival is distinguished from failed capture, no rain-to-runoff volume conversion is made, and quantitative modeling is withheld for missing inputs. This is an opportunity-depth limitation, not a missing consequential branch.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P35",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 63,
+      "sentence_in_line": 2,
+      "exact_clause": "Separate observed bypass from inferred infiltration failure.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        }
+      ],
+      "assessment": "Bypass is not taken as infiltration failure; captured inflow and recession are observed separately.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P36",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 63,
+      "sentence_in_line": 3,
+      "exact_clause": "Storm characteristics and antecedent conditions can alter several processes at once.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        }
+      ],
+      "assessment": "Several processes can change together; storm/antecedent context and confounding are retained.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P37",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 63,
+      "sentence_in_line": 4,
+      "exact_clause": "Propose evidence that could discriminate mechanisms, and state when a simple water balance would be informative or unsupported.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 110
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 131
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        }
+      ],
+      "assessment": "Entry, level/recession and routing observations discriminate branches; both boundary balances are conditional and missing-term limits are explicit.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P38",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 67,
+      "sentence_in_line": 1,
+      "exact_clause": "Investigate design intent, as-built information, maintenance dates, sediment accumulation, and possible traffic or delivery effects.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        }
+      ],
+      "assessment": "Design/as-builts/acceptance, maintenance/sediment chronology, delivery date/route/equipment/load where known and traffic are requested.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P39",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 67,
+      "sentence_in_line": 2,
+      "exact_clause": "Public implementation reports need catchment, geometry, event conditions, operation, and measured outcomes to support transfer.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 57
+        }
+      ],
+      "assessment": "Public analogs are bounded by catchment/loading, geometry, event selection, operation and measured endpoints. Full UMN report was not reviewed; no product/quantitative transfer depends on it.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P40",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 67,
+      "sentence_in_line": 3,
+      "exact_clause": "The recollection of compaction is a lead rather than a confirmed defect.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 76
+        }
+      ],
+      "assessment": "Compaction remains a lead, requiring records/qualified inquiry rather than asserted construction damage.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P41",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 67,
+      "sentence_in_line": 4,
+      "exact_clause": "Historical ponding photographs without timing or input conditions may fail to distinguish capture from drawdown.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 25
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 78
+        }
+      ],
+      "assessment": "Photos require timing, rainfall/input, viewpoint and maintenance context; untimed ponding cannot separate entry from recession.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P42",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 71,
+      "sentence_in_line": 1,
+      "exact_clause": "A later authorized study could document event conditions, entry or bypass observations, ponding and drawdown, and stable reference points across several storms.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 84
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 92
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 95
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 96
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 97
+        }
+      ],
+      "assessment": "Later authorized event/entry/ponding/recession observations use consistent fields and a stable partner-approved reference if feasible.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P43",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 71,
+      "sentence_in_line": 2,
+      "exact_clause": "Explain observation timing, safe access, comparison limits, and what would trigger a qualified survey or soil investigation rather than a volunteer repair.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 84
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 108
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 112
+        }
+      ],
+      "assessment": "Timing examples, safety/access gates, comparison limitations and qualified escalation are stated; volunteers are not asked to repair/test.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P44",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 71,
+      "sentence_in_line": 3,
+      "exact_clause": "An assumed water balance or diagram executed in the hour is desk work only.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 131
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "The conceptual balances are not populated or executed. No diagram/model/field validation is claimed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P45",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 71,
+      "sentence_in_line": 4,
+      "exact_clause": "Field capture, infiltration performance, downstream benefit, and pollutant outcomes remain unvalidated.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 37
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "Field capture/infiltration/downstream/water-quality performance remain unvalidated.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P46",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 73,
+      "sentence_in_line": 1,
+      "exact_clause": "Authoring status: only synthetic input files have been prepared.",
+      "disposition": "PRESERVED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "Synthetic inputs are not treated as actual site evidence.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P47",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 73,
+      "sentence_in_line": 2,
+      "exact_clause": "No scientific search, pilot, experiment, data collection, implementation, or performance validation has been performed for this case.",
+      "disposition": "PRESERVED_AUTHORING_BOUNDARY",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "Original authoring performed no scientific/site validation; later stages report desk research distinctly. Neither authoring nor this pipeline is falsely credited with a pilot or deployment.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P48",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 73,
+      "sentence_in_line": 3,
+      "exact_clause": "Future researchers must state the actual extent of any work they execute.",
+      "disposition": "SATISFIED_WITH_PROVENANCE_LIMIT",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 150
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "The final states desk source checks and all unexecuted site/model work. Actual historical source tool operations lack original transcripts; scientific content was independently rechecked.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P49",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 1,
+      "exact_clause": "The topic is sized for a full 60-minute research-and-proposal session: substantive evidence discovery, causal reasoning, comparison of useful alternatives, implementation/history investigation, and a coherent later validation design.",
+      "disposition": "SCIENCE_SATISFIED_TIME_SEPARATE",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 15
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 59
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 72
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 80
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 142
+        }
+      ],
+      "assessment": "Substantive discovery/causal alternatives/history/prospective validation are present. Full 60-minute use is not certified; thin runoff-generation opportunity and time records are disclosed separately.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P50",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 2,
+      "exact_clause": "The proposal may contain reasoned provisional choices, but the case provides no predetermined winner.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 13
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 70
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 127
+        }
+      ],
+      "assessment": "A provisional first information step is reasoned; no predetermined winner is imposed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P51",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 3,
+      "exact_clause": "It requests no product build.",
+      "disposition": "SATISFIED",
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 11
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 152
+        }
+      ],
+      "assessment": "No product build or nonexistent implementation is demanded or claimed.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P52",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 4,
+      "exact_clause": "Preserve brief.md and plan.md exactly for later paired freezes.",
+      "disposition": "BYTE_VERIFIED",
+      "final_locators": [],
+      "assessment": "Frozen brief and plan match the actual brief copy and revealed plan, and originals were unchanged throughout this assessment.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P53",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 5,
+      "exact_clause": "D inputs remain sealed until the exact recipe and budget lock; provide no designer feedback before the candidate set finishes.",
+      "disposition": "PROTOCOL_PARTLY_OBSERVED_UNKNOWN",
+      "final_locators": [],
+      "assessment": "Inspected same-case assignment revisions concern invocation/Goal binding and prospective service-tier selection, not designer scientific feedback. Recipe/budget lock and global candidate-set feedback timing cannot be established from this bounded packet; no other cases/history were inspected.",
+      "remaining_material_issue": false
+    },
+    {
+      "id": "P54",
+      "original_path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "original_line": 77,
+      "sentence_in_line": 6,
+      "exact_clause": "Input readiness does not assert that those release conditions have been satisfied.",
+      "disposition": "PROTOCOL_UNKNOWN",
+      "final_locators": [],
+      "assessment": "Input readiness is not used as proof of release compliance. Full lock/release provenance remains UNKNOWN.",
+      "remaining_material_issue": false
+    }
+  ],
+  "plan_metadata": [
+    {
+      "line": 1,
+      "exact_text": "# Uneven runoff entry into a demonstration rain garden",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 3,
+      "exact_text": "Case ID: ER12-D-R1-04-FRESH",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 4,
+      "exact_text": "Slot ID: D-R1-04",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 5,
+      "exact_text": "Domain: urban stormwater research",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 7,
+      "exact_text": "## Concealed prospective design record",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 11,
+      "exact_text": "## Exact original request and clauses",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 15,
+      "exact_text": "BEGIN ORIGINAL BRIEF",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 17,
+      "exact_text": "# Uneven runoff entry into a demonstration rain garden",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 19,
+      "exact_text": "Case ID: ER12-D-R1-04-FRESH",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 20,
+      "exact_text": "Slot ID: D-R1-04",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 21,
+      "exact_text": "Domain: urban stormwater research",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 23,
+      "exact_text": "## Project situation",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 27,
+      "exact_text": "## Request",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 31,
+      "exact_text": "## Requirements to preserve",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 39,
+      "exact_text": "## Boundaries",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 45,
+      "exact_text": "## Still unresolved",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 49,
+      "exact_text": "END ORIGINAL BRIEF",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 51,
+      "exact_text": "## Research question and incompleteness",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 57,
+      "exact_text": "## Meaningful useful alternatives",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 61,
+      "exact_text": "## Mechanism opportunity",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 65,
+      "exact_text": "## Implementation and history opportunity",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 69,
+      "exact_text": "## Proposed versus executed validation",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    },
+    {
+      "line": 75,
+      "exact_text": "## Scope and release boundary",
+      "disposition": "PRESERVED_IDENTITY_OR_STRUCTURAL_DELIMITER"
+    }
+  ],
+  "criticism_dispositions": [
+    {
+      "id": "C1",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "line": 24
+      },
+      "criticism": "Full-window use not verifiable from science packet",
+      "classification": "Time/auditability issue, separate from source science",
+      "final_disposition": "Retain uncertainty",
+      "final_line": 142,
+      "independent_assessment": "Correct for the candidate-facing science packet. Reviewer additionally has run freeze/terminal UTC records showing preparation-to-terminal occupancy under 60 minutes, not proof of literal full-window use. No scientific claim is corrected by elapsed time.",
+      "evidence": [
+        "terminal-science-freeze-root.json",
+        "stages/investigator/freeze.json"
+      ],
+      "remaining_material_science_issue": false
+    },
+    {
+      "id": "C2",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "line": 28
+      },
+      "criticism": "High water table is a plausible but uncited mechanism",
+      "classification": "Original supporting-locator gap, low consequence hypothetical claim",
+      "final_disposition": "Amend to conditional available-void-space boundary, with direct EPA support",
+      "final_line": 143,
+      "independent_assessment": "EPA 2023 Ch.3.1 supports interaction with media reducing available capture void space and preference for noninfiltration approaches where groundwater is high. Original listed hypothesis was not a site finding. Earlier source-map S09 inlet locator did not establish it; final supplies a suitable section and avoids treating storage support as proof of slow drawdown here.",
+      "evidence": [
+        "E09"
+      ],
+      "remaining_material_science_issue": false
+    },
+    {
+      "id": "C3",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "line": 32
+      },
+      "criticism": "Broad SWMM curb-inlet/gutter calculation wording",
+      "classification": "Minor precision and critic locator issue",
+      "final_disposition": "Accept and narrow to release-specific corrections",
+      "final_line": 144,
+      "independent_assessment": "Release bullets support the exact named operations/configurations. The broad discovery wording was directionally supported. Critic also locates that wording in draft transfer discussion, but the draft does not contain v5.2.4; it occurs in discovery/source map. This wrong locator is nonmaterial; final preserves optional future-only modeling and no latest-version assertion.",
+      "evidence": [
+        "E11",
+        "E12"
+      ],
+      "remaining_material_science_issue": false
+    },
+    {
+      "id": "C4",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "line": 43
+      },
+      "criticism": "Detailed five-minute rainfall method not independently confirmed in critic access",
+      "classification": "Access qualification, not established scientific defect",
+      "final_disposition": "Omit exact interval, retain event/antecedent/system context",
+      "final_line": 145,
+      "independent_assessment": "Independent reviewer obtained publisher-indexed Section 2.3: weather/rainfall recorded at five-minute intervals and event depth/duration/mean intensity/max30-minute intensity calculated. Original claim is supported, not false. Final truthfully limits its own verification and keeps short-interval intensity as an option; omission causes no material loss of proposal meaning.",
+      "evidence": [
+        "E10",
+        "evidence/web-specific-1.json"
+      ],
+      "remaining_material_science_issue": false
+    },
+    {
+      "id": "C5",
+      "critic_locator": {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "line": 7
+      },
+      "criticism": "Core proposal faithful, no material boundary violation",
+      "classification": "General favorable assessment, not source authority",
+      "final_disposition": "Accept after review",
+      "final_line": 146,
+      "independent_assessment": "Independent assessment supports this scientific conclusion after exact-clause and primary-source checks, with the P34 runoff-generation depth limitation and provenance/time limits stated here. Favorable agreement alone was not used as semantic proof.",
+      "evidence": [
+        "P01–P54",
+        "E01–E12"
+      ],
+      "remaining_material_science_issue": false
+    }
+  ],
+  "supported_lineage": [
+    {
+      "meaning": "Separate capture/storage/drainage/downstream and compaction only as lead",
+      "discovery": "Competing explanations; four processes and unverified delivery",
+      "draft": "Mechanisms subsections and event log",
+      "critique": "Coverage table and no collapse of bypass into infiltration failure",
+      "final": "L15–43, L90–125",
+      "judgment": "Supported meaning preserved"
+    },
+    {
+      "meaning": "Capacity-conditioned bypass and conditional routing/maintenance/pretreatment/soil/observation alternatives",
+      "discovery": "Evidence and useful approaches; conditional proposal direction",
+      "draft": "Conditional alternatives and transfer limits",
+      "critique": "S02/S03/S07/S08 check",
+      "final": "L19–21, L51, L59–70",
+      "judgment": "Meaning and conditions preserved; no dimensions/product selected"
+    },
+    {
+      "meaning": "Installation/maintenance/history and transfer limits",
+      "discovery": "Records and implementation leads",
+      "draft": "History and transfer discussion",
+      "critique": "History plan coverage",
+      "final": "L57, L72–78",
+      "judgment": "Specific history inquiry preserved; no fictional city records retrieved"
+    },
+    {
+      "meaning": "Groundwater hypothesis",
+      "discovery": "Possible high water table, not a measured site condition",
+      "draft": "Groundwater unknown within drainage pathway inquiry",
+      "critique": "C2 uncited low-consequence mechanism",
+      "final": "L31, L143",
+      "judgment": "Earlier supporting-locator gap retained as lineage; final narrower claim supported by EPA Ch.3.1"
+    },
+    {
+      "meaning": "SWMM optional future model and release history",
+      "discovery": "Broad curb-inlet/gutter calculations shorthand with v5.2.4",
+      "draft": "Optional future model, no executed model; no v5.2.4 text",
+      "critique": "C3 precision concern, partly wrong draft locator",
+      "final": "L55, L68, L144",
+      "judgment": "Optional scope preserved and release operation precision improved"
+    },
+    {
+      "meaning": "Five-minute weather method and event/antecedent storage context",
+      "discovery": "Five-minute interval stated with publisher method locator",
+      "draft": "Event/antecedent interpretation retained",
+      "critique": "C4 says interval not independently confirmed in its access",
+      "final": "L41, L45, L145",
+      "judgment": "Original interval independently supported by reviewer; final access qualification/omission causes only nonmaterial loss of granularity"
+    },
+    {
+      "meaning": "Pilot, water-balance limits and proposed/executed distinction",
+      "discovery": "Prospective natural-event evidence; no field validation",
+      "draft": "Event comparisons, conceptual balance, actual desk work disclosure",
+      "critique": "Validation is proposed; full-time use not proved",
+      "final": "L80–112, L129–152",
+      "judgment": "Supported constraints preserved; no extra validation or deployment invented"
+    }
+  ],
+  "useful_discoveries": [
+    {
+      "id": "D1",
+      "meaning": "Capacity-conditioned offline bypass can be intentional; pass-by alone is not capture failure.",
+      "use": "Recover intended ponding/bypass geometry and observe prior fullness before choosing routing repair.",
+      "evidence": [
+        "E02",
+        "E03"
+      ],
+      "final_lines": [
+        19,
+        70,
+        109,
+        110
+      ]
+    },
+    {
+      "id": "D2",
+      "meaning": "Recession can include storage, underdrain and overflow pathways; visible decline does not isolate native-soil infiltration.",
+      "use": "Inspect layer/drain records and keep outcomes/measurement terms separate.",
+      "evidence": [
+        "E01",
+        "E09",
+        "E11"
+      ],
+      "final_lines": [
+        25,
+        29,
+        120,
+        134,
+        136
+      ]
+    },
+    {
+      "id": "D3",
+      "meaning": "Groundwater interacting with media can reduce available capture void space; national guidance does not diagnose this site.",
+      "use": "Retain groundwater as a conditional boundary for qualified records review, not an asserted explanation.",
+      "evidence": [
+        "E09"
+      ],
+      "final_lines": [
+        31,
+        112
+      ]
+    },
+    {
+      "id": "D4",
+      "meaning": "Pretreatment depends on sheet versus concentrated flow, debris and maintenance; tested sump gross-solid retention can decline under overflow.",
+      "use": "Compare maintainable flow-appropriate options only after routing/debris is characterized; avoid product endorsement.",
+      "evidence": [
+        "E07",
+        "E08"
+      ],
+      "final_lines": [
+        51,
+        66
+      ]
+    },
+    {
+      "id": "D5",
+      "meaning": "Event/antecedent storage and different hydraulic loading/media/drain accounting in two roof-fed systems limit analog transfer.",
+      "use": "Log intensity/duration/wetness and retain uncertainty; do not copy performance targets.",
+      "evidence": [
+        "E10"
+      ],
+      "final_lines": [
+        41,
+        45,
+        57,
+        92,
+        93
+      ]
+    },
+    {
+      "id": "D6",
+      "meaning": "Visual BMP inspection and quantitative capacity/synthetic-runoff/monitoring assessment answer different questions.",
+      "use": "Make the 4–6-event pilot a mechanism screen rather than performance certification.",
+      "evidence": [
+        "E06",
+        "E05"
+      ],
+      "final_lines": [
+        53,
+        88,
+        104
+      ]
+    },
+    {
+      "id": "D7",
+      "meaning": "LID software types/layers and version-specific fixes constrain later modeling.",
+      "use": "No model before verified inputs; distinguish optional Bio-retention storage/drain layers from the software Rain Garden type, and pin a suitable future version rather than asserting latest.",
+      "evidence": [
+        "E11",
+        "E12"
+      ],
+      "final_lines": [
+        55,
+        68,
+        136
+      ]
+    }
+  ],
+  "alternatives": [
+    {
+      "path": "Observation-first natural-event pilot",
+      "support": "E02/E05/E06",
+      "discriminating_value": "Approach/arrival/entry/bypass, storage/recession and downstream route observed separately.",
+      "limit": "Permission/safety; qualitative patterns, no causal or compliance certification.",
+      "final_line": 63
+    },
+    {
+      "path": "Documented routine maintenance/soil-management inquiry",
+      "support": "E04/E05/E09",
+      "discriminating_value": "Dated debris/mulch/traffic/delivery history and normal-maintenance conditions.",
+      "limit": "No controlled blockage/mulch intervention, no surface-to-subsurface compaction inference.",
+      "final_line": 64
+    },
+    {
+      "path": "Qualified inlet/surface-routing review",
+      "support": "E02/E03",
+      "discriminating_value": "As-built intended flow, alignment/grade/bypass and conditional runnel/berm/grate/trench discussion.",
+      "limit": "Requires geometry/criteria; no dimensions or modification prescribed.",
+      "final_line": 65
+    },
+    {
+      "path": "Pretreatment comparison",
+      "support": "E07/E08",
+      "discriminating_value": "Flow regime/debris/space/maintenance matching and qualitative analog evidence.",
+      "limit": "Full report unavailable; no product selection or numerical transfer.",
+      "final_line": 66
+    },
+    {
+      "path": "Qualified soil/media/drain investigation",
+      "support": "E01/E04/E05/E09",
+      "discriminating_value": "Persistent recession after confirmed entry may warrant layer/drain/groundwater review.",
+      "limit": "Separate authorization; infiltration/capacity tests are outside this proposal.",
+      "final_line": 67
+    },
+    {
+      "path": "Future water balance/SWMM",
+      "support": "E11/E12",
+      "discriminating_value": "Defined boundary and complete measurements can support scenario closure/comparison.",
+      "limit": "Unmeasured terms and unknown software configuration prevent quantitative diagnosis now.",
+      "final_line": 68
+    },
+    {
+      "path": "Accept some-event limited capture baseline",
+      "support": "E02/E03",
+      "discriminating_value": "Distinguish intended excess-flow bypass from a defect.",
+      "limit": "Owner objective/design intent must support it; not a current site conclusion.",
+      "final_line": 70
+    }
+  ],
+  "material_findings": [],
+  "limitations": [
+    {
+      "id": "L1",
+      "kind": "Scientific opportunity depth",
+      "material": false,
+      "description": "P34 develops runoff generation less fully than approach/entry/storage/drainage: no detailed contributing-surface or initial-loss account. Actual runoff arrival is nevertheless an explicit observation branch, contributing area is unknown, and no rainfall-to-runoff calculation or causal repair is inferred. This does not remove a consequential discriminator or invalidate the proposal.",
+      "evidence": [
+        "P34",
+        "E11",
+        "final L19,41,95,118,133–136"
+      ]
+    },
+    {
+      "id": "L2",
+      "kind": "Source access/bibliographic limits",
+      "material": false,
+      "description": "UMN full report record is HTTP403; exact report number and detailed protocols are not independently certified. Official summary supports the only retained qualitative findings. Publisher full-page access failed; indexed primary methods/abstract support the bounded study claims, including the original five-minute detail. No numerical effect-size transfer or product selection depends on unavailable content.",
+      "evidence": [
+        "E08",
+        "E10",
+        "evidence/primary/S08-report-record.json",
+        "evidence/web-specific-1.json"
+      ]
+    },
+    {
+      "id": "L3",
+      "kind": "Lineage minor precision",
+      "material": false,
+      "description": "Critic incorrectly attributes broad SWMM release wording to the draft as well as discovery. Original groundwater source locator did not directly support the hypothesis. Final corrects the latter and narrows release language; no final material defect remains.",
+      "evidence": [
+        "C2",
+        "C3"
+      ]
+    },
+    {
+      "id": "L4",
+      "kind": "Historical source-operation provenance",
+      "material": false,
+      "description": "All authored evidence present consists of source-map records and navigable summary indexes; original browsing transcripts/raw primary captures are not in the frozen stage packet. Candidate retrieval operations/timing cannot be authenticated from self-records. Reviewer primary retrieval independently supports the scientific meaning.",
+      "evidence": [
+        "evidence/inspected-artifacts.json",
+        "E01–E12"
+      ]
+    },
+    {
+      "id": "L5",
+      "kind": "Time/protocol/native/effective/billing",
+      "material": false,
+      "description": "Recorded preparation-to-terminal occupancy is shorter than 60 minutes. Same-stage assignments permit early completion, but literal full-window use is not established. Native response provenance, release ordering, effective model/reasoning/service and billing lack independent execution telemetry. These are separate UNKNOWN/not-established fields, not scientific passes or speed/cost claims.",
+      "evidence": [
+        "protocol",
+        "time",
+        "native"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "field": "historical native activation/completion authenticity and timestamp UTC",
+      "status": "UNKNOWN",
+      "reason": "Saved JSON and guard binding do not authenticate native-tool provenance."
+    },
+    {
+      "field": "exact plan-release/no-early-read and Goal-before-input ordering",
+      "status": "UNKNOWN",
+      "reason": "No complete original execution trace; hashes/timestamps cannot prove mental/input ordering."
+    },
+    {
+      "field": "effective provider/model/reasoning/service tier and billing",
+      "status": "UNKNOWN",
+      "reason": "Requested route/reported labels only; no effective execution/billing telemetry."
+    },
+    {
+      "field": "literal full60min research use",
+      "status": "NOT_ESTABLISHED",
+      "reason": "Recorded preparation-to-terminal interval31m19.378s; assignments permit early finish, not proof of original literal duration."
+    },
+    {
+      "field": "actual site owner/objective/permission/geometry/storms/layers/drains/local criteria",
+      "status": "HONEST_EXTERNAL_CHOICES",
+      "reason": "Synthetic original case supplies none; concrete record/observation/qualified-partner investigation precedes decisions."
+    },
+    {
+      "field": "full UMN report and complete publisher article/raw data",
+      "status": "NOT_REVIEWED",
+      "reason": "Access blocked; governing official summary and indexed primary sections independently support retained bounded claims."
+    }
+  ],
+  "validation": {
+    "executed_science_reported": "Desk primary-source research and conceptual synthesis only. Original stage source operations are reported in maps, not independently authenticated; reviewer separately retrieved governing primary evidence.",
+    "not_executed": [
+      "site visit",
+      "actual city records retrieval",
+      "rainfall/soil/catchment measurements",
+      "natural-storm pilot",
+      "infiltration or capacity test",
+      "engineering survey/calculation",
+      "numerical water balance",
+      "SWMM installation/run",
+      "repair or retrofit",
+      "water-quality/flood/compliance evaluation"
+    ],
+    "proposed": "Permission-gated records-first pilot of approximately 4–6 natural events; event/rainfall/gauge/debris/wetness/entry/storage/recession/route fields; partner-approved stable reference where feasible; example safe checks soon after then about6/24/48h.",
+    "oracles": [
+      {
+        "observable": "Runoff approaches/reaches/enters/passes, prior ponding and debris state",
+        "can_discriminate": "No arrival vs bypass with unfilled apparent storage vs capacity-conditioned excess-flow passage",
+        "cannot_prove": "Exact capture fraction, grade defect or causal maintenance effect without geometry/measurements",
+        "evidence": [
+          "E02",
+          "E03"
+        ]
+      },
+      {
+        "observable": "Level/extent and recession with concurrent rain and known drain configuration",
+        "can_discriminate": "Repeated captured-water/recession patterns warrant qualified review",
+        "cannot_prove": "Infiltration rate or groundwater/compaction cause from recession alone; 48h is not local compliance",
+        "evidence": [
+          "E01",
+          "E04",
+          "E05",
+          "E09"
+        ]
+      },
+      {
+        "observable": "Matched event-context and logged normal maintenance across several storms",
+        "can_discriminate": "Useful mechanism patterns and candidates for focused follow-up",
+        "cannot_prove": "Uncontrolled before-after causality, statistical failure rate, design-storm capacity or benefits",
+        "evidence": [
+          "E06",
+          "E10"
+        ]
+      },
+      {
+        "observable": "Complete boundary water-balance terms, if later measured",
+        "can_discriminate": "Closure within uncertainty/scenario differences",
+        "cannot_prove": "Missing-term infiltration or present site performance; balances here are not executed",
+        "evidence": [
+          "E11"
+        ]
+      }
+    ],
+    "stop_escalation": "No permission/traffic/lightning/high-flow/public hazards => stop/owner referral. Modest-event bypass with clear approach/apparently unfilled cell => survey/design-intent review. Full-storage bypass => check intended design/objective. Repeated slow recession => local criterion first, conditional48h review prompt only; tests need separate qualified authorization.",
+    "sampling_limit": "4–6 events and6/24/48h examples are a scoping proposal, not source-derived power, guaranteed safe scheduling or exact drainage-rate estimate. No nonexistent empirical oracle is demanded."
+  },
+  "delivery": "COMPLETE_FINAL_PRESENT; stages/reviser/final.md is actual ordinary treatment final",
+  "coverage": "ALL6ASSESSED_AND_ALL54_PLAN_CLAUSES_DISPOSITIONED",
+  "native": [
+    {
+      "stage": "investigator",
+      "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-create-response.json",
+      "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-completion-response.json",
+      "saved_activation": {
+        "threadId": "01a1247b-cd0e-71d1-96e0-625330d8a0e5",
+        "objective": "ER12 investigator stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791613473,
+        "updatedAt": 1791613473
+      },
+      "saved_completion": {
+        "threadId": "01a1247b-cd0e-71d1-96e0-625330d8a0e5",
+        "objective": "ER12 investigator stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 205965,
+        "timeUsedSeconds": 971,
+        "createdAt": 1791613473,
+        "updatedAt": 1791614445
+      },
+      "saved_same_thread_objective_and_terminal_state": true,
+      "independently_authenticated_native_provenance": "UNKNOWN",
+      "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+      "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+    },
+    {
+      "stage": "critic",
+      "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-activation.json",
+      "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-completion.json",
+      "saved_activation": {
+        "threadId": "01a1248c-88d6-7d52-be88-1e0a95da73c6",
+        "objective": "ER12 critic stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791614604,
+        "updatedAt": 1791614604
+      },
+      "saved_completion": {
+        "threadId": "01a1248c-88d6-7d52-be88-1e0a95da73c6",
+        "objective": "ER12 critic stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 149766,
+        "timeUsedSeconds": 289,
+        "createdAt": 1791614604,
+        "updatedAt": 1791614894
+      },
+      "saved_same_thread_objective_and_terminal_state": true,
+      "independently_authenticated_native_provenance": "UNKNOWN",
+      "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+      "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+    },
+    {
+      "stage": "reviser",
+      "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-activation.json",
+      "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-completion.json",
+      "saved_activation": {
+        "threadId": "01a12492-3abe-7261-a4fd-4ee3827949ce",
+        "objective": "ER12 reviser stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "createdAt": 1791614943,
+        "updatedAt": 1791614943
+      },
+      "saved_completion": {
+        "threadId": "01a12492-3abe-7261-a4fd-4ee3827949ce",
+        "objective": "ER12 reviser stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+        "status": "complete",
+        "tokensUsed": 157359,
+        "timeUsedSeconds": 369,
+        "createdAt": 1791614943,
+        "updatedAt": 1791615312
+      },
+      "saved_same_thread_objective_and_terminal_state": true,
+      "independently_authenticated_native_provenance": "UNKNOWN",
+      "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+      "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+    }
+  ],
+  "protocol": {
+    "method_reported": "A1",
+    "delivery": "COMPLETE_FINAL_PRESENT; stages/reviser/final.md is actual ordinary treatment final",
+    "T3_saved_state": "Captured investigator/critic status and terminal root final task show completed/result_available and no pending child runs; independent live historical state not re-queried",
+    "native_stage_evidence": [
+      {
+        "stage": "investigator",
+        "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-create-response.json",
+        "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-completion-response.json",
+        "saved_activation": {
+          "threadId": "01a1247b-cd0e-71d1-96e0-625330d8a0e5",
+          "objective": "ER12 investigator stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791613473,
+          "updatedAt": 1791613473
+        },
+        "saved_completion": {
+          "threadId": "01a1247b-cd0e-71d1-96e0-625330d8a0e5",
+          "objective": "ER12 investigator stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 205965,
+          "timeUsedSeconds": 971,
+          "createdAt": 1791613473,
+          "updatedAt": 1791614445
+        },
+        "saved_same_thread_objective_and_terminal_state": true,
+        "independently_authenticated_native_provenance": "UNKNOWN",
+        "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+        "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+      },
+      {
+        "stage": "critic",
+        "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-activation.json",
+        "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-completion.json",
+        "saved_activation": {
+          "threadId": "01a1248c-88d6-7d52-be88-1e0a95da73c6",
+          "objective": "ER12 critic stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791614604,
+          "updatedAt": 1791614604
+        },
+        "saved_completion": {
+          "threadId": "01a1248c-88d6-7d52-be88-1e0a95da73c6",
+          "objective": "ER12 critic stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 149766,
+          "timeUsedSeconds": 289,
+          "createdAt": 1791614604,
+          "updatedAt": 1791614894
+        },
+        "saved_same_thread_objective_and_terminal_state": true,
+        "independently_authenticated_native_provenance": "UNKNOWN",
+        "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+        "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+      },
+      {
+        "stage": "reviser",
+        "activation_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-activation.json",
+        "completion_path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-completion.json",
+        "saved_activation": {
+          "threadId": "01a12492-3abe-7261-a4fd-4ee3827949ce",
+          "objective": "ER12 reviser stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "active",
+          "tokensUsed": 0,
+          "timeUsedSeconds": 0,
+          "createdAt": 1791614943,
+          "updatedAt": 1791614943
+        },
+        "saved_completion": {
+          "threadId": "01a12492-3abe-7261-a4fd-4ee3827949ce",
+          "objective": "ER12 reviser stage, run D-R1-04-treatment: execute ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+          "status": "complete",
+          "tokensUsed": 157359,
+          "timeUsedSeconds": 369,
+          "createdAt": 1791614943,
+          "updatedAt": 1791615312
+        },
+        "saved_same_thread_objective_and_terminal_state": true,
+        "independently_authenticated_native_provenance": "UNKNOWN",
+        "utc_interpretation_of_native_raw_timestamp_fields": "UNKNOWN",
+        "note": "Files are captured responses, not direct historical native-tool observations by this reviewer; binding guards explicitly disclaim independent provenance proof."
+      }
+    ],
+    "requested_route": {
+      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+      "model": "gpt-6-luna",
+      "options": {
+        "reasoningEffort": "max",
+        "serviceTier": "default"
+      }
+    },
+    "effective_provider_model_reasoning_service": "UNKNOWN; requested route and T3 reported labels are not effective telemetry",
+    "account_changes_by_reviewer": "NONE",
+    "original_stage_assistance": "No scientific designer feedback identified in inspected same-stage assignment revisions; original complete execution/protocol provenance UNKNOWN",
+    "plan_release": "Saved release receipt binds discovery hash and revealed plan bytes. This establishes stored linkage, not independent no-early-read, reveal-count or post-activation ordering proof. Investigator source-map final mtime is after release; there is no earlier source-map freeze hash to prove save-before-reveal.",
+    "recipe_budget_lock_and_candidate_set_release": "UNKNOWN in this bounded packet; no other cases/history consulted",
+    "billing": "UNKNOWN",
+    "reviewer_constraints": "No delegation, candidate feedback/repair, account changes, Git/publication, other arms/results/history, shared roster or ER11 rescore. Own inbox checked; unique pm-mail identity registered."
+  },
+  "time": {
+    "first_prepare_utc": "2026-10-10T06:24:13.768000+00:00",
+    "root_terminal_observed_utc": "2026-10-10T06:55:33.145710+00:00",
+    "recorded_prepare_to_terminal_seconds": 1879.37771,
+    "duration_kind": "Recorded pipeline occupancy between these two case timestamps; not authenticated active research duration or billing",
+    "literal_full_60_minute_use": "NOT_ESTABLISHED; recorded occupancy is under60min",
+    "assignment_early_finish": "All current stage assignments allow early completion when complete",
+    "stage_absolute_deadlines": [
+      {
+        "stage": "investigator",
+        "prepare_utc": "2026-10-10T06:24:13.768Z",
+        "deadline_utc": "2026-10-10T06:54:13.767Z",
+        "whole_deadline_utc": "2026-10-10T07:24:13.622Z"
+      },
+      {
+        "stage": "critic",
+        "prepare_utc": "2026-10-10T06:42:30.612Z",
+        "deadline_utc": "2026-10-10T07:06:13.767Z",
+        "whole_deadline_utc": "2026-10-10T07:24:13.622Z"
+      },
+      {
+        "stage": "reviser",
+        "prepare_utc": "2026-10-10T06:48:42.228Z",
+        "deadline_utc": "2026-10-10T07:24:13.622Z",
+        "whole_deadline_utc": "2026-10-10T07:24:13.622Z"
+      }
+    ],
+    "effective_active_time": "UNKNOWN",
+    "billing_or_cost": "UNKNOWN",
+    "comparative_speed_or_savings": "NOT_ASSESSED; no other arm inspected"
+  },
+  "sources": [
+    {
+      "id": "E01",
+      "candidate_id": "S01",
+      "judgment": "SUPPORTED",
+      "subject": "General rain-garden routing and underdrain distinction",
+      "operation": "Official educational mechanism and maintenance guidance; no site measurement",
+      "locator": "How does a rain garden work? / Why would I need an underdrain? / What maintenance is needed; independent text lines 16–27",
+      "conditions": "A configured underdrain can return filtered water to a storm sewer; without one water can enter native soil. One-to-two-day drainage is a general statement, not this site's criterion.",
+      "unit": "day; neither site dimensions nor published removal percentages adopted",
+      "type": "Educational guidance; underdrained versus non-underdrained systems",
+      "default": "No local default established",
+      "exceptions": "Unknown site configuration and jurisdiction; no local benefit inferred",
+      "local_file": "evidence/primary/S01.txt",
+      "final_lines": [
+        27,
+        29,
+        33
+      ],
+      "title": "Rain gardens (bioretention) 101",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S01",
+        "url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+        "resolved_url": "https://stormwater.pca.state.mn.us/rain_gardens_bioretention_101",
+        "access_utc": "2026-10-10T06:58:39.375877+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S01.html",
+        "bytes": 33180,
+        "sha256": "c54d7063ad54f9c334ccace9475f20d98dd002a9b0ae8b7e4ef8d246889516f8",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S01.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "499033ad630cafead8b5cc44dd97ead40acc347068c730dbed5b24ab13dcf47b"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 27
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S01.txt"
+      ]
+    },
+    {
+      "id": "E02",
+      "candidate_id": "S02",
+      "judgment": "SUPPORTED",
+      "subject": "Capacity-conditioned high-flow bypass",
+      "operation": "MPCA overview; water-quantity treatment and surrounding permit context",
+      "locator": "Water quantity treatment; text lines 56–62; permit applicability text lines 21–24",
+      "conditions": "An offline curb cut at the intended maximum ponding elevation can let excess gutter flow pass once the cell fills. Source distinguishes online flow paths and erosion/short-circuiting concerns.",
+      "unit": "No prescribed site dimensions or event-size threshold",
+      "type": "Offline versus online bypass",
+      "default": "Minnesota recommendations do not establish governing rules for unidentified site",
+      "exceptions": "Observed bypass at the hypothetical opening is not proof of intended design; recover plans and event context",
+      "local_file": "evidence/primary/S02.txt",
+      "final_lines": [
+        19,
+        109,
+        110
+      ],
+      "title": "Overview for bioretention",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S02",
+        "url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+        "resolved_url": "https://stormwater.pca.state.mn.us/overview_for_bioretention",
+        "access_utc": "2026-10-10T06:58:39.377623+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S02.html",
+        "bytes": 62427,
+        "sha256": "72f8e714743480fa8e329f89554a8c2f081588be6de080d4088cb2361843c872",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S02.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "7d563e45d592d80fe0ec59d2113adac48aee59155ab43dd46e8e8246d4c7a692"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 109
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 110
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S02.txt"
+      ]
+    },
+    {
+      "id": "E03",
+      "candidate_id": "S03",
+      "judgment": "SUPPORTED",
+      "subject": "Curb-cut capture and conditional routing alternatives",
+      "operation": "EPA Green Streets Handbook February 2021, Ch. 4.4 and design-context note",
+      "locator": "Printed pp. 4-1, 4-6–4-7; PDF zero-based p45; text lines 1671–1674 and 1878–1963",
+      "conditions": "Placement in the gutter flow path, grading toward the feature, and steep-slope berm/runnel examples are conditional. Grated cuts and trench drains address specific debris/access situations.",
+      "unit": "Handbook includes dimensions, but final adopts none",
+      "type": "Concentrated curb/gutter flow versus sheet flow; conceptual design examples",
+      "default": "No chosen design or software-sizing operation",
+      "exceptions": "Guidance directs designers to local requirements; source does not justify modifying this curb",
+      "local_file": "evidence/primary/S03.txt",
+      "final_lines": [
+        19,
+        21,
+        65
+      ],
+      "title": "Green Streets Handbook",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+      "version": "EPA Green Streets Handbook, February 2021",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S03",
+        "url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+        "resolved_url": "https://www.epa.gov/sites/default/files/2021-04/documents/green_streets_design_manual_feb_2021_web_res_small_508.pdf",
+        "access_utc": "2026-10-10T06:58:39.385163+00:00",
+        "status_code": 200,
+        "content_type": "application/pdf",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S03.pdf",
+        "bytes": 10131822,
+        "sha256": "96a6aac899885fbde9fc9f931e2837422388a2ef76528ea907f69a12e1186d34",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S03.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "2a76d8aaf6f8ca069ea57c6f0a0e43af22db4726816c4dfe0149d7f1dc8978ac"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 19
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 21
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 65
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S03.txt"
+      ]
+    },
+    {
+      "id": "E04",
+      "candidate_id": "S04",
+      "judgment": "SUPPORTED_WITH_CONTEXT",
+      "subject": "Maintenance, compaction/debris hypotheses, and 48-hour inspection",
+      "operation": "MPCA O&M page, post-construction schedule and troubleshooting",
+      "locator": "Independent text lines 101–159 and 225–245; web source post-construction table and common problems",
+      "conditions": "Later semiannual ponding checks are 48 hours after rain when ground is not frozen; deep sumps may pond. Troubleshooting identifies sediment/clogging as possible, not exclusive, causes. Mulch and debris may obstruct flow.",
+      "unit": "48 hours; first-year table includes storms >0.5 inches, not adopted as site event threshold",
+      "type": "Inspection schedule versus symptom/possible-cause table",
+      "default": "No universal local compliance threshold",
+      "exceptions": "Frozen ground and deep-sump conditions; local design and drain configuration unknown",
+      "local_file": "evidence/primary/S04.txt",
+      "final_lines": [
+        29,
+        33,
+        41,
+        43,
+        111
+      ],
+      "title": "Operation and maintenance of bioretention and other stormwater infiltration practices",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S04",
+        "url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+        "resolved_url": "https://stormwater.pca.state.mn.us/operation_and_maintenance_of_bioretention_and_other_stormwater_infiltration_practices",
+        "access_utc": "2026-10-10T06:58:39.387335+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S04.html",
+        "bytes": 67702,
+        "sha256": "ed213a6d06b638cb9a2a6987fa96e1b4bafa8f7b44604028b46a04b95c6a4d3c",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S04.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "285e75d3a78a997bc4ad7a5754b86c257409806ba4e3737abe364fe3884577b2"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 29
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 41
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 43
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S04.txt"
+      ]
+    },
+    {
+      "id": "E05",
+      "candidate_id": "S05",
+      "judgment": "SUPPORTED",
+      "subject": "Records-first inspection and drawdown observation",
+      "operation": "EPA road/parking-lot runoff O&M technical memorandum, 2016",
+      "locator": "Printed pp.7–10; text Inspection and Assessment, Infiltration Rates, and records paragraph around lines 328–383, 471–475",
+      "conditions": "Standing water at 48 hours is an example prompting further evaluation. Inspection cadence depends on drainage area, use/activity and rainfall. Level observations and design/maintenance records support staged assessment.",
+      "unit": "hour/day observation intervals, not a universal infiltration-rate oracle",
+      "type": "Visual screening and qualified assessment",
+      "default": "No site-specific criterion",
+      "exceptions": "Recession alone cannot isolate infiltration in an unknown system with drain/overflow/storage terms",
+      "local_file": "evidence/primary/S05.txt",
+      "final_lines": [
+        33,
+        53,
+        74,
+        97,
+        111
+      ],
+      "title": "Operation and Maintenance of Green Infrastructure Receiving Runoff from Roads and Parking Lots: Technical Memorandum",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf",
+      "version": "EPA road/parking-lot runoff O&M technical memorandum, 2016",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S05",
+        "url": "https://www.epa.gov/sites/production/files/2016-11/documents/final_gi_maintenance_508.pdf",
+        "resolved_url": "https://www.epa.gov/sites/default/files/2016-11/documents/final_gi_maintenance_508.pdf",
+        "access_utc": "2026-10-10T06:58:39.389555+00:00",
+        "status_code": 200,
+        "content_type": "application/pdf",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S05.pdf",
+        "bytes": 9305486,
+        "sha256": "3cb0d542d58c4dd736e7f1e5dd67a70d6e7edf57ca3480f77f91bc3c1865cb32",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S05.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "02253f3762085b7743c71dabd96d96b1fbfb535c7efd420cb933bf4ab8852a17"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 33
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 53
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 74
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 97
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 111
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S05.txt"
+      ]
+    },
+    {
+      "id": "E06",
+      "candidate_id": "S06",
+      "judgment": "SUPPORTED",
+      "subject": "Different levels of BMP assessment",
+      "operation": "Official MPCA four-level assessment summary",
+      "locator": "Levels 1–4 and credit caveat; independent text lines 4–48",
+      "conditions": "Visual inspection, capacity tests, synthetic-runoff tests and monitoring have distinct outputs and effort. Visual inspection supplies no numerical performance data for credit.",
+      "unit": "Candidate does not adopt source table's effort multipliers or monitoring durations",
+      "type": "Qualitative screening versus quantitative assessment",
+      "default": "No mandatory test sequence inferred",
+      "exceptions": "Agency consultation needed for regulatory use; current pilot cannot certify hydrologic or pollutant performance",
+      "local_file": "evidence/primary/S06.txt",
+      "final_lines": [
+        53,
+        63,
+        88,
+        104
+      ],
+      "title": "Assessing the performance of stormwater Best Management Practices (BMPs)",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S06",
+        "url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+        "resolved_url": "https://stormwater.pca.state.mn.us/assessing_the_performance_of_stormwater_best_management_practices_bmps",
+        "access_utc": "2026-10-10T06:58:39.391592+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S06.html",
+        "bytes": 34235,
+        "sha256": "8921737219ebe221ba13038acdd6de0c1d218d9d651b5944e9300464f8eaedf0",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S06.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "1629b2e7cdef6bf0ff7f85c2a2ed783c47c24e889cd4c95e62075177b0fba3d7"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 53
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 63
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 88
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 104
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S06.txt"
+      ]
+    },
+    {
+      "id": "E07",
+      "candidate_id": "S07",
+      "judgment": "SUPPORTED",
+      "subject": "Pretreatment selection conditions",
+      "operation": "Official MPCA article independently retrieved by web tool; direct HTTP body was CAPTCHA",
+      "locator": "Pretreatment compatibility/applicability and definitions; web lines 91–106, 147–162",
+      "conditions": "Pretreatment filter strips need shallow distributed sheet flow; concentrated flow is unsuitable for that type. Forebays are associated with channelized flow; screens with leaves/large debris. Space, topography, downstream practice and maintenance matter.",
+      "unit": "No device size or quantitative removal rating adopted",
+      "type": "Pretreatment, not a standalone treatment BMP",
+      "default": "Examples assume no overriding limitations",
+      "exceptions": "Candidate does not select a device for an unmeasured curb opening",
+      "local_file": "evidence/web-specific-1.json",
+      "final_lines": [
+        51,
+        66
+      ],
+      "title": "Overview and methods of pretreatment",
+      "publisher": "Minnesota Pollution Control Agency, Minnesota Stormwater Manual",
+      "url": "https://stormwater.pca.state.mn.us/overview_and_methods_of_pretreatment",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S07",
+        "url": "https://stormwater.pca.state.mn.us/overview_and_methods_of_pretreatment",
+        "resolved_url": "https://validate.perfdrive.com/?ssa=3affd951-e667-4791-9308-361523ff5ce3&ssb=09600231684&ssc=https%3A%2F%2Fstormwater.pca.state.mn.us%2Foverview_and_methods_of_pretreatment&ssi=5a5c2b0a-dkd2-4b67-9fbe-878159be5d74&ssk=AUTHORIZED_PROVIDER_INSTANCE&ssm=54692267660911093104000117568200&ssn=9688a3caf0154462767341ac5f024da4ada54cd63e59-87a8-4176-bd689e&sso=8f26a5c3-d716152f4da14fc169251d6d55b99a36b23407e69def0e7a&ssp=49232082381791683432179163533927513&ssq=17792471551992017980015519330132880394952&ssr=NjguMjM4LjI1NS4zMQ==&sst=python-requests/2.32.5&ssu=&ssv=&ssw=&ssx=eyJ1em14IjoiN2ZjMDAwMTgyZjMyYTQtNmM0Mi00NzQ3LWIyY2EtNTZlNTJiMGUzZmZmMS0xNzkxNjE1NTE5ODIxMC0wMDhhMzdjNDBlNGNmYjRhY2E1MTAiLCJfX3V6bWYiOiI3ZjkwMDA0Y2Q2M2U1OS04N2E4LTQxNzYtYjVjMy1kNzE2MTUyZjRkYTExLTE3OTE2MTU1MTk4MjEwLTAwMzBkMzBjZTMxZTYwZDI3MGQxMCIsInJkIjoic3RhdGUubW4udXMifQ==",
+        "access_utc": "2026-10-10T06:58:39.629803+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S07.html",
+        "bytes": 15084,
+        "sha256": "6eae1099b98acfa004454a2e0112b6b7e8ab6325ef100dfabf009911480e92ea",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S07.txt",
+        "usable_source_content": false,
+        "reason": "HTTP 200 body is a Radware CAPTCHA page, not the MPCA article. Independent web retrieval provided article text; see ../web-specific-1.json and ../web-specific-2.json.",
+        "extracted_text_sha256": "ddccf5e09deb6761105473e8acee90af8fb03707085cf074da7e6737f836f2fa"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/web-specific-1.json",
+        "evidence/web-specific-2.json"
+      ],
+      "retrieval_limit": "Direct HTTP response is a CAPTCHA page, despite HTTP 200. Governing conditions were independently read from web tool primary-page content; the CAPTCHA text is not evidence."
+    },
+    {
+      "id": "E08",
+      "candidate_id": "S08",
+      "judgment": "SUPPORTED_BOUNDED_SUMMARY",
+      "subject": "UMN five-configuration pretreatment test and maintenance comparison",
+      "operation": "Independent official project-summary retrieval; actual linked full report attempted but blocked",
+      "locator": "Project overview, Research findings, Reports and Presentations; independent text lines 8–34",
+      "conditions": "Named grass/rock inlets, Bunker/Turret and shallow sump were tested; capture differed by test intensity. Simulated overflow reduced sump gross-solid retention. Maintenance comparison is within these configurations.",
+      "unit": "Candidate uses qualitative comparisons; no study percentages transferred",
+      "type": "Pretreatment test evidence, not natural-event whole-garden performance guarantee",
+      "default": "No product preference at the hypothetical site",
+      "exceptions": "Full report not inspected; reported report number 586 not independently confirmed from blocked record",
+      "local_file": "evidence/primary/S08.txt",
+      "final_lines": [
+        51,
+        66
+      ],
+      "title": "Capture of gross solids and sediment by pretreatment practices for bioretention",
+      "publisher": "University of Minnesota Water Resources Center / St. Anthony Falls Laboratory project",
+      "url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+      "version": "Official living page/project summary; revision/default not established in captured content",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S08",
+        "url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+        "resolved_url": "https://wrc.umn.edu/projects/pretreatment-bioretention",
+        "access_utc": "2026-10-10T06:58:39.646754+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S08.html",
+        "bytes": 57186,
+        "sha256": "bffce48ac9e92df33c6af09e4f17c78eb5361df807d84fc2cd1db344041563c5",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S08.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "2a02e7f6dd17efc54ca8413d49c838277cd5ab7252e2b8d0fff8155cb48299ef"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 51
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 66
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S08.txt"
+      ],
+      "retrieval_limit": "Official project summary supports only the bounded qualitative claims. Linked full report record https://hdl.handle.net/11299/201607 redirected to the UMN repository and returned HTTP 403; report not read. Exact report number and full methods are not independently certified.",
+      "additional_evidence": [
+        "evidence/primary/S08-report-record.json"
+      ]
+    },
+    {
+      "id": "E09",
+      "candidate_id": "S09",
+      "judgment": "SUPPORTED",
+      "subject": "Groundwater/media boundary and inlet-maintenance mechanisms",
+      "operation": "EPA 841-B-23-002 November 2023 handbook, Ch.3.1 and 14.2",
+      "locator": "Printed pp.3-2–3-3 and 14-4–14-5; text lines 531–539, 795–806, 5663–5692",
+      "conditions": "Groundwater interaction with media reduces available void space for capture; high seasonal/year-round groundwater is a context for noninfiltration approaches. Inlet guidance addresses grading, damage, grit/leaves/debris.",
+      "unit": "2-foot design separation occurs in source but final does not prescribe it",
+      "type": "National guidance and conditional system boundary",
+      "default": "Local specifications must be consulted",
+      "exceptions": "No measured groundwater, slow-drawdown diagnosis, local rule or retrofit follows from this passage",
+      "local_file": "evidence/primary/S09.txt",
+      "final_lines": [
+        31,
+        143
+      ],
+      "title": "Designing Holistic Bioretention for Performance and Longevity (Bioretention Design Handbook)",
+      "publisher": "U.S. Environmental Protection Agency, EPA 841-B-23-002",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+      "version": "EPA 841-B-23-002, Bioretention Design Handbook, November 2023",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S09",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "resolved_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P1018SVQ.TXT",
+        "access_utc": "2026-10-10T06:58:39.672556+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S09.html",
+        "bytes": 332608,
+        "sha256": "6e43f5cd4d1c93a3d99929b8de1a7c4abf8bfbcaa2af5c6ab2481a4bcdb1a73f",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S09.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "b85bffe48fcb09ef176e4fdc9f5610e6443f4f12721f360c6a17c73a5755e167"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 31
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 143
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S09.txt"
+      ]
+    },
+    {
+      "id": "E10",
+      "candidate_id": "S10",
+      "judgment": "SUPPORTED_WITH_RETRIEVAL_LIMIT",
+      "subject": "Event and antecedent-media-storage study; five-minute method",
+      "operation": "Independently queried official publisher-indexed article and version notes; direct retrieval blocked",
+      "locator": "Water 2026 18(18):2320; DOI 10.3390/w18182320; Abstract, §2.1–2.5, §4.1 and Conclusions; indexed methods in web-specific-1.json",
+      "conditions": "Three wet seasons at two contrasting roof-fed Beijing systems. Storage metrics and response depend on loading, media depth and drainage boundaries. §2.3 explicitly uses 5-minute rainfall records and maximum 30-minute intensity.",
+      "unit": "5 min and 30 min method units verified; no performance number adopted",
+      "type": "Two engineered field cases with different outflow accounting, not a local oracle",
+      "default": "No prescribed rainfall interval for the hypothetical pilot",
+      "exceptions": "Index-retrieved primary text verified relevant passage; no full direct article/raw-data audit. Final omission is a reviewer-access qualification, not proof earlier method claim was false.",
+      "local_file": "evidence/web-specific-1.json",
+      "final_lines": [
+        45,
+        145
+      ],
+      "title": "Dynamic Media Storage Links Antecedent Soil Moisture to Runoff Retention in Field-Scale Bioretention Systems",
+      "publisher": "Water, 2026, 18(18), 2320",
+      "url": "https://doi.org/10.3390/w18182320",
+      "version": "Water 2026, 18(18), 2320; DOI 10.3390/w18182320; publisher Version of Record notes dated 2026-09-16",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S10",
+        "url": "https://doi.org/10.3390/w18182320",
+        "resolved_url": "https://www.mdpi.com/2073-4441/18/18/2320",
+        "access_utc": "2026-10-10T06:58:39.769614+00:00",
+        "status_code": 403,
+        "content_type": "text/html",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S10.html",
+        "bytes": 402,
+        "sha256": "045dd4ae38c02079be92c1d4856334eefe2fd0135d7115a20b96dd75a872ceb5",
+        "usable_source_content": false
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 45
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 145
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/web-specific-1.json",
+        "evidence/web-s10-method.json",
+        "evidence/web-context-2.json"
+      ],
+      "retrieval_limit": "Direct publisher HTTP response 403 and web full-page rate-limit; official publisher-indexed abstract/method sections accessed. Section 2.3 independently confirms five-minute weather data and maximum 30-minute intensity. No full-paper/raw-data replication claimed."
+    },
+    {
+      "id": "E11",
+      "candidate_id": "S11",
+      "judgment": "SUPPORTED",
+      "subject": "SWMM 5.2 LID layer representation and water balance",
+      "operation": "EPA user's manual Version 5.2, February 2022",
+      "locator": "§3.4.8 printed pp.91–92, Figure3-13/Table3-3; text lines 2849–2908; §3.4.1 surface runoff text lines 2643–2652",
+      "conditions": "LID properties are per-unit-area; a moisture balance tracks layer transfers/storage. Bioretention Cell and Rain Garden are distinct software types; optional storage/drain layers should not be presumed for every rain garden.",
+      "unit": "Per-unit-area parameterization; no executed model or chosen units/defaults",
+      "type": "Parameterized simulator, not site measurement",
+      "default": "No modeling configuration or version default selected in final",
+      "exceptions": "Real rainfall/catchment/geometry/media/drain inputs are absent; schematic balances do not establish site performance",
+      "local_file": "evidence/primary/S11.txt",
+      "final_lines": [
+        55,
+        68,
+        129,
+        136
+      ],
+      "title": "Storm Water Management Model (SWMM) User's Manual, Version 5.2",
+      "publisher": "U.S. Environmental Protection Agency",
+      "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+      "version": "EPA SWMM User's Manual Version 5.2, February 2022",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S11",
+        "url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+        "resolved_url": "https://nepis.epa.gov/Exe/ZyPURL.cgi?Dockey=P10145M6.TXT",
+        "access_utc": "2026-10-10T06:58:39.828552+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=ISO-8859-1",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S11.html",
+        "bytes": 578543,
+        "sha256": "13c0bea08a151084152a4c25ac1bd1e00e2a8b930d41712bc6a680b30b3aa35f",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S11.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "b08e4079d3b4a98245fe4edcaaf78362bedfe1b30e55520de6752bc28a9b7548"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 68
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 129
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 136
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S11.txt"
+      ]
+    },
+    {
+      "id": "E12",
+      "candidate_id": "S12",
+      "judgment": "SUPPORTED",
+      "subject": "Specific SWMM v5.2.4 release corrections",
+      "operation": "Independent EPA-maintained tagged release record",
+      "locator": "Build5.2.4 (Aug2023), tag v5.2.4 commit7952ca8; Engine Updates2–3,6–8; text lines32–42",
+      "conditions": "Changes affect LID underdrain input checking, fluxes in Bioretention/Permeable Pavement/Infiltration Trench, depressed-gutter street transect/slope and inclined-throat curb-inlet head.",
+      "unit": "Version/commit identifiers, not physical site quantities",
+      "type": "Software correction history",
+      "default": "Final makes no latest-version or universal-fix assertion",
+      "exceptions": "Does not diagnose physical rain-garden capture or justify a model run without inputs",
+      "local_file": "evidence/primary/S12.txt",
+      "final_lines": [
+        55,
+        144
+      ],
+      "title": "EPA SWMM repository release v5.2.4",
+      "publisher": "U.S. EPA-maintained Stormwater-Management-Model repository",
+      "url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+      "version": "USEPA release tag v5.2.4; Build 5.2.4, August 2023; commit 7952ca8",
+      "independence": "Reviewer retrieved primary content independently; candidate source identity is used only for cross-navigation. Candidate/reviewer agreement is not proof.",
+      "retrieval": {
+        "id": "S12",
+        "url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+        "resolved_url": "https://github.com/USEPA/Stormwater-Management-Model/releases/tag/v5.2.4",
+        "access_utc": "2026-10-10T06:58:39.893921+00:00",
+        "status_code": 200,
+        "content_type": "text/html; charset=utf-8",
+        "path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S12.html",
+        "bytes": 200874,
+        "sha256": "ebd515218558b7e2a1c0e3ff8438f620f15263a687abe6c47578e9ee278ed1b8",
+        "extracted_text_path": "ER12_RUNTIME/assessment/D-R1-04/treatment-v1/evidence/primary/S12.txt",
+        "usable_source_content": true,
+        "extracted_text_sha256": "6e398c48e98f6d61b68b8f3a1b713c7eafef3703f6042a1cce43a830a03d5d3c"
+      },
+      "final_locators": [
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 55
+        },
+        {
+          "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+          "line": 144
+        }
+      ],
+      "candidate_source_maps": [
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json"
+      ],
+      "usable_evidence": [
+        "evidence/primary/S12.txt"
+      ]
+    }
+  ],
+  "artifacts_inspected": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "unchanged": true,
+      "end_mtime_ns": 1791604608938287266,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613453609999692,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "unchanged": true,
+      "end_mtime_ns": 1791613453609999692,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R1-04/plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791613453610117087,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "unchanged": true,
+      "end_mtime_ns": 1791613453610117087,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/inputs/brief.md",
+      "bytes": 2512,
+      "sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "mtime_ns": 1791613453767771213,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "92ba302a03b968e7f142436f1423368a962609c701de0389ff505bcb07dbf2b8",
+      "unchanged": true,
+      "end_mtime_ns": 1791613453767771213,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/assignment.md",
+      "bytes": 4022,
+      "sha256": "9f987f5c92a611b4958241d50830a7a37bbbd480e2d6d522c53584db875178dd",
+      "mtime_ns": 1791614551214193286,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "9f987f5c92a611b4958241d50830a7a37bbbd480e2d6d522c53584db875178dd",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551214193286,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/freeze.json",
+      "bytes": 3348,
+      "sha256": "ac61eb84950f1c0f056e224142cdcd4f9639a4427a9610d38b3af748f378e0e2",
+      "mtime_ns": 1791614551213912636,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "ac61eb84950f1c0f056e224142cdcd4f9639a4427a9610d38b3af748f378e0e2",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551213912636,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551214061502,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551214061502,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.goal-guard-backup-501abf21bb0d4bc1bbb41276ce4ba3ca/request.json",
+      "bytes": 1625,
+      "sha256": "36d4093cb786bb5c84c2adac8b4b63b1111b83b2b6b33b450644d560b9f969c2",
+      "mtime_ns": 1791614551213787642,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "36d4093cb786bb5c84c2adac8b4b63b1111b83b2b6b33b450644d560b9f969c2",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551213787642,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/assignment.md",
+      "bytes": 3314,
+      "sha256": "7f99c4ff0a0f01ec5640f9789a26fa51d97ea4ef533b18a2fb92b404f181c316",
+      "mtime_ns": 1791614551014758661,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "7f99c4ff0a0f01ec5640f9789a26fa51d97ea4ef533b18a2fb92b404f181c316",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551014758661,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/freeze.json",
+      "bytes": 3260,
+      "sha256": "1d42d6b7702ac0fa611e339051f7079318e36a17f997ee92ceefaa124ab476e5",
+      "mtime_ns": 1791614551014627043,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "1d42d6b7702ac0fa611e339051f7079318e36a17f997ee92ceefaa124ab476e5",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551014627043,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551014697879,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551014697879,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/.invocation-backup-93572279cea54ea8aae144d4012d36b5/request.json",
+      "bytes": 905,
+      "sha256": "0f32f813e2c10066c9e0334d49e4ea99437da823dbf87aa5c2431d0e8bed765f",
+      "mtime_ns": 1791614551014509335,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "0f32f813e2c10066c9e0334d49e4ea99437da823dbf87aa5c2431d0e8bed765f",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551014509335,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/assignment.md",
+      "bytes": 5533,
+      "sha256": "3c5c86463b7ce101539d744795244d09f1c01d2c6c4601b0cb3d12ba70eb5bf7",
+      "mtime_ns": 1791614551216884161,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "3c5c86463b7ce101539d744795244d09f1c01d2c6c4601b0cb3d12ba70eb5bf7",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551216884161,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+      "bytes": 10589,
+      "sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+      "mtime_ns": 1791614867965530900,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+      "unchanged": true,
+      "end_mtime_ns": 1791614867965530900,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/dispatch.json",
+      "bytes": 6426,
+      "sha256": "2e9edc5947d63838ab6b0cce18536bb34b3bec01754a1aef1f863c57287fea38",
+      "mtime_ns": 1791614552345495304,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "2e9edc5947d63838ab6b0cce18536bb34b3bec01754a1aef1f863c57287fea38",
+      "unchanged": true,
+      "end_mtime_ns": 1791614552345495304,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4599,
+      "sha256": "4f1df34addb2a8bba139c275309f7b7422afe43b66be2c7815b86b6179c5eab2",
+      "mtime_ns": 1791614551217075279,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "4f1df34addb2a8bba139c275309f7b7422afe43b66be2c7815b86b6179c5eab2",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551217075279,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/freeze.json",
+      "bytes": 3348,
+      "sha256": "4b6ffc8c7f2deb8e86c7fbcf85e8bfa5c6319ca7aa901cc153a9624cd566b74f",
+      "mtime_ns": 1791614551215889002,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "4b6ffc8c7f2deb8e86c7fbcf85e8bfa5c6319ca7aa901cc153a9624cd566b74f",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551215889002,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "mtime_ns": 1791614551216383984,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "0f5db8d6136e89001e67d5ee7f426dc8010ed7e88473ca249abb25fdaaaf621b",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551216383984,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3044,
+      "sha256": "63e87dde19af20b5eb4648d9191972b64bb9009c15fd7d198e82e76defb36113",
+      "mtime_ns": 1791614551015978281,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "63e87dde19af20b5eb4648d9191972b64bb9009c15fd7d198e82e76defb36113",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551015978281,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-activation.json",
+      "bytes": 471,
+      "sha256": "d12607a88556533ac0fe8dfdb7f179cde6c9b1abcf42bcf17fde880bfd95bdce",
+      "mtime_ns": 1791614867965716570,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "d12607a88556533ac0fe8dfdb7f179cde6c9b1abcf42bcf17fde880bfd95bdce",
+      "unchanged": true,
+      "end_mtime_ns": 1791614867965716570,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-binding-guard.json",
+      "bytes": 54,
+      "sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "mtime_ns": 1791614867965818789,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "14cd10c373f787f775b352b6095f8190b160567c9acdde110f0e7474e8e8492f",
+      "unchanged": true,
+      "end_mtime_ns": 1791614867965818789,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-completion.json",
+      "bytes": 800,
+      "sha256": "c8d41884da0ab6b51e33d24d569a0e673806ca982c7b70a83be7500430074ac5",
+      "mtime_ns": 1791614894437001622,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "c8d41884da0ab6b51e33d24d569a0e673806ca982c7b70a83be7500430074ac5",
+      "unchanged": true,
+      "end_mtime_ns": 1791614894437001622,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/native-goal-lifecycle.md",
+      "bytes": 595,
+      "sha256": "4595b91d96d8c71d88ceeba89bd76b2dfc26b85aff724f9ff23f33ab01bac884",
+      "mtime_ns": 1791614894527781257,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "4595b91d96d8c71d88ceeba89bd76b2dfc26b85aff724f9ff23f33ab01bac884",
+      "unchanged": true,
+      "end_mtime_ns": 1791614894527781257,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/request.json",
+      "bytes": 3144,
+      "sha256": "396593df120c68f796e7c04b2d6704ecbccd59540cf4ce2d49bc7bb9d5c1c12c",
+      "mtime_ns": 1791614551215400379,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "396593df120c68f796e7c04b2d6704ecbccd59540cf4ce2d49bc7bb9d5c1c12c",
+      "unchanged": true,
+      "end_mtime_ns": 1791614551215400379,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/service-tier-change.json",
+      "bytes": 485,
+      "sha256": "72ff37859ea7a9c2dfde13bce8d951926596710663650d7b43fbbee7bdbd6d9b",
+      "mtime_ns": 1791614550805626316,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "72ff37859ea7a9c2dfde13bce8d951926596710663650d7b43fbbee7bdbd6d9b",
+      "unchanged": true,
+      "end_mtime_ns": 1791614550805626316,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+      "bytes": 26953,
+      "sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+      "mtime_ns": 1791614867966608406,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+      "unchanged": true,
+      "end_mtime_ns": 1791614867966608406,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/sources/index.md",
+      "bytes": 3397,
+      "sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+      "mtime_ns": 1791614867966757246,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+      "unchanged": true,
+      "end_mtime_ns": 1791614867966757246,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/status.json",
+      "bytes": 3938,
+      "sha256": "ebe2d34b07b16ffb8b92fce422ca29fb75f04d2f92bc5be24b482001b02721dc",
+      "mtime_ns": 1791614921862864971,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "ebe2d34b07b16ffb8b92fce422ca29fb75f04d2f92bc5be24b482001b02721dc",
+      "unchanged": true,
+      "end_mtime_ns": 1791614921862864971,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/assignment.md",
+      "bytes": 4448,
+      "sha256": "a2ae20a8a1c747098768c66eec2101c17b5e9ebeb0befa579bf1869fbca44893",
+      "mtime_ns": 1791613454370423951,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "a2ae20a8a1c747098768c66eec2101c17b5e9ebeb0befa579bf1869fbca44893",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454370423951,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/freeze.json",
+      "bytes": 1837,
+      "sha256": "3694a59906d7fad08ed9a4d9ed4e8b13a8a5f2e10e8ea1096fe59360641383f2",
+      "mtime_ns": 1791613454370284872,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "3694a59906d7fad08ed9a4d9ed4e8b13a8a5f2e10e8ea1096fe59360641383f2",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454370284872,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454370357153,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454370357153,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.goal-guard-backup-077ba67106b44ee7bf4abc7b82a8968d/request.json",
+      "bytes": 1661,
+      "sha256": "6fa7355965b152c6c50db99fbdaff3ea6a92fd054834794e6b458582651949b6",
+      "mtime_ns": 1791613454370159794,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "6fa7355965b152c6c50db99fbdaff3ea6a92fd054834794e6b458582651949b6",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454370159794,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/assignment.md",
+      "bytes": 3728,
+      "sha256": "676591c9be84c7a70082f17901b2787b14e7cdf2a98411f141b0319da8f7764e",
+      "mtime_ns": 1791613454164265103,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "676591c9be84c7a70082f17901b2787b14e7cdf2a98411f141b0319da8f7764e",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454164265103,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/freeze.json",
+      "bytes": 1749,
+      "sha256": "73e0d6f3a9d291066f713447c2b6dbb6e58d07728a1f79e973374bd13d744840",
+      "mtime_ns": 1791613454164134445,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "73e0d6f3a9d291066f713447c2b6dbb6e58d07728a1f79e973374bd13d744840",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454164134445,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454164203573,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454164203573,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/.invocation-backup-0e7ee6cdb1db47348473a9a6ac295a11/request.json",
+      "bytes": 929,
+      "sha256": "43e6106290cb9105e5ac91842f1316355993b4434602d5cc7b408714c14a7c96",
+      "mtime_ns": 1791613454164001042,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "43e6106290cb9105e5ac91842f1316355993b4434602d5cc7b408714c14a7c96",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454164001042,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/assignment.md",
+      "bytes": 5977,
+      "sha256": "c78f781923d877bf694254f8581ce438599347fb10ce4faa0e1a705e7b9597ae",
+      "mtime_ns": 1791613454372999625,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "c78f781923d877bf694254f8581ce438599347fb10ce4faa0e1a705e7b9597ae",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454372999625,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/discovery.md",
+      "bytes": 12112,
+      "sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "mtime_ns": 1791614210792773103,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+      "unchanged": true,
+      "end_mtime_ns": 1791614210792773103,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/dispatch.json",
+      "bytes": 6552,
+      "sha256": "13e07b2510c32131efdfd63e93d15239f424df6c606680d0de171878bd3c3436",
+      "mtime_ns": 1791613455625984334,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "13e07b2510c32131efdfd63e93d15239f424df6c606680d0de171878bd3c3436",
+      "unchanged": true,
+      "end_mtime_ns": 1791613455625984334,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/draft.md",
+      "bytes": 17586,
+      "sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "mtime_ns": 1791614412626170606,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+      "unchanged": true,
+      "end_mtime_ns": 1791614412626170606,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4665,
+      "sha256": "8b58880ab16329886dd08076bc31f96c60d27fdae7d4b0d1d638e17e14358c47",
+      "mtime_ns": 1791613454373185257,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "8b58880ab16329886dd08076bc31f96c60d27fdae7d4b0d1d638e17e14358c47",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454373185257,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/freeze.json",
+      "bytes": 1837,
+      "sha256": "079ab42a331d08467bc91a22efa07f253d8cdaf7e4108382578548d3b134c68b",
+      "mtime_ns": 1791613454372017622,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "079ab42a331d08467bc91a22efa07f253d8cdaf7e4108382578548d3b134c68b",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454372017622,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "mtime_ns": 1791613454372522028,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f9a90538d99ab78340ae7f72d3b0f2bd4ed181645e14d7acc1eef6b409a78aed",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454372522028,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3086,
+      "sha256": "afb3c979fe8befb57cda5918a26b6ce305dda977be5928715a1e41df6afd9e86",
+      "mtime_ns": 1791613454165502762,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "afb3c979fe8befb57cda5918a26b6ce305dda977be5928715a1e41df6afd9e86",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454165502762,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-binding-guard-response.json",
+      "bytes": 55,
+      "sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "mtime_ns": 1791614445248885659,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "7cdaaf863f2c0673d820df28e9e59a5aa653e2f60470442dcb33e7784ae25179",
+      "unchanged": true,
+      "end_mtime_ns": 1791614445248885659,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-completion-response.json",
+      "bytes": 812,
+      "sha256": "97197cfe4508c8d953e5c620344556102f6efb05c796a047cbde85e4dbed4ee5",
+      "mtime_ns": 1791614445418474597,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "97197cfe4508c8d953e5c620344556102f6efb05c796a047cbde85e4dbed4ee5",
+      "unchanged": true,
+      "end_mtime_ns": 1791614445418474597,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/native-goal-create-response.json",
+      "bytes": 483,
+      "sha256": "8f5ca5f2f7a8dbef257bc2633ba48fe34c7bf729ca39ce2ee861e77bfe2facf0",
+      "mtime_ns": 1791613556781686392,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "8f5ca5f2f7a8dbef257bc2633ba48fe34c7bf729ca39ce2ee861e77bfe2facf0",
+      "unchanged": true,
+      "end_mtime_ns": 1791613556781686392,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/plan-release-response.json",
+      "bytes": 415,
+      "sha256": "734f8caa179a347cc81fa334726581cc0c71a6b6a3d248c3b2f80db959983114",
+      "mtime_ns": 1791614423793788200,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "734f8caa179a347cc81fa334726581cc0c71a6b6a3d248c3b2f80db959983114",
+      "unchanged": true,
+      "end_mtime_ns": 1791614423793788200,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 433,
+      "sha256": "15fddd753fabeb08c3db76989c317eb8d1e5fecc655ce5ac6c75856a42df1971",
+      "mtime_ns": 1791614218695982381,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "15fddd753fabeb08c3db76989c317eb8d1e5fecc655ce5ac6c75856a42df1971",
+      "unchanged": true,
+      "end_mtime_ns": 1791614218695982381,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/request.json",
+      "bytes": 3198,
+      "sha256": "7b111be2b5b1723127af43d6e4a95001d750423f9ce45a3b319ad86ae465572a",
+      "mtime_ns": 1791613454371521629,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "7b111be2b5b1723127af43d6e4a95001d750423f9ce45a3b319ad86ae465572a",
+      "unchanged": true,
+      "end_mtime_ns": 1791613454371521629,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6642,
+      "sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "mtime_ns": 1791614218695862187,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+      "unchanged": true,
+      "end_mtime_ns": 1791614218695862187,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 497,
+      "sha256": "8da9177e4025971ef42c3084bfcad3101fa411cb9920a2f77892991fa2fb1f7c",
+      "mtime_ns": 1791613453952585700,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "8da9177e4025971ef42c3084bfcad3101fa411cb9920a2f77892991fa2fb1f7c",
+      "unchanged": true,
+      "end_mtime_ns": 1791613453952585700,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+      "bytes": 15833,
+      "sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "mtime_ns": 1791614335225933687,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+      "unchanged": true,
+      "end_mtime_ns": 1791614335225933687,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/sources/index.md",
+      "bytes": 3086,
+      "sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+      "mtime_ns": 1791614412626523148,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+      "unchanged": true,
+      "end_mtime_ns": 1791614412626523148,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/status.json",
+      "bytes": 5492,
+      "sha256": "303b9b8961252eb9271961623d949c01852a33515506d4416f904bd54ec20e2d",
+      "mtime_ns": 1791614550263218592,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "303b9b8961252eb9271961623d949c01852a33515506d4416f904bd54ec20e2d",
+      "unchanged": true,
+      "end_mtime_ns": 1791614550263218592,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/assignment.md",
+      "bytes": 4004,
+      "sha256": "a72de3ad677318aba5fa4567fa813abf1717b3e0eb7b611f675e344554672645",
+      "mtime_ns": 1791614922787027999,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "a72de3ad677318aba5fa4567fa813abf1717b3e0eb7b611f675e344554672645",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922787027999,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/freeze.json",
+      "bytes": 4134,
+      "sha256": "97874f584589e13a1cdb398a36838db6bcb6d9c55603dd84891d7ba35582aa0a",
+      "mtime_ns": 1791614922786879086,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "97874f584589e13a1cdb398a36838db6bcb6d9c55603dd84891d7ba35582aa0a",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922786879086,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922786967774,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922786967774,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.goal-guard-backup-cb0b3bebf42a4cbf94bd0f8512512df9/request.json",
+      "bytes": 1631,
+      "sha256": "58e0b62ec57911dd121303b93d112d1e60b487632ad5a5858e8dc8843a3a59e1",
+      "mtime_ns": 1791614922786747700,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "58e0b62ec57911dd121303b93d112d1e60b487632ad5a5858e8dc8843a3a59e1",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922786747700,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/assignment.md",
+      "bytes": 3294,
+      "sha256": "f84a064f48e3c340ed82914a233f6e77471d103c3a9f9195e8958ba9fef2768c",
+      "mtime_ns": 1791614922600615447,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f84a064f48e3c340ed82914a233f6e77471d103c3a9f9195e8958ba9fef2768c",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922600615447,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/freeze.json",
+      "bytes": 4046,
+      "sha256": "6ae9d5d7f75e7e724b852c15d6f83213fbf2eb85490c0933662645cb3390fe51",
+      "mtime_ns": 1791614922600492242,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "6ae9d5d7f75e7e724b852c15d6f83213fbf2eb85490c0933662645cb3390fe51",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922600492242,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922600557421,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922600557421,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/.invocation-backup-76d16fec693d408da156146c3260effa/request.json",
+      "bytes": 909,
+      "sha256": "9297b2bc4f010b8909d610cd7b6fed0b15f29e3a4dd98f3beb72656ea3f3e488",
+      "mtime_ns": 1791614922600382735,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "9297b2bc4f010b8909d610cd7b6fed0b15f29e3a4dd98f3beb72656ea3f3e488",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922600382735,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/assignment.md",
+      "bytes": 5518,
+      "sha256": "36be4be31346c69843b3846977ff071379b041cf6af0a7057293b6df85e4554b",
+      "mtime_ns": 1791614922789718714,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "36be4be31346c69843b3846977ff071379b041cf6af0a7057293b6df85e4554b",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922789718714,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/dispatch.json",
+      "bytes": 6447,
+      "sha256": "f7d91c0db1bdeeac3e3554945d73eceae93d6518a8776fbae2dd73cd0a2640ea",
+      "mtime_ns": 1791614925388880717,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f7d91c0db1bdeeac3e3554945d73eceae93d6518a8776fbae2dd73cd0a2640ea",
+      "unchanged": true,
+      "end_mtime_ns": 1791614925388880717,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4610,
+      "sha256": "1b01d5ce43c0148d3027d3eb6de196be78f4c76e4ac3310b0ad83f7ca8d20f54",
+      "mtime_ns": 1791614922789861167,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "1b01d5ce43c0148d3027d3eb6de196be78f4c76e4ac3310b0ad83f7ca8d20f54",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922789861167,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+      "bytes": 28255,
+      "sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "mtime_ns": 1791615240093053488,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+      "unchanged": true,
+      "end_mtime_ns": 1791615240093053488,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/freeze.json",
+      "bytes": 4134,
+      "sha256": "7b0ee094a15ade8c3b9e9e1b0cb889a95638095817dc09238214ae74a28769fe",
+      "mtime_ns": 1791614922788755638,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "7b0ee094a15ade8c3b9e9e1b0cb889a95638095817dc09238214ae74a28769fe",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922788755638,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "mtime_ns": 1791614922789256536,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "c5b579a44dcebf6372c67523fec9c15b1be4a75b2b3a6bae50a1b7a7347a71e6",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922789256536,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3051,
+      "sha256": "bf4cdbeb76b6ef3fe6747d894eb9f4eb44cd47ab61c9c85085d9516cd6307993",
+      "mtime_ns": 1791614922601889945,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "bf4cdbeb76b6ef3fe6747d894eb9f4eb44cd47ab61c9c85085d9516cd6307993",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922601889945,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-activation.json",
+      "bytes": 473,
+      "sha256": "6b5fc30d0a39d678cc0b3247642ce4a9b111c3f5380db19aa480436a2b02a231",
+      "mtime_ns": 1791615269709198381,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "6b5fc30d0a39d678cc0b3247642ce4a9b111c3f5380db19aa480436a2b02a231",
+      "unchanged": true,
+      "end_mtime_ns": 1791615269709198381,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/native-goal-completion.json",
+      "bytes": 802,
+      "sha256": "9f9e6a574566a57f30dd2c5caeb44b0e22f1a66f2fbfd06de06ef34e87575e23",
+      "mtime_ns": 1791615312802020997,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "9f9e6a574566a57f30dd2c5caeb44b0e22f1a66f2fbfd06de06ef34e87575e23",
+      "unchanged": true,
+      "end_mtime_ns": 1791615312802020997,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/request.json",
+      "bytes": 3153,
+      "sha256": "21bccaec3d4e162d42aabca178f91a3dbf461f5dc2950dd1e7c31da380d09c20",
+      "mtime_ns": 1791614922788096338,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "21bccaec3d4e162d42aabca178f91a3dbf461f5dc2950dd1e7c31da380d09c20",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922788096338,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 487,
+      "sha256": "f7cd7655c41f826d549b6a8b48b6e7d8096d0e08a7709d72558678a0fc212bfa",
+      "mtime_ns": 1791614922393497648,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "f7cd7655c41f826d549b6a8b48b6e7d8096d0e08a7709d72558678a0fc212bfa",
+      "unchanged": true,
+      "end_mtime_ns": 1791614922393497648,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json",
+      "bytes": 37611,
+      "sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+      "mtime_ns": 1791615290714820441,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+      "unchanged": true,
+      "end_mtime_ns": 1791615290714820441,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/sources/index.md",
+      "bytes": 4302,
+      "sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+      "mtime_ns": 1791615240107053557,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+      "unchanged": true,
+      "end_mtime_ns": 1791615240107053557,
+      "mtime_unchanged": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/terminal-science-freeze-root.json",
+      "bytes": 8255,
+      "sha256": "e5079480fda43b692101917d39ad18a9561bb133fad7180bbb45178cf8983c95",
+      "mtime_ns": 1791615333145508729,
+      "inspection": "FULL_CONTENT_READ",
+      "scope_note": "Original bounded case artifact; full content inspected.",
+      "end_sha256": "e5079480fda43b692101917d39ad18a9561bb133fad7180bbb45178cf8983c95",
+      "unchanged": true,
+      "end_mtime_ns": 1791615333145508729,
+      "mtime_unchanged": true
+    }
+  ],
+  "inventory_only_exclusions": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-04/treatment/control/run.json",
+      "bytes": 584,
+      "sha256": "7333f99f167f837bee1486c224d650f05a9b57e5e3b0c03a897d0335ead28e05",
+      "mtime_ns": 1791613453767987244,
+      "inspection": "HASH_INVENTORY_ONLY_NOT_READ",
+      "scope_note": "Not in the actual stage input maps; not used in semantic or protocol judgment.",
+      "end_sha256": "7333f99f167f837bee1486c224d650f05a9b57e5e3b0c03a897d0335ead28e05",
+      "unchanged": true,
+      "end_mtime_ns": 1791613453767987244,
+      "mtime_unchanged": true
+    }
+  ],
+  "freeze_integrity": {
+    "observed_at_utc": "2026-10-10T07:17:15.910027+00:00",
+    "all_original_hashes_and_mtimes_unchanged": true,
+    "terminal_science_artifacts": [
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/critique.md",
+        "expected_sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+        "observed_sha256": "faf438a80b7e6ed4b6b6860bbb080392e3eed78424828109fcfc2c193dc9ee59",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/source-map.json",
+        "expected_sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+        "observed_sha256": "85b278053ad4285399372137325848ebc95c2d160ea98e1029747631c5b54c65",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/critic/sources/index.md",
+        "expected_sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+        "observed_sha256": "42d3ace9f617354a2cdb7b9cfbcb3d606dec4a261005d7a72b15f6bd1490da93",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/discovery.md",
+        "expected_sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+        "observed_sha256": "476d2e24cb480ad1620b9c0ccd37d325fcaefe728bff12b3cf3908576d7ff582",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/draft.md",
+        "expected_sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+        "observed_sha256": "a26ea5024daa326b2f9029d190d17f051768a23baae9b6e201e3bf57308b771a",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/revealed-plan.md",
+        "expected_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+        "observed_sha256": "83cfd8f7a1e9a28268e174c04f2d1e2049b459ed644dcadb4125c96c2a2d8296",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/source-map.json",
+        "expected_sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+        "observed_sha256": "3e32b114a5b6cf54c623e2ae6b2844c2ffef58c9a28e566fb29f040dc69ee846",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/investigator/sources/index.md",
+        "expected_sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+        "observed_sha256": "74bf4fdce38f3e4b3a5c21db88b2d8ab827572d32fab7dc4a458e8fb13f0c890",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/final.md",
+        "expected_sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+        "observed_sha256": "55ee6e818d29d30c6d54b822d309b8658be49c2dc059055847b050dc7cd5ff34",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/source-map.json",
+        "expected_sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+        "observed_sha256": "4953a1f399efd05f23fa04d7386740c9df2e6a976ee6170db0bde4a5d5e3fb57",
+        "matches": true
+      },
+      {
+        "path": "ER12_RUNTIME/runs/D-R1-04/treatment/stages/reviser/sources/index.md",
+        "expected_sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+        "observed_sha256": "67be3f0159d85f58496708664f2e0ad1ca3f77e140fcd39a4cd8269153b5e7c9",
+        "matches": true
+      }
+    ],
+    "all_terminal_science_hashes_match": true,
+    "brief_copy_byte_identical": true,
+    "revealed_plan_byte_identical": true,
+    "embedded_brief_byte_identical": true,
+    "note": "Integrity checks establish the inspected bytes, not source meaning or execution authenticity."
+  },
+  "reviewer_native_goal": {
+    "thread_id": "01a12498-762f-7160-b11d-2c40c890dbbc",
+    "status_at_judgment_save": "ACTIVE_DIRECTLY_OBSERVED",
+    "completion_requirement": "Complete only after full judgment and source-map/evidence are saved; direct completion response recorded separately after saving.",
+    "objective_characters": 913,
+    "precompletion_receipt": "evidence/reviewer-goal-precompletion.json"
+  },
+  "source_judgment": "PASS_WITH_LIMITATIONS",
+  "artifact_verification": "evidence/artifact-verification.json"
+}

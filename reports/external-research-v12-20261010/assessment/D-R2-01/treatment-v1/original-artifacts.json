@@ -1,0 +1,355 @@
+{
+  "captured_at_utc": "2026-10-10T07:37:33.159454+00:00",
+  "artifacts": [
+    {
+      "path": "ER12_RUNTIME/assessment/RUBRIC-v1.md",
+      "snapshot": "evidence/originals/assessment/RUBRIC-v1.md",
+      "bytes": 2790,
+      "sha256": "a93d0456d53b3519883ec517135688d2bbb4c12eb62f9a0b6fbe1bf2615fe19b",
+      "mtime_ns": 1791604608938287266
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/brief.md",
+      "snapshot": "evidence/originals/frozen-inputs/D-R2-01/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "mtime_ns": 1791615417951472494
+    },
+    {
+      "path": "ER12_RUNTIME/frozen-inputs/D-R2-01/plan.md",
+      "snapshot": "evidence/originals/frozen-inputs/D-R2-01/plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "mtime_ns": 1791615417951580741
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/terminal-science-freeze-root.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/terminal-science-freeze-root.json",
+      "bytes": 7497,
+      "sha256": "7d16f9295a5b1eb9fa814e3b0c129fa15c4a6d4184fc28d99c5ba109efca0189",
+      "mtime_ns": 1791617740052289901
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/inputs/brief.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/inputs/brief.md",
+      "bytes": 2665,
+      "sha256": "e49eb80a5f951ffe3958f04ff0ae9296cc5391f43f545028d2f52a5f113c127f",
+      "mtime_ns": 1791615420040651947
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/assignment.md",
+      "bytes": 9043,
+      "sha256": "73f2363d47abc98a2b2f9cb2dd67105788bf281bcdeef4bc1b901e06873a534a",
+      "mtime_ns": 1791615420851125231
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/input-map.json",
+      "bytes": 797,
+      "sha256": "1932fb6de588d12c8aa607671ce433b94340cdfa903053cca76e2d8156e733a6",
+      "mtime_ns": 1791615420850569706
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/freeze.json",
+      "bytes": 4300,
+      "sha256": "d990f5b610de0a0edd3cb60070845c83c97697d0a8c00bc32f8ffee777050fe9",
+      "mtime_ns": 1791615420850011109
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/source-map.json",
+      "bytes": 24818,
+      "sha256": "ca7a09e10a2b65e4b3cc08d26038076ad809776c88d756ed09ef2fb8aa84faa4",
+      "mtime_ns": 1791616047494438121
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/request.json",
+      "bytes": 6377,
+      "sha256": "8380cc03b19510f0a00eb32ea5315b30518adad9109b3426f9b0766719c08ed5",
+      "mtime_ns": 1791615420848435663
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/dispatch.json",
+      "bytes": 9887,
+      "sha256": "243c06dbdc3c36c06e137fe1543c7abd86f2d88c639f252eb1696fe8f2736340",
+      "mtime_ns": 1791615423286843108
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/invocation-clarification.json",
+      "bytes": 3099,
+      "sha256": "fa14496f79679e2ba3fd68203bbd31115c63efa3702fe401be523e723df3f113",
+      "mtime_ns": 1791615420432620268
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/service-tier-change.json",
+      "bytes": 523,
+      "sha256": "93a7eceb9725af76ba19909cf7b46ed854b2f3544629a33487bf24928aec5e9d",
+      "mtime_ns": 1791615420199176575
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/exact-activation-capture-v2-1.json",
+      "bytes": 7778,
+      "sha256": "604a55ed1b075262eebd4f0e066df880b6ffe748c41fedd79ddd7df0af694e12",
+      "mtime_ns": 1791615420851310927
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/exact-goal-binding-guard.json",
+      "bytes": 4678,
+      "sha256": "c75ddb9b06fa13bb340884fdcf968134aa90520869125dfb5a3ed20872c3491b",
+      "mtime_ns": 1791615420653456091
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/native-goal-create.json",
+      "bytes": 483,
+      "sha256": "9aafc4facd6aa256f0d023d71b3f54306e6be0bc7a4b2077a2b99e8c970e108a",
+      "mtime_ns": 1791615437408797307
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/native-goal-complete.json",
+      "bytes": 812,
+      "sha256": "9f7654556eb127e909aa7aabe564110f7c5cfda63aa76f196c5e384817cff92e",
+      "mtime_ns": 1791616105480748980
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/sources/index.md",
+      "bytes": 21660,
+      "sha256": "1ad565dd3e90dce70e0c2e13a4ead4eb3ca4033684a119149c555bcad34e3d59",
+      "mtime_ns": 1791616047495151206
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/assignment.md",
+      "bytes": 11986,
+      "sha256": "30b73d7431ba3ca7b36b9bff16ebc17689cec0b03228f68b4f2a147ebb90485b",
+      "mtime_ns": 1791616143655058853
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/input-map.json",
+      "bytes": 1497,
+      "sha256": "80b980b75e4741c3f0b354dd6f0bc19873651cbf625c9262375d930fe4d52c3f",
+      "mtime_ns": 1791616143654550812
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/freeze.json",
+      "bytes": 6025,
+      "sha256": "f98259a00b1ef2c09d3d23d5431c55f9810fafe55464a1df41037d9b5fda207e",
+      "mtime_ns": 1791616143653999747
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/source-map.json",
+      "bytes": 32531,
+      "sha256": "ad24aff5a4aac303b210d071d16382b33251a12431bfa357fe191a266b6d14d5",
+      "mtime_ns": 1791616795830890055
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/request.json",
+      "bytes": 6311,
+      "sha256": "6d879d1f6767b25b202f38f1fc74727f1b849df97cae6f845bde919d9112a5b8",
+      "mtime_ns": 1791616143653384862
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/dispatch.json",
+      "bytes": 9749,
+      "sha256": "56613f79aecbc35662afb085055da75e720a36981ec67a534bda3f1a2ff7d77e",
+      "mtime_ns": 1791616144585840800
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/invocation-clarification.json",
+      "bytes": 3057,
+      "sha256": "836d4f85194ab99bf0db7ae7a8e42523292ccf68f41737e0f9bf7961e8739482",
+      "mtime_ns": 1791616143281300117
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/service-tier-change.json",
+      "bytes": 511,
+      "sha256": "943e3acf26558bcb9cbece928e4e95bd86a962e2b69dca90e7c60c2fd22fb606",
+      "mtime_ns": 1791616143066779642
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/exact-activation-capture-v2-1.json",
+      "bytes": 7706,
+      "sha256": "4678ab928735b845d4e472c77f11f47961ddd9e483e9dbdf0e733c527eea95cf",
+      "mtime_ns": 1791616143655256258
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/exact-goal-binding-guard.json",
+      "bytes": 4612,
+      "sha256": "1c606ba37d738e3f7741721b1fb39ae6b55eab95cd4b3e13cd685909a96dc350",
+      "mtime_ns": 1791616143462625236
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/native-goal-create.json",
+      "bytes": 471,
+      "sha256": "dd5c097165bc6596a6bb2ed5a0872b2361315e1a3c90317d792935c4a27f92a7",
+      "mtime_ns": 1791616156115950926
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/native-goal-complete.json",
+      "bytes": 800,
+      "sha256": "8bd43d10d54385889e905c7c9525077c9a6d429083fa206cf151f1d8a7f3fcc4",
+      "mtime_ns": 1791616930671325696
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/sources/index.md",
+      "bytes": 11151,
+      "sha256": "bb07917782d57ee39892c73d76265a5ac356294965a9f4758089b6b6bc20491c",
+      "mtime_ns": 1791616824414729242
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/assignment.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/assignment.md",
+      "bytes": 10290,
+      "sha256": "12116fd45506a9962b9efa36e5a2e01034948a78c633c966c9b6170c6f9f5381",
+      "mtime_ns": 1791616952925778860
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/input-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/input-map.json",
+      "bytes": 1820,
+      "sha256": "78ec77a937f1cd239fbc122b095851ede873e9e053cccf80949ab5d2b136584c",
+      "mtime_ns": 1791616952925293913
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/freeze.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/freeze.json",
+      "bytes": 6825,
+      "sha256": "95e4865330b18001bc0732601fe4288196b0642804b2b278dfd7e08e10d15e54",
+      "mtime_ns": 1791616952924748866
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/source-map.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/source-map.json",
+      "bytes": 48601,
+      "sha256": "444b69bebfab72a328a941bb1ec6d1a73c66f935f1b8d6eb60e43fae53763bce",
+      "mtime_ns": 1791617494165855718
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/request.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/request.json",
+      "bytes": 6322,
+      "sha256": "47860d5cd9856550344380ac676f7f43ef0b68d6ac986651868d18c0aa8b5753",
+      "mtime_ns": 1791616952924209541
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/dispatch.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/dispatch.json",
+      "bytes": 9772,
+      "sha256": "5e9b368517631e880639b64c1b163188c50585707f1788b3c96fade3ebd402f3",
+      "mtime_ns": 1791616955549904175
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/invocation-clarification.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/invocation-clarification.json",
+      "bytes": 3064,
+      "sha256": "326c17b9237e1ad5a069115ca07ba97396cbb87284fad543759d1577d1a66216",
+      "mtime_ns": 1791616952572072333
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/service-tier-change.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/service-tier-change.json",
+      "bytes": 513,
+      "sha256": "ae20a6fa49cfc14d498ede8d488fa9d4db0a6b4f0bf38dd8ec1e02dd1a6aa94d",
+      "mtime_ns": 1791616952368930752
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/exact-activation-capture-v2-1.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/exact-activation-capture-v2-1.json",
+      "bytes": 7718,
+      "sha256": "9f837de36e0583ac63a53dd8558c79f9e82620419fb96e92dbf75a09fa955104",
+      "mtime_ns": 1791616952925975087
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/exact-goal-binding-guard.json",
+      "bytes": 4623,
+      "sha256": "f9fad4c4915105c044ebef3d6fab071c7fed56b881404d4fab1f8a412d228ef0",
+      "mtime_ns": 1791616952751165631
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/native-goal-create.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/native-goal-create.json",
+      "bytes": 473,
+      "sha256": "5e202ed1ccff557e8ed9d8507fa4da0b9345648460b79a71ed87413863129c5c",
+      "mtime_ns": 1791616965797160553
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/native-goal-complete.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/native-goal-complete.json",
+      "bytes": 802,
+      "sha256": "264dcf28bfaae721bb916fb9bb704b57f7440ff97edf39caad579097cd089f38",
+      "mtime_ns": 1791617696993179809
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/sources/index.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/sources/index.md",
+      "bytes": 43792,
+      "sha256": "1fde84672cce394e0959aaeee7fe170644a56af2e348f1be8b2a8aee061d95a5",
+      "mtime_ns": 1791617494166430872
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/discovery.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/discovery.md",
+      "bytes": 9315,
+      "sha256": "6105008ffc67d833989810a6b4bf3edef299c226074ef08bd4c094e8786eee2c",
+      "mtime_ns": 1791615830945204060
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/draft.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/draft.md",
+      "bytes": 30253,
+      "sha256": "ce29e769468f07e69107b9841b5dd855ca55218cf529c4a3373ea73f0222cfd6",
+      "mtime_ns": 1791616070817860660
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/revealed-plan.md",
+      "bytes": 6857,
+      "sha256": "e5f32756b8f7b8259fdfc728a6d2c7f0f83cb81c3befe97d39790c7fa42dbd5b",
+      "mtime_ns": 1791615846213840065
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/investigator/plan-reveal.json",
+      "bytes": 432,
+      "sha256": "5d6348c7bbd6585539b9544ac908a1e2ff18feca745b6904e7ee18880e6e2bde",
+      "mtime_ns": 1791615846213969712
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/critic/critique.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/critic/critique.md",
+      "bytes": 24868,
+      "sha256": "d99081a8183a83398dfa885ca1f8e978f1cf8d0473b7ca5cc416e61300f4b765",
+      "mtime_ns": 1791616925474422158
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R2-01/treatment/stages/reviser/final.md",
+      "snapshot": "evidence/originals/runs/D-R2-01/treatment/stages/reviser/final.md",
+      "bytes": 36359,
+      "sha256": "60c867f3a9cbe326f321f95f2ff73728fd9cf09a0fd285f071eee421b5eca656",
+      "mtime_ns": 1791617666478299285
+    }
+  ]
+}

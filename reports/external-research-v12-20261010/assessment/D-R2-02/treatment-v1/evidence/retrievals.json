@@ -1,0 +1,88 @@
+[
+  {
+    "id": "S1",
+    "requested_url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+    "resolved_url": "https://www.fao.org/4/a1389e/a1389e00.pdf",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.360860+00:00",
+    "content_type": "application/pdf",
+    "sha256": "56f5387c5e1be362a576390cfd54642e6da0077ed0e4ceec27aa06ee66b38a52",
+    "bytes": 1581035,
+    "capture": "S1.pdf",
+    "capture_retained": true
+  },
+  {
+    "id": "S2",
+    "requested_url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+    "resolved_url": "https://www.fao.org/4/y5431e/y5431e04.htm",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.159249+00:00",
+    "content_type": "text/html",
+    "sha256": "38438c607e642609d53f75083854e00e19e712418a256c293e055c621387281c",
+    "bytes": 32240,
+    "capture": "S2.html",
+    "capture_retained": true
+  },
+  {
+    "id": "S3",
+    "requested_url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+    "resolved_url": "https://www.fao.org/4/x5403e/x5403e08.htm",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.156192+00:00",
+    "content_type": "text/html",
+    "sha256": "6f8e8f0baeab05f030d5c6cd4cbaddcc1743d22fcbe675aecd1e213d7f0cf620",
+    "bytes": 37353,
+    "capture": "S3.html",
+    "capture_retained": true
+  },
+  {
+    "id": "S4",
+    "requested_url": "https://mdpi-res.com/d_attachment/processes/processes-10-02286/article_deploy/processes-10-02286.pdf",
+    "resolved_url": "https://mdpi-res.com/d_attachment/processes/processes-10-02286/article_deploy/processes-10-02286.pdf",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.317711+00:00",
+    "content_type": "application/pdf",
+    "sha256": "35ba13a93ee5a89adce0cb81ce32977be94b2fd4a3ca796d282b5ee532d5ced7",
+    "bytes": 8030513,
+    "capture": "S4.pdf",
+    "capture_retained": true
+  },
+  {
+    "id": "S5",
+    "requested_url": "https://mdpi-res.com/d_attachment/energies/energies-16-05191/article_deploy/energies-16-05191.pdf?version=1688571133",
+    "resolved_url": "https://mdpi-res.com/d_attachment/energies/energies-16-05191/article_deploy/energies-16-05191.pdf?version=1688571133",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.189147+00:00",
+    "content_type": "application/pdf",
+    "sha256": "91b1b963f7b3249e33947b593c60c6c41095c2b5caf835b647309c55fa2c2d9b",
+    "bytes": 981828,
+    "capture": "S5.pdf",
+    "capture_retained": true
+  },
+  {
+    "id": "S6",
+    "requested_url": "https://www.sciencedirect.com/science/article/pii/S0260877417303035",
+    "resolved_url": "https://www.sciencedirect.com/science/article/pii/S0260877417303035",
+    "status": 403,
+    "access_utc": "2026-10-10T07:41:35.069939+00:00",
+    "content_type": "text/html; charset=UTF-8",
+    "sha256": "70953b418c1b16b751872f80c84506e542169a47900a2483844700087e6fcda3",
+    "bytes": 832804,
+    "capture": "S6.html",
+    "capture_retained": false,
+    "capture_removed_reason": "Failed/challenge response, not scientific source evidence; response hash/status retained."
+  },
+  {
+    "id": "S7",
+    "requested_url": "https://link.springer.com/article/10.1007/s13201-024-02300-5",
+    "resolved_url": "https://link.springer.com/article/10.1007/s13201-024-02300-5",
+    "status": 200,
+    "access_utc": "2026-10-10T07:41:35.057219+00:00",
+    "content_type": "text/html; charset=utf-8",
+    "sha256": "32ed63159c77e21ee19ca1b9aa3213ccf0218eb59539560b132a8e68ef0e18ea",
+    "bytes": 3038,
+    "capture": "S7.html",
+    "capture_retained": false,
+    "capture_removed_reason": "Failed/challenge response, not scientific source evidence; response hash/status retained."
+  }
+]

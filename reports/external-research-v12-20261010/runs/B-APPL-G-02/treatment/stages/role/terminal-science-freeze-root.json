@@ -112,25 +112,18 @@
     }
   ],
   "terminal_task": {
-    "slot": "B-APPL-G-02",
-    "arm": "treatment",
-    "stage": "role",
-    "helper": "ER12_RUNTIME/helpers/role-v2",
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
-    "status": "completed",
-    "workState": "result_available",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:ordinal:1",
-    "latestTerminalStatus": "completed",
-    "latestTerminalSummary": "Role complete. All deliverables saved in the assigned stage directory before native Goal completion, finishing at 05:12:24Z against the 05:24:08Z deadline.\n\nTop finding: of the six systemd-257 timer claims, 1, 4, and 5 are supported (with corrected bounded wording) and 2, 3, and 6 are refuted \u2014 persistence catch-up is OnCalendar-only, an elapse never restarts an already-active unit, and valid `daily` syntax proves nothing about completion timing.\n\nWhat was done, in order:\n\n- Activated exactly one native Goal with the frozen objective verbatim as the first action, before any case/source input. Receipt preserved in `records/native-goal-activation.json` (`goal-01a12437-354c-7f53-91e2-fc92218cbd52`, now `complete`; completion receipt in `records/native-goal-completion.json`).\n- Read only the input-map's common assignment, fixture, and listed corpus (S1, S2, index).\n- Retrieved the two corpus-listed pinned v257 primaries (timer and time manuals, raw equivalents) \u2014 2 listed URLs followed, 0 additional pages (limit 8), no failures.\n- Wrote `verification.md` (772 words, limit 900): independent disposition, version/configuration, primary citation, corrected wording, and exceptions per claim, plus two concrete acceptance checks.\n- Wrote `source-map.json` (claim citations, retrieval UTC/operation, applicability, conditions/exceptions, proposed-vs-executed, unresolved evidence) and bounded excerpts in `sources/P1-*.md` and `sources/P2-*.md`.\n\nConstraints honored: no provider CLI/session in shell, no delegation or cross-arm contact, no input modification, no installs or code execution, writes confined to the allowed root, scratch files removed.",
-    "latestTerminalResultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:03f223b4-5dee-4296-bff0-82d35327707e",
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "muse-spark-1.3-contributor",
-    "summary": "Role complete. All deliverables saved in the assigned stage directory before native Goal completion, finishing at 05:12:24Z against the 05:24:08Z deadline.\n\nTop finding: of the six systemd-257 timer claims, 1, 4, and 5 are supported (with corrected bounded wording) and 2, 3, and 6 are refuted \u2014 persistence catch-up is OnCalendar-only, an elapse never restarts an already-active unit, and valid `daily` syntax proves nothing about completion timing.\n\nWhat was done, in order:\n\n- Activated exactly one native Goal with the frozen objective verbatim as the first action, before any case/source input. Receipt preserved in `records/native-goal-activation.json` (`goal-01a12437-354c-7f53-91e2-fc92218cbd52`, now `complete`; completion receipt in `records/native-goal-completion.json`).\n- Read only the input-map's common assignment, fixture, and listed corpus (S1, S2, index).\n- Retrieved the two corpus-listed pinned v257 primaries (timer and time manuals, raw equivalents) \u2014 2 listed URLs followed, 0 additional pages (limit 8), no failures.\n- Wrote `verification.md` (772 words, limit 900): independent disposition, version/configuration, primary citation, corrected wording, and exceptions per claim, plus two concrete acceptance checks.\n- Wrote `source-map.json` (claim citations, retrieval UTC/operation, applicability, conditions/exceptions, proposed-vs-executed, unresolved evidence) and bounded excerpts in `sources/P1-*.md` and `sources/P2-*.md`.\n\nConstraints honored: no provider CLI/session in shell, no delegation or cross-arm contact, no input modification, no installs or code execution, writes confined to the allowed root, scratch files removed.",
-    "resultContextTransferId": "context-transfer:type:subagent_result:source-thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-APPL-G-02-treatment-role-v2:target-thread:caa5cbf4-50a7-448a-8965-2eb9994c7ad7:03f223b4-5dee-4296-bff0-82d35327707e",
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-APPL-G-02-treatment-role-v2",
+        "status": "completed",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": "completed",
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "3802d197e7cf2a0d7eb5d9ed17248a4e8dc6bf045859b106512a1de500c1ec95"
   }
 }

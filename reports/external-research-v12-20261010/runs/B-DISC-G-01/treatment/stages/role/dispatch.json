@@ -19,48 +19,45 @@
     "task": "Execute exactly ER12_RUNTIME/runs/B-DISC-G-01/treatment/stages/role/assignment.md and input-map.json. Before common source/case input or inference, activate exactly ONE actual exposed native Goal referring to this assignment. If unavailable/unsupported, stop scientific inference and save the exact unsupported diagnostic; no simulated Goal. Save deliverables before native completion. Never start provider CLI/model/session in shell, nested assistance, other arms, account changes or parent history."
   },
   "raw_response": {
-    "content": [
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
       {
-        "type": "text",
-        "text": "{\"taskId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2\",\"childThreadId\":\"thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2\",\"childRunId\":\"run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1\",\"childNodeId\":\"node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2\",\"status\":\"running\",\"workState\":\"working\",\"hasPendingChildRuns\":false,\"latestTerminalRunId\":null,\"latestTerminalStatus\":null,\"latestTerminalSummary\":null,\"latestTerminalResultContextTransferId\":null,\"providerInstanceId\":\"AUTHORIZED_PROVIDER_INSTANCE\",\"model\":\"muse-spark-1.3-contributor\",\"summary\":null,\"resultContextTransferId\":null,\"waitTimedOut\":false}"
+        "structured_content_metadata": [
+          {
+            "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+            "status": "running",
+            "hasPendingChildRuns": false,
+            "latestTerminalStatus": null,
+            "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+            "model": "muse-spark-1.3-contributor"
+          }
+        ],
+        "structuredContent": {
+          "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+          "status": "running",
+          "hasPendingChildRuns": false,
+          "latestTerminalStatus": null,
+          "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+          "model": "muse-spark-1.3-contributor"
+        }
       }
     ],
-    "structuredContent": {
-      "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-      "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-      "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
-      "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-      "status": "running",
-      "workState": "working",
-      "hasPendingChildRuns": false,
-      "latestTerminalRunId": null,
-      "latestTerminalStatus": null,
-      "latestTerminalSummary": null,
-      "latestTerminalResultContextTransferId": null,
-      "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-      "model": "muse-spark-1.3-contributor",
-      "summary": null,
-      "resultContextTransferId": null,
-      "waitTimedOut": false
-    },
-    "isError": false
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "245f464f936055f3f2a8b0d6277099c88ffe0af0d532b5df3bea33d002437d5a"
   },
   "returned": {
-    "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-    "childThreadId": "thread:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-    "childRunId": "run:thread:thread%3Adelegated-task%3Acommand%253Amcp%253A39c31430-71a8-4158-b353-1fe1bb3dad4d%253Adelegate-task%253Aer12-B-DISC-G-01-treatment-role-v2:ordinal:1",
-    "childNodeId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
-    "status": "running",
-    "workState": "working",
-    "hasPendingChildRuns": false,
-    "latestTerminalRunId": null,
-    "latestTerminalStatus": null,
-    "latestTerminalSummary": null,
-    "latestTerminalResultContextTransferId": null,
-    "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
-    "model": "muse-spark-1.3-contributor",
-    "summary": null,
-    "resultContextTransferId": null,
-    "waitTimedOut": false
+    "schema": "er12.public-native-lifecycle.v1",
+    "actual_lifecycle_metadata": [
+      {
+        "taskId": "node:delegated-task:command%3Amcp%3A39c31430-71a8-4158-b353-1fe1bb3dad4d%3Adelegate-task%3Aer12-B-DISC-G-01-treatment-role-v2",
+        "status": "running",
+        "hasPendingChildRuns": false,
+        "latestTerminalStatus": null,
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor"
+      }
+    ],
+    "omitted_activity_message_bodies": true,
+    "original_json_value_sha256": "60a447644d840e5cba31b11affd96d661e23f2f3ee1649722659dafd1049c058"
   }
 }

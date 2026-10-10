@@ -1,9 +1,20 @@
-# S17 — UltiMaker Cura 5.14.0-alpha.0 release
-
-- **Exact URL:** https://github.com/Ultimaker/Cura/releases/tag/5.14.0-alpha.0
-- **Released version/commit:** Pre-release tag 5.14.0-alpha.0, commit 17e7b05; released 25 June in the retrieved page (year not shown there).
-- **Locator:** Pre-release label and commit (lines 134-171); improvement for non-project multi-model 3MF positioning (lines 172-185).
-- **Access UTC:** 2026-10-10T04:39:48Z
-- **Observed operation:** Opened the official tag from the Cura release index and read release notes; no binary or project was run.
-- **Governing condition/default/exception:** Notes say positioning was improved when loading multiple models from a non-project 3MF. Release is explicitly a pre-release and note does not say this fixes issue #19456's exact project/import case.
-- **Applicability:** Relevant future test lead only; not a stable pilot result or proof of a particular issue resolution.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "2a73fb6b2caae6995a8ce7513660932d8d4b1886a7ced683a465fede012a0045",
+  "rawSHA256": "2a73fb6b2caae6995a8ce7513660932d8d4b1886a7ced683a465fede012a0045",
+  "original_bytes": 941,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/stages/critic-finalizer/sources/S17-cura-514-alpha.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

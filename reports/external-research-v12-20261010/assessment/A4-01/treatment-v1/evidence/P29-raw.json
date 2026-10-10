@@ -1,1 +1,38 @@
-{"ref":"refs/tags/v2.10.1","node_id":"MDM6UmVmODgyNTEzNzpyZWZzL3RhZ3MvdjIuMTAuMQ==","url":"https://api.github.com/repos/tus/tusd/git/refs/tags/v2.10.1","object":{"sha":"388a27cb81c33b2349e0308b5e97e23797e86fd9","type":"commit","url":"https://api.github.com/repos/tus/tusd/git/commits/388a27cb81c33b2349e0308b5e97e23797e86fd9"}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://api.github.com/repos/tus/tusd/git/ref/tags/v2.10.1"
+  ],
+  "source_urls": [
+    "https://api.github.com/repos/tus/tusd/git/ref/tags/v2.10.1"
+  ],
+  "version": "UNKNOWN",
+  "selector": [
+    {
+      "lines": 1
+    }
+  ],
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A4-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "P29",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "lines": 1
+    }
+  ],
+  "raw_sha256": "3f210b7110fe1e2515208e75ffe31216874f86824602db665e70837652fc5792",
+  "rawSHA256": "3f210b7110fe1e2515208e75ffe31216874f86824602db665e70837652fc5792",
+  "original_bytes": 327,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A4-01/treatment-v1/evidence/P29-raw.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

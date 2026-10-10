@@ -1,0 +1,93 @@
+[
+  {
+    "slot": "B-DISC-M-01",
+    "arm": "treatment",
+    "stage": "role",
+    "stage_dir": "ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role",
+    "args": {
+      "clientRequestId": "er12-B-DISC-M-01-treatment-role-v1",
+      "title": "ER12 B-DISC-M-01 treatment role",
+      "role": "research",
+      "mode": "async",
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "target": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "muse-spark-1.3-contributor",
+        "options": {
+          "reasoningEffort": "max"
+        }
+      },
+      "task": "Execute exactly ER12_RUNTIME/runs/B-DISC-M-01/treatment/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+    }
+  },
+  {
+    "slot": "B-DISC-M-01",
+    "arm": "control",
+    "stage": "role",
+    "stage_dir": "ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role",
+    "args": {
+      "clientRequestId": "er12-B-DISC-M-01-control-role-v1",
+      "title": "ER12 B-DISC-M-01 control role",
+      "role": "research",
+      "mode": "async",
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "target": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        }
+      },
+      "task": "Execute exactly ER12_RUNTIME/runs/B-DISC-M-01/control/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+    }
+  },
+  {
+    "slot": "B-APPL-G-01",
+    "arm": "control",
+    "stage": "role",
+    "stage_dir": "ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role",
+    "args": {
+      "clientRequestId": "er12-B-APPL-G-01-control-role-v1",
+      "title": "ER12 B-APPL-G-01 control role",
+      "role": "research",
+      "mode": "async",
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "target": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "gpt-6-luna",
+        "options": {
+          "reasoningEffort": "max",
+          "serviceTier": "priority"
+        }
+      },
+      "task": "Execute exactly ER12_RUNTIME/runs/B-APPL-G-01/control/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+    }
+  },
+  {
+    "slot": "B-APPL-G-01",
+    "arm": "treatment",
+    "stage": "role",
+    "stage_dir": "ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role",
+    "args": {
+      "clientRequestId": "er12-B-APPL-G-01-treatment-role-v1",
+      "title": "ER12 B-APPL-G-01 treatment role",
+      "role": "research",
+      "mode": "async",
+      "runtimeMode": "full-access",
+      "interactionMode": "default",
+      "target": {
+        "providerInstanceId": "AUTHORIZED_PROVIDER_INSTANCE",
+        "model": "builtin:zai-coding-plan\\GLM-5.3-Flash",
+        "options": {
+          "mode": "yolo",
+          "thought": "max"
+        }
+      },
+      "task": "Execute exactly ER12_RUNTIME/runs/B-APPL-G-01/treatment/stages/role/assignment.md and input-map.json. Create a real native Goal referring to this assignment; save complete role science before native completion. No nested helpers, other arms, account changes or parent history."
+    }
+  }
+]

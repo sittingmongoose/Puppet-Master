@@ -1,0 +1,231 @@
+{
+  "terminal_freeze": [
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/critique.md",
+      "expected": "fe3ec225009c6fbf5dd95e0628f94fc449b63961d3299d8a5e6a728ca3e71407",
+      "actual": "fe3ec225009c6fbf5dd95e0628f94fc449b63961d3299d8a5e6a728ca3e71407",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/source-map.json",
+      "expected": "602b27ad54f0fff05eed51252d5f2544ba8f096b118e5879818b5995b193b9ea",
+      "actual": "602b27ad54f0fff05eed51252d5f2544ba8f096b118e5879818b5995b193b9ea",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/sources/index.md",
+      "expected": "ae06b5a1b3fe2ece8f6ec7e96384c5c41a0ae9d52384803e2eb55bf54df90d6e",
+      "actual": "ae06b5a1b3fe2ece8f6ec7e96384c5c41a0ae9d52384803e2eb55bf54df90d6e",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/discovery.md",
+      "expected": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875",
+      "actual": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/draft.md",
+      "expected": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563",
+      "actual": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/revealed-plan.md",
+      "expected": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "actual": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/source-map.json",
+      "expected": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b",
+      "actual": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/sources/index.md",
+      "expected": "188c7ff3c111f6e033e8224a5068dc4784ffed1e7897ef94291e584825a4b95f",
+      "actual": "188c7ff3c111f6e033e8224a5068dc4784ffed1e7897ef94291e584825a4b95f",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/final.md",
+      "expected": "ff37b0f65d4015187ee3089582e815b5b968dc131fbb1b32584f23cffe5de37f",
+      "actual": "ff37b0f65d4015187ee3089582e815b5b968dc131fbb1b32584f23cffe5de37f",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/source-map.json",
+      "expected": "4afe68d7a031c865bd16c2a911bf92b060115c0c7be2cc9fe46b29774c92dea5",
+      "actual": "4afe68d7a031c865bd16c2a911bf92b060115c0c7be2cc9fe46b29774c92dea5",
+      "matches": true
+    },
+    {
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/sources/index.md",
+      "expected": "b0dd59fc5a59c488effcb8e8657458de7cf7c81330b75c6f453033b79ca3ab86",
+      "actual": "b0dd59fc5a59c488effcb8e8657458de7cf7c81330b75c6f453033b79ca3ab86",
+      "matches": true
+    }
+  ],
+  "stage_frozen_inputs": [
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/inputs/brief.md",
+      "matches": true,
+      "expected": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715",
+      "actual": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/assignment.md",
+      "matches": true,
+      "expected": "751a8a16054ab3a1c5b5f342f5eec64e92e1dc1a03c3aedcf4340aab8e1f0415",
+      "actual": "751a8a16054ab3a1c5b5f342f5eec64e92e1dc1a03c3aedcf4340aab8e1f0415"
+    },
+    {
+      "stage": "investigator",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/input-map.json",
+      "matches": true,
+      "expected": "05070c44165de480d0215d34045cc3b7fca6ac7b00d082e90a34bf97f61d0875",
+      "actual": "05070c44165de480d0215d34045cc3b7fca6ac7b00d082e90a34bf97f61d0875"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/inputs/brief.md",
+      "matches": true,
+      "expected": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715",
+      "actual": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/assignment.md",
+      "matches": true,
+      "expected": "4911f3da603478fc00f8b279442e7cba342294a8452e0df3384826550d06584a",
+      "actual": "4911f3da603478fc00f8b279442e7cba342294a8452e0df3384826550d06584a"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/input-map.json",
+      "matches": true,
+      "expected": "c2d826f7d937009cd6a72eb52e211cb9fa8a63b21f6e54bbebb89d7d3eb01eb0",
+      "actual": "c2d826f7d937009cd6a72eb52e211cb9fa8a63b21f6e54bbebb89d7d3eb01eb0"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/discovery.md",
+      "matches": true,
+      "expected": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875",
+      "actual": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/draft.md",
+      "matches": true,
+      "expected": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563",
+      "actual": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/source-map.json",
+      "matches": true,
+      "expected": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b",
+      "actual": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/revealed-plan.md",
+      "matches": true,
+      "expected": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "actual": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158"
+    },
+    {
+      "stage": "critic",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/plan-reveal.json",
+      "matches": true,
+      "expected": "64ee181d6312d2aabcbdf6d6f5de897184ca480ffd038ca346c48ba650242b91",
+      "actual": "64ee181d6312d2aabcbdf6d6f5de897184ca480ffd038ca346c48ba650242b91"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/inputs/brief.md",
+      "matches": true,
+      "expected": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715",
+      "actual": "147f8ef3ad722d90021648c5bd83a0165df830f601cc3ae669cbb517185cf715"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/assignment.md",
+      "matches": true,
+      "expected": "0bd5beb3945cc80371966ae6a42773aab37aca6c256e88f078f2e07a537716fb",
+      "actual": "0bd5beb3945cc80371966ae6a42773aab37aca6c256e88f078f2e07a537716fb"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/input-map.json",
+      "matches": true,
+      "expected": "8c775914ca081ac99c70c912b397c73338df910125077e9975230bb3831f5f96",
+      "actual": "8c775914ca081ac99c70c912b397c73338df910125077e9975230bb3831f5f96"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/discovery.md",
+      "matches": true,
+      "expected": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875",
+      "actual": "0b7e9a6a16100d9e57cfd38b10f8ad85291a0c8c21832986e8e755e90c840875"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/draft.md",
+      "matches": true,
+      "expected": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563",
+      "actual": "22dfdae401aaddfa918a0a5b6e03b332ac61cbb9bbb2194373bc94fd6bbdb563"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/source-map.json",
+      "matches": true,
+      "expected": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b",
+      "actual": "26d88c273ad09ec4306ba49b2fb690e90af827cbfaa39f9a8a620830dc49f98b"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/revealed-plan.md",
+      "matches": true,
+      "expected": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158",
+      "actual": "88963f5ab3311e090f8851bb6f0bd5a000fa90e5320fa46bac12a82da3377158"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/plan-reveal.json",
+      "matches": true,
+      "expected": "64ee181d6312d2aabcbdf6d6f5de897184ca480ffd038ca346c48ba650242b91",
+      "actual": "64ee181d6312d2aabcbdf6d6f5de897184ca480ffd038ca346c48ba650242b91"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/critique.md",
+      "matches": true,
+      "expected": "fe3ec225009c6fbf5dd95e0628f94fc449b63961d3299d8a5e6a728ca3e71407",
+      "actual": "fe3ec225009c6fbf5dd95e0628f94fc449b63961d3299d8a5e6a728ca3e71407"
+    },
+    {
+      "stage": "reviser",
+      "path": "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/source-map.json",
+      "matches": true,
+      "expected": "602b27ad54f0fff05eed51252d5f2544ba8f096b118e5879818b5995b193b9ea",
+      "actual": "602b27ad54f0fff05eed51252d5f2544ba8f096b118e5879818b5995b193b9ea"
+    }
+  ],
+  "source_root_files": {
+    "investigator": [
+      "ER12_RUNTIME/runs/D-R1-03/control/stages/investigator/sources/index.md"
+    ],
+    "critic": [
+      "ER12_RUNTIME/runs/D-R1-03/control/stages/critic/sources/index.md"
+    ],
+    "reviser": [
+      "ER12_RUNTIME/runs/D-R1-03/control/stages/reviser/sources/index.md"
+    ]
+  },
+  "missing_inputs": []
+}

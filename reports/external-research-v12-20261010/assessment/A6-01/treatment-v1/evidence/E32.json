@@ -1,1 +1,30 @@
-{"ref":"refs/tags/v2.7.1","node_id":"MDM6UmVmMzQyNDM1MzpyZWZzL3RhZ3MvdjIuNy4x","url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/refs/tags/v2.7.1","object":{"sha":"095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a","type":"commit","url":"https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/commits/095bf1ac3aeb7009b9f78e7f1cb4c65bd38b988a"}}
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/ref/tags/v2.7.1"
+  ],
+  "source_urls": [
+    "https://api.github.com/repos/OneBusAway/onebusaway-application-modules/git/ref/tags/v2.7.1"
+  ],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "assessment/A6-01/treatment-v1/evidence/retrieval-manifest.json",
+      "source_id": "E32",
+      "existing_authored_summary_fields": {}
+    }
+  ],
+  "original_capture_selectors": [],
+  "raw_sha256": "f5edc94432ab220fa1b48969b481fdea4ea820bd94906cb15ce8c92d65469373",
+  "rawSHA256": "f5edc94432ab220fa1b48969b481fdea4ea820bd94906cb15ce8c92d65469373",
+  "original_bytes": 387,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/assessment/A6-01/treatment-v1/evidence/E32.json",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

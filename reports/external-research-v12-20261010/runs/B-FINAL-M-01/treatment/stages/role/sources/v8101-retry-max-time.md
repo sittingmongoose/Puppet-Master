@@ -1,23 +1,20 @@
----
-c: Copyright (C) Daniel Stenberg, <AUTHORIZED_PROVIDER_INSTANCE>, et al.
-SPDX-License-Identifier: curl
-Long: retry-max-time
-Arg: <seconds>
-Help: Retry only within this period
-Added: 7.12.3
-Category: curl timeout
-Multi: single
-See-also:
-  - retry
-Example:
-  - --retry-max-time 30 --retry 10 $URL
----
-
-# `--retry-max-time`
-
-The retry timer is reset before the first transfer attempt. Retries are done
-as usual (see --retry) as long as the timer has not reached this given
-limit. Notice that if the timer has not reached the limit, the request is
-made and while performing, it may take longer than this given time period. To
-limit a single request's maximum time, use --max-time. Set this option to zero
-to not timeout retries.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+  "rawSHA256": "9505140824bf47fe04d4c8b929c16b3371e02399301c153b9f1071718ae53f33",
+  "original_bytes": 715,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-FINAL-M-01/treatment/stages/role/sources/v8101-retry-max-time.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

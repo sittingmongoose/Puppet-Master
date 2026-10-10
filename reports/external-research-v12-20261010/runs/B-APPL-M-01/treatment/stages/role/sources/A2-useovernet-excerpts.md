@@ -1,26 +1,54 @@
-# A2 evidence — SQLite over a network, caveats (additional primary 2 of 3)
-URL: https://www.sqlite.org/useovernet.html
-
-Retrieval: provider web_fetch on 2026-10-10 between 04:03:00Z and 04:04:30Z (UTC day-session;
-exact per-fetch second not recorded). Within the 8-additional-page allowance.
-Page footer: last updated 2022-06-22 (page's own stamp; older than S1/S2).
-
-## Verbatim
-> "This simple, 'remote database' approach is usually not the best way to use a single
-> SQLite database from multiple systems, (even if it appears to 'work'), as it often
-> leads to various kinds of trouble and grief."
-> "SQLite relies on exclusive locks for write operations, and those have been known to
-> operate incorrectly for some network filesystems. This has led to database
-> corruption."
-> "The bottom line is that network filesystem sync and locking reliability vary among
-> implementations and installations."
-> "Hence, use of a remote database is done at the user's risk."
-> "Network filesystems do not support the ability to do simultaneous reads and writes
-> while at the same time keeping the database consistent."
-> Choice 2: "Host an SQLite database in WAL mode, but do all reads and writes from
-> processes on the same machine that stores the database file. Implement a proxy that
-> runs on the database machine that relays read/write requests from remote machines."
-
-Relevance: corroborates S1 that unchanged multi-process WAL design must not move to a
-multi-host NFS mount; supported remote patterns are different deployments (proxy /
-client-server), not the same design on NFS.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": [
+    "https://www.sqlite.org/useovernet.html"
+  ],
+  "source_urls": [
+    "https://www.sqlite.org/useovernet.html"
+  ],
+  "version": [
+    {
+      "applicability": "claim 3: multi-host NFS unsupported for unchanged WAL design; supported remote patterns are different deployments",
+      "conditions": "network filesystem interposed in File I/O channel",
+      "version": "page footer 2022-06-22 (page's own stamp)"
+    }
+  ],
+  "selector": [
+    {
+      "locator": "Issues Arising (reliability: sync/locking); Recommendations (choices incl. co-located WAL + proxy); Summary"
+    }
+  ],
+  "conditions": [
+    {
+      "applicability": "claim 3: multi-host NFS unsupported for unchanged WAL design; supported remote patterns are different deployments",
+      "conditions": "network filesystem interposed in File I/O channel",
+      "version": "page footer 2022-06-22 (page's own stamp)"
+    }
+  ],
+  "versions_conditions_and_authored_summaries": [
+    {
+      "authored_source_map": "runs/B-APPL-M-01/treatment/stages/role/source-map.json",
+      "source_id": "A2",
+      "existing_authored_summary_fields": {
+        "applicability": "claim 3: multi-host NFS unsupported for unchanged WAL design; supported remote patterns are different deployments",
+        "conditions": "network filesystem interposed in File I/O channel",
+        "version": "page footer 2022-06-22 (page's own stamp)"
+      }
+    }
+  ],
+  "original_capture_selectors": [
+    {
+      "locator": "Issues Arising (reliability: sync/locking); Recommendations (choices incl. co-located WAL + proxy); Summary"
+    }
+  ],
+  "raw_sha256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+  "rawSHA256": "7bee38dd18c61bbd929f95d9d1564fba64004cf35f34850e71d9fe4a914987da",
+  "original_bytes": 1583,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/B-APPL-M-01/treatment/stages/role/sources/A2-useovernet-excerpts.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "BOUNDED_EXISTING_AUTHORED_SUMMARY; omitted body coverage UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}

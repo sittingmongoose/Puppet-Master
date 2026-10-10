@@ -1,0 +1,151 @@
+{
+  "run_id": "D-R2-04-treatment",
+  "stage": "investigator",
+  "created_utc": "2026-10-10 07:06:55 UTC",
+  "method_note": "All sources have stable IDs bound to exact URLs. Evidence notes are bounded paraphrases, not copied page captures. Do not silently rebind IDs. Fictional-service facts are from the assigned brief, not external sources.",
+  "sources": [
+    {
+      "source_id": "E01",
+      "title": "CDC Clear Communication Index Score Sheet",
+      "url": "https://www.cdc.gov/ccindex/pdf/full-index-score-sheet.pdf",
+      "release_version_or_commit": "PDF states Revised July 2014.",
+      "locator": "PDF pp. 1, 3, 5: audience/literacy/objective/main message; translated-audience note; main-message placement, familiar terms, lists, chunks/headings, numbers.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened official CDC PDF via web reader and read extracted form text; no notice was scored.",
+      "governing_condition_default_exception": "The first four audience/objective/message questions are required before scoring; translated versions with different audiences should be scored separately; some score sections are conditional.",
+      "applicability_and_transfer_limit": "Design checklist only; public-health context, not evidence of effects on this course notice; score cannot prove comprehension, accessibility, or legal compliance.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E02",
+      "title": "CDC Clear Communication Index: Developing Effective Communication Products quick check",
+      "url": "https://www.cdc.gov/ccindex/tool/develop.html",
+      "release_version_or_commit": "Current CDC web page as accessed 2026-10-10; no publication/version date displayed.",
+      "locator": "Questions 1–5: audience, audience research, objective, format/distribution, and pretest; page says guidance cannot replace audience pretesting.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened and read the official CDC page via web reader.",
+      "governing_condition_default_exception": "For public communication products; format and channel should fit audience and message; pretesting may be repeated.",
+      "applicability_and_transfer_limit": "Study-planning prompt only; not a community-center rule or case-specific evidence.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E03",
+      "title": "HHS Office of Minority Health National CLAS Standards",
+      "url": "https://thinkculturalhealth.hhs.gov/clas/standards",
+      "linked_release_asset_url": "https://thinkculturalhealth.hhs.gov/assets/pdfs/EnhancedNationalCLASStandards_Revised_June2025.pdf",
+      "release_version_or_commit": "Current official HTML page retrieved 2026-10-10; links a PDF labeled Revised June 2025. Direct PDF retrieval returned HTTP 503; only HTML standards text was used.",
+      "locator": "Standards 1 and 5–8, plus 11 and 13: understandable/respectful services, language assistance, notice of availability, competence, understandable digital/print materials, assessment, and community partnership.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Read the official HTML standards page and linked PDF title; attempted PDF open, which returned 503.",
+      "governing_condition_default_exception": "Expressly intended for health and health-care organizations; separate law may apply to some organizations, but this case gives no jurisdiction or organizational status.",
+      "applicability_and_transfer_limit": "Analogical service/translation principles only; no claim that CLAS or a legal duty applies to this fictional center.",
+      "evidence_status": "verified_html_linked_pdf_unavailable"
+    },
+    {
+      "source_id": "E04",
+      "title": "GOV.UK publishing guidance: Consider translations",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/consider-translations/",
+      "release_version_or_commit": "Current live page as accessed 2026-10-10; no release date displayed.",
+      "locator": "Consider translations and responsibilities around Welsh language sections, especially page lines 29–39 and 117–123.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened and read page via web reader.",
+      "governing_condition_default_exception": "Within GOV.UK publishing: decide using policy/user-need evidence; do not add translated text to same page as English due to screen-reader problems; keep translated content accurate.",
+      "applicability_and_transfer_limit": "Specific to GOV.UK publishing system and screen-reader concerns; not a universal rule for paper bilingual notices or every mobile message.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E05",
+      "title": "W3C Web Content Accessibility Guidelines (WCAG) 2.2",
+      "url": "https://www.w3.org/TR/WCAG22/?cq_net=g",
+      "release_url": "https://www.w3.org/TR/2024/REC-WCAG22-20241212/",
+      "release_version_or_commit": "W3C Recommendation 2.2 dated 2024-12-12.",
+      "locator": "SC 1.4.5 Images of Text; SC 1.4.10 Reflow; SC 3.1.1 Language of Page; SC 3.1.2 Language of Parts.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/searched W3C standard through web reader; reviewed reflow and language criteria.",
+      "governing_condition_default_exception": "For web content. Reflow SC includes 320 CSS px for vertical-reading content and an exception for components whose use/meaning requires two-dimensional layout.",
+      "applicability_and_transfer_limit": "Proposed technical checks only if web content is used; not readability, user comprehension, or legal-conformance evidence and not directly for paper/plain SMS.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E06",
+      "title": "UK Department for Education User Research Manual: limited-English and sign-language research",
+      "url": "https://user-research.education.gov.uk/guidance/inclusive-research/limited-english-and-sign-language",
+      "release_version_or_commit": "Current live page accessed 2026-10-10; page warns it is under review and some details may be out of date or incorrect.",
+      "locator": "Scoping languages, diverse needs, recruitment, consent, literacy variation, interpreter support, and testing research questions; rendered lines 33–35, 45–97, 139–180, 199–233.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/read the official DfE page and retained its under-review warning.",
+      "governing_condition_default_exception": "UK DfE research guidance; advises tailored accessible consent, first-language literacy variation, language support, and realistic time.",
+      "applicability_and_transfer_limit": "Practical prompts only, subject to local ethics, language pair, budget, and user context; does not establish this case’s demographics.",
+      "evidence_status": "verified_with_under_review_warning"
+    },
+    {
+      "source_id": "E07",
+      "title": "GOV.UK Service Manual: Getting informed consent for user research",
+      "url": "https://www.gov.uk/service-manual/user-research/getting-users-consent-for-research",
+      "release_version_or_commit": "Published 2016-05-24; last updated 2018-11-05.",
+      "locator": "Consent elements/data handling and accessible information formats, withdrawal; rendered lines 70–114, 124–159.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/read official page and displayed update history.",
+      "governing_condition_default_exception": "Discusses purpose, data, observation/recording, voluntary participation, accessible formats, and withdrawal; instructs researchers to check their own organization’s legal/privacy expertise.",
+      "applicability_and_transfer_limit": "Ethical-design checklist only; UK guidance, not determination of local law or IRB requirements.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E08",
+      "title": "GOV.UK Service Manual: Using moderated usability testing",
+      "url": "https://www.gov.uk/service-manual/user-research/using-moderated-usability-testing",
+      "release_version_or_commit": "Published 2017-02-21; last updated 2017-10-03.",
+      "locator": "Task design, neutral instructions, likely users, interpreter/accessibility arrangements, assistive technology; rendered lines 70–139 and 162–174.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/read official page and displayed update history.",
+      "governing_condition_default_exception": "Practical guidance for moderated service usability tests; favors believable goals without hints, consistent guide, and task observation; permits language/access support.",
+      "applicability_and_transfer_limit": "Method prompt, not evidence that a particular sample is powered or representative; adapt beyond government service context.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E09",
+      "title": "City of Toronto: How to Register for Recreation Programs",
+      "url": "https://www.toronto.ca/explore-enjoy/parks-recreation/how-to-use-our-services/how-to-register-for-recreation-programs/",
+      "release_version_or_commit": "Live page displays Date modified: October 2, 2026.",
+      "locator": "Step 3 and Waiting Lists: channels, installment rule for programs over $100, email/phone offer, 36-hour response, no enrollment guarantee; rendered lines 36–74; further fee/eligibility exceptions around 144–168.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/read registration, fee and waitlist sections, including displayed modification date.",
+      "governing_condition_default_exception": "If an activity is full, joining the waitlist is not enrollment; if a spot opens, offer may be sent via email/phone and recipient has up to 36 hours; other program and fee conditions apply.",
+      "applicability_and_transfer_limit": "Comparator for process states and explicit conditions only. Toronto policy, costs, eligibility, and channels do not transfer to the fictional center.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E10",
+      "title": "Austin Parks and Recreation: Account Creation, Online Registration and FAQ",
+      "url": "https://www.austintexas.gov/parks/account-creation-online-registration-and-faq",
+      "release_version_or_commit": "Live page accessed 2026-10-10; no displayed publication/update date visible.",
+      "locator": "Online registration and FAQ: registration route/item details lines 137–147; held-space, waitlist, deadline and partial-payment rules lines 156–177.",
+      "access_utc": "2026-10-10T07:00:27Z",
+      "observed_operation": "Opened/read official city FAQ via web reader.",
+      "governing_condition_default_exception": "No spaces are held across online/walk-in/phone registration; full classes offer no-fee waitlist; an offered spot requires payment by its deadline; partial payment is allowed only for eligible classes and late balance risks removal.",
+      "applicability_and_transfer_limit": "Comparator that illustrates channel and policy differences in submit/hold/confirm states; Austin’s policies/software are not evidence of center policy.",
+      "evidence_status": "verified"
+    },
+    {
+      "source_id": "E11",
+      "title": "Testing the useability and applicability of Australian multilingual public service communications",
+      "url": "https://www.rmit.edu.au/content/dam/rmit/au/en/about/schools-colleges/guss/social-equity-research-centre/projects/serc-testing-useability-applicability-aus-multilingual-public-service-communications.pdf",
+      "project_page_url": "https://www.rmit.edu.au/about/schools-colleges/global-urban-and-social-studies/research/social-equity-research-centre/projects/testing-useability-applicability-aus-multilingual-public-service-comms",
+      "release_version_or_commit": "61-page public report title page says June 2023. RMIT project page separately lists project dates April 2023–June 2024; exact final report release date is not otherwise stated.",
+      "locator": "PDF pp. 10–14: methods, language groups, respondents and survey process; pp. 15–18: method/document preference and exceptions; pp. 19–20: respondent reasons; project page identifies commissioning body and study frame.",
+      "access_utc": "2026-10-10T07:07:38Z",
+      "observed_operation": "Opened the RMIT University project page and 61-page linked report through the web reader; inspected methods, demographics, four-method preference tables, and stated limitations.",
+      "governing_condition_default_exception": "Commonwealth Department of Health and Aged Care commissioned a study of four COVID-19 public-health documents, translated by four methods into seven languages. It used 21 community readers (three per language) recruited across Australian states; focus groups/survey were in each respondent’s preferred language, oral or written. Four versions of each of four documents were considered in sequence with a 77-question survey. Methods 3 (Plain-English source rewrite then double human translation) and 4 (direct target-language drafting from a brief) were preferred on three documents; the fourth webpage document favored conventional translation and method 3 drew the most confusion, with font/layout/wording explanations.",
+      "applicability_and_transfer_limit": "The report is a useful multilingual implementation comparison because it reports audience, language, recruitment intent, tasks, language assistance, and preference/confusion outcomes. Its 3-per-language cells, sequential subjective ratings, sample skew (including Australian education and English information use), lack of objective comprehension/task-completion tests, and health-message domain limit inference. It does not choose a best method for a community-course notice or establish the center’s policy.",
+      "evidence_status": "verified_primary_report"
+    }
+  ],
+  "release_boundary": {
+    "revealed_at_utc": "2026-10-10T07:07:13.175Z",
+    "discovery_sha256": "911a62f69703115d3f405732f49fcd328f6e98184f6d0bd70050f614e812cba2",
+    "discovery_bytes": 14976,
+    "plan_sha256": "72b52c88f5e170e7300d8965e3a823ad369e36e42c3103cdcf20b4d8eeb78cf6",
+    "plan_bytes": 7069
+  },
+  "supplemental_source_batch_utc": "2026-10-10T07:07:38Z"
+}

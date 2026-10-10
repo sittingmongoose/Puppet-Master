@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "threadId": "01a1247b-a59d-7c92-b7de-103798406a63",
+    "objective": "ER12 investigator stage, run D-R1-02-control: execute ER12_RUNTIME/runs/D-R1-02/control/stages/investigator/assignment.md; preserve complete brief scope and save required outputs before completing this native Goal.",
+    "status": "complete",
+    "tokensUsed": 290081,
+    "timeUsedSeconds": 880,
+    "createdAt": 1791613464,
+    "updatedAt": 1791614345
+  },
+  "remainingTokens": null,
+  "completionBudgetReport": "Goal achieved. Report final usage from this tool result's structured goal fields. If `goal.tokenBudget` is present, include token usage from `goal.tokensUsed` and `goal.tokenBudget`. If `goal.timeUsedSeconds` is greater than 0, summarize elapsed time in a concise, human-friendly form appropriate to the response language."
+}

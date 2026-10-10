@@ -1,9 +1,20 @@
-# S11 — UltiMaker Cura 5.7.0 release
-
-- **Source:** [UltiMaker Cura 5.7.0 release](https://github.com/Ultimaker/Cura/releases/tag/5.7.0)
-- **Version/commit:** Tag 5.7.0, commit 04ddb8e; release page shows 3 April (year is not printed in the tag page).
-- **Access:** 2026-10-10T04:18:00Z, read-only web open.
-- **Locator:** Release summary lines 151-162, 194-205, and tips 244-247 in retrieved page.
-- **Observed operation:** Read public release notes; no Cura binary or project was run.
-- **Relevant conditions:** Universal Cura Project files contain models and settings; release notes claim sharing with different printers and say position and selected settings may be included. 5.7.0 says it fixed 3MF saved-position loading while explicitly changing the Import Models feature to ignore saved positions. Release tips recommend starting a new project after finishing a Universal Cura Project to reset its settings.
-- **Applicability:** Product- and release-specific behavior; cross-printer marketing does not establish cross-slicer or per-machine approval.
+{
+  "schema": "publication-source-body-repair-v1",
+  "record_type": "source evidence capsule; fetched body private",
+  "classification_basis": "fetched body: content signature, capture provenance and source-map binding",
+  "primaryURL": "UNKNOWN",
+  "source_urls": [],
+  "version": "UNKNOWN",
+  "selector": "UNKNOWN",
+  "conditions": "UNKNOWN",
+  "versions_conditions_and_authored_summaries": [],
+  "original_capture_selectors": [],
+  "raw_sha256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+  "rawSHA256": "0660ac8e5e5e35b9e091b6566afecc1aff994ed9a2d63c1a46f0daba022bdf53",
+  "original_bytes": 1060,
+  "private_archive_lineage": "publication-final-prep-v6/root-final-publication-001/private/originals/runs/A7-01/treatment/handoff/stages/investigator/sources/S11-cura-570-release.md",
+  "quoted_body_words": 0,
+  "evidence_coverage": "UNKNOWN",
+  "byte_exact_replay": false,
+  "omission": "Full source/native capture private; zero new quotations, no invented summary or semantic repair."
+}
