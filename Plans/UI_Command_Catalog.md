@@ -564,9 +564,9 @@ Broad-pass command and wiring reconciliation spans the command catalog plus its 
 | `cmd.source_control.graph_focus` | Focus Graph Object | Compatibility alias for `cmd.source_control.graph.focus` | `git_available && graph_object_resolvable` |
 | `cmd.source_control.graph_filter` | Filter Graph | Compatibility alias for `cmd.source_control.graph.filter` | `source_control_graph_visible` |
 | `cmd.source_control.history_open_commit` | Open Commit In History | Opens a selected commit in Source Control History | `git_available && commit_resolvable` |
-| `cmd.source_control.select_tab` | Select Source Control Tab | Selects `Changes`, `History`, `Graph`, `Worktrees`, or `Branches / Stash` without changing repository state | `source_control_visible` |
+| `cmd.source_control.select_tab` | Select Source Control Tab | Selects one tab of the active engine's own strip without changing repository state: for Git `Changes`, `Worktrees`, `History` (with `Graph`) or `Branches / Stash`; for Jujutsu `Changes`, `Workspaces`, `History`, `Bookmarks` or `Operation Log` (`Plans/Source_Control_System.md#SCS-005`, `Plans/Jujutsu_Integration.md#JJI-006`, `Plans/FinalGUISpec.md#F3-623`; amended 2026-10-09 by DL-163) | `source_control_visible` |
 
-| `cmd.source_control.stash` | Open Stash Controls | Opens Source Control `Branches / Stash` controls for the current repo/worktree | `git_available` |
+| `cmd.source_control.stash` | Open Stash Controls | Opens Source Control `Branches / Stash` controls for the current repo/worktree; Git only, Jujutsu has no stash (JJI-006, DL-163) | `git_available` |
 | `cmd.source_control.stash.*` | Stash Command Family | Compatibility family for stash list/create/apply/drop flows | `git_available` |
 | `cmd.source_control.suggest_commit_batches` | Suggest Commit Batches | Generates advisory commit groupings and draft messages from staged/unstaged diff clusters | `git_available && changes_present` |
 | `cmd.source_control.suggest_commit_groups` | Suggest Commit Groups | Compatibility alias for advisory AI commit batching over staged and unstaged diff clusters | `git_available && changes_present` |
@@ -7701,13 +7701,16 @@ status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
 canonical_text: >-
   UCC-106 retains eleven historical cmd.onboarding.* identifiers as searchable command-era source lineage only; none is
-  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly thirteen typed
+  a current command, alias, primary handler, or production-wiring row. Current Product Onboarding uses exactly fourteen typed
   owner-local actions ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close,
   ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways,
   ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow,
-  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish. These are local
+  ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and
+  ui.onboarding.choose_look. These are local
   UI actions, not semantic commands or catalog registrations, and use the closed pm.product_onboarding.action_request.v2
-  and pm.product_onboarding.action_result.v2 contracts. Every request consumes PWIZ-021's closed, normalized, secret-free
+  and pm.product_onboarding.action_result.v2 contracts. ui.onboarding.choose_look (DL-153) is a local look preview,
+  and so is the look ui.onboarding.start opens in (Basic Dark for first_run, the look on screen for settings_rerun):
+  neither dispatches cmd.theme.* or a Settings transaction, and the look is written with the Project at commit. Every request consumes PWIZ-021's closed, normalized, secret-free
   local_context, including phase-specific draft/preflight/commit bindings as defined by the owner schema;
   arbitrary/raw payload fields and secret-bearing values are rejected. An action that launches owner work carries a typed owner
   route or intent and maps to that owner's existing canonical command and sole handler. The command-era reference to
@@ -7722,7 +7725,8 @@ depends_on: [PWIZ-021, PWIZ-022, PWIZ-023, UCC-102, CS-053]
 unblocks: []
 acceptance_criteria:
   - The eleven retained cmd.onboarding.* tokens are searchable source lineage only and receive no command registration, alias, primary handler, or production-wiring row.
-  - Every current Product Onboarding control emits exactly one of the thirteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - Every current Product Onboarding control emits exactly one of the fourteen ui.onboarding.* typed local action IDs owned by PWIZ-021 through PWIZ-023.
+  - The onboarding look choice, its NieR Mode controls and its start look are local previews through ui.onboarding.choose_look and ui.onboarding.start; neither dispatches cmd.theme.* or a Settings transaction (DL-153).
   - The eight packet candidate cmd.onboarding.* tokens are durably rejected as commands, aliases, primary handlers, and production-wiring rows; they do not normalize to the typed local action set.
   - Defer durably preserves exact stage, path, active branch, bounded history, revision/continuation, initiating Client, and focus return; Close is a non-completion dismissal; Skip records an explicit skipped session; Details is ephemeral, same-stage, non-persistent, and owner-command-free.
   - OnboardingActionRequest/OnboardingActionResult close the request/result vocabulary. Applied, disabled, and rejected results are distinct; disabled/rejected results have no local effect, session write, continuation, owner route, or production receipt and expose exact reasons.
@@ -7793,6 +7797,7 @@ preserved_exact_tokens:
   - "ui.onboarding.run_automatic_preparation"
   - "ui.onboarding.choose_first_project"
   - "ui.onboarding.finish"
+  - "ui.onboarding.choose_look"
   - "local_context"
   - "skip_product_onboarding"
   - "skip_optional_scope"
@@ -8114,7 +8119,7 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 
 The following former rows are preserved verbatim enough for search, audit, and one-time migration lineage.
 They are not members of the active GUI command table above, are not aliases, and receive no primary handler
-or production-wiring row. Current Product Onboarding uses the thirteen typed local `ui.onboarding.*` actions
+or production-wiring row. Current Product Onboarding uses the fourteen typed local `ui.onboarding.*` actions
 enumerated by UCC-106 and routes owner work to the target owner's existing canonical command.
 
 | Historical token | Retained command-era payload/result/error/effect lineage | Current disposition |
@@ -8162,7 +8167,14 @@ canonical_text: >-
   contracts with field-level payload, result, error, and receipt/event requirements.
   Existing FileManager CRUD, launch-chain, and runtime allowed-action rows remain
   canonical and are strengthened by the shared UICommandResponse and no fabricated
-  command_applied event rule.
+  command_applied event rule. In the cmd.theme.* family the title bar's Light/Dark/Auto
+  segmented control dispatches cmd.theme.set_mode, while its family rows and NieR Mode
+  checkbox, the Guided Tour bar's Look menu and the NieR Mode editor compose
+  cmd.settings.transaction.preview then cmd.settings.transaction.apply as UCC-120's
+  local affordances do; no theme family or NieR command is added. The application's start
+  and onboarding's look previews (ui.onboarding.start, ui.onboarding.choose_look) dispatch
+  no cmd.theme.* and emit no settings.theme.updated: the pre-paint reads the stored theme
+  of the Project the application opens on (F3-468, DL-153).
 gui_related: true
 gui_classification_reason: Defines user-visible GUI command families, command payloads, responses, disabled states, and receipts.
 depends_on: [UCC-089, UCC-097]
@@ -8173,6 +8185,7 @@ acceptance_criteria:
   - Runtime allowed_action_ids map only to canonical `cmd.runtime.*` commands.
   - FileManager CRUD commands are not duplicated; existing rows remain canonical and gain the shared response/receipt acceptance bar.
   - No command in this addendum uses or authorizes fabricated `*.command_applied` events.
+  - Only the title bar's Light/Dark/Auto control dispatches a cmd.theme.* command for the look; family, NieR Mode and NieR editor changes use the Settings transaction pair, and the application's start and onboarding's look previews dispatch no cmd.theme.* and emit no settings.theme.updated (F3-468, DL-153).
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
   - python3 scripts/pm-plan-index.py validate
@@ -8224,7 +8237,7 @@ owner_hints:
 
 This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current thirteen `ui.onboarding.*` tokens are typed local UI actions rather than command-schema rows.
+- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current fourteen `ui.onboarding.*` tokens (`ui.onboarding.choose_look` added by DL-153) are typed local UI actions rather than command-schema rows.
 - Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
 
 ### UCC-049 through UCC-105 strict schema overlay and UCC-106 lineage exclusion
@@ -8254,7 +8267,7 @@ Common fields for every covered row:
 | `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
 | `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
 | `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families in this catalog. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
-| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its thirteen `ui.onboarding.*` identifiers are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
+| `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its fourteen `ui.onboarding.*` identifiers (`ui.onboarding.choose_look` added by DL-153) are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
 
@@ -9214,7 +9227,9 @@ canonical_text: >-
   command encodes no bloom-specific geometry. The historical cmd.settings.open_notifications,
   cmd.settings.category.reset, and cmd.settings.suggestion.dismiss spellings are retained only as retired,
   non-alias local-affordance lineage. Notifications navigation emits cmd.settings.open. Category reset and
-  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply.
+  suggestion dismissal each compose cmd.settings.transaction.preview followed by cmd.settings.transaction.apply,
+  and so do the live look controls (DL-153): the title-bar theme selector's family rows and NieR Mode checkbox, the
+  Guided Tour bar's Look menu and sound control, and every live edit in the NieR Mode editor (SSYS-043, F3-082).
   The historical spellings receive no primary handler, production-wiring row, or alias. SSYS-023's hash-bound
   80-token disposition registry is transitive catalog input: its canonical targets retain their existing rows, its
   seven typed local actions receive no command rows, and retired or rejected packet spellings remain non-actionable.
@@ -10476,7 +10491,8 @@ canonical_text: >-
   and cmd.docker.image.delete register the expander actions; container and image delete are destructive with
   strong confirmation, and prune is destructive over scan results. Docker Manager keeps six subview tabs with
   distinct glyphs and abbreviated mid-width labels (user decision 2026-07-27); no tab-switch commands are
-  minted.
+  minted. Amended 2026-10-09 (DL-162): the tab labels are no longer abbreviated; they fit as FinalGUISpec
+  F3-620 says, and still no tab-switch command is minted.
 gui_related: true
 gui_classification_reason: Registers and adjudicates user-visible Docker container, image, and cleanup controls.
 depends_on: [UCC-049, UCC-105, UCC-121]
@@ -10504,6 +10520,7 @@ source_lineage:
   - "Concepts/rail-concepts/QwenRailConcepts/c2-cozy-shelves.html (Cozy Shelves concept; source-lineage-only)"
   - "Plans/UI_Command_Catalog.md (UCC-105 existing-token list; UCC-121 container subfamily direction)"
   - "user decision 2026-07-27 (Docker Manager keeps 6 subview tabs)"
+  - "Plans/Decision_Log.md#DL-162 (owner decision 2026-10-09; tab labels fit by FinalGUISpec F3-620, never abbreviated)"
 preserved_exact_tokens:
   - "cmd.docker.container.stop"
   - "cmd.docker.container.restart"
@@ -13251,19 +13268,19 @@ plan_unit_id: "UCC-163"
 unit_type: "integration_contract"
 status: "accepted"
 owner_doc: "Plans/UI_Command_Catalog.md"
-canonical_text: "Every accepted action or visible state has a bounded intended consumer and exact initiating-context return contract. F3-552 through F3-560 own the visible distinctions; this inventory expresses future routing obligations and is not runtime or schema admission."
+canonical_text: "Every accepted action or visible state has a bounded intended consumer and exact initiating-context return contract. F3-552 through F3-560 own the visible distinctions; this inventory expresses future routing obligations and is not runtime or schema admission. Amended 2026-10-09 (DL-163): the operation view these criteria call Operation History is labelled Operation Log, JJI-006's registered string."
 gui_related: true
 gui_classification_reason: "Defines visible actions, state, producer/consumer routes and user feedback."
 depends_on: ["UCC-162", "F3-552", "F3-553", "F3-554", "F3-555", "F3-556", "F3-557", "F3-558", "F3-559", "F3-560"]
 unblocks: []
-acceptance_criteria: ["Operation History owns markers, grouping, recent actions, action/time filters, descriptions, group undo, redo and selected-operation reversal; a named historical target carries its exact operation through preview and result.", "Source Control history/graph and change detail own rewrite preview/apply, earlier-state browsing, comparison/evolution, lane/query assistance, pinned details and change-editing actions; Files consumes bounded attribution/file-history, review correspondence and hunk selection without inventing mutation authority.", "Workspace manager and setup own read-only mode, adoption/repair and hide/unhide; Backup/history diagnostics own maintenance and separately authorized missing-data completion; technical diagnostics own explicit sanitized export and optional command log.", "Publication and review consumers bind explicit provider/workflow identity for conflict publication, bookmark alternatives, stack publication and additional-service capability; hosting failures retain independent local navigation.", "All applicable menu, palette, pointer, keyboard, Files, Settings, Project, Doctor, internal agent and owner-route consumers share their admitted semantic route and return exact repository/workspace/revision, selection, caller route/focus and invocation/currentness context. An unavailable producer retains a reason and does not fall through to hidden Git or shell mutation."]
+acceptance_criteria: ["Operation Log owns markers, grouping, recent actions, action/time filters, descriptions, group undo, redo and selected-operation reversal; a named historical target carries its exact operation through preview and result.", "Source Control history/graph and change detail own rewrite preview/apply, earlier-state browsing, comparison/evolution, lane/query assistance, pinned details and change-editing actions; Files consumes bounded attribution/file-history, review correspondence and hunk selection without inventing mutation authority.", "Workspace manager and setup own read-only mode, adoption/repair and hide/unhide; Backup/history diagnostics own maintenance and separately authorized missing-data completion; technical diagnostics own explicit sanitized export and optional command log.", "Publication and review consumers bind explicit provider/workflow identity for conflict publication, bookmark alternatives, stack publication and additional-service capability; hosting failures retain independent local navigation.", "All applicable menu, palette, pointer, keyboard, Files, Settings, Project, Doctor, internal agent and owner-route consumers share their admitted semantic route and return exact repository/workspace/revision, selection, caller route/focus and invocation/currentness context. An unavailable producer retains a reason and does not fall through to hidden Git or shell mutation."]
 validation_surfaces: ["Future owner-qualified request/result, stale identity, denied, cancellation, partial and unknown-effect fixtures", "python3 scripts/pm-plan-index.py validate"]
 risk_class: "jujutsu_identity_authority_or_effect_misrepresentation"
 reasoning_tier: "high"
 context_scope: "dl043_accepted_jujutsu_planning"
 implementation_surfaces: ["Plans/UI_Command_Catalog.md", "Plans/Jujutsu_Integration.md", "Plans/Source_Control_System.md"]
 node_compile_hint: {"mode": "accepted_planning_contract_only", "create_worknodes": false, "create_nodeseeds": false}
-source_lineage: ["source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d001", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d002", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d003", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d004", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d005", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d006", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d007", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d008", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d009", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d010", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d011", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d012", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d013", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d014", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d015", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d016", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d017", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d018", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d019", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d027", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d028", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d029", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d030", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d031", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d032", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d035", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d037", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d038", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d039", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d040", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d042", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d043", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d044", "Plans/Decision_Log.md:DL-043"]
+source_lineage: ["source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d001", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d002", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d003", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d004", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d005", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d006", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d007", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d008", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d009", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d010", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d011", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d012", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d013", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d014", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d015", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d016", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d017", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d018", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d019", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d027", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d028", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d029", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d030", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d031", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d032", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d035", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d037", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d038", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d039", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d040", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d042", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d043", "source_ref:pldg-20260911-002-jujutsu-decisions:atom-jj-d5-d044", "Plans/Decision_Log.md:DL-043", "Plans/Decision_Log.md#DL-163"]
 negative_constraints: ["Planning only: no new admitted command ID, native handler, runtime readiness, EventRecord family, schema widening, WorkNode, NodeSeed or governance seal follows from this unit.", "Declined DL-043 dispositions remain declined; do not reopen them or add a third-party diff/source-control library, external IDE/MCP interface, shared public service, custom publish hooks, specialized storage or specialized AI workspace-review workflow."]
 owner_boundary_notes: ["Jujutsu and Source Control own native semantics and admitted command contracts; Final GUI owns presentation, Backup owns restore/completion/maintenance policy, FileManager owns newline behavior, Permissions and FileSafe independently own safety, and Forge owns hosted workflows."]
 owner_hints: ["Plans/Jujutsu_Integration.md", "Plans/Source_Control_System.md", "Plans/FinalGUISpec.md", "Plans/Backup_Restore_System.md", "Plans/FileManager.md", "Plans/Forge_Integrations.md", "Plans/FileSafe.md"]

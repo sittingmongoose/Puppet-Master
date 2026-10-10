@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L235-L1793
+Source lines: L235-L1794
 
-Source SHA256: `a128627d85b0eb7cafb591dd7f33e769fcad42a272294631f99c93f272a50e4c`
+Source SHA256: `924201ae5917470118eca679dbf546249dad0cd80de2f7b93d5e7b2fc9ac92ed`
 
 ---
 
@@ -124,7 +124,7 @@ plan_unit_id: GI-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/GitHub_Integration.md
-canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin.
+canonical_text: Source Control exposes Changes, History, Graph, Worktrees, Branches/Stash, diff preview, staging, commit, sync, stash, branch, incoming/outgoing, conflict, and multi-SCM provider behavior; accordion headers are accessible buttons and compare defaults are deterministic by origin. Amended 2026-10-09 by DL-163, this is the Git view's section list; the section set per engine is owned by Plans/Source_Control_System.md SCS-005, and the left rail shows each engine's sections as its own tab strip (FinalGUISpec F3-623), Jujutsu with no staging or stash.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, GitHub Actions, readiness, workflow, routing, or remote-disclosure behavior.
 split_recommended: true
@@ -148,6 +148,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_Integration-S0008
+- Plans/Decision_Log.md#DL-163 (2026-10-09; section set per engine owned by SCS-005, rail tabs per F3-623)
 preserved_exact_tokens:
 - Changes
 - History

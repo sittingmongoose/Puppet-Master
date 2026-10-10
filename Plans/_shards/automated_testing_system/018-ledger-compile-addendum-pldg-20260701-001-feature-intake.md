@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1642-L1907
+Source lines: L1642-L1908
 
-Source SHA256: `76af4ce20341765c36c0be4a79d1b944d2a7e2260ce6ea24fd056962fca59038`
+Source SHA256: `6dafd1db8537fab7df8c76a3003bec2d0b39ba27c6a40e58919b04c3174607b6`
 
 ---
 
@@ -43,7 +43,7 @@ unblocks: []
 acceptance_criteria:
   - Tests consume the exact PWIZ-021 main_stage_order, connect_existing_stage_order and deferred_project_stage_order definitions, not a testing-owned roster. Main includes eleven semantic stages; explicit Project Later skips provider work without a fake Project and connect-existing retains its six-stage shortcut.
   - Connect-existing tests verify the exact six-stage shortcut `welcome`, `simple_path`, `remote_access_setup`, `review_setup_plan`, `automatic_preparation`, `ready` and exact path denominator six; `first_project`, `source_control_setup`, and `server_storage_client` are omitted rather than silently executed.
-  - Tests enforce the exact thirteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, and ui.onboarding.finish; `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
+  - Tests enforce the exact fourteen-action Onboarding census: ui.onboarding.start, ui.onboarding.next, ui.onboarding.back, ui.onboarding.close, ui.onboarding.skip, ui.onboarding.defer, ui.onboarding.open_details, ui.onboarding.more_ways, ui.onboarding.choose_simple_path, ui.onboarding.open_owner_flow, ui.onboarding.run_automatic_preparation, ui.onboarding.choose_first_project, ui.onboarding.finish, and ui.onboarding.choose_look (DL-153); `simple_path` and `ui.onboarding.choose_simple_path` are current visible behavior, and no missing or extra typed action passes.
   - Precommit tests reject every owner dispatch except current owner-authorized read-only preflight or necessary selected-source authentication; actual owner request shape/hash, permission, capability, consent, source/draft/revision, Client/Host, focus and expiry are joined. Ref-shaped strings, detected accounts, stale sources or UI availability alone never authorize work.
   - First Project keeps new/open decisions visually distinct and progressively discloses less-common origins. Its selection queues canonical Project-owner intent; only a confirmed Review may dispatch `cmd.project.new_local {init_git:true}` through Project System, and tests reject `cmd.source_control.repository.init` as a request, alias, handler, or visible route.
   - Source Control tests state plainly that Safe History is local and verify independent `scm_backend_selection=git|jujutsu|null` and `forge_provider_selection=github|gitlab|azure_devops|bitbucket_cloud|bitbucket_data_center|forgejo|gitea|cursor_origin|none|null` axes, including Git/local-only, Git/online, Jujutsu/local-only, and Jujutsu/online cases. Git and Jujutsu never have service accounts, Forgejo and Gitea remain distinct products/adapters, and FileSafe complements rather than replaces the selected backend.
@@ -182,6 +182,7 @@ preserved_exact_tokens:
   - "ui.onboarding.run_automatic_preparation"
   - "ui.onboarding.choose_first_project"
   - "ui.onboarding.finish"
+  - "ui.onboarding.choose_look"
   - "ui.guided_tour.start"
   - "ui.guided_tour.next"
   - "ui.guided_tour.back"
