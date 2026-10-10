@@ -263,8 +263,11 @@
     if (f('background') === 'follow' && lk === 'friendly') {
       /* Friendly's stage: a soft light from above over a gentle fall to the look's tint; 30-looks.css adds the recess
          under the header and the paper grain */
-      var top = C.toHex(theme.bg), foot = C.toHex(C.mix(theme.bg, C.hex(mode === 'dark' ? '#3b3550' : '#f6e9f2'), mode === 'dark' ? 0.35 : 0.6));
-      bg = { kind: 'gradient', soft: true, css: 'radial-gradient(120% 70% at 50% -8%, ' + (mode === 'dark' ? 'rgb(255 236 250 / .10)' : 'rgb(255 255 255 / .8)') +
+      /* the scheme's own lightness decides the tint, not the look's mode: a dark scheme picked in Friendly light keeps a
+         dark stage (a light tint under it would leave its last rows on mid-grey) */
+      var darkGround = s ? s.appearance === 'dark' : mode === 'dark';
+      var top = C.toHex(theme.bg), foot = C.toHex(C.mix(theme.bg, C.hex(darkGround ? '#3b3550' : '#f6e9f2'), darkGround ? 0.35 : 0.6));
+      bg = { kind: 'gradient', soft: true, css: 'radial-gradient(120% 70% at 50% -8%, ' + (darkGround ? 'rgb(255 236 250 / .10)' : 'rgb(255 255 255 / .8)') +
         ', transparent 62%), linear-gradient(180deg, ' + top + ' 0%, ' + foot + ' 100%)' };
     }
     else if (bgKind === 'solid') bg.color = f('bgColor') || C.toHex(theme.bg);

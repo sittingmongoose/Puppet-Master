@@ -82,7 +82,7 @@
       if (view.findBar) { view.findInput.focus(); view.findInput.select(); return; }
       var st = view.findState = new FindState(view);
       var bar = document.createElement('div');
-      bar.className = 'pmt-findbar';
+      bar.className = 'pmt-findbar pmt-calm';
       bar.setAttribute('role', 'search');
       bar.innerHTML =
         '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find">' +
@@ -95,16 +95,25 @@
         '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find (Esc)" data-pm-hover-label="Close (Esc)">' + ICON.close + '</button>';
       view.screen.appendChild(bar);
       view.findBar = bar;
+      T.Motion.play(bar);
       var input = view.findInput = bar.querySelector('input'), count = bar.querySelector('.pmt-find-count');
       var sel = view.selection ? view.selection.text(view.term) : '';
       if (sel && sel.indexOf('\n') < 0 && sel.length < 200) input.value = sel;
       function update(keep) {
         st.q = input.value; st.run(keep);
         bar.classList.toggle('pmt-find-error', st.error);
+        var was = count.textContent;
         count.textContent = st.error ? 'Invalid pattern' : !st.q ? '' : st.matches.length ? (st.index + 1) + ' of ' + st.matches.length + (st.matches.length >= MAX ? '+' : '') : 'No results';
         /* only what the person did in the bar moves the view; the refresh after output (keep) recounts and repaints
-           the marks and leaves the scroll position, and following the bottom, alone */
-        if (!keep) reveal();
+           the marks and leaves the scroll position, and following the bottom, alone (and the count does not move) */
+        if (!keep) {
+          reveal();
+          if (count.textContent !== was) {
+            /* a search that just found nothing nudges its count once; any other new count rolls in */
+            if (count.textContent === 'No results' || st.error) T.Motion.play(count, 'pmt-nudge');
+            else if (count.textContent) { count.removeAttribute('data-pmt-dir'); T.Motion.play(count, 'pmt-tick'); }
+          }
+        }
         view.marksDirty = true; view.schedule();
       }
       function reveal() {
@@ -113,10 +122,30 @@
         if (m.a0 < top || m.a0 >= top + rows) view.scrollTo(m.a0 - Math.floor(rows / 2));
       }
       function go(d) {
-        if (!st.matches.length) return;
+        if (!st.matches.length) { T.Motion.play(count, 'pmt-nudge'); return; }
         st.index = (st.index + d + st.matches.length) % st.matches.length;
         count.textContent = (st.index + 1) + ' of ' + st.matches.length;
+        /* the count rolls the way the match moved (previous is upward), and the match is marked where it landed */
+        count.setAttribute('data-pmt-dir', d < 0 ? 'down' : 'up');
+        T.Motion.play(count, 'pmt-tick');
         reveal(); view.marksDirty = true; view.schedule();
+        ring(st.matches[st.index]);
+      }
+      /* a ring around the match the person jumped to, for a moment, so the eye finds it; the text under it stays still */
+      function ring(m) {
+        if (view._findRing) { view._findRing.remove(); view._findRing = null; }
+        var mt = view.metrics; if (!m || !mt) return;
+        var row = m.a0 - view.viewTop();
+        if (row < 0 || row >= view.term.rows) return;
+        var x1 = m.a1 === m.a0 ? m.x1 : view.term.cols;
+        var a = view.cellToOverlay(m.x0, row), b = view.cellToOverlay(x1, row);
+        var r = view._findRing = document.createElement('div');
+        r.className = 'pmt-findring pmt-calm';
+        r.setAttribute('aria-hidden', 'true');
+        r.style.left = (a.left - 3) + 'px'; r.style.top = (a.top - 2) + 'px';
+        r.style.width = Math.max(mt.cellW, b.left - a.left) + 6 + 'px'; r.style.height = mt.cellH + 4 + 'px';
+        view.overlays.appendChild(r);
+        T.Motion.finished(r, function () { r.remove(); if (view._findRing === r) view._findRing = null; });
       }
       input.addEventListener('input', function () { update(false); });
       input.addEventListener('keydown', function (e) {
@@ -145,7 +174,12 @@
     };
     view.closeFind = function () {
       if (!view.findBar) return;
-      view.findBar.remove(); view.findBar = null; view.findState = null;
+      /* the bar plays its exit and is gone for everything else at once: a new Find opens a fresh bar */
+      var bar = view.findBar;
+      bar.setAttribute('aria-hidden', 'true'); bar.inert = true;
+      T.Motion.leave(bar, function () { bar.remove(); });
+      view.findBar = null; view.findState = null;
+      if (view._findRing) { view._findRing.remove(); view._findRing = null; }
       if (view._findOff) view._findOff();
       view.marksDirty = true; view.schedule(true);
       view.focus();

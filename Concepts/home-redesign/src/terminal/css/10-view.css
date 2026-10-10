@@ -122,7 +122,8 @@
 .pmt-find-toggle:hover, .pmt-find-btn:hover { background: color-mix(in srgb, currentColor 12%, transparent); color: var(--pmw-text, var(--text-primary)); }
 .pmt-find-toggle.pmt-on { border-color: var(--pmw-accent, var(--accent-primary)); color: var(--pmw-text, var(--text-primary)); background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
 .pmt-find-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.pmt-find-count { min-width: 64px; padding: 0 6px; font-size: 11px; color: var(--pmw-text-2, var(--text-secondary)); text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* wide enough for "No results" and "Invalid pattern", so the bar never shifts while you type */
+.pmt-find-count { min-width: 92px; padding: 0 6px; font-size: 11px; color: var(--pmw-text-2, var(--text-secondary)); text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ---- hints, copy mode, link tag ---- */
 .pmt-hints { position: absolute; inset: 0; pointer-events: none; }

@@ -27,10 +27,11 @@ given and labelled "target". Section numbers are stable; later installments add 
 
 ## 2. More menu (exact items, in order)
 
-New terminal ▸ (zsh, bash, pwsh, ssh devbox) · Split down · — · Appearance... · Text size ▸ (Bigger, Smaller, Reset) ·
-— · Copy mode · Quick select · Select all · Clear · Clear scrollback · Plain-text buffer · — · Agent input ▸ (Ask each
-time; one row per agent allowed here, each revokes) · Send signal ▸ (Interrupt SIGINT, Terminate SIGTERM, Kill
-SIGKILL) · Restart session.
+New terminal ▸ (zsh, bash, pwsh · — · SSH hosts ▸ devbox) · Split down · — · Appearance... · Text size ▸ (Bigger,
+Smaller, Reset) · — · Copy mode · Quick select · Select all · Clear · Clear scrollback · Plain-text buffer · — · Agent
+input ▸ (Ask each time; one row per agent allowed here, each revokes) · Mute notifications (a check, D38; absent where
+the platform has no system notifications) · Send signal ▸ (Interrupt SIGINT, Terminate SIGTERM, Kill SIGKILL) ·
+Restart session.
 
 Context menu on the screen (right click; Shift+right click when a program reports the mouse): Open in editor / Open
 link and Copy path / Copy link (on a link) · Copy · Paste · Select all · Find · Clear.

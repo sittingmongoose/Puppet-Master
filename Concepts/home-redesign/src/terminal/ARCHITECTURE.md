@@ -50,7 +50,8 @@ src/terminal/
         78-agent.js       agent states (driving row, take over, permission, secret prompts, attribution)
         80-card.js        the chat's command card (PMT.card)
         90-kind.js        session registry, profiles, PM_HOME.registerKind('terminal'), window.PMT
-  css/  00-fonts.css 10-view.css 20-overlays.css 30-looks.css 40-nier.css 50-fx.css 80-card.css (sorted, inlined)
+  css/  00-fonts.css 10-view.css 20-overlays.css 30-looks.css 40-nier.css 50-fx.css 60-motion.css 80-card.css (sorted, inlined;
+        60-motion.css holds the per-look motion and the calm Reduced Motion fades of .pmt-calm elements)
   fonts/    woff2 + licence texts + SOURCE.md (DL-161 format)
   schemes/  <family>.json (raw, with source and licence) + LICENSE-<family>.txt + SOURCES.md; editor-syntax.json
             (the 17 editor syntax colours of every scheme, D30) + check_editor_syntax.py (its contrast gate)

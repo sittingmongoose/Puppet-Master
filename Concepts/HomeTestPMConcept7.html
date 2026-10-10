@@ -36679,7 +36679,8 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
 .pmt-find-toggle:hover, .pmt-find-btn:hover { background: color-mix(in srgb, currentColor 12%, transparent); color: var(--pmw-text, var(--text-primary)); }
 .pmt-find-toggle.pmt-on { border-color: var(--pmw-accent, var(--accent-primary)); color: var(--pmw-text, var(--text-primary)); background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
 .pmt-find-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.pmt-find-count { min-width: 64px; padding: 0 6px; font-size: 11px; color: var(--pmw-text-2, var(--text-secondary)); text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* wide enough for "No results" and "Invalid pattern", so the bar never shifts while you type */
+.pmt-find-count { min-width: 92px; padding: 0 6px; font-size: 11px; color: var(--pmw-text-2, var(--text-secondary)); text-align: center; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 /* ---- hints, copy mode, link tag ---- */
 .pmt-hints { position: absolute; inset: 0; pointer-events: none; }
@@ -36731,7 +36732,7 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
 
 /* ---- agent row (D18) ---- */
 .pmt-agentrow {
-  flex: none; display: flex; align-items: center; gap: 10px; min-height: 30px; padding: 3px 8px 3px 12px; font-size: 12px;
+  position: relative; flex: none; display: flex; align-items: center; min-height: 30px; padding: 3px 8px 3px 12px; font-size: 12px;
   background: color-mix(in srgb, var(--pmw-warn, var(--accent-warning)) 16%, var(--pmw-surface-2, var(--surface-elevated)));
   color: var(--pmw-text, var(--text-primary)); border-bottom: 1px solid color-mix(in srgb, var(--pmw-warn, var(--accent-warning)) 30%, transparent);
 }
@@ -36740,13 +36741,16 @@ html[data-motion="reduced"] .pmw-tab, html[data-motion="reduced"] .pmw-tab *, ht
 .pmt-agent-sq { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--pmw-warn, var(--accent-warning)); stroke-width: 1.6; }
 .pmt-agent-secret { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 14%, var(--pmw-surface-2, var(--surface-elevated))); border-bottom-color: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 30%, transparent); }
 .pmt-agent-secret .pmt-agent-sq { stroke: var(--pmw-accent, var(--accent-primary)); }
+/* the row's words and actions; a state change keeps the old ones (.pmt-agent-old) over the row while they roll out */
+.pmt-agent-in { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 10px; }
+.pmt-agent-old { position: absolute; left: 12px; right: 8px; top: 0; bottom: 0; pointer-events: none; }
 .pmt-agent-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* a permission request shows the whole command it approves, wrapped, never cut off with an ellipsis */
 .pmt-agent-permission .pmt-agent-text { white-space: normal; overflow-wrap: anywhere; }
 .pmt-agent-permission code { white-space: pre-wrap; }
 .pmt-agent-acts { display: flex; gap: 2px; flex: none; }
 .pmt-agent-acts .pmt-textbtn { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
-@container pmw-body (max-width: 520px) { .pmt-agent-text { white-space: normal; } .pmt-agentrow { flex-wrap: wrap; } }
+@container pmw-body (max-width: 520px) { .pmt-agent-text { white-space: normal; } .pmt-agent-in { flex-wrap: wrap; } }
 
 /* ---- Appearance popover ---- */
 .pmt-pop {
@@ -36872,6 +36876,26 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="retro"] .pmt-progress::before { background: repeating-linear-gradient(90deg, var(--pmt-fg) 0 6px, transparent 6px 8px); transition: none; }
 .pmt-root[data-pmt-look="friendly"] .pmt-progress { height: 3px; }
 
+/* ---- grounds (D23 polish) ----
+   Friendly: the ground (42-appearance.js) is a stage lit from above; here it sits a little recessed under the header,
+   with a faint paper grain. Glass: the ground reads the shared look tokens (--pmw-surface, which Glass maps to its
+   reading surface), so an app-wide Glass restyle reaches the terminal; --pmt-glass-veil is the hook. Static. */
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::after {
+  content: ""; position: absolute; inset: 0;
+  box-shadow: inset 0 16px 20px -16px rgb(76 56 110 / .34), inset 0 -12px 16px -16px rgb(76 56 110 / .16);
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::after {
+  box-shadow: inset 0 16px 20px -16px rgb(0 0 0 / .7), inset 0 -12px 16px -16px rgb(0 0 0 / .4);
+}
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::before {
+  content: ""; position: absolute; inset: 0; opacity: .045; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.30 0 0 0 0 0.22 0 0 0 0 0.40 0 0 0 1.6 -0.55'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url%28%23n%29'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::before { mix-blend-mode: screen; opacity: .05; }
+.pmt-root[data-pmt-look="glass"] { --pmt-glass-veil: color-mix(in srgb, var(--pmw-surface, transparent) 28%, transparent); }
+.pmt-root[data-pmt-look="glass"] .pmt-bglayer.pmt-bg-theme { background: var(--pmt-glass-veil); }
+
 /* ---- chrome shapes per look ---- */
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
 .pmt-root[data-pmt-look="glass"] { --pmt-radius: 10px; }
@@ -36885,6 +36909,8 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
   background: color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent); border-color: var(--glass-hairline, rgba(255,255,255,.16));
 }
 :is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) { border-radius: 14px; }
+/* the sticky family names hold their own ground in Glass, so rows scrolling under them never show through */
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) .pmt-scheme-group { background: color-mix(in srgb, var(--surface-elevated, #2a2240) 97%, transparent); }
 :is(.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-pop[data-pmt-look="retro"]), .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
   border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
 }
@@ -36902,12 +36928,14 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="retro"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
 .pmt-root[data-pmt-look="retro"] .pmt-notice { border-radius: 0; }
 
-/* ---- Reduced Motion: no animation anywhere in the terminal ---- */
-html[data-motion="reduced"] .pmt-root *, html[data-motion="reduced"] .pmt-root *::before, html[data-motion="reduced"] .pmt-root *::after { animation: none !important; transition: none !important; }
+/* ---- Reduced Motion: nothing moves in the terminal. An element whose calm version is a deliberate cross-fade carries
+   .pmt-calm (60-motion.css gives it that fade); everything else is still. ---- */
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm), html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::before,
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
 html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
-  .pmt-root *, .pmt-root *::before, .pmt-root *::after { animation: none !important; transition: none !important; }
+  .pmt-root :not(.pmt-calm), .pmt-root :not(.pmt-calm)::before, .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 }
 /* ---- terminal/css/40-nier.css ---- */
 /* NieR Mode for the terminal (D23), under the binding rule for new surfaces (NIER-RULES-for-new-surfaces.md, DL-152,
@@ -37070,10 +37098,379 @@ html[data-o55-nier="on"] .pmt-notice-warn { background: var(--o55-nier-warn-surf
 /* ---- Reduced Motion: the trail never shows, and nothing in these hooks may move ---- */
 html[data-motion="reduced"] .pmt-trail { display: none !important; }
 html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass),
-html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass) *,
+html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass) :not(.pmt-calm),
 html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::before,
 html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::after {
   animation: none !important; transition: none !important;
+}
+/* ---- terminal/css/60-motion.css ---- */
+/* Motion for the terminal's chrome: the agent row and notices, command marks, the find bar, the Appearance popover
+   (both surfaces) and the recolour when a scheme is previewed or chosen. JS only starts things and waits for them
+   (T.Motion in 70-view.js): an element plays its entrance under .pmt-in, its exit under .pmt-out, a content change
+   under .pmt-swap, a command's end under .pmt-settle. What each of those animates is a token on .pmt-root (and on the
+   editor's floating popover, .pmt-pop-float, which carries the look itself).
+
+   Layers, from the bottom:
+   1. calm tokens: what Reduced Motion gets (short opacity cross-fades; nothing travels). Elements whose calm version
+      is a fade carry .pmt-calm, which 30-looks.css leaves alone under Reduced Motion.
+   2. motion tokens per look, only with motion allowed: Basic cubic-bezier(0.2, 0, 0, 1); Friendly cubic-bezier(0.34,
+      1.56, 0.64, 1), springy; Glass cubic-bezier(0.05, 0.7, 0.1, 1), a slow glide; Retro steps(6, end), stepped and
+      snappy; durations 120-300 ms, so nothing delays typing or reading output.
+   3. NieR: end states at once, then motion only where an installed Motion part asks for it, stepped (steps(8, end)):
+      slice (the popover and find bar open from a line), decode (rows and counts type on, marks snap), glitch (a
+      request, a failure and an empty find arrive with a short jitter; target brackets snap), wipe (a recolour crosses
+      as an ink-edged band). Reduced Motion, Still and Colors only (no Motion part) show end states at once. Colours
+      only from --o55-nier-* tokens; no glow, filter or blur.
+   The terminal's canvas text never animates or moves: a recolour lays the old colours over it and takes them away.
+   Nothing here loops, so nothing moves at idle. No side stripes, no capsules. */
+
+@property --pmt-xf-r { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+/* ================================================================================================================
+   1. calm tokens (Reduced Motion, and the floor every look starts from)
+   ================================================================================================================ */
+.pmt-root, .pmt-pop-float {
+  --pmt-ease-move: linear; --pmt-ease-fade: linear; --pmt-ease-exit: linear; --pmt-ease-xf: linear;
+  --pmt-t-in: 120ms; --pmt-t-out: 100ms; --pmt-t-swap: 120ms; --pmt-t-xf: 120ms; --pmt-t-tick: 0ms;
+  --pmt-t-slide: 0ms; --pmt-t-settle: 120ms; --pmt-t-ring: 520ms; --pmt-t-tint: 0ms;
+  --pmt-rise: 0px; --pmt-pop-scale: 1; --pmt-pop-origin: 100% 0; --pmt-ring-from: 1;
+  --pmt-a-pop-in: pmt-m-fade-in; --pmt-a-pop-out: pmt-m-fade-out;
+  --pmt-a-row-in: pmt-m-fade-in; --pmt-a-row-body: none; --pmt-a-row-out: pmt-m-fade-out; --pmt-a-row-sheen: none;
+  --pmt-a-new: pmt-m-dip-in; --pmt-a-old: pmt-m-dip-out; --pmt-a-rescope: pmt-m-dim-in;
+  --pmt-a-xf: pmt-xf-fade; --pmt-a-ring: pmt-m-hold-fade;
+  --pmt-a-tick: none; --pmt-a-nudge: none; --pmt-a-ask: none;
+  --pmt-a-draw: none; --pmt-a-mark: none; --pmt-a-mark-fail: none; --pmt-a-ripple: none; --pmt-a-start: none; --pmt-a-box: none;
+  --pmt-a-pick: none; --pmt-stagger: 0ms;
+}
+
+/* ================================================================================================================
+   2. motion per look (only when motion is allowed, and never in NieR, which has its own rules below)
+   ================================================================================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Basic: quiet and exact */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-ease-move: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-fade: cubic-bezier(0.2, 0, 0, 1); --pmt-ease-exit: cubic-bezier(0.4, 0, 1, 1);
+    --pmt-ease-xf: cubic-bezier(0.2, 0, 0, 1);
+    --pmt-t-in: 180ms; --pmt-t-out: 120ms; --pmt-t-swap: 200ms; --pmt-t-xf: 180ms; --pmt-t-tick: 140ms;
+    --pmt-t-slide: 180ms; --pmt-t-settle: 220ms; --pmt-t-ring: 440ms; --pmt-t-tint: 90ms;
+    --pmt-rise: 5px; --pmt-pop-scale: .98; --pmt-ring-from: 1.2;
+    --pmt-a-pop-in: pmt-m-drop-in; --pmt-a-pop-out: pmt-m-drop-out;
+    --pmt-a-row-in: pmt-m-unfold; --pmt-a-row-body: pmt-m-rise-in; --pmt-a-row-out: pmt-m-fold;
+    --pmt-a-new: pmt-m-roll-in; --pmt-a-old: pmt-m-roll-out;
+    --pmt-a-xf: pmt-xf-fade; --pmt-a-ring: pmt-m-lock;
+    --pmt-a-tick: pmt-m-tick; --pmt-a-nudge: pmt-m-nudge;
+    --pmt-a-draw: pmt-m-draw; --pmt-a-start: pmt-m-grow;
+  }
+  /* Friendly: springy, things land with a little give; the recolour blooms out of the scheme under the pointer */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="friendly"] {
+    --pmt-ease-move: cubic-bezier(0.34, 1.56, 0.64, 1); --pmt-ease-xf: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --pmt-t-in: 260ms; --pmt-t-out: 140ms; --pmt-t-swap: 280ms; --pmt-t-xf: 300ms; --pmt-t-tick: 220ms;
+    --pmt-t-slide: 300ms; --pmt-t-settle: 340ms; --pmt-t-ring: 520ms;
+    --pmt-rise: 9px; --pmt-pop-scale: .92; --pmt-ring-from: 1.55;
+    --pmt-a-row-body: pmt-m-spring-in; --pmt-a-xf: pmt-xf-grow; --pmt-a-ask: pmt-m-knock;
+    --pmt-a-mark: pmt-m-pop; --pmt-a-mark-fail: pmt-m-shake; --pmt-a-start: pmt-m-pop;
+    --pmt-a-pick: pmt-m-pop-soft; --pmt-stagger: 40ms;
+  }
+  /* Glass: a slow glide; light runs across what arrives; the recolour slides in from the popover's side */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="glass"] {
+    --pmt-ease-move: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-fade: cubic-bezier(0.05, 0.7, 0.1, 1); --pmt-ease-xf: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --pmt-t-in: 260ms; --pmt-t-out: 160ms; --pmt-t-swap: 300ms; --pmt-t-xf: 320ms; --pmt-t-tick: 220ms;
+    --pmt-t-slide: 300ms; --pmt-t-settle: 360ms; --pmt-t-ring: 560ms; --pmt-t-tint: 140ms;
+    --pmt-rise: 10px; --pmt-pop-scale: .97; --pmt-ring-from: 1.35;
+    --pmt-a-row-in: pmt-m-fade-in; --pmt-a-row-body: pmt-m-glide-in; --pmt-a-row-out: pmt-m-lift-out; --pmt-a-row-sheen: pmt-m-sheen;
+    --pmt-a-xf: pmt-xf-grow; --pmt-a-ripple: pmt-m-ripple;
+  }
+  /* Retro: stepped and snappy, like a terminal drawing its own box; reverse video for emphasis */
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) :is(.pmt-root, .pmt-pop-float)[data-pmt-look="retro"] {
+    --pmt-ease-move: steps(6, end); --pmt-ease-fade: steps(3, end); --pmt-ease-exit: steps(3, end); --pmt-ease-xf: steps(6, end);
+    --pmt-t-in: 180ms; --pmt-t-out: 90ms; --pmt-t-swap: 150ms; --pmt-t-xf: 180ms; --pmt-t-tick: 90ms;
+    --pmt-t-slide: 0ms; --pmt-t-settle: 160ms; --pmt-t-ring: 420ms; --pmt-t-tint: 0ms;
+    --pmt-rise: 0px; --pmt-pop-scale: 1;
+    --pmt-a-pop-in: pmt-m-scan-in; --pmt-a-pop-out: pmt-m-scan-out;
+    --pmt-a-row-in: pmt-m-print-in; --pmt-a-row-body: none; --pmt-a-row-out: pmt-m-print-out;
+    --pmt-a-new: pmt-m-print-in; --pmt-a-old: pmt-m-gone; --pmt-a-rescope: pmt-m-dim-in;
+    --pmt-a-xf: pmt-xf-grow; --pmt-a-ring: pmt-m-blink2;
+    --pmt-a-tick: pmt-m-fade-in; --pmt-a-nudge: pmt-m-invert; --pmt-a-ask: pmt-m-revert;
+    --pmt-a-draw: none; --pmt-a-mark: pmt-m-invert; --pmt-a-start: pmt-m-invert;
+  }
+}
+
+/* ================================================================================================================
+   3. NieR: end states at once; each Motion part adds its own stepped motion
+   ================================================================================================================ */
+html[data-o55-nier="on"] :is(.pmt-root, .pmt-pop-float) {
+  --pmt-ease-move: steps(8, end); --pmt-ease-fade: steps(4, end); --pmt-ease-exit: steps(4, end); --pmt-ease-xf: steps(8, end);
+  --pmt-t-in: 200ms; --pmt-t-out: 100ms; --pmt-t-swap: 200ms; --pmt-t-xf: 200ms; --pmt-t-tick: 120ms;
+  --pmt-t-slide: 0ms; --pmt-t-settle: 150ms; --pmt-t-ring: 480ms; --pmt-t-tint: 0ms;
+  --pmt-pop-origin: 50% 0;
+  --pmt-a-pop-in: none; --pmt-a-pop-out: none; --pmt-a-row-in: none; --pmt-a-row-body: none; --pmt-a-row-out: none;
+  --pmt-a-new: none; --pmt-a-old: none; --pmt-a-rescope: none; --pmt-a-xf: none; --pmt-a-ring: pmt-m-hold;
+  --pmt-a-tick: none; --pmt-a-nudge: none; --pmt-a-ask: none;
+  --pmt-a-draw: none; --pmt-a-mark: none; --pmt-a-mark-fail: none; --pmt-a-start: none; --pmt-a-box: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* slice: the popover and the find bar open from a thin line at their top edge (they hang from their anchor), in
+     eight steps */
+  html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-pop-in: pmt-m-slice-in; --pmt-a-pop-out: pmt-m-slice-out;
+  }
+  /* decode: rows print in as an ink band and their text types on; counts type on; a finished command's square snaps */
+  html[data-o55-nier="on"][data-o55-nier-parts~="decode"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-row-in: pmt-m-print-in; --pmt-a-row-out: pmt-m-print-out; --pmt-a-new: pmt-m-print-in; --pmt-a-old: pmt-m-gone;
+    --pmt-a-tick: pmt-m-print-in; --pmt-a-box: pmt-m-nier-box; --pmt-a-draw: pmt-m-draw;
+  }
+  /* glitch: a request, a failure and an empty find arrive with a short jitter */
+  html[data-o55-nier="on"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) :is(.pmt-root, .pmt-pop-float) {
+    --pmt-a-ask: pmt-m-jitter; --pmt-a-mark-fail: pmt-m-jitter; --pmt-a-nudge: pmt-m-jitter;
+  }
+  /* brackets with glitch: the find target's brackets snap in, as the bell's do (40-nier.css) */
+  html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"]:not([data-motion="reduced"]) .pmt-root {
+    --pmt-a-ring: pmt-m-nier-lock;
+  }
+  /* wipe: a recolour crosses as an ink-edged band from the popover's side */
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root { --pmt-a-xf: pmt-xf-grow; }
+}
+
+/* ================================================================================================================
+   keyframes (from-only keyframes end on the element's own style)
+   ================================================================================================================ */
+@keyframes pmt-m-fade-in { from { opacity: 0; } }
+@keyframes pmt-m-fade-out { to { opacity: 0; } }
+@keyframes pmt-m-dim-in { from { opacity: .45; } }
+/* a dip: the old words are gone before the new ones come, so the two never sit on top of each other */
+@keyframes pmt-m-dip-out { 0% { opacity: 1; } 45%, 100% { opacity: 0; } }
+@keyframes pmt-m-dip-in { 0%, 45% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes pmt-m-gone { from, to { opacity: 0; } }
+@keyframes pmt-m-hold { from, to { opacity: 1; } }
+@keyframes pmt-m-hold-fade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+/* overlays drop from their anchor */
+@keyframes pmt-m-drop-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)) scale(var(--pmt-pop-scale)); } }
+@keyframes pmt-m-drop-out { to { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -.6)) scale(var(--pmt-pop-scale)); } }
+@keyframes pmt-m-scan-in { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-scan-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+@keyframes pmt-m-slice-in { from { transform: scaleY(.006); } }
+@keyframes pmt-m-slice-out { to { transform: scaleY(.006); } }
+/* inline rows: the row unrolls, its content settles into it */
+@keyframes pmt-m-unfold { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-fold { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); opacity: 0; } }
+@keyframes pmt-m-rise-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)); } }
+@keyframes pmt-m-spring-in { from { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -1)) scale(.97); } }
+@keyframes pmt-m-glide-in { from { opacity: 0; transform: translateX(calc(var(--pmt-rise) * 1.6)); } }
+@keyframes pmt-m-lift-out { to { opacity: 0; transform: translateY(calc(var(--pmt-rise) * -.5)); } }
+@keyframes pmt-m-print-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes pmt-m-print-out { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 0 100%); } }
+/* an odometer: the new words come up from under the row as the old ones leave over its top, one row apart */
+@keyframes pmt-m-roll-in { from { opacity: .2; transform: translateY(calc(100% + 8px)); } }
+@keyframes pmt-m-roll-out { to { opacity: .2; transform: translateY(-100%); } }
+@keyframes pmt-m-sheen { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes pmt-m-knock { 0%, 100% { transform: none; } 30% { transform: scale(1.22); } 55% { transform: scale(.94); } 78% { transform: scale(1.08); } }
+@keyframes pmt-m-jitter { 0% { transform: translateX(3px); } 34% { transform: translateX(-3px); } 67% { transform: translateX(1px); } 100% { transform: none; } }
+@keyframes pmt-m-invert { from, to { background: var(--pmt-fg); color: var(--pmt-bg-solid); } }
+/* the reverse of Retro's reverse-video rows */
+@keyframes pmt-m-revert { from, to { background: var(--pmt-bg-solid); color: var(--pmt-fg); } }
+/* find */
+@keyframes pmt-m-tick { from { opacity: .2; transform: translateY(var(--pmt-tick-dy, 5px)); } }
+@keyframes pmt-m-nudge { 0%, 100% { transform: none; } 20% { transform: translateX(-3px); } 45% { transform: translateX(3px); } 70% { transform: translateX(-1.5px); } }
+@keyframes pmt-m-lock { 0% { opacity: 0; transform: scale(var(--pmt-ring-from)); } 32% { opacity: 1; transform: none; } 68% { opacity: 1; transform: none; } 100% { opacity: 0; transform: none; } }
+@keyframes pmt-m-blink2 { 0%, 22% { opacity: 1; } 23%, 45% { opacity: 0; } 46%, 72% { opacity: 1; } 73%, 100% { opacity: 0; } }
+@keyframes pmt-m-nier-lock { 0% { transform: scale(1.7); } 22% { transform: scale(1.35); } 44%, 99% { transform: none; opacity: 1; } 100% { transform: none; opacity: 0; } }
+/* command marks */
+@keyframes pmt-m-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes pmt-m-pop { from { transform: scale(.35); } }
+@keyframes pmt-m-pop-soft { from { transform: scale(.8); } }
+@keyframes pmt-m-grow { from { transform: scale(.55); opacity: .4; } }
+@keyframes pmt-m-shake { 0%, 100% { transform: none; } 25% { transform: translateX(-2px); } 55% { transform: translateX(2px); } 80% { transform: translateX(-1px); } }
+@keyframes pmt-m-ripple { from { opacity: .7; transform: scale(.5); } to { opacity: 0; transform: scale(1.9); } }
+@keyframes pmt-m-nier-box { from { width: 15px; height: 15px; } to { width: 7px; height: 7px; } }
+/* recolour */
+@keyframes pmt-xf-fade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes pmt-xf-grow { from { --pmt-xf-r: 0px; } to { --pmt-xf-r: var(--pmt-xf-max, 2000px); } }
+
+/* ================================================================================================================
+   the agent row and notices: inline rows above the screen (the row takes its room at once, so the terminal moves
+   once; what moves after that is the row's own paint)
+   ================================================================================================================ */
+.pmt-agentrow, .pmt-notice { transition: background-color var(--pmt-t-swap) var(--pmt-ease-fade), color var(--pmt-t-swap) var(--pmt-ease-fade); }
+:is(.pmt-agentrow, .pmt-notice).pmt-in { overflow: hidden; animation: var(--pmt-a-row-in) var(--pmt-t-in) var(--pmt-ease-move) both; }
+.pmt-agentrow.pmt-in > .pmt-agent-in > :not(.pmt-agent-acts), .pmt-agentrow.pmt-in .pmt-agent-acts > *,
+.pmt-notice.pmt-in > .pmt-notice-text, .pmt-notice.pmt-in .pmt-notice-actions > * { animation: var(--pmt-a-row-body) var(--pmt-t-in) var(--pmt-ease-move) both; }
+/* the actions land one after another (Friendly's stagger; the other looks land them together) */
+.pmt-agentrow.pmt-in .pmt-agent-acts > :nth-child(2), .pmt-notice.pmt-in .pmt-notice-actions > :nth-child(2) { animation-delay: var(--pmt-stagger); }
+.pmt-agentrow.pmt-in .pmt-agent-acts > :nth-child(3), .pmt-notice.pmt-in .pmt-notice-actions > :nth-child(3) { animation-delay: calc(var(--pmt-stagger) * 2); }
+:is(.pmt-agentrow, .pmt-notice).pmt-out { overflow: hidden; pointer-events: none; animation: var(--pmt-a-row-out) var(--pmt-t-out) var(--pmt-ease-exit) both; }
+/* Glass: one pass of light across a row as it arrives */
+:is(.pmt-agentrow, .pmt-notice)::after { content: none; }
+:is(.pmt-agentrow, .pmt-notice).pmt-in::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-100%);
+  background: linear-gradient(100deg, transparent 25%, rgb(255 255 255 / .2) 50%, transparent 75%);
+  animation: var(--pmt-a-row-sheen) calc(var(--pmt-t-in) * 2.1) cubic-bezier(0.4, 0, 0.2, 1) calc(var(--pmt-t-in) * .3) both;
+}
+html[data-theme="glass-light"] :is(.pmt-agentrow, .pmt-notice).pmt-in::after { background: linear-gradient(100deg, transparent 25%, rgb(255 255 255 / .55) 50%, transparent 75%); }
+.pmt-notice { position: relative; }
+
+/* a state change rolls the old words out and the new ones in; the row's tint follows */
+.pmt-agentrow.pmt-swap, .pmt-notice.pmt-swap { overflow: hidden; }
+.pmt-agentrow.pmt-swap > .pmt-agent-in:not(.pmt-agent-old) { animation: var(--pmt-a-new) var(--pmt-t-swap) var(--pmt-ease-move) both; }
+.pmt-agentrow.pmt-swap > .pmt-agent-old { animation: var(--pmt-a-old) var(--pmt-t-swap) var(--pmt-ease-fade) both; }
+.pmt-notice.pmt-swap > .pmt-notice-text { animation: var(--pmt-a-new) var(--pmt-t-swap) var(--pmt-ease-move) both; }
+/* the answer the person gave stays marked while its row rolls away */
+.pmt-agent-old .pmt-textbtn.pmt-picked { background: color-mix(in srgb, currentColor 18%, transparent); text-decoration-color: currentColor; }
+.pmt-root[data-pmt-look="retro"] .pmt-agent-old .pmt-textbtn.pmt-picked { background: var(--pmt-bg-solid); color: var(--pmt-fg); }
+/* a request knocks once: the agent's square (Friendly), reverse video (Retro), a jitter (NieR glitch) */
+.pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-sq,
+.pmt-agentrow.pmt-agent-permission.pmt-swap > .pmt-agent-in:not(.pmt-agent-old) .pmt-agent-sq {
+  animation: var(--pmt-a-ask) calc(var(--pmt-t-in) * 1.6) cubic-bezier(0.2, 0, 0, 1) calc(var(--pmt-t-in) * .5) both;
+}
+.pmt-root[data-pmt-look="retro"] .pmt-agentrow.pmt-agent-permission :is(.pmt-agent-sq) { animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission:is(.pmt-in, .pmt-swap) { animation-timing-function: steps(3, end); }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-sq { animation: none; }
+html[data-o55-nier="on"] .pmt-agentrow.pmt-agent-permission.pmt-in .pmt-agent-text { animation: var(--pmt-a-ask) 150ms steps(3, end) var(--pmt-t-in) both; }
+
+/* ================================================================================================================
+   command marks: a mark settles when its command ends (running to done or failed), without pulling the eye from
+   the text: the stroke draws itself and the colour follows
+   ================================================================================================================ */
+.pmt-mark { transition: color var(--pmt-t-settle) var(--pmt-ease-fade), background-color var(--pmt-t-tint) linear; }
+.pmt-mark.pmt-settle svg :is(path, rect) { stroke-dasharray: 1 1; animation: var(--pmt-a-draw) var(--pmt-t-settle) var(--pmt-ease-fade) both; }
+.pmt-mark.pmt-settle svg path + path { animation-delay: calc(var(--pmt-t-settle) * .3); }
+.pmt-mark.pmt-settle svg { animation: var(--pmt-a-mark) var(--pmt-t-settle) var(--pmt-ease-move) both; }
+.pmt-mark.pmt-settle.pmt-mark-fail { animation: var(--pmt-a-mark-fail) var(--pmt-t-settle) cubic-bezier(0.3, 0, 0.3, 1) both; }
+.pmt-mark.pmt-start svg { animation: var(--pmt-a-start) calc(var(--pmt-t-settle) * .8) var(--pmt-ease-move) both; }
+/* Glass: a ring of light leaves the mark */
+.pmt-root[data-pmt-look="glass"] .pmt-mark.pmt-settle::before {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  border: 1px solid currentColor; pointer-events: none; opacity: 0;
+  animation: var(--pmt-a-ripple) calc(var(--pmt-t-settle) * 1.4) cubic-bezier(0.05, 0.7, 0.1, 1) both;
+}
+/* Retro: the glyph flashes in reverse video for one beat */
+.pmt-root[data-pmt-look="retro"] .pmt-mark:is(.pmt-settle, .pmt-start) { animation: var(--pmt-a-mark) var(--pmt-t-settle) steps(1, end); }
+.pmt-root[data-pmt-look="retro"] .pmt-mark:is(.pmt-settle, .pmt-start) svg { animation: none; }
+/* NieR (icons + decode): the square snaps down onto its line in three steps; a failure jitters (glitch) */
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark:is(.pmt-settle, .pmt-start)::before { animation: var(--pmt-a-box) var(--pmt-t-settle) steps(3, end) both; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark.pmt-settle.pmt-mark-fail { animation: var(--pmt-a-mark-fail) 150ms steps(3, end) var(--pmt-t-settle) both; }
+html[data-o55-nier="on"] .pmt-mark { transition: none; }
+
+/* ================================================================================================================
+   find bar: opens from its corner, the count rolls with the direction you moved, an empty search nudges, and the
+   match you jumped to is marked for a moment by a ring around it (the text under it stays still)
+   ================================================================================================================ */
+:is(.pmt-pop, .pmt-findbar).pmt-in { transform-origin: var(--pmt-pop-origin); animation: var(--pmt-a-pop-in) var(--pmt-t-in) var(--pmt-ease-move) both; }
+:is(.pmt-pop, .pmt-findbar).pmt-out { transform-origin: var(--pmt-pop-origin); pointer-events: none; animation: var(--pmt-a-pop-out) var(--pmt-t-out) var(--pmt-ease-exit) both; }
+.pmt-findbar .pmt-find-count.pmt-tick { animation: var(--pmt-a-tick) var(--pmt-t-tick) var(--pmt-ease-move) both; }
+.pmt-findbar .pmt-find-count[data-pmt-dir="down"] { --pmt-tick-dy: -5px; }
+.pmt-findbar .pmt-find-count.pmt-nudge { animation: var(--pmt-a-nudge) 280ms cubic-bezier(0.3, 0, 0.3, 1) both; }
+.pmt-root[data-pmt-look="retro"] .pmt-find-count.pmt-nudge { animation-duration: 140ms; animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"] .pmt-find-count.pmt-nudge { animation-duration: 150ms; animation-timing-function: steps(3, end); }
+.pmt-find-toggle, .pmt-find-btn { transition: background-color var(--pmt-t-tint) linear, color var(--pmt-t-tint) linear, border-color var(--pmt-t-tint) linear; }
+
+.pmt-overlays > .pmt-findring {
+  position: absolute; z-index: 4; pointer-events: none; border-radius: min(var(--pmt-radius, 4px), 4px);
+  box-shadow: 0 0 0 1.5px var(--pmt-accent), 0 0 0 4px color-mix(in srgb, var(--pmt-accent) 22%, transparent);
+  animation: var(--pmt-a-ring) var(--pmt-t-ring) var(--pmt-ease-move) both;
+}
+.pmt-root[data-pmt-look="friendly"] .pmt-findring { border-radius: 5px; background: color-mix(in srgb, var(--pmt-accent) 10%, transparent); }
+.pmt-root[data-pmt-look="glass"] .pmt-findring {
+  border-radius: 5px; box-shadow: 0 0 0 1px rgb(255 255 255 / .8), 0 0 12px 2px color-mix(in srgb, var(--pmt-accent) 55%, transparent);
+}
+.pmt-root[data-pmt-look="retro"] .pmt-findring { border-radius: 0; box-shadow: 0 0 0 2px var(--pmt-fg); animation-timing-function: linear; }
+html[data-o55-nier="on"] .pmt-findring { box-shadow: 0 0 0 1px var(--o55-nier-ink); border-radius: 0; background: none; animation-timing-function: steps(1, end); }
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-findring {
+  box-shadow: none; --b: var(--o55-nier-ink);
+  background:
+    linear-gradient(var(--b), var(--b)) left top / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) left top / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) right top / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 6px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 6px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 6px no-repeat;
+}
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"] .pmt-findring { animation-timing-function: steps(2, end); }
+
+/* ================================================================================================================
+   Appearance popover (both surfaces): segmented choices and the scheme list slide their chosen mark to the new
+   choice; a scope switch fades the values in, since they now read from another layer
+   ================================================================================================================ */
+.pmt-seg { position: relative; isolation: isolate; }
+.pmt-seg-ind, .pmt-scheme-ind { position: absolute; left: 0; top: 0; z-index: -1; pointer-events: none; will-change: transform; }
+.pmt-seg-ind { bottom: 0; background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 18%, transparent); }
+.pmt-scheme-ind { border-radius: 3px; background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
+:is(.pmt-seg-ind, .pmt-scheme-ind).pmt-go { transition: transform var(--pmt-t-slide) var(--pmt-ease-move), width var(--pmt-t-slide) var(--pmt-ease-move), height var(--pmt-t-slide) var(--pmt-ease-move); }
+.pmt-seg.pmt-sliding button[aria-checked="true"], .pmt-schemes.pmt-sliding .pmt-scheme[aria-selected="true"] { background: transparent; }
+.pmt-schemes { position: relative; isolation: isolate; }
+.pmt-scheme { transition: background-color var(--pmt-t-tint) linear; }
+.pmt-pop-body.pmt-rescope { animation: var(--pmt-a-rescope) calc(var(--pmt-t-swap) * 1.1) var(--pmt-ease-fade) both; }
+/* Friendly: the chosen scheme's swatch lands with a little bounce */
+.pmt-scheme.pmt-picked .pmt-swatch {
+  animation: var(--pmt-a-pick) var(--pmt-t-settle) var(--pmt-ease-move) both;
+}
+html[data-o55-nier="on"] .pmt-scheme { transition: none; }
+
+/* ================================================================================================================
+   recolour (a scheme hovered, chosen or reverted): the old ground and the old text are laid over the new ones and
+   taken away: Basic a cross-fade, Friendly a bloom out of the scheme under the pointer, Glass a soft-edged glide from
+   the popover's side, Retro a raster sweep top to bottom in six steps, NieR (wipe) an ink-edged band in eight steps,
+   Reduced Motion a short cross-fade, NieR without wipe at once. 70-view.js places the layers and their geometry.
+   ================================================================================================================ */
+.pmt-xf { position: absolute; inset: 0; pointer-events: none; }
+.pmt-xf-text > canvas { position: absolute; left: var(--pmt-pad-x); top: var(--pmt-pad-y); display: block; }
+.pmt-xf.pmt-in, .pmt-xf-edge.pmt-in { animation: var(--pmt-a-xf) var(--pmt-t-xf) var(--pmt-ease-xf) both; }
+.pmt-xf-edge { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="friendly"] .pmt-xf {
+    --pmt-xf-max: var(--pmt-xf-rad);
+    -webkit-mask-image: radial-gradient(circle at calc(var(--pmt-xf-ox) - var(--pmt-xf-dx)) calc(var(--pmt-xf-oy) - var(--pmt-xf-dy)), transparent calc(var(--pmt-xf-r) - 72px), #000 var(--pmt-xf-r));
+    mask-image: radial-gradient(circle at calc(var(--pmt-xf-ox) - var(--pmt-xf-dx)) calc(var(--pmt-xf-oy) - var(--pmt-xf-dy)), transparent calc(var(--pmt-xf-r) - 72px), #000 var(--pmt-xf-r));
+  }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="glass"] .pmt-xf {
+    --pmt-xf-max: calc(var(--pmt-xf-bw) + 220px);
+    -webkit-mask-image: linear-gradient(to left, transparent calc(var(--pmt-xf-r) - var(--pmt-xf-dr) - 220px), #000 calc(var(--pmt-xf-r) - var(--pmt-xf-dr)));
+    mask-image: linear-gradient(to left, transparent calc(var(--pmt-xf-r) - var(--pmt-xf-dr) - 220px), #000 calc(var(--pmt-xf-r) - var(--pmt-xf-dr)));
+  }
+  html:not([data-motion="reduced"]):not([data-o55-nier="on"]) .pmt-root[data-pmt-look="retro"] .pmt-xf {
+    --pmt-xf-max: var(--pmt-xf-bh);
+    clip-path: inset(max(0px, calc(var(--pmt-xf-r) - var(--pmt-xf-dy))) 0 0 0);
+  }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root :is(.pmt-xf, .pmt-xf-edge) { --pmt-xf-max: var(--pmt-xf-bw); }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root .pmt-xf { clip-path: inset(0 max(0px, calc(var(--pmt-xf-r) - var(--pmt-xf-dr))) 0 0); }
+  html[data-o55-nier="on"][data-o55-nier-parts~="wipe"]:not([data-motion="reduced"]) .pmt-root .pmt-xf-edge {
+    display: block; position: absolute; top: 0; bottom: 0; z-index: 3; width: 3px; pointer-events: none;
+    left: calc(var(--pmt-xf-bw) - var(--pmt-xf-r) - 3px); background: var(--o55-nier-ink);
+    box-shadow: 5px 0 0 -2px rgba(var(--o55-nier-ink-rgb), .55);
+  }
+}
+/* while the old colours leave, the DOM painted in scheme colours (marks, sticky header, scrollbar, hints) follows; so
+   does a see-through ground (Glass), which has no layer of its own */
+.pmt-root.pmt-recolor .pmt-body { transition: background-color var(--pmt-t-xf) var(--pmt-ease-fade); }
+.pmt-root.pmt-recolor :is(.pmt-mark, .pmt-sticky, .pmt-sb-thumb, .pmt-modehint, .pmt-hint) {
+  transition: color var(--pmt-t-xf) var(--pmt-ease-fade), background-color var(--pmt-t-xf) var(--pmt-ease-fade), border-color var(--pmt-t-xf) var(--pmt-ease-fade);
+}
+
+/* ================================================================================================================
+   Reduced Motion: the calm versions keep their length. The page stills every animation under Reduced Motion
+   (animation-duration .01ms and transitions off, all !important), and so do the effects screens (50-fx.css). The
+   terminal's calm versions are short opacity cross-fades and colour changes, nothing that travels, so they keep their
+   length here. NieR shows end states at once (its tokens are none), so it is left out.
+   ================================================================================================================ */
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-calm { animation-duration: var(--pmt-calm, 120ms) !important; animation-iteration-count: 1 !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-calm.pmt-out { --pmt-calm: 100ms; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-findring.pmt-calm { --pmt-calm: 520ms; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) :is(.pmt-agentrow, .pmt-notice).pmt-calm { transition: background-color 120ms linear, color 120ms linear !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-mark.pmt-calm { transition: color 120ms linear !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root.pmt-recolor .pmt-body { transition: background-color 120ms linear !important; }
+/* inside a screen with an effect class, 50-fx.css also takes the animation itself away: the find bar, the find ring and
+   the recolour's text layer get their fade back */
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findbar.pmt-calm.pmt-in { animation: pmt-m-fade-in 120ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findbar.pmt-calm.pmt-out { animation: pmt-m-fade-out 100ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-findring.pmt-calm { animation: pmt-m-hold-fade 520ms linear both !important; }
+html[data-motion="reduced"]:not([data-o55-nier="on"]) .pmt-root .pmt-screen .pmt-xf.pmt-calm.pmt-in { animation: pmt-xf-fade 120ms linear both !important; }
+/* NieR under Reduced Motion: the find target's brackets still stand for a moment, still (an end state, then gone) */
+html[data-o55-nier="on"][data-motion="reduced"] .pmt-findring.pmt-calm { animation: pmt-m-hold 480ms steps(1, end) both !important; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-o55-nier="on"] .pmt-findring.pmt-calm { animation: pmt-m-hold 480ms steps(1, end) both !important; }
+  html:not([data-o55-nier="on"]) .pmt-calm { animation-duration: var(--pmt-calm, 120ms) !important; animation-iteration-count: 1 !important; }
+  html:not([data-o55-nier="on"]) .pmt-calm.pmt-out { --pmt-calm: 100ms; }
+  html:not([data-o55-nier="on"]) .pmt-findring.pmt-calm { --pmt-calm: 520ms; }
+  html:not([data-o55-nier="on"]) :is(.pmt-agentrow, .pmt-notice).pmt-calm { transition: background-color 120ms linear, color 120ms linear !important; }
+  html:not([data-o55-nier="on"]) .pmt-mark.pmt-calm { transition: color 120ms linear !important; }
+  html:not([data-o55-nier="on"]) .pmt-root.pmt-recolor .pmt-body { transition: background-color 120ms linear !important; }
 }
 /* ---- terminal/css/80-card.css ---- */
 /* The chat's compact command card (js/80-card.js, DECISIONS.md D27). It sits in the 5.6 Pro chat's transcript in
@@ -155204,6 +155601,135 @@ var T = {};
     }
   };
 })();
+/* ---- terminal/js/37-scrub.js ---- */
+/* Secrets in saved scrollback (D36). Before a terminal's scrollback is written to disk, well-known secret formats are
+   replaced in the saved copy: vendor API keys, bearer tokens and JWTs, KEY=value assignments whose name says secret,
+   and the body of private-key blocks. The live screen keeps the original; only what 38-saved.js writes changes.
+   A secret's cells are rewritten in place, cell for cell, so the line keeps its width and every image anchor, command
+   mark and column stays where it was. Where the secret is long enough the cells read "[API key · not saved]" (or
+   token, secret, private key) and the rest of its cells are blank; a shorter one is filled with "•". A private key's
+   BEGIN and END lines stay; its first body line carries the marker and the rest of the body is left empty.
+   Command lines and link targets are scrubbed the same way. Nothing here is a vault: it is a floor that keeps the
+   common formats off the disk, not a guarantee that no secret is ever saved. */
+(function () {
+  var PATTERNS = [
+    { label: 'API key', re: /\bsk-(?:ant-|proj-|live-)?[A-Za-z0-9_-]{20,}/g },
+    { label: 'API key', re: /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/g },
+    { label: 'API key', re: /\bgh[pousr]_[A-Za-z0-9]{36,}|\bgithub_pat_[A-Za-z0-9_]{22,}/g },
+    { label: 'API key', re: /\bglpat-[0-9A-Za-z_-]{20,}/g },
+    { label: 'API key', re: /\bxox[abprs]-[A-Za-z0-9-]{10,}/g },
+    { label: 'API key', re: /\bAIza[0-9A-Za-z_-]{35}/g },
+    { label: 'API key', re: /\b[sr]k_(?:live|test)_[0-9A-Za-z]{16,}/g },
+    { label: 'token', re: /\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g },
+    { label: 'token', re: /\b(?:Bearer|Token)\s+([A-Za-z0-9._~+\/-]{16,}=*)/gi, group: 1 },
+    { label: 'secret', re: /\b[A-Za-z0-9_]*(?:API_?KEY|APIKEY|SECRET|TOKEN|PASSWORD|PASSWD)[A-Za-z0-9_]*\s*[=:]\s*["']?([^\s"'`]{8,})/gi, group: 1 }
+  ];
+  var KEY_BEGIN = /-----BEGIN [A-Z0-9 ]*PRIVATE KEY(?: BLOCK)?-----/, KEY_END = /-----END [A-Z0-9 ]*PRIVATE KEY(?: BLOCK)?-----/;
+  var KEY_BODY = /^\s*(?:[A-Za-z0-9+\/=]+|[A-Za-z-]+:.*)?\s*$/;
+  var DOT = 0x2022;
+
+  function marker(label) { return '[' + label + ' · not saved]'; }
+
+  /* spans [start, end, label] of the secrets in one string, merged where they overlap */
+  function spans(s) {
+    var out = [];
+    PATTERNS.forEach(function (p) {
+      p.re.lastIndex = 0;
+      var m;
+      while ((m = p.re.exec(s))) {
+        var v = p.group ? m[p.group] : m[0], at = p.group ? m.index + m[0].lastIndexOf(v) : m.index;
+        out.push([at, at + v.length, p.label]);
+        if (m[0].length === 0) p.re.lastIndex++;
+      }
+    });
+    out.sort(function (a, b) { return a[0] - b[0] || b[1] - a[1]; });
+    var merged = [];
+    out.forEach(function (x) { var l = merged[merged.length - 1]; if (l && x[0] <= l[1]) l[1] = Math.max(l[1], x[1]); else merged.push(x.slice()); });
+    return merged;
+  }
+  /* the text a span is replaced with, exactly n characters */
+  function fill(n, label) {
+    var m = marker(label);
+    if (m.length <= n) return m + new Array(n - m.length + 1).join(' ');
+    return new Array(n + 1).join('•');
+  }
+
+  /* a plain string (a command line, a link target): secrets become their marker; the length may change */
+  function text(s) {
+    if (!s || typeof s !== 'string') return { text: s, count: 0 };
+    var sp = spans(s), count = sp.length;
+    for (var i = sp.length - 1; i >= 0; i--) s = s.slice(0, sp[i][0]) + marker(sp[i][2]) + s.slice(sp[i][1]);
+    if (KEY_BEGIN.test(s)) {
+      var b = s.search(KEY_BEGIN), bm = s.match(KEY_BEGIN)[0], rest = s.slice(b + bm.length), e = rest.search(KEY_END);
+      s = s.slice(0, b + bm.length) + (e >= 0 ? marker('private key') + rest.slice(e)
+        : rest.replace(/[A-Za-z0-9+\/=]{16,}/g, function () { return marker('private key'); }));
+      count++;
+    }
+    return { text: s, count: count };
+  }
+
+  /* Saved line packs (38-saved.js packLine: n used cells, c code points, f flags, g graphemes, w soft-wrapped into the
+     next). Returns { packs, count, masked }, masked: row -> the columns rewritten (38-saved.js draws them dim): the packs that changed are copies, so the live lines' cached packs stay as they
+     are. A logical line (a run of soft-wrapped rows) is searched as one string, so a token that wrapped is found. */
+  function packs(list) {
+    var out = list.slice(), count = 0, inKey = false, keyMarked = false, masked = new Map();
+    function cellChar(cp) { return cp === 0 ? ' ' : cp > 0xffff ? '\u0001' : String.fromCharCode(cp); }
+    function edit(i) {
+      var pk = out[i];
+      if (pk === list[i]) out[i] = pk = Object.assign({}, pk, { c: pk.c.slice(), f: pk.f ? pk.f.slice() : null, g: pk.g ? pk.g.slice() : null });
+      return pk;
+    }
+    function setCell(i, x, ch) {
+      var pk = edit(i);
+      (masked.get(i) || masked.set(i, []).get(i)).push(x);
+      pk.c[x] = ch;
+      if (pk.f) pk.f[x] = 0;
+      if (pk.g) for (var k = pk.g.length - 2; k >= 0; k -= 2) if (pk.g[k] === x) pk.g.splice(k, 2);
+    }
+    var i = 0;
+    while (i < list.length) {
+      /* one logical line: rows i..j, joined while a row soft-wraps into the next */
+      var j = i; while (j < list.length - 1 && list[j].w) j++;
+      var s = '', map = [];
+      for (var r = i; r <= j; r++) for (var x = 0; x < list[r].n; x++) { s += cellChar(list[r].c[x]); map.push([r, x]); }
+      /* a key body is base64 rows (and PEM header rows, blanks) up to its END line; anything else ends it unmasked, so a
+         cut-off block (head -3 id_rsa) never swallows the output after it */
+      if (inKey && s.search(KEY_END) < 0 && !KEY_BODY.test(s)) inKey = false;
+      if (inKey) {
+        var e = s.search(KEY_END);
+        var upto = e >= 0 ? e : s.length;
+        if (upto > 0) {
+          var t = keyMarked ? '' : marker('private key');
+          for (var q = 0; q < upto; q++) setCell(map[q][0], map[q][1], q < t.length ? t.charCodeAt(q) : 0);
+          keyMarked = true;
+        }
+        if (e >= 0) inKey = false;
+      } else {
+        var sp = spans(s);
+        sp.forEach(function (z) {
+          var f = fill(z[1] - z[0], z[2]);
+          for (var q = z[0]; q < z[1]; q++) { var ch = f.charCodeAt(q - z[0]); setCell(map[q][0], map[q][1], ch === 0x20 ? 0x20 : ch === 0x2022 ? DOT : ch); }
+        });
+        count += sp.length;
+        var bm = s.match(KEY_BEGIN);
+        if (bm) {
+          var from = s.indexOf(bm[0]) + bm[0].length, tail = s.slice(from), e2 = tail.search(KEY_END);
+          if (e2 !== 0) {
+            var t2 = marker('private key'), to = e2 >= 0 ? from + e2 : s.length;
+            for (var q2 = from; q2 < to; q2++) setCell(map[q2][0], map[q2][1], q2 - from < t2.length ? t2.charCodeAt(q2 - from) : 0);
+            count++;
+            keyMarked = to > from;
+            inKey = e2 < 0;
+          }
+        }
+      }
+      i = j + 1;
+    }
+    return { packs: out, count: count, masked: masked };
+  }
+
+  T.Scrub = { text: text, packs: packs, spans: spans, marker: marker };
+})();
 /* ---- terminal/js/38-saved.js ---- */
 /* Saved scrollback (Plans canon 2026-10-09, after SPEC installment 1). While a terminal runs, its main-screen scrollback,
    its command marks and its images are saved, so a tab restored after a reload shows its scrollback as it was, above a
@@ -155213,7 +155739,10 @@ var T = {};
    terminal (text, styles, links, command records, image placements) and one record per image frame, written once and
    reused by later saves. Saved images follow the saved scrollback's own rules (R18): it stays on this machine and is
    excluded from backups, exports and sync.
-   Quota: 64 MiB stored per terminal, text and images together. Text is bounded by the 10,000-line scrollback and never
+   Quota: 64 MiB stored per terminal, text and images together, and 512 MiB for all terminals together (D37). Past
+   the total, the oldest saved scrollback gives way first: closed and other not-running terminals' saved copies, least
+   recently saved first; if that is not enough, the terminal being saved keeps less of its images. A small index store
+   ('meta': bytes and time per saved copy) keeps the total without reading the copies. Text is bounded by the 10,000-line scrollback and never
    gives way to images; images that do not fit are dropped oldest first (highest in the scrollback), and their cells then
    show a short placeholder naming the image: "[logo.png 640×480 · not kept]". A frame that cannot be read back gets
    the same placeholder.
@@ -155224,20 +155753,34 @@ var T = {};
    at most 7 days. */
 (function () {
   var DB_NAME = 'pm.home.terminal:v1:saved';
-  var LIMITS = { quota: 64 * 1024 * 1024, settleMs: 1500, maxWaitMs: 5000, loadMs: 5000, closedMax: 20, closedDays: 7 };
+  var LIMITS = { quota: 64 * 1024 * 1024, total: 512 * 1024 * 1024, settleMs: 1500, maxWaitMs: 5000, loadMs: 5000, closedMax: 20, closedDays: 7 };
   var dbp = null;
   var closing = new Map();   /* key -> the last save of a tab that closed, so a reopen reads what it wrote */
+  var running = new Map();   /* key -> savers writing it now; their copies are never evicted for the total (D37) */
 
   function openDb() {
     if (dbp) return dbp;
     dbp = new Promise(function (resolve) {
       var req = null;
-      try { req = window.indexedDB ? window.indexedDB.open(DB_NAME, 1) : null; } catch (e) { req = null; }
+      try { req = window.indexedDB ? window.indexedDB.open(DB_NAME, 2) : null; } catch (e) { req = null; }
       if (!req) { resolve(null); return; }
-      req.onupgradeneeded = function () {
+      req.onupgradeneeded = function (ev) {
         var d = req.result;
         if (!d.objectStoreNames.contains('snap')) d.createObjectStore('snap');
         if (!d.objectStoreNames.contains('img')) d.createObjectStore('img');
+        if (!d.objectStoreNames.contains('meta')) {
+          var meta = d.createObjectStore('meta');
+          /* copies saved before the index existed are counted once, here */
+          if (ev.oldVersion >= 1) {
+            var cur = req.transaction.objectStore('snap').openCursor();
+            cur.onsuccess = function () {
+              var c = cur.result; if (!c) return;
+              var r = c.value;
+              if (r && !Array.isArray(r) && typeof r.bytes === 'number') meta.put({ bytes: r.bytes, at: r.savedAt || 0 }, c.key);
+              c.continue();
+            };
+          }
+        }
       };
       req.onsuccess = function () { resolve(req.result); };
       req.onerror = function () { resolve(null); };
@@ -155348,11 +155891,32 @@ var T = {};
         packs[i] = Object.assign({}, packs[i], { s: Uint32Array.from(runs) });   /* a copy: the line's cached pack stays as it is */
       });
     }
+    /* D36: well-known secret formats never reach the disk; the live lines keep them (37-scrub.js) */
+    var scrubbed = 0;
+    if (T.Scrub) {
+      var sc = T.Scrub.packs(packs), dimOf = new Map();
+      packs = sc.packs; scrubbed = sc.count;
+      /* the labels read as the terminal's voice, not the program's: dim and italic in the cell's own colours */
+      sc.masked.forEach(function (xs, row) {
+        var pk = packs[row], n = pk.n, st = new Uint32Array(n), x = 0, k;
+        for (k = 0; k < pk.s.length && x < n; k += 2) for (var e = Math.min(n, x + pk.s[k + 1]); x < e;) st[x++] = pk.s[k];
+        xs.forEach(function (c) {
+          if (c >= n) return;
+          var from = st[c], to = dimOf.get(from);
+          if (to === undefined) { to = styles.length; styles.push(Object.assign({}, styles[from] || styles[0], { flags: ((styles[from] || styles[0]).flags | T.ATTR.DIM | T.ATTR.ITALIC) })); dimOf.set(from, to); }
+          st[c] = to;
+        });
+        var runs = [];
+        for (x = 0; x < n;) { var id = st[x], s0 = x; while (x < n && st[x] === id) x++; runs.push(id, x - s0); }
+        packs[row] = Object.assign({}, pk, { s: Uint32Array.from(runs) });
+      });
+    }
+    function clean(str) { if (!T.Scrub || !str) return str; var r = T.Scrub.text(str); scrubbed += r.count; return r.text; }
     function ix(l) { var v = l ? index.get(l) : undefined; return v === undefined || v >= end ? -1 : v; }
     var cmds = [];
     term.commands.forEach(function (c) {
       var p = ix(c.promptLine); if (p < 0) return;
-      cmds.push({ cmdline: c.cmdline, cwd: c.cwd, by: c.by, exit: c.exit, start: c.start, end: c.end, state: c.state, empty: !!c.empty,
+      cmds.push({ cmdline: clean(c.cmdline), cwd: c.cwd, by: c.by, exit: c.exit, start: c.start, end: c.end, state: c.state, empty: !!c.empty,
         ind: !!c.indeterminate, p: p, i: ix(c.inputLine), ic: c.inputCol || 0, o: ix(c.outputLine), e: ix(c.endLine), ec: c.endCol || 0 });
     });
     var imgs = [], imgIdx = new Map(), pls = [], plIdx = new Map(), placed = new Set(B ? B.placements : []);
@@ -155398,8 +155962,8 @@ var T = {};
           im.frames.map(function (f) { return (f.canvas ? f.canvas._gen || 0 : 'g') + '/' + (f.gap || 0); }).join('.');
       }).join()].join('|');
     return { sig: sig, cols: buf.cols, rows: buf.rows, packs: packs, textBytes: textBytes, cmds: cmds, imgs: imgs, pls: pls,
-      styles: styles,
-      links: term.links.list.map(function (l) { return l ? { uri: l.uri, params: Object.assign({}, l.params) } : null; }) };
+      styles: styles, scrubbed: scrubbed,
+      links: term.links.list.map(function (l) { return l ? { uri: clean(l.uri), params: Object.assign({}, l.params) } : null; }) };
   }
 
   /* PNG per frame, encoded once per frame content */
@@ -155430,6 +155994,7 @@ var T = {};
     this.held = !!held;
     this.seq = 0; this.opened = 0;   /* saves numbered by capture; an older one never writes over a newer one */
     this.written = new Set();
+    running.set(this.key, (running.get(this.key) || 0) + 1);
     var self = this, term = session.term, soon = function () { self.soon(); };
     this.offs = [term.on('dirty', soon), term.on('command', soon), term.on('resize', soon)];
     this._vis = function () { if (document.visibilityState === 'hidden') self.hide(); };
@@ -155487,11 +156052,31 @@ var T = {};
     return p;
   };
   Saver.prototype.dispose = function () {
+    if (!this.dead) { var n = (running.get(this.key) || 1) - 1; if (n) running.set(this.key, n); else running.delete(this.key); }
     this.dead = true; clearTimeout(this.timer);
     this.offs.forEach(function (f) { f(); });
     document.removeEventListener('visibilitychange', this._vis);
     window.removeEventListener('pagehide', this._hide);
   };
+
+  /* D37: the room this terminal's copy has under the total. Copies of terminals not running now give way first, least
+     recently saved first, until the total has room for a full per-terminal quota again */
+  function room(key) {
+    return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
+      var out = { room: LIMITS.total }, list = [], cur = s.meta.openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { if (c.key !== key) list.push({ key: c.key, bytes: (c.value && c.value.bytes) || 0, at: (c.value && c.value.at) || 0 }); c.continue(); return; }
+        var sum = list.reduce(function (a, e) { return a + e.bytes; }, 0);
+        list.filter(function (e) { return !running.has(e.key); }).sort(function (a, b) { return a.at - b.at; }).forEach(function (e) {
+          if (sum + LIMITS.quota <= LIMITS.total) return;
+          forgetKeys(s, [e.key]); sum -= e.bytes;
+        });
+        out.room = Math.max(0, LIMITS.total - sum);
+      };
+      return out;
+    }).then(function (o) { return o ? o.room : LIMITS.quota; }, function () { return LIMITS.quota; });
+  }
 
   function save(sv, force, quick) {
     var snap = capture(sv.session), budget = LIMITS.quota - snap.textBytes, used = 0, puts = [], have = [], seq = ++sv.seq;
@@ -155513,13 +156098,13 @@ var T = {};
           frames.forEach(function (f) { var k = sv.key + '|' + f.key; (sv.written.has(k) ? have : puts).push([k, f.blob]); });
         }, function () { e.kept = false; });
       });
-    }, Promise.resolve()).then(function () {
+    }, room(sv.key).then(function (rm) { budget = Math.min(LIMITS.quota, rm) - snap.textBytes; })).then(function () {
       /* a closing tab's saves still land; a newer save already writing wins over this older capture */
       if ((sv.dead && !sv.closing) || seq < sv.opened) return false;
       sv.opened = seq;
       sv.sig = snap.partial ? null : snap.sig;   /* a save that left an image out is not the last word */
       var rec = { v: 1, savedAt: Date.now(), cols: snap.cols, rows: snap.rows, lines: snap.packs, styles: snap.styles, links: snap.links,
-        cmds: snap.cmds, pls: snap.pls, bytes: snap.textBytes + used,
+        cmds: snap.cmds, pls: snap.pls, bytes: snap.textBytes + used, scrubbed: snap.scrubbed || 0,
         imgs: snap.imgs.map(function (e) {
           var im = e.im;
           return { kept: !!e.kept, frames: e.kept ? e.frames : [], w: im.w, h: im.h, name: im.name || '', source: im.source || 'kitty',
@@ -155527,10 +156112,11 @@ var T = {};
         }) };
       var live = new Set();
       rec.imgs.forEach(function (e) { e.frames.forEach(function (f) { live.add(sv.key + '|' + f.key); }); });
-      return run(['snap', 'img'], 'readwrite', function (s) {
+      return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
         puts.forEach(function (p) { s.img.put(p[1], p[0]); });
         have.forEach(function (p) { var q = s.img.count(p[0]); q.onsuccess = function () { if (!q.result) s.img.put(p[1], p[0]); }; });
         s.snap.put(rec, sv.key);
+        s.meta.put({ bytes: rec.bytes, at: rec.savedAt }, sv.key);
         /* frames no longer referenced go */
         var cur = s.img.openKeyCursor(IDBKeyRange.bound(sv.key + '|', sv.key + '|\uffff'));
         cur.onsuccess = function () { var c = cur.result; if (!c) return; if (!live.has(c.key)) s.img.delete(c.key); c.continue(); };
@@ -155680,23 +156266,23 @@ var T = {};
     }
     if (store) { (B ? Array.from(B.images.values()) : []).forEach(function (im) { if (im.restored) store._startAnim(im); }); store.bump(); }
     term.emit('dirty');
-    return { lines: kept.length, commands: term.commands.length, images: shown, dropped: ghosts, keys: keys };
+    return { lines: kept.length, commands: term.commands.length, images: shown, dropped: ghosts, keys: keys, scrubbed: rec.scrubbed || 0 };
   }
 
   function forgetKeys(s, keys) {
-    keys.forEach(function (key) { s.snap.delete(key); s.img.delete(IDBKeyRange.bound(key + '|', key + '|\uffff')); });
+    keys.forEach(function (key) { s.snap.delete(key); s.img.delete(IDBKeyRange.bound(key + '|', key + '|\uffff')); if (s.meta) s.meta.delete(key); });
   }
   /* a tab closed a moment ago may still be writing its last save (another saver, so seq order cannot stop it): wait */
   function settled(id) { return closing.get(keyFor(id)) || Promise.resolve(); }
   function forget(id) {
     return settled(id).then(function () {
-      return run(['snap', 'img'], 'readwrite', function (s) { forgetKeys(s, [keyFor(id)]); });
+      return run(['snap', 'img', 'meta'], 'readwrite', function (s) { forgetKeys(s, [keyFor(id)]); });
     }).catch(function () { return null; });
   }
   /* closed terminals, newest last, in one small record per project: [{ id, at }]; past the reopen stack or 7 days they go */
   function editClosed(fn) {
     var ck = project() + '|#closed', out = {};
-    return run(['snap', 'img'], 'readwrite', function (s) {
+    return run(['snap', 'img', 'meta'], 'readwrite', function (s) {
       var r = s.snap.get(ck);
       r.onsuccess = function () {
         var list = Array.isArray(r.result) ? r.result : [], res = fn(list), cut = Date.now() - LIMITS.closedDays * 864e5;
@@ -155802,7 +156388,7 @@ var T = {};
      4. this tab     (the tab's own overrides, saved with the tab).
    A field left unset falls through. Everything applies live: no field needs a restart. The Appearance popover
    writes layer 4 ("This terminal") or layer 2 ("All terminals").
-   The scheme catalog is shared with the code editor (D27): every scheme carries its 17 editor syntax colours
+   The scheme catalog is shared with the code editor (D30): every scheme carries its 17 editor syntax colours
    (editorTokens), and the Retro look's dark scheme choice is read by the editor through retroPhosphor(). */
 (function () {
   var C = T.color;
@@ -155948,7 +156534,7 @@ var T = {};
     return theme;
   }
 
-  /* ---- the editor's view of the catalog (D27) ---- */
+  /* ---- the editor's view of the catalog (D30) ---- */
   var EDITOR_TOKENS = ['kw', 'str', 'num', 'com', 'fn', 'ty', 'var', 'prop', 'op', 'pun', 'tag', 'attr', 'esc', 'mac', 'link', 'head', 'code'];
   /* a scheme without its own editor block (imported, user) takes one from its ANSI 16: n is the ANSI index, 'fg' the
      foreground. Fixed; the curated schemes carry their own from schemes/editor-syntax.json */
@@ -156057,7 +156643,16 @@ var T = {};
 
     /* background */
     var bg = { kind: bgKind };
-    if (f('background') === 'follow' && lk === 'friendly') bg = { kind: 'gradient', css: mode === 'dark' ? 'linear-gradient(180deg, ' + C.toHex(theme.bg) + ' 0%, ' + C.toHex(C.mix(theme.bg, C.hex('#3b3550'), 0.35)) + ' 100%)' : 'linear-gradient(180deg, ' + C.toHex(theme.bg) + ' 0%, ' + C.toHex(C.mix(theme.bg, C.hex('#f6e9f2'), 0.6)) + ' 100%)', soft: true };
+    if (f('background') === 'follow' && lk === 'friendly') {
+      /* Friendly's stage: a soft light from above over a gentle fall to the look's tint; 30-looks.css adds the recess
+         under the header and the paper grain */
+      /* the scheme's own lightness decides the tint, not the look's mode: a dark scheme picked in Friendly light keeps a
+         dark stage (a light tint under it would leave its last rows on mid-grey) */
+      var darkGround = s ? s.appearance === 'dark' : mode === 'dark';
+      var top = C.toHex(theme.bg), foot = C.toHex(C.mix(theme.bg, C.hex(darkGround ? '#3b3550' : '#f6e9f2'), darkGround ? 0.35 : 0.6));
+      bg = { kind: 'gradient', soft: true, css: 'radial-gradient(120% 70% at 50% -8%, ' + (darkGround ? 'rgb(255 236 250 / .10)' : 'rgb(255 255 255 / .8)') +
+        ', transparent 62%), linear-gradient(180deg, ' + top + ' 0%, ' + foot + ' 100%)' };
+    }
     else if (bgKind === 'solid') bg.color = f('bgColor') || C.toHex(theme.bg);
     else if (bgKind === 'gradient') bg.css = GRADIENTS[f('bgGradient')] || GRADIENTS.dusk;
     else if (bgKind === 'image') { bg.url = T.Appearance.imageUrl(f('bgImage'), f('bgImageData'), f('bgBlur')); bg.dim = f('bgDim'); }
@@ -156082,7 +156677,7 @@ var T = {};
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
       crt: crtOn,
       curvature: { on: crtOn, amount: f('curvature') },
-      bezel: { on: crtOn }, vignette: { on: crtOn, strength: 0.25 },
+      bezel: { on: crtOn, light: mode === 'light' }, vignette: { on: crtOn, strength: mode === 'light' ? 0.10 : 0.25 },
       burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
       noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
@@ -156101,7 +156696,7 @@ var T = {};
     };
   }
 
-  /* The Retro look's dark scheme, 'green' or 'amber' (D27). It is not stored anywhere of its own: it is what Retro dark
+  /* The Retro look's dark scheme, 'green' or 'amber' (D30). It is not stored anywhere of its own: it is what Retro dark
      resolves to at the All terminals layers (project over app, the 'scheme' and 'schemePair' fields), so choosing
      PM Phosphor Amber for All terminals is the choice. Follow look, or any scheme that is not Amber, reads 'green'. */
   function retroPhosphor() {
@@ -156205,7 +156800,7 @@ var T = {};
     get: field, layerOf: layerOf, set: set, reset: resetScope, preview: preview, endPreview: endPreview,
     refreshAll: refreshAll, addUserScheme: addUserScheme, imageUrl: imageUrl, lookKey: lookKey,
     setTabFont: function (view, o) { if (o.size) set('tab', 'fontSize', o.size, view); },
-    /* D27: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
+    /* D30: the catalog as the editor reads it (window.PMT.Appearance, 90-kind.js) */
     EDITOR_TOKENS: EDITOR_TOKENS, EDITOR_FROM_ANSI: EDITOR_FROM_ANSI, editorFromAnsi: editorFromAnsi,
     catalog: catalog, editorTokens: editorTokens, palette: palette, retroPhosphor: retroPhosphor,
     on: function (name, fn) { return events.on(name, fn); }
@@ -157196,7 +157791,7 @@ var T = {};
       glow: { on: on(gw, D.glow.on), strength: clamp(num(gw.strength, D.glow.strength), L.glowStrength[0], L.glowStrength[1]),
         radius: clamp(num(gw.radius, D.glow.radius), L.glowRadius[0], L.glowRadius[1]) },
       curvature: { on: on(cv, D.curvature.on), amount: clamp(num(cv.amount, D.curvature.amount), L.curvature[0], L.curvature[1]) },
-      bezel: { on: on(bz, D.bezel.on) },
+      bezel: { on: on(bz, D.bezel.on), light: !!bz.light },
       vignette: { on: on(vg, D.vignette.on), strength: clamp(num(vg.strength, D.vignette.strength), L.vignette[0], L.vignette[1]) },
       burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]) },
       noise: { on: on(nz, D.noise.on), amount: clamp(num(nz.amount, D.noise.amount), L.noise[0], L.noise[1]) },
@@ -157336,7 +157931,7 @@ var T = {};
   var FS_FINAL = PREC + [
     'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform sampler2D uGlow;',
     'uniform vec2 uOut; uniform vec2 uSrcPx; uniform float uDpr;',
-    'uniform float uCurv; uniform vec2 uInset; uniform float uRadius; uniform float uBezel; uniform float uBezelPx;',
+    'uniform float uCurv; uniform vec2 uInset; uniform float uRadius; uniform float uBezel; uniform float uBezelPx; uniform float uBezelLight;',
     'uniform vec2 uScan; uniform float uGlowK; uniform float uBurnK; uniform float uVig;',
     'uniform vec2 uNoise; uniform float uGain; uniform vec2 uDeg; uniform float uDim;',
     'vec2 warp(vec2 p) { vec2 c = p - 0.5; float d = dot(c, c) * uCurv; return p + c * (1.0 + d) * d; }',
@@ -157344,18 +157939,30 @@ var T = {};
     'float lin1(float c) { return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4); }',
     'float srgb1(float c) { return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055; }',
     'float luma(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }',
+    /* The case: moulded plastic (charcoal, or warm beige on a light scheme). The inner 45 % of the bezel is a chamfer
+       sloping down to the tube, lit from above: its lower lip catches the light, its upper lip falls into shadow. The
+       outer edge is rounded over, the plastic has a fine static grain, the screen's own light falls on the chamfer,
+       and the glass sits in a thin contact shadow. Nothing here moves. */
     'vec3 bezel(vec2 uv, vec2 s, float dist) {',
     '  float k = clamp(dist / max(uBezelPx, 1.0), 0.0, 1.0);',
-    '  vec3 base = mix(vec3(0.050, 0.049, 0.046), vec3(0.118, 0.114, 0.106), uv.y);',
+    '  vec3 base = mix(vec3(0.118, 0.113, 0.104), vec3(0.792, 0.760, 0.690), uBezelLight);',
+    '  vec3 col = base * (0.90 + 0.16 * uv.y);',
+    '  vec2 n = normalize((s - 0.5) * uSrcPx + vec2(0.0001));',
+    '  float ch = 1.0 - smoothstep(0.0, 0.45, k);',
+    '  float lit = dot(-n, normalize(vec2(-0.3, 1.0)));',
+    '  col *= 1.0 + ch * lit * mix(1.10, 0.30, uBezelLight);',
+    '  col += ch * max(lit, 0.0) * mix(0.050, 0.045, uBezelLight);',
+    '  vec2 e = min(uv, 1.0 - uv) * uOut / uDpr;',
+    '  float over = 1.0 - smoothstep(0.0, 3.5, min(e.x, e.y));',
+    '  col += over * (uv.y > 0.5 ? mix(0.05, 0.08, uBezelLight) : -mix(0.02, 0.10, uBezelLight));',
+    '  col *= 0.982 + 0.036 * hash12(floor(gl_FragCoord.xy / uDpr));',
     '  vec2 r = s;',
     '  r = mix(r, -r, step(r, vec2(0.0)));',
     '  r = mix(r, 2.0 - r, step(vec2(1.0), r));',
     '  vec3 refl = texture2D(uSrc, r).rgb * 0.10;',
     '  if (uGlowK > 0.0) refl += texture2D(uGlow, r).rgb * 0.9;',
-    '  vec3 col = base + refl * (1.0 - k) * (1.0 - k) * 0.55;',
-    '  col *= 1.0 - 0.55 * (1.0 - smoothstep(0.0, 2.5 * uDpr, dist));',
-    '  float rim = smoothstep(uBezelPx - 1.5 * uDpr, uBezelPx, dist);',
-    '  col += rim * 0.035;',
+    '  col += refl * ch * ch * mix(0.65, 0.18, uBezelLight);',
+    '  col *= 1.0 - mix(0.65, 0.35, uBezelLight) * (1.0 - smoothstep(0.0, 3.0 * uDpr, dist));',
     '  return col;',
     '}',
     'void main() {',
@@ -157416,6 +158023,18 @@ var T = {};
     '    vec3 st = c.rgb / max(c.a, 0.0001);',
     '    st = vec3(srgb1(lin1(st.r) * uGain), srgb1(lin1(st.g) * uGain), srgb1(lin1(st.b) * uGain));',
     '    c.rgb = st * c.a;',
+    '  }',
+    /* the tube's glass, under the case: it darkens into the case at its edge (depth), and a broad soft highlight
+       from the same light as the case sits up and to the left, with a faint glare along the top. Static. */
+    '  if (uBezel > 0.0) {',
+    '    float depth = smoothstep(0.0, 4.0 * uDpr, -dist);',
+    '    c.rgb *= mix(0.80, 0.90, uBezelLight) + mix(0.20, 0.10, uBezelLight) * depth;',
+    '    vec2 hp = (s - vec2(0.24, 0.80)) * vec2(1.0, 1.7);',
+    '    float spec = exp(-dot(hp, hp) * 6.0) * mix(0.11, 0.05, uBezelLight);',
+    '    float arc = s.y - 0.95 + 0.30 * (s.x - 0.5) * (s.x - 0.5);',
+    '    spec += (1.0 - smoothstep(0.0, 0.035, abs(arc))) * smoothstep(0.08, 0.35, s.x) * (1.0 - smoothstep(0.65, 0.92, s.x)) * mix(0.06, 0.025, uBezelLight);',
+    '    c.rgb += spec * (vec3(c.a) - c.rgb) + spec * (1.0 - c.a);',
+    '    c.a = max(c.a, spec);',
     '  }',
     '  c.rgb = min(c.rgb * (1.0 - uDim), vec3(c.a));',
     '  vec4 outside = vec4(0.0, 0.0, 0.0, 1.0);',
@@ -157697,7 +158316,7 @@ var T = {};
     this._bind(2, this.glowValid ? this.targets.glowA.tex : null, pf, 'uGlow');
     gl.uniform2f(u.uOut, W, H); gl.uniform2f(u.uSrcPx, W, H); gl.uniform1f(u.uDpr, this.dpr);
     gl.uniform1f(u.uCurv, g.curv); gl.uniform2f(u.uInset, g.ix, g.iy); gl.uniform1f(u.uRadius, g.radius);
-    gl.uniform1f(u.uBezel, p.bezel.on ? 1 : 0); gl.uniform1f(u.uBezelPx, g.bezelPx);
+    gl.uniform1f(u.uBezel, p.bezel.on ? 1 : 0); gl.uniform1f(u.uBezelPx, g.bezelPx); gl.uniform1f(u.uBezelLight, p.bezel.light ? 1 : 0);
     gl.uniform2f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, p.scanlines.period);
     gl.uniform1f(u.uGlowK, this.glowValid ? p.glow.strength * GLOW_GAIN : 0);
     gl.uniform1f(u.uBurnK, burnK);
@@ -163347,12 +163966,13 @@ var T = {};
 (function () {
   var C = T.color;
   var GUTTER = 20, SCROLLBAR = 14;
+  /* pathLength 1: a settling mark draws its stroke from nothing (60-motion.css) */
   var SVG = {
-    ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>',
-    fail: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>',
+    ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><path pathLength="1" d="M3.5 8.5l3 3 6-7"/></svg>',
+    fail: '<svg viewBox="0 0 16 16" aria-hidden="true"><path pathLength="1" d="M4.5 4.5l7 7"/><path pathLength="1" d="M11.5 4.5l-7 7"/></svg>',
     run: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.4" class="pmt-fill"/></svg>',
     idle: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/></svg>',
-    agent: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="4" width="8" height="8"/><path d="M6.5 8h3"/></svg>'
+    agent: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect pathLength="1" x="4" y="4" width="8" height="8"/><path pathLength="1" d="M6.5 8h3"/></svg>'
   };
   T.ICONS = {
     clock: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>',
@@ -163365,6 +163985,41 @@ var T = {};
   /* nothing moves under Reduced Motion, nor on battery saver (SPEC section 9); both are read live, so a change of
      either stops the blink and the smooth wheel at once */
   function motionOff() { return T.look().reduced || !!(T.FX && T.FX.battery && T.FX.battery.saver); }
+
+  /* ---- motion for the chrome (60-motion.css says how each look moves; these only start it and wait for it) ----
+     An element plays its entrance under the class pmt-in (or another one-shot class), its exit under pmt-out. What
+     those animate is a look token, so a look, NieR part or Reduced Motion without motion for it ends at once. */
+  var Motion = T.Motion = {
+    /* a safety net: nothing here is longer than about 600 ms, and a stalled animation must not hold an element */
+    limit: 900,
+    /* fn() once every finite animation and transition on el and inside it has finished (at once when there is none) */
+    finished: function (el, fn) {
+      var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
+        var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+        return !t || t.endTime !== Infinity;
+      }) : [];
+      if (!list.length) { fn(); return; }
+      var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
+      var timer = setTimeout(go, Motion.limit);
+      Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+    },
+    /* plays a one-shot class (default pmt-in) from its start; a later play or leave supersedes it */
+    play: function (el, cls, then) {
+      cls = cls || 'pmt-in';
+      var gen = el._pmtGen = (el._pmtGen || 0) + 1;
+      el.classList.remove('pmt-out');
+      if (el.classList.contains(cls)) { el.classList.remove(cls); void el.offsetWidth; }
+      el.classList.add(cls);
+      Motion.finished(el, function () { if (el._pmtGen !== gen) return; el.classList.remove(cls); if (then) then(); });
+    },
+    /* plays the exit, then done(); an entrance played meanwhile cancels the exit and done never runs */
+    leave: function (el, done) {
+      var gen = el._pmtGen = (el._pmtGen || 0) + 1;
+      el.classList.remove('pmt-in', 'pmt-swap');
+      el.classList.add('pmt-out');
+      Motion.finished(el, function () { if (el._pmtGen === gen) { el.classList.remove('pmt-out'); done(); } });
+    }
+  };
 
   function View(host, api, session, state) {
     T.mixinEmitter(this);
@@ -163490,6 +164145,9 @@ var T = {};
   /* appearance: { theme, font, opts, padding, background, effects } from T.Appearance */
   View.prototype.applyAppearance = function (ap) {
     var self = this;
+    var xf = this._recolorPrep(ap);
+    /* before the new colours: the DOM painted in scheme colours transitions only if this is on when they change */
+    if (xf) this.root.classList.add('pmt-recolor');
     this.appearance = ap;
     this.theme = ap.theme;
     Object.assign(this.opts, ap.opts || {});
@@ -163517,6 +164175,106 @@ var T = {};
     this.renderer.invalidate();
     this.layout(true);
     this.marksDirty = true;
+    if (xf) this._recolor(xf);
+  };
+
+  /* ---- recolour: a scheme hovered, chosen or reverted. The old ground and the old text are laid over the new ones and
+     taken away, each look its own way (60-motion.css); the canvas text itself never moves. A change of font, size or
+     padding moves the text, so it shows at once. A recolour that arrives while another runs goes underneath it, so
+     what is on screen never jumps. ---- */
+  function colorSig(ap) {
+    var t = ap.theme || {}, b = ap.background || {}, o = ap.opts || {};
+    return [t.id, t.bg, t.fg, t.bgAlpha, t.appearance, o.minContrast, o.boldBright, b.kind, b.css, b.color, b.url, b.blurredUrl, b.dim].join('|');
+  }
+  function alphaOf(c) {
+    var m = /\/\s*([\d.]+%?)\s*\)$/.exec(c) || /^rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)$/.exec(c);
+    if (!m) return /^transparent$/.test(c) ? 0 : 1;
+    return /%$/.test(m[1]) ? parseFloat(m[1]) / 100 : parseFloat(m[1]);
+  }
+  function geomSig(ap) {
+    var f = ap.font || {}, p = ap.padding || {};
+    return [f.family, f.size, f.weight, f.lineHeight, f.letterSpacing, p.x, p.y].join('|');
+  }
+  /* where the change comes from, in client px: the popover sets it to the scheme under the pointer or the keyboard */
+  View.prototype.recolorFrom = function (x, y) { this._xfFrom = { x: x, y: y }; };
+  View.prototype._recolorPrep = function (ap) {
+    var prev = this.appearance, from = this._xfFrom;
+    this._xfFrom = null;
+    if (!prev || !this.visible || !this.metrics || !this.root.isConnected) return null;
+    if (colorSig(prev) === colorSig(ap) || geomSig(prev) !== geomSig(ap)) return null;
+    if (T.FX && T.FX.battery && T.FX.battery.saver) return null;
+    /* a recolour that has not been painted yet already shows what is on screen */
+    var frames = this.renderer.stats ? this.renderer.stats.frames : 0;
+    if (this._xf && this._xf.length && this._xfFrames === frames) return null;
+    var gl = !!(this.fx && this.fx.active), src = gl ? this.fxCanvas : this.canvas;
+    if (!src.width || !src.height) return null;
+    var snap = document.createElement('canvas');
+    try {
+      /* the effects canvas keeps no copy of its picture, so draw it again and read it in the same task */
+      if (gl) this.fx.frame();
+      snap.width = src.width; snap.height = src.height;
+      snap.getContext('2d').drawImage(src, 0, 0);
+    } catch (e) { return null; }
+    var cs = getComputedStyle(src);
+    snap.style.width = src.style.width; snap.style.height = src.style.height;
+    snap.style.opacity = cs.opacity;
+    if (cs.filter && cs.filter !== 'none') snap.style.filter = cs.filter;
+    /* the old ground: the background layer's paint over the body's own (colour, NieR's grid) */
+    var body = this.bodyEl, bcs = getComputedStyle(body), lcs = getComputedStyle(this.bgLayer);
+    var ground = el('div', 'pmt-xf pmt-xf-ground pmt-calm'), gs = ground.style;
+    var clear = /^(transparent|rgba\(0, 0, 0, 0\))$/.test(lcs.backgroundColor);
+    gs.backgroundColor = clear ? bcs.backgroundColor : lcs.backgroundColor;
+    var layers = [lcs, bcs].filter(function (c) { return c.backgroundImage && c.backgroundImage !== 'none'; });
+    if (layers.length) {
+      ['backgroundImage', 'backgroundSize', 'backgroundPosition', 'backgroundRepeat'].forEach(function (k) {
+        gs[k] = layers.map(function (c) { return c[k]; }).join(', ');
+      });
+    }
+    /* a see-through ground (Glass) cannot be laid over the new one: the two tints would stack into a darker third.
+       There the tint itself changes (60-motion.css, .pmt-recolor .pmt-body) and only the text is laid over */
+    if (!layers.length && alphaOf(gs.backgroundColor) < 0.99) ground = null;
+    var text = el('div', 'pmt-xf pmt-xf-text pmt-calm');
+    text.appendChild(snap);
+    var edge = el('div', 'pmt-xf-edge pmt-calm');
+    /* geometry for the looks' masks: the origin, the body's size and each layer's offset inside the body */
+    var B = body.getBoundingClientRect(), S = this.screen.getBoundingClientRect();
+    if (!from) {
+      var pr = this.pop && this.pop.getBoundingClientRect();
+      from = pr && pr.width ? { x: pr.left, y: pr.top + Math.min(120, pr.height / 2) } : { x: B.left + B.width / 2, y: B.top + B.height / 2 };
+    }
+    var ox = from.x - B.left, oy = from.y - B.top;
+    var rad = Math.ceil(Math.max(Math.hypot(ox, oy), Math.hypot(B.width - ox, oy), Math.hypot(ox, B.height - oy), Math.hypot(B.width - ox, B.height - oy))) + 72;
+    var geo = function (node, dx, dy, dr) {
+      var st = node.style;
+      st.setProperty('--pmt-xf-ox', ox + 'px'); st.setProperty('--pmt-xf-oy', oy + 'px');
+      st.setProperty('--pmt-xf-bw', B.width + 'px'); st.setProperty('--pmt-xf-bh', B.height + 'px'); st.setProperty('--pmt-xf-rad', rad + 'px');
+      st.setProperty('--pmt-xf-dx', dx + 'px'); st.setProperty('--pmt-xf-dy', dy + 'px'); st.setProperty('--pmt-xf-dr', dr + 'px');
+    };
+    if (ground) geo(ground, 0, 0, 0);
+    geo(edge, 0, 0, 0);
+    geo(text, S.left - B.left, S.top - B.top, B.right - S.right);
+    return { ground: ground, text: text, edge: edge };
+  };
+  View.prototype._recolor = function (xf) {
+    var self = this, list = this._xf || (this._xf = []);
+    /* underneath any recolour still running: it keeps taking away what it covers */
+    if (xf.ground) this.bodyEl.insertBefore(xf.ground, this.bgLayer.nextSibling);
+    this.screen.insertBefore(xf.text, this.trailCanvas.nextSibling);
+    this.bodyEl.appendChild(xf.edge);
+    var mine = [xf.ground, xf.text, xf.edge].filter(Boolean);
+    list.push(mine);
+    /* at most three at once (a fast run of hovers): the oldest, nearly gone, goes now */
+    while (list.length > 3) list.shift().forEach(function (n) { n.remove(); });
+    this._xfFrames = this.renderer.stats ? this.renderer.stats.frames : 0;
+    var left = mine.length;
+    mine.forEach(function (n) {
+      Motion.play(n, 'pmt-in', function () {
+        n.remove();
+        if (--left) return;
+        var i = list.indexOf(mine); if (i >= 0) list.splice(i, 1);
+        if (!list.length) self.root.classList.remove('pmt-recolor');
+      });
+    });
   };
   /* the screen ground and text colour as the renderer paints default cells (OSC 10/11 over the scheme, mapped on mono
      schemes), so the contrast floor measures what is shown */
@@ -163804,11 +164562,14 @@ var T = {};
   };
 
   /* ---- gutter: one glyph per prompt line (D13), never a stripe ---- */
+  /* the marks are kept per command and only changed where they differ, so a mark that settles (running to done or
+     failed) plays its settle once while the view scrolls or repaints around it */
   View.prototype._renderGutter = function () {
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
-    if (buf.isAlt) { g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
+    var marks = this._marks || (this._marks = new Map());
+    if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
     g.classList.remove('pmt-gutter-alt');
-    var top = this.viewTop(), rows = buf.rows, html = [], cmds = this.term.commands;
+    var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     var py = this.gridTop || 0;
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
@@ -163823,9 +164584,29 @@ var T = {};
       var agent = /^agent:/.test(c.by);
       var label = (c.cmdline ? c.cmdline : 'Prompt') + (kind === 'fail' ? ', exit ' + c.exit : kind === 'ok' ? ', exit 0' : kind === 'run' ? ', running' : c.indeterminate ? ', ended with the earlier session' : '') + (agent ? ', typed by ' + c.by.slice(6) : '');
       this._gutterCmds.push(c);
-      html.push('<button type="button" class="pmt-mark pmt-mark-' + kind + (agent ? ' pmt-mark-agent' : '') + '" data-pmt-cmd="' + c.id + '" style="top:' + (py + (abs - top) * m.cellH) + 'px;height:' + m.cellH + 'px" aria-label="' + T.util.esc(label) + '" data-pm-hover-label="' + T.util.esc(label) + '">' + (agent ? SVG.agent : SVG[kind]) + '</button>');
+      seen.add(c.id);
+      var r = marks.get(c.id);
+      if (!r) {
+        r = { el: el('button') };
+        r.el.type = 'button'; r.el.setAttribute('data-pmt-cmd', c.id);
+        marks.set(c.id, r);
+      }
+      if (r.kind !== kind || r.agent !== agent) {
+        /* only a change the person could see plays: a mark that was showing as running settles, a waiting prompt
+           whose command starts fills in */
+        var shown = r.el.isConnected, cue = shown && r.kind === 'run' && (kind === 'ok' || kind === 'fail') ? 'pmt-settle' : shown && r.kind === 'idle' && kind === 'run' ? 'pmt-start' : '';
+        r.el.className = 'pmt-mark pmt-calm pmt-mark-' + kind + (agent ? ' pmt-mark-agent' : '');
+        r.el.innerHTML = agent ? SVG.agent : SVG[kind];
+        r.kind = kind; r.agent = agent;
+        if (cue) Motion.play(r.el, cue);
+      }
+      var y = py + (abs - top) * m.cellH;
+      if (r.top !== y) { r.top = y; r.el.style.top = y + 'px'; }
+      if (r.h !== m.cellH) { r.h = m.cellH; r.el.style.height = m.cellH + 'px'; }
+      if (r.label !== label) { r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label); }
+      if (!r.el.isConnected) g.appendChild(r.el);
     }
-    g.innerHTML = html.join('');
+    marks.forEach(function (r, id) { if (!seen.has(id)) { r.el.remove(); marks.delete(id); } });
     if (!g._bound) {
       g._bound = true;
       g.addEventListener('click', function (e) {
@@ -164143,8 +164924,9 @@ var T = {};
   /* ---- notices: inline rows above the screen, never modals ---- */
   View.prototype.notice = function (n) {
     var self = this;
-    this.dismissNotice(n.id);
-    var row = el('div', 'pmt-notice pmt-notice-' + (n.tone || 'info'));
+    /* a notice that replaces one with the same id takes its place and only its words change; a new one arrives */
+    var old = this._notice(n.id);
+    var row = el('div', 'pmt-notice pmt-calm pmt-notice-' + (n.tone || 'info'));
     row.setAttribute('data-pmt-notice', n.id);
     row.setAttribute('role', n.tone === 'warn' ? 'alert' : 'status');
     var text = el('span', 'pmt-notice-text'); text.textContent = n.text; row.appendChild(text);
@@ -164155,16 +164937,28 @@ var T = {};
       acts.appendChild(b);
     });
     row.appendChild(acts);
-    this.noticeEl.appendChild(row);
+    text.classList.add('pmt-calm');
+    if (old) { this.noticeEl.replaceChild(row, old); Motion.play(row, 'pmt-swap'); }
+    else { this.noticeEl.appendChild(row); Motion.play(row); }
     this.layoutSoon();
     /* a notice takes the focus only when the caller says a user action caused it (a paste, closing the tab): program
        output and agents never pull the keyboard away from what the user is typing, here or elsewhere (D8) */
     var first = acts.querySelector('button'); if (first && n.focus === true) first.focus({ preventScroll: true });
     return row;
   };
+  /* the notice with this id that is showing (not one on its way out) */
+  View.prototype._notice = function (id) {
+    var list = this.noticeEl.querySelectorAll('[data-pmt-notice]');
+    for (var i = 0; i < list.length; i++) if (list[i].getAttribute('data-pmt-notice') === id && !list[i].classList.contains('pmt-out')) return list[i];
+    return null;
+  };
+  /* the notice plays its exit, then gives its room back to the screen */
   View.prototype.dismissNotice = function (id) {
-    var old = this.noticeEl.querySelector('[data-pmt-notice="' + id + '"]');
-    if (old) { old.remove(); this.layoutSoon(); }
+    var old = this._notice(id), self = this;
+    if (!old) return;
+    old.setAttribute('aria-hidden', 'true');
+    old.inert = true;
+    Motion.leave(old, function () { old.remove(); self.layout(); });
   };
   View.prototype.layoutSoon = function () { var self = this; requestAnimationFrame(function () { self.layout(); }); };
 
@@ -164397,7 +165191,7 @@ var T = {};
       if (view.findBar) { view.findInput.focus(); view.findInput.select(); return; }
       var st = view.findState = new FindState(view);
       var bar = document.createElement('div');
-      bar.className = 'pmt-findbar';
+      bar.className = 'pmt-findbar pmt-calm';
       bar.setAttribute('role', 'search');
       bar.innerHTML =
         '<input class="pmt-find-input" type="text" spellcheck="false" aria-label="Find in terminal" placeholder="Find">' +
@@ -164410,16 +165204,25 @@ var T = {};
         '<button type="button" class="pmt-find-btn" data-a="close" aria-label="Close find (Esc)" data-pm-hover-label="Close (Esc)">' + ICON.close + '</button>';
       view.screen.appendChild(bar);
       view.findBar = bar;
+      T.Motion.play(bar);
       var input = view.findInput = bar.querySelector('input'), count = bar.querySelector('.pmt-find-count');
       var sel = view.selection ? view.selection.text(view.term) : '';
       if (sel && sel.indexOf('\n') < 0 && sel.length < 200) input.value = sel;
       function update(keep) {
         st.q = input.value; st.run(keep);
         bar.classList.toggle('pmt-find-error', st.error);
+        var was = count.textContent;
         count.textContent = st.error ? 'Invalid pattern' : !st.q ? '' : st.matches.length ? (st.index + 1) + ' of ' + st.matches.length + (st.matches.length >= MAX ? '+' : '') : 'No results';
         /* only what the person did in the bar moves the view; the refresh after output (keep) recounts and repaints
-           the marks and leaves the scroll position, and following the bottom, alone */
-        if (!keep) reveal();
+           the marks and leaves the scroll position, and following the bottom, alone (and the count does not move) */
+        if (!keep) {
+          reveal();
+          if (count.textContent !== was) {
+            /* a search that just found nothing nudges its count once; any other new count rolls in */
+            if (count.textContent === 'No results' || st.error) T.Motion.play(count, 'pmt-nudge');
+            else if (count.textContent) { count.removeAttribute('data-pmt-dir'); T.Motion.play(count, 'pmt-tick'); }
+          }
+        }
         view.marksDirty = true; view.schedule();
       }
       function reveal() {
@@ -164428,10 +165231,30 @@ var T = {};
         if (m.a0 < top || m.a0 >= top + rows) view.scrollTo(m.a0 - Math.floor(rows / 2));
       }
       function go(d) {
-        if (!st.matches.length) return;
+        if (!st.matches.length) { T.Motion.play(count, 'pmt-nudge'); return; }
         st.index = (st.index + d + st.matches.length) % st.matches.length;
         count.textContent = (st.index + 1) + ' of ' + st.matches.length;
+        /* the count rolls the way the match moved (previous is upward), and the match is marked where it landed */
+        count.setAttribute('data-pmt-dir', d < 0 ? 'down' : 'up');
+        T.Motion.play(count, 'pmt-tick');
         reveal(); view.marksDirty = true; view.schedule();
+        ring(st.matches[st.index]);
+      }
+      /* a ring around the match the person jumped to, for a moment, so the eye finds it; the text under it stays still */
+      function ring(m) {
+        if (view._findRing) { view._findRing.remove(); view._findRing = null; }
+        var mt = view.metrics; if (!m || !mt) return;
+        var row = m.a0 - view.viewTop();
+        if (row < 0 || row >= view.term.rows) return;
+        var x1 = m.a1 === m.a0 ? m.x1 : view.term.cols;
+        var a = view.cellToOverlay(m.x0, row), b = view.cellToOverlay(x1, row);
+        var r = view._findRing = document.createElement('div');
+        r.className = 'pmt-findring pmt-calm';
+        r.setAttribute('aria-hidden', 'true');
+        r.style.left = (a.left - 3) + 'px'; r.style.top = (a.top - 2) + 'px';
+        r.style.width = Math.max(mt.cellW, b.left - a.left) + 6 + 'px'; r.style.height = mt.cellH + 4 + 'px';
+        view.overlays.appendChild(r);
+        T.Motion.finished(r, function () { r.remove(); if (view._findRing === r) view._findRing = null; });
       }
       input.addEventListener('input', function () { update(false); });
       input.addEventListener('keydown', function (e) {
@@ -164460,7 +165283,12 @@ var T = {};
     };
     view.closeFind = function () {
       if (!view.findBar) return;
-      view.findBar.remove(); view.findBar = null; view.findState = null;
+      /* the bar plays its exit and is gone for everything else at once: a new Find opens a fresh bar */
+      var bar = view.findBar;
+      bar.setAttribute('aria-hidden', 'true'); bar.inert = true;
+      T.Motion.leave(bar, function () { bar.remove(); });
+      view.findBar = null; view.findState = null;
+      if (view._findRing) { view._findRing.remove(); view._findRing = null; }
       if (view._findOff) view._findOff();
       view.marksDirty = true; view.schedule(true);
       view.focus();
@@ -164936,7 +165764,7 @@ var T = {};
    T.Appearance only; Settings > Terminal will bind the same fields later. Everything applies live. Hovering a scheme
    previews it on this terminal; leaving the list or pressing Escape reverts the preview. The scope switch chooses the
    layer written: "This terminal" (the tab) or "All terminals" (the app default). The same popover, cut down to scheme,
-   font and size, is the code editor's (T.AppearancePopover, surface 'editor', D27). */
+   font and size, is the code editor's (T.AppearancePopover, surface 'editor', D30). */
 (function () {
   var A = function () { return T.Appearance; };
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html !== undefined) e.innerHTML = html; return e; }
@@ -164952,8 +165780,14 @@ var T = {};
       var nm = a.replace(/^agent:/, '');
       agentItems.push({ id: 'agent-' + a, label: (s.inTerminal.has(a) ? 'Allowed in this terminal: ' : 'Allowed once: ') + nm, detail: 'Revoke', run: function () { s.revoke(a); v.announce(nm + ' can no longer type here'); } });
     });
+    /* shells inline, SSH hosts in their own submenu, as in the "+" menu (D39) */
+    function newRow(p) { return { id: 'new-' + p.id, label: p.label, detail: p.detail, run: function () { if (v.api && v.api.open) v.api.open({ kind: 'terminal', profile: p.id, where: 'tab' }); } }; }
+    var newRows = profiles.filter(function (p) { return p.group !== 'ssh'; }).map(newRow);
+    var hosts = profiles.filter(function (p) { return p.group === 'ssh'; }).map(newRow);
+    if (hosts.length) newRows.push('-', { id: 'new-ssh', label: 'SSH hosts', sub: hosts });
+    var N = window.PMT && window.PMT.notifications, sid = s.id;
     return [
-      { id: 'new', label: 'New terminal', sub: profiles.map(function (p) { return { id: 'new-' + p.id, label: p.label, detail: p.detail, run: function () { if (v.api && v.api.open) v.api.open({ kind: 'terminal', profile: p.id, where: 'tab' }); } }; }) },
+      { id: 'new', label: 'New terminal', sub: newRows },
       { id: 'split-down', label: 'Split down', run: function () { if (v.api && v.api.split) v.api.split('down', { kind: 'terminal', profile: s.profile.id, cwd: s.shell ? s.shell.cwd : s.cwd }); } },
       '-',
       { id: 'appearance', label: 'Appearance…', run: function () { v.openAppearance(); } },
@@ -164970,16 +165804,18 @@ var T = {};
       { id: 'a11y', label: 'Plain-text buffer', shortcut: T.keys.label('a11y'), run: function () { v.openA11y(); } },
       '-',
       { id: 'agents', label: 'Agent input', sub: agentItems },
+      /* D38: system notifications from this terminal's programs while Puppet Master is in the background */
+      N && N.available() ? { id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: N.muted(sid), run: function () { N.mute(sid); } } : null,
       { id: 'signal', label: 'Send signal', disabled: !running || !s.foreground(), sub: [
         { id: 'sig-int', label: 'Interrupt', detail: 'SIGINT', run: function () { s.interrupt(); } },
         { id: 'sig-term', label: 'Terminate', detail: 'SIGTERM', run: function () { s.shell.signal('SIGTERM', true); } },
         { id: 'sig-kill', label: 'Kill', detail: 'SIGKILL', danger: true, run: function () { s.kill(); } }] },
       { id: 'restart', label: 'Restart session', run: function () { v.restart(); } }
-    ];
+    ].filter(Boolean);
   };
 
   /* ---------------- Appearance popover ---------------- */
-  /* T.AppearancePopover.open(anchor, { surface, get, set, onClose, view }) (D27). One popover for two surfaces:
+  /* T.AppearancePopover.open(anchor, { surface, get, set, onClose, view }) (D30). One popover for two surfaces:
        'terminal'  the terminal's own (View.openAppearance): anchor is the view's root and view the T.View; it reads
                    and writes T.Appearance at the scope its switch shows, so get and set are not used.
        'editor'    the code editor's: Colour scheme ('Follow look' first, the default), font face and size only; no
@@ -165014,12 +165850,18 @@ var T = {};
       out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
         '<span class="pmt-scheme-name">' + esc(follow.label) + '</span><span class="pmt-scheme-meta">' + esc(follow.meta || '') + '</span></div>');
     }
+    /* each family in its own box, so its sticky name scrolls away with it instead of piling up under the next one */
     list.forEach(function (sch) {
       if (ql && (sch.name + ' ' + sch.family).toLowerCase().indexOf(ql) < 0) return;
-      if (sch.family !== fam) { fam = sch.family; out.push('<div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>'); }
+      if (sch.family !== fam) {
+        if (fam !== null) out.push('</div>');
+        fam = sch.family;
+        out.push('<div class="pmt-scheme-fam" role="presentation"><div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>');
+      }
       out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
         '<span class="pmt-scheme-name">' + esc(sch.name) + '</span><span class="pmt-scheme-meta">' + (sch.appearance === 'light' ? 'Light' : 'Dark') + '</span></div>');
     });
+    if (fam !== null) out.push('</div>');
     if (out.length === 0) out.push('<div class="pmt-pop-note">No scheme matches</div>');
     return out.join('');
   }
@@ -165032,6 +165874,46 @@ var T = {};
     var n = opts[e.key === 'ArrowDown' ? Math.min(opts.length - 1, i + 1) : Math.max(0, i - 1)];
     if (n) n.focus();
     return n || null;
+  }
+  /* the chosen marks of the segmented choices and the scheme list, read before a render replaces them, so the new
+     choice can be reached by a slide from the old one (60-motion.css says how far each look slides) */
+  function memo(pop) {
+    var m = { segs: {}, scheme: null };
+    [].forEach.call(pop.querySelectorAll('.pmt-seg button[aria-checked="true"]'), function (b) {
+      var ind = b.parentNode.querySelector('.pmt-seg-ind');
+      m.segs[b.getAttribute('data-key') || 'scope'] = ind ? where(ind, null) : { x: b.offsetLeft, w: b.offsetWidth, value: b.getAttribute('data-value') || b.getAttribute('data-scope') };
+    });
+    var o = pop.querySelector('.pmt-schemes .pmt-scheme[aria-selected="true"]'), si = pop.querySelector('.pmt-scheme-ind');
+    /* a slide still running when the popover renders again (the editor refreshes it from its set) goes on from where
+       its stand-in is now */
+    if (si) m.scheme = where(si, null);
+    else if (o) m.scheme = { id: o.getAttribute('data-id'), x: o.offsetLeft, y: o.offsetTop, w: o.offsetWidth, h: o.offsetHeight };
+    return m;
+  }
+  function where(ind, id) {
+    var box = ind.parentNode, br = box.getBoundingClientRect(), r = ind.getBoundingClientRect();
+    return { id: id, value: id, x: r.left - br.left - box.clientLeft, y: r.top - br.top - box.clientTop, w: r.width, h: r.height };
+  }
+  function slide(pop, before) {
+    [].forEach.call(pop.querySelectorAll('.pmt-seg button[aria-checked="true"]'), function (b) {
+      var was = before.segs[b.getAttribute('data-key') || 'scope'];
+      if (was && was.value !== (b.getAttribute('data-value') || b.getAttribute('data-scope'))) glide(b.parentNode, 'pmt-seg-ind', was, { x: b.offsetLeft, w: b.offsetWidth });
+    });
+    var o = pop.querySelector('.pmt-schemes .pmt-scheme[aria-selected="true"]'), w = before.scheme;
+    if (o && w && w.id !== o.getAttribute('data-id')) {
+      glide(o.closest('.pmt-schemes'), 'pmt-scheme-ind', w, { x: o.offsetLeft, y: o.offsetTop, w: o.offsetWidth, h: o.offsetHeight });
+      T.Motion.play(o, 'pmt-picked');
+    }
+  }
+  /* a stand-in for the chosen mark travels from a to b while the real one waits, then hands over */
+  function glide(box, cls, a, b) {
+    var ind = el('i', cls);
+    ind.setAttribute('aria-hidden', 'true');
+    var put = function (p) { ind.style.transform = 'translate(' + p.x + 'px,' + (p.y || 0) + 'px)'; ind.style.width = p.w + 'px'; if (p.h) ind.style.height = p.h + 'px'; };
+    put(a); box.appendChild(ind); box.classList.add('pmt-sliding');
+    void ind.offsetWidth;
+    ind.classList.add('pmt-go'); put(b);
+    T.Motion.finished(ind, function () { ind.remove(); if (!box.querySelector('.' + cls)) box.classList.remove('pmt-sliding'); });
   }
   function focusFirst(pop) {
     var first = pop.querySelector('.pmt-scheme[aria-selected="true"]') || pop.querySelector('.pmt-pop-search');
@@ -165055,7 +165937,7 @@ var T = {};
     if (v.pop) v.closeAppearance(true);
     v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
     var scope = v._apScope || 'tab';
-    var pop = el('div', 'pmt-pop');
+    var pop = el('div', 'pmt-pop pmt-calm');
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Terminal appearance'); pop.tabIndex = -1;
     (anchor || v.root).appendChild(pop);
     v.pop = pop;
@@ -165075,7 +165957,7 @@ var T = {};
     }
 
     function render(keepScroll) {
-      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
+      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0, before = memo(pop);
       var R = ap(), look = R.lookKey;
       var sid = val('scheme');
       var html = '';
@@ -165084,7 +165966,7 @@ var T = {};
         '<button type="button" role="radio" data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
         '<button type="button" role="radio" data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
         '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
-      html += '<div class="pmt-pop-body">';
+      html += '<div class="pmt-pop-body pmt-calm">';
       /* scheme */
       html += '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
         '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
@@ -165152,6 +166034,7 @@ var T = {};
       pop.innerHTML = html;
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
+      slide(pop, before);
     }
     /* Follow look: the look's own scheme, swatched as it applies now when this scope follows */
     function follow(sid) {
@@ -165193,7 +166076,13 @@ var T = {};
     pop.addEventListener('click', function (e) {
       var b = e.target.closest('button, .pmt-scheme'); if (!b) return;
       if (b.classList.contains('pmt-scheme')) { A().endPreview(v); set('scheme', b.getAttribute('data-id')); v.announce('Scheme: ' + b.querySelector('.pmt-scheme-name').textContent); return; }
-      if (b.hasAttribute('data-scope')) { scope = v._apScope = b.getAttribute('data-scope'); render(true); return; }
+      if (b.hasAttribute('data-scope')) {
+        var to = b.getAttribute('data-scope'); if (to === scope) return;
+        /* the values below now read from the other layer: they fade in as the switch slides over */
+        scope = v._apScope = to; render(true);
+        T.Motion.play(pop.querySelector('.pmt-pop-body'), 'pmt-rescope');
+        return;
+      }
       if (b.hasAttribute('data-step')) { var k = b.getAttribute('data-key'); set(k, T.util.clamp(scopeFont().size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { set(b.getAttribute('data-key'), b.getAttribute('data-value')); return; }
       var act = b.getAttribute('data-act');
@@ -165204,21 +166093,23 @@ var T = {};
       else if (act === 'upload') uploadImage();
     });
     /* live preview on hover and keyboard focus in the list */
+    /* the recolour starts from the scheme that caused it (Friendly's bloom pours out of that row) */
+    function from(o) { var r = o.getBoundingClientRect(); v.recolorFrom(r.left, r.top + r.height / 2); }
     pop.addEventListener('mouseover', function (e) {
       var o = e.target.closest('.pmt-scheme'); if (!o) return;
       var id = o.getAttribute('data-id');
       if (v._previewId === id) return;
-      v._previewId = id; A().preview(v, { scheme: id });
+      v._previewId = id; from(o); A().preview(v, { scheme: id });
     });
     pop.addEventListener('mouseout', function (e) {
       var list = pop.querySelector('.pmt-schemes');
-      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; A().endPreview(v); }
+      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
     });
     pop.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
       var o = e.target.closest && e.target.closest('.pmt-scheme');
       var n = listStep(pop, e);
-      if (n) { v._previewId = n.getAttribute('data-id'); A().preview(v, { scheme: v._previewId }); }
+      if (n) { v._previewId = n.getAttribute('data-id'); from(n); A().preview(v, { scheme: v._previewId }); }
       if (e.key === 'Enter' && o) { e.preventDefault(); o.click(); }
       e.stopPropagation();
     });
@@ -165285,6 +166176,7 @@ var T = {};
     v._popOutside = function (e) { if (v.pop && !v.pop.contains(e.target) && !e.target.closest('.pmw-hbtn, [role="menu"], .pmw-menu')) v.closeAppearance(); };
     setTimeout(function () { document.addEventListener('mousedown', v._popOutside, true); }, 0);
     focusFirst(pop);
+    T.Motion.play(pop);
     v._apRender = render;
     return { el: pop, close: function () { if (v.pop === pop) v.closeAppearance(); }, refresh: function () { if (v.pop === pop) render(true); } };
   }
@@ -165292,7 +166184,11 @@ var T = {};
   T.View.prototype.closeAppearance = function (noFocus) {
     if (!this.pop) return;
     T.Appearance.endPreview(this);
-    this.pop.remove(); this.pop = null;
+    /* closed at once for everything else (a new one may open); its exit plays, unless the view is going away */
+    var pop = this.pop;
+    this.pop = null;
+    pop.inert = true; pop.setAttribute('aria-hidden', 'true');
+    if (noFocus) pop.remove(); else T.Motion.leave(pop, function () { pop.remove(); });
     document.removeEventListener('mousedown', this._popOutside, true);
     var done = this._apOnClose; this._apOnClose = null;
     if (done) { try { done(); } catch (e) { console.error('[pmt] appearance onClose failed', e); } }
@@ -165308,7 +166204,7 @@ var T = {};
     return A().scheme(A().LOOKS[lk][mode]);
   }
   function openEditor(anchor, opts) {
-    var pop = el('div', 'pmt-pop pmt-pop-float');
+    var pop = el('div', 'pmt-pop pmt-pop-float pmt-calm');
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Editor appearance'); pop.tabIndex = -1;
     /* inside the panels' overlay layer when there is one, so it takes the panel tokens and sits above the tabs */
     (document.getElementById && document.getElementById('pmw-overlay') || document.body).appendChild(pop);
@@ -165325,7 +166221,7 @@ var T = {};
     function follow() { var s = editorFollowScheme(); return { label: 'Follow look', meta: s ? s.name : '', swatch: s }; }
     function shownSize(c) { return c.size || (c.font !== 'follow' ? A().FONTS[c.font].size : 13); }
     function render(keepScroll) {
-      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
+      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0, before = memo(pop);
       var c = cur();
       /* the look's chrome shapes (30-looks.css) reach this copy too, though it floats outside any terminal */
       pop.setAttribute('data-pmt-look', A().lookKey(T.look()));
@@ -165343,6 +166239,7 @@ var T = {};
         '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
+      slide(pop, before);
     }
     /* under the anchor, right-aligned to it, kept inside the page (an overlay, placed the way the panels' menus are);
        full width less a margin on a narrow page */
@@ -165359,7 +166256,8 @@ var T = {};
     function close() {
       if (closed) return;
       closed = true;
-      pop.remove();
+      pop.inert = true; pop.setAttribute('aria-hidden', 'true');
+      T.Motion.leave(pop, function () { pop.remove(); });
       document.removeEventListener('mousedown', outside, true);
       window.removeEventListener('resize', place);
       if (anchor && anchor.focus && document.contains && document.contains(anchor)) anchor.focus({ preventScroll: true });
@@ -165393,6 +166291,7 @@ var T = {};
     window.addEventListener('resize', place);
     setTimeout(function () { if (!closed) document.addEventListener('mousedown', outside, true); }, 0);
     focusFirst(pop);
+    T.Motion.play(pop);
     return { el: pop, close: close, refresh: function () { if (!closed) render(true); } };
   }
 })();
@@ -165443,9 +166342,8 @@ var T = {};
        first, then the request comes back) */
     if (q && !(st && st.mode === 'secret')) st = { mode: 'permission', agent: q.agent, cmd: q.cmd };
     if (!st) {
-      row.hidden = true; row.innerHTML = '';
       v.setAgent(null); v.root.classList.remove('pmt-agent-driving');
-      v.layoutSoon(); return;
+      this.leave(); return;
     }
     var nm = T.util.esc(this.name(st.agent));
     var html = '', acts = [];
@@ -165467,16 +166365,67 @@ var T = {};
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
       acts = [['focus', 'Type it']];
     }
-    row.innerHTML = html + '<span class="pmt-agent-acts">' + acts.map(function (a) {
+    var actsHtml = '<span class="pmt-agent-acts">' + acts.map(function (a) {
       return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '"' + (a[2] ? ' data-pm-hover-label="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
     }).join('') + '</span>';
-    row.className = 'pmt-agentrow pmt-agent-' + st.mode;
     row.setAttribute('role', st.mode === 'permission' || st.mode === 'secret' ? 'alert' : 'status');
-    row.hidden = false;
-    row.onclick = function (e) { var b = e.target.closest('button'); if (b) self.act(b.getAttribute('data-act')); };
+    row.onclick = function (e) { var b = e.target.closest('.pmt-agent-in:not(.pmt-agent-old) button'); if (b) self.act(b.getAttribute('data-act')); };
+    this.show(st.mode, html, actsHtml);
     v.setAgent(st.mode === 'secret' && !st.agent ? null : this.name(st.agent));
     v.root.classList.toggle('pmt-agent-driving', st.mode === 'driving');
     v.layoutSoon();
+  };
+  /* The row's motion (60-motion.css): it arrives (pmt-in), rolls its words over when the state changes (pmt-swap: the
+     old words stay over the row as .pmt-agent-old while they leave), and leaves (pmt-out) before giving its room back.
+     The row takes its full height at once, so the terminal moves once, as before; only the row's paint moves after. A
+     row asked back while it leaves (an answered request whose run goes on driving) rolls over instead of leaving. */
+  Controller.prototype.show = function (mode, html, actsHtml) {
+    var row = this.view.agentRow, was = this._shown, M = T.Motion;
+    this._shown = { mode: mode, html: html, acts: actsHtml };
+    var body = document.createElement('span');
+    body.className = 'pmt-agent-in pmt-calm';
+    body.innerHTML = html + actsHtml;
+    row.inert = false; row.removeAttribute('aria-hidden');
+    if (!was || row.hidden) {
+      row.replaceChildren(body);
+      row.className = 'pmt-agentrow pmt-calm pmt-agent-' + mode;
+      row.hidden = false;
+      M.play(row);
+      return;
+    }
+    if (was.mode === mode && !was.leaving) {
+      /* the same state with new words (the next step): the text changes in place and the actions stay, so a focused
+         button keeps the focus */
+      if (was.html === html && was.acts === actsHtml) return;
+      var cur = row.querySelector('.pmt-agent-in:not(.pmt-agent-old)');
+      if (cur && was.acts === actsHtml) {
+        var acts = cur.querySelector('.pmt-agent-acts');
+        while (cur.firstChild !== acts) cur.removeChild(cur.firstChild);
+        var tmp = document.createElement('span'); tmp.innerHTML = html;
+        while (tmp.firstChild) cur.insertBefore(tmp.firstChild, acts);
+        return;
+      }
+    }
+    /* a new state: the old words roll out over the row while the new ones roll in */
+    [].forEach.call(row.querySelectorAll('.pmt-agent-old'), function (o) { o.remove(); });
+    var old = row.querySelector('.pmt-agent-in');
+    if (old) { old.classList.add('pmt-agent-old'); old.setAttribute('aria-hidden', 'true'); old.inert = true; }
+    row.appendChild(body);
+    row.className = 'pmt-agentrow pmt-calm pmt-agent-' + mode;
+    M.play(row, 'pmt-swap', function () { if (old) old.remove(); });
+  };
+  Controller.prototype.leave = function () {
+    var self = this, v = this.view, row = v.agentRow, was = this._shown;
+    if (!was || was.leaving || row.hidden) { if (!was) { row.hidden = true; row.replaceChildren(); } return; }
+    was.leaving = true;
+    row.inert = true; row.setAttribute('aria-hidden', 'true');
+    T.Motion.leave(row, function () {
+      row.hidden = true; row.replaceChildren(); row.inert = false; row.removeAttribute('aria-hidden');
+      row.className = 'pmt-agentrow pmt-calm';
+      if (self._shown === was) self._shown = null;
+      /* the screen takes the room back in this frame, not one later with an empty slot showing */
+      v.layout();
+    });
   };
   Controller.prototype.act = function (a) {
     var st = this.state || {}, s = this.s, v = this.view;
@@ -165489,7 +166438,12 @@ var T = {};
     }
     else if (a === 'stop') { this.stopAgent(st.agent); }
     else if (a === 'handback') { s.handBack(); }
-    else if (a === 'allow' || a === 'terminal' || a === 'deny') { var q = this.asks.shift(); if (q) q.resolve(a); this.render(); }
+    else if (a === 'allow' || a === 'terminal' || a === 'deny') {
+      /* the answer stays marked on the request while it rolls away (60-motion.css) */
+      var picked = v.agentRow.querySelector('.pmt-agent-in:not(.pmt-agent-old) [data-act="' + a + '"]');
+      if (picked) picked.classList.add('pmt-picked');
+      var q = this.asks.shift(); if (q) q.resolve(a); this.render();
+    }
     else if (a === 'focus') { v.focus(); }
   };
   Controller.prototype.stopAgent = function (agent) {
@@ -166102,7 +167056,8 @@ var T = {};
       { id: 'zsh', label: 'zsh', detail: 'Default', icon: 'terminal' },
       { id: 'bash', label: 'bash', detail: 'GNU bash 5.2', icon: 'terminal' },
       { id: 'pwsh', label: 'pwsh', detail: 'PowerShell 7.5', icon: 'terminal' },
-      { id: 'ssh-devbox', label: 'ssh devbox', detail: 'jared@devbox', icon: 'terminal' }
+      /* D39: SSH hosts carry group 'ssh'; the host's '+' menu lists them in an 'SSH hosts' submenu, shells inline */
+      { id: 'ssh-devbox', label: 'devbox', detail: 'jared@devbox', icon: 'terminal', group: 'ssh' }
     ];
   }
 
@@ -166113,6 +167068,9 @@ var T = {};
     var home = (T.Session.machine() && T.Session.machine().home) || '/home/jared';
     return cwd === '~' ? home : cwd.indexOf('~/') === 0 ? home + cwd.slice(1) : cwd;
   }
+
+  /* a terminal's record by session id or by the tab's saved alias */
+  function recordFor(id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r || null; }
 
   function createSession(spec) {
     var s = new T.Session({ profile: spec.profile || 'zsh', cwd: expandCwd(spec.cwd), by: spec.by || 'user',
@@ -166133,10 +167091,55 @@ var T = {};
       setTimeout(function () { s.input(inv.command + '\r', by); }, 60);
     }
   }
+  /* ---- D38: a program's notification (OSC 9, 777, 99) raises a system notification while Puppet Master is in the
+     background, unless this terminal is muted. At most one every 3 s per terminal; clicking it brings the terminal
+     forward. The browser's permission is never asked out of the blue: the first time a notification arrives with no
+     answer yet, the terminal asks once in a notice when the user is back, offering Allow, Mute this terminal, Not now */
+  var NOTIFY_ASKED = 'pm.home.terminal:v1:notify-asked';
+  function inBackground() { return document.visibilityState === 'hidden' || (typeof document.hasFocus === 'function' && !document.hasFocus()); }
+  function canNotify() { return typeof window.Notification === 'function'; }
+  function setMuted(rec, on) {
+    rec.muted = !!on;
+    if (rec.api && rec.api.saveSoon) rec.api.saveSoon();
+    if (rec.view) rec.view.announce(on ? 'Notifications from this terminal are muted' : 'Notifications from this terminal are on');
+  }
+  function askPermission(rec) {
+    var v = rec.view; if (!v || !v.notice) return;
+    try { if (localStorage.getItem(NOTIFY_ASKED)) return; localStorage.setItem(NOTIFY_ASKED, '1'); } catch (e) { /* ask anyway */ }
+    v.notice({ id: 'notify-permission', tone: 'info',
+      text: 'A program here sent a notification while Puppet Master was in the background. Show these as system notifications?',
+      actions: [
+        { label: 'Allow', primary: true, run: function () { try { window.Notification.requestPermission(); } catch (e) { /* no permission API */ } v.focus(); } },
+        { label: 'Mute this terminal', run: function () { setMuted(rec, true); v.focus(); } },
+        { label: 'Not now', run: function () { v.focus(); } }] });
+  }
+  function wireNotify(rec) {
+    if (rec.notifyOff) rec.notifyOff();
+    var last = 0;
+    rec.notifyOff = rec.session.term.on('notify', function (n) {
+      if (rec.muted || !canNotify() || !inBackground()) return;
+      var now = Date.now(); if (now - last < 3000) return; last = now;
+      var perm = window.Notification.permission;
+      if (perm === 'default') { rec.askOnReturn = true; return; }
+      if (perm !== 'granted') return;
+      var id = rec.alias || rec.session.id, sh = rec.session.shell, cwd = sh ? sh.cwd : rec.session.cwd || '';
+      var where = rec.session.profile.label + (cwd ? ' \u00b7 ' + cwd.replace(/^.*\//, '') : '');
+      try {
+        var note = new window.Notification(n.title || where, { body: n.title ? where + ': ' + n.body : n.body, tag: 'pmt-' + id });
+        note.onclick = function () { try { window.focus(); } catch (e) {} if (window.PM_HOME) window.PM_HOME.open({ kind: 'terminal', session: id }); note.close(); };
+      } catch (e) { /* a page that may not notify (some embeds) shows nothing */ }
+    });
+  }
+  if (window.addEventListener) window.addEventListener('focus', function () {
+    records.forEach(function (rec) { if (rec.askOnReturn) { rec.askOnReturn = false; askPermission(rec); } });
+  });
+
   function mountView(host, api, rec, state) {
     var view = new T.View(host, api, rec.session, state);
     if (T.Find) T.Find.attach(view);
-    rec.view = view;
+    rec.view = view; rec.api = api;
+    if (state && state.mute) rec.muted = true;
+    wireNotify(rec);
     view.on('restart', function () { restart(rec, host, api, state); });
     /* a session waiting on its restore is not saved until the restore settles (resume releases the saver) */
     if (T.Saved) { if (rec.saver) rec.saver.dispose(); rec.saver = T.Saved.watch(rec.session, rec.alias || rec.session.id, !!rec.holdStart); }
@@ -166166,7 +167169,9 @@ var T = {};
       view.marksDirty = true; view.scrollTo(view.bottomAbs()); view.schedule(true);
       var why = wasClosed ? 'when the tab closed' : 'when the page reloaded';
       if (r) say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + ' with its scrollback' +
-        (r.dropped ? ' (' + r.dropped + (r.dropped === 1 ? ' image was' : ' images were') + ' not kept)' : '') + '. Its earlier session ended ' + why + '; this is a new session.');
+        (r.dropped ? ' (' + r.dropped + (r.dropped === 1 ? ' image was' : ' images were') + ' not kept)' : '') + '. Its earlier session ended ' + why + '; this is a new session.' +
+        /* D36: what the scrub left out of the saved copy is said once, where the restored lines are */
+        (r.scrubbed ? ' ' + r.scrubbed + (r.scrubbed === 1 ? ' secret was' : ' secrets were') + ' left out of the saved copy.' : ''));
       else if (o === 'timeout') say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + ' without its scrollback, which took too long to load. Its earlier session ended ' + why + '; this is a new session.');
       else if (back) say('This terminal was ' + (wasClosed ? 'reopened' : 'restored') + '. Its earlier session ended ' + why + '; this is a new session.');
       return r;
@@ -166230,6 +167235,13 @@ var T = {};
         sub: function () { return profiles(); },
         spec: function (subId) { return { kind: 'terminal', profile: subId || null }; }
       },
+      /* rows this kind adds to its tab's menu (asked of home-panels; D38): the notification mute */
+      tabMenu: function (state) {
+        var rec = recordFor(state && state.session);
+        if (!rec || !canNotify()) return [];
+        return [{ id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: !!rec.muted,
+          run: function () { setMuted(rec, !rec.muted); } }];
+      },
       mount: function (host, state, api) {
         state = state || {};
         var rec = records.get(state.session);
@@ -166266,7 +167278,9 @@ var T = {};
             /* a custom image held as a data URL (written before images were kept by reference) would push the state
                over the host's 16 KB cap, and then nothing of it saves: it is left out, the rest stays */
             if (typeof ap.bgImageData === 'string' && ap.bgImageData.indexOf('data:') === 0) { ap = Object.assign({}, ap); delete ap.bgImageData; }
-            return { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: ap };
+            var out = { v: 1, session: rec.alias || rec.session.id, profile: rec.session.profile.id, cwd: sh ? sh.cwd : rec.session.cwd, appearance: ap };
+            if (rec.muted) out.mute = true;
+            return out;
           },
           /* while a divider drag is still moving the body (final === false) the reflow and PTY resize wait,
              at most every 120 ms; the final call lays out at once */
@@ -166338,10 +167352,16 @@ var T = {};
           state: s.state, foreground: s.foreground() };
       });
     },
+    /* D38: per-terminal mute of the system notifications its programs raise */
+    notifications: {
+      muted: function (id) { var r = recordFor(id); return !!(r && r.muted); },
+      mute: function (id, on) { var r = recordFor(id); if (r) setMuted(r, on === undefined ? !r.muted : on); },
+      available: canNotify
+    },
     session: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.session : null; },
     view: function (id) { var r = records.get(id); if (!r) for (var x of records.values()) if (x.alias === id) r = x; return r ? r.view : null; },
     keys: function () { return T.keys.list(); },
-    /* the colour-scheme catalog the code editor shares (D27). Unknown scheme ids give null */
+    /* the colour-scheme catalog the code editor shares (D30). Unknown scheme ids give null */
     Appearance: {
       schemes: function () { return T.Appearance.catalog(); },
       editorTokens: function (schemeId) { return T.Appearance.editorTokens(schemeId); },

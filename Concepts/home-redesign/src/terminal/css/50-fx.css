@@ -73,7 +73,7 @@
 /* ---- Reduced Motion: the trail never shows, and nothing in these hooks may move ---- */
 html[data-motion="reduced"] .pmt-trail { display: none !important; }
 html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass),
-html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass) *,
+html[data-motion="reduced"] :is(.pmt-fx-gl, .pmt-fx-scan, .pmt-fx-glow, .pmt-fx-paper, .pmt-fx-glass) :not(.pmt-calm),
 html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::before,
 html[data-motion="reduced"] :is(.pmt-fx-scan, .pmt-fx-paper, .pmt-fx-glass)::after {
   animation: none !important; transition: none !important;

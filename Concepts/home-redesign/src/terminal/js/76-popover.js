@@ -2,7 +2,7 @@
    T.Appearance only; Settings > Terminal will bind the same fields later. Everything applies live. Hovering a scheme
    previews it on this terminal; leaving the list or pressing Escape reverts the preview. The scope switch chooses the
    layer written: "This terminal" (the tab) or "All terminals" (the app default). The same popover, cut down to scheme,
-   font and size, is the code editor's (T.AppearancePopover, surface 'editor', D27). */
+   font and size, is the code editor's (T.AppearancePopover, surface 'editor', D30). */
 (function () {
   var A = function () { return T.Appearance; };
   function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html !== undefined) e.innerHTML = html; return e; }
@@ -18,8 +18,14 @@
       var nm = a.replace(/^agent:/, '');
       agentItems.push({ id: 'agent-' + a, label: (s.inTerminal.has(a) ? 'Allowed in this terminal: ' : 'Allowed once: ') + nm, detail: 'Revoke', run: function () { s.revoke(a); v.announce(nm + ' can no longer type here'); } });
     });
+    /* shells inline, SSH hosts in their own submenu, as in the "+" menu (D39) */
+    function newRow(p) { return { id: 'new-' + p.id, label: p.label, detail: p.detail, run: function () { if (v.api && v.api.open) v.api.open({ kind: 'terminal', profile: p.id, where: 'tab' }); } }; }
+    var newRows = profiles.filter(function (p) { return p.group !== 'ssh'; }).map(newRow);
+    var hosts = profiles.filter(function (p) { return p.group === 'ssh'; }).map(newRow);
+    if (hosts.length) newRows.push('-', { id: 'new-ssh', label: 'SSH hosts', sub: hosts });
+    var N = window.PMT && window.PMT.notifications, sid = s.id;
     return [
-      { id: 'new', label: 'New terminal', sub: profiles.map(function (p) { return { id: 'new-' + p.id, label: p.label, detail: p.detail, run: function () { if (v.api && v.api.open) v.api.open({ kind: 'terminal', profile: p.id, where: 'tab' }); } }; }) },
+      { id: 'new', label: 'New terminal', sub: newRows },
       { id: 'split-down', label: 'Split down', run: function () { if (v.api && v.api.split) v.api.split('down', { kind: 'terminal', profile: s.profile.id, cwd: s.shell ? s.shell.cwd : s.cwd }); } },
       '-',
       { id: 'appearance', label: 'Appearance…', run: function () { v.openAppearance(); } },
@@ -36,16 +42,18 @@
       { id: 'a11y', label: 'Plain-text buffer', shortcut: T.keys.label('a11y'), run: function () { v.openA11y(); } },
       '-',
       { id: 'agents', label: 'Agent input', sub: agentItems },
+      /* D38: system notifications from this terminal's programs while Puppet Master is in the background */
+      N && N.available() ? { id: 'notify-mute', label: 'Mute notifications', detail: 'System notifications from this terminal', checked: N.muted(sid), run: function () { N.mute(sid); } } : null,
       { id: 'signal', label: 'Send signal', disabled: !running || !s.foreground(), sub: [
         { id: 'sig-int', label: 'Interrupt', detail: 'SIGINT', run: function () { s.interrupt(); } },
         { id: 'sig-term', label: 'Terminate', detail: 'SIGTERM', run: function () { s.shell.signal('SIGTERM', true); } },
         { id: 'sig-kill', label: 'Kill', detail: 'SIGKILL', danger: true, run: function () { s.kill(); } }] },
       { id: 'restart', label: 'Restart session', run: function () { v.restart(); } }
-    ];
+    ].filter(Boolean);
   };
 
   /* ---------------- Appearance popover ---------------- */
-  /* T.AppearancePopover.open(anchor, { surface, get, set, onClose, view }) (D27). One popover for two surfaces:
+  /* T.AppearancePopover.open(anchor, { surface, get, set, onClose, view }) (D30). One popover for two surfaces:
        'terminal'  the terminal's own (View.openAppearance): anchor is the view's root and view the T.View; it reads
                    and writes T.Appearance at the scope its switch shows, so get and set are not used.
        'editor'    the code editor's: Colour scheme ('Follow look' first, the default), font face and size only; no
@@ -80,12 +88,18 @@
       out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="follow" aria-selected="' + (sid === 'follow') + '">' + swatch(follow.swatch || list[0]) +
         '<span class="pmt-scheme-name">' + esc(follow.label) + '</span><span class="pmt-scheme-meta">' + esc(follow.meta || '') + '</span></div>');
     }
+    /* each family in its own box, so its sticky name scrolls away with it instead of piling up under the next one */
     list.forEach(function (sch) {
       if (ql && (sch.name + ' ' + sch.family).toLowerCase().indexOf(ql) < 0) return;
-      if (sch.family !== fam) { fam = sch.family; out.push('<div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>'); }
+      if (sch.family !== fam) {
+        if (fam !== null) out.push('</div>');
+        fam = sch.family;
+        out.push('<div class="pmt-scheme-fam" role="presentation"><div class="pmt-scheme-group" role="presentation">' + esc(fam === 'Puppet Master' ? 'Puppet Master originals' : fam) + '</div>');
+      }
       out.push('<div class="pmt-scheme" role="option" tabindex="-1" data-id="' + esc(sch.id) + '" aria-selected="' + (sid === sch.id) + '">' + swatch(sch) +
         '<span class="pmt-scheme-name">' + esc(sch.name) + '</span><span class="pmt-scheme-meta">' + (sch.appearance === 'light' ? 'Light' : 'Dark') + '</span></div>');
     });
+    if (fam !== null) out.push('</div>');
     if (out.length === 0) out.push('<div class="pmt-pop-note">No scheme matches</div>');
     return out.join('');
   }
@@ -98,6 +112,46 @@
     var n = opts[e.key === 'ArrowDown' ? Math.min(opts.length - 1, i + 1) : Math.max(0, i - 1)];
     if (n) n.focus();
     return n || null;
+  }
+  /* the chosen marks of the segmented choices and the scheme list, read before a render replaces them, so the new
+     choice can be reached by a slide from the old one (60-motion.css says how far each look slides) */
+  function memo(pop) {
+    var m = { segs: {}, scheme: null };
+    [].forEach.call(pop.querySelectorAll('.pmt-seg button[aria-checked="true"]'), function (b) {
+      var ind = b.parentNode.querySelector('.pmt-seg-ind');
+      m.segs[b.getAttribute('data-key') || 'scope'] = ind ? where(ind, null) : { x: b.offsetLeft, w: b.offsetWidth, value: b.getAttribute('data-value') || b.getAttribute('data-scope') };
+    });
+    var o = pop.querySelector('.pmt-schemes .pmt-scheme[aria-selected="true"]'), si = pop.querySelector('.pmt-scheme-ind');
+    /* a slide still running when the popover renders again (the editor refreshes it from its set) goes on from where
+       its stand-in is now */
+    if (si) m.scheme = where(si, null);
+    else if (o) m.scheme = { id: o.getAttribute('data-id'), x: o.offsetLeft, y: o.offsetTop, w: o.offsetWidth, h: o.offsetHeight };
+    return m;
+  }
+  function where(ind, id) {
+    var box = ind.parentNode, br = box.getBoundingClientRect(), r = ind.getBoundingClientRect();
+    return { id: id, value: id, x: r.left - br.left - box.clientLeft, y: r.top - br.top - box.clientTop, w: r.width, h: r.height };
+  }
+  function slide(pop, before) {
+    [].forEach.call(pop.querySelectorAll('.pmt-seg button[aria-checked="true"]'), function (b) {
+      var was = before.segs[b.getAttribute('data-key') || 'scope'];
+      if (was && was.value !== (b.getAttribute('data-value') || b.getAttribute('data-scope'))) glide(b.parentNode, 'pmt-seg-ind', was, { x: b.offsetLeft, w: b.offsetWidth });
+    });
+    var o = pop.querySelector('.pmt-schemes .pmt-scheme[aria-selected="true"]'), w = before.scheme;
+    if (o && w && w.id !== o.getAttribute('data-id')) {
+      glide(o.closest('.pmt-schemes'), 'pmt-scheme-ind', w, { x: o.offsetLeft, y: o.offsetTop, w: o.offsetWidth, h: o.offsetHeight });
+      T.Motion.play(o, 'pmt-picked');
+    }
+  }
+  /* a stand-in for the chosen mark travels from a to b while the real one waits, then hands over */
+  function glide(box, cls, a, b) {
+    var ind = el('i', cls);
+    ind.setAttribute('aria-hidden', 'true');
+    var put = function (p) { ind.style.transform = 'translate(' + p.x + 'px,' + (p.y || 0) + 'px)'; ind.style.width = p.w + 'px'; if (p.h) ind.style.height = p.h + 'px'; };
+    put(a); box.appendChild(ind); box.classList.add('pmt-sliding');
+    void ind.offsetWidth;
+    ind.classList.add('pmt-go'); put(b);
+    T.Motion.finished(ind, function () { ind.remove(); if (!box.querySelector('.' + cls)) box.classList.remove('pmt-sliding'); });
   }
   function focusFirst(pop) {
     var first = pop.querySelector('.pmt-scheme[aria-selected="true"]') || pop.querySelector('.pmt-pop-search');
@@ -121,7 +175,7 @@
     if (v.pop) v.closeAppearance(true);
     v._apOnClose = typeof opts.onClose === 'function' ? opts.onClose : null;
     var scope = v._apScope || 'tab';
-    var pop = el('div', 'pmt-pop');
+    var pop = el('div', 'pmt-pop pmt-calm');
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Terminal appearance'); pop.tabIndex = -1;
     (anchor || v.root).appendChild(pop);
     v.pop = pop;
@@ -141,7 +195,7 @@
     }
 
     function render(keepScroll) {
-      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
+      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0, before = memo(pop);
       var R = ap(), look = R.lookKey;
       var sid = val('scheme');
       var html = '';
@@ -150,7 +204,7 @@
         '<button type="button" role="radio" data-scope="tab" aria-checked="' + (scope === 'tab') + '">This terminal</button>' +
         '<button type="button" role="radio" data-scope="app" aria-checked="' + (scope === 'app') + '">All terminals</button></span>' +
         '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>';
-      html += '<div class="pmt-pop-body">';
+      html += '<div class="pmt-pop-body pmt-calm">';
       /* scheme */
       html += '<section class="pmt-pop-sec" aria-label="Colour scheme"><h4>Colour scheme</h4>' +
         '<input class="pmt-pop-search" type="search" placeholder="Search schemes" aria-label="Search schemes" value="' + esc(v._apQuery || '') + '">' +
@@ -218,6 +272,7 @@
       pop.innerHTML = html;
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
+      slide(pop, before);
     }
     /* Follow look: the look's own scheme, swatched as it applies now when this scope follows */
     function follow(sid) {
@@ -259,7 +314,13 @@
     pop.addEventListener('click', function (e) {
       var b = e.target.closest('button, .pmt-scheme'); if (!b) return;
       if (b.classList.contains('pmt-scheme')) { A().endPreview(v); set('scheme', b.getAttribute('data-id')); v.announce('Scheme: ' + b.querySelector('.pmt-scheme-name').textContent); return; }
-      if (b.hasAttribute('data-scope')) { scope = v._apScope = b.getAttribute('data-scope'); render(true); return; }
+      if (b.hasAttribute('data-scope')) {
+        var to = b.getAttribute('data-scope'); if (to === scope) return;
+        /* the values below now read from the other layer: they fade in as the switch slides over */
+        scope = v._apScope = to; render(true);
+        T.Motion.play(pop.querySelector('.pmt-pop-body'), 'pmt-rescope');
+        return;
+      }
       if (b.hasAttribute('data-step')) { var k = b.getAttribute('data-key'); set(k, T.util.clamp(scopeFont().size + parseFloat(b.getAttribute('data-step')), 8, 32)); return; }
       if (b.getAttribute('role') === 'radio' && b.hasAttribute('data-key')) { set(b.getAttribute('data-key'), b.getAttribute('data-value')); return; }
       var act = b.getAttribute('data-act');
@@ -270,21 +331,23 @@
       else if (act === 'upload') uploadImage();
     });
     /* live preview on hover and keyboard focus in the list */
+    /* the recolour starts from the scheme that caused it (Friendly's bloom pours out of that row) */
+    function from(o) { var r = o.getBoundingClientRect(); v.recolorFrom(r.left, r.top + r.height / 2); }
     pop.addEventListener('mouseover', function (e) {
       var o = e.target.closest('.pmt-scheme'); if (!o) return;
       var id = o.getAttribute('data-id');
       if (v._previewId === id) return;
-      v._previewId = id; A().preview(v, { scheme: id });
+      v._previewId = id; from(o); A().preview(v, { scheme: id });
     });
     pop.addEventListener('mouseout', function (e) {
       var list = pop.querySelector('.pmt-schemes');
-      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; A().endPreview(v); }
+      if (list && !list.contains(e.relatedTarget)) { v._previewId = null; v.recolorFrom(e.clientX, e.clientY); A().endPreview(v); }
     });
     pop.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); A().endPreview(v); v.closeAppearance(); return; }
       var o = e.target.closest && e.target.closest('.pmt-scheme');
       var n = listStep(pop, e);
-      if (n) { v._previewId = n.getAttribute('data-id'); A().preview(v, { scheme: v._previewId }); }
+      if (n) { v._previewId = n.getAttribute('data-id'); from(n); A().preview(v, { scheme: v._previewId }); }
       if (e.key === 'Enter' && o) { e.preventDefault(); o.click(); }
       e.stopPropagation();
     });
@@ -351,6 +414,7 @@
     v._popOutside = function (e) { if (v.pop && !v.pop.contains(e.target) && !e.target.closest('.pmw-hbtn, [role="menu"], .pmw-menu')) v.closeAppearance(); };
     setTimeout(function () { document.addEventListener('mousedown', v._popOutside, true); }, 0);
     focusFirst(pop);
+    T.Motion.play(pop);
     v._apRender = render;
     return { el: pop, close: function () { if (v.pop === pop) v.closeAppearance(); }, refresh: function () { if (v.pop === pop) render(true); } };
   }
@@ -358,7 +422,11 @@
   T.View.prototype.closeAppearance = function (noFocus) {
     if (!this.pop) return;
     T.Appearance.endPreview(this);
-    this.pop.remove(); this.pop = null;
+    /* closed at once for everything else (a new one may open); its exit plays, unless the view is going away */
+    var pop = this.pop;
+    this.pop = null;
+    pop.inert = true; pop.setAttribute('aria-hidden', 'true');
+    if (noFocus) pop.remove(); else T.Motion.leave(pop, function () { pop.remove(); });
     document.removeEventListener('mousedown', this._popOutside, true);
     var done = this._apOnClose; this._apOnClose = null;
     if (done) { try { done(); } catch (e) { console.error('[pmt] appearance onClose failed', e); } }
@@ -374,7 +442,7 @@
     return A().scheme(A().LOOKS[lk][mode]);
   }
   function openEditor(anchor, opts) {
-    var pop = el('div', 'pmt-pop pmt-pop-float');
+    var pop = el('div', 'pmt-pop pmt-pop-float pmt-calm');
     pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Editor appearance'); pop.tabIndex = -1;
     /* inside the panels' overlay layer when there is one, so it takes the panel tokens and sits above the tabs */
     (document.getElementById && document.getElementById('pmw-overlay') || document.body).appendChild(pop);
@@ -391,7 +459,7 @@
     function follow() { var s = editorFollowScheme(); return { label: 'Follow look', meta: s ? s.name : '', swatch: s }; }
     function shownSize(c) { return c.size || (c.font !== 'follow' ? A().FONTS[c.font].size : 13); }
     function render(keepScroll) {
-      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
+      var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0, before = memo(pop);
       var c = cur();
       /* the look's chrome shapes (30-looks.css) reach this copy too, though it floats outside any terminal */
       pop.setAttribute('data-pmt-look', A().lookKey(T.look()));
@@ -409,6 +477,7 @@
         '<div class="pmt-pop-foot"><span class="pmt-pop-spacer"></span><button type="button" class="pmt-textbtn pmt-textbtn-primary" data-act="close">Done</button></div>';
       var nb = pop.querySelector('.pmt-pop-body'); if (keepScroll && nb) nb.scrollTop = st;
       place();
+      slide(pop, before);
     }
     /* under the anchor, right-aligned to it, kept inside the page (an overlay, placed the way the panels' menus are);
        full width less a margin on a narrow page */
@@ -425,7 +494,8 @@
     function close() {
       if (closed) return;
       closed = true;
-      pop.remove();
+      pop.inert = true; pop.setAttribute('aria-hidden', 'true');
+      T.Motion.leave(pop, function () { pop.remove(); });
       document.removeEventListener('mousedown', outside, true);
       window.removeEventListener('resize', place);
       if (anchor && anchor.focus && document.contains && document.contains(anchor)) anchor.focus({ preventScroll: true });
@@ -459,6 +529,7 @@
     window.addEventListener('resize', place);
     setTimeout(function () { if (!closed) document.addEventListener('mousedown', outside, true); }, 0);
     focusFirst(pop);
+    T.Motion.play(pop);
     return { el: pop, close: close, refresh: function () { if (!closed) render(true); } };
   }
 })();

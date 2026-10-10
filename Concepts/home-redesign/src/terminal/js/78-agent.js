@@ -44,9 +44,8 @@
        first, then the request comes back) */
     if (q && !(st && st.mode === 'secret')) st = { mode: 'permission', agent: q.agent, cmd: q.cmd };
     if (!st) {
-      row.hidden = true; row.innerHTML = '';
       v.setAgent(null); v.root.classList.remove('pmt-agent-driving');
-      v.layoutSoon(); return;
+      this.leave(); return;
     }
     var nm = T.util.esc(this.name(st.agent));
     var html = '', acts = [];
@@ -68,16 +67,67 @@
       html = LOCK + '<span class="pmt-agent-text">Password needed. Only you can answer this prompt' + (st.agent ? '; <b>' + nm + '</b> is waiting' : '') + '.</span>';
       acts = [['focus', 'Type it']];
     }
-    row.innerHTML = html + '<span class="pmt-agent-acts">' + acts.map(function (a) {
+    var actsHtml = '<span class="pmt-agent-acts">' + acts.map(function (a) {
       return '<button type="button" class="pmt-textbtn" data-act="' + a[0] + '"' + (a[2] ? ' data-pm-hover-label="' + a[2] + '"' : '') + '>' + a[1] + '</button>';
     }).join('') + '</span>';
-    row.className = 'pmt-agentrow pmt-agent-' + st.mode;
     row.setAttribute('role', st.mode === 'permission' || st.mode === 'secret' ? 'alert' : 'status');
-    row.hidden = false;
-    row.onclick = function (e) { var b = e.target.closest('button'); if (b) self.act(b.getAttribute('data-act')); };
+    row.onclick = function (e) { var b = e.target.closest('.pmt-agent-in:not(.pmt-agent-old) button'); if (b) self.act(b.getAttribute('data-act')); };
+    this.show(st.mode, html, actsHtml);
     v.setAgent(st.mode === 'secret' && !st.agent ? null : this.name(st.agent));
     v.root.classList.toggle('pmt-agent-driving', st.mode === 'driving');
     v.layoutSoon();
+  };
+  /* The row's motion (60-motion.css): it arrives (pmt-in), rolls its words over when the state changes (pmt-swap: the
+     old words stay over the row as .pmt-agent-old while they leave), and leaves (pmt-out) before giving its room back.
+     The row takes its full height at once, so the terminal moves once, as before; only the row's paint moves after. A
+     row asked back while it leaves (an answered request whose run goes on driving) rolls over instead of leaving. */
+  Controller.prototype.show = function (mode, html, actsHtml) {
+    var row = this.view.agentRow, was = this._shown, M = T.Motion;
+    this._shown = { mode: mode, html: html, acts: actsHtml };
+    var body = document.createElement('span');
+    body.className = 'pmt-agent-in pmt-calm';
+    body.innerHTML = html + actsHtml;
+    row.inert = false; row.removeAttribute('aria-hidden');
+    if (!was || row.hidden) {
+      row.replaceChildren(body);
+      row.className = 'pmt-agentrow pmt-calm pmt-agent-' + mode;
+      row.hidden = false;
+      M.play(row);
+      return;
+    }
+    if (was.mode === mode && !was.leaving) {
+      /* the same state with new words (the next step): the text changes in place and the actions stay, so a focused
+         button keeps the focus */
+      if (was.html === html && was.acts === actsHtml) return;
+      var cur = row.querySelector('.pmt-agent-in:not(.pmt-agent-old)');
+      if (cur && was.acts === actsHtml) {
+        var acts = cur.querySelector('.pmt-agent-acts');
+        while (cur.firstChild !== acts) cur.removeChild(cur.firstChild);
+        var tmp = document.createElement('span'); tmp.innerHTML = html;
+        while (tmp.firstChild) cur.insertBefore(tmp.firstChild, acts);
+        return;
+      }
+    }
+    /* a new state: the old words roll out over the row while the new ones roll in */
+    [].forEach.call(row.querySelectorAll('.pmt-agent-old'), function (o) { o.remove(); });
+    var old = row.querySelector('.pmt-agent-in');
+    if (old) { old.classList.add('pmt-agent-old'); old.setAttribute('aria-hidden', 'true'); old.inert = true; }
+    row.appendChild(body);
+    row.className = 'pmt-agentrow pmt-calm pmt-agent-' + mode;
+    M.play(row, 'pmt-swap', function () { if (old) old.remove(); });
+  };
+  Controller.prototype.leave = function () {
+    var self = this, v = this.view, row = v.agentRow, was = this._shown;
+    if (!was || was.leaving || row.hidden) { if (!was) { row.hidden = true; row.replaceChildren(); } return; }
+    was.leaving = true;
+    row.inert = true; row.setAttribute('aria-hidden', 'true');
+    T.Motion.leave(row, function () {
+      row.hidden = true; row.replaceChildren(); row.inert = false; row.removeAttribute('aria-hidden');
+      row.className = 'pmt-agentrow pmt-calm';
+      if (self._shown === was) self._shown = null;
+      /* the screen takes the room back in this frame, not one later with an empty slot showing */
+      v.layout();
+    });
   };
   Controller.prototype.act = function (a) {
     var st = this.state || {}, s = this.s, v = this.view;
@@ -90,7 +140,12 @@
     }
     else if (a === 'stop') { this.stopAgent(st.agent); }
     else if (a === 'handback') { s.handBack(); }
-    else if (a === 'allow' || a === 'terminal' || a === 'deny') { var q = this.asks.shift(); if (q) q.resolve(a); this.render(); }
+    else if (a === 'allow' || a === 'terminal' || a === 'deny') {
+      /* the answer stays marked on the request while it rolls away (60-motion.css) */
+      var picked = v.agentRow.querySelector('.pmt-agent-in:not(.pmt-agent-old) [data-act="' + a + '"]');
+      if (picked) picked.classList.add('pmt-picked');
+      var q = this.asks.shift(); if (q) q.resolve(a); this.render();
+    }
     else if (a === 'focus') { v.focus(); }
   };
   Controller.prototype.stopAgent = function (agent) {

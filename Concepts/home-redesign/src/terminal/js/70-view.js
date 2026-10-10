@@ -4,12 +4,13 @@
 (function () {
   var C = T.color;
   var GUTTER = 20, SCROLLBAR = 14;
+  /* pathLength 1: a settling mark draws its stroke from nothing (60-motion.css) */
   var SVG = {
-    ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>',
-    fail: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg>',
+    ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><path pathLength="1" d="M3.5 8.5l3 3 6-7"/></svg>',
+    fail: '<svg viewBox="0 0 16 16" aria-hidden="true"><path pathLength="1" d="M4.5 4.5l7 7"/><path pathLength="1" d="M11.5 4.5l-7 7"/></svg>',
     run: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.4" class="pmt-fill"/></svg>',
     idle: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/></svg>',
-    agent: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="4" width="8" height="8"/><path d="M6.5 8h3"/></svg>'
+    agent: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect pathLength="1" x="4" y="4" width="8" height="8"/><path pathLength="1" d="M6.5 8h3"/></svg>'
   };
   T.ICONS = {
     clock: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>',
@@ -22,6 +23,41 @@
   /* nothing moves under Reduced Motion, nor on battery saver (SPEC section 9); both are read live, so a change of
      either stops the blink and the smooth wheel at once */
   function motionOff() { return T.look().reduced || !!(T.FX && T.FX.battery && T.FX.battery.saver); }
+
+  /* ---- motion for the chrome (60-motion.css says how each look moves; these only start it and wait for it) ----
+     An element plays its entrance under the class pmt-in (or another one-shot class), its exit under pmt-out. What
+     those animate is a look token, so a look, NieR part or Reduced Motion without motion for it ends at once. */
+  var Motion = T.Motion = {
+    /* a safety net: nothing here is longer than about 600 ms, and a stalled animation must not hold an element */
+    limit: 900,
+    /* fn() once every finite animation and transition on el and inside it has finished (at once when there is none) */
+    finished: function (el, fn) {
+      var list = el.isConnected && el.getAnimations ? el.getAnimations({ subtree: true }).filter(function (a) {
+        var t = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming() : null;
+        return !t || t.endTime !== Infinity;
+      }) : [];
+      if (!list.length) { fn(); return; }
+      var done = false, go = function () { if (!done) { done = true; clearTimeout(timer); fn(); } };
+      var timer = setTimeout(go, Motion.limit);
+      Promise.all(list.map(function (a) { return a.finished.catch(function () {}); })).then(go);
+    },
+    /* plays a one-shot class (default pmt-in) from its start; a later play or leave supersedes it */
+    play: function (el, cls, then) {
+      cls = cls || 'pmt-in';
+      var gen = el._pmtGen = (el._pmtGen || 0) + 1;
+      el.classList.remove('pmt-out');
+      if (el.classList.contains(cls)) { el.classList.remove(cls); void el.offsetWidth; }
+      el.classList.add(cls);
+      Motion.finished(el, function () { if (el._pmtGen !== gen) return; el.classList.remove(cls); if (then) then(); });
+    },
+    /* plays the exit, then done(); an entrance played meanwhile cancels the exit and done never runs */
+    leave: function (el, done) {
+      var gen = el._pmtGen = (el._pmtGen || 0) + 1;
+      el.classList.remove('pmt-in', 'pmt-swap');
+      el.classList.add('pmt-out');
+      Motion.finished(el, function () { if (el._pmtGen === gen) { el.classList.remove('pmt-out'); done(); } });
+    }
+  };
 
   function View(host, api, session, state) {
     T.mixinEmitter(this);
@@ -147,6 +183,9 @@
   /* appearance: { theme, font, opts, padding, background, effects } from T.Appearance */
   View.prototype.applyAppearance = function (ap) {
     var self = this;
+    var xf = this._recolorPrep(ap);
+    /* before the new colours: the DOM painted in scheme colours transitions only if this is on when they change */
+    if (xf) this.root.classList.add('pmt-recolor');
     this.appearance = ap;
     this.theme = ap.theme;
     Object.assign(this.opts, ap.opts || {});
@@ -174,6 +213,106 @@
     this.renderer.invalidate();
     this.layout(true);
     this.marksDirty = true;
+    if (xf) this._recolor(xf);
+  };
+
+  /* ---- recolour: a scheme hovered, chosen or reverted. The old ground and the old text are laid over the new ones and
+     taken away, each look its own way (60-motion.css); the canvas text itself never moves. A change of font, size or
+     padding moves the text, so it shows at once. A recolour that arrives while another runs goes underneath it, so
+     what is on screen never jumps. ---- */
+  function colorSig(ap) {
+    var t = ap.theme || {}, b = ap.background || {}, o = ap.opts || {};
+    return [t.id, t.bg, t.fg, t.bgAlpha, t.appearance, o.minContrast, o.boldBright, b.kind, b.css, b.color, b.url, b.blurredUrl, b.dim].join('|');
+  }
+  function alphaOf(c) {
+    var m = /\/\s*([\d.]+%?)\s*\)$/.exec(c) || /^rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)$/.exec(c);
+    if (!m) return /^transparent$/.test(c) ? 0 : 1;
+    return /%$/.test(m[1]) ? parseFloat(m[1]) / 100 : parseFloat(m[1]);
+  }
+  function geomSig(ap) {
+    var f = ap.font || {}, p = ap.padding || {};
+    return [f.family, f.size, f.weight, f.lineHeight, f.letterSpacing, p.x, p.y].join('|');
+  }
+  /* where the change comes from, in client px: the popover sets it to the scheme under the pointer or the keyboard */
+  View.prototype.recolorFrom = function (x, y) { this._xfFrom = { x: x, y: y }; };
+  View.prototype._recolorPrep = function (ap) {
+    var prev = this.appearance, from = this._xfFrom;
+    this._xfFrom = null;
+    if (!prev || !this.visible || !this.metrics || !this.root.isConnected) return null;
+    if (colorSig(prev) === colorSig(ap) || geomSig(prev) !== geomSig(ap)) return null;
+    if (T.FX && T.FX.battery && T.FX.battery.saver) return null;
+    /* a recolour that has not been painted yet already shows what is on screen */
+    var frames = this.renderer.stats ? this.renderer.stats.frames : 0;
+    if (this._xf && this._xf.length && this._xfFrames === frames) return null;
+    var gl = !!(this.fx && this.fx.active), src = gl ? this.fxCanvas : this.canvas;
+    if (!src.width || !src.height) return null;
+    var snap = document.createElement('canvas');
+    try {
+      /* the effects canvas keeps no copy of its picture, so draw it again and read it in the same task */
+      if (gl) this.fx.frame();
+      snap.width = src.width; snap.height = src.height;
+      snap.getContext('2d').drawImage(src, 0, 0);
+    } catch (e) { return null; }
+    var cs = getComputedStyle(src);
+    snap.style.width = src.style.width; snap.style.height = src.style.height;
+    snap.style.opacity = cs.opacity;
+    if (cs.filter && cs.filter !== 'none') snap.style.filter = cs.filter;
+    /* the old ground: the background layer's paint over the body's own (colour, NieR's grid) */
+    var body = this.bodyEl, bcs = getComputedStyle(body), lcs = getComputedStyle(this.bgLayer);
+    var ground = el('div', 'pmt-xf pmt-xf-ground pmt-calm'), gs = ground.style;
+    var clear = /^(transparent|rgba\(0, 0, 0, 0\))$/.test(lcs.backgroundColor);
+    gs.backgroundColor = clear ? bcs.backgroundColor : lcs.backgroundColor;
+    var layers = [lcs, bcs].filter(function (c) { return c.backgroundImage && c.backgroundImage !== 'none'; });
+    if (layers.length) {
+      ['backgroundImage', 'backgroundSize', 'backgroundPosition', 'backgroundRepeat'].forEach(function (k) {
+        gs[k] = layers.map(function (c) { return c[k]; }).join(', ');
+      });
+    }
+    /* a see-through ground (Glass) cannot be laid over the new one: the two tints would stack into a darker third.
+       There the tint itself changes (60-motion.css, .pmt-recolor .pmt-body) and only the text is laid over */
+    if (!layers.length && alphaOf(gs.backgroundColor) < 0.99) ground = null;
+    var text = el('div', 'pmt-xf pmt-xf-text pmt-calm');
+    text.appendChild(snap);
+    var edge = el('div', 'pmt-xf-edge pmt-calm');
+    /* geometry for the looks' masks: the origin, the body's size and each layer's offset inside the body */
+    var B = body.getBoundingClientRect(), S = this.screen.getBoundingClientRect();
+    if (!from) {
+      var pr = this.pop && this.pop.getBoundingClientRect();
+      from = pr && pr.width ? { x: pr.left, y: pr.top + Math.min(120, pr.height / 2) } : { x: B.left + B.width / 2, y: B.top + B.height / 2 };
+    }
+    var ox = from.x - B.left, oy = from.y - B.top;
+    var rad = Math.ceil(Math.max(Math.hypot(ox, oy), Math.hypot(B.width - ox, oy), Math.hypot(ox, B.height - oy), Math.hypot(B.width - ox, B.height - oy))) + 72;
+    var geo = function (node, dx, dy, dr) {
+      var st = node.style;
+      st.setProperty('--pmt-xf-ox', ox + 'px'); st.setProperty('--pmt-xf-oy', oy + 'px');
+      st.setProperty('--pmt-xf-bw', B.width + 'px'); st.setProperty('--pmt-xf-bh', B.height + 'px'); st.setProperty('--pmt-xf-rad', rad + 'px');
+      st.setProperty('--pmt-xf-dx', dx + 'px'); st.setProperty('--pmt-xf-dy', dy + 'px'); st.setProperty('--pmt-xf-dr', dr + 'px');
+    };
+    if (ground) geo(ground, 0, 0, 0);
+    geo(edge, 0, 0, 0);
+    geo(text, S.left - B.left, S.top - B.top, B.right - S.right);
+    return { ground: ground, text: text, edge: edge };
+  };
+  View.prototype._recolor = function (xf) {
+    var self = this, list = this._xf || (this._xf = []);
+    /* underneath any recolour still running: it keeps taking away what it covers */
+    if (xf.ground) this.bodyEl.insertBefore(xf.ground, this.bgLayer.nextSibling);
+    this.screen.insertBefore(xf.text, this.trailCanvas.nextSibling);
+    this.bodyEl.appendChild(xf.edge);
+    var mine = [xf.ground, xf.text, xf.edge].filter(Boolean);
+    list.push(mine);
+    /* at most three at once (a fast run of hovers): the oldest, nearly gone, goes now */
+    while (list.length > 3) list.shift().forEach(function (n) { n.remove(); });
+    this._xfFrames = this.renderer.stats ? this.renderer.stats.frames : 0;
+    var left = mine.length;
+    mine.forEach(function (n) {
+      Motion.play(n, 'pmt-in', function () {
+        n.remove();
+        if (--left) return;
+        var i = list.indexOf(mine); if (i >= 0) list.splice(i, 1);
+        if (!list.length) self.root.classList.remove('pmt-recolor');
+      });
+    });
   };
   /* the screen ground and text colour as the renderer paints default cells (OSC 10/11 over the scheme, mapped on mono
      schemes), so the contrast floor measures what is shown */
@@ -461,11 +600,14 @@
   };
 
   /* ---- gutter: one glyph per prompt line (D13), never a stripe ---- */
+  /* the marks are kept per command and only changed where they differ, so a mark that settles (running to done or
+     failed) plays its settle once while the view scrolls or repaints around it */
   View.prototype._renderGutter = function () {
     var g = this.gutter, m = this.metrics, buf = this.term.buf, self = this;
-    if (buf.isAlt) { g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
+    var marks = this._marks || (this._marks = new Map());
+    if (buf.isAlt) { marks.clear(); g.innerHTML = ''; g.classList.add('pmt-gutter-alt'); return; }
     g.classList.remove('pmt-gutter-alt');
-    var top = this.viewTop(), rows = buf.rows, html = [], cmds = this.term.commands;
+    var top = this.viewTop(), rows = buf.rows, cmds = this.term.commands, seen = new Set();
     var py = this.gridTop || 0;
     this._gutterCmds = [];
     for (var i = cmds.length - 1; i >= 0; i--) {
@@ -480,9 +622,29 @@
       var agent = /^agent:/.test(c.by);
       var label = (c.cmdline ? c.cmdline : 'Prompt') + (kind === 'fail' ? ', exit ' + c.exit : kind === 'ok' ? ', exit 0' : kind === 'run' ? ', running' : c.indeterminate ? ', ended with the earlier session' : '') + (agent ? ', typed by ' + c.by.slice(6) : '');
       this._gutterCmds.push(c);
-      html.push('<button type="button" class="pmt-mark pmt-mark-' + kind + (agent ? ' pmt-mark-agent' : '') + '" data-pmt-cmd="' + c.id + '" style="top:' + (py + (abs - top) * m.cellH) + 'px;height:' + m.cellH + 'px" aria-label="' + T.util.esc(label) + '" data-pm-hover-label="' + T.util.esc(label) + '">' + (agent ? SVG.agent : SVG[kind]) + '</button>');
+      seen.add(c.id);
+      var r = marks.get(c.id);
+      if (!r) {
+        r = { el: el('button') };
+        r.el.type = 'button'; r.el.setAttribute('data-pmt-cmd', c.id);
+        marks.set(c.id, r);
+      }
+      if (r.kind !== kind || r.agent !== agent) {
+        /* only a change the person could see plays: a mark that was showing as running settles, a waiting prompt
+           whose command starts fills in */
+        var shown = r.el.isConnected, cue = shown && r.kind === 'run' && (kind === 'ok' || kind === 'fail') ? 'pmt-settle' : shown && r.kind === 'idle' && kind === 'run' ? 'pmt-start' : '';
+        r.el.className = 'pmt-mark pmt-calm pmt-mark-' + kind + (agent ? ' pmt-mark-agent' : '');
+        r.el.innerHTML = agent ? SVG.agent : SVG[kind];
+        r.kind = kind; r.agent = agent;
+        if (cue) Motion.play(r.el, cue);
+      }
+      var y = py + (abs - top) * m.cellH;
+      if (r.top !== y) { r.top = y; r.el.style.top = y + 'px'; }
+      if (r.h !== m.cellH) { r.h = m.cellH; r.el.style.height = m.cellH + 'px'; }
+      if (r.label !== label) { r.label = label; r.el.setAttribute('aria-label', label); r.el.setAttribute('data-pm-hover-label', label); }
+      if (!r.el.isConnected) g.appendChild(r.el);
     }
-    g.innerHTML = html.join('');
+    marks.forEach(function (r, id) { if (!seen.has(id)) { r.el.remove(); marks.delete(id); } });
     if (!g._bound) {
       g._bound = true;
       g.addEventListener('click', function (e) {
@@ -800,8 +962,9 @@
   /* ---- notices: inline rows above the screen, never modals ---- */
   View.prototype.notice = function (n) {
     var self = this;
-    this.dismissNotice(n.id);
-    var row = el('div', 'pmt-notice pmt-notice-' + (n.tone || 'info'));
+    /* a notice that replaces one with the same id takes its place and only its words change; a new one arrives */
+    var old = this._notice(n.id);
+    var row = el('div', 'pmt-notice pmt-calm pmt-notice-' + (n.tone || 'info'));
     row.setAttribute('data-pmt-notice', n.id);
     row.setAttribute('role', n.tone === 'warn' ? 'alert' : 'status');
     var text = el('span', 'pmt-notice-text'); text.textContent = n.text; row.appendChild(text);
@@ -812,16 +975,28 @@
       acts.appendChild(b);
     });
     row.appendChild(acts);
-    this.noticeEl.appendChild(row);
+    text.classList.add('pmt-calm');
+    if (old) { this.noticeEl.replaceChild(row, old); Motion.play(row, 'pmt-swap'); }
+    else { this.noticeEl.appendChild(row); Motion.play(row); }
     this.layoutSoon();
     /* a notice takes the focus only when the caller says a user action caused it (a paste, closing the tab): program
        output and agents never pull the keyboard away from what the user is typing, here or elsewhere (D8) */
     var first = acts.querySelector('button'); if (first && n.focus === true) first.focus({ preventScroll: true });
     return row;
   };
+  /* the notice with this id that is showing (not one on its way out) */
+  View.prototype._notice = function (id) {
+    var list = this.noticeEl.querySelectorAll('[data-pmt-notice]');
+    for (var i = 0; i < list.length; i++) if (list[i].getAttribute('data-pmt-notice') === id && !list[i].classList.contains('pmt-out')) return list[i];
+    return null;
+  };
+  /* the notice plays its exit, then gives its room back to the screen */
   View.prototype.dismissNotice = function (id) {
-    var old = this.noticeEl.querySelector('[data-pmt-notice="' + id + '"]');
-    if (old) { old.remove(); this.layoutSoon(); }
+    var old = this._notice(id), self = this;
+    if (!old) return;
+    old.setAttribute('aria-hidden', 'true');
+    old.inert = true;
+    Motion.leave(old, function () { old.remove(); self.layout(); });
   };
   View.prototype.layoutSoon = function () { var self = this; requestAnimationFrame(function () { self.layout(); }); };
 

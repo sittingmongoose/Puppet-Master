@@ -2,7 +2,7 @@
 
 /* ---- agent row (D18) ---- */
 .pmt-agentrow {
-  flex: none; display: flex; align-items: center; gap: 10px; min-height: 30px; padding: 3px 8px 3px 12px; font-size: 12px;
+  position: relative; flex: none; display: flex; align-items: center; min-height: 30px; padding: 3px 8px 3px 12px; font-size: 12px;
   background: color-mix(in srgb, var(--pmw-warn, var(--accent-warning)) 16%, var(--pmw-surface-2, var(--surface-elevated)));
   color: var(--pmw-text, var(--text-primary)); border-bottom: 1px solid color-mix(in srgb, var(--pmw-warn, var(--accent-warning)) 30%, transparent);
 }
@@ -11,13 +11,16 @@
 .pmt-agent-sq { width: 14px; height: 14px; flex: none; fill: none; stroke: var(--pmw-warn, var(--accent-warning)); stroke-width: 1.6; }
 .pmt-agent-secret { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 14%, var(--pmw-surface-2, var(--surface-elevated))); border-bottom-color: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 30%, transparent); }
 .pmt-agent-secret .pmt-agent-sq { stroke: var(--pmw-accent, var(--accent-primary)); }
+/* the row's words and actions; a state change keeps the old ones (.pmt-agent-old) over the row while they roll out */
+.pmt-agent-in { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 10px; }
+.pmt-agent-old { position: absolute; left: 12px; right: 8px; top: 0; bottom: 0; pointer-events: none; }
 .pmt-agent-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 /* a permission request shows the whole command it approves, wrapped, never cut off with an ellipsis */
 .pmt-agent-permission .pmt-agent-text { white-space: normal; overflow-wrap: anywhere; }
 .pmt-agent-permission code { white-space: pre-wrap; }
 .pmt-agent-acts { display: flex; gap: 2px; flex: none; }
 .pmt-agent-acts .pmt-textbtn { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
-@container pmw-body (max-width: 520px) { .pmt-agent-text { white-space: normal; } .pmt-agentrow { flex-wrap: wrap; } }
+@container pmw-body (max-width: 520px) { .pmt-agent-text { white-space: normal; } .pmt-agent-in { flex-wrap: wrap; } }
 
 /* ---- Appearance popover ---- */
 .pmt-pop {
