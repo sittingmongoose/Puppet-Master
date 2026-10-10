@@ -6881,7 +6881,8 @@
       ],
       "optional_fields": [
         "transcript_ref",
-        "evidence_refs"
+        "evidence_refs",
+        "by"
       ],
       "nullable_fields": [
         "finished_at_utc",
@@ -6898,7 +6899,8 @@
         "integration_source",
         "integration_source_ref",
         "completion_source_ref",
-        "migration_source_ref"
+        "migration_source_ref",
+        "by"
       ],
       "replay_behavior": "Restores command history by scrubbed refs only; command blocks are historical evidence and not runtime authority. Value v2 facts describe the observation at capture, never current PTY authority. Null denotes unknown; unresolved scrubbed refs remain unavailable. Legacy v1 status/exit claims retain historical provenance and do not by themselves establish independent corroboration.",
       "migration": "Explicit value-only migration at unchanged terminal_command_block.v1 key. StorageMigrationCoordinator converts every affected row under its registered store edge, exclusive lock, matching journal and protected verified backup. Preserve v1 schema for supported old-store admission, conversion and backup inspection, not ordinary mixed-version operation. Each converted value binds migration_source_ref to the exact original protected bytes/key/version and journal before rewrite. Verify all target rows, stamp last, reopen and read back the existing receipt before ordinary writers start. Production store edge admission is required; no production store integers are assigned by this family amendment. Unknown facts remain null.",
@@ -7169,6 +7171,21 @@
                 ]
               }
             }
+          },
+          "by": {
+            "anyOf": [
+              {
+                "const": "user"
+              },
+              {
+                "type": "string",
+                "pattern": "^agent:[^\\s].*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Who typed the command (Plans/Contracts_V0.md#CV-362): user, or agent:<name>. Written only from a shell-integration record that carries the terminal's secret; absent or null when no trusted record attributed it, including every converted v1 row."
           }
         },
         "$defs": {

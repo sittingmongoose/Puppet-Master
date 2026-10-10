@@ -109,7 +109,7 @@
           "type": "null"
         }
       ],
-      "description": "The admitted command, under the id its caller used (aliases keep their ids, R1 of the canon plan); null only for the v1-to-v2 migration."
+      "description": "The admitted command, under the id its caller used (aliases keep their ids: Plans/UI_Command_Catalog.md#UCC-200, Plans/Commands_System.md#CS-101); null only for the v1-to-v2 migration."
     },
     "actor": {
       "type": "string",
