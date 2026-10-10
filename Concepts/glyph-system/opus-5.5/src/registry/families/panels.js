@@ -188,7 +188,7 @@
     note: 'An arrowhead cursor entering a box whose corner is open for it: the element it is about to pick. A bare ' +
       'arrow said "the mouse" and nothing about the page; the box is what makes it pick an element, and it keeps the ' +
       'glyph apart from open (an arrow leaving a box: a line arrow, not a cursor) and from select-area beside it. On ' +
-      'hover the cursor taps in 3 units from outside the corner and settles.',
+      'hover the cursor pulls back 3 units out of the corner and taps in again, a click.',
     parts: ['<path d="M10 19H5.2A2.2 2.2 0 0 1 3 16.8V5.2A2.2 2.2 0 0 1 5.2 3h11.6A2.2 2.2 0 0 1 19 5.2V10"/>',
       { els: '<path d="M11 11 20.6 14.7 16.4 16.4 14.7 20.6z"/>', move: { ax: 3, ay: 3, b: 1 } }]
   });
@@ -201,9 +201,10 @@
       'one unit in from expand\'s with 4-unit legs, so the two never pair up as one family. A marquee with corner ' +
       'handles was tried first: at 12 and 14 px the handles merged into the corners and it read as a plain square. ' +
       'On hover the crosshair is dragged in from the top-left and the brackets turn a quarter onto it, locking on ' +
-      '(the turn lands on itself, so the rest pose is the drawing).',
+      '(one turn in, no bounce: the brackets are symmetric by a quarter, so a turn out and back passed 45 degrees twice ' +
+      'and read as a double twitch on the P1000 film).',
     parts: [
-      { els: '<path d="M4 8.5V5.2A1.2 1.2 0 0 1 5.2 4h3.3M15.5 4h3.3A1.2 1.2 0 0 1 20 5.2v3.3M20 15.5v3.3a1.2 1.2 0 0 1-1.2 1.2h-3.3M8.5 20H5.2A1.2 1.2 0 0 1 4 18.8v-3.3"/>', move: { ar: 90, o: [12, 12], b: 1 } },
+      { els: '<path d="M4 8.5V5.2A1.2 1.2 0 0 1 5.2 4h3.3M15.5 4h3.3A1.2 1.2 0 0 1 20 5.2v3.3M20 15.5v3.3a1.2 1.2 0 0 1-1.2 1.2h-3.3M8.5 20H5.2A1.2 1.2 0 0 1 4 18.8v-3.3"/>', move: { ar: 90, o: [12, 12] } },
       { els: '<path d="M12 8.6v6.8M8.6 12h6.8"/>', move: { ax: -3, ay: -3 } }]
   });
   def('wrap', {
@@ -297,7 +298,7 @@
       'elbow draws from the first stage and the second stage drops into place at its end.',
     parts: ['<rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/>',
       { els: '<path d="M10.5 7h4.5a2 2 0 0 1 2 2v4.5"/>', move: { ac: '0 13.5 10.5 0', ae: '0 0 0 0' } },
-      { els: '<rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/>', move: { ay: -3, ao: .5, ad: 140, b: 1 } }]
+      { els: '<rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/>', move: { ay: -3, ao: .5, ad: 140 } }]
   });
 
   /* ---------------------------------------------------------------- tab marks (32-strip.js:296-318) */
