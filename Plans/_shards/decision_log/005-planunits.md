@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L4182-L14116
 
-Source SHA256: `8b00fdd94f8490d03bdbd2ddf54f4fca096477741cd1c9e7d621a8ddab4983db`
+Source SHA256: `eb9a8e2ee06e0c8ba57a5a43febd8fe05a7b7677c599499b7ce44b4383498569`
 
 ---
 
@@ -9784,7 +9784,7 @@ canonical_text: >-
   Departure Mono as options and JetBrains Mono selectable; Atkinson Hyperlegible Mono is offered for readability; only
   permissively licensed fonts (SIL Open Font License, Apache, MIT) are built in, through DL-161's pipeline (F3-644).
   General code text across the chat and PMConcept7 (JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in
-  Retro, PM NieR Mono in NieR; Jared, 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
+  Retro, PM NieR Mono in NieR; Jared, 2026-10-09 and 2026-10-10, D17a) belongs to DL-161, F3-426 and F3-430 and is not amended by
   this record. The 34 schemes, the 4.5:1 default contrast floor and the terminal's own font files are the terminal concept's.
 gui_related: true
 gui_classification_reason: Records the owner decision on the terminal's schemes, backgrounds, effects and built-in code fonts.

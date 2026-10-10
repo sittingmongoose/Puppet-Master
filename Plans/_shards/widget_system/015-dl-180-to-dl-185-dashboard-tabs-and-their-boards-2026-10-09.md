@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L1689-L1824
 
-Source SHA256: `ca4fec99fc9699a68ef1721fbdc55c19d1b836d7884749b7a793ec78de45c27a`
+Source SHA256: `ae1a346a95abc142404430e55e5bd909f9f0be7eeacc6831cfbb0a4c39092a5e`
 
 ---
 
@@ -56,7 +56,7 @@ canonical_text: >-
   and its track count chosen from the board's own measured width, never the window (F3-638). The Usage board engine
   becomes the dashboard engine once it runs several boards at once; this thread family does that refactor after the
   Usage port lands, and until then the panels concept's stand-in board is lineage only. The per-kind preset table
-  tested at 400, 550 and 700 px of board width comes from the Usage thread in wave 2. Add widget sits inside the
+  tested at 400, 550 and 700 px of board width is WS-017's one per-kind preset table (DL-176). Add widget sits inside the
   dashboard tab, in its header row (F3-635), and adds to that board only. Every `cmd.widget.*` row inside a dashboard
   tab is addressed by board_id (UCC-200), commits only to that board's namespace, and emits no
   `workspace.layout_changed`, which stays the Home layout's event (Plans/Contracts_V0.md#CV-361). Home's panels, tabs

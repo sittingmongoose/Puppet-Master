@@ -4,7 +4,7 @@ Source: `Plans/Decision_Log.md`
 
 Source lines: L13-L4174
 
-Source SHA256: `8b00fdd94f8490d03bdbd2ddf54f4fca096477741cd1c9e7d621a8ddab4983db`
+Source SHA256: `eb9a8e2ee06e0c8ba57a5a43febd8fe05a7b7677c599499b7ce44b4383498569`
 
 ---
 
@@ -4084,7 +4084,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-18
 - Settings come from layers: the look's defaults, then your app default, then a project default, then one terminal. In the concept you choose from an Appearance popover in the terminal's ⋮ menu with a live preview, for "This terminal" or "All terminals"; Settings > Terminal binds the same model when Settings is ported.
 - Effects that only run on the terminal you are in, stop when it is idle, turn off on battery saver and on computers drawing without a graphics card where they cost too much, and stop moving entirely under Reduced Motion: dimming of other terminals, a focus ring, cursor blink and trail, smooth scrolling, backgrounds, Glass blur, Retro scanlines and phosphor glow (on by default in Retro dark), a Full CRT tier (curvature, burn-in, noise) you turn on yourself, flicker off by default and kept below the flash limit of WCAG 2.3.1, the visual bell, progress and attention marks, and a Retro "degauss" you trigger. NieR Mode gives a parchment texture and ink focus brackets, with no glow.
 - Fonts for the editor and the terminal: the editor's code font is JetBrains Mono in every look, Retro included. The terminal uses JetBrains Mono too, except in Retro, where it starts in VT323, with Sixtyfour (whose scanline and bleed settings give a CRT look without motion), Sixtyfour Raster and Departure Mono as other Retro choices and JetBrains Mono still selectable. Atkinson Hyperlegible Mono is there for readability. JetBrains Mono is the page's own code face, the same file already built in for NieR Mode, under its own name; the terminal does not add it again.
-- Code text everywhere else (the chat, file paths, logs) is not this decision: Jared settled it on 2026-10-10 as JetBrains Mono in Basic, Glass and Friendly, IBM Plex Mono in Retro ("Retro's whole interface is Plex Mono") and PM NieR Mono in NieR, and the 5.6 Pro chat's fonts work records it.
+- Code text everywhere else (the chat, file paths, logs) is not this decision: Jared settled it as JetBrains Mono in Basic, Glass and Friendly on 2026-10-09 and IBM Plex Mono in Retro on 2026-10-10 ("Retro's whole interface is Plex Mono"), with PM NieR Mono in NieR, and the 5.6 Pro chat's fonts work records it in DL-161.
 - Fonts must have a permissive licence: SIL Open Font License, Apache or MIT. Every font file the terminal adds is under the SIL Open Font License.
 
 **What it costs:**

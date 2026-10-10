@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3397-L3895
+Source lines: L3397-L3896
 
-Source SHA256: `474f8f64eab5885dc30c3208079fa79ad09cbe923c81675dc91bee72cb1214c9`
+Source SHA256: `fef6c1c17802f543c0abaf13deb262b81c43b0da0f4423c8521c3d0176744df4`
 
 ---
 
@@ -38,8 +38,8 @@ canonical_text: >-
   and the panel adds no session, store or service of its own: a browser tab shows a session of the Browser owner
   (DR-037), a terminal tab one terminal session (SMPFS-180), and a dashboard tab one widget board hosted through
   Widget_System (WS-030), never through a new host service (DR-038). The chat column is outside this grammar: never a
-  panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons is the shell's one
-  hover system, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
+  panel and never a tab (F3-637). Hover on tabs, strip buttons, dividers and header-row buttons stays inside the
+  boundary of the shell's one hover grammar: no magnet, light or glow, a static tint at most (DR-072, F3-465). This rule supersedes the per-surface Home owners of the
   2026-08-04 Home owner boundary for panel and tab presentation.
 gui_related: true
 gui_classification_reason: "Fixes one grammar for every panel and tab in the home centre."
@@ -170,11 +170,12 @@ status: accepted
 owner_doc: Plans/DRY_Rules.md
 canonical_text: >-
   Everything that floats over the home centre opens in one overlay root with one stacking order (DL-180, DL-185,
-  D27). The "+" menu, the "+N" list, tab menus, panel menus, every menu a tab kind opens through the host, drag ghosts
+  D27), except the folded rail's side panel, which opens over the centre from the rail's own slot, drawn and fitted
+  by the rail (F3-636, F3-621), above the panels' strips and dividers and below the overlay root. The "+" menu, the "+N" list, tab menus, panel menus, every menu a tab kind opens through the host, drag ghosts
   and landing previews open in that root, and no tab kind appends an overlay layer of its own to the page or the
   window. The order is fixed, bottom to top: panel content, then tab strips and dividers, then the overlay root, which
   sits above the status bar and below the Demo Studio's controls (DR-070), the hover tags and the Guided Tour
-  (F3-635). Hover tags belong to the shell's one hover system (DR-072) and the Guided Tour to its own owner; neither
+  (F3-635). Hover tags belong to the shell's one hover tag controller (FinalGUISpec F3-523) and the Guided Tour to its own owner; neither
   joins the overlay root and neither keeps a second stacking order. When the 5.6 Pro chat is ported (ACD-501, D27),
   its body-portaled popouts (F3-424) and its menus open in the same root and order; the chat keeps no overlay layer
   and no stacking order of its own. A tab body never draws past its own box except through this root, and Escape
@@ -222,7 +223,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-424, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/DRY_Rules.md#DR-072
+ContractRef: ContractName:Plans/Decision_Log.md#DL-180, ContractName:Plans/Decision_Log.md#DL-185, ContractName:Plans/FinalGUISpec.md#F3-635, ContractName:Plans/FinalGUISpec.md#F3-424, ContractName:Plans/FinalGUISpec.md#F3-568, ContractName:Plans/assistant-chat-design.md#ACD-501, ContractName:Plans/FinalGUISpec.md#F3-523
 
 ### DR-068 - One Terminal Appearance Model
 

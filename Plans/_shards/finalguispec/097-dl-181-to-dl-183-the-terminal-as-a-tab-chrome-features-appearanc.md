@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L45279-L46050
+Source lines: L45279-L46051
 
-Source SHA256: `2ecbf0a729c9e953bea41cc5efbd93f80122937e29c1dacf0ec97266fce60ca0`
+Source SHA256: `0447b088ad9ff94580a742cf8d93648e220ab8bd0f5a472e7f8f8109027721dd`
 
 ---
 
@@ -512,10 +512,11 @@ canonical_text: >-
   Raster and Departure Mono are Retro options and JetBrains Mono stays selectable there; Atkinson Hyperlegible Mono
   is offered for readability; and the system monospace is also a choice (F3-642). JetBrains Mono is provided by the
   page, not by the terminal: its upright bytes are NieR Mode's PM NieR Mono files under the general family name
-  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is synthesised
-  unless the page's code face adds the italic file (42,964 bytes, offered). The faces, with licence, bytes, axes and
+  'JetBrains Mono', which the 5.6 Pro fonts work builds through DL-161's pipeline, and its italic is
+  JetBrains Mono's own italic, which the page's code face embeds in PMConcept7 with the same script slices (Latin
+  file 42,964 bytes; DL-161, F3-430), so italic code is drawn, not slanted, and the terminal adds no italic of its own. The faces, with licence, bytes, axes and
   default size and line height in CSS px: JetBrains Mono, the code face of the editor and the terminal, OFL-1.1, the
-  page's face (31,432 bytes), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
+  page's face (31,432 bytes for its Latin upright file), weight 400 to 800, 13 px and 1.30; VT323, Retro's terminal default, OFL-1.1, 17,936
   bytes, no axes, 19 px and 1.05; Sixtyfour, a Retro option whose own axes give a CRT look without motion, OFL-1.1,
   4,236 bytes, SCAN -53 to 100 and BLED 0 to 100, 10 px and 1.45; Sixtyfour Raster, a Retro option that is Sixtyfour
   baked at SCAN 45 and BLED 40, OFL-1.1, 3,068 bytes, no axes; Atkinson Hyperlegible Mono, for readability, OFL-1.1,

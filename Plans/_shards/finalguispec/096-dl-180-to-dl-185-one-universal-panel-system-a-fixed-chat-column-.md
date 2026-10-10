@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L43742-L45277
 
-Source SHA256: `2ecbf0a729c9e953bea41cc5efbd93f80122937e29c1dacf0ec97266fce60ca0`
+Source SHA256: `0447b088ad9ff94580a742cf8d93648e220ab8bd0f5a472e7f8f8109027721dd`
 
 ---
 
@@ -1093,8 +1093,8 @@ canonical_text: >-
   tab's own width (F3-635), never the window. Hosting, the boards, the per-board widget layout
   `widget_layout:v1:dashboard:<board_id>`, the catalogue and the move of today's one dashboard into `dashboard:home` are
   Plans/Widget_System.md#WS-030's. The Usage board engine runs several boards at once after the Usage port lands (this
-  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px come later from the
-  Usage thread. A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
+  thread family does that refactor), and the per-kind widget presets tested at 400, 550 and 700 px are
+  Plans/Widget_System.md#WS-017's one per-kind table (DL-176). A dashboard's widget layout is never stored inside the Home layout record, and Home's panels are not
   widgets. This supersedes F3-279's exact four-widget catalogue and the dashboard catalogue limit of Appendix C.4 and
   C.4.1, F3-517's "distinct tab models" for Home and Dashboard, section 7.2's singleton dashboard, and the dashboard's
   own Main, Metrics and Monitoring strip of F3-505.
