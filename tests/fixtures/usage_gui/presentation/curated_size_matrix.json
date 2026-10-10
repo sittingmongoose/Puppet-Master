@@ -19,7 +19,9 @@
     "Plans/usage-feature.md#UF-094",
     "Plans/Widget_System.md#WS-020",
     "Plans/FinalGUISpec.md#F3-628",
-    "Plans/Decision_Log.md#DL-176"
+    "Plans/Decision_Log.md#DL-176",
+    "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/c-presets-REPORT.md (SHA-256 505de34e60acd8d9efce08e5ec392f58c574db75cbadf5846a34c42424567a3e; sections 5 and 6)",
+    "Concepts/usage-redesign/tools/boards.py at concept/usage-pm7-c-presets-20261009 21ca626731 (KINDS; source-lineage-only)"
   ],
   "surfaces": [
     "Usage widget grid",
@@ -44,28 +46,1547 @@
   ],
   "track_ladder": [
     {
+      "board_class": "S",
       "tracks": 12,
       "board_width_css_px_from": 0,
-      "board_width_css_px_below": 820
+      "board_width_css_px_below": 880,
+      "held_down_to_css_px": null
     },
     {
+      "board_class": "M",
       "tracks": 20,
-      "board_width_css_px_from": 820,
-      "board_width_css_px_below": 1100
+      "board_width_css_px_from": 880,
+      "board_width_css_px_below": 1100,
+      "held_down_to_css_px": 856
     },
     {
+      "board_class": "L",
       "tracks": 24,
       "board_width_css_px_from": 1100,
-      "board_width_css_px_below": 1460
+      "board_width_css_px_below": 1460,
+      "held_down_to_css_px": 1076
     },
     {
+      "board_class": "XL",
       "tracks": 30,
       "board_width_css_px_from": 1460,
-      "board_width_css_px_below": null
+      "board_width_css_px_below": null,
+      "held_down_to_css_px": 1436
     }
   ],
   "track_ladder_hysteresis_css_px": 24,
   "track_ladder_measured_on": "board_width",
+  "preset_table_id": "usage_size_presets.v2",
+  "preset_resolution": {
+    "nominal_pitch_css_px": 47,
+    "width_rule": "width_tracks_at_nominal_pitch[class] x 47 - 8 css px, resolved at the live pitch to the fewest tracks that are never more than 2 % narrower, clamped to the kind's width_range_tracks and the board's tracks",
+    "board_width_rule": "width 'board' takes the class's tracks: S 12, M 20, L 24, XL 30",
+    "height_rules": [
+      "rows",
+      "fit_n",
+      "fit_all"
+    ],
+    "height_rule_meaning": {
+      "rows": "fixed rows (30 px row pitch, card = 30 x rows - 8 css px)",
+      "fit_n": "smallest height showing fit_n complete items (every item when the kind has fewer, and it says so); fit_n every_item shows every item while other facts may fold to the head count",
+      "fit_all": "smallest height at which the kind folds nothing"
+    },
+    "fit_measure": "rendered from the real kind at the preset's pixel width in the current look, range, scope and configuration; capped at height_range_rows.max; fallback_rows until measured; never below min_rows_by_class",
+    "not_offered_when": [
+      "board class before offered_from_class",
+      "board cannot give min_card_width_css_px"
+    ],
+    "same_size_presets": "two presets that come to the same size on the current board are one picker row, kept by the larger tier",
+    "smallest_preset_complete_down_to_board_css_px": 400,
+    "tested_board_widths_css_px": [
+      400,
+      550,
+      700
+    ],
+    "tested_windows": [
+      "1440x900 (S)",
+      "1920x1080 (M)"
+    ],
+    "folded_facts_reachable_through": [
+      "head +N count with hover list",
+      "N more line with hover list",
+      "Details"
+    ]
+  },
+  "preset_ids": [
+    "band",
+    "compact",
+    "expanded",
+    "full",
+    "ladder",
+    "panel",
+    "standard",
+    "strip",
+    "wide"
+  ],
+  "retired_preset_names": [
+    "Maximum",
+    "Tall"
+  ],
+  "preset_id_restore": {
+    "stored_value": "preset_id from preset_ids (the table id, never the display name); null for a size between presets; custom is never stored",
+    "survives": [
+      "reload",
+      "look change",
+      "keyboard resize landing on a preset"
+    ],
+    "look_change": "keeps preset_id and re-resolves that preset's geometry at the new pitch and fit height",
+    "unknown_or_retired": "map to the current preset of the same geometry, else null with geometry snapped by WS-018",
+    "table_change": "default_set_version changes; saved geometry takes the new defaults once, visibility and configuration kept"
+  },
+  "kind_presets": [
+    {
+      "kind": "kpi",
+      "width_range_tracks": {
+        "min": 3,
+        "max": 12
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 12
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 4,
+            "M": 4,
+            "L": 4,
+            "XL": 4
+          },
+          "height_rule": "rows",
+          "rows": 4,
+          "offered_from_class": "S",
+          "shows": "The value and its line"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 6,
+          "offered_from_class": "S",
+          "shows": "Value, line and the first facts"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 8,
+          "offered_from_class": "S",
+          "shows": "Value, line and every fact"
+        }
+      ]
+    },
+    {
+      "kind": "kpis",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "strip",
+          "name": "Strip",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 3,
+          "offered_from_class": "M",
+          "shows": "Every total's value on one line"
+        },
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "Every total, two to a row"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 5,
+          "offered_from_class": "S",
+          "shows": "Every total, side by side"
+        }
+      ]
+    },
+    {
+      "kind": "limit",
+      "width_range_tracks": {
+        "min": 3,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 24
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 4,
+            "M": 4,
+            "L": 4,
+            "XL": 4
+          },
+          "height_rule": "fit_n",
+          "fit_n": 1,
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "The active account's windows"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_n",
+          "fit_n": 3,
+          "fallback_rows": 12,
+          "offered_from_class": "S",
+          "shows": "Up to three accounts, a column per window"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 14,
+          "offered_from_class": "S",
+          "shows": "Every account, window and fact"
+        }
+      ]
+    },
+    {
+      "kind": "provider",
+      "width_range_tracks": {
+        "min": 3,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 24
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_n",
+          "fit_n": 1,
+          "fallback_rows": 7,
+          "offered_from_class": "S",
+          "shows": "The active account"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 14,
+          "offered_from_class": "S",
+          "shows": "Every account, window and action"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 16,
+            "M": 16,
+            "L": 16,
+            "XL": 16
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 12,
+          "offered_from_class": "M",
+          "shows": "Every account with room for its words"
+        }
+      ]
+    },
+    {
+      "kind": "switch",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 18
+      },
+      "presets": [
+        {
+          "preset_id": "strip",
+          "name": "Strip",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 3,
+          "min_card_width_css_px": 480,
+          "offered_from_class": "S",
+          "shows": "The switch levels on one line"
+        },
+        {
+          "preset_id": "panel",
+          "name": "Panel",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "Controls and most room, stacked"
+        },
+        {
+          "preset_id": "ladder",
+          "name": "Ladder",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "min_rows_by_class": {
+            "S": 10,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "min_card_width_css_px": 480,
+          "offered_from_class": "S",
+          "shows": "Controls and every account's headroom"
+        }
+      ]
+    },
+    {
+      "kind": "providers",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 12
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 5,
+          "offered_from_class": "S",
+          "shows": "Every provider, stacked"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 10,
+            "M": 10,
+            "L": 10,
+            "XL": 10
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 4,
+          "offered_from_class": "S",
+          "shows": "Every provider on one line"
+        }
+      ]
+    },
+    {
+      "kind": "group",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 2,
+        "max": 2
+      },
+      "presets": [
+        {
+          "preset_id": "band",
+          "name": "Band",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 2,
+          "offered_from_class": "S",
+          "shows": "The group heading across the board"
+        }
+      ]
+    },
+    {
+      "kind": "setup",
+      "width_range_tracks": {
+        "min": 4,
+        "max": 16
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 18
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 7,
+          "offered_from_class": "S",
+          "shows": "State, Settings link and note"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 8,
+          "offered_from_class": "S",
+          "shows": "Every setup fact"
+        }
+      ]
+    },
+    {
+      "kind": "context",
+      "width_range_tracks": {
+        "min": 4,
+        "max": 14
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_n",
+          "fit_n": "every_item",
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "The ring and every family"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 13,
+          "offered_from_class": "S",
+          "shows": "Adds every fact, route and compaction"
+        }
+      ]
+    },
+    {
+      "kind": "trend",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 20
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 5,
+            "M": 5,
+            "L": 5,
+            "XL": 5
+          },
+          "height_rule": "rows",
+          "rows": 5,
+          "offered_from_class": "S",
+          "shows": "The number and its sparkline"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "The chart with axes and legend"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 14,
+            "L": 14,
+            "XL": 14
+          },
+          "height_rule": "rows",
+          "rows": 11,
+          "offered_from_class": "S",
+          "shows": "Adds the headline, facts row and peak"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 12,
+          "offered_from_class": "M",
+          "shows": "The board's width, finer buckets"
+        }
+      ]
+    },
+    {
+      "kind": "columns",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 16
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 5,
+            "M": 5,
+            "L": 5,
+            "XL": 5
+          },
+          "height_rule": "rows",
+          "rows": 6,
+          "offered_from_class": "S",
+          "shows": "Labelled bars, a few buckets"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "rows",
+          "rows": 9,
+          "offered_from_class": "S",
+          "shows": "Labelled bars with the caption"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 14,
+            "L": 14,
+            "XL": 14
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "More buckets, caption, legend and facts"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "M",
+          "shows": "Every bucket across the board"
+        }
+      ]
+    },
+    {
+      "kind": "budget",
+      "width_range_tracks": {
+        "min": 5,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 16
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 7,
+          "offered_from_class": "S",
+          "shows": "Spend, estimate and a small line"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "Projection chart and burn facts"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 14,
+            "L": 14,
+            "XL": 14
+          },
+          "height_rule": "rows",
+          "rows": 12,
+          "offered_from_class": "S",
+          "shows": "Adds plan versus metered"
+        }
+      ]
+    },
+    {
+      "kind": "heat",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "rows",
+          "rows": 11,
+          "offered_from_class": "S",
+          "shows": "Every hour of the week"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 14,
+            "L": 14,
+            "XL": 14
+          },
+          "height_rule": "rows",
+          "rows": 11,
+          "offered_from_class": "S",
+          "shows": "Adds hour labels and Tokens / Cost"
+        }
+      ]
+    },
+    {
+      "kind": "agenda",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 40
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_n",
+          "fit_n": 4,
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "The next four resets"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_n",
+          "fit_n": 8,
+          "fallback_rows": 16,
+          "offered_from_class": "S",
+          "shows": "The next eight resets"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 14,
+          "offered_from_class": "S",
+          "shows": "Every reset in its horizon"
+        }
+      ]
+    },
+    {
+      "kind": "qhist",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 40
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_n",
+          "fit_n": 4,
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "The first four accounts"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 30,
+          "offered_from_class": "S",
+          "shows": "Every account's main window"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 27,
+          "offered_from_class": "M",
+          "shows": "Adds the week's day labels"
+        }
+      ]
+    },
+    {
+      "kind": "models",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 20
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_n",
+          "fit_n": 3,
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "The top three models"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 10,
+            "M": 10,
+            "L": 10,
+            "XL": 10
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 12,
+          "offered_from_class": "S",
+          "shows": "Every model and its cost bar"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 16,
+            "L": 16,
+            "XL": 16
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 12,
+          "offered_from_class": "S",
+          "shows": "Adds share and tokens"
+        }
+      ]
+    },
+    {
+      "kind": "donut",
+      "width_range_tracks": {
+        "min": 5,
+        "max": 14
+      },
+      "height_range_rows": {
+        "min": 6,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "The ring and the top models"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "rows",
+          "rows": 12,
+          "offered_from_class": "S",
+          "shows": "Adds the Tokens / Cost switch"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "The ring beside every model"
+        }
+      ]
+    },
+    {
+      "kind": "breakdown",
+      "width_range_tracks": {
+        "min": 5,
+        "max": 16
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 12,
+          "offered_from_class": "S",
+          "shows": "Every token type, stacked"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "Tokens and cost side by side"
+        }
+      ]
+    },
+    {
+      "kind": "efficiency",
+      "width_range_tracks": {
+        "min": 4,
+        "max": 14
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 12
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "Ring, savings and the split"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "rows",
+          "rows": 8,
+          "offered_from_class": "S",
+          "shows": "Ring beside savings and the note"
+        }
+      ]
+    },
+    {
+      "kind": "ranked",
+      "width_range_tracks": {
+        "min": 5,
+        "max": 14
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 16
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 7,
+            "M": 7,
+            "L": 7,
+            "XL": 7
+          },
+          "height_rule": "fit_n",
+          "fit_n": 3,
+          "fallback_rows": 7,
+          "offered_from_class": "S",
+          "shows": "The top three and their share"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 7,
+            "M": 7,
+            "L": 7,
+            "XL": 7
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "Every row and its share"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "Adds each row's role"
+        }
+      ]
+    },
+    {
+      "kind": "mix",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 12
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 6,
+          "offered_from_class": "S",
+          "shows": "The bar and every part"
+        },
+        {
+          "preset_id": "wide",
+          "name": "Wide",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 6,
+          "offered_from_class": "S",
+          "shows": "Adds each part's note"
+        }
+      ]
+    },
+    {
+      "kind": "list",
+      "width_range_tracks": {
+        "min": 4,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 3,
+        "max": 24
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_n",
+          "fit_n": 3,
+          "fallback_rows": 6,
+          "offered_from_class": "S",
+          "shows": "The first three rows"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_n",
+          "fit_n": 6,
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "Six rows with their second line"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "offered_from_class": "S",
+          "shows": "Every row with its note"
+        }
+      ]
+    },
+    {
+      "kind": "table",
+      "width_range_tracks": {
+        "min": 6,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 30
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 10,
+            "M": 10,
+            "L": 10,
+            "XL": 10
+          },
+          "height_rule": "fit_n",
+          "fit_n": 4,
+          "fallback_rows": 8,
+          "offered_from_class": "S",
+          "shows": "Four rows, the main columns"
+        },
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 12,
+            "XL": 12
+          },
+          "height_rule": "fit_n",
+          "fit_n": 8,
+          "fallback_rows": 12,
+          "offered_from_class": "S",
+          "shows": "Eight rows, more columns"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 14,
+          "offered_from_class": "S",
+          "shows": "Every row and every column"
+        }
+      ]
+    },
+    {
+      "kind": "alert",
+      "width_range_tracks": {
+        "min": 4,
+        "max": 10
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 16
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "rows",
+          "rows": 6,
+          "offered_from_class": "S",
+          "shows": "The state and what happened"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "Adds the meter, actions and facts"
+        }
+      ]
+    },
+    {
+      "kind": "free",
+      "width_range_tracks": {
+        "min": 3,
+        "max": 12
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 20
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 4,
+            "M": 4,
+            "L": 4,
+            "XL": 4
+          },
+          "height_rule": "rows",
+          "rows": 7,
+          "offered_from_class": "S",
+          "shows": "State, capacity and route"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 13,
+          "offered_from_class": "S",
+          "shows": "Adds every fact of the route"
+        }
+      ]
+    },
+    {
+      "kind": "cache",
+      "width_range_tracks": {
+        "min": 3,
+        "max": 8
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 4,
+            "M": 4,
+            "L": 4,
+            "XL": 4
+          },
+          "height_rule": "rows",
+          "rows": 7,
+          "offered_from_class": "S",
+          "shows": "The ring and the savings"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 6,
+            "M": 6,
+            "L": 6,
+            "XL": 6
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 11,
+          "offered_from_class": "S",
+          "shows": "Adds every fact"
+        }
+      ]
+    },
+    {
+      "kind": "gauge",
+      "width_range_tracks": {
+        "min": 3,
+        "max": 8
+      },
+      "height_range_rows": {
+        "min": 4,
+        "max": 12
+      },
+      "presets": [
+        {
+          "preset_id": "compact",
+          "name": "Compact",
+          "width_tracks_at_nominal_pitch": {
+            "S": 4,
+            "M": 4,
+            "L": 4,
+            "XL": 4
+          },
+          "height_rule": "rows",
+          "rows": 5,
+          "offered_from_class": "S",
+          "shows": "The ring and the calls"
+        },
+        {
+          "preset_id": "expanded",
+          "name": "Expanded",
+          "width_tracks_at_nominal_pitch": {
+            "S": 8,
+            "M": 8,
+            "L": 8,
+            "XL": 8
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 6,
+          "offered_from_class": "S",
+          "shows": "The ring beside every fact"
+        }
+      ]
+    },
+    {
+      "kind": "skyline",
+      "width_range_tracks": {
+        "min": 8,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 6,
+        "max": 16
+      },
+      "presets": [
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 14,
+            "XL": 16
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "Every active account's tower"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 11,
+          "offered_from_class": "M",
+          "shows": "The towers across the board"
+        }
+      ]
+    },
+    {
+      "kind": "attempts",
+      "width_range_tracks": {
+        "min": 8,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 5,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 14,
+            "XL": 16
+          },
+          "height_rule": "rows",
+          "rows": 8,
+          "offered_from_class": "S",
+          "shows": "Every attempt on its lane"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "M",
+          "shows": "The lanes across the board"
+        }
+      ]
+    },
+    {
+      "kind": "flow",
+      "width_range_tracks": {
+        "min": 10,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 7,
+        "max": 14
+      },
+      "presets": [
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 14,
+            "L": 14,
+            "XL": 16
+          },
+          "height_rule": "rows",
+          "rows": 10,
+          "offered_from_class": "S",
+          "shows": "Readings, authority and labels"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "rows",
+          "rows": 11,
+          "offered_from_class": "M",
+          "shows": "The flow across the board"
+        }
+      ]
+    },
+    {
+      "kind": "windows",
+      "width_range_tracks": {
+        "min": 8,
+        "max": "board"
+      },
+      "height_range_rows": {
+        "min": 6,
+        "max": 20
+      },
+      "presets": [
+        {
+          "preset_id": "standard",
+          "name": "Standard",
+          "width_tracks_at_nominal_pitch": {
+            "S": 12,
+            "M": 12,
+            "L": 14,
+            "XL": 16
+          },
+          "height_rule": "fit_all",
+          "fallback_rows": 9,
+          "offered_from_class": "S",
+          "shows": "Every window of the week"
+        },
+        {
+          "preset_id": "full",
+          "name": "Full width",
+          "width": "board",
+          "height_rule": "fit_all",
+          "fallback_rows": 10,
+          "offered_from_class": "M",
+          "shows": "The week across the board"
+        }
+      ]
+    }
+  ],
   "must": [
     "larger_size_adds_useful_content",
     "provider_heavy_narrow_tall",
@@ -76,11 +1597,16 @@
     "track_count_follows_measured_board_width_on_12_20_24_30_ladder_with_24px_hysteresis",
     "narrowest_class_keeps_twelve_tracks",
     "default_boards_use_many_narrow_widgets_per_row_with_complete_tiers",
-    "preset_is_width_in_tracks_and_height_in_rows_from_the_kind_curated_shapes",
+    "preset_resolves_to_pixels_from_nominal_pitch_tracks_and_a_rows_fit_n_or_fit_all_height",
     "preset_offered_only_when_it_shows_a_complete_tier",
-    "preset_wider_than_board_listed_disabled_with_reason",
-    "preset_hover_or_focus_previews_with_live_outline_and_dispatches_nothing",
-    "facts_a_size_cannot_show_fold_behind_n_more_with_hover_and_details"
+    "preset_not_offered_at_class_or_width_is_absent_and_same_size_presets_share_one_row",
+    "preset_hover_focus_or_arrow_previews_real_card_miniature_in_stage_and_dispatches_nothing",
+    "facts_a_size_cannot_show_fold_behind_n_more_with_hover_and_details",
+    "two_or_three_complete_presets_per_kind_each_adding_a_named_content_step",
+    "smallest_preset_of_every_kind_complete_down_to_400px_board",
+    "track_class_m_from_880px_with_24px_hysteresis",
+    "size_picker_opens_from_size_tool_and_card_menu_size_row_with_every_row_visible",
+    "chosen_preset_id_survives_reload_and_look_change"
   ],
   "must_not": [
     "routine_internal_scroll",
@@ -90,6 +1616,18 @@
     "preview_physical_span_persisted",
     "fixed_single_twelve_track_board",
     "preset_showing_fragment_or_unlabelled_value",
-    "custom_size_label_stored_as_preset_id"
+    "custom_size_label_stored_as_preset_id",
+    "preset_named_maximum_or_tall",
+    "preset_display_name_stored_as_preset_id",
+    "preset_menu_rows_scroll"
+  ],
+  "track_ladder_hysteresis_rule": "a board keeps its class until its width falls track_ladder_hysteresis_css_px below that class's board_width_css_px_from (held_down_to_css_px)",
+  "track_ladder_superseded": [
+    {
+      "tracks": 20,
+      "board_width_css_px_from": 820,
+      "superseded_by": 880,
+      "reason": "at 820 px a 20-track pitch was 41.4 px and the M default boards clipped; from 880 px M never runs under a 43.2 px pitch"
+    }
   ]
 }
