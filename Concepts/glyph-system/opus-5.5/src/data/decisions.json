@@ -1,1 +1,31 @@
-{"cards": []}
+{
+  "cards": [
+    {
+      "id": "GLY-1",
+      "title": "Does the triangle mean warning or failed?",
+      "question": "Today the triangle means warning in the rail and Settings, and failed in the chat (the 5.6 Pro set draws failed as the warning triangle and has no warning status at all). One shape can carry one meaning. Which way does Puppet Master go?",
+      "options": [
+        {
+          "key": "A", "title": "Triangle is warning; failed becomes a ring with an exclamation mark", "recommended": true,
+          "detail": "Follows the convention people already know (a triangle warns, a circled exclamation is an error) and the rail and Settings keep their warnings. The chat's failed mark changes to the ring, which also makes it a member of the status set's ring family (working, pending, skipped). The stutter stays reserved for failed.",
+          "demo": [
+            {"glyph": "warning", "tone": "attention", "label": "Warning"},
+            {"glyph": "st-failed-ring", "tone": "blocked", "label": "Failed"},
+            {"status": "blocked", "label": "Blocked"},
+            {"status": "skipped", "label": "Skipped"}
+          ]
+        },
+        {
+          "key": "B", "title": "Triangle stays failed; warning gets a diamond",
+          "detail": "Keeps the chat exactly as it is and changes the rail and Settings instead. The diamond is distinct, but people read a triangle as a warning first, so a failed run can look like a mere warning at a glance.",
+          "demo": [
+            {"glyph": "st-warning-diamond", "tone": "attention", "label": "Warning"},
+            {"status": "failed", "label": "Failed"},
+            {"status": "blocked", "label": "Blocked"},
+            {"status": "skipped", "label": "Skipped"}
+          ]
+        }
+      ]
+    }
+  ]
+}
