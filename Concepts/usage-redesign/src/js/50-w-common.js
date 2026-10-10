@@ -1807,6 +1807,12 @@
           legNeed = Math.max(legNeed, 10 + 7 + C.wrapW(s.name, 12.5) * kLeg + 7 + C.wrapW(PMU.fmt.tok(s.tokens), 12.5, 600) * kLeg + (oneCol && ctx.tier.bw >= 300 ? 7 + 30 : 0));
         });
         while (ringPx > 56 && ctx.tier.bw - ringPx - 16 < legNeed) ringPx = Math.max(56, ringPx - 12);
+        /* still too narrow beside the smallest ring (NieR at a 240 px card on a 487 px board: "Instructions" wrapped in its
+           24 px row over "Tools"): each name keeps its one line and ends in an ellipsis, the row's hover tag says it whole */
+        if (ctx.tier.bw - ringPx - 16 < legNeed) {
+          var tightLeg = true;
+          legendRows = m.segments.map(function (s, i) { return legendRows[i].replace('<div class="pmu-ctxleg" data-reveal', '<div class="pmu-ctxleg" data-reveal' + C.hover(s.name, PMU.fmt.tok(s.tokens) + ' · ' + s.pct + '%')); });
+        }
       }
       else if (bh - 84 - 10 - 18 >= needRows * LEG) { mixOk = true; ringPx = 84; avail = bh - 84 - 10 - 18; }
       else { mixOk = false; ringPx = 68; avail = bh - 68 - 10; }
@@ -1827,7 +1833,7 @@
          the hidden ones are counted on one line (complete or hidden) */
       var legCap = legFit * per;
       if (legCap < n) legCap = Math.max(per, C.fit(avail - MORE, LEG) * per);
-      body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (heroRing ? ' is-hero' : '') + (factsRoom ? ' has-facts' : '') + (below ? ' has-below' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + '">' +
+      body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (heroRing ? ' is-hero' : '') + (factsRoom ? ' has-facts' : '') + (below ? ' has-below' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + (tightLeg ? ' is-tightleg' : '') + '">' +
         '<div class="pmu-ctxring" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' +
         '<div class="pmu-ctxmain">' + (mixOk ? '<div class="pmu-ctxmix"></div>' : '') + '<div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families', ctx.tier.bw < 260, m.segments.slice(legCap).map(function (s) { return s.name + ' ' + PMU.fmt.tok(s.tokens) + ' · ' + s.pct + '%'; })) : '') + '</div>' +
         (factsRoom ? '<div class="pmu-ctxfacts">' + C.facts(m.facts, factFit) + (factMore ? C.more(m.facts.length - factFit, 'facts', false, m.facts.slice(factFit).map(C.factText)) : '') + '</div>' : '') + '</div>';

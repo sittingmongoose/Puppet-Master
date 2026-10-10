@@ -427,6 +427,7 @@ html[data-motion="reduced"] #panel-usage :is(.pmu-wswitch-track, .pmu-wswitch-tr
 #panel-usage .pmu-agbeyond { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #panel-usage .pmu-ctx.is-narrow .pmu-ctxleg em { display: none; }
 #panel-usage .pmu-ctx.is-narrow .pmu-ctxleg { grid-template-columns: 10px minmax(0, 1fr) auto; }
+#panel-usage .pmu-ctx.is-tightleg .pmu-ctxleg > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* the label keeps its longest word (Retro's mono broke "Credi / ts" in a 4-track plate); the value wraps instead */
 #panel-usage .pmu-amount.pmu-amt { grid-template-columns: 18px minmax(min-content, 1fr) minmax(0, max-content); }
 
