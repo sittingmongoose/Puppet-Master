@@ -44392,7 +44392,7 @@ canonical_text: >-
   F3-598, DL-152): square gives the chamfered silhouette with a straight foot (crown 6, shoulder 0, flare 14 px), an ink
   rule under each strip, square dirty and attention marks, hairline dividers with ticks and a hatched landing preview;
   cursor fills the active tab and hovered or chosen menu and launcher rows with ink, the YoRHa menu cursor, puts the
-  square list cursor before the focused panel's active label and gives other panels' active tabs a half-ink plate;
+  square list cursor before the focused panel's active label and gives other panels' active tabs the same ink fill as their fused panel;
   headers sets tab labels, "+N" and menu headings in the YoRHa caption treatment; brackets puts target brackets on the
   focused or chosen item; icons draws kind icons with square strokes; empty draws the empty-panel launcher's ink empty
   state; ground shows the parchment dot grid between panels. NieR colours come only from the NieR token tables or the
@@ -44407,6 +44407,7 @@ canonical_text: >-
   icon kind with a static tint; and hover rests while a divider is dragged. No look draws a pill, a coloured side stripe
   or an emoji (F3-648). This supersedes F3-505's and F3-466's per-theme tab skins where they differ, and gives the home
   panels the NieR Mode treatment they lacked (DL-144 and DL-152 covered the chat, onboarding and the Tour).
+  The active tab and its panel are one shape in every look; the shape's fill follows the look's selection grammar: the body's fill in Friendly, Glass and Basic, reverse video in Retro, ink in NieR. Glass's 1 px rim along the crown is material, not an accent.
 gui_related: true
 gui_classification_reason: Defines how panels, strips, menus, dividers and drags render in each look, NieR Mode and Reduced Motion.
 split_recommended: false
@@ -44457,7 +44458,8 @@ negative_constraints:
   - "Do not use an emoji as a kind icon in any look."
 compatibility_only_notes:
   - "The concept also gates some touches by its own hook names and by part keys outside this list; only the existing part keys named here are canon."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L5): The active tab and its panel share one shape and the look selection fill; the Glass crown rim is material."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
