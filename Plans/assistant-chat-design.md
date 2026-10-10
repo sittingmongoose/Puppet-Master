@@ -24831,7 +24831,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: The unit defines cross-page Assistant visibility, identity continuity, context-ring fields, menu actions, and detail views.
 split_recommended: false
-depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039]
+depends_on: [ACD-441, ACD-445, ACD-447, CS-068, UCC-147, WM-045, UIW-012, DR-039, DL-180]
 unblocks: []
 acceptance_criteria:
   - Home, Projects, Planning Wizard, Orchestrator, Usage, Settings, and every other primary page show/hide or re-seat the same Assistant node/store rather than cloning it.
@@ -24878,7 +24878,7 @@ negative_constraints:
   - Do not route thread context details through app-wide Usage or create a second detail store.
   - Do not treat concept-local storage as canonical Assistant state.
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is cited in source_lineage because a depends_on edge would close a cycle through DL-147."
+  - "Amended 2026-10-09 (DL-180): the saved Home dock is the fixed chat column of F3-637; DL-180 is in depends_on now that it depends on no earlier unit, and ACD-500 stays in source_lineage."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -26464,7 +26464,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Keeps concept lab controls out of product surfaces."
 split_recommended: false
-depends_on: [DL-106]
+depends_on: [DL-106, DL-185, DR-070]
 unblocks: []
 acceptance_criteria:
   - "No product catalog, settings inventory, wiring matrix or persisted key names a lab tool listed here."
@@ -26498,7 +26498,7 @@ negative_constraints:
   - "Do not register a lab tool as a command, setting, wiring row, persisted key or test gate."
   - "Do not carry concept family or variant indices into product settings."
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185, DR-070 and F3-649 are cited in source_lineage, not depends_on, because F3-649 depends on this unit and an edge to DL-185 would pull this unit into the dependency cycle through DL-180 that the merged branches form."
+  - "Amended 2026-10-09 (DL-185): Demo Studio is one for all of PMConcept7 (DR-070, F3-649); DL-185 and DR-070 are in depends_on, and F3-649 stays in source_lineage because F3-649 depends on this unit."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -26941,7 +26941,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Places collaboration run views in the editor tab system."
 split_recommended: false
-depends_on: [ACD-452]
+depends_on: [ACD-452, DL-180]
 unblocks: [F3-569]
 acceptance_criteria:
   - "Open Panel opens one run tab per run in the home centre through F3-634 and reveals an existing tab instead of duplicating it (DL-180)."
@@ -26973,7 +26973,7 @@ negative_constraints:
   - "Do not build a second document mechanism for run views."
   - "Do not open a run view as a centred modal panel."
 stale_retired_dispositions:
-  - "Amended 2026-10-09 (DL-180): run views are run tabs placed by F3-634 through ACD-500, and Return to chat retires for Home; DL-180 and ACD-500 are cited in source_lineage because a depends_on edge would close a cycle through DL-147."
+  - "Amended 2026-10-09 (DL-180): run views are run tabs placed by F3-634 through ACD-500, and Return to chat retires for Home; DL-180 is in depends_on, and ACD-500 stays in source_lineage because ACD-500 reaches this unit through F3-569."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Collaborative_Workflows.md
