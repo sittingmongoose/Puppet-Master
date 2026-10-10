@@ -226,6 +226,8 @@ Tiers-tab widgets are compatibility-only: `widget.tier_tree` renders a Phase/Tas
 
 The path-based `open_file` target uses `OpenFile { path, line?, range?, target_editor_panel_id?, target_editor_group_id?, target_group? }`; the panel and group fields select editor placement only and do not replace route_target, OpenSubject, or object identity. `target_group` remains an explicit compatibility alias for `target_editor_group_id`.
 
+Amended 2026-10-09 (DL-180): the editor panel and group fields no longer select a home panel, because Home has no fixed editor panels. A file opens through the one opening module with the placement fields `where`, `mode`, `by` and `background` (`Plans/Contracts_V0.md#CV-360`, UCC-200); the fields above remain only as the route's lineage.
+
 Subject-open and generalized route focus are first-class route/open behavior: `subject-open` wrappers cover `/route`, `/navigation`, `/focus/show`, and `routed-open` pivots so `cross-surface` commands do not keep accreting as `one-off` cases.
 
 Route identity can carry `message_id`, `workflow_run_id`, `scheduler_pass_id`, `safe_point_id`, and `remediation_root_id`; callers may resolve runtime-lineage `IDs` through indexes and `/projections` instead of knowing file paths.
@@ -792,7 +794,9 @@ Rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ### 2.6A Render / browser preview commands
-Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.
+Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own session behavior, and dev commands own dev-workflow behavior.
+
+Amended 2026-10-09 (DL-180, DL-181): browser and terminal tabs live in the universal panels, so tab and panel hosting (open, move, close, split, reveal) belongs to the `cmd.panel_tab.*` and `cmd.workspace_layout.*` families (UCC-200); terminal sections, workgroups, sub-tabs and panes are retired (UCC-201).
 
 #### Browser preview and browsing commands
 
@@ -828,6 +832,8 @@ Rules:
 | `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
+Amended 2026-10-09 (DL-180): `cmd.browser.open_workspace_preview`'s `target_editor_panel_id?` and `target_editor_group_id?` no longer select a home panel; it places its browser tab through CV-360's placement fields and the one opening module, and emits `workspace.layout_changed` only when a tab is added. `cmd.browser.focus_browser_tab` reveals the tab that hosts the session. `cmd.browser.open_devtools` is the canonical DevTools command and `cmd.browser.devtools.open` its alias (UCC-202). `cmd.browser.detach_browser_tab` has no producer on a panel tab, because no tab pops out (UCC-203).
+
 Capture event rules:
 - The four screenshot-to-chat rows declare `runtime_artifact.screenshot` consumer intent using `pm.runtime_artifact.screenshot.schema.v1` (`Plans/runtime_artifact_screenshot.schema.json`), owned by `Plans/Runtime_Artifacts_Panel.md#RAP-054`. RAP-054 / Event Authority admission remains pending; native handlers remain absent. Until separately authorized native persistence and real owner-resolved project_id, run_id, and attempt_id exist, fail closed with handler_unavailable; do not fabricate IDs, persist or emit events, advance checkpoints, or claim successful capture. Protected browser/auth content is excluded. Schema shape is not proof of real IDs, native capture, or retention execution.
 - `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
@@ -852,16 +858,18 @@ Core rules:
 - Historical command and audit details show the frozen permission/runtime snapshot that actually governed execution, including policy/mode/project changes; current Settings state must not replace historical `/policy/mode/project` evidence.
 - Dedicated log and audit surfaces provide richer search plus `/filter/drill-down`, `/changes`, `/summaries`, `/transparency`, and `/logging/subagents` over event-log summaries and blobs, while in-thread transparency remains concise and user-facing.
 
+Amended 2026-10-09 (DL-181): a terminal is one session per tab in the universal panels (UCC-201). `cmd.terminal.detach`, `cmd.terminal.split_pane`, `cmd.terminal.move_pane` and `cmd.terminal.close_pane` are retired: a terminal tab is split with `cmd.workspace_layout.split` and a terminal spec, moved with `cmd.panel_tab.move` and closed with `cmd.panel_tab.close`; no tab pops out. The rows stay below for lineage.
+
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 | --- | --- | --- | --- |
 | `cmd.terminal.open` | label `Open in Terminal`; `terminal_session_id`; reveal existing session context; optional `origin_surface`, `reveal-origin`, and `/linkback` refs | terminal session reveal/focus | command cards, terminal surfaces, Problems, Ports, Output, previews |
 | `cmd.terminal.show` | label `Show Terminal`; `terminal_session_id`; focus the same live session already associated with the card or route context | terminal session reveal/focus | command cards, terminal surfaces |
 | `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | command replay with a new invocation; new terminal launch only for an explicit new-session request | command cards, terminal surfaces |
-| `cmd.terminal.detach` | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
+| `cmd.terminal.detach` (retired 2026-10-09, UCC-201) | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
 | `cmd.terminal.focus` | `terminal_session_id?`, `terminal_pane_id?`, `dev_session_id?`, `/last-relevant` fallback mode | terminal reveal/focus | command cards, command palette, terminal surfaces |
-| `cmd.terminal.split_pane` | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |
-| `cmd.terminal.move_pane` | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
-| `cmd.terminal.close_pane` | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
+| `cmd.terminal.split_pane` (retired 2026-10-09, UCC-201) | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |
+| `cmd.terminal.move_pane` (retired 2026-10-09, UCC-201) | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
+| `cmd.terminal.close_pane` (retired 2026-10-09, UCC-201) | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
 | `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |
 
 Fields:
@@ -8104,7 +8112,7 @@ Testing policy UI is a first-class command surface, not settings prose alone.
 | `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
 | `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
 | `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |
-| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. |
+| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. Settled 2026-10-09 (UCC-202): `cmd.terminal.focus_session` is an alias of `cmd.terminal.focus`. |
 | `cmd.indexOf` | Parser false-positive from JavaScript and not a UICommand. |
 
 `START`, `BUILD`, and `Approve & Continue` are retired as ordinary planning/build launch labels. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch command. Post-approval runtime controls must use scoped commands such as `cmd.plan_compile.open_build`, `cmd.plan_compile.resume`, `cmd.runtime.approve`, or route/open commands with disabled reasons and receipt effects.
@@ -8155,6 +8163,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+
+Amended 2026-10-09 (DL-180): `cmd.dashboard.add_widget` is an alias of `cmd.widget.add` (its `dashboard_id` read as `board_id`) and its `dashboard.widget_added` effect is withdrawn (UCC-202). From the home layout `cmd.panel.undock` and `cmd.panel.redock` take only `chat`, into a window (UCC-203).
 
 ### Retained Product Onboarding command-era row lineage
 
@@ -8474,10 +8484,12 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 | Command ID | Label | Description | Preconditions | command_kind |
 |------------|-------|-------------|----------------|--------------|
-| `cmd.terminal.reveal` | Reveal Terminal Session | Reveals the bottom panel and terminal tab and scrolls the target session into view without spawning a duplicate shell. | `session_exists` | `shell_view` |
+| `cmd.terminal.reveal` | Reveal Terminal Session | Reveals the session's terminal tab wherever it is (amended 2026-10-09, UCC-201) and scrolls the target session into view without spawning a duplicate shell. | `session_exists` | `shell_view` |
 | `cmd.terminal.terminate_session` | Terminate Terminal Session | Requests graceful shutdown for the selected live session; distinct from kill. | `session_live` | `domain_action` |
 | `cmd.terminal.kill_session` | Kill Terminal Session | Forces termination for the selected live session; must not present the old session as still live. | `session_live` | `domain_action` |
 | `cmd.terminal.reattach_section` | Reattach Terminal Section | Returns a detached terminal section to docked layout with preserved tab, pane, and session identity. | `section_detached` | `shell_view` |
+
+Amended 2026-10-09 (DL-181): `cmd.terminal.reattach_section` is retired with detached terminal sections, and `cmd.terminal.reveal` no longer assumes a bottom panel (UCC-201). `cmd.terminal.clear_scrollback`, called covered above, had no catalog row until UCC-201 added it; `cmd.terminal.restart_session` is a retired spelling of `cmd.terminal.restart_replace` and `cmd.terminal.focus_session` an alias of `cmd.terminal.focus` (UCC-202).
 
 ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
@@ -9981,7 +9993,7 @@ ContractRef: ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/
 
 ### File Manager, editor, and chat navigation rows
 
-`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
+`cmd.file.open` is the bare subject-open command over the canonical `OpenFile{path,line?,range?,target_editor_panel_id?,target_editor_group_id?,target_group?}` route; it does not duplicate `cmd.file.open_with` (explicit target picker) and does not touch the ten-row CRUD closure, which stays intact per UCC-108. `target_group` is compatibility-only and normalizes to `target_editor_group_id`; Panel 1..4 values belong to `target_editor_panel_id`, never to `cmd.file.open_with`. (Amended 2026-10-09, DL-180: Home has no Panel 1..4; `cmd.file.open` places its tab through CV-360's placement fields, and `cmd.editor.close_tab` is an alias of `cmd.panel_tab.close`, UCC-200.) `cmd.editor.close_tab` reserves the `cmd.editor.*` prefix for editor tab lifecycle. `cmd.chat.open_thread` is the cross-surface thread entry wrapper the prototype token `cmd.chat.open_at` retires into; it carries route/OpenSubject identity, opens the chat panel when closed, and does not duplicate the chat-panel-local `cmd.chat.switch_thread` row, with wiring recording the seam. `cmd.chat.add_file_reference` keeps its existing row and canonical signature lock unchanged.
 
 | Command ID | Label | command_kind | Availability | Confirmation | disabled_reasons | Owner |
 |---|---|---|---|---|---|---|
@@ -11403,6 +11415,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wir
 
 ## PMConcept7 Home Workspace command reconciliation — 2026-08-04
 
+Superseded 2026-10-09 (DL-180): this section is lineage only. Home's four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat movement and the in-canvas float, `cmd.terminal.move_workgroup` and Collapse Bottom Terminal are retired; the universal panels' commands are UCC-200, the terminal's UCC-201 and the chat column's UCC-203 in the DL-180 to DL-183 addendum. `cmd.editor.open_panel` and `cmd.editor.close_panel` are retired, and the `cmd.workspace_layout.*` ids below keep their names with UCC-200's arguments.
+
 The Home workspace reuses `cmd.panel.undock`, `cmd.panel.redock`,
 `cmd.browser.open_workspace_preview`, `cmd.browser.open_detached_preview`,
 `cmd.browser.detach_browser_tab`, `cmd.file.open`, `cmd.terminal.reattach_section`,
@@ -12691,7 +12705,7 @@ Immediate-send rows use an isolated payload and can never send unrelated compose
 | `cmd.browser.component.add_to_composer` | Add Component To Composer List | Appends the selected component to the numbered composer component list and stores its hidden reference. | `component_selected && composer_available` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_add_to_composer` |
 | `cmd.browser.component.insert_at_cursor` | Insert Component At Cursor | Inserts a component chip at the composer caret position. | `component_selected && composer_available && caret_position_known` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentComposerRequest` → `ComposerBufferResult` | `handlers::browser_runtime::component_insert_at_cursor` |
 | `cmd.browser.component.mode.set_default` | Set Component Mode Default | Persists the last used component action as the initial mode for the next selection. | `settings_writable` | `domain_action` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserComponentModeRequest` → `SettingsTransactionResult` | `handlers::browser_runtime::component_mode_set_default` |
-| `cmd.browser.devtools.open` | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
+| `cmd.browser.devtools.open` (alias of `cmd.browser.open_devtools` from 2026-10-09, UCC-202) | Open DevTools | Opens ordinary internal browser DevTools under policy control; the protected authentication browser is excluded. | `browser_runtime_available && !protected_auth_browser && devtools_policy_allows` | `navigation_wrapper` | `Plans/Section15_MVP_Promoted_Features_Spec.md` | `BrowserDevToolsOpenRequest` → `RouteResult` | `handlers::browser_runtime::devtools_open` |
 
 Source surfaces for this family: `browser_selection_bar`, `browser_toolbar`. Every named surface must read the same owner availability and the same exact disabled reason; a surface that cannot read it renders the control disabled rather than optimistic.
 
