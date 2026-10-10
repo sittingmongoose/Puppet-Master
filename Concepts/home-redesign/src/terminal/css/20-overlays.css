@@ -36,10 +36,10 @@
 .pmt-pop-x:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
 .pmt-pop-x svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
 .pmt-pop-body { flex: 1 1 auto; overflow: auto; padding: 4px 12px 10px; }
-.pmt-pop-body, .pmt-schemes { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 28%, transparent) transparent; }
-.pmt-pop-body::-webkit-scrollbar, .pmt-schemes::-webkit-scrollbar { width: 8px; }
-.pmt-pop-body::-webkit-scrollbar-thumb, .pmt-schemes::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--pmw-text, currentColor) 28%, transparent); border-radius: 0; }
-.pmt-pop-body::-webkit-scrollbar-track, .pmt-schemes::-webkit-scrollbar-track { background: transparent; }
+.pmt-pop-body { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--pmw-text, currentColor) 28%, transparent) transparent; }
+.pmt-pop-body::-webkit-scrollbar { width: 8px; }
+.pmt-pop-body::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--pmw-text, currentColor) 28%, transparent); border-radius: 0; }
+.pmt-pop-body::-webkit-scrollbar-track { background: transparent; }
 .pmt-pop-sec { padding: 8px 0 10px; border-bottom: 1px solid var(--pmw-line, var(--border-light)); }
 .pmt-pop-sec:last-child { border-bottom: 0; }
 .pmt-pop-sec h4 { margin: 2px 0 8px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-2, var(--text-secondary)); }
@@ -61,11 +61,16 @@
 .pmt-pop-import { grid-template-columns: auto 1fr; }
 .pmt-pop-foot { flex: none; display: flex; align-items: center; gap: 6px; padding: 6px 8px; border-top: 1px solid var(--pmw-line, var(--border)); }
 .pmt-pop-spacer { flex: 1; }
+/* button corners: at most 6 px (the core frames' radius), so a 24 px button never turns into a capsule, whatever
+   radius a look gives every button on the page (Friendly's 14 px); Retro and NieR stay square (30-looks.css,
+   40-nier.css) */
+:is(.pmt-root, .pmt-pop) :is(.pmt-textbtn, .pmt-step, .pmt-pop-x, .pmt-find-toggle, .pmt-find-btn) { border-radius: min(var(--pmt-radius, 4px), 6px); }
 .pmt-pop button:focus-visible, .pmt-pop select:focus-visible, .pmt-pop input:focus-visible { outline: 2px solid var(--pmw-accent, var(--accent-primary)); outline-offset: 1px; }
 
 /* segmented choice: square-cornered segments in one frame, never a capsule */
 .pmt-seg { display: inline-flex; border: 1px solid var(--pmw-line, var(--border)); border-radius: 4px; overflow: hidden; }
 .pmt-seg button { height: 24px; padding: 0 9px; white-space: nowrap; border: 0; background: transparent; color: var(--pmw-text-2, var(--text-secondary)); font: inherit; font-size: 11.5px; cursor: pointer; }
+:is(.pmt-root, .pmt-pop) .pmt-seg button { border-radius: 0; }
 .pmt-seg button + button { border-left: 1px solid var(--pmw-line, var(--border)); }
 .pmt-seg button[aria-checked="true"] { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 18%, transparent); color: var(--pmw-text, var(--text-primary)); font-weight: 600; }
 .pmt-stepper { display: inline-flex; align-items: center; gap: 4px; }
@@ -73,14 +78,19 @@
 .pmt-step:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
 
 /* scheme list with swatches */
-.pmt-schemes { max-height: 216px; overflow: auto; margin: 0 -4px 8px; padding: 0 4px; border: 1px solid var(--pmw-line, var(--border-light)); border-radius: 4px; }
-.pmt-scheme-group { position: sticky; top: 0; z-index: 1; padding: 6px 6px 3px; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
+/* one scroll area: the list has no height cap or scrollbar of its own; it grows with the popover body, which scrolls
+   and is capped by the room the popover has (76-popover.js place) */
+.pmt-schemes { margin: 0 -4px 8px; padding: 0 4px; border: 1px solid var(--pmw-line, var(--border-light)); border-radius: 4px; }
+.pmt-scheme-group { position: sticky; top: 0; z-index: 1; padding: 6px 6px 3px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3, var(--text-muted)); background: var(--pmw-surface-2, var(--surface-elevated)); }
 .pmt-scheme { display: flex; align-items: center; gap: 8px; min-height: 28px; padding: 2px 6px; border-radius: 3px; cursor: pointer; outline: none; }
 .pmt-scheme:hover, .pmt-scheme:focus { background: color-mix(in srgb, var(--pmw-text, currentColor) 8%, transparent); }
 .pmt-scheme[aria-selected="true"] { background: color-mix(in srgb, var(--pmw-accent, var(--accent-primary)) 16%, transparent); }
 .pmt-scheme[aria-selected="true"] .pmt-scheme-name { font-weight: 600; }
 .pmt-scheme-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmt-scheme-meta { flex: none; font-size: 11px; color: var(--pmw-text-3, var(--text-muted)); }
+/* the chosen row's meta takes the row's text colour: the muted grey falls under 4.5:1 on Friendly's tint (3.8:1) and
+   on Retro's reverse video (1.5:1) */
+.pmt-scheme[aria-selected="true"] .pmt-scheme-meta { color: inherit; }
 .pmt-swatch { flex: none; display: inline-flex; align-items: center; gap: 2px; height: 18px; padding: 0 4px; border-radius: 3px; border: 1px solid color-mix(in srgb, var(--pmw-text, #888) 18%, transparent); }
 .pmt-swatch i { display: block; width: 6px; height: 10px; }
-.pmt-sw-fg { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: 10px; margin-right: 3px; line-height: 1; }
+.pmt-sw-fg { font-family: var(--pm-font-code, ui-monospace, monospace); font-size: 11px; margin-right: 3px; line-height: 1; }

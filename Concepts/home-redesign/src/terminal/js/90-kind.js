@@ -114,6 +114,11 @@
     if (PH.on) {
       PH.on('activate', function (e) { if (e && e.reason === 'reopen' && /^terminal:/.test(e.tabId || '')) reopenedIds.add(e.tabId); });
       PH.on('close', function (e) { if (e && e.tabId) reopenedIds.delete(e.tabId); });
+      /* a layout commit can rebuild the tab records while the terminals stay mounted (Apply layout with fresh: the
+         Home default's t1 and t2 keep their sessions); each terminal names its tab again, process and folder (D12) */
+      PH.on('layout', function () {
+        setTimeout(function () { records.forEach(function (r) { if (r.view && !r.gone) r.view.refreshLabel(); }); }, 0);
+      });
     }
     PH.registerKind('terminal', {
       label: 'Terminal',

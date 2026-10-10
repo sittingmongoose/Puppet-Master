@@ -1,6 +1,7 @@
 /* Per-look treatments (D16, D23). The effects policy writes data-pmt-look, data-pmt-focusfx and data-pmt-bell on the
-   root. Focus: Friendly a soft accent ring, Glass a luminous rim, Retro an inverse header, Basic a thin accent line
-   under the header, NieR ink corner brackets. Inactive dimming per look. Bell per look, at most once a second.
+   root. Focus: Friendly a soft accent ring, Glass a luminous rim, Retro a 2 px rule in the screen's text colour under
+   the header (the header keeps the panel surface, so tab and panel stay one surface), Basic a thin accent line under
+   the header, NieR ink corner brackets. Inactive dimming per look. Bell per look, at most once a second.
    Reduced Motion: every animation here is replaced by a static state. */
 
 /* ---- focus ---- */
@@ -8,8 +9,7 @@
 .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.30), inset 0 1px 0 rgba(255,255,255,.22); }
 html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pmt-body { box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), inset 0 1px 0 rgba(255,255,255,.9); }
 .pmt-root[data-pmt-focusfx="line"].pmt-focused > .pmw-hrow { box-shadow: inset 0 -1px 0 var(--pmw-accent, var(--accent-primary)); }
-.pmt-root[data-pmt-focusfx="inverse"].pmt-focused > .pmw-hrow { background: var(--pmt-fg); color: var(--pmt-bg-solid); }
-.pmt-root[data-pmt-focusfx="inverse"].pmt-focused > .pmw-hrow * { color: inherit; }
+.pmt-root[data-pmt-focusfx="rule"].pmt-focused > .pmw-hrow { box-shadow: inset 0 -2px 0 var(--pmt-fg); }
 /* NieR: ink target brackets live in 40-nier.css, gated by the brackets part */
 
 /* ---- inactive dimming ---- */
@@ -50,21 +50,25 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
 .pmt-root[data-pmt-look="glass"] { --pmt-radius: 10px; }
 .pmt-root[data-pmt-look="retro"] { --pmt-radius: 0px; }
-.pmt-root[data-pmt-look="friendly"] .pmt-pop { border-radius: 14px; }
-.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-root[data-pmt-look="glass"] .pmt-findbar {
+/* the editor's popover floats outside any terminal root; it carries the look itself (76-popover.js) */
+.pmt-pop[data-pmt-look="friendly"] { --pmt-radius: 8px; }
+.pmt-pop[data-pmt-look="glass"] { --pmt-radius: 10px; }
+.pmt-pop[data-pmt-look="retro"] { --pmt-radius: 0px; }
+:is(.pmt-root[data-pmt-look="friendly"] .pmt-pop, .pmt-pop[data-pmt-look="friendly"]) { border-radius: 14px; }
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]), .pmt-root[data-pmt-look="glass"] .pmt-findbar {
   background: color-mix(in srgb, var(--surface-elevated, #2a2240) 92%, transparent); border-color: var(--glass-hairline, rgba(255,255,255,.16));
 }
-.pmt-root[data-pmt-look="glass"] .pmt-pop { border-radius: 14px; }
-.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
+:is(.pmt-root[data-pmt-look="glass"] .pmt-pop, .pmt-pop[data-pmt-look="glass"]) { border-radius: 14px; }
+:is(.pmt-root[data-pmt-look="retro"] .pmt-pop, .pmt-pop[data-pmt-look="retro"]), .pmt-root[data-pmt-look="retro"] .pmt-findbar, .pmt-root[data-pmt-look="retro"] .pmt-linktip {
   border-radius: 0; border-width: 2px; box-shadow: var(--elev-2, 3px 3px 0 rgba(224,224,224,.55)); font-family: var(--body-font, 'IBM Plex Mono', monospace);
 }
-.pmt-root[data-pmt-look="retro"] .pmt-seg, .pmt-root[data-pmt-look="retro"] .pmt-seg button,
-.pmt-root[data-pmt-look="retro"] .pmt-pop-ctl select, .pmt-root[data-pmt-look="retro"] .pmt-find-input,
-.pmt-root[data-pmt-look="retro"] .pmt-textbtn, .pmt-root[data-pmt-look="retro"] .pmt-scheme, .pmt-root[data-pmt-look="retro"] .pmt-swatch { border-radius: 0; }
-.pmt-root[data-pmt-look="retro"] .pmt-seg button[aria-checked="true"], .pmt-root[data-pmt-look="retro"] .pmt-scheme[aria-selected="true"],
-.pmt-root[data-pmt-look="retro"] .pmt-find-toggle.pmt-on { background: var(--pmw-accent, var(--accent-primary)); color: var(--background, #10120e); }
-.pmt-root[data-pmt-look="retro"] .pmt-pop-sec h4::before { content: "[ "; }
-.pmt-root[data-pmt-look="retro"] .pmt-pop-sec h4::after { content: " ]"; }
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) :is(.pmt-seg, .pmt-seg button, .pmt-pop-ctl select, .pmt-find-input,
+  .pmt-textbtn, .pmt-scheme, .pmt-swatch, .pmt-step, .pmt-pop-x, .pmt-pop-search) { border-radius: 0; }
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) :is(.pmt-seg button[aria-checked="true"], .pmt-scheme[aria-selected="true"], .pmt-find-toggle.pmt-on) {
+  background: var(--pmw-accent, var(--accent-primary)); color: var(--background, #10120e);
+}
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) .pmt-pop-sec h4::before { content: "[ "; }
+:is(.pmt-root[data-pmt-look="retro"], .pmt-pop[data-pmt-look="retro"]) .pmt-pop-sec h4::after { content: " ]"; }
 .pmt-root[data-pmt-look="retro"] .pmt-hint { border-radius: 0; background: var(--pmt-fg); color: var(--pmt-bg-solid); }
 .pmt-root[data-pmt-look="retro"] .pmt-sb-thumb { border-radius: 0; background: transparent; border: 1px solid var(--pmt-fg); opacity: .7; }
 .pmt-root[data-pmt-look="retro"] .pmt-sticky { background: color-mix(in srgb, var(--pmt-bg-solid) 90%, var(--pmt-fg)); }

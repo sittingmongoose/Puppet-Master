@@ -393,6 +393,8 @@
     function render(keepScroll) {
       var body = pop.querySelector('.pmt-pop-body'), st = body ? body.scrollTop : 0;
       var c = cur();
+      /* the look's chrome shapes (30-looks.css) reach this copy too, though it floats outside any terminal */
+      pop.setAttribute('data-pmt-look', A().lookKey(T.look()));
       var fonts = [['follow', 'Follow look']].concat(Object.keys(A().FONTS).map(function (k) { return [k, A().FONTS[k].label]; }));
       pop.innerHTML = '<div class="pmt-pop-head"><span class="pmt-pop-title">Appearance</span>' +
         '<button type="button" class="pmt-pop-x" data-act="close" aria-label="Close appearance" data-pm-hover-label="Close (Esc)"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>' +

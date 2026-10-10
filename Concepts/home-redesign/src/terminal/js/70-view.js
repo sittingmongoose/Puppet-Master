@@ -68,13 +68,15 @@
     screen.setAttribute('data-pm-hover-exempt', 'terminal');
     this.input.setAttribute('autocapitalize', 'off'); this.input.setAttribute('autocomplete', 'off');
     this.input.setAttribute('autocorrect', 'off'); this.input.setAttribute('spellcheck', 'false');
-    screen.appendChild(this.bgLayer); screen.appendChild(this.canvas); screen.appendChild(this.fxCanvas);
+    screen.appendChild(this.canvas); screen.appendChild(this.fxCanvas);
     screen.appendChild(this.trailCanvas); screen.appendChild(this.sticky); screen.appendChild(this.overlays); screen.appendChild(this.input);
     this.sb = el('div', 'pmt-scrollbar');
     this.sbMarks = el('canvas', 'pmt-sb-marks');
     this.sbThumb = el('div', 'pmt-sb-thumb');
     this.sb.appendChild(this.sbMarks); this.sb.appendChild(this.sbThumb);
-    body.appendChild(this.gutter); body.appendChild(screen); body.appendChild(this.sb);
+    /* the screen ground (theme, gradient, image) spans the whole body, gutter and scrollbar included, so the marks
+       column and the screen read as one surface edge to edge */
+    body.appendChild(this.bgLayer); body.appendChild(this.gutter); body.appendChild(screen); body.appendChild(this.sb);
     this.live = el('div', 'pmt-live'); this.live.setAttribute('aria-live', 'polite');
     body.appendChild(this.progressEl);
     root.appendChild(this.agentRow); root.appendChild(this.noticeEl); root.appendChild(body); root.appendChild(this.live);
@@ -433,6 +435,9 @@
     var sig = JSON.stringify(upd);
     if (sig !== this._lsig) { this._lsig = sig; this.api.update(upd); }
   };
+  /* push the label again even if it has not changed here: a layout the host rebuilt (Apply layout, fresh) keeps this
+     view but gives the tab a new record that reads the kind's 'Terminal' until the terminal names it (D12) */
+  View.prototype.refreshLabel = function () { this._lsig = ''; this._updateLabel(); if (this.agentName && this.api && this.api.update) this.api.update({ agent: this.agentName }); };
   View.prototype.setAgent = function (name) {
     this.agentName = name || null;
     if (this.api && this.api.update) this.api.update({ agent: this.agentName });

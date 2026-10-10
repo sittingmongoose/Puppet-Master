@@ -268,7 +268,7 @@ the glyphs, does not draw curvature, burn-in or noise, and the Appearance popove
 | Effect | Friendly | Glass | Retro | Basic | NieR | Parameters |
 |---|---|---|---|---|---|---|
 | Inactive dimming | on, overlay of the background at 18 % | content at 80 % opacity (more translucent) | on, black at 40 % (brightness to 60 %) | off | on, parchment at 32 % | `inactiveDim` |
-| Focus | 1 px accent ring at 45 % | luminous rim: 1 px white at 30 % plus a top highlight | inverse-video header row | 1 px accent line under the header | ink corner brackets (10 px arms, 2 px) | static |
+| Focus | 1 px accent ring at 45 % | luminous rim: 1 px white at 30 % plus a top highlight | a 2 px rule in the screen's text colour under the header; the header keeps the panel surface | 1 px accent line under the header | ink corner brackets (10 px arms, 2 px) | static |
 | Cursor | block | bar | block | block | block | blink 530 ms phases, stops after 15 s idle; unfocused: hollow block; secret input: padlock |
 | Cursor trail | soft, 120 ms | glow, 160 ms | phosphor, 200 ms | off | trace (thin ink line), 140 ms | fires only on jumps over 2 cells after the cursor rested 60 ms |
 | Smooth scrolling | on | on | off (line steps) | on | on | wheel moves 35 % of the remaining distance per frame |

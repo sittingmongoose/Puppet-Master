@@ -24,7 +24,7 @@
   var LOOKS = {
     friendly: { light: 'catppuccin-latte', dark: 'catppuccin-mocha', font: 'jetbrains-mono', cursorShape: 'block', blink: 'eased', trail: 'soft', dim: 0.18, focus: 'ring', bell: 'flash', background: 'soft', opacity: 1 },
     glass: { light: 'tokyo-night-day', dark: 'tokyo-night-storm', font: 'jetbrains-mono', cursorShape: 'bar', blink: 'eased', trail: 'glow', dim: 0.22, focus: 'rim', bell: 'rim', background: 'theme', opacity: 0.74, opacityLight: 0.7 },
-    retro: { light: 'pm-paper-teletype', dark: 'pm-phosphor-green', font: 'vt323', cursorShape: 'block', blink: 'step', trail: 'phosphor', dim: 0.4, focus: 'inverse', bell: 'inverse', background: 'theme', opacity: 1, scanlines: true, glow: true },
+    retro: { light: 'pm-paper-teletype', dark: 'pm-phosphor-green', font: 'vt323', cursorShape: 'block', blink: 'step', trail: 'phosphor', dim: 0.4, focus: 'rule', bell: 'inverse', background: 'theme', opacity: 1, scanlines: true, glow: true },
     basic: { light: 'one-half-light', dark: 'one-half-dark', font: 'jetbrains-mono', cursorShape: 'block', blink: 'step', trail: 'off', dim: 0, focus: 'line', bell: 'marker', background: 'theme', opacity: 1 },
     nier: { light: 'pm-yorha-parchment', dark: 'pm-yorha-ink', font: 'jetbrains-mono', cursorShape: 'block', blink: 'step', trail: 'trace', dim: 0.32, focus: 'brackets', bell: 'snap', background: 'paper', opacity: 1 }
   };
