@@ -3211,7 +3211,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Each row is a visible Settings > Terminal control whose change shows at once in every terminal.
 split_recommended: false
-depends_on: [DL-181, DL-182, DL-183, DR-068, SSYS-002, SSYS-009, SSYS-028, SSYS-040, SSYS-050, SP-332]
+depends_on: [DL-181, DL-182, DL-183, DR-068, SSYS-002, SSYS-009, SSYS-028, SSYS-040, SSYS-050]
 unblocks: [F3-120, F3-121, F3-642, SP-331]
 acceptance_criteria:
   - "Every field of F3-642 has exactly one inventory row, each with the default listed here, scope global and project, and no terminal row carries a restart badge."
@@ -3239,6 +3239,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/storage-plan.md#SP-332 (terminal records consume these rows; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-183"
   - "Plans/Decision_Log.md#DL-181"
   - "Plans/Decision_Log.md#DL-182"

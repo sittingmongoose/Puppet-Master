@@ -7584,7 +7584,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: "Registers the command families and local action prefixes behind every universal panel and terminal control and rules which of them are view state."
 split_recommended: false
-depends_on: [DL-180, DL-181, CS-060, CS-061, CS-062, CS-068, CS-072, CDRY-006, UCC-200, UCC-201]
+depends_on: [DL-180, DL-181, CS-060, CS-061, CS-062, CS-068, CS-072, UCC-200, UCC-201]
 unblocks: [WM-090, WM-091, UIW-040, UIW-041]
 acceptance_criteria:
   - "The reserved-prefix registry names cmd.panel_tab. and cmd.workspace_layout. with Plans/UI_Command_Catalog.md as the only minter, and no User Command can be created under them."
@@ -7606,6 +7606,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/Commands_System.md CDRY-006 What stays view state (a prose heading with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md (SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64)"

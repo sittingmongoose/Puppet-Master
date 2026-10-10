@@ -43442,7 +43442,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the home centre's panel model, its layout tree, its named layouts and how panels move, split, collapse and persist.
 split_recommended: false
-depends_on: [DL-180, DL-181, F3-HOME-002, F3-HOME-004, F3-HOME-005, F3-503, F3-635]
+depends_on: [DL-180, DL-181, F3-503]
 unblocks: [SP-330, CV-361, UCC-200, CS-100, WM-090, UIW-040, UIW-041, SSYS-050, DR-065, DR-066, ATS-075, GRRC-040]
 acceptance_criteria:
   - "The layout is an n-ary split tree whose leaves are panels, sizes are proportions per split, and after every commit the invariants hold: every leaf a panel, two or more children per split, no split in its parent's direction, every size above 0.02, each tab in exactly one panel, pinned tabs first, at most one preview tab per panel."
@@ -43475,6 +43475,8 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/FinalGUISpec.md F3-HOME-002, F3-HOME-004 and F3-HOME-005 (prose headings with no PlanUnit; cited, not a dependency (lead ruling L22, 2026-10-10))"
+  - "Plans/FinalGUISpec.md#F3-635 (the tab kinds consume this model; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "Plans/Decision_Log.md#DL-181"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D1, D2, D11)"
@@ -44162,7 +44164,7 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the chat's fixed column, its width, show and hide, Pop out, History flyout and Activity Detail.
 split_recommended: false
-depends_on: [DL-180, F3-504, F3-527, F3-630, F3-636]
+depends_on: [DL-180, F3-504, F3-527, F3-630]
 unblocks: [ACD-500, ACD-501, SSYS-050, UCC-203, PWIZ-035, ATS-075]
 acceptance_criteria:
   - "The chat column spans from the title bar to the status bar at full width of both bars, and no gesture, menu or key moves it inside the window."
@@ -44188,6 +44190,7 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+  - "Plans/FinalGUISpec.md#F3-636 (the narrow ladder consumes the chat column; cited, not a dependency (lead ruling L22, 2026-10-10))"
   - "Plans/Decision_Log.md#DL-180"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/DECISIONS.md, SHA-256 0d2b45466c91734e15fd8659e9a8e3b17b70d92be785421e57e084dc8daf6b64 (D3, D4)"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (concept lineage only)"
