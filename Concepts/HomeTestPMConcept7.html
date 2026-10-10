@@ -132188,31 +132188,21 @@ function updateTab(el, rec, p, l) {
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));
   var tag = hoverWords(rec, k);
+  if (el.getAttribute('data-pmh-tag') !== 'literal') el.setAttribute('data-pmh-tag', 'literal');
   el.setAttribute('data-pm-hover-label', tag.label);
   el.setAttribute('data-pm-hover-detail', [tag.place].concat(desc).concat(k && !desc.length ? [k.label] : []).filter(Boolean).join(' · '));
 }
 
-/* The tab's hover tag. The page's tag controller (PMConcept7.html, descriptor and looksInternal) replaces any label or
-   detail that holds a dotted word ("recipes.rs", "postgresql.org", "host:5173") with "Choose this option", and has no
-   opt-out for literal text (41-fileref.js keeps paths out of its tag for the same reason). So a file tab's tag names
-   the file by its stem and its type ("recipes, Rust file") and its folder ("In src/routes"); the exact name is the
-   tab's own text and the "+N" list's. */
-var DOTTED = /\b[a-z][a-z0-9-]*(?:[.:][a-z0-9_-]+)+\b/i;
-var EXT_WORDS = { rs: 'Rust', md: 'Markdown', toml: 'TOML', json: 'JSON', ts: 'TypeScript', tsx: 'TypeScript', js: 'JavaScript', mjs: 'JavaScript',
-  css: 'CSS', html: 'HTML', svelte: 'Svelte', sql: 'SQL', yml: 'YAML', yaml: 'YAML', xml: 'XML', log: 'log', bin: 'binary', py: 'Python', sh: 'script', txt: 'text' };
+/* The tab's hover tag: the file's name and its folder, or the tab's title, as written. Tabs carry data-pmh-tag="literal"
+   (the hover thread's opt-out), so the page's tag controller keeps a dotted name ("recipes.rs", "postgresql.org")
+   instead of swapping it for generic copy. */
 function hoverWords(rec, k) {
-  var title = tabTitle(rec), path = rec.state && rec.state.path;
+  var path = rec.state && rec.state.path;
   if (path) {
     var name = String(path).split('/').pop(), dir = String(path).slice(0, Math.max(0, String(path).length - name.length - 1));
-    var dot = name.lastIndexOf('.');
-    var stem = dot > 0 ? name.slice(0, dot) : name, ext = dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
-    var kind = ext ? (EXT_WORDS[ext] || ext.toUpperCase()) + ' file' : (dot === 0 ? 'Hidden file' : 'File');
-    var lab = dot === 0 ? name.slice(1) : stem;
-    return { label: DOTTED.test(lab) ? kind : lab + ', ' + kind, place: dir && !DOTTED.test(dir) ? 'In ' + dir : '' };
+    return { label: name, place: dir ? 'In ' + dir : '' };
   }
-  if (!DOTTED.test(title)) return { label: title, place: '' };
-  var short = tabLabel(rec);
-  return { label: !DOTTED.test(short) ? short : (k ? k.label : 'Tab'), place: '' };
+  return { label: tabTitle(rec) || tabLabel(rec) || (k ? k.label : 'Tab'), place: '' };
 }
 
 function buildStrip(host, panelId) {
@@ -134273,11 +134263,11 @@ PMW.fileRef = function (ref, o) {
   var label = ref.label != null && ref.label !== '' ? String(ref.label) : o.label != null && o.label !== '' ? String(o.label) : (o.short ? name : path) + at;
   var target = { path: path, line: line, col: col, view: ref.view || null };
 
-  /* the hover tag says what the button does in words: the page's tag controller (PMConcept7.html, descriptor and
-     looksInternal) swaps any label or detail that looks like a path, a file name or host:port for generic copy and has
-     no opt-out for literal text, so the path stays in the button's own text */
+  /* the hover tag names the file as written: data-pmh-tag="literal" keeps the page's tag controller from swapping a path,
+     a file name or host:port for generic copy (the hover thread's opt-out, concept/pm7-hover-polish-20261009) */
   var b = h('button', { type: 'button', class: 'pmw-fileref' + (o.inline ? ' is-inline' : '') + (o.cls ? ' ' + o.cls : ''), 'data-pmh': 'icon',
-    'data-pm-hover-label': path ? 'Open file' : 'No file to open',
+    'data-pmh-tag': 'literal',
+    'data-pm-hover-label': path ? path + at : 'No file to open',
     'data-pm-hover-detail': path ? 'Click previews it. Double-click keeps it open.' : 'This reference names no file.' });
   if (o.icon !== false && !o.noIcon) b.appendChild(icon('file', { size: 13 }));
   b.appendChild(h('span', { class: 'pmw-fileref-t', text: label }));

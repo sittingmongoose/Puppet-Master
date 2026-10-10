@@ -34,11 +34,11 @@ PMW.fileRef = function (ref, o) {
   var label = ref.label != null && ref.label !== '' ? String(ref.label) : o.label != null && o.label !== '' ? String(o.label) : (o.short ? name : path) + at;
   var target = { path: path, line: line, col: col, view: ref.view || null };
 
-  /* the hover tag says what the button does in words: the page's tag controller (PMConcept7.html, descriptor and
-     looksInternal) swaps any label or detail that looks like a path, a file name or host:port for generic copy and has
-     no opt-out for literal text, so the path stays in the button's own text */
+  /* the hover tag names the file as written: data-pmh-tag="literal" keeps the page's tag controller from swapping a path,
+     a file name or host:port for generic copy (the hover thread's opt-out, concept/pm7-hover-polish-20261009) */
   var b = h('button', { type: 'button', class: 'pmw-fileref' + (o.inline ? ' is-inline' : '') + (o.cls ? ' ' + o.cls : ''), 'data-pmh': 'icon',
-    'data-pm-hover-label': path ? 'Open file' : 'No file to open',
+    'data-pmh-tag': 'literal',
+    'data-pm-hover-label': path ? path + at : 'No file to open',
     'data-pm-hover-detail': path ? 'Click previews it. Double-click keeps it open.' : 'This reference names no file.' });
   if (o.icon !== false && !o.noIcon) b.appendChild(icon('file', { size: 13 }));
   b.appendChild(h('span', { class: 'pmw-fileref-t', text: label }));
