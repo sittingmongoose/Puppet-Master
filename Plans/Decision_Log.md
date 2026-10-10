@@ -3774,7 +3774,7 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-18
 **Why it came up:** Canon asked for terminal themes, presets and an appearance group, but the concept draws one hard-coded font at 11 px, light looks draw a dark terminal, and the settings rows that exist say a restart is needed. Jared: "There were supposed to be different terminals effects, colors, fonts, backgrounds selectable in the settings but they seem to have not made it to the concept. That needs to be added." He also said fonts are being built in now and the terminal will bring new ones.
 
 **What you get:**
-- "Follow theme" by default, with a colour scheme chosen for each look: Friendly uses Catppuccin (Latte and Mocha), Glass uses Tokyo Night (Day and Storm, over its blur within the app's blur budget), Retro uses Puppet Master's own Phosphor Green and Amber for dark and Paper Teletype for light, Basic uses One Half (Light and Dark), and NieR Mode uses Puppet Master's YoRHa Parchment and Ink.
+- "Follow look" by default (named "Follow theme" until Jared's answer of 2026-10-10 gave the editor and the terminal one word), with a colour scheme chosen for each look: Friendly uses Catppuccin (Latte and Mocha), Glass uses Tokyo Night (Day and Storm, over its blur within the app's blur budget), Retro uses Puppet Master's own Phosphor Green and Amber for dark and Paper Teletype for light, Basic uses One Half (Light and Dark), and NieR Mode uses Puppet Master's YoRHa Parchment and Ink.
 - 34 hand-picked schemes with clear licences, import of the common theme file formats, and a minimum-contrast floor (4.5:1 by default) so text stays readable.
 - Cursor shape, blink and trail; background (the theme's surface, a solid colour, a gradient, or an image with dim and blur); padding; line height; letter spacing; ligatures; weight. Everything applies at once; nothing says "restart required".
 - One catalog of code colour schemes serves the editor and the terminal (Jared, 2026-10-10). Each curated scheme carries the terminal's palette and the editor's syntax colours. The editor and the terminal each start on "Follow look" (the editor's syntax colours per look, the terminal's schemes per look above) and each has its own scheme choice. The editor's ⋮ menu gets the same Appearance popover as the terminal, and Settings > Editor and > Terminal bind the same catalog when Settings is ported.
@@ -13069,7 +13069,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/terminal-SPEC-1-d605b4a256.md, SHA-256 71784f23a24c3f922292c8979093e0e5bcbdb1c49392da0d8cd9bd04533ea7c2 (concept lineage only)"
 preserved_exact_tokens:
   - "DL-183"
-  - "Follow theme"
+  - "Follow look"
   - "JetBrains Mono"
   - "VT323"
   - "Sixtyfour"
