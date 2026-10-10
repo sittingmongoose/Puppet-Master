@@ -24163,13 +24163,16 @@ canonical_text: >-
   Amended 2026-10-09 (DL-184): the footer keeps this content and routing, but it is no longer a pill:
   Plans/FinalGUISpec.md#F3-422 now draws it as a content-sized rectangle with the look's inner radius
   (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648).
+  Amended 2026-10-09 (DL-180): there is no bottom panel; the problems row opens or reveals the Problems tab, one per
+  workspace, a tool tab kind of the home panels (Plans/FinalGUISpec.md#F3-635) placed by the tool-kind affinity of
+  Plans/FinalGUISpec.md#F3-634. Read "the Problems bottom tab" in this unit as that Problems tab.
 gui_related: true
 gui_classification_reason: Defines visible chat footer content and routing behavior.
-depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217]
+depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217, DL-180, DL-184]
 unblocks: [ACD-482]
 acceptance_criteria:
   - "No subagent chip, files chip or middle-dot separator renders in the footer pill or above the composer (DL-129, ACD-482)."
-  - "Threads with diagnostics render a problems row that opens the Problems bottom tab scoped to the thread's diagnostics."
+  - "Threads with diagnostics render a problems row that opens or reveals the Problems tab (one per workspace, placed by F3-634) scoped to the thread's diagnostics (DL-180)."
   - "No rewind affordance renders in the footer."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
@@ -24199,6 +24202,8 @@ compatibility_only_notes:
   - "Slint portability: chips are opaque precomputed surfaces; diff totals use precomputed per-theme colors; no arbitrary-content backdrop blur and no SVG filters."
 stale_retired_dispositions:
   - "Superseded 2026-09-27 by ACD-482 (DL-129): the subagent chip, the files chip and their separator no longer render above the composer; live runs are dock lines (ACD-476), each reply that changed files has its own files row (ACD-478), and the thread's total file count is in Activity's Changes domain. The problems row and its route to the Problems bottom tab are not part of that decision and are unchanged."
+  - "Amended 2026-10-09 (DL-180): the problems row routes to the Problems tab of the home panels (F3-635, F3-634), not a bottom tab."
+  - "Amended 2026-10-09 (DL-184): the footer is no longer a pill; F3-422 draws it as a content-sized rectangle."
 owner_boundary_notes:
   - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422; a content-sized rectangle, no longer a pill, since 2026-10-09, DL-184); this unit records footer content and routing semantics."
 owner_hints:
@@ -27065,15 +27070,20 @@ canonical_text: >-
   that ACD-435 renders for threads with diagnostics, with its route to the Problems bottom tab, is
   not part of this decision and is unchanged, as are FinalGUISpec F3-422's floating geometry and
   jump-to-latest rules.
+  Amended 2026-10-09 (DL-180, DL-184): there is no bottom panel; the problems row opens or reveals the
+  Problems tab, one per workspace, a tool tab kind of the home panels placed by the tool-kind affinity
+  of Plans/FinalGUISpec.md#F3-634 (F3-635, ACD-435). The Activity bar is no longer a pill in any look;
+  read "the Activity bar pill" as the Activity bar (ACD-452, Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648).
 gui_related: true
 gui_classification_reason: "Removes the footer chips above the composer and names where their information went."
 split_recommended: false
-depends_on: [ACD-435, ACD-436, ACD-476, ACD-478, DL-129]
+depends_on: [ACD-435, ACD-436, ACD-476, ACD-478, DL-129, DL-180, DL-184]
 unblocks: [F3-567]
 acceptance_criteria:
   - "No subagent chip, files chip or chip fan-out renders above the composer."
   - "The thread's total file count is reachable from Activity's Changes domain."
-  - "The problems row still routes to the Problems bottom tab."
+  - "The problems row still routes to the Problems tab of the home panels, one per workspace (DL-180)."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
   - python3 scripts/pm-plan-index.py validate
@@ -27099,6 +27109,9 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not render the footer chips beside the dock."
   - "Do not drop the problems row as part of this supersession."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the problems row routes to the Problems tab of the home panels (F3-635, F3-634), not a bottom tab."
+  - "Amended 2026-10-09 (DL-184): the Activity bar in the composer stack is no longer a pill (ACD-452)."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
@@ -27421,7 +27434,12 @@ canonical_text: >-
   restoring; ok for exited with exit code 0; failed for failed, exited with any other code, and disconnected;
   interrupted for terminated; waiting for attention_required. Its actions are text buttons: Open in Terminal, only
   while the command has a terminal session, opens or reveals that session's terminal tab through F3-634 (ACD-502);
-  Rerun in Terminal once the command has stopped (ACD-108); View output when there is no session (ACD-129). Output
+  Rerun in Terminal once the command has stopped (ACD-108, ACD-502); View output when there is no session (ACD-129).
+  View output, and View output log in the card's menu, open the command's retained output as an editor buffer tab:
+  read-only, kept and never a preview, titled with its command line, opened and taking focus through F3-634 by
+  cmd.panel_tab.open with an editor buffer spec, the same tab the terminal's Open output in an editor tab opens
+  (Plans/FinalGUISpec.md#F3-641, Plans/UI_Command_Catalog.md#UCC-201). The chat never draws the output in a viewer
+  of its own. Output
   lines keep their spacing, never wrap and scroll sideways. The card has no pill, no coloured side stripe and no box
   nested inside a card, and the chat never draws a terminal of its own. Explaining commands is the Teacher persona's
   job in the chat (Plans/Personas.md section 11.8, DL-181, D19): when the user asks about a command or its output,
@@ -27444,6 +27462,7 @@ acceptance_criteria:
   - "The chat's width, drag range and narrow behaviour are F3-637's and F3-636's; no unit of this document states another chat minimum, and no tab covers the chat at any width."
   - "History is a flyout by default, pinning it widens the column by the list's width, the pin is saved in the home layout record, and only one thread-history list exists after the port."
   - "The command card shows the command, folder, status words with the exit code, elapsed time, the last lines with the count of earlier lines, and who ran it; Open in Terminal appears only with a session and reveals its terminal tab; Rerun in Terminal and View output follow ACD-108 and ACD-129."
+  - "View output and View output log on a command with no terminal session open its output as a read-only, kept editor buffer tab through F3-634 (cmd.panel_tab.open with an editor buffer spec), never a preview and never a viewer drawn by the chat (DL-180, F3-641)."
   - "The command card has no pill, no coloured side stripe and no nested box, and no terminal is drawn inside the chat."
   - "Teacher explains a command only when the user asks, in the chat; no Explain action exists on the card or in the terminal."
 validation_surfaces:
@@ -27477,6 +27496,7 @@ preserved_exact_tokens:
   - "Open in Terminal"
   - "Rerun in Terminal"
   - "View output"
+  - "View output log"
   - "Needs input"
   - "Keep the chat open in narrow windows"
   - "general.interaction.chat-history-list"
@@ -27607,7 +27627,10 @@ canonical_text: >-
   no tab yet its tab through the one opening module (cmd.terminal.open, Plans/UI_Command_Catalog.md#UCC-201;
   Plans/FinalGUISpec.md#F3-634); it never starts a new shell. Show Terminal reveals the same tab (ACD-128), so the
   compact card shows Open in Terminal only. Rerun in Terminal runs the command again in that session's tab as a new
-  invocation, never in a new shell unless the user asks for one (ACD-108). New terminal here is the one action that
+  invocation, never in a new shell unless the user asks for one (ACD-108). On a command with no terminal session, a
+  completed inline command (ACD-129), Rerun in Terminal opens a new terminal tab in the command's folder by the same
+  route as New terminal here, takes focus and runs the command there, as a new terminal session with a new invocation
+  card (section 13.3's retry rule). New terminal here is the one action that
   opens a new terminal tab, in the folder it names, through cmd.panel_tab.open with the terminal kind and that folder
   (Plans/UI_Command_Catalog.md#UCC-200); it is never labelled Open in Terminal. A session the agent starts by itself,
   for a command that needs stdin or a TTY or for a background, watch or server action (ACD-127), shows as a terminal
@@ -27635,6 +27658,7 @@ unblocks: [ACD-077, ACD-108, ACD-127, ACD-128, ACD-131, ACD-132, ACD-134, ACD-13
 acceptance_criteria:
   - "Open in Terminal reveals the exact session's terminal tab wherever it is, or gives a tabless session its tab, and never starts a new shell."
   - "New terminal here opens a new terminal tab in its folder, and no action that opens a new terminal is labelled Open in Terminal."
+  - "Rerun in Terminal on a command with a session reruns it in that session's tab; on a command with no session it opens a new terminal tab in the command's folder, takes focus and runs the command there (DL-181)."
   - "A terminal an agent started by itself lands as a background tab with the hollow square and the agent mark and never takes focus."
   - "No chat card offers Detach/Pop-Out or Pop Out Terminal, and no terminal tab pops out to a window."
   - "The terminal surface offers no AI action."
