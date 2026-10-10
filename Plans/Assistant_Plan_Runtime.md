@@ -823,6 +823,7 @@ The exact Assistant Plan Runtime command IDs requiring central catalog registrat
 | `cmd.chat.plan.cancel` | domain_action | `AssistantPlanCancelRequest` -> `AssistantPlanCancelResult` | `plan_card` | Cancels the current unfinished Plan or the active run under exact expected-state rules and sets the control to `Canceled`. Never emits `superseded`, never deletes history, and never purges shared referenced artifacts. |
 | `cmd.chat.plan.export` | domain_action | `AssistantPlanExportRequest` -> `ArtifactExportResult` | `plan_card` | Produces a versioned `markdown`, `pdf`, or `pm_bundle` export of the exact bound version with an export receipt. Never re-serializes a different version and never mutates the source revision. |
 | `cmd.chat.plan.open_details` | navigation_wrapper | `AssistantPlanRoute` -> `RouteResult` | `plan_card`, `artifact_details` | Navigation only, to Plan details, sources, and version lineage. Never mutates Plan, run, To-Do, or artifact state. |
+| `cmd.chat.plan.open_version` | navigation_wrapper | `AssistantPlanVersionRoute` -> `RouteResult` | `plan_card`, `schedule_manager`, `goal_activity`, `goal_hover` | Navigation only, to the document of the exact `assistant_plan_id` and `plan_version` an Open plan button's surface names (the card's version, a receipt's version, a build schedule's bound version), or the `plan_version` and `plan_hash` a bound Goal names (DL-157, UCC-176): the Plan's own editor tab, focused rather than duplicated (APR-014), while that version is the Plan's version, otherwise that version's retained read-only document. Never opens Plan details, never substitutes a newer version, and never mutates Plan, run, Goal, To-Do, or artifact state; an unretained or hash-mismatched version is a typed error that opens nothing. |
 
 Two adjacent commands are owned elsewhere and are consumed, not redefined, here. `cmd.chat.plan.schedule_build` (`AssistantPlanScheduleRequest` -> `ExecutionScheduleResult`, surface `plan_card`) is owned by `Plans/Scheduling_and_Quota_Resume.md` and must honor the exact-version binding and invalidation rules in section 9. `cmd.chat.plan.send_to_planning_wizard` (`AssistantPlanHandoffRequest` -> `PlanningWizardIntakeResult`, surface `plan_card`) is owned by `Plans/Planning_Wizard.md` and must honor the payload boundary and PRD bypass in section 10.
 
@@ -1429,7 +1430,10 @@ APR-066.
 ### 16. Plan Tab Navigation, Deduplication, and Control Parity (APR-036, APR-037)
 
 - **Left Editor Plan Tab Navigation:** Activating a plan via title click, "Details" link, "Expand",
-  or "Open plan" in the transcript opens or activates the plan in the left editor tab bar.
+  or "Open plan" in the transcript opens or activates the plan in the left editor tab bar. Every "Open plan"
+  button is `cmd.chat.plan.open_version` with the version its surface names: while that version is the Plan's
+  version it opens this tab, and once a later version exists it opens that version's retained read-only
+  document (DL-157).
 - **Tab Deduplication:** If the plan tab is already open in the editor tab bar, the existing tab is
   focused and brought to the front. Duplicate editor tabs for the same `assistant_plan_id` are
   strictly prohibited.
@@ -1464,7 +1468,9 @@ status: accepted
 owner_doc: Plans/Assistant_Plan_Runtime.md
 canonical_text: >-
   Clicking a plan title, Details, Expand, or Open plan in the transcript opens or focuses the plan in
-  the left editor tab bar with tab deduplication. The left plan tab exposes complete owner-backed control
+  the left editor tab bar with tab deduplication; an Open plan button is cmd.chat.plan.open_version with the
+  version its surface names, which opens that version's retained read-only document instead once a later
+  version exists (DL-157). The left plan tab exposes complete owner-backed control
   parity with the transcript Plan card (Rich/Markdown toggle, Build, Build With Crew, Build At, Revise,
   Send To Planning Wizard, Export, Cancel, Open To-Dos). Opening a plan expands collapsed splits to readable
   width, and split resizing preserves a minimum 360 px chat canvas width (DL-138), superseding the older

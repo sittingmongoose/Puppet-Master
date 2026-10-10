@@ -30060,7 +30060,7 @@ window.PM56_NIER_FACES = [
  const editBtn=(g,action,surface)=>'<button class="soft-button goal-edit-btn" data-action="'+action+'" aria-label="Edit objective"'+(surface==='panel'?' data-hover-key="goal-edit-objective" data-hover-tip="Edit objective&#10;Saving records a new revision in Objective history."':'')+(g.status==='completed'?' disabled':'')+'><span class="goal-lbl">Edit<span class="goal-lbl-more"> objective</span></span></button>';
  const cancelBtn=g=>'<button class="text-button danger goal-cancel-btn" data-action="goal-cancel" '+(g.status==='completed'?'disabled':'')+'>Cancel Goal</button>';
  function controlRow(g,editAction,surface){return '<div class="goal-actions" role="group" aria-label="Goal controls"><span class="goal-actions-safe">'+pauseBtn(g)+(editAction?editBtn(g,editAction,surface):'')+'</span>'+cancelBtn(g)+'</div>';}
- function boundRow(g){return g.binding?'<div class="goal-bound"><button class="text-button" data-action="goal-bound-open-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Open exact Plan · V'+g.binding.plan_version+'</button>'+(g.blockedReason?'<button class="text-button" data-action="goal-revise-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Revise Plan</button>':'')+'</div>':'';}
+ function boundRow(g){return g.binding?'<div class="goal-bound"><button class="text-button" data-action="goal-open-plan-version" data-id="'+esc(g.binding.assistant_plan_id)+'" data-version="'+g.binding.plan_version+'">Open exact Plan · V'+g.binding.plan_version+'</button>'+(g.blockedReason?'<button class="text-button" data-action="goal-revise-plan" data-id="'+esc(g.binding.assistant_plan_id)+'">Revise Plan</button>':'')+'</div>':'';}
  function historyToggle(c,g){return '<button class="pmap-route-action goal-history-toggle" data-action="goal-toggle-history" aria-expanded="'+!!ui.history+'"><span>Objective history</span><small>'+g.revisions.length+' revisions</small>'+c.icon('chevron',11)+'</button>';}
  function historyList(g){return ui.history?'<div class="goal-history">'+g.revisions.slice().reverse().map(r=>'<div class="goal-history-row"><strong>Revision '+r.revision+'</strong><small>'+esc(r.source==='user_direct'?'Your direct change':'Your approved proposal')+'</small><p>'+esc(r.objective)+'</p></div>').join('')+'</div>':'';}
  function renderEditor(c){const p=store.proposals[ui.proposal];if(!p||p.state!=='pending'||p.token.goalId!==get()?.id)return '';
@@ -30098,7 +30098,7 @@ window.PM56_NIER_FACES = [
   'goal-approve-proposal':c=>refresh(c,approve(ui.proposal)),
   'goal-deny-proposal':c=>refresh(c,deny(ui.proposal)),
   'goal-continue':c=>{const g=get();if(!g)return;const out=evaluate(g.id);if(out.ok){setTimeout(()=>refresh(context(),dispatch(out.ticket.id)),450);}ui.continuations=true;refresh(c,out);},
-  'goal-bound-open-plan':(c,b)=>window.PM56_PLANS?.openDetails(c,b.dataset.id),
+  'goal-open-plan-version':(c,b)=>{if(b.closest?.('.hover-card'))c.state.hover=null;window.PM56_PLANS?.openVersion(c,b.dataset.id,b.dataset.version);},
   'goal-revise-plan':(c,b)=>E._actions[window.PM56_PLANS?.get(b.dataset.id)?.status==='building'?'pd-stop-revise':'pd-revise']?.(c,{dataset:{id:b.dataset.id}})
  };
  for(const [name,fn] of Object.entries(actions))E.action(name,(c,b)=>{fn(c,b);return true;});
@@ -45999,7 +45999,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
-      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-open-version','Open plan',r.plan_id,' data-version="'+r.version+'"')+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
@@ -46142,7 +46142,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
       for(const [k,v] of Object.entries(values))TX.set(r,k,v);
       if(r.backend==='ledger_bound')TX.set(r,'unitsMaterialized',{at:approved.at,scope:r.plan_id+'@V'+r.version,count:list(r.planunits).length,validated:true,validation_kind:'local_scoped_template_validation',plan_hash:expected.hash,scope_kind:'assistant_deep_plan',globalIndex:false,worknodes:0,nodeSeeds:0});
       const t=ctx.state.threads.find(t=>t.id===r.thread_id);
-      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
+      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,plan_version:r.version,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
       TX.defer(()=>{stopRun(r);if(!opts.paused)startRunTimer(ctx,r);});
       return {ok:true,...receipt};
     });
@@ -46703,6 +46703,18 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     var r=rec(id);if(!r)return;
     ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor('plan:'+id);
   }
+  /* cmd.chat.plan.open_version (DL-157): a bound Goal's Open exact Plan · Vn opens that
+     version's document and nothing else. While Vn is still the Plan's version that is the
+     Plan's own tab; once a later version exists it is Vn's retained, read-only document.
+     It never opens Plan Details and never substitutes a newer version. */
+  function openPlanVersion(ctx,id,v){
+    var r=rec(id);v=Number(v);
+    if(!r||!v){ctx.toast('Cannot open','The bound Plan is missing.');return false;}
+    if(r.version===v){openPlanEditor(ctx,id);return true;}
+    var ref=r.document_refs&&r.document_refs[v];
+    if(!ref){ctx.toast('Cannot open','Plan V'+v+' is not retained.');return false;}
+    ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor(window.PM56_ARTIFACTS.route(ref));return true;
+  }
   function openDlg(ctx, kind, id){ ctx.openDialog({ type:DLG[kind], id:id }); }
 
   var ACTIONS = {
@@ -46763,6 +46775,9 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     },
 
     'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
+    /* Every Open plan button (the card's action row, a Build-started or revision
+       receipt, a scheduled build's row) opens the version that surface names. */
+    'pd-open-version': function(ctx,btn){if(btn.dataset.version)openPlanVersion(ctx,btn.dataset.id,btn.dataset.version);else openPlanEditor(ctx,btn.dataset.id);},
     'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
     'pd-build-at': function(ctx,btn){
@@ -47047,7 +47062,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
         const result=applyRevision(ctx,r,raw,d.expectedRevision);if(!result.ok)window.PM56_TX.fail(result.error);
         window.PM56_TX.set(thread,'messages',thread.messages.concat(
           {id:ctx.uid('plan-revision-request'),role:'user',type:'text',body:raw,time:new Date().toISOString()},
-          {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
+          {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,plan_version:r.version,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
         window.PM56_TX.set(RT.composer,'destination',null);return result;
       });
       if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
@@ -47097,7 +47112,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-open-version" data-id="'+c.esc(m.plan_id)+'" data-version="'+c.esc(m.plan_version||(/^V(\d+)/.exec(m.detail||'')||[])[1]||'')+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
@@ -47285,6 +47300,7 @@ AT.sha256=sha256;AT.snapshotLimits=Object.freeze({fileBytes:MAX_FILE,totalBytes:
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
     openDetails:openPlanEditor,
+    openVersion:openPlanVersion,
     // Window state is decided by Scheduling; Plan owns safe pause/resume.
     pauseForWindow:function(id,binding,reason,kind='window'){
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};
@@ -56544,7 +56560,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
     var btn = function (action, attrs, label, cls) { return '<button type="button" class="' + (cls || 'text-button') + ' pmx-act" data-action="' + action + '"' + attrs + '>' + label + '</button>'; };
     var cancel = ['active', 'paused', 'invalidated', 'held'].indexOf(st) >= 0 ? btn('sched-cancel-build', ' data-id="' + id + '" data-revision="' + b.revision + '" data-currentness="' + esc(buildCurrent(b)) + '"', 'Cancel schedule') : '';
     var acts = (st === 'invalidated' ? btn('sched-rebind-build', ' data-id="' + id + '" data-version="' + esc(b.pendingVersion) + '" data-hash="' + esc(b.pendingHash) + '" data-revision="' + b.revision + '"', 'Use V' + esc(b.pendingVersion), 'soft-button') : '') +
-      btn('pd-info', ' data-id="' + esc(b.target_id) + '"', 'Open plan') + (st === 'active' && !b.dispatchReceipt ? btn('sched-edit-build', ' data-id="' + id + '"', 'Change times') : '') + cancel;
+      btn('pd-open-version', ' data-id="' + esc(b.target_id) + '" data-version="' + esc(b.exact_target_version) + '"', 'Open plan') + (st === 'active' && !b.dispatchReceipt ? btn('sched-edit-build', ' data-id="' + id + '"', 'Change times') : '') + cancel;
     return '<div class="pmx-sched-brow" data-k="sched-bld-' + id + '" data-sched-row="' + cssId(b.schedule_id) + '" data-state="' + esc(st) + '" data-pmx-flip>' +
       '<div class="pmx-sched-bhead"><span class="pmx-sched-bmark">' + SH.pmxKindMark('build-at', 18) + '</span><p class="pmx-sched-btitle"><b>' + esc(plan && plan.title || b.target_id) + '</b> <span>V' + esc(b.exact_target_version) + '</span></p>' +
       '<span class="mdl-chip pmx-sched-state" data-state="' + esc(st) + '">' + schedMark(st, 13, BUILD_GLYPH[st]) + '<span>' + esc(word) + '</span></span><span class="pmx-sched-bacts">' + acts + '</span></div>' +
@@ -62342,7 +62358,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   const settle=()=>new Promise(resolve=>setTimeout(resolve,170));a.busy=true;
   try{
    const p=plan();const name=step[2];
-   if(name==='open'){invoke('pd-info',{id:p.plan_id});}
+   if(name==='open'){invoke('pd-open-version',{id:p.plan_id});}
    if(name==='build'){invoke('pd-build',{id:p.plan_id});if(p.status!=='building')throw Error('Build was not admitted');}
    if(name==='todos'){
     invoke('pd-more-actions',{id:p.plan_id});await settle();if(active!==a)return;invoke('pd-open-todos',{id:p.plan_id});await settle();if(active!==a)return;invoke('pd-more-actions',{id:p.plan_id});
@@ -62419,7 +62435,7 @@ root.PM56_SCHEDULE_TIME=api;if(typeof module!=='undefined')module.exports=api;
   a.busy=true;const pause=()=>new Promise(r=>setTimeout(r,160));
   try{
    const p=plan(),kind=step[2];
-   if(kind==='open')control('pd-info',{id:p.plan_id});
+   if(kind==='open')control('pd-open-version',{id:p.plan_id});
    if(kind==='at'){
     if(!document.querySelector('.polish-plan-more')){control('pd-more-actions',{id:p.plan_id});await pause();}
     control('pd-build-at',{id:p.plan_id});

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L35226-L36007
+Source lines: L35226-L36008
 
-Source SHA256: `35284be1d2c39d88067feb4776970b95abb33743d8ace92ff0887caa2ce0fd7c`
+Source SHA256: `12b8747bbb07328d8c9f0dfe59781510d754e172d89e64a3f234e7a9c210c719`
 
 ---
 
@@ -509,6 +509,7 @@ acceptance_criteria:
   - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
   - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
   - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
+  - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
   - Concepts/pm7-tools/global_hover_tags_source.py authored guards

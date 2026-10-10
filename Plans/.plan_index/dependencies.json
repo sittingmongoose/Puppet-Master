@@ -6677,6 +6677,7 @@
     "BRS-016",
     "ACD-458",
     "ACD-485",
+    "DL-157",
     "DL-160",
     "ATS-039",
     "ATS-040",
@@ -6949,12 +6950,15 @@
     "F3-521",
     "BSD-030",
     "F3-607",
+    "UCC-176",
     "ATS-020",
     "DL-152",
     "F3-524",
     "BSD-032",
     "BSD-033",
     "UCC-169",
+    "CS-088",
+    "UIW-026",
     "ATS-043",
     "DL-153",
     "F3-599",
@@ -6964,6 +6968,7 @@
     "CDRY-021",
     "CS-086",
     "UCC-171",
+    "WM-065",
     "ATS-044",
     "F3-468",
     "F3-598",
@@ -18537,6 +18542,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CS-088",
+      "to": "CS-079"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-088",
+      "to": "DL-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-088",
+      "to": "UCC-176"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CS-093",
       "to": "CDRY-021"
     },
@@ -25997,6 +26017,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-157",
+      "to": "DL-145"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-157",
+      "to": "DL-147"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DL-158",
       "to": "DL-150"
     },
@@ -31008,6 +31038,11 @@
     {
       "edge_type": "depends_on",
       "from": "F3-590",
+      "to": "DL-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-590",
       "to": "F3-523"
     },
     {
@@ -31064,6 +31099,11 @@
       "edge_type": "depends_on",
       "from": "F3-593",
       "to": "DL-147"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-593",
+      "to": "DL-157"
     },
     {
       "edge_type": "depends_on",
@@ -81682,6 +81722,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-176",
+      "to": "APR-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-176",
+      "to": "DL-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-176",
+      "to": "F3-593"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UCC-188",
       "to": "ACD-485"
     },
@@ -84439,6 +84494,21 @@
       "edge_type": "depends_on",
       "from": "UIW-025",
       "to": "UCC-156"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-026",
+      "to": "DL-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-026",
+      "to": "UCC-176"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-026",
+      "to": "UIW-013"
     },
     {
       "edge_type": "depends_on",
@@ -89044,6 +89114,26 @@
       "edge_type": "depends_on",
       "from": "WM-064",
       "to": "WM-063"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-065",
+      "to": "CS-088"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-065",
+      "to": "DL-157"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-065",
+      "to": "UCC-176"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-065",
+      "to": "UIW-026"
     },
     {
       "edge_type": "depends_on",
@@ -95457,6 +95547,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CS-088",
+      "to": "WM-065"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CV-002",
       "to": "CV-003"
     },
@@ -99049,6 +99144,41 @@
       "edge_type": "unblocks",
       "from": "DL-156",
       "to": "F3-607"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "CS-088"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "F3-590"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "F3-593"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "SQR-015"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "UCC-176"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "UIW-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "DL-157",
+      "to": "WM-065"
     },
     {
       "edge_type": "unblocks",
@@ -104057,6 +104187,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UCC-176",
+      "to": "CS-088"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-176",
+      "to": "UIW-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-176",
+      "to": "WM-065"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UCC-188",
       "to": "WM-073"
     },
@@ -104249,6 +104394,11 @@
       "edge_type": "unblocks",
       "from": "UIW-025",
       "to": "F3-568"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UIW-026",
+      "to": "WM-065"
     },
     {
       "edge_type": "unblocks",
@@ -104511,7 +104661,7 @@
       "to": "WS-020"
     }
   ],
-  "generated_at_utc": "2026-10-10T01:46:02Z",
+  "generated_at_utc": "2026-10-10T01:46:58Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -104523,8 +104673,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 951,
-        "line": 953,
+        "heading_line": 953,
+        "line": 955,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104540,8 +104690,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 1066,
-        "line": 1068,
+        "heading_line": 1068,
+        "line": 1070,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104557,8 +104707,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 1114,
-        "line": 1116,
+        "heading_line": 1116,
+        "line": 1118,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104574,8 +104724,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 1165,
-        "line": 1167,
+        "heading_line": 1167,
+        "line": 1169,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104591,8 +104741,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 1220,
-        "line": 1222,
+        "heading_line": 1222,
+        "line": 1224,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104608,8 +104758,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1269,
-        "line": 1271,
+        "heading_line": 1271,
+        "line": 1273,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104625,8 +104775,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1320,
-        "line": 1322,
+        "heading_line": 1322,
+        "line": 1324,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104642,8 +104792,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1371,
-        "line": 1373,
+        "heading_line": 1373,
+        "line": 1375,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104659,8 +104809,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1424,
-        "line": 1426,
+        "heading_line": 1426,
+        "line": 1428,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104676,8 +104826,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1475,
-        "line": 1477,
+        "heading_line": 1477,
+        "line": 1479,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104693,8 +104843,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1535,
-        "line": 1537,
+        "heading_line": 1537,
+        "line": 1539,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104710,8 +104860,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1586,
-        "line": 1588,
+        "heading_line": 1588,
+        "line": 1590,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104727,8 +104877,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1638,
-        "line": 1640,
+        "heading_line": 1640,
+        "line": 1642,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104744,8 +104894,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1687,
-        "line": 1689,
+        "heading_line": 1689,
+        "line": 1691,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104761,8 +104911,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1736,
-        "line": 1738,
+        "heading_line": 1738,
+        "line": 1740,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104778,8 +104928,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1789,
-        "line": 1791,
+        "heading_line": 1791,
+        "line": 1793,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104795,8 +104945,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1841,
-        "line": 1843,
+        "heading_line": 1843,
+        "line": 1845,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104812,8 +104962,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1892,
-        "line": 1894,
+        "heading_line": 1894,
+        "line": 1896,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104829,8 +104979,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1944,
-        "line": 1946,
+        "heading_line": 1946,
+        "line": 1948,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104846,8 +104996,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1995,
-        "line": 1997,
+        "heading_line": 1997,
+        "line": 1999,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104863,8 +105013,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 2044,
-        "line": 2046,
+        "heading_line": 2046,
+        "line": 2048,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104880,8 +105030,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 2097,
-        "line": 2099,
+        "heading_line": 2099,
+        "line": 2101,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104897,8 +105047,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 2147,
-        "line": 2149,
+        "heading_line": 2149,
+        "line": 2151,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104914,8 +105064,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 2200,
-        "line": 2202,
+        "heading_line": 2202,
+        "line": 2204,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104931,8 +105081,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 2253,
-        "line": 2255,
+        "heading_line": 2255,
+        "line": 2257,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104948,8 +105098,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2307,
-        "line": 2309,
+        "heading_line": 2309,
+        "line": 2311,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104965,8 +105115,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2359,
-        "line": 2361,
+        "heading_line": 2361,
+        "line": 2363,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104982,8 +105132,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2418,
-        "line": 2420,
+        "heading_line": 2420,
+        "line": 2422,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -104999,8 +105149,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2479,
-        "line": 2481,
+        "heading_line": 2481,
+        "line": 2483,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105016,8 +105166,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2531,
-        "line": 2533,
+        "heading_line": 2533,
+        "line": 2535,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105033,8 +105183,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2588,
-        "line": 2590,
+        "heading_line": 2590,
+        "line": 2592,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105050,8 +105200,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2637,
-        "line": 2639,
+        "heading_line": 2639,
+        "line": 2641,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105067,8 +105217,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2688,
-        "line": 2690,
+        "heading_line": 2690,
+        "line": 2692,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105084,8 +105234,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2745,
-        "line": 2747,
+        "heading_line": 2747,
+        "line": 2749,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105101,8 +105251,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2801,
-        "line": 2803,
+        "heading_line": 2803,
+        "line": 2805,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105118,8 +105268,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2855,
-        "line": 2857,
+        "heading_line": 2857,
+        "line": 2859,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105135,8 +105285,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2905,
-        "line": 2907,
+        "heading_line": 2907,
+        "line": 2909,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105152,8 +105302,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2961,
-        "line": 2963,
+        "heading_line": 2963,
+        "line": 2965,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105169,8 +105319,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 3015,
-        "line": 3017,
+        "heading_line": 3017,
+        "line": 3019,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105186,8 +105336,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 3071,
-        "line": 3073,
+        "heading_line": 3073,
+        "line": 3075,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105203,8 +105353,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 3135,
-        "line": 3137,
+        "heading_line": 3137,
+        "line": 3139,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105220,8 +105370,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 3190,
-        "line": 3192,
+        "heading_line": 3192,
+        "line": 3194,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105237,8 +105387,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3261,
-        "line": 3263,
+        "heading_line": 3263,
+        "line": 3265,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105254,8 +105404,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3333,
-        "line": 3335,
+        "heading_line": 3335,
+        "line": 3337,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105271,8 +105421,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3405,
-        "line": 3407,
+        "heading_line": 3407,
+        "line": 3409,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105288,8 +105438,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3471,
-        "line": 3473,
+        "heading_line": 3473,
+        "line": 3475,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105305,8 +105455,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3535,
-        "line": 3537,
+        "heading_line": 3537,
+        "line": 3539,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105322,8 +105472,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3607,
-        "line": 3609,
+        "heading_line": 3609,
+        "line": 3611,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105339,8 +105489,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3680,
-        "line": 3682,
+        "heading_line": 3682,
+        "line": 3684,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105356,8 +105506,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3752,
-        "line": 3754,
+        "heading_line": 3754,
+        "line": 3756,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105373,8 +105523,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3813,
-        "line": 3815,
+        "heading_line": 3815,
+        "line": 3817,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105390,8 +105540,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3888,
-        "line": 3890,
+        "heading_line": 3890,
+        "line": 3892,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105407,8 +105557,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3956,
-        "line": 3958,
+        "heading_line": 3958,
+        "line": 3960,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105424,8 +105574,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 4034,
-        "line": 4036,
+        "heading_line": 4036,
+        "line": 4038,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105441,8 +105591,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 4086,
-        "line": 4088,
+        "heading_line": 4088,
+        "line": 4090,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105458,8 +105608,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 4175,
-        "line": 4177,
+        "heading_line": 4177,
+        "line": 4179,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105475,8 +105625,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4310,
-        "line": 4312,
+        "heading_line": 4312,
+        "line": 4314,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105492,8 +105642,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4399,
-        "line": 4401,
+        "heading_line": 4401,
+        "line": 4403,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105509,8 +105659,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4520,
-        "line": 4522,
+        "heading_line": 4522,
+        "line": 4524,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105526,8 +105676,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4621,
-        "line": 4632,
+        "heading_line": 4623,
+        "line": 4634,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105543,8 +105693,8 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4714,
-        "line": 4716,
+        "heading_line": 4716,
+        "line": 4718,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105560,8 +105710,8 @@
       "source_location": {
         "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
         "heading_level": 3,
-        "heading_line": 4794,
-        "line": 4796,
+        "heading_line": 4796,
+        "line": 4798,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105577,8 +105727,8 @@
       "source_location": {
         "heading": "0PI-063 - Miscellaneous Feature Intake Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5003,
-        "line": 5005,
+        "heading_line": 5005,
+        "line": 5007,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105594,8 +105744,8 @@
       "source_location": {
         "heading": "0PI-064 - Free Models Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5087,
-        "line": 5089,
+        "heading_line": 5089,
+        "line": 5091,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105611,8 +105761,8 @@
       "source_location": {
         "heading": "0PI-065 - Containerized Hosts Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 5150,
-        "line": 5152,
+        "heading_line": 5152,
+        "line": 5154,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105628,8 +105778,8 @@
       "source_location": {
         "heading": "0PI-066 - 0PI-066",
         "heading_level": 3,
-        "heading_line": 5247,
-        "line": 5249,
+        "heading_line": 5249,
+        "line": 5251,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105645,8 +105795,8 @@
       "source_location": {
         "heading": "0PI-067 - Shared Integration Runtime Owner Routing",
         "heading_level": 3,
-        "heading_line": 5494,
-        "line": 5496,
+        "heading_line": 5496,
+        "line": 5498,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -105662,8 +105812,8 @@
       "source_location": {
         "heading": "0PI-068 - 203-Command Touch Closure Owner And Machine-Registry Map",
         "heading_level": 3,
-        "heading_line": 5549,
-        "line": 5551,
+        "heading_line": 5551,
+        "line": 5553,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -116287,8 +116437,8 @@
       "source_location": {
         "heading": "Working Notebook Plan Identity Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1388,
-        "line": 1392,
+        "heading_line": 1389,
+        "line": 1393,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -116304,8 +116454,8 @@
       "source_location": {
         "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
         "heading_level": 3,
-        "heading_line": 1448,
-        "line": 1460,
+        "heading_line": 1452,
+        "line": 1464,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -116321,8 +116471,8 @@
       "source_location": {
         "heading": "17. Plan Schedule Invalidation and Immediate Build Precedence (APR-019)",
         "heading_level": 3,
-        "heading_line": 1448,
-        "line": 1512,
+        "heading_line": 1452,
+        "line": 1518,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -116338,8 +116488,8 @@
       "source_location": {
         "heading": "APR-016 - Original Goal Plan binding participation",
         "heading_level": 3,
-        "heading_line": 1556,
-        "line": 1558,
+        "heading_line": 1562,
+        "line": 1564,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -116355,8 +116505,8 @@
       "source_location": {
         "heading": "Exact original bound selection",
         "heading_level": 4,
-        "heading_line": 1687,
-        "line": 1697,
+        "heading_line": 1693,
+        "line": 1703,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -116372,8 +116522,8 @@
       "source_location": {
         "heading": "APR-071 - Plan Card Schedule Line And The Two Plan-Bound Crew Modes",
         "heading_level": 3,
-        "heading_line": 1752,
-        "line": 1754,
+        "heading_line": 1758,
+        "line": 1760,
         "path": "Plans/Assistant_Plan_Runtime.md"
       },
       "status": "accepted",
@@ -121404,8 +121554,8 @@
       "source_location": {
         "heading": "CDRY-021 — Wand module controls that are not commands",
         "heading_level": 3,
-        "heading_line": 6933,
-        "line": 6958,
+        "heading_line": 6934,
+        "line": 6959,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -121421,8 +121571,8 @@
       "source_location": {
         "heading": "CDRY-022 - The Wand Modules Mint Exactly Seven Commands On DL-130",
         "heading_level": 3,
-        "heading_line": 7195,
-        "line": 7217,
+        "heading_line": 7196,
+        "line": 7218,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -121438,8 +121588,8 @@
       "source_location": {
         "heading": "CDRY-023 - The Closure Answers Mint Exactly Two More Commands",
         "heading_level": 3,
-        "heading_line": 7385,
-        "line": 7399,
+        "heading_line": 7386,
+        "line": 7400,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124515,8 +124665,8 @@
       "source_location": {
         "heading": "CS-078 - Assistant Redesign Central Contract, Event, And Record Registration",
         "heading_level": 3,
-        "heading_line": 6060,
-        "line": 6062,
+        "heading_line": 6061,
+        "line": 6063,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124532,8 +124682,8 @@
       "source_location": {
         "heading": "16. Canonical Command Dispositions and Exact Reuse Invariants (APR-023)",
         "heading_level": 3,
-        "heading_line": 6229,
-        "line": 6259,
+        "heading_line": 6230,
+        "line": 6260,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124549,8 +124699,8 @@
       "source_location": {
         "heading": "CS-080 - Shared Runtime Result To Command Outcome Binding",
         "heading_level": 3,
-        "heading_line": 6313,
-        "line": 6315,
+        "heading_line": 6314,
+        "line": 6316,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124566,8 +124716,8 @@
       "source_location": {
         "heading": "CS-081 - Commands Shortcuts Mutation-Routing Census",
         "heading_level": 3,
-        "heading_line": 6687,
-        "line": 6689,
+        "heading_line": 6688,
+        "line": 6690,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124583,8 +124733,8 @@
       "source_location": {
         "heading": "CS-082 - Project Recovery And Forge CI Command Consumers",
         "heading_level": 3,
-        "heading_line": 6809,
-        "line": 6811,
+        "heading_line": 6810,
+        "line": 6812,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124600,8 +124750,8 @@
       "source_location": {
         "heading": "CS-083 - Git Adapter Command Contracts And Sole Targets",
         "heading_level": 3,
-        "heading_line": 6881,
-        "line": 6883,
+        "heading_line": 6882,
+        "line": 6884,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124617,8 +124767,8 @@
       "source_location": {
         "heading": "CS-085 - Central Contract Records For The Wand Module Commands",
         "heading_level": 3,
-        "heading_line": 7081,
-        "line": 7104,
+        "heading_line": 7082,
+        "line": 7105,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124634,8 +124784,8 @@
       "source_location": {
         "heading": "CS-086 - Text-Editing Keys Inside Sheet Text Fields",
         "heading_level": 3,
-        "heading_line": 7025,
-        "line": 7029,
+        "heading_line": 7026,
+        "line": 7030,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124651,8 +124801,25 @@
       "source_location": {
         "heading": "CS-087 - Central Contract Records For The Closure-Wave Commands",
         "heading_level": 3,
-        "heading_line": 7283,
-        "line": 7314,
+        "heading_line": 7284,
+        "line": 7315,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_contract"
+    },
+    {
+      "context_scope": "goal_bound_plan_open_20261009",
+      "gui_related": true,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-088",
+      "reasoning_tier": "medium",
+      "risk_class": "invented_command_identity",
+      "source_location": {
+        "heading": "CS-088 - cmd.chat.plan.open_version Opens One Exact Plan Version's Document",
+        "heading_level": 3,
+        "heading_line": 7531,
+        "line": 7533,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -124668,8 +124835,8 @@
       "source_location": {
         "heading": "CS-093 - 5.6 Pro Chat Round Non-Command Controls And The Subagent Open Reuse",
         "heading_level": 3,
-        "heading_line": 7455,
-        "line": 7472,
+        "heading_line": 7456,
+        "line": 7473,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -134086,8 +134253,8 @@
       "source_location": {
         "heading": "DL-001 - Decision Log Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 9135,
-        "line": 9137,
+        "heading_line": 9169,
+        "line": 9171,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134103,8 +134270,8 @@
       "source_location": {
         "heading": "DL-002 - Decision Log Human-Authored Ledger Boundary",
         "heading_level": 3,
-        "heading_line": 3669,
-        "line": 3671,
+        "heading_line": 3703,
+        "line": 3705,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134120,8 +134287,8 @@
       "source_location": {
         "heading": "DL-003 - OpenCode Extraction Reference Aid Boundary",
         "heading_level": 3,
-        "heading_line": 3715,
-        "line": 3717,
+        "heading_line": 3749,
+        "line": 3751,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134137,8 +134304,8 @@
       "source_location": {
         "heading": "DL-004 - Extraction Section Number Drift Guard",
         "heading_level": 3,
-        "heading_line": 3756,
-        "line": 3758,
+        "heading_line": 3790,
+        "line": 3792,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134154,8 +134321,8 @@
       "source_location": {
         "heading": "DL-005 - Node Graph Execution Model",
         "heading_level": 3,
-        "heading_line": 3795,
-        "line": 3797,
+        "heading_line": 3829,
+        "line": 3831,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134171,8 +134338,8 @@
       "source_location": {
         "heading": "DL-006 - Governance Role Split",
         "heading_level": 3,
-        "heading_line": 3843,
-        "line": 3845,
+        "heading_line": 3877,
+        "line": 3879,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134188,8 +134355,8 @@
       "source_location": {
         "heading": "DL-007 - Completion Promotion Distinctions",
         "heading_level": 3,
-        "heading_line": 3889,
-        "line": 3891,
+        "heading_line": 3923,
+        "line": 3925,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134205,8 +134372,8 @@
       "source_location": {
         "heading": "DL-008 - Weak Integration First Class Scope",
         "heading_level": 3,
-        "heading_line": 3935,
-        "line": 3937,
+        "heading_line": 3969,
+        "line": 3971,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134222,8 +134389,8 @@
       "source_location": {
         "heading": "DL-009 - Corroboration Threshold Rule",
         "heading_level": 3,
-        "heading_line": 3980,
-        "line": 3982,
+        "heading_line": 4014,
+        "line": 4016,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134239,8 +134406,8 @@
       "source_location": {
         "heading": "DL-010 - Graph Patch Lineage Generation",
         "heading_level": 3,
-        "heading_line": 4024,
-        "line": 4026,
+        "heading_line": 4058,
+        "line": 4060,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134256,8 +134423,8 @@
       "source_location": {
         "heading": "DL-011 - Source Control Worktree First Boundary",
         "heading_level": 3,
-        "heading_line": 4069,
-        "line": 4071,
+        "heading_line": 4103,
+        "line": 4105,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134273,8 +134440,8 @@
       "source_location": {
         "heading": "DL-012 - Shared Runtime Identity Actor Scope",
         "heading_level": 3,
-        "heading_line": 4114,
-        "line": 4116,
+        "heading_line": 4148,
+        "line": 4150,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134290,8 +134457,8 @@
       "source_location": {
         "heading": "DL-013 - Blocked Approval Runtime Identity",
         "heading_level": 3,
-        "heading_line": 4164,
-        "line": 4166,
+        "heading_line": 4198,
+        "line": 4200,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134307,8 +134474,8 @@
       "source_location": {
         "heading": "DL-014 - Navigation Primitive Boundary",
         "heading_level": 3,
-        "heading_line": 4212,
-        "line": 4214,
+        "heading_line": 4246,
+        "line": 4248,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134324,8 +134491,8 @@
       "source_location": {
         "heading": "DL-015 - Debug Evidence Capture Hygiene",
         "heading_level": 3,
-        "heading_line": 4260,
-        "line": 4262,
+        "heading_line": 4294,
+        "line": 4296,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134341,8 +134508,8 @@
       "source_location": {
         "heading": "DL-016 - Provider Runtime Actor Envelope",
         "heading_level": 3,
-        "heading_line": 4313,
-        "line": 4315,
+        "heading_line": 4347,
+        "line": 4349,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134358,8 +134525,8 @@
       "source_location": {
         "heading": "DL-017 - Support Decision Drift Guard",
         "heading_level": 3,
-        "heading_line": 4369,
-        "line": 4371,
+        "heading_line": 4403,
+        "line": 4405,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134375,8 +134542,8 @@
       "source_location": {
         "heading": "DL-018 - Governance Label Copy Boundary",
         "heading_level": 3,
-        "heading_line": 4420,
-        "line": 4422,
+        "heading_line": 4454,
+        "line": 4456,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134392,8 +134559,8 @@
       "source_location": {
         "heading": "DL-019 - Graph Owned Governance Semantics",
         "heading_level": 3,
-        "heading_line": 4479,
-        "line": 4481,
+        "heading_line": 4513,
+        "line": 4515,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134409,8 +134576,8 @@
       "source_location": {
         "heading": "DL-020 - Seam Weak Integration UI Visibility",
         "heading_level": 3,
-        "heading_line": 4534,
-        "line": 4536,
+        "heading_line": 4568,
+        "line": 4570,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134426,8 +134593,8 @@
       "source_location": {
         "heading": "DL-021 - Reopen Revocation Weak Integration Policy",
         "heading_level": 3,
-        "heading_line": 4592,
-        "line": 4594,
+        "heading_line": 4626,
+        "line": 4628,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134443,8 +134610,8 @@
       "source_location": {
         "heading": "DL-022 - Approval Anchoring Evidence Governance",
         "heading_level": 3,
-        "heading_line": 4651,
-        "line": 4653,
+        "heading_line": 4685,
+        "line": 4687,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134460,8 +134627,8 @@
       "source_location": {
         "heading": "DL-023 - Blocked Episode Identity Migration",
         "heading_level": 3,
-        "heading_line": 4705,
-        "line": 4707,
+        "heading_line": 4739,
+        "line": 4741,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134477,8 +134644,8 @@
       "source_location": {
         "heading": "DL-024 - Corroboration Disagreement Outcome",
         "heading_level": 3,
-        "heading_line": 4761,
-        "line": 4763,
+        "heading_line": 4795,
+        "line": 4797,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134494,8 +134661,8 @@
       "source_location": {
         "heading": "DL-025 - Help Clusters Alias Limits",
         "heading_level": 3,
-        "heading_line": 4810,
-        "line": 4812,
+        "heading_line": 4844,
+        "line": 4846,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134511,8 +134678,8 @@
       "source_location": {
         "heading": "DL-026 - Lane Cleanup Retained Transition",
         "heading_level": 3,
-        "heading_line": 4871,
-        "line": 4873,
+        "heading_line": 4905,
+        "line": 4907,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134528,8 +134695,8 @@
       "source_location": {
         "heading": "DL-027 - Case L Bundle A Recovery And Migration Decisions",
         "heading_level": 3,
-        "heading_line": 4919,
-        "line": 4921,
+        "heading_line": 4953,
+        "line": 4955,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134545,8 +134712,8 @@
       "source_location": {
         "heading": "DL-028 - Case L Bundle B Seglog Durability Recovery Decisions",
         "heading_level": 3,
-        "heading_line": 4983,
-        "line": 4985,
+        "heading_line": 5017,
+        "line": 5019,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134562,8 +134729,8 @@
       "source_location": {
         "heading": "DL-029 - Case L Bundle C Retention Compaction Quarantine Decisions",
         "heading_level": 3,
-        "heading_line": 5064,
-        "line": 5066,
+        "heading_line": 5098,
+        "line": 5100,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134579,8 +134746,8 @@
       "source_location": {
         "heading": "DL-030 - Case L Bundle D Storage Root Lock And Fallback Decisions",
         "heading_level": 3,
-        "heading_line": 5141,
-        "line": 5143,
+        "heading_line": 5175,
+        "line": 5177,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134596,8 +134763,8 @@
       "source_location": {
         "heading": "DL-031 - Case L Bundle E EventRecord Scope And Replay Decisions",
         "heading_level": 3,
-        "heading_line": 5214,
-        "line": 5216,
+        "heading_line": 5248,
+        "line": 5250,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134613,8 +134780,8 @@
       "source_location": {
         "heading": "DL-032 - Case L Bundle F Restore Safe Point And Chat Decisions",
         "heading_level": 3,
-        "heading_line": 5278,
-        "line": 5280,
+        "heading_line": 5312,
+        "line": 5314,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134630,8 +134797,8 @@
       "source_location": {
         "heading": "DL-033 - Case L Supplemental Probe Packet Decisions",
         "heading_level": 3,
-        "heading_line": 5352,
-        "line": 5354,
+        "heading_line": 5386,
+        "line": 5388,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134647,8 +134814,8 @@
       "source_location": {
         "heading": "DL-034 - Case L Supplemental Kernel Depth Decisions",
         "heading_level": 3,
-        "heading_line": 5425,
-        "line": 5427,
+        "heading_line": 5459,
+        "line": 5461,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134664,8 +134831,8 @@
       "source_location": {
         "heading": "DL-035 - Terminal Research Decisions Own Engine And Accepted Proposals",
         "heading_level": 3,
-        "heading_line": 5506,
-        "line": 5508,
+        "heading_line": 5540,
+        "line": 5542,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134681,8 +134848,8 @@
       "source_location": {
         "heading": "DL-036 - Research Decision Packet Review Flow",
         "heading_level": 3,
-        "heading_line": 5584,
-        "line": 5586,
+        "heading_line": 5618,
+        "line": 5620,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134698,8 +134865,8 @@
       "source_location": {
         "heading": "DL-037 - Terminal Input Protection Persistence",
         "heading_level": 3,
-        "heading_line": 5652,
-        "line": 5654,
+        "heading_line": 5686,
+        "line": 5688,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134715,8 +134882,8 @@
       "source_location": {
         "heading": "DL-038 - Terminal Input Protection User And Agent Scope",
         "heading_level": 3,
-        "heading_line": 5699,
-        "line": 5701,
+        "heading_line": 5733,
+        "line": 5735,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134732,8 +134899,8 @@
       "source_location": {
         "heading": "DL-039 - Event Authority Owner Decisions August Sheet Answered",
         "heading_level": 3,
-        "heading_line": 5752,
-        "line": 5754,
+        "heading_line": 5786,
+        "line": 5788,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134749,8 +134916,8 @@
       "source_location": {
         "heading": "DL-043 - Jujutsu Research Decisions Forty Four Answers",
         "heading_level": 3,
-        "heading_line": 5830,
-        "line": 5832,
+        "heading_line": 5864,
+        "line": 5866,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134766,8 +134933,8 @@
       "source_location": {
         "heading": "DL-044 - Forge Review Wiring Vocabulary And Create Alias",
         "heading_level": 3,
-        "heading_line": 5900,
-        "line": 5902,
+        "heading_line": 5934,
+        "line": 5936,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134783,8 +134950,8 @@
       "source_location": {
         "heading": "DL-045 - Bounded Event Authority Technical Binding Definition Approval",
         "heading_level": 3,
-        "heading_line": 5989,
-        "line": 5991,
+        "heading_line": 6023,
+        "line": 6025,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134800,8 +134967,8 @@
       "source_location": {
         "heading": "DL-046 - Bounded Browser Technical Binding Authority And Individual Admission",
         "heading_level": 3,
-        "heading_line": 6044,
-        "line": 6046,
+        "heading_line": 6078,
+        "line": 6080,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134817,8 +134984,8 @@
       "source_location": {
         "heading": "DL-047 - Goal Objective And Revision Retention Follows Chat",
         "heading_level": 3,
-        "heading_line": 6094,
-        "line": 6096,
+        "heading_line": 6128,
+        "line": 6130,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134834,8 +135001,8 @@
       "source_location": {
         "heading": "DL-048 - Platform Decision Custody Reference Lifetime",
         "heading_level": 3,
-        "heading_line": 6165,
-        "line": 6167,
+        "heading_line": 6199,
+        "line": 6201,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134851,8 +135018,8 @@
       "source_location": {
         "heading": "DL-049 - Completed Compaction Detail Seven-Day Retention",
         "heading_level": 3,
-        "heading_line": 6228,
-        "line": 6230,
+        "heading_line": 6262,
+        "line": 6264,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134868,8 +135035,8 @@
       "source_location": {
         "heading": "DL-050 - Hosted Repo Requests Route By Selected Adapter",
         "heading_level": 3,
-        "heading_line": 6288,
-        "line": 6290,
+        "heading_line": 6322,
+        "line": 6324,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134885,8 +135052,8 @@
       "source_location": {
         "heading": "DL-051 - New Repository Object Format Picker Evidence Gated",
         "heading_level": 3,
-        "heading_line": 6363,
-        "line": 6365,
+        "heading_line": 6397,
+        "line": 6399,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134902,8 +135069,8 @@
       "source_location": {
         "heading": "DL-052 - Source Graph Parent Reference Bound Thirty Two With Fetch The Rest",
         "heading_level": 3,
-        "heading_line": 6433,
-        "line": 6435,
+        "heading_line": 6467,
+        "line": 6469,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134919,8 +135086,8 @@
       "source_location": {
         "heading": "DL-053 - Source Graph Node Reference Unique Within A Page",
         "heading_level": 3,
-        "heading_line": 6499,
-        "line": 6501,
+        "heading_line": 6533,
+        "line": 6535,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134936,8 +135103,8 @@
       "source_location": {
         "heading": "DL-054 - Parent List Truncates Only At The Bound And Expansion Echoes Currentness",
         "heading_level": 3,
-        "heading_line": 6560,
-        "line": 6562,
+        "heading_line": 6594,
+        "line": 6596,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134953,8 +135120,8 @@
       "source_location": {
         "heading": "DL-055 - Plan Layer Seal Is A Production Seal With Repository Gates At Landing",
         "heading_level": 3,
-        "heading_line": 6628,
-        "line": 6630,
+        "heading_line": 6662,
+        "line": 6664,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134970,8 +135137,8 @@
       "source_location": {
         "heading": "DL-056 - Conflict And Merge Editors Are Read Only Or Built In On A Jujutsu Workspace",
         "heading_level": 3,
-        "heading_line": 6715,
-        "line": 6717,
+        "heading_line": 6749,
+        "line": 6751,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -134987,8 +135154,8 @@
       "source_location": {
         "heading": "DL-057 - A Bookmark Control Says Which Remotes It Touches Before It Touches Them",
         "heading_level": 3,
-        "heading_line": 6786,
-        "line": 6788,
+        "heading_line": 6820,
+        "line": 6822,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135004,8 +135171,8 @@
       "source_location": {
         "heading": "DL-058 - The Seven Shapes The Continuation 4 Corrections Take",
         "heading_level": 3,
-        "heading_line": 6861,
-        "line": 6863,
+        "heading_line": 6895,
+        "line": 6897,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135021,8 +135188,8 @@
       "source_location": {
         "heading": "DL-059 - Branch Policies Are Shown On A Pull Request And The Branch Read Is Deferred",
         "heading_level": 3,
-        "heading_line": 6947,
-        "line": 6949,
+        "heading_line": 6981,
+        "line": 6983,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135038,8 +135205,8 @@
       "source_location": {
         "heading": "DL-060 - An Azure Vote Is Bound To The Revision Puppet Master Observed",
         "heading_level": 3,
-        "heading_line": 7000,
-        "line": 7002,
+        "heading_line": 7034,
+        "line": 7036,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135055,8 +135222,8 @@
       "source_location": {
         "heading": "DL-061 - The Checks View Leads With Evaluations And Separates Unwatched Statuses",
         "heading_level": 3,
-        "heading_line": 7056,
-        "line": 7058,
+        "heading_line": 7090,
+        "line": 7092,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135072,8 +135239,8 @@
       "source_location": {
         "heading": "DL-062 - One Gate List With A Source Column And An Enforcement Column",
         "heading_level": 3,
-        "heading_line": 7112,
-        "line": 7114,
+        "heading_line": 7146,
+        "line": 7148,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135089,8 +135256,8 @@
       "source_location": {
         "heading": "DL-063 - The Merge Command Gains A Typed Strategy Field That Is Always Shown",
         "heading_level": 3,
-        "heading_line": 7170,
-        "line": 7172,
+        "heading_line": 7204,
+        "line": 7206,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135106,8 +135273,8 @@
       "source_location": {
         "heading": "DL-064 - A Requeue Command Disabled With A Typed Reason Where There Is No Equivalent",
         "heading_level": 3,
-        "heading_line": 7227,
-        "line": 7229,
+        "heading_line": 7261,
+        "line": 7263,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135123,8 +135290,8 @@
       "source_location": {
         "heading": "DL-065 - A Provider Neutral Vote And Reviewer Carrier Bound The Way DL-060 Binds",
         "heading_level": 3,
-        "heading_line": 7284,
-        "line": 7286,
+        "heading_line": 7318,
+        "line": 7320,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135140,8 +135307,8 @@
       "source_location": {
         "heading": "DL-066 - Plan Seal Acceptance Is Bounded By One Review And One Repair Round",
         "heading_level": 3,
-        "heading_line": 7344,
-        "line": 7346,
+        "heading_line": 7378,
+        "line": 7380,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135157,8 +135324,8 @@
       "source_location": {
         "heading": "DL-067 - Landing Checks Report Only Failures New Since A Recorded Baseline",
         "heading_level": 3,
-        "heading_line": 7413,
-        "line": 7415,
+        "heading_line": 7447,
+        "line": 7449,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135174,8 +135341,8 @@
       "source_location": {
         "heading": "DL-068 - Quarantine Cleanup Keeps Only The Existing Audit Trail",
         "heading_level": 3,
-        "heading_line": 7499,
-        "line": 7501,
+        "heading_line": 7533,
+        "line": 7535,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135191,8 +135358,8 @@
       "source_location": {
         "heading": "DL-069 - SafePoint Summary Retention Clock Starts At First Durable Publication",
         "heading_level": 3,
-        "heading_line": 7553,
-        "line": 7555,
+        "heading_line": 7587,
+        "line": 7589,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135208,8 +135375,8 @@
       "source_location": {
         "heading": "DL-070 - Moving The Last Terminal Workgroup Leaves The Old Section Empty",
         "heading_level": 3,
-        "heading_line": 7602,
-        "line": 7604,
+        "heading_line": 7636,
+        "line": 7638,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135225,8 +135392,8 @@
       "source_location": {
         "heading": "DL-071 - Account Switch History Uses The Existing Switch Record",
         "heading_level": 3,
-        "heading_line": 7659,
-        "line": 7661,
+        "heading_line": 7693,
+        "line": 7695,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135242,8 +135409,8 @@
       "source_location": {
         "heading": "DL-072 - Continuation Suppression Diagnostic Stays Transient",
         "heading_level": 3,
-        "heading_line": 7708,
-        "line": 7710,
+        "heading_line": 7742,
+        "line": 7744,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135259,8 +135426,8 @@
       "source_location": {
         "heading": "DL-073 - Doctor Media Check Result Stays Check Output",
         "heading_level": 3,
-        "heading_line": 7753,
-        "line": 7755,
+        "heading_line": 7787,
+        "line": 7789,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135276,8 +135443,8 @@
       "source_location": {
         "heading": "DL-074 - Task Failure Is A Presentation Notification Over Child Run History",
         "heading_level": 3,
-        "heading_line": 7796,
-        "line": 7798,
+        "heading_line": 7830,
+        "line": 7832,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135293,8 +135460,8 @@
       "source_location": {
         "heading": "DL-075 - Runtime Artifact Event Histories Are Kept Indefinitely",
         "heading_level": 3,
-        "heading_line": 7844,
-        "line": 7846,
+        "heading_line": 7878,
+        "line": 7880,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135310,8 +135477,8 @@
       "source_location": {
         "heading": "DL-076 - Storage Wrapper Digest Recipe And Durable Read Token Without Snapshot Id",
         "heading_level": 3,
-        "heading_line": 7897,
-        "line": 7899,
+        "heading_line": 7931,
+        "line": 7933,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135327,8 +135494,8 @@
       "source_location": {
         "heading": "DL-077 - Seal Check Accepts Post-August Families Only Through Complete Admission Records",
         "heading_level": 3,
-        "heading_line": 7955,
-        "line": 7957,
+        "heading_line": 7989,
+        "line": 7991,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135344,8 +135511,8 @@
       "source_location": {
         "heading": "DL-078 - Step 9 Registration Moves The Approved Checkpoint Under A Standing Rule",
         "heading_level": 3,
-        "heading_line": 8015,
-        "line": 8017,
+        "heading_line": 8049,
+        "line": 8051,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135361,8 +135528,8 @@
       "source_location": {
         "heading": "DL-079 - Old Goal Record Events Become Read-Only History",
         "heading_level": 3,
-        "heading_line": 8076,
-        "line": 8078,
+        "heading_line": 8110,
+        "line": 8112,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135378,8 +135545,8 @@
       "source_location": {
         "heading": "DL-080 - Workflow Runs Get Current Blocked Replanned And Stopped Events",
         "heading_level": 3,
-        "heading_line": 8134,
-        "line": 8136,
+        "heading_line": 8168,
+        "line": 8170,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135395,8 +135562,8 @@
       "source_location": {
         "heading": "DL-081 - Workflow Runs May Finish With An Approved Verification Exception",
         "heading_level": 3,
-        "heading_line": 8197,
-        "line": 8199,
+        "heading_line": 8231,
+        "line": 8233,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135412,8 +135579,8 @@
       "source_location": {
         "heading": "DL-082 - Platform Capability Catalog Filling Deferred To Build Time",
         "heading_level": 3,
-        "heading_line": 8258,
-        "line": 8260,
+        "heading_line": 8292,
+        "line": 8294,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135429,8 +135596,8 @@
       "source_location": {
         "heading": "DL-083 - Application-Wide Records Count In One Application Bucket Under RP-OPERATIONAL-2555D",
         "heading_level": 3,
-        "heading_line": 8314,
-        "line": 8316,
+        "heading_line": 8348,
+        "line": 8350,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135446,8 +135613,8 @@
       "source_location": {
         "heading": "DL-084 - Subagent Child-Run History Is Kept As Long As Its Chat Exists",
         "heading_level": 3,
-        "heading_line": 8375,
-        "line": 8377,
+        "heading_line": 8409,
+        "line": 8411,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135463,8 +135630,8 @@
       "source_location": {
         "heading": "DL-085 - Crew Board Messages Are Kept With The Coordination Records After Leaving The Board",
         "heading_level": 3,
-        "heading_line": 8463,
-        "line": 8465,
+        "heading_line": 8497,
+        "line": 8499,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135480,8 +135647,8 @@
       "source_location": {
         "heading": "DL-086 - Three Orchestrator Diagnostics Are Kept One Year After The Run Finishes",
         "heading_level": 3,
-        "heading_line": 8528,
-        "line": 8530,
+        "heading_line": 8562,
+        "line": 8564,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135497,8 +135664,8 @@
       "source_location": {
         "heading": "DL-087 - Six Older Crew Lifecycle Events Are Retired For The Shared Collaborative Workflow Events",
         "heading_level": 3,
-        "heading_line": 8589,
-        "line": 8591,
+        "heading_line": 8623,
+        "line": 8625,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135514,8 +135681,8 @@
       "source_location": {
         "heading": "DL-088 - Subagent Spawn Request Event Names Are Retired",
         "heading_level": 3,
-        "heading_line": 8659,
-        "line": 8661,
+        "heading_line": 8693,
+        "line": 8695,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135531,8 +135698,8 @@
       "source_location": {
         "heading": "DL-089 - Application-Scoped Platform Evaluations Count In Their Own Application Bucket Under RP-OPERATIONAL-2555D",
         "heading_level": 3,
-        "heading_line": 8720,
-        "line": 8722,
+        "heading_line": 8754,
+        "line": 8756,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135548,8 +135715,8 @@
       "source_location": {
         "heading": "DL-090 - Registration Of All Seventeen Collaborative Workflow Events One Family Per Landing Under Bounded Technical Bindings",
         "heading_level": 3,
-        "heading_line": 8781,
-        "line": 8783,
+        "heading_line": 8815,
+        "line": 8817,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135565,8 +135732,8 @@
       "source_location": {
         "heading": "DL-091 - A Failed Collaborative Run Gets Its Own Recorded Event",
         "heading_level": 3,
-        "heading_line": 8869,
-        "line": 8871,
+        "heading_line": 8903,
+        "line": 8905,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135582,8 +135749,8 @@
       "source_location": {
         "heading": "DL-092 - Collaborative Workflow Event History Is Kept As Long As Its Chat Exists",
         "heading_level": 3,
-        "heading_line": 8931,
-        "line": 8933,
+        "heading_line": 8965,
+        "line": 8967,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135599,8 +135766,8 @@
       "source_location": {
         "heading": "DL-093 - The Seven Coordination Families' Registration Entries Are Jared's Decision Entries For Those Families",
         "heading_level": 3,
-        "heading_line": 8993,
-        "line": 8995,
+        "heading_line": 9027,
+        "line": 9029,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135616,8 +135783,8 @@
       "source_location": {
         "heading": "DL-094 - Step 9 Registration Of coordination.agent_registered Moves The Approved Checkpoint To 2026-09-25.1",
         "heading_level": 3,
-        "heading_line": 9058,
-        "line": 9060,
+        "heading_line": 9092,
+        "line": 9094,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135633,8 +135800,8 @@
       "source_location": {
         "heading": "DL-104 - The Chat Transcript Uses The Turn Stage Layout Distinct Item Families And An Accent Budget",
         "heading_level": 3,
-        "heading_line": 9258,
-        "line": 9260,
+        "heading_line": 9292,
+        "line": 9294,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135650,8 +135817,8 @@
       "source_location": {
         "heading": "DL-105 - The Working Card Folds When The Answer Starts And Short Narration Folds Into It",
         "heading_level": 3,
-        "heading_line": 9311,
-        "line": 9313,
+        "heading_line": 9345,
+        "line": 9347,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135667,8 +135834,8 @@
       "source_location": {
         "heading": "DL-106 - Replies Stream Stop Lives In The Composer And Motion Follows The Theme Family",
         "heading_level": 3,
-        "heading_line": 9359,
-        "line": 9361,
+        "heading_line": 9393,
+        "line": 9395,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135684,8 +135851,8 @@
       "source_location": {
         "heading": "DL-107 - Chat Sound Is On By Default With A One Click Mute",
         "heading_level": 3,
-        "heading_line": 9412,
-        "line": 9414,
+        "heading_line": 9446,
+        "line": 9448,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135701,8 +135868,8 @@
       "source_location": {
         "heading": "DL-108 - Sends Made While The Assistant Is Busy Queue By Default And Send Now Steers",
         "heading_level": 3,
-        "heading_line": 9463,
-        "line": 9465,
+        "heading_line": 9497,
+        "line": 9499,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135718,8 +135885,8 @@
       "source_location": {
         "heading": "DL-109 - Wand Module Surfaces Use The Theme's Own Font And Nothing Is Cramped",
         "heading_level": 3,
-        "heading_line": 9516,
-        "line": 9518,
+        "heading_line": 9550,
+        "line": 9552,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135735,8 +135902,8 @@
       "source_location": {
         "heading": "DL-110 - Back Seat Driver Shows Plain Status Words And The Plans Change To Match",
         "heading_level": 3,
-        "heading_line": 9567,
-        "line": 9569,
+        "heading_line": 9601,
+        "line": 9603,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135752,8 +135919,8 @@
       "source_location": {
         "heading": "DL-111 - The Coordinator's Mark In A Crew Card Uses The Text Or Seat Colour Not The Accent",
         "heading_level": 3,
-        "heading_line": 9618,
-        "line": 9620,
+        "heading_line": 9652,
+        "line": 9654,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135769,8 +135936,8 @@
       "source_location": {
         "heading": "DL-112 - A Chat Room Message Sent Mid Round Queues For The Next Round And Can Steer Without Interrupting",
         "heading_level": 3,
-        "heading_line": 9663,
-        "line": 9665,
+        "heading_line": 9697,
+        "line": 9699,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135786,8 +135953,8 @@
       "source_location": {
         "heading": "DL-113 - Each Theme Family Gets Its Own Motion Personality For Popups And Chat Cards",
         "heading_level": 3,
-        "heading_line": 9716,
-        "line": 9718,
+        "heading_line": 9750,
+        "line": 9752,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135803,8 +135970,8 @@
       "source_location": {
         "heading": "DL-114 - Setup Popups Keep The Blur Only If Slint 1.18.1 Can Draw It Otherwise They Are Solid",
         "heading_level": 3,
-        "heading_line": 9770,
-        "line": 9772,
+        "heading_line": 9804,
+        "line": 9806,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135820,8 +135987,8 @@
       "source_location": {
         "heading": "DL-115 - Reduce Motion Means Instant",
         "heading_level": 3,
-        "heading_line": 9825,
-        "line": 9827,
+        "heading_line": 9859,
+        "line": 9861,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135837,8 +136004,8 @@
       "source_location": {
         "heading": "DL-116 - Applied Taught Rules Are Reported As Followed And The Plans Define What Counts As Following",
         "heading_level": 3,
-        "heading_line": 9868,
-        "line": 9870,
+        "heading_line": 9902,
+        "line": 9904,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135854,8 +136021,8 @@
       "source_location": {
         "heading": "DL-117 - Review's Setup Offers Team Presets",
         "heading_level": 3,
-        "heading_line": 9924,
-        "line": 9926,
+        "heading_line": 9958,
+        "line": 9960,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135871,8 +136038,8 @@
       "source_location": {
         "heading": "DL-118 - The Two Recovery Buttons Use The Plans' Words Retry And Recover",
         "heading_level": 3,
-        "heading_line": 9976,
-        "line": 9978,
+        "heading_line": 10010,
+        "line": 10012,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135888,8 +136055,8 @@
       "source_location": {
         "heading": "DL-119 - Review And BrainStorm Keep Their Plans Entry Points And The Plans Gain Crew Auto Settings",
         "heading_level": 3,
-        "heading_line": 10021,
-        "line": 10023,
+        "heading_line": 10055,
+        "line": 10057,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135905,8 +136072,8 @@
       "source_location": {
         "heading": "DL-120 - Crews Are Summonable By The Agent And Crew Auto Is The Project Wide Default That Lets It Use Them",
         "heading_level": 3,
-        "heading_line": 10074,
-        "line": 10076,
+        "heading_line": 10108,
+        "line": 10110,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135922,8 +136089,8 @@
       "source_location": {
         "heading": "DL-121 - Start Is Blocked Until The User Picks A Replacement For An Offline Model",
         "heading_level": 3,
-        "heading_line": 10133,
-        "line": 10135,
+        "heading_line": 10167,
+        "line": 10169,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135939,8 +136106,8 @@
       "source_location": {
         "heading": "DL-122 - Activity Shows A Short Team List For The Four Collaboration Kinds And Back Seat Driver",
         "heading_level": 3,
-        "heading_line": 10182,
-        "line": 10184,
+        "heading_line": 10216,
+        "line": 10218,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135956,8 +136123,8 @@
       "source_location": {
         "heading": "DL-123 - A Collapsed Or Narrow Run Card May Move Its Actions Behind Expand And Its Helper Count Into A Hover Card",
         "heading_level": 3,
-        "heading_line": 10234,
-        "line": 10236,
+        "heading_line": 10268,
+        "line": 10270,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135973,8 +136140,8 @@
       "source_location": {
         "heading": "DL-124 - Screens Say Helpers And The Data Keeps Participant",
         "heading_level": 3,
-        "heading_line": 10281,
-        "line": 10283,
+        "heading_line": 10315,
+        "line": 10317,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -135990,8 +136157,8 @@
       "source_location": {
         "heading": "DL-125 - Send Findings To Agent Fills The Message Box Instead Of Sending",
         "heading_level": 3,
-        "heading_line": 10326,
-        "line": 10328,
+        "heading_line": 10360,
+        "line": 10362,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136007,8 +136174,8 @@
       "source_location": {
         "heading": "DL-126 - ELI5 Has A Project Default That A Chat Can Override And Switching It Never Rewrites A Reply",
         "heading_level": 3,
-        "heading_line": 10374,
-        "line": 10376,
+        "heading_line": 10408,
+        "line": 10410,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136024,8 +136191,8 @@
       "source_location": {
         "heading": "DL-127 - Teach Opens The Teach Popup Everywhere",
         "heading_level": 3,
-        "heading_line": 10452,
-        "line": 10454,
+        "heading_line": 10486,
+        "line": 10488,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136041,8 +136208,8 @@
       "source_location": {
         "heading": "DL-128 - The Coordinator Writes Each Crew Part's Done When And Must Finish First",
         "heading_level": 3,
-        "heading_line": 10500,
-        "line": 10502,
+        "heading_line": 10534,
+        "line": 10536,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136058,8 +136225,8 @@
       "source_location": {
         "heading": "DL-129 - The Live Run Line And Per Reply Files Row Replace The Old Summary Above The Message Box",
         "heading_level": 3,
-        "heading_line": 10543,
-        "line": 10545,
+        "heading_line": 10577,
+        "line": 10579,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136075,8 +136242,8 @@
       "source_location": {
         "heading": "DL-130 - All Seven New Commands Are Added",
         "heading_level": 3,
-        "heading_line": 10589,
-        "line": 10591,
+        "heading_line": 10623,
+        "line": 10625,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136092,8 +136259,8 @@
       "source_location": {
         "heading": "DL-131 - A Crew's Own Time And Cost Limit Overrides The General Run Limit",
         "heading_level": 3,
-        "heading_line": 10648,
-        "line": 10650,
+        "heading_line": 10682,
+        "line": 10684,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136109,8 +136276,8 @@
       "source_location": {
         "heading": "DL-132 - This Chat's Assistant Checks The Work Of A Helper Who Is Also The Coordinator",
         "heading_level": 3,
-        "heading_line": 10702,
-        "line": 10704,
+        "heading_line": 10736,
+        "line": 10738,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136126,8 +136293,8 @@
       "source_location": {
         "heading": "DL-133 - The Team Preset Personas Are Registered For Team Use And Grill Me Is A Skill",
         "heading_level": 3,
-        "heading_line": 10745,
-        "line": 10747,
+        "heading_line": 10779,
+        "line": 10781,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136143,8 +136310,8 @@
       "source_location": {
         "heading": "DL-134 - Three Official Labels Change To Friendlier Words And Two Data Words Get Plain Display Words",
         "heading_level": 3,
-        "heading_line": 10792,
-        "line": 10794,
+        "heading_line": 10826,
+        "line": 10828,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136160,8 +136327,8 @@
       "source_location": {
         "heading": "DL-135 - Crew Auto Leaves A One Line Note In The Chat Worded For The Project",
         "heading_level": 3,
-        "heading_line": 10851,
-        "line": 10853,
+        "heading_line": 10885,
+        "line": 10887,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136177,8 +136344,8 @@
       "source_location": {
         "heading": "DL-136 - A Project Wide Pause All Automations Switch Stops Every Scheduled Send And Build Until The User Turns It Back On",
         "heading_level": 3,
-        "heading_line": 10905,
-        "line": 10907,
+        "heading_line": 10939,
+        "line": 10941,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136194,8 +136361,8 @@
       "source_location": {
         "heading": "DL-137 - Each Helper's Line In A Running Card Streams What The Helper Is Writing Reusing The Reply Streaming",
         "heading_level": 3,
-        "heading_line": 10964,
-        "line": 10966,
+        "heading_line": 10998,
+        "line": 11000,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136211,8 +136378,8 @@
       "source_location": {
         "heading": "DL-138 - Approved Wand Modules Answers And Theme Fonts",
         "heading_level": 3,
-        "heading_line": 11018,
-        "line": 11020,
+        "heading_line": 11052,
+        "line": 11054,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136228,8 +136395,8 @@
       "source_location": {
         "heading": "DL-139 - Skia Only Desktop With Our Own Skia Extensions And A Leptos Web Client",
         "heading_level": 3,
-        "heading_line": 11203,
-        "line": 11205,
+        "heading_line": 11237,
+        "line": 11239,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136245,8 +136412,8 @@
       "source_location": {
         "heading": "DL-140 - Assistant Chat Icons Become One Neon Family",
         "heading_level": 3,
-        "heading_line": 11318,
-        "line": 11320,
+        "heading_line": 11352,
+        "line": 11354,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136262,8 +136429,8 @@
       "source_location": {
         "heading": "DL-141 - Every Status Reads At A Glance From One Shared Set Of Marks",
         "heading_level": 3,
-        "heading_line": 11389,
-        "line": 11391,
+        "heading_line": 11423,
+        "line": 11425,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136279,8 +136446,8 @@
       "source_location": {
         "heading": "DL-142 - The Working Activity Live Step Is A Dark Disc With A Lit Icon",
         "heading_level": 3,
-        "heading_line": 11443,
-        "line": 11445,
+        "heading_line": 11477,
+        "line": 11479,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136296,8 +136463,8 @@
       "source_location": {
         "heading": "DL-143 - Send And Stop Are The Solid Living Design",
         "heading_level": 3,
-        "heading_line": 11489,
-        "line": 11491,
+        "heading_line": 11523,
+        "line": 11525,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136313,8 +136480,8 @@
       "source_location": {
         "heading": "DL-144 - NieR Mode Covers The Whole Assistant Chat And Scene Changes Cross Fade",
         "heading_level": 3,
-        "heading_line": 11543,
-        "line": 11545,
+        "heading_line": 11577,
+        "line": 11579,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136330,8 +136497,8 @@
       "source_location": {
         "heading": "DL-145 - The Chat's Hover Labels Wait For A Deliberate Pause And Three Small Chrome Fixes",
         "heading_level": 3,
-        "heading_line": 11597,
-        "line": 11599,
+        "heading_line": 11631,
+        "line": 11633,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136347,8 +136514,8 @@
       "source_location": {
         "heading": "DL-146 - The Capabilities Wand In Colour The Fast Bolt Strikes From The Top And Grill Me's Icon Is A Kettle Grill",
         "heading_level": 3,
-        "heading_line": 11654,
-        "line": 11656,
+        "heading_line": 11688,
+        "line": 11690,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136364,8 +136531,8 @@
       "source_location": {
         "heading": "DL-147 - Activity Detail Gets A Tidy Goal Panel One Line To Do Rows And A Live Subagent Transcript",
         "heading_level": 3,
-        "heading_line": 11707,
-        "line": 11709,
+        "heading_line": 11741,
+        "line": 11743,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136381,8 +136548,8 @@
       "source_location": {
         "heading": "DL-148 - The Setup Popups Get Step Tiles A Readable Chat Preview And A Draggable Send Time",
         "heading_level": 3,
-        "heading_line": 11768,
-        "line": 11770,
+        "heading_line": 11802,
+        "line": 11804,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136398,8 +136565,8 @@
       "source_location": {
         "heading": "DL-149 - Agents Are Drawn As Little Puppets The Agent Graphs Become Cast Plates And Technical Details Leaves The Run Surfaces",
         "heading_level": 3,
-        "heading_line": 11825,
-        "line": 11827,
+        "heading_line": 11859,
+        "line": 11861,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136415,8 +136582,8 @@
       "source_location": {
         "heading": "DL-150 - The Ask Card Gets A Livelier Look",
         "heading_level": 3,
-        "heading_line": 11885,
-        "line": 11887,
+        "heading_line": 11919,
+        "line": 11921,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136432,8 +136599,8 @@
       "source_location": {
         "heading": "DL-151 - The Retro Themes Follow PMConcept7's Colours And Box Shapes",
         "heading_level": 3,
-        "heading_line": 11930,
-        "line": 11932,
+        "heading_line": 11964,
+        "line": 11966,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136449,8 +136616,8 @@
       "source_location": {
         "heading": "DL-152 - NieR Mode Where A Look Is Chosen NieR Onboarding And Tour And Their Sounds",
         "heading_level": 3,
-        "heading_line": 11986,
-        "line": 11988,
+        "heading_line": 12020,
+        "line": 12022,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136466,8 +136633,8 @@
       "source_location": {
         "heading": "DL-153 - The App Opens In Its Own Look Setup's Starting Look And The Four Families' Hero Moments",
         "heading_level": 3,
-        "heading_line": 12055,
-        "line": 12057,
+        "heading_line": 12089,
+        "line": 12091,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136483,8 +136650,8 @@
       "source_location": {
         "heading": "DL-154 - A Collaboration Setup Sheet's Graph Stays In View As Helpers And Rounds Are Added",
         "heading_level": 3,
-        "heading_line": 12253,
-        "line": 12255,
+        "heading_line": 12287,
+        "line": 12289,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136500,8 +136667,25 @@
       "source_location": {
         "heading": "DL-156 - The Plan Card's Buttons Line Up And Fit The Card In Every Theme",
         "heading_level": 3,
-        "heading_line": 12313,
-        "line": 12315,
+        "heading_line": 12347,
+        "line": 12349,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "c56_owner_decisions_20261009",
+      "gui_related": true,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-157",
+      "reasoning_tier": "high",
+      "risk_class": "owner_decision_drift",
+      "source_location": {
+        "heading": "DL-157 - The Schedule Ended Wording, A Command To Open The Exact Plan, And Previews As The Hover Tag Exception",
+        "heading_level": 3,
+        "heading_line": 12635,
+        "line": 12637,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136517,8 +136701,8 @@
       "source_location": {
         "heading": "DL-158 - The Ask Card Fits Long Answers",
         "heading_level": 3,
-        "heading_line": 12207,
-        "line": 12209,
+        "heading_line": 12241,
+        "line": 12243,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136534,8 +136718,8 @@
       "source_location": {
         "heading": "DL-159 - The Chat Opens In The Look You Chose, From Its First Frame",
         "heading_level": 3,
-        "heading_line": 12420,
-        "line": 12422,
+        "heading_line": 12454,
+        "line": 12456,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136551,8 +136735,8 @@
       "source_location": {
         "heading": "DL-160 - The To-Do Navigation Line Loses Its Last Item Button",
         "heading_level": 3,
-        "heading_line": 12368,
-        "line": 12370,
+        "heading_line": 12402,
+        "line": 12404,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136568,8 +136752,8 @@
       "source_location": {
         "heading": "DL-161 - PMConcept7 Carries Its Own Fonts",
         "heading_level": 3,
-        "heading_line": 12142,
-        "line": 12144,
+        "heading_line": 12176,
+        "line": 12178,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136585,8 +136769,8 @@
       "source_location": {
         "heading": "DL-162 - The Left Rail Takes The Polish Design",
         "heading_level": 3,
-        "heading_line": 12470,
-        "line": 12472,
+        "heading_line": 12504,
+        "line": 12506,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -136602,8 +136786,8 @@
       "source_location": {
         "heading": "DL-163 - The Jujutsu View Of Source Control Gets Its Own Five Tabs",
         "heading_level": 3,
-        "heading_line": 12537,
-        "line": 12539,
+        "heading_line": 12571,
+        "line": 12573,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -155404,8 +155588,8 @@
       "source_location": {
         "heading": "F3-524 - Model-Backed Slint Portability And Evidence Separation",
         "heading_level": 3,
-        "heading_line": 35756,
-        "line": 35758,
+        "heading_line": 35757,
+        "line": 35759,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155421,8 +155605,8 @@
       "source_location": {
         "heading": "F3-525 - K3 Plugins Owner Projection And Theme-Native Action States",
         "heading_level": 3,
-        "heading_line": 35817,
-        "line": 35819,
+        "heading_line": 35818,
+        "line": 35820,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155438,8 +155622,8 @@
       "source_location": {
         "heading": "F3-526 - Operational Doctor Consumer Currentness And Evidence Closure",
         "heading_level": 3,
-        "heading_line": 35885,
-        "line": 35887,
+        "heading_line": 35886,
+        "line": 35888,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155455,8 +155639,8 @@
       "source_location": {
         "heading": "F3-527 - Settled Panel Undock And Redock Event Identity",
         "heading_level": 3,
-        "heading_line": 35949,
-        "line": 35951,
+        "heading_line": 35950,
+        "line": 35952,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155472,8 +155656,8 @@
       "source_location": {
         "heading": "F3-528 - Provider-neutral automation and recovery/connector presentation",
         "heading_level": 3,
-        "heading_line": 36016,
-        "line": 36018,
+        "heading_line": 36017,
+        "line": 36019,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155489,8 +155673,8 @@
       "source_location": {
         "heading": "F3-529 - Source Control, Reviews, Actions And Pipelines, And Related-Surface Semantics",
         "heading_level": 3,
-        "heading_line": 36101,
-        "line": 36103,
+        "heading_line": 36102,
+        "line": 36104,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155506,8 +155690,8 @@
       "source_location": {
         "heading": "F3-530 - Reference-Only Security Controls And Post-Integration DRY Reconciliation",
         "heading_level": 3,
-        "heading_line": 36200,
-        "line": 36202,
+        "heading_line": 36201,
+        "line": 36203,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155523,8 +155707,8 @@
       "source_location": {
         "heading": "F3-531 - Assistant Redesign Mode Menu, Wand, And Header Placement",
         "heading_level": 3,
-        "heading_line": 36370,
-        "line": 36372,
+        "heading_line": 36371,
+        "line": 36373,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155540,8 +155724,8 @@
       "source_location": {
         "heading": "F3-532 - Assistant Composer Tray, Destination Ribbon, And Quota Strip",
         "heading_level": 3,
-        "heading_line": 36424,
-        "line": 36426,
+        "heading_line": 36425,
+        "line": 36427,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155557,8 +155741,8 @@
       "source_location": {
         "heading": "F3-533 - Plan Card, Goal And To-Do Activity Surfaces, And Activity Domains",
         "heading_level": 3,
-        "heading_line": 36473,
-        "line": 36475,
+        "heading_line": 36474,
+        "line": 36476,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155574,8 +155758,8 @@
       "source_location": {
         "heading": "F3-534 - Assistant Redesign Responsive Priority And Visual Prohibitions",
         "heading_level": 3,
-        "heading_line": 36528,
-        "line": 36530,
+        "heading_line": 36529,
+        "line": 36531,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155591,8 +155775,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37016,
+        "heading_line": 36931,
+        "line": 37017,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155608,8 +155792,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37066,
+        "heading_line": 36931,
+        "line": 37067,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155625,8 +155809,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37114,
+        "heading_line": 36931,
+        "line": 37115,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155642,8 +155826,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37161,
+        "heading_line": 36931,
+        "line": 37162,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155659,8 +155843,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37209,
+        "heading_line": 36931,
+        "line": 37210,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155676,8 +155860,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37255,
+        "heading_line": 36931,
+        "line": 37256,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155693,8 +155877,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37301,
+        "heading_line": 36931,
+        "line": 37302,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155710,8 +155894,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37345,
+        "heading_line": 36931,
+        "line": 37346,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155727,8 +155911,8 @@
       "source_location": {
         "heading": "25. Settings Manager Presentation Grammar Across All 38 Managers and Projections",
         "heading_level": 3,
-        "heading_line": 36930,
-        "line": 37399,
+        "heading_line": 36931,
+        "line": 37400,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155744,8 +155928,8 @@
       "source_location": {
         "heading": "F3-544 - Terminal Capability Shell Context And Snapshot Disclosure",
         "heading_level": 3,
-        "heading_line": 37472,
-        "line": 37474,
+        "heading_line": 37473,
+        "line": 37475,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155761,8 +155945,8 @@
       "source_location": {
         "heading": "F3-545 - Explicit Remote Terminal Compatibility Setup",
         "heading_level": 3,
-        "heading_line": 37531,
-        "line": 37533,
+        "heading_line": 37532,
+        "line": 37534,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155778,8 +155962,8 @@
       "source_location": {
         "heading": "F3-546 - Pane Local Advisory Command Progress",
         "heading_level": 3,
-        "heading_line": 37584,
-        "line": 37586,
+        "heading_line": 37585,
+        "line": 37587,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155795,8 +155979,8 @@
       "source_location": {
         "heading": "F3-547 - Safe Command Insertion And Retained Output Editor Actions",
         "heading_level": 3,
-        "heading_line": 37632,
-        "line": 37634,
+        "heading_line": 37633,
+        "line": 37635,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155812,8 +155996,8 @@
       "source_location": {
         "heading": "F3-548 - Redacted Environment Provenance And Pending Launch Display",
         "heading_level": 3,
-        "heading_line": 37690,
-        "line": 37692,
+        "heading_line": 37691,
+        "line": 37693,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155829,8 +156013,8 @@
       "source_location": {
         "heading": "F3-549 - Explicit Live Pane Input Protection",
         "heading_level": 3,
-        "heading_line": 37744,
-        "line": 37746,
+        "heading_line": 37745,
+        "line": 37747,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155846,8 +156030,8 @@
       "source_location": {
         "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
         "heading_level": 3,
-        "heading_line": 37811,
-        "line": 37813,
+        "heading_line": 37812,
+        "line": 37814,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155863,8 +156047,8 @@
       "source_location": {
         "heading": "F3-550 - Research Decision Card Fields Sequencing And Text Status",
         "heading_level": 3,
-        "heading_line": 37811,
-        "line": 37886,
+        "heading_line": 37812,
+        "line": 37887,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155880,8 +156064,8 @@
       "source_location": {
         "heading": "F3-552 — Operation History Navigation And Descriptions",
         "heading_level": 3,
-        "heading_line": 37947,
-        "line": 37949,
+        "heading_line": 37948,
+        "line": 37950,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155897,8 +156081,8 @@
       "source_location": {
         "heading": "F3-553 — Distinct Group Undo Redo And Selected Operation Reversal",
         "heading_level": 3,
-        "heading_line": 38020,
-        "line": 38022,
+        "heading_line": 38021,
+        "line": 38023,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155914,8 +156098,8 @@
       "source_location": {
         "heading": "F3-554 — Managed Rewrite Preview And Earlier State Browsing",
         "heading_level": 3,
-        "heading_line": 38091,
-        "line": 38093,
+        "heading_line": 38092,
+        "line": 38094,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155931,8 +156115,8 @@
       "source_location": {
         "heading": "F3-555 — Guided Change Editing And Structured Partial Selection",
         "heading_level": 3,
-        "heading_line": 38162,
-        "line": 38164,
+        "heading_line": 38163,
+        "line": 38165,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155948,8 +156132,8 @@
       "source_location": {
         "heading": "F3-556 — History Comparison Graph Assistance And Review Correspondence",
         "heading_level": 3,
-        "heading_line": 38241,
-        "line": 38243,
+        "heading_line": 38242,
+        "line": 38244,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155965,8 +156149,8 @@
       "source_location": {
         "heading": "F3-557 — Read Only Browsing Workspace Adoption And Visibility",
         "heading_level": 3,
-        "heading_line": 38321,
-        "line": 38323,
+        "heading_line": 38322,
+        "line": 38324,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155982,8 +156166,8 @@
       "source_location": {
         "heading": "F3-558 — Qualified Conflict Publication Bookmark Resolution And Review Stacks",
         "heading_level": 3,
-        "heading_line": 38388,
-        "line": 38390,
+        "heading_line": 38389,
+        "line": 38391,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -155999,8 +156183,8 @@
       "source_location": {
         "heading": "F3-559 — History Maintenance And Sanitized Diagnostic Surfaces",
         "heading_level": 3,
-        "heading_line": 38463,
-        "line": 38465,
+        "heading_line": 38464,
+        "line": 38466,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156016,8 +156200,8 @@
       "source_location": {
         "heading": "F3-560 — Line Ending And Backup Completion Policy Presentation",
         "heading_level": 3,
-        "heading_line": 38530,
-        "line": 38532,
+        "heading_line": 38531,
+        "line": 38533,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156033,8 +156217,8 @@
       "source_location": {
         "heading": "F3-561 — Gate List Source And Enforcement Columns",
         "heading_level": 3,
-        "heading_line": 38602,
-        "line": 38604,
+        "heading_line": 38603,
+        "line": 38605,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156050,8 +156234,8 @@
       "source_location": {
         "heading": "F3-562 - Chat Transcript Turn Stage Presentation And Working Activity Promotion",
         "heading_level": 3,
-        "heading_line": 38646,
-        "line": 38648,
+        "heading_line": 38647,
+        "line": 38649,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156067,8 +156251,8 @@
       "source_location": {
         "heading": "F3-563 - Composer Busy Send Steer Queue Switch Default And Send Now",
         "heading_level": 3,
-        "heading_line": 38709,
-        "line": 38711,
+        "heading_line": 38710,
+        "line": 38712,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156084,8 +156268,8 @@
       "source_location": {
         "heading": "F3-564 - Chat Sound Cues In Notifications And Sounds With A Header Mute",
         "heading_level": 3,
-        "heading_line": 38762,
-        "line": 38764,
+        "heading_line": 38763,
+        "line": 38765,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156101,8 +156285,8 @@
       "source_location": {
         "heading": "F3-565 - Narrow Chat Pane Transcript Resilience",
         "heading_level": 3,
-        "heading_line": 38819,
-        "line": 38821,
+        "heading_line": 38820,
+        "line": 38822,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156118,8 +156302,8 @@
       "source_location": {
         "heading": "F3-566 - Wand Modules Redesign GUI Contract And Sheet Grammar",
         "heading_level": 3,
-        "heading_line": 38869,
-        "line": 38871,
+        "heading_line": 38870,
+        "line": 38872,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156135,8 +156319,8 @@
       "source_location": {
         "heading": "F3-567 - Composer Stack With The Dock And Capability Marks",
         "heading_level": 3,
-        "heading_line": 39015,
-        "line": 39017,
+        "heading_line": 39016,
+        "line": 39018,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156152,8 +156336,8 @@
       "source_location": {
         "heading": "F3-568 - Dialog Keyboard Scope And Escape Precedence",
         "heading_level": 3,
-        "heading_line": 39082,
-        "line": 39084,
+        "heading_line": 39083,
+        "line": 39085,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156169,8 +156353,8 @@
       "source_location": {
         "heading": "F3-569 - Run Card Budgets Width Tiers Receipts And Run Views",
         "heading_level": 3,
-        "heading_line": 39145,
-        "line": 39147,
+        "heading_line": 39146,
+        "line": 39148,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156186,8 +156370,8 @@
       "source_location": {
         "heading": "F3-570 - Reply One-Line Attachments From The Wand Modules",
         "heading_level": 3,
-        "heading_line": 39234,
-        "line": 39236,
+        "heading_line": 39235,
+        "line": 39237,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156203,8 +156387,8 @@
       "source_location": {
         "heading": "F3-571 - Back Seat Driver Advisor Note Placement",
         "heading_level": 3,
-        "heading_line": 39306,
-        "line": 39308,
+        "heading_line": 39307,
+        "line": 39309,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156220,8 +156404,8 @@
       "source_location": {
         "heading": "F3-572 - Dual-Copy Checklist For Expert And ELI5 Authored Copy",
         "heading_level": 3,
-        "heading_line": 39374,
-        "line": 39376,
+        "heading_line": 39375,
+        "line": 39377,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156237,8 +156421,8 @@
       "source_location": {
         "heading": "F3-573 - Schedule Message And Build At Sheets",
         "heading_level": 3,
-        "heading_line": 39435,
-        "line": 39437,
+        "heading_line": 39436,
+        "line": 39438,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156254,8 +156438,8 @@
       "source_location": {
         "heading": "F3-574 - Revert Confirm Sheet And Memory Chat Traces",
         "heading_level": 3,
-        "heading_line": 39501,
-        "line": 39503,
+        "heading_line": 39502,
+        "line": 39504,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156271,8 +156455,8 @@
       "source_location": {
         "heading": "F3-575 - Chat Header Title States",
         "heading_level": 3,
-        "heading_line": 39564,
-        "line": 39566,
+        "heading_line": 39565,
+        "line": 39567,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156288,8 +156472,8 @@
       "source_location": {
         "heading": "F3-576 - Additive Correction v4 Wording For The Wand Module Surfaces",
         "heading_level": 3,
-        "heading_line": 39619,
-        "line": 39621,
+        "heading_line": 39620,
+        "line": 39622,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156305,8 +156489,8 @@
       "source_location": {
         "heading": "F3-577 - Wand Rows For Back Seat Driver And Revert",
         "heading_level": 3,
-        "heading_line": 39678,
-        "line": 39680,
+        "heading_line": 39679,
+        "line": 39681,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156322,8 +156506,8 @@
       "source_location": {
         "heading": "F3-578 - Wand Multi-Agent Sidecar Gains Crew Auto Settings",
         "heading_level": 3,
-        "heading_line": 39728,
-        "line": 39730,
+        "heading_line": 39729,
+        "line": 39731,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156339,8 +156523,8 @@
       "source_location": {
         "heading": "F3-579 - Teach Sheet And Your Rules Document",
         "heading_level": 3,
-        "heading_line": 39807,
-        "line": 39809,
+        "heading_line": 39808,
+        "line": 39810,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156356,8 +156540,8 @@
       "source_location": {
         "heading": "F3-580 - Compact Activity Detail For Collaboration Runs And Back Seat Driver Context",
         "heading_level": 3,
-        "heading_line": 39903,
-        "line": 39905,
+        "heading_line": 39904,
+        "line": 39906,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156373,8 +156557,8 @@
       "source_location": {
         "heading": "F3-581 - ELI5 Sheet Quick Dot Reply Tick And Explain This Reply Simply",
         "heading_level": 3,
-        "heading_line": 39973,
-        "line": 39975,
+        "heading_line": 39974,
+        "line": 39976,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156390,8 +156574,8 @@
       "source_location": {
         "heading": "F3-582 — Skia Renderer Extensions",
         "heading_level": 3,
-        "heading_line": 40081,
-        "line": 40083,
+        "heading_line": 40082,
+        "line": 40084,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156407,8 +156591,8 @@
       "source_location": {
         "heading": "F3-583 — Leptos Web Client",
         "heading_level": 3,
-        "heading_line": 40159,
-        "line": 40161,
+        "heading_line": 40160,
+        "line": 40162,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156424,8 +156608,8 @@
       "source_location": {
         "heading": "F3-584 — Assistant Chat Neon Icon Grammar",
         "heading_level": 3,
-        "heading_line": 40250,
-        "line": 40252,
+        "heading_line": 40251,
+        "line": 40253,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156441,8 +156625,8 @@
       "source_location": {
         "heading": "F3-585 — Status Set And Status At A Glance",
         "heading_level": 3,
-        "heading_line": 40324,
-        "line": 40326,
+        "heading_line": 40325,
+        "line": 40327,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156458,8 +156642,8 @@
       "source_location": {
         "heading": "F3-586 — Working Activity Dark Disc",
         "heading_level": 3,
-        "heading_line": 40386,
-        "line": 40388,
+        "heading_line": 40387,
+        "line": 40389,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156475,8 +156659,8 @@
       "source_location": {
         "heading": "F3-587 — Composer Send And Stop Solid Living Control",
         "heading_level": 3,
-        "heading_line": 40440,
-        "line": 40442,
+        "heading_line": 40441,
+        "line": 40443,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156492,8 +156676,8 @@
       "source_location": {
         "heading": "F3-588 — Wand And Fast Mode Bolt Glyphs",
         "heading_level": 3,
-        "heading_line": 40511,
-        "line": 40513,
+        "heading_line": 40512,
+        "line": 40514,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156509,8 +156693,8 @@
       "source_location": {
         "heading": "F3-589 — Assistant Chat Under NieR Mode And Scene Changes",
         "heading_level": 3,
-        "heading_line": 40584,
-        "line": 40586,
+        "heading_line": 40585,
+        "line": 40587,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156526,8 +156710,8 @@
       "source_location": {
         "heading": "F3-590 — Chat Hover Labels Wait For Intent And Activity Previews Dwell",
         "heading_level": 3,
-        "heading_line": 40657,
-        "line": 40659,
+        "heading_line": 40658,
+        "line": 40660,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156543,8 +156727,8 @@
       "source_location": {
         "heading": "F3-591 — Opening More Keeps The Message Chrome On Its Row",
         "heading_level": 3,
-        "heading_line": 40720,
-        "line": 40722,
+        "heading_line": 40737,
+        "line": 40739,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156560,8 +156744,8 @@
       "source_location": {
         "heading": "F3-592 — Setup Sheet Step Tiles, A Readable In Your Chat Preview, And The Send Time Track",
         "heading_level": 3,
-        "heading_line": 40772,
-        "line": 40774,
+        "heading_line": 40789,
+        "line": 40791,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156577,8 +156761,8 @@
       "source_location": {
         "heading": "F3-593 — Goal, To-Dos And Subagents In Activity Detail",
         "heading_level": 3,
-        "heading_line": 40840,
-        "line": 40842,
+        "heading_line": 40857,
+        "line": 40859,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156594,8 +156778,8 @@
       "source_location": {
         "heading": "F3-594 — Agents Are Puppets",
         "heading_level": 3,
-        "heading_line": 40941,
-        "line": 40943,
+        "heading_line": 40963,
+        "line": 40965,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156611,8 +156795,8 @@
       "source_location": {
         "heading": "F3-595 — Cast Plates In Sheets And Run Views",
         "heading_level": 3,
-        "heading_line": 41028,
-        "line": 41030,
+        "heading_line": 41050,
+        "line": 41052,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156628,8 +156812,8 @@
       "source_location": {
         "heading": "F3-596 — The Ask Card's Look",
         "heading_level": 3,
-        "heading_line": 41104,
-        "line": 41106,
+        "heading_line": 41126,
+        "line": 41128,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156645,8 +156829,8 @@
       "source_location": {
         "heading": "F3-597 — The Assistant Chat Under The Retro Themes",
         "heading_level": 3,
-        "heading_line": 41167,
-        "line": 41169,
+        "heading_line": 41189,
+        "line": 41191,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156662,8 +156846,8 @@
       "source_location": {
         "heading": "F3-598 — NieR Mode In Product Onboarding And The Guided Tour",
         "heading_level": 3,
-        "heading_line": 41253,
-        "line": 41255,
+        "heading_line": 41275,
+        "line": 41277,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156679,8 +156863,8 @@
       "source_location": {
         "heading": "F3-599 — Onboarding And Guided Tour Sound Cues In Notifications And Sounds",
         "heading_level": 3,
-        "heading_line": 41395,
-        "line": 41397,
+        "heading_line": 41417,
+        "line": 41419,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156696,8 +156880,8 @@
       "source_location": {
         "heading": "F3-600 — The Hero Moments In The Four Theme Families",
         "heading_level": 3,
-        "heading_line": 41996,
-        "line": 41998,
+        "heading_line": 42020,
+        "line": 42022,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156713,8 +156897,8 @@
       "source_location": {
         "heading": "F3-601 — A Cast Plate Keeps A Drawing At Every Team Size",
         "heading_level": 3,
-        "heading_line": 41590,
-        "line": 41592,
+        "heading_line": 41612,
+        "line": 41614,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156730,8 +156914,8 @@
       "source_location": {
         "heading": "F3-602 — A Run Card's Track Wraps Down And Shows Every Chat Room Round",
         "heading_level": 3,
-        "heading_line": 41658,
-        "line": 41660,
+        "heading_line": 41680,
+        "line": 41682,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156747,8 +156931,8 @@
       "source_location": {
         "heading": "F3-606 — The Transcript Plan Card's Status Zone And One Action Row",
         "heading_level": 3,
-        "heading_line": 41719,
-        "line": 41721,
+        "heading_line": 41741,
+        "line": 41743,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156764,8 +156948,8 @@
       "source_location": {
         "heading": "F3-607 — The Plan Card's Schedule Line Layout",
         "heading_level": 3,
-        "heading_line": 41790,
-        "line": 41792,
+        "heading_line": 41814,
+        "line": 41816,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156781,8 +156965,8 @@
       "source_location": {
         "heading": "F3-609 — The Ask Card Fits Long Answers",
         "heading_level": 3,
-        "heading_line": 41520,
-        "line": 41522,
+        "heading_line": 41542,
+        "line": 41544,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156798,8 +156982,8 @@
       "source_location": {
         "heading": "F3-612 — The Assistant Chat Paints The Stored Look From Its First Frame",
         "heading_level": 3,
-        "heading_line": 42084,
-        "line": 42086,
+        "heading_line": 42108,
+        "line": 42110,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156815,8 +156999,8 @@
       "source_location": {
         "heading": "F3-616 — Activity Detail Tabs, Collaboration Domain Tones And The Round's Last Polish",
         "heading_level": 3,
-        "heading_line": 41857,
-        "line": 41859,
+        "heading_line": 41881,
+        "line": 41883,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156832,8 +157016,8 @@
       "source_location": {
         "heading": "F3-617 — Technical Details Remains Only On A Setup Sheet's Advanced Page",
         "heading_level": 3,
-        "heading_line": 41922,
-        "line": 41924,
+        "heading_line": 41946,
+        "line": 41948,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156849,8 +157033,8 @@
       "source_location": {
         "heading": "F3-618 — The Left Rail's Geometry, Shelves And Type",
         "heading_level": 3,
-        "heading_line": 42151,
-        "line": 42153,
+        "heading_line": 42175,
+        "line": 42177,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156866,8 +157050,8 @@
       "source_location": {
         "heading": "F3-619 — Rail Statuses Are A Glyph And A Word, Counts Are Plain Numbers",
         "heading_level": 3,
-        "heading_line": 42225,
-        "line": 42227,
+        "heading_line": 42249,
+        "line": 42251,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156883,8 +157067,8 @@
       "source_location": {
         "heading": "F3-620 — Rail Text Fits By Layout, Never By Abbreviation",
         "heading_level": 3,
-        "heading_line": 42305,
-        "line": 42307,
+        "heading_line": 42329,
+        "line": 42331,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156900,8 +157084,8 @@
       "source_location": {
         "heading": "F3-621 — Rail Dropdowns Use The Chat Picker, And Rail Motion Follows The Theme Family",
         "heading_level": 3,
-        "heading_line": 42378,
-        "line": 42380,
+        "heading_line": 42402,
+        "line": 42404,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156917,8 +157101,8 @@
       "source_location": {
         "heading": "F3-622 — The Worktree Owner Dropdown And The Folding Publish Card",
         "heading_level": 3,
-        "heading_line": 42466,
-        "line": 42468,
+        "heading_line": 42490,
+        "line": 42492,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156934,8 +157118,8 @@
       "source_location": {
         "heading": "F3-623 — The Jujutsu Tab Strip, The Engine Switch And The Panel Frame",
         "heading_level": 3,
-        "heading_line": 42589,
-        "line": 42591,
+        "heading_line": 42613,
+        "line": 42615,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156951,8 +157135,8 @@
       "source_location": {
         "heading": "F3-624 — The Five Jujutsu Views",
         "heading_level": 3,
-        "heading_line": 42674,
-        "line": 42676,
+        "heading_line": 42698,
+        "line": 42700,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -156968,8 +157152,8 @@
       "source_location": {
         "heading": "F3-625 — The Activity Bar's More Tray In The Polish Design",
         "heading_level": 3,
-        "heading_line": 42525,
-        "line": 42527,
+        "heading_line": 42549,
+        "line": 42551,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -209991,8 +210175,8 @@
       "source_location": {
         "heading": "SQR-016 - Occurrence Summary, Overnight Receipt, Night Journal And Away Digest",
         "heading_level": 3,
-        "heading_line": 1420,
-        "line": 1452,
+        "heading_line": 1424,
+        "line": 1456,
         "path": "Plans/Scheduling_and_Quota_Resume.md"
       },
       "status": "accepted",
@@ -210008,8 +210192,8 @@
       "source_location": {
         "heading": "SQR-017 - Display Labels For Missed Policy, Next-Window Resume And Wind-Down",
         "heading_level": 3,
-        "heading_line": 1525,
-        "line": 1538,
+        "heading_line": 1529,
+        "line": 1542,
         "path": "Plans/Scheduling_and_Quota_Resume.md"
       },
       "status": "accepted",
@@ -210025,8 +210209,8 @@
       "source_location": {
         "heading": "SQR-018 - Project-Wide Pause All Automations",
         "heading_level": 3,
-        "heading_line": 1593,
-        "line": 1654,
+        "heading_line": 1597,
+        "line": 1658,
         "path": "Plans/Scheduling_and_Quota_Resume.md"
       },
       "status": "accepted",
@@ -217743,8 +217927,8 @@
       "source_location": {
         "heading": "UCC-156 - Assistant Redesign Command Registration And Alias Census",
         "heading_level": 3,
-        "heading_line": 12639,
-        "line": 12641,
+        "heading_line": 12640,
+        "line": 12642,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217760,8 +217944,8 @@
       "source_location": {
         "heading": "UCC-157 - Assistant Redesign Retired Command Surfaces",
         "heading_level": 3,
-        "heading_line": 12696,
-        "line": 12698,
+        "heading_line": 12697,
+        "line": 12699,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217777,8 +217961,8 @@
       "source_location": {
         "heading": "Working Notebook Command Rows Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 12774,
-        "line": 12778,
+        "heading_line": 12775,
+        "line": 12779,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217794,8 +217978,8 @@
       "source_location": {
         "heading": "15. UI Command Catalog Dispositions and Exact Reuse Rules (APR-023)",
         "heading_level": 3,
-        "heading_line": 12816,
-        "line": 12841,
+        "heading_line": 12817,
+        "line": 12842,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217811,8 +217995,8 @@
       "source_location": {
         "heading": "UCC-160 - Accepted Terminal Action Contracts",
         "heading_level": 3,
-        "heading_line": 12915,
-        "line": 12917,
+        "heading_line": 12916,
+        "line": 12918,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217828,8 +218012,8 @@
       "source_location": {
         "heading": "UCC-161 — Research Decision Review",
         "heading_level": 3,
-        "heading_line": 13016,
-        "line": 13018,
+        "heading_line": 13017,
+        "line": 13019,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217845,8 +218029,8 @@
       "source_location": {
         "heading": "UCC-162 — Jujutsu Accepted Action Planning And Admission Boundary",
         "heading_level": 3,
-        "heading_line": 13159,
-        "line": 13161,
+        "heading_line": 13160,
+        "line": 13162,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217862,8 +218046,8 @@
       "source_location": {
         "heading": "UCC-163 — Jujutsu Consumer Action Inventory And Return Context",
         "heading_level": 3,
-        "heading_line": 13264,
-        "line": 13266,
+        "heading_line": 13265,
+        "line": 13267,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217879,8 +218063,8 @@
       "source_location": {
         "heading": "UCC-164 - Consume The Central Command Response Contract",
         "heading_level": 3,
-        "heading_line": 13084,
-        "line": 13086,
+        "heading_line": 13085,
+        "line": 13087,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217896,8 +218080,8 @@
       "source_location": {
         "heading": "UCC-165 - Project Recovery And Forge Delete/CI Central Admission",
         "heading_level": 3,
-        "heading_line": 13323,
-        "line": 13325,
+        "heading_line": 13324,
+        "line": 13326,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217913,8 +218097,8 @@
       "source_location": {
         "heading": "UCC-166 - Commands Shortcuts Central Consumers",
         "heading_level": 3,
-        "heading_line": 13365,
-        "line": 13367,
+        "heading_line": 13366,
+        "line": 13368,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217930,8 +218114,8 @@
       "source_location": {
         "heading": "UCC-167 - Git Adapter Command Mapping And Availability",
         "heading_level": 3,
-        "heading_line": 13417,
-        "line": 13419,
+        "heading_line": 13418,
+        "line": 13420,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217947,8 +218131,8 @@
       "source_location": {
         "heading": "UCC-168 - Chat Busy Send Steer Command And Reused Chat Controls",
         "heading_level": 3,
-        "heading_line": 13470,
-        "line": 13472,
+        "heading_line": 13471,
+        "line": 13473,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217964,8 +218148,8 @@
       "source_location": {
         "heading": "UCC-169 - Wand Module Source Surfaces And Catalog Revisions",
         "heading_level": 3,
-        "heading_line": 13577,
-        "line": 13579,
+        "heading_line": 13578,
+        "line": 13580,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217981,8 +218165,8 @@
       "source_location": {
         "heading": "UCC-170 - Wand Module Command Census",
         "heading_level": 3,
-        "heading_line": 13692,
-        "line": 13981,
+        "heading_line": 13693,
+        "line": 13983,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -217998,8 +218182,8 @@
       "source_location": {
         "heading": "UCC-171 - Wand Module New Command Rows",
         "heading_level": 3,
-        "heading_line": 14082,
-        "line": 14115,
+        "heading_line": 14084,
+        "line": 14117,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -218015,8 +218199,8 @@
       "source_location": {
         "heading": "UCC-172 - Wand Module Surfaces And Row Revisions After The Owner's Answers",
         "heading_level": 3,
-        "heading_line": 14186,
-        "line": 14214,
+        "heading_line": 14188,
+        "line": 14216,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -218032,8 +218216,8 @@
       "source_location": {
         "heading": "UCC-173 - Wand Module Labels",
         "heading_level": 3,
-        "heading_line": 14314,
-        "line": 14335,
+        "heading_line": 14316,
+        "line": 14337,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -218049,8 +218233,8 @@
       "source_location": {
         "heading": "UCC-174 - Wand Module Closure Command Rows",
         "heading_level": 3,
-        "heading_line": 14418,
-        "line": 14455,
+        "heading_line": 14420,
+        "line": 14457,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -218066,8 +218250,25 @@
       "source_location": {
         "heading": "UCC-175 - ELI5 Sheet Surface And The ELI5 Setting Command",
         "heading_level": 3,
-        "heading_line": 14533,
-        "line": 14561,
+        "heading_line": 14535,
+        "line": 14563,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_contract"
+    },
+    {
+      "context_scope": "goal_bound_plan_open_20261009",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-176",
+      "reasoning_tier": "high",
+      "risk_class": "chat_command_catalog_gap",
+      "source_location": {
+        "heading": "UCC-176 - Open Plan And A Bound Goal's Open Exact Plan · Vn Open One Exact Plan Version",
+        "heading_level": 3,
+        "heading_line": 14742,
+        "line": 14744,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -218083,8 +218284,8 @@
       "source_location": {
         "heading": "UCC-188 - 5.6 Pro Chat Round Command Census And Subagent Open Reuse",
         "heading_level": 3,
-        "heading_line": 14661,
-        "line": 14663,
+        "heading_line": 14664,
+        "line": 14666,
         "path": "Plans/UI_Command_Catalog.md"
       },
       "status": "accepted",
@@ -220123,8 +220324,8 @@
       "source_location": {
         "heading": "UIW-014 - Complete Settings Command And Route-Only Wiring Family",
         "heading_level": 3,
-        "heading_line": 948,
-        "line": 950,
+        "heading_line": 949,
+        "line": 951,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220140,8 +220341,8 @@
       "source_location": {
         "heading": "UIW-015 - Product Onboarding typed-local request/result closure",
         "heading_level": 3,
-        "heading_line": 1051,
-        "line": 1053,
+        "heading_line": 1052,
+        "line": 1054,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220157,8 +220358,8 @@
       "source_location": {
         "heading": "UIW-016 - Server And Egolite Exact Dispatch Boundary",
         "heading_level": 3,
-        "heading_line": 1121,
-        "line": 1123,
+        "heading_line": 1122,
+        "line": 1124,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220174,8 +220375,8 @@
       "source_location": {
         "heading": "UIW-017 - Exact Touch Command/GUI/Handler Closure",
         "heading_level": 3,
-        "heading_line": 1154,
-        "line": 1156,
+        "heading_line": 1155,
+        "line": 1157,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220191,8 +220392,8 @@
       "source_location": {
         "heading": "UIW-018 - Assistant Redesign Row Discipline And Declared View-Local Intents",
         "heading_level": 3,
-        "heading_line": 1199,
-        "line": 1201,
+        "heading_line": 1200,
+        "line": 1202,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220208,8 +220409,8 @@
       "source_location": {
         "heading": "Working Notebook Wiring Disposition Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 1456,
-        "line": 1460,
+        "heading_line": 1457,
+        "line": 1461,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220225,8 +220426,8 @@
       "source_location": {
         "heading": "16. Wiring DRY Invariants and Action Chaining Teardown (APR-023, APR-050)",
         "heading_level": 3,
-        "heading_line": 1496,
-        "line": 1523,
+        "heading_line": 1497,
+        "line": 1524,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220242,8 +220443,8 @@
       "source_location": {
         "heading": "UIW-021 - Terminal Research Action Dispatch",
         "heading_level": 3,
-        "heading_line": 1580,
-        "line": 1582,
+        "heading_line": 1581,
+        "line": 1583,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220259,8 +220460,8 @@
       "source_location": {
         "heading": "UIW-022 — Research Decision Review",
         "heading_level": 3,
-        "heading_line": 1657,
-        "line": 1659,
+        "heading_line": 1658,
+        "line": 1660,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220276,8 +220477,8 @@
       "source_location": {
         "heading": "UIW-023 - Response Projection Wiring And Truthful Proof Boundaries",
         "heading_level": 3,
-        "heading_line": 1724,
-        "line": 1726,
+        "heading_line": 1725,
+        "line": 1727,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220293,8 +220494,8 @@
       "source_location": {
         "heading": "UIW-024 - Chat Presentation Teardown On Thread Switch Reset And Close",
         "heading_level": 3,
-        "heading_line": 1758,
-        "line": 1760,
+        "heading_line": 1759,
+        "line": 1761,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220310,12 +220511,29 @@
       "source_location": {
         "heading": "UIW-025 - Configuration Sheet Wiring Open Is Not Start One Close Path Focus Return",
         "heading_level": 3,
-        "heading_line": 1807,
-        "line": 1809,
+        "heading_line": 1808,
+        "line": 1810,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "goal_bound_plan_open_20261009",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-026",
+      "reasoning_tier": "medium",
+      "risk_class": "version_exact_opener_drift",
+      "source_location": {
+        "heading": "UIW-026 - An Exact-Version Opener Opens That Version's Document",
+        "heading_level": 3,
+        "heading_line": 2000,
+        "line": 2004,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "wiring_rule"
     },
     {
       "context_scope": "chat_composer_commands",
@@ -220327,8 +220545,8 @@
       "source_location": {
         "heading": "UIW-030 - A Control Slot Whose Command Changes With State Binds One Command At A Time",
         "heading_level": 3,
-        "heading_line": 1883,
-        "line": 1887,
+        "heading_line": 1884,
+        "line": 1888,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -220344,8 +220562,8 @@
       "source_location": {
         "heading": "UIW-031 - A Read-Only Child Transcript Document Binds No Mutation And Owns Its View Resources",
         "heading_level": 3,
-        "heading_line": 1943,
-        "line": 1947,
+        "heading_line": 1944,
+        "line": 1948,
         "path": "Plans/UI_Wiring_Rules.md"
       },
       "status": "accepted",
@@ -222851,6 +223069,23 @@
       "unit_type": "integration_contract"
     },
     {
+      "context_scope": "goal_bound_plan_open_20261009",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-065",
+      "reasoning_tier": "medium",
+      "risk_class": "wand_module_surface_drift",
+      "source_location": {
+        "heading": "WM-065 - Open Exact Plan · Vn Raises The Open Plan Version Entry",
+        "heading_level": 3,
+        "heading_line": 5422,
+        "line": 5424,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "integration_contract"
+    },
+    {
       "context_scope": "chat_tweaks_20261007",
       "gui_related": true,
       "owner_doc": "Plans/Wiring_Matrix.md",
@@ -223588,12 +223823,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 16564,
+    "depends_on_edge_count": 16581,
     "downstream_blocked_node_count": 0,
-    "edge_count": 19500,
-    "node_count": 7004,
+    "edge_count": 19529,
+    "node_count": 7009,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2936,
+    "unblocks_edge_count": 2948,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

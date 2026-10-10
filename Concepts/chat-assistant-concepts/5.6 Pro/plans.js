@@ -1312,7 +1312,7 @@
       '<button class="plan-preview-open" data-action="pd-info" data-id="'+esc(r.plan_id)+'"><strong>'+esc(r.title)+'</strong>'+(summary?'<span>'+esc(summary)+'</span>':'')+'</button>'+
       (window.PM56_SCHED?.planSummary(r.plan_id)||'')+
       '<p class="plan-preview-meta"><span>'+steps(body(r)).length+(steps(body(r)).length===1?' step':' steps')+'</span><span>'+esc(BUILD_STATUS[r.status]||r.status)+'</span></p>'+
-      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-info','Open plan',r.plan_id)+
+      '<div class="pd-foot pmx-actions">'+buildControl(r)+(e.revise?actionBtn('pd-revise','Revise',r.plan_id):'')+actionBtn('pd-open-version','Open plan',r.plan_id,' data-version="'+r.version+'"')+
         (r.status==='building'?progressSummary(r)+waitCopy(r):'')+'</div></article>';
   }
 
@@ -1455,7 +1455,7 @@
       for(const [k,v] of Object.entries(values))TX.set(r,k,v);
       if(r.backend==='ledger_bound')TX.set(r,'unitsMaterialized',{at:approved.at,scope:r.plan_id+'@V'+r.version,count:list(r.planunits).length,validated:true,validation_kind:'local_scoped_template_validation',plan_hash:expected.hash,scope_kind:'assistant_deep_plan',globalIndex:false,worknodes:0,nodeSeeds:0});
       const t=ctx.state.threads.find(t=>t.id===r.thread_id);
-      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
+      TX.set(t,'messages',t.messages.concat({id:'receipt-'+runId,role:'system',type:'plan-run-receipt',plan_id:r.plan_id,plan_version:r.version,title:opts.scheduleRef?'Scheduled build started':'Build started',detail:'V'+r.version+' · '+made.ids.length+' To-Dos',time:new Date().toISOString()}));
       TX.defer(()=>{stopRun(r);if(!opts.paused)startRunTimer(ctx,r);});
       return {ok:true,...receipt};
     });
@@ -2016,6 +2016,18 @@
     var r=rec(id);if(!r)return;
     ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor('plan:'+id);
   }
+  /* cmd.chat.plan.open_version (DL-157): a bound Goal's Open exact Plan · Vn opens that
+     version's document and nothing else. While Vn is still the Plan's version that is the
+     Plan's own tab; once a later version exists it is Vn's retained, read-only document.
+     It never opens Plan Details and never substitutes a newer version. */
+  function openPlanVersion(ctx,id,v){
+    var r=rec(id);v=Number(v);
+    if(!r||!v){ctx.toast('Cannot open','The bound Plan is missing.');return false;}
+    if(r.version===v){openPlanEditor(ctx,id);return true;}
+    var ref=r.document_refs&&r.document_refs[v];
+    if(!ref){ctx.toast('Cannot open','Plan V'+v+' is not retained.');return false;}
+    ctx.state.editorRevealed=true;ctx.closeMenu();ctx.closeDialog();ctx.openEditor(window.PM56_ARTIFACTS.route(ref));return true;
+  }
   function openDlg(ctx, kind, id){ ctx.openDialog({ type:DLG[kind], id:id }); }
 
   var ACTIONS = {
@@ -2076,6 +2088,9 @@
     },
 
     'pd-info': function(ctx,btn){openPlanEditor(ctx,btn.dataset.id);},
+    /* Every Open plan button (the card's action row, a Build-started or revision
+       receipt, a scheduled build's row) opens the version that surface names. */
+    'pd-open-version': function(ctx,btn){if(btn.dataset.version)openPlanVersion(ctx,btn.dataset.id,btn.dataset.version);else openPlanEditor(ctx,btn.dataset.id);},
     'pd-inspect': function(ctx,btn){openDlg(ctx,'info',btn.dataset.id);},
     'pd-build-crew': function(ctx,btn){ openDlg(ctx,'crew',  btn.dataset.id); },
     'pd-build-at': function(ctx,btn){
@@ -2360,7 +2375,7 @@
         const result=applyRevision(ctx,r,raw,d.expectedRevision);if(!result.ok)window.PM56_TX.fail(result.error);
         window.PM56_TX.set(thread,'messages',thread.messages.concat(
           {id:ctx.uid('plan-revision-request'),role:'user',type:'text',body:raw,time:new Date().toISOString()},
-          {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
+          {id:ctx.uid('plan-revision'),role:'system',type:'plan-revision-receipt',plan_id:r.plan_id,plan_version:r.version,title:'Plan revised',detail:'V'+r.version+' · V'+(r.version-1)+' preserved',time:new Date().toISOString()}));
         window.PM56_TX.set(RT.composer,'destination',null);return result;
       });
       if(!out.ok)ctx.toast('Revision not admitted',out.error+'. Your instructions remain in the composer. Reopen Revise against the current document.');
@@ -2410,7 +2425,7 @@
  // A Plan receipt is a linked record, not a Goal state or generic work note.
  EXT.slot('transcriptMessage',c=>{
   const m=c.message||c.m;if(!m||!['plan-run-receipt','plan-revision-receipt'].includes(m.type))return '';
-  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-info" data-id="'+c.esc(m.plan_id)+'">Open plan</button></div>';
+  return '<div class="plan-run-line" data-k="plan-run:'+c.esc(m.id)+'">'+c.icon('plan',14)+'<span>'+c.esc(m.title)+' <small>'+c.esc(m.detail)+'</small></span><button type="button" class="soft-button pmx-act" data-action="pd-open-version" data-id="'+c.esc(m.plan_id)+'" data-version="'+c.esc(m.plan_version||(/^V(\d+)/.exec(m.detail||'')||[])[1]||'')+'">Open plan</button></div>';
  });
 
   EXT.action('pd-open-goal',(c,b)=>{const r=rec(b.dataset.id),g=r&&window.PM56_GOAL.bound(r.plan_id);if(g&&!window.PM56_GOAL.cancelled(g)){if(c.thread.id!==g.thread)c.switchThread(g.thread);c.state.activity.open=true;c.state.activity.domain='goal';c.state.activity.scope='focus';c.closeDialog();c.state.menu=null;if(innerWidth<=1100)c.state.editorRevealed=false;c.renderApp();}return true;});
@@ -2598,6 +2613,7 @@
     grillExtension:function(){ return QGRILL; },
     embeds:function(id){ var r=rec(id); return r?body(r).filter(function(b){return b.t==='plan_embed';}):null; },
     openDetails:openPlanEditor,
+    openVersion:openPlanVersion,
     // Window state is decided by Scheduling; Plan owns safe pause/resume.
     pauseForWindow:function(id,binding,reason,kind='window'){
       const r=rec(id);if(!r||r.status!=='building'||r.approved?.plan_run_id!==binding.plan_run_id||r.version!==binding.version||hashOf(body(r))!==binding.hash)return {ok:false,error:'stale_window_binding'};

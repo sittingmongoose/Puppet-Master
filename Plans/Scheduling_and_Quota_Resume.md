@@ -1348,7 +1348,7 @@ window` with when it continues, `Paused` for a build the user paused, `Waiting f
 its reset truth (no countdown when the reset is unknown), and `Schedule needs update` for a schedule a revision
 invalidated, with Use V<n> and Cancel schedule. A schedule invalidated with no newer version to rebind to (Build ran
 the bound version now, or the bound execution ended) leads with `Schedule ended` and says why ("you started this build
-now, so the schedule won't start a second one."), with no Use V<n> (DL-156). Its layout is FinalGUISpec F3-607. The line never replaces the Build control's `Building…`, and `Scheduled` is
+now, so the schedule won't start a second one."), with no Use V<n> (DL-156). That wording is the owner's approved decision of 2026-10-09 (DL-157). Its layout is FinalGUISpec F3-607. The line never replaces the Build control's `Building…`, and `Scheduled` is
 never a primary Plan status (PSCHED-011).
 
 ```yaml
@@ -1367,7 +1367,9 @@ canonical_text: >-
   ribbon before a run, Building now with the wrap-up time during a slot, and otherwise a lead canon token of
   Outside execution window, Paused, Waiting for Usage (with reset truth, no countdown when unknown), Schedule
   needs update with Use V<n> and Cancel schedule for a schedule a revision invalidated, or Schedule ended, with no
-  Use V<n>, for a schedule invalidated with no newer version to rebind to (DL-156); its layout is F3-607. It never replaces the Build control's Building… and Scheduled
+  Use V<n>, for a schedule invalidated with no newer version to rebind to (DL-156), its wording after Build being
+  Schedule ended · you started this build now, so the schedule won't start a second one., approved by the owner on
+  2026-10-09 (DL-157); its layout is F3-607. It never replaces the Build control's Building… and Scheduled
   is never a primary Plan status.
 gui_related: true
 gui_classification_reason: Defines the Build At sheet's recorded values and the Plan card schedule line's states.
@@ -1378,6 +1380,7 @@ acceptance_criteria:
   - "The chosen grace_seconds survives restart in pm.execution.schedule.v2; a v1 read uses the previously effective default."
   - "Each secondary state of the schedule line begins with Outside execution window, Paused, Waiting for Usage, Schedule needs update or Schedule ended."
   - "A schedule invalidated with no newer version never offers Use V<n>."
+  - "After Build on a scheduled Plan the line reads Schedule ended · you started this build now, so the schedule won't start a second one. (DL-157)."
   - "The Build control keeps Building… while the schedule line shows any secondary state."
   - "An unknown reset renders no countdown on the schedule line."
 validation_surfaces:
@@ -1399,6 +1402,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-modules-canon-20260927/IMPACT-REGISTER.md B-SQR-06 (SHA-256 71227f8edda108ed849256d909ff12f859f98bef58202ef988f9d3b4e4f8d493)"
   - "Plans/Decision_Log.md DL-138; /mnt/Cursor/PuppetMaster-Evidence/scratch/pm56-followups-20260929/ANSWERS-20260929.md sha256:345247dfb965fa19ae2f68847125c5b6cafe26126a56bb5b80242e88d3fa9d5c question 7"
   - "Plans/Decision_Log.md#DL-156 (Schedule ended, 2026-10-09)"
+  - "Plans/Decision_Log.md#DL-157 (the Schedule ended wording approved by the owner, 2026-10-09)"
 preserved_exact_tokens:
   - "Outside execution window"
   - "Waiting for Usage"
@@ -1415,7 +1419,7 @@ owner_hints:
   - Plans/Scheduling_and_Quota_Resume.md
 ```
 
-ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Assistant_Plan_Runtime.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Log.md#DL-157
 
 ### SQR-016 - Occurrence Summary, Overnight Receipt, Night Journal And Away Digest
 
