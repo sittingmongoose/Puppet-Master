@@ -3,12 +3,14 @@
   "owner_plan_units": [
     "F3-513",
     "F3-514",
-    "ATS-038"
+    "ATS-038",
+    "F3-628"
   ],
   "source_lineage": [
     "Plans/FinalGUISpec.md#F3-513",
     "Plans/FinalGUISpec.md#F3-514",
-    "Plans/Automated_Testing_System.md#ATS-038"
+    "Plans/Automated_Testing_System.md#ATS-038",
+    "Plans/FinalGUISpec.md#F3-628"
   ],
   "surfaces": [
     "Usage"
@@ -33,11 +35,16 @@
   "must": [
     "no_viewport_escape",
     "font_ready_and_fallback",
-    "no_blank_or_black_frame"
+    "no_blank_or_black_frame",
+    "embedded_face_late_load_refits_without_truncation_or_overflow",
+    "no_fallback_face_measurement_kept",
+    "late_face_refit_sliced_without_long_task",
+    "nier_mode_painted_over_basic_not_a_ninth_theme"
   ],
   "must_not": [
     "white_until_hover",
     "clipped_controls",
-    "theme_inventory_change"
+    "theme_inventory_change",
+    "glyph_missing_from_embedded_faces"
   ]
 }

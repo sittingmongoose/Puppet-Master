@@ -6191,23 +6191,26 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  The Usage page head stays one line. Its subtitle follows the copy pattern "AI Cost/usage for
-  <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept
-  for 90 days." where <project> is the active project name; the concept fixture shows project
-  Tastebook. The 5-minute figure mirrors the default auto-refresh cadence inside the documented 5-15
-  minute background refresh window and the 90-day figure mirrors the default raw-event retention
-  window; changed defaults surface the configured values rather than stale copy. Refresh and Export
-  render as icon-only buttons (inline SVG restart and clipboard glyphs), each carrying `title` and
-  `aria-label` accessible names, and dispatch cmd.usage.refresh and cmd.usage.export unchanged.
+  The Usage page head stays one line. Since the redesigned page replaced the old one (DL-173), the head is the
+  room's head: the room title with one short description line under it, and on the same line the scope, range and
+  disclosure menus, the room's panel menu, and the Refresh and Export buttons. The page name "Usage" sits in the
+  rail head, and the Live / Paused control (UF-107) sits beside it there, never as a second head line. Wherever
+  the head or a room states the refresh cadence or the history kept, the figures mirror the configured background
+  refresh cadence and raw-event retention window rather than fixed copy. Refresh and Export render as icon-only
+  buttons (inline SVG glyphs), each carrying `title` and `aria-label` accessible names. Refresh dispatches
+  cmd.usage.refresh unchanged. Export opens a menu in the chat menu style (DR-058) with two rows, Snapshot and
+  Ledger, and each row dispatches cmd.usage.export with scope snapshot or ledger; the menu adds no command and
+  no export scope.
 gui_related: true
-gui_classification_reason: This unit defines the visible Usage page head copy, subtitle pattern, and icon-only Refresh/Export presentation.
+gui_classification_reason: This unit defines the visible Usage page head, where its Live control sits, and the icon-only Refresh and Export presentation.
 split_recommended: false
 depends_on: [UF-006, UF-039]
 unblocks: []
 acceptance_criteria:
-- "The Usage page head renders one line with the subtitle pattern 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' resolved against the active project name (concept fixture: Tastebook)."
-- "The subtitle's 5-minute figure reflects the default auto-refresh cadence and the 90-day figure reflects the default raw-event retention window; changed defaults surface the configured values rather than stale copy."
-- "Refresh and Export render as icon-only buttons with inline SVG restart and clipboard glyphs, each carrying title and aria-label accessible names, and dispatch cmd.usage.refresh and cmd.usage.export with unchanged behavior."
+- "The Usage head renders one line: the room title with one description line under it, and the scope, range, disclosure, panel, Refresh and Export controls on that line; no second head line exists."
+- "The Live / Paused control sits in the rail head beside the page name Usage, not in the room head and not on a second head line."
+- "Any refresh-cadence or history-retention figure the page shows reflects the configured value; changed defaults surface the configured values rather than stale copy."
+- "Refresh and Export render as icon-only buttons with inline SVG glyphs, each carrying title and aria-label accessible names; Refresh dispatches cmd.usage.refresh, and Export's Snapshot and Ledger rows each dispatch cmd.usage.export with scope snapshot or ledger."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -6223,6 +6226,8 @@ node_compile_hint:
 source_lineage:
 - "Concepts/PMConcept7.html (PMConcept7 demo rev 9.2; source-lineage-only per Plans/usage-feature.md)"
 - "Concepts/ChatGuiUpdates2.md (PM8 workstream and rev 4-9.2 ship notes; source-lineage-only)"
+- "Concepts/usage-redesign/src/markup.html and src/js/46-shell.js (the redesigned Usage head and Export menu; source-lineage-only)"
+- "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md (SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008)"
 - "Plans/usage-feature.md (background refresh 5-15 minute default window; 90-day raw-event retention default)"
 preserved_exact_tokens:
 - "AI Cost/usage for"
@@ -6230,16 +6235,21 @@ preserved_exact_tokens:
 - "Tastebook"
 - "icon-only"
 - "aria-label"
+- "Live / Paused"
+- "Snapshot"
+- "Ledger"
 negative_constraints:
 - "Do not add a second head line or re-introduce text-labeled Refresh/Export buttons on the Usage page head."
-- "Do not hardcode Tastebook or the 5-minute/90-day figures as literal copy; the project name is the active project and the figures mirror the configured defaults."
-- "Do not change cmd.usage.refresh or cmd.usage.export IDs, payloads, events, or preconditions from this unit; it is presentation only."
+- "Do not hardcode a project name or the refresh-cadence and retention figures as literal copy; they mirror the active project and the configured values."
+- "Do not change cmd.usage.refresh or cmd.usage.export IDs, payloads, events, or preconditions from this unit, and do not mint a command or an export scope per Export menu row; it is presentation only."
 compatibility_only_notes:
-- "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
+- "Slint portability: the Usage page head and its icon-only controls render as opaque precomputed surfaces with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed. This note does not bind the redesigned concept's look (DL-173): the Slint limits were lifted for the concept, and framework version pins are untouched."
 stale_retired_dispositions:
 - "The 'prominent Refresh action' presentation is retired per PMConcept7 rev 9 Usage head; Refresh remains an explicit user action rendered icon-only with title and aria-label accessible names so the head stays one line."
+- "The page-level subtitle 'AI Cost/usage for <project> — quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.' (concept fixture project Tastebook) is retired by DL-173: the room description line replaces it, and the rule that cadence and retention figures mirror configured values is kept."
+- "The single-action Export button is retired: Export is an icon-only button that opens the Snapshot and Ledger menu, dispatching the same cmd.usage.export scopes."
 owner_boundary_notes:
-- "Page-header layout and per-theme header boxes are owned by Plans/FinalGUISpec.md F3-462; this unit owns Usage head copy and control presentation only."
+- "Page-header layout and per-theme header boxes are owned by Plans/FinalGUISpec.md F3-462; the redesigned head's look is owned by Plans/FinalGUISpec.md F3-628; this unit owns Usage head copy and control presentation only."
 - "cmd.usage.refresh and cmd.usage.export command semantics are owned by Plans/UI_Command_Catalog.md (UCC-116); this unit registers no commands."
 owner_hints:
 - "Plans/usage-feature.md"
@@ -6360,9 +6370,14 @@ canonical_text: >-
   provider_route_kind describe who pays for it, and the page never collapses the two into one badge. Usage
   reports and routes but owns no policy: a Usage affordance that would change a Settings-owned value
   deep-links to its owner through cmd.settings.open with a typed Settings-owned setting or manager/detail
-  target, and the page stores, mutates, and re-declares nothing on the policy side. Provider-native quota units
+  target, and the page stores, mutates, and re-declares nothing on the policy side. The one exception is a
+  bound Settings control that the Accounts room hosts in place (UF-107, DL-174): it shows the Settings
+  owner's current value and changes it only through cmd.settings.transaction.preview and
+  cmd.settings.transaction.apply, so the value, its validation, its scope and its receipt stay the Settings
+  owner's and Usage keeps no copy. Provider-native quota units
   keep their own units, windows, and reset semantics and are never flattened onto a single cross-provider
-  percentage scale.
+  percentage scale. A concept's demo clock that plays readings forward in time (UF-107) is a lab-only
+  demonstration, never a Usage reading, and nothing it shows is counted, stored or exported.
 gui_related: true
 gui_classification_reason: The unit governs what the Usage page shows for unknown, zero, not-exposed, settlement, entitlement, and quota-unit values, and where a policy change is routed.
 depends_on: [UF-085, UF-087, UF-089, UF-090, UF-091]
@@ -6371,7 +6386,7 @@ acceptance_criteria:
   - A route with no published separate billing treatment for its cache-read or reasoning bucket renders that bucket as not exposed and leaves displayed totals unchanged; no fixture infers an inclusive or exclusive rule from an unpublished route.
   - Unknown and provider-reported zero render as distinct states with distinct reasons on every Usage surface, and no projection path converts one into the other.
   - Settlement state and billing route render as independent axes; a combined badge that hides one behind the other fails the fixture.
-  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value.
+  - Every Usage affordance that would change a Settings-owned value dispatches cmd.settings.open with a typed target whose setting id exists in Plans/settings_inventory.json, preserves the exact-return contract, and writes no local policy value; the only exception is a bound Settings control hosted in the Accounts room, which commits through cmd.settings.transaction.preview and cmd.settings.transaction.apply and keeps no Usage copy of the value.
   - Provider-native quota units keep their own unit, window, and reset semantics; a single cross-provider percentage rollup fails the fixture.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -6407,7 +6422,8 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not fold a cache-read or reasoning bucket into a displayed total on a route whose provider publishes no separate billing treatment for it.
   - Do not render a missing value as zero, and do not render a provider-reported zero as unknown.
-  - Do not let the Usage page own, persist, or mutate a Settings-owned policy value.
+  - Do not let the Usage page own, persist, or mutate a Settings-owned policy value; a bound control hosted in place changes it only through the Settings owner's transaction.
+  - Do not count, store, or export a reading a demo clock produced.
   - Do not flatten provider-native quota units onto one shared percentage scale.
   - Do not hardcode the concept fixture identities as canonical copy.
 owner_hints:
@@ -6450,14 +6466,20 @@ canonical_text: >-
   is not decorative copy and it never deletes a widget instance or stored layout. Source authority mounts exactly
   4, 6, and 8 panels at those three disclosure levels, and all thirteen rooms remain reachable at every supported
   physical viewport width even when the secondary rail collapses into an overflow surface. Active room, scope, date
-  range, disclosure level, and the expanded-room rail state are local view projections unless an existing
-  canonical command owner explicitly requires a command; changing them does not justify a new command family.
+  range, disclosure level, the expanded-room rail state, and the Live / Paused choice (UF-107) are local view
+  projections unless an existing canonical command owner explicitly requires a command; changing them does not
+  justify a new command family.
   Usage refresh and object-backed Usage/Ledger drill-through continue through their existing authorities. A
   PMConcept7 Ledger attempt row dispatches `cmd.nav.open_usage_subject` only with stable `attempt_id` and
   `usage_event_ref`, normalizes to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keeps
   the event/provider/account/runtime refs as correlation, and carries no `OpenSubject`; event-primary callers
   retain `usage_event` plus `usage_event_ref`, while aggregate provider/account/panel details remain local inspectors and dispatch no
-  command, receipt, or domain event. When a selected provider
+  command, receipt, or domain event. The Accounts room acts in place through explicit controls on its cards, never
+  through the card itself (UF-107, DL-174): an account's "Use this account" control dispatches the existing
+  `cmd.account.select_profile` as a labelled override and shows only where the provider's capability
+  `supports_manual_set_active` is true, and a provider's Auto-switch toggle and switch level are bound Settings
+  controls that commit through `cmd.settings.transaction.preview` and `cmd.settings.transaction.apply` with
+  `scope=provider`. Opening a card's Details stays a local inspector. When a selected provider
   route cannot run because setup is absent, the exact state is `Provider Setup Required`; it shows explicit
   `Host/Environment`, preserves operation and continuation identity, and reuses `cmd.settings.open` with
   `target_type=setting` and `setting_id=ai.accounts.provider-connections`. UF-090, UF-092, and CBP-028 remain the policy
@@ -6466,12 +6488,13 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: This unit defines the visible Usage room taxonomy, disclosure labels, and view-state behavior.
 depends_on: [CBP-028, UF-044, UF-055, UF-090, UF-092, WS-016]
-unblocks: [UF-094, UF-095, UF-096]
+unblocks: [UF-094, UF-095, UF-096, UF-107]
 acceptance_criteria:
   - All thirteen named rooms are addressable in the Usage workspace at every supported physical viewport width, including through the secondary-room overflow surface when required, and each renders its room-specific panel catalog at the current disclosure level.
   - The only user-facing disclosure labels are At a glance, Detailed, and Diagnostics; Essen, Std, Adv, essentials, standard, and advanced are not disclosure labels.
   - Switching disclosure materially changes mounted panel types or content facts, Source authority mounts exactly 4/6/8 panels for At a glance/Detailed/Diagnostics, and no disclosure switch deletes an existing widget instance or stored layout.
-  - Active room, scope, date range, disclosure, and expanded-room rail state remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
+  - Active room, scope, date range, disclosure, expanded-room rail state, and the Live / Paused choice remain local projection actions unless an existing owner requires otherwise; no duplicate command family is introduced, Usage refresh retains its authority, and a PMConcept7 Ledger attempt row dispatches cmd.nav.open_usage_subject as a usage_attempt/attempt_id object route without OpenSubject while retaining usage_event_ref as correlation; event-primary callers retain usage_event/usage_event_ref, and aggregate provider, account, and panel cards open local inspectors without a route command, command receipt, or domain event.
+  - In the Accounts room, "Use this account" dispatches cmd.account.select_profile only where supports_manual_set_active is true, and a provider's Auto-switch toggle and switch level dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply with scope=provider on the Settings rows, show the same value Settings shows, and keep no Usage copy; opening a card or its Details still dispatches no command.
   - Provider setup absence renders the exact `Provider Setup Required` state with explicit `Host/Environment` and preserved operation and continuation identity; its CTA reuses `cmd.settings.open` with `target_type=setting` and `setting_id=ai.accounts.provider-connections`, mints no new setup command, keeps installation and authentication separate, performs no automatic acquisition or silent reroute, and leaves UF-090, UF-092, and CBP-028 as the underlying policy owners.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -6517,9 +6540,14 @@ preserved_exact_tokens:
   - "At a glance"
   - Detailed
   - Diagnostics
+  - "Use this account"
+  - cmd.account.select_profile
+  - supports_manual_set_active
+  - scope=provider
 negative_constraints:
   - Do not expose Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels.
-  - Do not mint commands merely to persist local room, scope, date-range, disclosure, or expanded-rail projection state.
+  - Do not mint commands merely to persist local room, scope, date-range, disclosure, expanded-rail, or Live / Paused projection state.
+  - Do not give an Accounts card a Usage-local copy of an auto-switch value or a Usage-only switch command; the card's in-place controls are the existing account command and the Settings owner's transaction.
   - Do not route aggregate provider/account/panel cards, copy a presentation card ID into route_target.object_id, attach OpenSubject to either typed cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the primary object_id of a PMConcept7 Ledger attempt row.
   - Do not treat the protected generated artifact or in-progress audit work as passed executable acceptance evidence.
   - Do not bundle installation with authentication, start automatic acquisition, or silently reroute a setup-blocked request.
@@ -6654,10 +6682,15 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Every Usage room starts from a non-empty, room-specific, balanced curated board on the current twelve-track
-  layout. Default rows preserve intentional card widths and alignment; a partial final row does not stretch a
-  lone card to full width, provider-heavy rooms prefer narrower taller cards, and the mixed-size stress/demo
-  arrangement is not a product default. The seven-widget four-column table retained by UF-058 is legacy source
+  Every Usage room starts from a non-empty, room-specific, balanced curated board. The board's track count
+  follows its measured width on a ladder of 12, 20, 24 and 30 tracks (DL-176), which replaces the earlier single
+  twelve-track layout; the narrowest class keeps twelve tracks, and Widget_System owns the class widths. Default
+  boards are curated per width class (the widest class may be projected from the next narrower one) under one
+  default-set version, and a changed default-set version drops saved geometry while keeping the saved view,
+  visibility and configuration. Default boards use many narrow
+  widgets per row, each showing a complete content tier at its width. Default rows preserve intentional card
+  widths and alignment; a partial final row does not stretch a lone card to full width, provider-heavy rooms
+  prefer narrower taller cards, and the mixed-size stress/demo arrangement is not a product default. The seven-widget four-column table retained by UF-058 is legacy source
   lineage and migration compatibility, not the current default-board authority. A saved layout may override
   current defaults only after its schema and default-set version migrate and its widget identities and supported
   geometry validate; otherwise the room falls back to the corrected current default with an explicit migration
@@ -6670,7 +6703,8 @@ acceptance_criteria:
   - Every room has an intentional non-empty default board and the default catalog is room-specific rather than one stress/demo layout copied everywhere.
   - Partial rows retain curated widths and deliberate alignment; All signals and comparable lone cards do not stretch across the full board.
   - Provider-heavy default boards use narrower taller cards and reveal complete additional rows rather than low-density horizontal space.
-  - The legacy UF-058 seven-widget four-column table is accepted only as migration/source lineage and cannot replace the current twelve-track room defaults.
+  - The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder, each class has a curated or projected default board under one default-set version, and default boards use narrow widgets that each show a complete content tier.
+  - The legacy UF-058 seven-widget four-column table is accepted only as migration/source lineage and cannot replace the current width-class room defaults.
   - Saved layout restore requires a current or successfully migrated schema/default-set version, valid widget identities, and supported geometry; failed validation falls back to the current curated default.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -6694,6 +6728,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/40-board.js (the width-class ladder and versioned default sets of the redesigned Usage page, DL-173; source-lineage-only)"
 preserved_exact_tokens:
   - twelve-track
   - balanced curated board
@@ -6703,6 +6738,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not use a mixed-size stress or demonstration layout as the product default.
   - Do not let an unversioned or invalid saved layout override corrected defaults.
+  - Do not fix every board to twelve tracks regardless of its width, and do not restore wide default cards that a narrower card shows as well.
 owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
@@ -6717,14 +6753,22 @@ unit_type: data_contract
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Usage restores the current workspace from eight view/layout state families: active `room`, disclosure
-  `detail`, date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
-  per-room settled widget `layout`, and per-room widget `order`. The product implementation stores these
-  through the current storage and widget-layout owners, not through the PMConcept7 prototype localStorage
-  keys. The current `pm7:usage:prototype:workspace:v12` envelope is demo-only, noncanonical prototype lineage.
-  It validates and considers the prior v11 envelope once when v12 is absent, while `pm7:usage:v10:*` may be
-  considered only by the bounded legacy import when neither valid current nor prior envelope is admitted; none
-  is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
+  Usage restores the current workspace from nine view/layout state families: active `room`, disclosure
+  `detail` (whose values are `glance`, `detailed` and `diagnostics` for At a glance, Detailed and Diagnostics, the
+  values every Usage consumer of the detail level uses, the Tidy `arrange` field included), date `range`, account/provider `scope`, expanded-room rail `more`, per-room widget `hidden` state,
+  per-room settled widget `layout`, per-room widget `order`, and the Live / Paused choice `live` (DL-177), a
+  remembered view-only preference that is Live by default and holds no Settings-owned value. The product
+  implementation stores these through the current storage and widget-layout owners, not through the PMConcept7
+  prototype localStorage keys. The redesigned concept (DL-173) keeps its view and layout in a prototype envelope
+  stored under the product's own key name `widget_layout:v1:usage` (WS-020) with the prototype schema id
+  `pm.usage.widget_layout.v1`, and its Live choice under `pm7:usage:live:v1`. Only that schema id and
+  `pm7:usage:live:v1` are demo-only, noncanonical prototype lineage: the key name is the product's, and the
+  envelope's schema id is not a product schema (the product record is `UsageWidgetLayoutRecord`, WS-020). When that
+  envelope is absent it considers the prior `pm7:usage:prototype:workspace:v12` envelope once, else the v11
+  envelope, carrying room, detail, range, scope, more and hidden and dropping layout and order; a corrupt or
+  unknown envelope is set aside and the defaults apply without a second migration. `pm7:usage:v10:*` may be
+  considered only by the bounded legacy import when no valid current or prior envelope is admitted; neither those
+  prior envelopes nor `pm7:usage:v10:*` is a canonical product storage key. Visibility, order, supported geometry, and semantic size persist only after a committed widget
   operation; pointer-preview rectangles, ghosts, placeholders, animation state, and per-frame drafts never
   become durable state. Missing rooms, widgets, scopes, or unsupported geometry migrate or evict to the
   documented safe current default rather than leaving a dangling identity.
@@ -6733,11 +6777,11 @@ gui_classification_reason: These fields determine what Usage shows after reload 
 depends_on: [UF-060, UF-093, UF-094, WS-019, WS-020, SP-248]
 unblocks: []
 acceptance_criteria:
-  - Reload restores room, disclosure, date range, scope, expanded-room rail state, per-room visibility, per-room order, and committed size/layout according to the current model.
+  - Reload restores room, disclosure, date range, scope, expanded-room rail state, per-room visibility, per-room order, committed size/layout, and the Live / Paused choice according to the current model; with no stored choice the page is Live.
   - Visibility, order, supported geometry, and semantic size are written only for settled operations through existing widget-layout authorities.
   - No pointer-preview rectangle, ghost, placeholder, animation state, or per-frame draft is persisted.
   - Missing or retired room, widget, scope, or geometry references migrate or evict to a named safe current default.
-  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the v12 envelope remains demo-only and noncanonical, v11 is considered only as its prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
+  - PMConcept7 prototype keys remain source-lineage/migration shims rather than canonical storage keys; the redesigned concept's pm.usage.widget_layout.v1 envelope and pm7:usage:live:v1 remain demo-only and noncanonical, the v12 envelope (else v11) is considered only as their prior one-time import source, and v10 import is bounded rather than becoming a continuing dual-read path.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - tests/fixtures/usage_gui/presentation/persistence_migration_matrix.json (static contract fixture only)
@@ -6759,6 +6803,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/40-board.js and src/js/15-film.js (the redesigned concept's layout envelope, its one-time v12 migration, and the remembered Live choice; source-lineage-only)"
 preserved_exact_tokens:
   - room
   - detail
@@ -6768,7 +6813,10 @@ preserved_exact_tokens:
   - hidden
   - layout
   - order
+  - live
   - widget_layout:v1:usage
+  - pm.usage.widget_layout.v1
+  - pm7:usage:live:v1
   - pm7:usage:prototype:workspace:v12
   - pm7:usage:prototype:workspace:v11
   - pm7:usage:v10:*
@@ -6776,6 +6824,7 @@ negative_constraints:
   - Do not make a pointer move, held resize preview, ghost, placeholder, or animation frame durable.
   - Do not promote `pm7:usage:v10:*` prototype keys to canonical key names.
   - Do not promote v12, v11, or `pm7:usage:v10:*` prototype lineage to a canonical key or maintain a continuing dual-read path.
+  - Do not promote `pm.usage.widget_layout.v1` or `pm7:usage:live:v1` to a product schema or key, and do not store the Live / Paused choice as a Settings value or as part of a widget layout record.
 owner_hints:
   - Plans/usage-feature.md
   - Plans/storage-plan.md
@@ -6797,7 +6846,13 @@ canonical_text: >-
   Pricing confidence, Provider charges, Allowance authority, Pressure order, Upcoming resets, Settlement mix,
   Route pressure, Tool details, Current sources, All signals, Cache economics, Routing trace, and Free usage.
   Each named card still follows its kind-specific supported geometry; this list is coverage, not a mandate to
-  force unrelated widgets to one numeric width. Content-tier selection and reorder placeholder footprint follow
+  force unrelated widgets to one numeric width. Since the redesign (DL-176), every widget kind also has narrow
+  widths that show the same information well, adapting its content to the measured width rather than dropping
+  facts. Every size preset a kind offers in the card's size menu shows a complete, sensible content tier for that
+  kind: no preset is so small that it shows a fragment, a truncated fact or a chart without its readable values,
+  and the size menu previews each preset before it is chosen. Facts that a size cannot show fold behind an
+  "N more" control that opens them on hover and in Details, and are never dropped. Widget_System owns each kind's
+  preset list and the geometry of each preset (WS-017); this unit owns the rule that every preset earns its place. Content-tier selection and reorder placeholder footprint follow
   the card body's measured rendered width and height rather than a stale nominal grid-span or breakpoint
   assumption; preview-only physical spans never become settled layout fields. A vertical chart reserves a
   measured in-plot label region and paints exactly one visible value for every painted bar, including zero bars,
@@ -6816,6 +6871,7 @@ acceptance_criteria:
   - Every named card has a smaller polished minimum/default variant that remains composed without clipped values or avoidable empty width, with content tiers and reorder placeholder footprints chosen from measured rendered geometry rather than nominal spans, while every larger supported variant reveals additional useful content or plot area rather than blank space.
   - Current window retains its separately approved Context default while the other Context widgets use the smaller polished family.
   - The coverage list does not override kind-specific min/max constraints or force all cards to identical numeric spans; preview physical spans do not become settled layout fields.
+  - Every widget kind has a narrow width that shows the same information as its default, every size preset of every kind shows a complete, sensible content tier, the size menu previews each preset, and facts a size cannot show fold behind "N more" with hover and Details rather than being dropped.
   - Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition, and reorder ghosts remain visibly above card/content layers until cleanup.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -6840,6 +6896,7 @@ source_lineage:
   - "Concepts/pm7-tools/base/PM7-base.html (current recovered PMConcept7 source base; source-lineage-only)"
   - "Concepts/pm7-tools/build_pm7.py (current assertion-guarded T33-T41 pipeline)"
   - "Concepts/PMConcept7.html (protected generated output; verification input only; never hand-edit)"
+  - "Concepts/usage-redesign/src/js/42-cards.js and tools/boards.py (the redesigned per-kind size presets and narrow tiers; source-lineage-only)"
 preserved_exact_tokens:
   - "Plans & limits"
   - "Token analytics"
@@ -6868,12 +6925,14 @@ preserved_exact_tokens:
   - "Cache economics"
   - "Routing trace"
   - "Free usage"
+  - "N more"
 negative_constraints:
   - Do not interpret the coverage set as one universal fixed width for every widget kind.
   - Do not let a larger tier earn its size with empty space alone.
   - Do not drop chart points from accessible text, suppress a painted bar's label, or let an active reorder ghost render under workspace cards.
   - Do not position a value label outside the plot, detach it horizontally from its own bar, permit label overlap, or display attempt-charge cents without exactly two currency decimals.
   - Do not persist preview-only measured physical spans or use stale nominal spans as rendered-width authority.
+  - Do not offer a size preset whose content is a fragment, and do not drop a fact that a size cannot show instead of folding it behind "N more".
 owner_hints:
   - Plans/usage-feature.md
   - Plans/Widget_System.md
@@ -7234,3 +7293,71 @@ owner_hints: [Plans/usage-feature.md, Plans/Collaborative_Workflows.md]
 ```
 
 ContractRef: ContractName:Plans/Collaborative_Workflows.md, ContractName:Plans/Collaborative_Workflows.md#CWR-029, ContractName:Plans/usage-feature.md#UF-105, ContractName:Plans/Decision_Log.md#DL-131
+
+## Usage Page Redesign In PMConcept7 Addendum (2026-10-09)
+
+Jared approved the redesigned Usage page and asked for it to replace the old one in PMConcept7 (DL-173 to DL-179). The decisions are recorded at `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md` (SHA-256 `fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008`) and his notes of 2026-10-09 at `/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md` section 2 (SHA-256 `d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5`). This addendum owns what the redesigned page must do; its look is owned by `Plans/FinalGUISpec.md#F3-628`, its presentation grammar's single owner by `Plans/DRY_Rules.md#DR-058`, per-provider auto-switch by `Plans/Multi-Account.md#MA-073`, and the board transaction by `Plans/Widget_System.md#WS-019`. UF-089, UF-092 to UF-096 are amended in place above. The concept sources under `Concepts/usage-redesign/` are source lineage only.
+
+### UF-107 - Redesigned Usage Page: One Provider Catalog, Every Account, Accounts In Place, Honest Pace And Live Readings
+
+```yaml
+plan_unit_id: UF-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  The redesigned Usage page replaces the old one (DL-173) and keeps its thirteen rooms, its rail of rooms and its overall layout. No datum the previous page showed is dropped; adding is allowed, and a fact or series that was a static concept fixture stays in its natural widget, labelled as a fixture.
+  One provider catalog: every provider name, mark, group and order on the page is the Settings provider catalog's (Settings > AI > Providers & Accounts): its display names, its three groups Subscriptions and plans, Pay as you go, and Free and your own, and its order. The page's providers and accounts are the Settings state's own roster, so the two pages always agree; usage facts (each window's use and limit, reset truth, source and freshness, pressure, cooldown and history) come from Usage projections keyed by provider id and account id. A provider's windows are those its Settings definition declares, and Usage invents none. A provider with no account or not yet set up shows as one compact line that says Not set up or Not installed, with a Set up in Settings action that dispatches cmd.settings.open with a typed Settings target, never as an empty card.
+  Every account is shown (MA-049): the Accounts room and Plans & limits show one row or card per account, grouped by provider, including every account of the same provider (three ChatGPT / Codex accounts show as three), never only the active account. Each account shows its identity, plan, each window's use or headroom with its reset, its source and freshness, and whether it is the active account. Plans & limits has one plate per provider with accounts and one row per account, every window a meter cell with its reset; a plate too small for full rows shows the remaining accounts as lines (mark, nickname and state, and every window value) with hover and Details, and never drops an account. The windows timeline has one lane per account, grouped by provider, and names once, under the lanes, the providers that report no plan windows. A window's quota history can compare that window across the provider's accounts: its legend names every account, marks the active one (active) and an account without history no history, and the stretch during which the open account was active is marked from the switch log. A window's provenance (truth, source and sampled time) is in its hover and Details, not in the body. Readings are never added or averaged across accounts, and a missing reading never reads as zero.
+  Reset truth: when a window's reset has passed and its reading predates the reset, the window has no current reading. It reads Reset at <time> · new reading pending, never 0% and never the old percentage; the old reading stays in history only, and the hover gives the last reading's age and source. The words wrap inside the meter cell in every room.
+  The Accounts room acts in place through the real owners (DL-174). An account's "Use this account" control is labelled as an override, shows only where the provider's capability supports_manual_set_active is true, and dispatches cmd.account.select_profile; activating an account that is already past its provider's switch point asks first, as MA-073 sets out. Each provider with two or more accounts shows its Auto-switch toggle and switch level, which are the Settings rows ai.accounts.multi-account-switching and ai.accounts.hard-switch-level at that provider's scope: changing them on the card dispatches cmd.settings.transaction.preview and then cmd.settings.transaction.apply with scope=provider through the Settings owner (SSYS-044), and Settings and the card always show the same value; a provider without a value of its own shows, and runs on, the value MA-073 resolves for it. The provider's warning level and rest period show on its plate as read values and are edited in Settings, reached through Open in Settings. Open in Settings dispatches cmd.settings.open with target_type=setting. A provider with one account shows that auto-switch needs a second account instead of the controls. Every meter of a provider carries a notch at that provider's switch point, and each provider's auto-switch state is shown in plain words as MA-073 projects it; Usage decides no switch.
+  Pace without countdowns (DL-175): pace is said in one unit everywhere, points ahead of or behind the usual pace (for example +11 pts vs norm). No clock to running out is shown, such as a time until a limit is reached, a runway or a time left at the current pace; headroom as a percentage (for example 31% left) is shown, month-end spend appears only as a labelled estimate, and reset times keep their own rules (UF-045). The rejection of RunOutProjection (DR-038) stands.
+  Live readings (DL-177): the page is Live by default. While Live, Usage projection updates that arrive are applied in place, with one change moment per batch of updates and nothing moving between updates; updates that arrive while the page is not shown, during a gesture, an open menu, the inspector or a room change are held and applied together as one change once the hold ends. Paused holds arriving updates for display only and keeps the values shown with their freshness; it never stops collection, background refresh, alerts or accounting, and turning Live back on applies the latest values at once. The Live / Paused choice is a remembered view preference (UF-095 family live) with no command, setting, event or receipt; under Reduce Motion every change lands final at once.
+  The concept's demo controls are lab-only (DL-177, on ACD-474's precedent; this classification is the coordinator's recommendation recorded in DL-177, which the owner has not yet decided), and this unit is the one owner of that disposition, to which UCC-147, the wiring units and the test suite point: Play the next hour, Back to now, the Demo time label, the concept's feature switches and query flags, and its demo reading cadence receive no command, setting, wiring row, persisted key or test gate, and nothing a demo clock shows is a Usage reading (UF-092).
+  Board actions (DL-176): Tidy repacks the room's board on request, and every settled move, resize, preset change, hide or show lets cards float up into the holes above them, keeping their order (board gravity); WS-019 owns how both are previewed and resolved. Tidy and gravity each commit as one settled layout transaction with one receipt through one existing widget command as WS-019 sets out, with no move command per card and no new command. A size preset commits through cmd.widget.resize with its preset_id (WS-020), a chart type or option through cmd.widget.configure, and a widget's table export through cmd.usage.export with scope ledger; an alert's acknowledge or snooze uses the alert lifecycle owner's actions (F3-453). No Usage command, export command or alert command is added.
+gui_related: true
+gui_classification_reason: "The unit defines what the redesigned Usage page shows and does: the provider catalog, every account, the Accounts room's in-place actions, pace, Live readings, and the board actions."
+depends_on: [DL-173, DL-174, DL-175, DL-176, DL-177, UF-045, UF-089, UF-092, UF-093, UF-095, UF-096, MA-049, MA-073, WS-019, WS-020, DR-038, ACD-474, SSYS-009, SSYS-018, SSYS-044, UCC-116]
+unblocks: []
+acceptance_criteria:
+  - Every provider name, group and order on the page matches the Settings provider catalog, the page's roster is the Settings roster, every window shown is one the provider's Settings definition declares, and a provider not set up shows as one compact line with a Set up in Settings action.
+  - The Accounts room and Plans & limits show every account of every provider, one row or card each, grouped by provider; a provider with three accounts shows three.
+  - A Plans & limits plate too small for full rows shows its other accounts as lines with every window value and never drops one; the windows timeline has one lane per account.
+  - A window whose reset passed after its last reading reads Reset at <time> · new reading pending, never 0% or the old value, with the last reading's age and source in the hover.
+  - Use this account shows only where supports_manual_set_active is true, dispatches cmd.account.select_profile, and asks first when the account is past its provider's switch point.
+  - A provider's Auto-switch toggle and switch level on the card and in Settings show the same value, changing either dispatches cmd.settings.transaction.preview then cmd.settings.transaction.apply with scope=provider, a provider with one account shows no switch controls, and every meter of a provider carries that provider's switch-point notch.
+  - No clock to running out appears anywhere on the page; pace reads in points against the norm, headroom in percent, and month-end spend only as a labelled estimate.
+  - The page is Live by default; Paused holds display updates without stopping collection, refresh, alerts or accounting; the choice survives reload and dispatches no command.
+  - No command, setting, wiring row, persisted key or test gate exists for Play the next hour, Back to now, Demo time or the concept's feature switches.
+  - Tidy and board gravity each produce one settled layout transaction with one receipt and no per-card move command; no new Usage, export or alert command is registered.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks are created by this unit.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures
+  - python3 scripts/pm-plans-verify.py validate-pm7-gui-fixtures
+risk_class: usage_redesign_requirement_drift
+reasoning_tier: high
+context_scope: usage_redesign_requirements
+implementation_surfaces: [Plans/usage-feature.md, Plans/Multi-Account.md, Plans/Settings_System.md, Plans/Widget_System.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: usage_redesign_requirements, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/DECISIONS-20261009.md (SHA-256 fd8d2d8a092e97f2964331dfe3befea99f2aa66691b5021313bae2cad0a25008)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/HANDOFF-usage-upgrade-20261009.md section 2 (SHA-256 d009d908af6785fd19866b83821313d65165ed0169737ab72bcd70c04539fdd5)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/R3-aac-20261009.md section 1 (SHA-256 6f7d0b33ae6d648e8bc1aa88bf4cab0ebbe1540e5aeec723e062217e5eb04449)"
+  - "Concepts/usage-redesign/src/js/54-w-accounts.js, 15-film.js, 40-board.js (the redesigned Accounts room, Live film and board; source-lineage-only)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/d-plans-REPORT.md (SHA-256 5bee3a9fc5d56005e873dabdc44edccc0ae2ab2a62bbab6742431951568f7fe7; every account in Plans & limits and the reset truth)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/usage-mockups-20261001/lane-reports-20261010/d-switch-REPORT.md (SHA-256 30eab667e56fdaf329c6bfa1a137f3ff2947cea903b811eae7b5208379a1291a; per-provider auto-switch on the Accounts room)"
+preserved_exact_tokens: ["new reading pending", "(active)", "no history", "Subscriptions and plans", "Pay as you go", "Free and your own", "Not set up", "Not installed", "Use this account", "supports_manual_set_active", "cmd.account.select_profile", "ai.accounts.multi-account-switching", "ai.accounts.hard-switch-level", "cmd.settings.transaction.preview", "cmd.settings.transaction.apply", "scope=provider", "+11 pts vs norm", "31% left", "Live / Paused", "Play the next hour", "Back to now", "Demo time", "Tidy", "preset_id"]
+negative_constraints:
+  - Do not rename, regroup or reorder providers on the Usage page apart from the Settings catalog, and do not invent a provider window.
+  - Do not show only the active account of a provider that has several, or drop an account to fit a plate.
+  - Do not show 0% or the old percentage for a window whose reset has passed without a new reading, and do not add or average readings across accounts.
+  - Do not keep a Usage copy of an auto-switch value or decide a switch in Usage.
+  - Do not show a clock to running out, a runway or a time left at the current pace.
+  - Do not let Paused stop collection, refresh, alerts or accounting, and do not give Live / Paused a command or a setting.
+  - Do not give a demo control a command, setting, wiring row, persisted key or test gate, or count a demo reading.
+  - Do not dispatch a move command per card for Tidy or gravity, and do not add a Usage, export or alert command.
+owner_hints: [Plans/usage-feature.md, Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Widget_System.md]
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-173, ContractName:Plans/Decision_Log.md#DL-174, ContractName:Plans/Decision_Log.md#DL-175, ContractName:Plans/Decision_Log.md#DL-176, ContractName:Plans/Decision_Log.md#DL-177, ContractName:Plans/Multi-Account.md#MA-049, ContractName:Plans/Multi-Account.md#MA-073, ContractName:Plans/Settings_System.md#SSYS-009, ContractName:Plans/Settings_System.md#SSYS-018, ContractName:Plans/Settings_System.md#SSYS-044, ContractName:Plans/Widget_System.md#WS-019, ContractName:Plans/Widget_System.md#WS-020, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/DRY_Rules.md#DR-038, ContractName:Plans/FinalGUISpec.md#F3-628

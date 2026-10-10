@@ -1,0 +1,236 @@
+/* Shell: rail, one-line head, controls, shared controls (owner: engine; DESIGN-SPEC sections 2.1, 3 and 14,
+   DESIGN-SPEC-ATLAS 2.2 and 10.3). The dropdown panels themselves are in 15-menu.css. */
+#panel-usage .pmu-shell { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); height: 100%; min-height: 0; container-type: inline-size;
+  color: var(--pmu-ink); background: var(--pmu-ground); font-family: var(--pmu-font); font-size: 13px; line-height: 1.45; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-ico { display: inline-flex; width: 16px; height: 16px; flex: none; }
+#panel-usage .pmu-ico svg { display: block; width: 100%; height: 100%; }
+#panel-usage .pmu-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+#panel-usage .pmu-defs { position: absolute; width: 0; height: 0; overflow: hidden; color: var(--pmu-ink); }
+/* faces (A1 2.1): the theme's text face; the mono only for micro-labels */
+html[data-theme^="retro"] #panel-usage .pmu-shell { --pmu-font: "IBM Plex Mono", var(--mono-font, ui-monospace, monospace); --pmu-mono: "IBM Plex Mono", var(--mono-font, ui-monospace, monospace); }
+html[data-o55-nier="on"] #panel-usage .pmu-shell { --pmu-font: "PM NieR Sans", var(--body-font, inherit); --pmu-mono: "PM NieR Mono", var(--mono-font, ui-monospace, monospace); }
+
+/* rail */
+#panel-usage .pmu-rail { display: flex; flex-direction: column; gap: 10px; width: 182px; min-width: 0; min-height: 0; padding: 14px 8px; border-right: 1px solid var(--pmu-rule);
+  background: var(--pmu-card); overflow: auto; scrollbar-width: none; }
+@container (min-width: 1000px) { #panel-usage .pmu-rail { width: 188px; } }
+#panel-usage .pmu-brand h1 { margin: 2px 8px 4px; font-size: 15px; font-weight: 650; letter-spacing: -.01em; color: var(--pmu-ink); }
+#panel-usage .pmu-nav { position: relative; display: flex; flex-direction: column; gap: 1px; }
+#panel-usage .pmu-navink { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: 8px; background: var(--pmu-row-hover); pointer-events: none;
+  box-shadow: inset 2px 0 0 0 transparent; }
+#panel-usage .pmu-navbtn { position: relative; z-index: 1; display: flex; align-items: center; gap: 8px; width: 100%; height: 30px; padding: 0 8px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 13px; text-align: left; cursor: pointer; transition: color calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-navbtn:hover { color: var(--pmu-ink); }
+#panel-usage .pmu-navbtn.active { color: var(--pmu-ink); font-weight: 600; }
+#panel-usage .pmu-navbtn:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#panel-usage .pmu-navicon { width: 16px; height: 16px; flex: none; color: var(--pmu-ink-3); transition: color calc(140ms * var(--pmu-speed, 1)), transform calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
+#panel-usage .pmu-navbtn:hover .pmu-navicon { transform: translateX(1px); }
+#panel-usage .pmu-navbtn.active .pmu-navicon { color: var(--pmu-accent); }
+#panel-usage .pmu-navicon svg { display: block; width: 100%; height: 100%; }
+#panel-usage .pmu-navtext { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* the Attention row's count (WOW-SPEC-3 8.3): warn-ink numerals at the row's end, no badge */
+#panel-usage .pmu-navcount { margin-left: auto; flex: none; padding-left: 6px; font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--pmu-ink-warn); }
+#panel-usage .pmu-navcount[hidden] { display: none; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-navink, .pmu-navbtn) { border-radius: 0; }
+/* the mono face is wider: the Retro rail keeps every room name whole ("Source authority", "Plans & limits") */
+html[data-theme^="retro"] #panel-usage .pmu-rail { width: 196px; }
+html[data-theme^="retro"] #panel-usage .pmu-navbtn { font-size: 12.5px; gap: 8px; padding: 0 8px; }
+
+/* stage and head (A1 2.2: room title 18 / 640) */
+#panel-usage .pmu-stage { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
+#panel-usage .pmu-stagehead { position: relative; z-index: 5; display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 14px 0 18px; flex: none;
+  border-bottom: 1px solid var(--pmu-rule); background: transparent; }   /* WOW-SPEC-3 4.2: the key light shows behind the title */
+/* the title and its one-line subtitle stacked (E3-11): the subtitle gets the title block's whole width and shows whole or
+   not at all (fitDesc); 22 + 1 + 15 px inside the 52 px head */
+#panel-usage .pmu-titleblock { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px; min-width: 0; flex: 1 1 auto; }
+/* the old room's title leaving over the new one (46-shell.js titleGhost) */
+#panel-usage .pmu-titleblock.pmu-titleghost { position: absolute; z-index: 1; margin: 0; overflow: hidden; pointer-events: none; }
+#panel-usage .pmu-titleghost .pmu-roomdesc { flex: none; }
+/* the title keeps its whole name; the one-line description takes what is left (and ellipsizes first) */
+#panel-usage #pmuRoomTitle { margin: 0; min-width: 72px; overflow: hidden; text-overflow: ellipsis; font-size: 18px; font-weight: 640; line-height: 22px; letter-spacing: -.015em;
+  white-space: nowrap; outline: none; flex: 0 1 auto; max-width: 100%; }
+/* E4 (NOTES3-content): a narrow head (Glass 1440 left the title 22 px short) shows the panel count without its word; the
+   grid icon and the hover tag "Panels in this room" carry it */
+#panel-usage .pmu-detlead { display: none; }
+@container (max-width: 800px) { #panel-usage .pmu-pcw { display: none; } #panel-usage .pmu-headctl { gap: 4px; }
+  #panel-usage .pmu-detlead { display: inline-grid; } #panel-usage #pmuDetailBtn .pmu-ctltext { display: none; } }
+#panel-usage .pmu-roomdesc { margin: 0; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: clip; white-space: nowrap; color: var(--pmu-ink-3); font-size: 12px; line-height: 15px; flex: none; }
+/* E3-11: shown whole or not at all (46-shell.js fitDesc measures it); the demo hour's clock reads in the mono */
+#panel-usage .pmu-roomdesc[hidden] { display: none; }
+#panel-usage .pmu-roomdesc.is-demo { font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; color: var(--pmu-ink-2); }
+#panel-usage .pmu-headctl { display: flex; align-items: center; gap: 6px; flex: none; }
+#panel-usage .pmu-ctlbtn { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 8px 0 10px; border: 1px solid var(--pmu-rule); border-radius: 9px;
+  background: transparent; color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; white-space: nowrap; outline: none;
+  transition: background-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)), border-color calc(140ms * var(--pmu-speed, 1)), transform calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-ctlbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); border-color: var(--pmu-rule-strong); }
+#panel-usage .pmu-ctlbtn:active { transform: scale(.97); }
+#panel-usage .pmu-ctlbtn:focus-visible, #panel-usage .pmu-iconbtn:focus-visible, #panel-usage .pmu-seg button:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#panel-usage .pmu-ctltext { max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+#panel-usage .pmu-ctllead { display: inline-grid; place-items: center; width: 16px; height: 16px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-ctllead:empty { display: none; }
+#panel-usage .pmu-ctlicon { width: 14px; height: 14px; color: var(--pmu-ink-3); }
+#panel-usage .pmu-ctlchev { width: 14px; height: 14px; color: var(--pmu-ink-3); transition: transform calc(260ms * var(--pmu-speed, 1)) var(--pmu-ease-spring); }
+#panel-usage .pmu-ctlbtn[aria-expanded="true"] .pmu-ctlchev { transform: rotate(180deg); }
+#panel-usage .pmu-rangebtn { display: none; }
+#panel-usage .pmu-rangetext { font-family: var(--pmu-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+/* segmented text controls (no pills): mono caps for the range, an accent underline that slides with a spring */
+#panel-usage .pmu-seg { position: relative; display: inline-flex; align-items: center; gap: 0; height: 30px; }
+#panel-usage .pmu-seg button { position: relative; height: 30px; padding: 0 9px; border: 0; background: transparent; color: var(--pmu-ink-3); font: inherit; font-size: 12.5px;
+  cursor: pointer; transition: color calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-seg button:hover { color: var(--pmu-ink); }
+#panel-usage .pmu-seg button.active { color: var(--pmu-ink); font-weight: 600; }
+#panel-usage .pmu-range button { font-family: var(--pmu-mono); font-size: 11.5px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+#panel-usage .pmu-range button.active { font-weight: 650; }
+#panel-usage .pmu-seg-ink { position: absolute; left: 0; bottom: 2px; width: 100px; height: 2px; border-radius: 1px; transform-origin: 0 50%; pointer-events: none;
+  background: linear-gradient(90deg, var(--pmu-accent), var(--pmu-accent-b)); transition: transform calc(260ms * var(--pmu-speed, 1)) cubic-bezier(.22,1,.36,1), opacity calc(140ms * var(--pmu-speed, 1)); }
+/* (WOW-SPEC 3.4: the range underline slides 260 SLIDE) */
+html[data-theme^="retro"] #panel-usage .pmu-seg-ink { border-radius: 0; transition-timing-function: steps(4, end); }
+#panel-usage .pmu-iconbtn { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 9px; background: transparent;
+  color: var(--pmu-ink-3); cursor: pointer; outline: none; transition: background-color calc(140ms * var(--pmu-speed, 1)), color calc(140ms * var(--pmu-speed, 1)), transform calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-iconbtn:hover { color: var(--pmu-ink); background: var(--pmu-row-hover); }
+#panel-usage .pmu-iconbtn:active { transform: scale(.94); }
+#panel-usage .pmu-iconbtn svg { width: 16px; height: 16px; }
+/* refresh (WOW-SPEC 3.18): one turn in 650 ms that lands with the measured 5.6 Pro POP settle */
+#panel-usage .pmu-iconbtn.spinning svg { animation: pmu-spin calc(650ms * var(--pmu-speed, 1)) linear(0,.028,.111 8%,.412 20%,.686 30%,.867 40%,.964 50%,1.012 62%,1.014 74%,1.003 88%,1) 1; }
+@keyframes pmu-spin { to { transform: rotate(360deg); } }
+html[data-theme^="retro"] #panel-usage :is(.pmu-ctlbtn, .pmu-iconbtn) { border-radius: 0; }
+
+/* provider marks (A1 5.1): monogram tiles in vendor hues; letters never under 11 px */
+#panel-usage .pmu-pmark { display: inline-grid; place-items: center; flex: none; width: var(--s, 20px); height: var(--s, 20px); border-radius: calc(var(--s, 20px) * .3);
+  background: var(--pv, var(--pmu-v-community)); color: var(--pmu-mark-ink); font-family: var(--pmu-font); font-size: 11px; font-weight: 700; line-height: 1;
+  letter-spacing: -.02em; font-style: normal; text-transform: none; user-select: none; }
+#panel-usage .pmu-pmark[data-size="24"] { font-size: 12px; }
+html[data-theme^="retro"] #panel-usage .pmu-pmark:not(.is-logo) { border-radius: 0; }
+/* official marks (06-marks.js): shown as published, never on a plate, never tinted */
+#panel-usage .pmu-pmark.is-logo { background: none; border-radius: 0; box-shadow: none; color: var(--pmu-ink); overflow: visible; }
+#panel-usage .pmu-pmark.is-logo > :is(img, .pmu-mark) { display: block; }
+
+/* shared controls (A1 10.3): the toggle and the stepper used by the Auto-switch strip and gear rows */
+#panel-usage .pmu-toggle { position: relative; display: inline-flex; flex: none; width: 30px; height: 18px; padding: 0; border: 0; border-radius: 9px; cursor: pointer;
+  background: var(--pmu-rule-strong); transition: background-color calc(180ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+#panel-usage .pmu-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.3); transition: transform calc(180ms * var(--pmu-speed, 1)) cubic-bezier(.2,.8,.2,1); }
+/* the knob (WOW-SPEC 3.9): 180 (.2,.8,.2,1); Friendly springs, Retro steps twice, NieR three steps in 120 */
+html[data-theme^="friendly"] #panel-usage .pmu-toggle::after { transition-timing-function: var(--pmu-ease-spring); }
+html[data-o55-nier="on"] #panel-usage .pmu-toggle::after { transition: transform calc(120ms * var(--pmu-speed, 1)) steps(3, jump-start); }
+#panel-usage .pmu-toggle[aria-checked="true"], #panel-usage .pmu-toggle.on { background: var(--pmu-accent); }
+#panel-usage .pmu-toggle[aria-checked="true"]::after, #panel-usage .pmu-toggle.on::after { transform: translateX(12px); }
+#panel-usage .pmu-toggle:disabled, #panel-usage .pmu-toggle[aria-disabled="true"] { opacity: .5; cursor: default; }
+#panel-usage .pmu-toggle:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 2px; }
+#panel-usage .pmu-stepper { display: inline-flex; align-items: center; height: 28px; border: 1px solid var(--pmu-rule); border-radius: 8px; overflow: hidden; }
+#panel-usage .pmu-stepper button { display: inline-grid; place-items: center; width: 24px; height: 100%; padding: 0; border: 0; background: transparent; color: var(--pmu-ink-3); cursor: pointer; }
+#panel-usage .pmu-stepper button:hover { background: var(--pmu-row-hover); color: var(--pmu-ink); }
+#panel-usage .pmu-stepper button svg { width: 12px; height: 12px; }
+#panel-usage .pmu-stepper output, #panel-usage .pmu-stepper .pmu-stepval { min-width: 40px; padding: 0 4px; text-align: center; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+html[data-theme^="retro"] #panel-usage :is(.pmu-toggle, .pmu-toggle::after, .pmu-stepper) { border-radius: 0; }
+html[data-theme^="retro"] #panel-usage .pmu-toggle::after { transition-timing-function: steps(2, jump-start); }
+/* the value-change underline (B v2 8.5) */
+#panel-usage .pmu-pulse-ul { position: relative; }
+#panel-usage .pmu-pulse-ul::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 1px; pointer-events: none;
+  background: linear-gradient(90deg, var(--pmu-accent), var(--pmu-accent-b)); transform-origin: 0 50%; animation: pmu-ul calc(520ms * var(--pmu-speed, 1)) var(--pmu-ease-out) 1 both; }
+@keyframes pmu-ul { 0% { transform: scaleX(0); opacity: 1; } 50% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+
+body.pmu-page-active #pm-home-workspace { pointer-events: none !important; }
+/* no GPU (html[data-pmu-soft], 90-api.js): while Usage shows, the Glass pane is solid instead of a live full-window blur,
+   so Usage motion is not re-blurred on the CPU every frame; the pane keeps its rim, radius and shadow */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell {
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  background: linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(145deg, var(--rg-rim, rgba(255,255,255,.3)), rgba(255,255,255,.08) 23%, rgba(255,255,255,.04) 68%, var(--rg-rim-low, rgba(255,255,255,.1))) border-box !important; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::before { mix-blend-mode: normal; opacity: .18; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active .app-shell::after { mix-blend-mode: normal; }
+/* the window-wide film-grain overlay blends every frame in software; it goes while Usage shows on such a machine */
+/* the Glass grain is a full-window mix-blend-mode: overlay layer; the app shows it with display: block !important, so
+   the soft rule needs !important too (PERF-3: with it every Glass frame on the VM was a 150-170 ms software draw, 5-6
+   fps in every moment) */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #pixelGrid { display: none !important; }
+/* the Glass wallpaper's light layer (#glass-bg::after: filter blur(4px) + mix-blend-mode: screen over the whole window)
+   made every software draw 120-190 ms (5-7 fps in every moment of Glass on the VM; glassbisect.py: hidden -> 4-6 ms,
+   60 fps). Without a GPU it goes while Usage shows, and the scene below it is not blurred; with the solid pane only the
+   10 px around the shell shows the wallpaper */
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #glass-bg::after { display: none !important; }
+html[data-pmu-soft][data-theme^="glass"] body.pmu-page-active #glass-bg::before { filter: none !important; }
+/* the app's title-bar notes (Settings writes such as "Next run uses this account") drop over the Usage head: while Usage
+   shows they never take a pointer, so a click on Detail, Panels or the range goes through (the inbox keeps them) */
+body.pmu-page-active #rsStage, body.pmu-page-active #rsStage .rs-card { pointer-events: none !important; }
+/* ... and they drop below the Usage head (LOOK-REVIEW-2 item 14: "Research run complete" and "Usage warning" sat over the
+   range, detail and panels buttons for seconds); the individual translate property composes with the app's own motion */
+/* final fix M2: the 58 px drop put them on the board's first row (the KPI tiles at the top right); PMU.shell.placeNotices
+   now anchors them at the bottom right of the Usage stage (--pmu-rs-x / --pmu-rs-y); 58 px stays only until it has measured */
+body.pmu-page-active #rsStage { translate: var(--pmu-rs-x, 0px) var(--pmu-rs-y, 58px); }
+/* the onboarding's concept-demo chip (fixed bottom-left, 318 px) poked 45 px into the Usage rail (LOOK-REVIEW-2 item 22):
+   while Usage shows it is drawn at 80 % so it stays inside the app's own navigation column */
+body.pmu-page-active #o55-demo { transform-origin: 0 100%; scale: .8; }
+/* Usage's own note: bottom centre of the stage, never a pointer target */
+#panel-usage .pmu-toast { position: absolute; left: 50%; bottom: 18px; z-index: 40; display: flex; align-items: center; gap: 8px; max-width: min(460px, calc(100% - 32px));
+  padding: 8px 14px 8px 10px; border: 1px solid var(--pmu-rule-strong); border-radius: 10px; background: var(--pmu-card); color: var(--pmu-ink); font-size: 13px; line-height: 1.35;
+  box-shadow: var(--pmu-elev-lift); transform: translate(-50%, 0); pointer-events: none; }
+#panel-usage .pmu-toast[hidden] { display: none; }
+#panel-usage .pmu-toast-ico { display: inline-grid; place-items: center; width: 16px; height: 16px; flex: none; color: var(--pmu-ink-ok); }
+#panel-usage .pmu-toast-ico svg { width: 14px; height: 14px; }
+html[data-theme^="retro"] #panel-usage .pmu-toast { border-radius: 0; }
+/* during a gesture: nothing restyles the application. user-select on body would restyle all ~15k nodes (98 ms on the VM),
+   so text selection is blocked by a selectstart listener instead; the grabbing cursor lives on the lifted card. */
+html[data-motion="reduced"] #panel-usage :is(.pmu-seg-ink, .pmu-toggle, .pmu-toggle::after, .pmu-ctlchev, .pmu-navicon) { transition: none !important; }
+
+/* narrow heads (DESIGN-SPEC 2.1: nothing overlaps the title): below 1000 px of panel the subtitle goes to the title's
+   hover tag, the range strip collapses into its menu and the scope label shortens; below 860 px the scope button keeps
+   its glyph (or provider mark) only and the panel count keeps its glyph. These rules come last so they win. */
+@container (max-width: 999px) {
+  #panel-usage .pmu-roomdesc { display: none; }
+  /* the subtitle is gone, so the title may take the whole title block */
+  #panel-usage #pmuRoomTitle { max-width: 100%; flex: 0 1 auto; }
+  #panel-usage #pmuScopeLabel { max-width: 96px; }
+  #panel-usage .pmu-range { display: none; }
+  #panel-usage .pmu-rangebtn { display: inline-flex; }
+  #panel-usage .pmu-headctl { gap: 5px; }
+}
+@container (max-width: 860px) {
+  #panel-usage #pmuScopeLabel, #panel-usage #pmuPanelCount { display: none; }
+  #panel-usage #pmuScopeBtn, #panel-usage #pmuCustomize { padding: 0 6px 0 8px; }
+  #panel-usage .pmu-headctl { gap: 4px; }
+  #panel-usage .pmu-stagehead { padding: 0 10px 0 16px; gap: 10px; }
+  #panel-usage #pmuRoomTitle { font-size: 16.5px; letter-spacing: -.02em; }
+  #panel-usage #pmuDetailLabel { max-width: 84px; }
+}
+
+/* ---- the Live control in the rail head beside "Usage" (WOW-SPEC-3 8.5, E3-8): a 6 px dot + "Live" (12.5 px, ink-2) /
+   a hollow ring + "Paused"; the chevron opens the Live menu. No pill, no tinted box; every glyph is inline SVG. Per family:
+   Basic mint dot, Friendly rose -> teal dot, Glass a dot with its own static glow, Retro [LIVE] / [HOLD] with a block
+   cursor, NieR a diamond + LIVE / STANDBY. ---- */
+#panel-usage .pmu-brand { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+#panel-usage .pmu-brand h1 { flex: none; }
+#panel-usage .pmu-livectl { display: inline-flex; align-items: center; gap: 0; flex: none; margin: 2px 2px 4px 0; --pmu-live-c: var(--pmu-l-r2, var(--pmu-accent)); }
+#panel-usage .pmu-livectl[hidden] { display: none; }
+#panel-usage .pmu-livebtn, #panel-usage .pmu-livechev { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 4px; border: 0; border-radius: 6px; background: transparent;
+  color: var(--pmu-ink-2); font: inherit; font-size: 12.5px; cursor: pointer; outline: none; transition: color calc(140ms * var(--pmu-speed, 1)); }
+#panel-usage .pmu-livebtn:hover, #panel-usage .pmu-livechev:hover { color: var(--pmu-ink); }
+#panel-usage .pmu-livebtn:focus-visible, #panel-usage .pmu-livechev:focus-visible { outline: 2px solid var(--pmu-accent); outline-offset: 1px; }
+#panel-usage .pmu-livechev { width: 18px; padding: 0; justify-content: center; color: var(--pmu-ink-3); }
+#panel-usage .pmu-livechev .pmu-ico { width: 12px; height: 12px; }
+#panel-usage .pmu-livedot { position: relative; display: inline-grid; place-items: center; width: 12px; height: 12px; flex: none; }
+#panel-usage .pmu-livedot svg { display: block; width: 12px; height: 12px; overflow: visible; }
+#panel-usage .pmu-livedot svg > :not(defs) { display: none; }   /* the defs stay rendered: a gradient inside display:none paints nothing */
+#panel-usage .pmu-ld-dot { display: inline !important; fill: var(--pmu-live-c); }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-dot { display: none !important; }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: inline !important; fill: none; stroke: var(--pmu-ink-3); stroke-width: 1.4; }
+#panel-usage .pmu-livectl[data-state="paused"] .pmu-liveword { color: var(--pmu-ink-3); }
+#panel-usage .pmu-livepulse { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--pmu-live-c); opacity: 0; pointer-events: none; }
+#panel-usage .pmu-liveword { white-space: nowrap; }
+html[data-theme^="friendly"] #panel-usage .pmu-ld-dot { fill: url(#pmuLiveGrad); }
+html[data-theme^="friendly"] #panel-usage .pmu-livectl { --pmu-live-c: #C2557A; }
+html[data-theme^="glass"] #panel-usage .pmu-livectl[data-state="on"] .pmu-livedot svg { filter: drop-shadow(0 0 3px var(--pmu-live-c)); }
+html[data-theme^="retro"] #panel-usage .pmu-livectl { --pmu-live-c: var(--pmu-s0); }
+html[data-theme^="retro"] #panel-usage .pmu-livebtn { gap: 3px; font-family: var(--pmu-mono); font-size: 12px; letter-spacing: .02em; }
+html[data-theme^="retro"] #panel-usage .pmu-livedot { order: 2; width: 7px; }
+html[data-theme^="retro"] #panel-usage .pmu-livedot svg { width: 7px; }
+html[data-theme^="retro"] #panel-usage .pmu-ld-dot, html[data-theme^="retro"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: none !important; }
+html[data-theme^="retro"] #panel-usage .pmu-ld-cur { display: inline !important; fill: var(--pmu-live-c); }
+html[data-theme^="retro"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-cur { fill: var(--pmu-ink-3); }
+html[data-theme^="retro"] #panel-usage .pmu-livepulse { border-radius: 0; }
+html[data-o55-nier="on"] #panel-usage .pmu-livectl { --pmu-live-c: var(--pmu-ink); }
+html[data-o55-nier="on"] #panel-usage .pmu-livebtn { font-family: var(--pmu-mono); font-size: 11.5px; letter-spacing: .08em; }
+html[data-o55-nier="on"] #panel-usage .pmu-ld-dot, html[data-o55-nier="on"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-ring { display: none !important; }
+html[data-o55-nier="on"] #panel-usage .pmu-ld-dia { display: inline !important; fill: var(--pmu-ink); stroke: var(--pmu-ink); stroke-width: 1; }
+html[data-o55-nier="on"] #panel-usage .pmu-livectl[data-state="paused"] .pmu-ld-dia { fill: none; }
+html[data-o55-nier="on"] #panel-usage .pmu-livepulse { border-radius: 0; transform: rotate(45deg) scale(.8); }

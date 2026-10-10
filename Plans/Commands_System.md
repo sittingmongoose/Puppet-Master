@@ -4772,7 +4772,16 @@ canonical_text: >-
   a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id and retains the event, provider, account,
   and runtime refs as correlation. Current PMConcept7 aggregate provider/account/panel cards remain local inspectors and
   dispatch no command; and a Settings change dispatches cmd.settings.open with the Settings-owned
-  `pm.settings_route_request.v1` target and exact-return identity.
+  `pm.settings_route_request.v1` target and exact-return identity. The one exception (2026-10-09,
+  Plans/Decision_Log.md#DL-174) is a bound Settings control that the redesigned Usage Accounts room hosts in
+  place, which UF-092 carves out and SSYS-044 owns: each provider's Auto-switch toggle and switch level commit
+  through the Settings owner's cmd.settings.transaction.preview and then cmd.settings.transaction.apply at scope
+  provider, and Usage keeps no copy of the value; every other Settings change on the page, the provider's warning
+  level and rest period included, still dispatches cmd.settings.open. On the same room an account's Use this
+  account control dispatches the existing account profile selection command, cmd.account.select_profile, as a
+  labelled override; it is an explicit account action, shown only where the provider supports choosing the active
+  account by hand, and never a page-scope pick. Live / Paused is view state like disclosure and range, and adds no
+  command (UF-107).
 gui_related: true
 gui_classification_reason: The family decides which Usage affordances dispatch a command, what their disabled and busy announcements say, and which affordances are view-local.
 depends_on: [CS-066, UF-092]
@@ -4783,6 +4792,7 @@ acceptance_criteria:
   - A forecast result is a labelled projection and is never presented as a quota run-out date or a countdown.
   - Disclosure, scope, range, and filter selections dispatch no command, and a page-scope pick never dispatches the account profile selection command; event-primary Usage callers use cmd.nav.open_usage_subject with usage_event/usage_event_ref, while a PMConcept7 Ledger attempt row uses usage_attempt/attempt_id, retains usage_event_ref plus provider/account/runtime refs as correlation, and carries no OpenSubject. Current aggregate provider/account/panel cards stay local with no command, receipt, or event.
   - A persisted Usage widget layout mutation dispatches the existing widget command family with a layout revision expectation and an idempotency key rather than writing layout storage directly.
+  - "Every Usage Settings change dispatches cmd.settings.open except a provider's Auto-switch toggle and switch level on the Accounts room, which dispatch cmd.settings.transaction.preview then cmd.settings.transaction.apply at scope provider and leave no Usage copy; Use this account dispatches cmd.account.select_profile only as an explicit labelled action, and Live / Paused dispatches nothing."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -4803,9 +4813,12 @@ source_lineage:
   - "Concepts/usage-concepts/QwenUsageConcept/u11-prism.html (u11 Prism II Usage concept; source-lineage-only)"
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/PORT_HANDOFF_PLANS_ROUTE.md
   - Concepts/usage-concepts/PM_Usage_Independent_Audit_2026-08-17/handoff/HANDOFF_CORRECTIONS.md
+  - Plans/Decision_Log.md#DL-174
 preserved_exact_tokens:
   - cmd.usage.forecast.request
   - cmd.settings.open
+  - cmd.settings.transaction.preview
+  - cmd.settings.transaction.apply
   - pm.settings_route_request.v1
   - none_pending_event_authority
   - missing_event_registration
@@ -4815,6 +4828,7 @@ negative_constraints:
   - Do not present a forecast as a quota run-out date or a countdown.
   - Do not promote a view-local disclosure, scope, range, or filter selection into a command.
   - Do not dispatch the account profile selection command for a read-only view-scope change.
+  - Do not write a Settings-owned value from Usage except through the Settings owner's transaction for a bound control SSYS-044 names.
   - Do not dispatch cmd.nav.open_usage_subject without the stable selector required by its event-primary or attempt-primary branch, attach OpenSubject to either cmd.nav selector branch, or promote a current PMConcept7 aggregate card presentation id into route identity; the pre-existing artifact route/open bridge remains separately owned.
 owner_hints:
   - Plans/Commands_System.md
@@ -4841,6 +4855,10 @@ The canonical dispositions are:
 | Usage refresh and object-backed Usage/Ledger drill-through | `cmd.usage.refresh`, `cmd.nav.open_usage_subject` | Refresh records a no-persist dispatch receipt. Event-primary callers use `usage_event`/`usage_event_ref`; a PMConcept7 Ledger attempt row uses `usage_attempt`/`attempt_id`, repeats `attempt_id` at top level, retains `usage_event_ref` plus provider/account/runtime refs as correlation, and carries no `OpenSubject`. |
 | Aggregate provider/account/panel details | local inspector (`view_only`) | Current aggregate cards open their local inspector only; no command, command receipt, domain event, or invented route kind is admitted. |
 | Usage room, scope, range, disclosure, More-menu state, and per-widget filters | local projection (`view_only`) | No command, command receipt, persisted event, or storage mutation is emitted merely for local projection changes. Settled saved preferences remain storage-owned. |
+| Usage Live / Paused (redesigned page, 2026-10-09) | local projection (`view_only`) | Holds or applies arriving Usage projection updates for display only; the remembered choice is the storage-owned view preference `live` (`Plans/usage-feature.md#UF-095`). |
+| Usage Tidy and board gravity (redesigned page) | one existing `cmd.widget.move` carrying `arrange` `{ mode: "tidy", detail }` for Tidy; gravity inside the action's own widget command | One settled layout transaction with one receipt; no per-card move and no new command (`Plans/Widget_System.md#WS-019`). |
+| Usage Accounts room Use this account | `cmd.account.select_profile` | Explicit labelled override, shown only where `supports_manual_set_active` holds; never a page-scope pick. |
+| Usage Accounts room provider Auto-switch toggle and switch level | `cmd.settings.transaction.preview` then `cmd.settings.transaction.apply` at scope `provider` | The Settings owner's transaction commits the one Settings value; Usage keeps no copy (`Plans/Settings_System.md#SSYS-044`). |
 | Context-ring popup/hover summary | local projection (`view_only`) | Opening or hovering the menu does not compact context or open a detail surface. |
 | `Compact Now` | `cmd.chat.compact_context` | Dispatches only after explicit selection. While no `context.compaction.*` Event Authority registration exists, production wiring records the command result/receipt and visible projection state rather than fabricating an event family. |
 | `More Details`, focus, and close | `cmd.chat.open_thread_context_details`, `cmd.chat.focus_thread_context_details`, `cmd.chat.close_thread_context_details` | Reuses the shared thread Context Detail Pane; it does not create a Usage route or a second chat-local details store. |
@@ -4872,7 +4890,13 @@ canonical_text: >-
   cmd.workspace_layout.size_surface token normalizes to cmd.workspace_layout.resize_surface
   after preset resolution and never becomes a primary command. No pointer-preview event,
   PM7 command family, second Assistant command path, or rejected provider-management
-  command is admitted.
+  command is admitted. The redesigned Usage page (2026-10-09, DL-173) adds no command either: its
+  Accounts room's Use this account reuses cmd.account.select_profile, each provider's Auto-switch toggle and
+  switch level reuse the Settings owner's cmd.settings.transaction.preview and cmd.settings.transaction.apply at
+  scope provider (SSYS-044), Tidy is one existing cmd.widget.move carrying arrange { mode: tidy, detail } for the
+  whole room and Usage board gravity commits inside the action's own widget command (WS-019), a size preset
+  commits through cmd.widget.resize, Live / Paused is a local view projection, and the concept's demo controls
+  take the lab-only disposition of UF-107. UCC-147 carries the control-by-control census.
 gui_related: true
 gui_classification_reason: The unit governs which visible PMConcept7 controls dispatch and which interactions remain local previews.
 split_recommended: false
@@ -4885,6 +4909,7 @@ acceptance_criteria:
   - Compact Now dispatches cmd.chat.compact_context only after explicit selection; More Details reuses the thread Context Detail Pane command family; menu open and hover dispatch nothing.
   - Escape, pointercancel, invalid target, and no-change releases restore or retain the prior projection and emit no command, receipt, event, or persistence write.
   - cmd.provider.usage.open_management remains rejected and no PM7-only command namespace is added.
+  - "The redesigned Usage page dispatches cmd.account.select_profile for Use this account, the cmd.settings.transaction.preview/apply pair at scope provider for a provider's Auto-switch toggle and switch level, exactly one cmd.widget.move carrying arrange { mode: tidy, detail } per Tidy that moves cards, and nothing for Live / Paused, gravity beyond the causing action, or the concept's demo controls; no command is added."
   - No WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py validate-wiring-matrix
@@ -4909,6 +4934,9 @@ source_lineage:
   - Concepts/pm7-tools/build_pm7.py#T33-T41 (source-owned transforms)
   - Concepts/PMConcept7.html (generated artifact; terminal bytes and hash are audit-owned)
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local successor audit status; verdict remains report-owned)
+  - Plans/Decision_Log.md#DL-173
+  - Plans/Decision_Log.md#DL-174
+  - Plans/Decision_Log.md#DL-176
 preserved_exact_tokens:
   - cmd.widget.resize
   - cmd.widget.move
@@ -4925,6 +4953,7 @@ negative_constraints:
   - Do not dispatch commands or persist events for pointer-preview frames, hover, popup disclosure, or cancellation.
   - Do not revive cmd.provider.usage.open_management.
   - Do not create a second Assistant command path or store.
+  - Do not mint a command for Usage Tidy, board gravity, size presets, Live / Paused, or the Accounts room's in-place controls, and do not commit Tidy as one move per card.
   - Do not route aggregate provider/account/panel cards, attach OpenSubject to either cmd.nav.open_usage_subject selector branch, or use usage_event_ref as the PMConcept7 Ledger attempt selector.
 owner_hints:
   - Plans/Commands_System.md

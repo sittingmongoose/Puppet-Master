@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L34775-L35205
+Source lines: L34788-L35232
 
-Source SHA256: `d884c94b67e361099db61149556d47f4cab502bfe4283e019c62dd0a747361f2`
+Source SHA256: `531f33841911f4b489578d3196daf49d16ffb0c03c93684d88fe8aaeddd22662`
 
 ---
 
@@ -87,7 +87,11 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   PMConcept7 Usage projects the thirteen canonical rooms and the exact At a glance, Detailed, and Diagnostics
-  disclosure ladder from the Usage owner into a balanced twelve-track widget workspace. Curated defaults,
+  disclosure ladder from the Usage owner into a balanced widget workspace whose track count follows the board's
+  measured width on the 12, 20, 24 and 30 track ladder of UF-094, which replaces the earlier fixed twelve-track
+  board (DL-176). Default boards use many narrow widgets, every widget kind has narrow widths that show the same
+  information, every size preset shows a complete content tier, and facts a size cannot show fold behind "N more"
+  with hover and Details rather than being dropped (UF-096). Curated defaults,
   provider-heavy narrow-and-tall cards, partial-row alignment, semantic size identities, complete-or-hidden
   content tiers, chart and meter lanes, source-confidence copy, Raw versus Curated views, Context details, and
   humanized Ledger labels must remain readable at supported sizes. Wider or taller widgets earn their footprint
@@ -112,7 +116,11 @@ canonical_text: >-
   `usage_event_ref`, normalize to `route_target.object_kind = usage_attempt` plus `object_id = attempt_id`, keep
   the event/provider/account/runtime identities as correlation, and carry no `OpenSubject`. Event-primary callers
   retain usage_event/usage_event_ref. Aggregate provider, account, and panel cards open their existing local
-  inspector with no route command, receipt, or domain event.
+  inspector with no route command, receipt, or domain event. The Accounts room's explicit in-place controls are the
+  one exception, and only as UF-093 and UF-107 set out: Use this account dispatches cmd.account.select_profile, and
+  a provider's Auto-switch toggle and switch level are bound Settings controls committed through the Settings
+  owner's transaction; opening a card or its Details stays local. The redesigned page's look, its move and resize
+  previews, its menus, marks, heroes, charts and motion are owned by F3-628.
 gui_related: true
 gui_classification_reason: This unit governs the visible Usage room, widget, chart, meter, Context, and Ledger presentation.
 split_recommended: false
@@ -121,9 +129,10 @@ unblocks: [F3-515, F3-518, ATS-036, ATS-038]
 acceptance_criteria:
   - "Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, and Source authority are all addressable, in that order and at every supported physical width, with only At a glance, Detailed, and Diagnostics as user-facing disclosure labels; Source authority mounts exactly 4/6/8 panels, and provider setup absence renders exact Provider Setup Required copy, explicit Host/Environment, preserved operation/continuation identity, and a cmd.settings.open CTA with target_type setting and setting_id ai.accounts.provider-connections."
   - "Every room has a non-empty curated default; partial final rows retain intentional widths and provider-heavy boards prefer narrower, taller, information-dense cards."
+  - "The board's track count follows its measured width on the 12, 20, 24 and 30 track ladder; every size preset of every widget kind shows a complete content tier, and facts a size cannot show fold behind N more with hover and Details."
   - "Each semantic size presents a complete tier or hides the tier entirely, chooses that tier from measured rendered width, and larger sizes reveal additional useful facts, rows, columns, or plots rather than blank area; reorder placeholders use measured rendered width and height rather than stale nominal spans, preview spans do not become settled layout fields, and supported curated sizes have no routine widget-body scrolling, clipped corners, value collisions, partial bars, bottom-content peeking, or partially exposed next-tier content."
   - "Every painted vertical bar, including a zero bar, has exactly one visible label inside the plot; labels remain horizontally associated with their own bars, measured direct or vertical-lane placement prevents clipping and pair overlap without suppressing data, accessible text retains the complete ordered series, values use the declared metric formatter and display unit, attempt-charge integer cents render with exactly two currency decimals rather than raw cents, and the title plus Latest and distinct peak remain complete in one row or a narrow two-row composition; reorder ghosts remain above cards until cleanup."
-  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged."
+  - "Source authority/confidence, unknown versus zero, Raw/Curated redaction, Context composition, and humanized Ledger attempt labels remain semantically truthful and visually legible; a PMConcept7 Ledger attempt routes by attempt_id as object_kind usage_attempt, preserves usage_event_ref plus provider/account/runtime correlation, and carries no OpenSubject, while provider/account/panel aggregate detail cards remain local inspectors and leave route-command, command-receipt, and domain-event counts unchanged; only the Accounts room's Use this account and provider auto-switch controls dispatch, each through its existing owner."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
   - "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures"
@@ -148,7 +157,8 @@ source_lineage:
   - Plans/.audits/audit-20260829-001-pmconcept7-widget-followup/audit_report.json (current repo-local follow-up audit status; verdict remains report-owned)
   - Plans/usage-feature.md#uf-093---usage-rooms-disclosure-and-local-projection-state
   - Plans/Widget_System.md#ws-017---kind-aware-curated-size-and-adaptive-content-contract
-preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated]
+  - "Concepts/usage-redesign/src/js/40-board.js and 42-cards.js (the redesigned board's width classes, narrow tiers and size presets; source-lineage-only)"
+preserved_exact_tokens: [Overview, Plans & limits, Costs, Accounts, Free models, Context, Analytics, Ledger, Attention, Prompt cache, Tools, Signals, Source authority, At a glance, Detailed, Diagnostics, Provider Setup Required, Host/Environment, cmd.settings.open, ai, ai.accounts.provider-connections, twelve-track, complete-or-hidden, Raw, Curated, N more]
 negative_constraints:
   - "Do not revive Essen, Std, Adv, essentials, standard, or advanced as user-facing disclosure labels."
   - "Do not stretch lone cards across a row or preserve wide empty space merely because the grid permits it."
@@ -176,8 +186,9 @@ canonical_text: >-
   candidate model with live interruptible peer displacement while peer nodes remain mounted and fully painted;
   entrance animations do not restart and the accepted settlement reconciles DOM order once. Usage pointer resize
   advances its real target footprint through the same deterministic slot projection, visibly repacks only
-  obstructed peers during the held preview, and retains that last-painted topology on acceptance without remounting
-  peers; Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
+  obstructed peers during the held preview, and on acceptance retains that last-painted topology with Usage board
+  gravity applied at settle, as WS-019 sets out (DL-176), without remounting peers; Usage Tidy and gravity settle
+  inside one existing widget command with one receipt, never one command per card (WS-019); Usage keyboard resize remains an atomic changed-only settlement per supported directional key intent, and Dashboard resize keeps peer rectangles frozen. Horizontal pointer or keyboard intent advances strictly on the requested supported curated
   axis at the far right, far left, and middle while minimizing companion-axis drift; an edge-constrained deliberate
   drag can express one step, and an in-viewport release commits the last painted supported size even after
   same-direction overshoot. A changed reorder
@@ -200,7 +211,7 @@ split_recommended: false
 depends_on: [F3-514, WS-019, CS-068, UCC-147, WM-045, UIW-012]
 unblocks: [ATS-037, ATS-039, ATS-040]
 acceptance_criteria:
-  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
+  - "While a pointer or keyboard preview is active, command, result, receipt, persisted-event, and storage-write spies remain empty; Usage pointer resize advances the target footprint and visibly displaces only obstructed peers, with Usage board gravity applied only at settle as WS-019 sets out, while Dashboard resize peers remain frozen, and reorder peers visibly displace around the same stable two-dimensional candidate, including empty same-footprint cavities and lower rows, without peer-node remount, opacity loss, board blackout, child-list churn, or entrance-animation replay; Usage pointer targeting aligns the ghost's anchored top-left with one stable candidate origin under a geometric hysteresis margin so overlapping multi-span rectangles cannot steal the target, and keyboard pickup exposes truthful aria-grabbed plus a visible picked-card outline while traversing the same candidate set."
   - "A changed reorder release/drop commits the last painted intent without pointer-up re-hit-testing or retargeting; horizontal-only resize advances strictly along the requested supported curated axis at right/left/middle positions, minimizes companion-axis drift, admits an edge-limited one-step gesture, and commits an in-viewport last-painted maximum despite same-direction overshoot; it and every other changed final-coordinate release or semantic activation dispatch exactly one existing command and reconcile exactly one settled owner outcome without duplicate effects."
   - "Escape, pointercancel, lostpointercapture, blur, invalid target, stale revision, no-change release/drop, popup dismissal, and pre-dispatch validation failure restore the prior authoritative state with no command or receipt and clear capture, ghosts, placeholders, portals, classes, animation frames, and transient listeners; an owner-rejected or post-dispatch adapter-failed attempt retains exactly one command and one rejected/failed receipt but no settled event or successful owner-store write; changed pointer and keyboard reorder restore the exact pre-transaction inline board minimum height, leave scroll extent bounded to settled card geometry without a compounding blank tail, and exclude concurrent resize/reorder acquisition until the sole owner terminates."
   - "The current workspace.layout_changed 1.1.0 payload is emitted only for an applicable changed committed layout, requires settled_only=true, preview_state_included=false, persisted=true, interaction/command/correlation identities, accepted result and receipt references, prior/new revisions, mutation, final target and settled-layout data, and the required nullable semantic_size_preset_id through its closed schema."
@@ -391,7 +402,10 @@ canonical_text: >-
   browser execution, raw receipts, and independent review. Final certification combines deterministic build
   proof, machine-readable geometry and state assertions, actual-pixel review, and frame-by-frame motion review.
   The widget interaction slice binds the exact generated artifact hash and covers repeated right-edge (primary),
-  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity,
+  left-edge, and middle pointer/keyboard resize settlement plus pointer-only live occupied-peer preview repack with accepted-settlement parity
+  up to settle-time gravity: the accepted layout equals the last-painted preview exactly except that the Usage board
+  gravity of WS-019 (DL-176) slides shown cards other than the active one up into space freed above them, committed
+  in the same single settled transaction and never as a later step,
   direct and rescued magnetic-control
   acquisition, cancellation/no-op cleanup, stable mounted reorder peers, and black/empty-frame detection.
   The acquisition evidence includes a real top-layer occluder and transaction reentrancy probes, while settled
@@ -407,7 +421,7 @@ acceptance_criteria:
   - "The canonical Usage and shared PM7 fixture trees exist in the repository and concept demo reports are not used as substitutes for them."
   - "Every fixture records stable identity, owner PlanUnits, source lineage, affected surfaces, must assertions, and must-not assertions."
   - "Fixture files and their must/must_not lists grant static representation only and do not prove runtime, visual, motion, or migration behavior; visual certification requires fresh browser execution, raw receipts, screenshots/contact sheets, and independent actual-pixel review in addition to DOM, state, and geometry assertions."
-  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, exact preview-to-accepted-settlement topology parity, Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
+  - "Motion certification requires fresh frame-sequence capture, raw receipts, and independent review for drag, resize, reorder, reflow, page, menu, drawer, hover, context, and tab movement rather than sampling only the final frame; widget interaction evidence binds one exact generated artifact and includes primary far-right plus far-left/middle horizontal pointer and keyboard resize, Usage occupied-peer displacement during held pointer preview, preview-to-accepted-settlement topology parity up to settle-time gravity (the accepted layout equals the last-painted layout with only the Usage board gravity of WS-019 applied at settle), Dashboard-frozen resize peers, direct and displaced-handle acquisition, exact command/receipt/event/write counts, preview node/opacity/animation/child-list continuity, cancellation/no-op cleanup, and decoded frame review for black or empty intervals."
   - "No accessibility acceptance expansion, WorkNode, NodeSeed, executable queue, implementation task, or production code is created by this evidence contract."
 validation_surfaces:
   - "python3 scripts/pm-plan-index.py validate"
