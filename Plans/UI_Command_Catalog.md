@@ -14907,7 +14907,7 @@ The "+" opens the menu and never creates a tab by itself; opening the menu, typi
 | Terminal | `cmd.panel_tab.open` with `{ kind: terminal }` and the default profile | each shell profile and SSH host: the same with its `profile` |
 | Browser | `cmd.panel_tab.open` with `{ kind: browser }`, a blank browser | each recent address: `cmd.browser.open_workspace_preview` |
 | File... | opens Quick Open (view-local); Enter there dispatches `cmd.file.open` with `mode: keep` | each of the three recent files: `cmd.file.open` with `mode: keep` |
-| Dashboard | `cmd.panel_tab.open` with `{ kind: dashboard }` and no `board_id`: a new dashboard tab on a new, empty board (the dashboard kind makes the board, `Plans/Widget_System.md#WS-030`) | each board: `cmd.panel_tab.open` with its `board_id` (revealed when already open) |
+| Dashboard | `cmd.panel_tab.open` opens or reveals `dashboard:home` | each sub-row opens or reveals one of the other starting boards by its `board_id`; no board is created, renamed or deleted in wave 1 |
 | Plan or document... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` | none |
 | Artifact... | opens a picker (view-local); a choice dispatches `cmd.nav.open_subject` with the artifact subject | none |
 | Output, Problems, Ports, Debug Console | opens the submenu (view-local) | each: `cmd.panel_tab.open` with `kind` `output`, `problems`, `ports` or `debug_console` (Problems and Ports reveal their one tab) |
@@ -14997,7 +14997,9 @@ The shell keeps Ctrl+1..9 (pages) and Ctrl+K (the command palette), so the panel
 
 ### The dashboard tab
 
-A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens a new tab on a new, empty board. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
+Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards; wave 1 creates, renames and deletes no board.
+
+A dashboard tab is opened by `cmd.panel_tab.open` with `{ kind: dashboard, board_id }`; `dashboard:home` is the pinned Home dashboard of the default layout, and the "+" menu's Dashboard row body opens or reveals `dashboard:home`, while its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1. Several dashboard tabs may be open, each with its own board and widget layout. Inside a dashboard tab the widget commands stay `cmd.widget.add`, `cmd.widget.remove`, `cmd.widget.resize`, `cmd.widget.configure`, `cmd.widget.move` and `cmd.widget.reset_layout`, addressed by `board_id` (`Plans/Widget_System.md#WS-030`), with `page` kept for the Usage page; the Add widget picker reads `cmd.dashboard.catalog`. A widget-layout change is a change to that board, not to the Home layout, so it emits no `workspace.layout_changed`. UCC-144's criterion "No Home surface uses cmd.widget.*" retires with UCC-144.
 
 ### Home producer dispositions (for the wiring owner)
 
@@ -15044,8 +15046,7 @@ canonical_text: >-
   dispatched directly only for a new terminal, a blank browser, a dashboard tab, an editor buffer and the tool tabs.
   cmd.editor.close_tab is an alias of cmd.panel_tab.close. cmd.editor.open_panel, cmd.editor.close_panel and the
   never-registered cmd.artifacts.open_panel retire, and target_editor_panel_id, target_editor_group_id and
-  target_group never select a home panel. A dashboard tab opens with cmd.panel_tab.open and a board_id (no board_id
-  makes a new, empty board); widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
+  target_group never select a home panel. A dashboard tab opens or reveals with cmd.panel_tab.open and a board_id; the Dashboard row body opens or reveals dashboard:home and its sub-rows open or reveal the other starting boards; no board is created, renamed or deleted in wave 1; widget commands inside it stay cmd.widget.* addressed by board_id (WS-030) and emit no
   workspace.layout_changed. The shell keeps Ctrl+1..9 and Ctrl+K, so tab N is Alt+N and there are no Ctrl+K chords;
   in the web client Ctrl+T, Ctrl+W, Ctrl+Shift+T and Ctrl+Tab are answered as Alt+T, Alt+W, Alt+Shift+T and Alt+`.
   This unit supersedes UCC-144.
@@ -15117,6 +15118,7 @@ compatibility_only_notes:
   - "cmd.editor.close_tab is recorded alias metadata of cmd.panel_tab.close with no handler of its own."
   - "cmd.workspace_layout.size_surface still normalizes to cmd.workspace_layout.resize_surface (CS-068)."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L10): The Dashboard row opens or reveals dashboard:home and its sub-rows the other starting boards, without board creation, rename or deletion."
   - "Supersedes UCC-144 (2026-10-09, DL-180): four editor panels, Panel 1 to 4 routing, the singleton Dashboard, chat grab and in-canvas float, cmd.terminal.move_workgroup and Collapse Bottom Terminal retire; its leaf semantics carry forward here."
   - "Retired 2026-10-09 (DL-180): cmd.editor.open_panel, cmd.editor.close_panel and cmd.artifacts.open_panel, with their replacements in CS-101."
 owner_hints:

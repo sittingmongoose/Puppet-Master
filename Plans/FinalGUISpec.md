@@ -43667,6 +43667,7 @@ canonical_text: >-
   label and its shortcut, no tiles and no pills, then the five most recent files, then a one-line hint. The menu and the
   launcher read one row list, so a kind that joins one joins the other. This supersedes F3-HOME-003's and F3-502's Open
   Panel and Open Browser in Panel rows with their Panel 1 to Panel 4 flyouts.
+  The Dashboard row body opens or reveals dashboard:home; its sub-rows open or reveal the other starting boards. No board is created, renamed or deleted in wave 1.
 gui_related: true
 gui_classification_reason: Defines the plus menu after the last tab and the empty-panel launcher.
 split_recommended: false
@@ -43719,7 +43720,8 @@ negative_constraints:
   - "Do not dispatch anything when the menu opens, filters or closes."
 compatibility_only_notes:
   - "The contract's Split down shortcut Ctrl+K Ctrl+\\ is retired: the shell owns Ctrl+K, and Split down is Ctrl+Shift+\\ (F3-635)."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L10): The Dashboard row and sub-rows open or reveal the starting boards without creating, renaming or deleting boards."
 owner_hints:
   - Plans/FinalGUISpec.md
 ```
