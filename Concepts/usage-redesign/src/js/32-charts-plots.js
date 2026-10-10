@@ -206,20 +206,125 @@
     return out;
   }
   function mix(a, b, k) { return !finite(b) ? null : !finite(a) ? b : a + (b - a) * k; }
+  /* where each recorded cost point starts a morph (a Live beat, a range or size change): on the old cost line at the same
+     sample position (the area's own morph is by sample, so the two move together), or at its place when the old line had
+     no value there. The morphing cost line is drawn through the points mixed from these starts (monoD, the curve it rests
+     on) and the dots ride the same mix (charts.ride), so a cost dot is on its line in every frame (item 3; before, a beat
+     that added or dropped a recorded bucket rebuilt the dots at their end places while the sampled line was still morphing,
+     1-5 px off it, and a dot at a steep end sat past the sampled line's last vertex) */
+  function costStarts(pts, geo, from) {
+    var N = geo.N, span = geo.x1 - geo.x0;
+    return pts.map(function (p) {
+      var u = N > 1 && span > 0 ? clamp((p.x - geo.x0) / span * (N - 1), 0, N - 1) : 0;
+      var y = from && from.cs ? rowAt(from.cs, 0, N - 1, u) : null;
+      if (!finite(y)) return { x: p.x, y: p.y };
+      return { x: from.x0 + (from.x1 - from.x0) * (N > 1 ? u / (N - 1) : 0), y: y };
+    });
+  }
+  function costMixD(pts, starts, k) {
+    return pts.length > 1 ? charts.monoD(pts.map(function (p, j) { var s0 = starts[j]; return [s0.x + (p.x - s0.x) * k, s0.y + (p.y - s0.y) * k]; })) : '';
+  }
+  /* the y of a sampled row (N samples from x0 to x1, the polyline the plot draws) at plot x; null in a gap. The crosshair's
+     dots glide along it between buckets (charts.hover cfg.yAt) */
+  function rowAt(row, x0, x1, x) {
+    var n = row ? row.length : 0; if (!n) return null;
+    var u = n > 1 && x1 > x0 ? (x - x0) / (x1 - x0) * (n - 1) : 0;
+    if (u < -0.01 || u > n - 0.99) return null;
+    u = clamp(u, 0, n - 1);
+    var i = Math.min(n - 2, Math.floor(u)), f = u - i, a = row[i], b = row[Math.min(n - 1, i + 1)];
+    if (n === 1) return finite(a) ? a : null;
+    if (finite(a) && finite(b)) return a + (b - a) * f;
+    return f < 0.01 && finite(a) ? a : f > 0.99 && finite(b) ? b : null;
+  }
+  /* y at plot x on a series drawn as monotone runs through (xs[i], ys[i]) (charts.monoD draws the same curve); null in a gap */
+  function runsAt(xs, ys) {
+    var fns = charts.runs(ys).map(function (run) { return { a: xs[run[0]], b: xs[run[run.length - 1]], f: charts.monotone(run.map(function (i) { return xs[i]; }), run.map(function (i) { return ys[i]; })) }; });
+    return function (x) { for (var q = 0; q < fns.length; q++) if (x >= fns[q].a - 0.01 && x <= fns[q].b + 0.01) return fns[q].f(x); return null; };
+  }
   /* morphs read as data in every family (WOW-SPEC 5): one continuous ease-out, the same on the JS path tween and on the
      WAAPI marks that ride it */
   var MORPH_EASE = 'cubic-bezier(.33,1,.68,1)';
   /* a live change of an HTML mark layer (end dots, halos): the markup is patched in place and every mark slides from where
-     it was (translate, the morph's ease); returns the number of animations */
-  function slideMarks(layer, html, lo) {
-    var olds = $$(':scope > *', layer).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }), n = 0;
+     it was. slideJobs patches and returns the marks' offsets; rideOrSlide hangs them on the path's own tween (charts.ride:
+     the same frame and the same k as the line they mark, item 3), or, with no path tween, slides them by translate on the
+     morph's ease; both return the number of marks that move */
+  function slideJobs(layer, html) {
+    var olds = $$(':scope > *', layer).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }), jobs = [];
     charts.patchHtml(layer, html);
     $$(':scope > *', layer).forEach(function (el, i) {
       var o = olds[i]; if (!o) return;
       var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
-      if (finite(dx) && finite(dy) && (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, (lo && lo.delay) || 0, MORPH_EASE, 'backwards')) n++;
+      if (finite(dx) && finite(dy) && (Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3)) jobs.push({ el: el, dx: dx, dy: dy });
     });
+    return jobs;
+  }
+  function rideOrSlide(tw, jobs, dur, delay) {
+    jobs = (jobs || []).filter(function (j) { return finite(j.dx) && finite(j.dy) && (Math.abs(j.dx) > 0.3 || Math.abs(j.dy) > 0.3); });
+    if (!jobs.length) return 0;
+    var n = charts.ride(tw, jobs); if (n) return n;
+    jobs.forEach(function (j) { if (Mo.anim(j.el, [{ translate: r1(j.dx) + 'px ' + r1(j.dy) + 'px' }, { translate: '0px 0px' }], dur || 420, delay || 0, MORPH_EASE, 'backwards')) n++; });
     return n;
+  }
+  function slideMarks(layer, html, lo, tw) { return rideOrSlide(tw, slideJobs(layer, html), 420, (lo && lo.delay) || 0); }
+  /* marks leaving with a morph, with the line they sit on (ghost, may be null): they shrink and fade over the first `frac`
+     of the tween's own time (the same frames as the path; quickest at the start, where the path's ease-out moves it most),
+     the ghost line fades with them while the new line (incoming) fades in, and the leaving parts are removed when gone,
+     when the tween lands or when it is cancelled. Until the tween's first frame only the old line and its dots show. */
+  function leaveOnTween(tw, els, ghost, frac, incoming) {
+    if (!els.length || !tw || tw.cancelled || typeof tw.step !== 'function') return false;
+    var step = tw.step, done = tw.done, cancel = tw.cancel, gone = false;
+    var xf = function (el, v) { if (v == null) { el.removeAttribute('data-xf'); el.style.removeProperty('--xf'); } else { el.setAttribute('data-xf', ''); el.style.setProperty('--xf', v.toFixed(3)); } };
+    /* the new line lands at full strength at once; the attribute goes a frame later, once that strength is the computed
+       style, so the marks' transition does not fade it in again */
+    var drop = function () {
+      if (gone) return; gone = true;
+      els.forEach(function (el) { el.remove(); }); if (ghost) ghost.remove();
+      if (incoming && incoming.hasAttribute('data-xf')) {
+        var tok = {}; incoming._xf = tok; xf(incoming, 1);
+        requestAnimationFrame(function () { requestAnimationFrame(function () { if (incoming._xf === tok) { incoming._xf = null; xf(incoming, null); } }); });
+      }
+    };
+    /* the line's cross-fade rides --xf (30-charts.css: no transition there, which would lag the tween by its duration) */
+    if (ghost) { xf(ghost, 1); if (incoming) { incoming._xf = null; xf(incoming, 0); } }
+    tw.step = function (v, t) {
+      step(v, t);
+      if (gone) return;
+      var x = t == null ? v : t, p = Math.max(0, 1 - x / frac), s = p * p;
+      if (p <= 0) { drop(); return; }
+      els.forEach(function (el) { el.style.transform = 'scale(' + s.toFixed(3) + ')'; el.style.opacity = s.toFixed(3); });
+      if (ghost) { xf(ghost, s); if (incoming) xf(incoming, 1 - s); }
+    };
+    tw.done = function () { if (done) done(); drop(); };
+    tw.cancel = function () { cancel(); drop(); };
+    return true;
+  }
+  /* fn once, when the tween lands or is cancelled (a cancel is followed by the next render, which places things itself) */
+  function onLand(tw, fn) {
+    var done = tw.done, cancel = tw.cancel, ran = false;
+    tw.done = function () { if (done) done(); if (!ran) { ran = true; fn(true); } };
+    tw.cancel = function () { cancel(); if (!ran) { ran = true; fn(false); } };
+  }
+  /* a range morph's end marks (Jared 2026-10-09, item 3). They used to be placed at their end places at once and their layer
+     faded 0, 0 at 70 %, 1 over 640; the fade's ease-out is the effect's curve, so it showed from about 20 % of the time,
+     and a busy main thread (a whole room re-rendering) starts the JS path tween a frame or more late: on the GPU probe the
+     token trend's NOW dot showed up to 15 px off its still-morphing line (opacity .15 to .6). Now the marks ride the
+     morphing path (charts.ride: the same tween, the same k), so the NOW dot travels with the line's end and is on it in
+     every frame, the way cost marks interpolate with the area (WOW-SPEC 3.4). A mark with no old place to ride from (a
+     new series, a callout placed by right:) and the extra layers (the peak label) appear only when the tween lands. */
+  function morphMarks(tw, layer, html, extra) {
+    var before = layer.children.length, jobs = slideJobs(layer, html), moved = new Set(jobs.map(function (j) { return j.el; })), wait = [];
+    charts.ride(tw, jobs);
+    $$(':scope > *', layer).forEach(function (el, i) {
+      if (moved.has(el)) return;
+      var fresh = i >= before, placed = finite(parseFloat(el.style.left)) && finite(parseFloat(el.style.top));
+      if (fresh || !placed) wait.push(el);
+    });
+    (extra || []).forEach(function (el) { if (el) wait.push(el); });
+    if (!wait.length) return;
+    wait.forEach(function (el) { el.style.opacity = '0'; });
+    onLand(tw, function (landed) {
+      wait.forEach(function (el) { el.style.opacity = ''; if (landed) Mo.anim(el, [{ opacity: 0 }, { opacity: 1 }], 200, 0, Mo.EASE.out, 'backwards'); });
+    });
   }
   function morphTween(dur, step, done) {
     return PMU.motion.tween({ from: 0, to: 1, dur: dur, ease: 'linear', step: function (v, t) { var x = t == null ? v : t; step(1 - Math.pow(1 - x, 3)); }, done: done });
@@ -359,7 +464,10 @@
     var base = new Array(N).fill(Y(0));
     var cs = cost ? costSamples(cost, mids, YB, N, x0, x1) : null;
     var geo = { W: W, H: Hh, pad: pad, pw: pw, ph: ph, x0: x0, x1: x1, lv: lv, tot: tot, base: base, cs: cs, N: N, sc: sc, compact: compact, split: split,
-      stacked: stacked, token: m.token, keys: incSeries.map(function (s) { return s._tk || ('S' + s._i); }) };
+      stacked: stacked, token: m.token, keys: incSeries.map(function (s) { return s._tk || ('S' + s._i); }),
+      /* the token total line's own colour: one token series (the savings trend's cache reads) keeps its type's colour, so its
+         end dot, NOW halo and crosshair dot wear the colour of the line they sit on, never the all-tokens blue */
+      totTk: m.token && m.series.length === 1 ? m.series[0]._tk : 'all' };
     /* axes */
     if (!compact) {
       var xt = charts.xTicks(dom.t0, t1, dom.bucket, pw).map(function (tk) { return { x: X(tk.t), label: tk.label, major: tk.major }; });
@@ -429,32 +537,37 @@
       var from = prev.N === N ? prev : { x0: prev.x0, x1: prev.x1, lv: prev.lv.map(function (row) { return resample(row, N); }), tot: resample(prev.tot, N), base: resample(prev.base, N),
         cs: prev.cs ? resample(prev.cs, N) : null };
       if (live) c._liveAnims++;
+      var cpts = cost && !geo.compact ? costPoints(cost, mids, YB) : null, cst = cpts ? costStarts(cpts, geo, from) : null;
       c._tw = morphTween(live ? 420 : 520, function (k) {
         paintArea(c, {
           x0: from.x0 + (geo.x0 - from.x0) * k, x1: from.x1 + (geo.x1 - from.x1) * k,
           lv: geo.lv.map(function (row, j) { return row.map(function (v, i) { return mix(from.lv[j][i], v, k); }); }),
           tot: geo.tot.map(function (v, i) { return mix(from.tot[i], v, k); }),
           base: geo.base.map(function (v, i) { return mix(from.base[i], v, k); }),
-          cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null
+          cs: geo.cs ? geo.cs.map(function (v, i) { return mix(from.cs ? from.cs[i] : v, v, k); }) : null,
+          cd: cpts ? costMixD(cpts, cst, k) : null
         }, geo);
       }, function () { c._tw = null; paintArea(c, geo, geo); if (P.cost && cost) { var cp = costPoints(cost, mids, YB); P.cost.setAttribute('d', cp.length > 1 ? charts.monoD(cp.map(function (q) { return [q.x, q.y]; })) : ''); } if (!live) rescan(c); });
-      if (live) liveCostMarks(c, geo, cost, mids, YB);
-      else morphCostMarks(c, geo, from, cost, mids, YB);
+      if (live) liveCostMarks(c, geo, cost, mids, YB, false, cst);
+      else morphCostMarks(c, geo, from, cost, mids, YB, cst);
+      /* until the tween's first frame the cost line stays where its dots start (a rebuild just wrote its end shape) */
+      if (cpts && P.cost) P.cost.setAttribute('d', costMixD(cpts, cst, 0));
     } else { paintArea(c, geo, geo); if (!live || !liveCostMarks(c, geo, cost, mids, YB, true)) paintCostMarks(c, geo, cost, mids, YB); }
     c._geo = geo;
-    /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens) */
+    /* the flyer map (C3-5): the token trend repeats on Overview and Analytics (chart:tokens). A plot of ONE token type (the
+       savings trend's cache reads) is not that chart: it never claims the key, so the all-tokens line never flies into it
+       and the token trend's live beats never repaint it */
     if (!compact) {
       var yTop = sc.a.top, tt0 = dom.t0, tt1 = t1;
-      charts.setFly(c, f.box, c.opts.share || spec.share || (m.token ? 'tokens' : null), { shareEl: f.rv,
+      charts.setFly(c, f.box, c.opts.share || spec.share || (m.token && m.series.length > 1 ? 'tokens' : null), { shareEl: f.rv,
         box: { l: pad.l, t: pad.t, w: pw, h: ph }, domain: { x0: tt0, x1: tt1, y0: 0, y1: yTop },
         boxOf: function (d) { var l = X(d.x0), r = X(d.x1); return { l: l, t: Y(d.y1), w: r - l, h: Y(d.y0) - Y(d.y1) }; },
         paths: function () { return P.total ? [P.total, P.glow, P.totalLine] : [P.bands[0], P.edges[0]]; } });
     }
-    /* end dots and peak label (after a morph they fade in where the morph lands, never over the old shape; a live change
-       slides them in place) */
-    endDots(c, geo, m, totals, cost, Y, YB, mids, live && morph);
+    /* end dots and peak label: a live change and a range morph slide the dots on the line's own tween (item 3); after a
+       range morph the peak label appears where the morph lands, never over the old shape */
     peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw, live);
-    if (morph && !live) [P.endL, f.over].forEach(function (el) { if (el) Mo.anim(el, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none'); });
+    endDots(c, geo, m, totals, cost, Y, YB, mids, live && morph, morph && !live && c._tw ? [f.over] : null);
     /* hover */
     if (!compact) bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1);
     else if (c._hover) { c._hover.destroy(); c._hover = null; }
@@ -472,13 +585,14 @@
       P.bands[j].setAttribute('d', gapBand(cur.x0, cur.x1, row, bot.map(function (v, i) { return finite(v) ? v : cur.base[i]; })));
       P.edges[j].setAttribute('d', gapLine(cur.x0, cur.x1, row));
     });
-    if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
+    if (P.cost && cur.cd != null) P.cost.setAttribute('d', cur.cd);
+    else if (P.cost && cur.cs) P.cost.setAttribute('d', gapLine(cur.x0, cur.x1, cur.cs));
   }
   /* the NOW / last point of each line: a 3.5 px dot with a static 10 px halo (WOW-SPEC 2.4), HTML over the plot */
-  function endDots(c, geo, m, totals, cost, Y, YB, mids, slide) {
+  function endDots(c, geo, m, totals, cost, Y, YB, mids, slide, morphing) {
     var P = c.P, s = '';
     var li = lastFinite(totals);
-    if (geo.token && li >= 0) s += charts.dotHtml(mids[li], Y(totals[li]), { tk: 'all' }, { key: 'all', halo: true });
+    if (geo.token && li >= 0) s += charts.dotHtml(mids[li], Y(totals[li]), { tk: geo.totTk }, { key: 'all', halo: true });
     else if (!geo.token) {
       geo.keys.forEach(function (k, j) {
         var row = m.series[j] && m.series[j].values || [];
@@ -492,23 +606,18 @@
     if (slide) {
       /* live: the dots keep their elements and slide from where they were (translate, the morph's ease); the lead's NOW
          halo swells once */
-      var olds = $$(':scope > i', P.endL).map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; });
-      if (charts.patchHtml && (charts.patchHtml(P.endL, html), true)) {
-        var lo = c._live || {};
-        $$(':scope > i', P.endL).forEach(function (el, i) {
-          var o = olds[i]; if (!o) return;
-          var dx = o[0] - parseFloat(el.style.left), dy = o[1] - parseFloat(el.style.top);
-          if ((Math.abs(dx) > 0.3 || Math.abs(dy) > 0.3) && Mo.anim(el, [{ translate: r1(dx) + 'px ' + r1(dy) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
-        });
-        var halo = P.endL.querySelector('.pmu-hhalo');
-        if (halo && lo.lead && charts.swellHalo(halo, (lo.delay || 0) + 120)) c._liveAnims++;
-      }
+      var lo = c._live || {};
+      /* they ride the area's own morph tween (charts.ride), so the NOW dot is on the line's last point in every frame */
+      c._liveAnims += slideMarks(P.endL, html, lo, c._tw);
+      var halo = P.endL.querySelector('.pmu-hhalo');
+      if (halo && lo.lead && charts.swellHalo(halo, (lo.delay || 0) + 120)) c._liveAnims++;
       return;
     }
+    if (morphing) { morphMarks(c._tw, P.endL, html, morphing); return; }
     P.endL.innerHTML = html;
   }
   /* live cost dots: same count -> they slide to their new place in place; otherwise false (the caller rebuilds) */
-  function liveCostMarks(c, geo, cost, mids, YB, still) {
+  function liveCostMarks(c, geo, cost, mids, YB, still, starts) {
     var els = (c._costEls || []).filter(function (el) { return el.isConnected; });
     if (!cost || geo.compact) return false;
     var pts = costPoints(cost, mids, YB), real = els.filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; });
@@ -516,35 +625,63 @@
        buckets or pending markers rebuilds */
     var pend = (c.spec.cost && c.spec.cost.pending) || [], nPend = 0;
     cost.forEach(function (v, i) { if (!finite(v) && pend[i] > 0) nPend++; });
-    if (real.length !== pts.length || els.length - real.length !== nPend) { paintCostMarks(c, geo, cost, mids, YB); return true; }
-    var lo = c._live || {};
+    var lo = c._live || {}, jobs = [];
+    /* a changed set rebuilds the dots at their end places; mid-morph they still start on the old line (starts) */
+    if (real.length !== pts.length || els.length - real.length !== nPend) {
+      real = (paintCostMarks(c, geo, cost, mids, YB) || []).filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; });
+      if (still || !starts) return true;
+    }
     real.forEach(function (el, j) {
-      var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top);
+      var p = pts[j], ox = parseFloat(el.style.left), oy = parseFloat(el.style.top), s0 = starts && starts[j];
       el.style.left = r1(p.x) + 'px'; el.style.top = r1(p.y) + 'px'; el.setAttribute('data-ci', String(p.i));
-      if (!still && (Math.abs(ox - p.x) > 0.3 || Math.abs(oy - p.y) > 0.3) && Mo.anim(el, [{ translate: r1(ox - p.x) + 'px ' + r1(oy - p.y) + 'px' }, { translate: '0px 0px' }], 420, lo.delay || 0, MORPH_EASE, 'backwards')) c._liveAnims++;
+      if (!still) jobs.push(s0 ? { el: el, dx: s0.x - r1(p.x), dy: s0.y - r1(p.y) } : { el: el, dx: ox - p.x, dy: oy - p.y });
     });
+    /* the cost dots ride the cost line's morph (the area's tween, charts.ride), from the same starts as the line */
+    if (jobs.length) c._liveAnims += rideOrSlide(c._tw, jobs, 420, lo.delay || 0);
     if (still && c.P && c.P.cost) c.P.cost.setAttribute('d', pts.length > 1 ? charts.monoD(pts.map(function (q) { return [q.x, q.y]; })) : '');
     return true;
   }
   /* a range change (WOW-SPEC 3.4, MOTION-REVIEW-2 item 4): the old cost dots shrink away (160 ms), the new ones ride the
      morphing line from where the old line was at their sample (translate on the compositor, the same ease as the path)
      and grow in from 320 ms; nothing is drawn across a bucket without a recorded value */
-  function morphCostMarks(c, geo, from, cost, mids, YB) {
+  function morphCostMarks(c, geo, from, cost, mids, YB, starts) {
     var old = (c._costEls || []).filter(function (el) { return el.isConnected; });
-    old.forEach(function (el) {
-      el.classList.remove('pmu-costmark');
+    old.forEach(function (el) { el.classList.remove('pmu-costmark'); });
+    /* the leaving dots keep the line they sit on (item 3). The morphing cost line starts through the new points' starts,
+       a coarser curve than the old one (7 starts across a 30-point line), and a WAAPI shrink stayed pending (no start
+       time) while the room re-rendered, so on the GPU probe the old dots sat whole for 130 ms or more, up to 22 px off
+       the line. Now a ghost of the old line (through the old dots' own places) stays under them and fades as they shrink,
+       on the morph's own tween, from the frame the new line starts to move, while the new line fades in: every dot is on
+       its line in every frame, and the old line cross-fades into the new one */
+    var oldPts = old.filter(function (el) { return el.getAttribute('data-cost-dot') === '1'; })
+      .map(function (el) { return [parseFloat(el.style.left), parseFloat(el.style.top)]; }).filter(function (q) { return finite(q[0]) && finite(q[1]); })
+      .sort(function (a, b) { return a[0] - b[0]; });
+    var ghost = null;
+    if (old.length && c.P && c.P.cost && oldPts.length > 1 && c._tw) {
+      ghost = c.P.cost.cloneNode(false);
+      ghost.setAttribute('d', charts.monoD(oldPts));
+      ghost.setAttribute('data-ghost', '1');
+      c.P.cost.parentNode.insertBefore(ghost, c.P.cost);
+    }
+    if (!leaveOnTween(c._tw, old, ghost, 160 / 520, c.P && c.P.cost)) { if (ghost) ghost.remove(); old.forEach(function (el) {
       var a = Mo.anim(el, [{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(0)', opacity: 0 }], 160, 0, Mo.EASE.inq, 'forwards');
       if (a) a.onfinish = function () { el.remove(); }; else el.remove();
-    });
+    }); }
     var els = paintCostMarks(c, geo, cost, mids, YB) || [];
-    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0);
+    var N = geo.N, span = Math.max(1, geo.x1 - geo.x0), jobs = [], ri = 0;
     els.forEach(function (el) {
       var x = parseFloat(el.style.left), y = parseFloat(el.style.top);
+      if (starts && el.getAttribute('data-cost-dot') === '1') {
+        var s0 = starts[ri++];
+        if (s0) { jobs.push({ el: el, dx: s0.x - x, dy: s0.y - y }); Mo.anim(el, [{ scale: '0' }, { scale: '1' }], 200, 320, Mo.EASE.out, 'backwards'); return; }
+      }
       var sIdx = clamp(Math.round((x - geo.x0) / span * (N - 1)), 0, N - 1);
       var ox = from.x0 + (from.x1 - from.x0) * (N > 1 ? sIdx / (N - 1) : 0), oy = from.cs && finite(from.cs[sIdx]) && el.getAttribute('data-cost-dot') === '1' ? from.cs[sIdx] : y;
-      Mo.anim(el, [{ translate: r1(ox - x) + 'px ' + r1(oy - y) + 'px' }, { translate: '0px 0px' }], 520, 0, MORPH_EASE, 'backwards');
+      jobs.push({ el: el, dx: ox - x, dy: oy - y });
       Mo.anim(el, [{ scale: '0' }, { scale: '1' }], 200, 320, Mo.EASE.out, 'backwards');
     });
+    /* they ride the morphing cost line (the area's tween, charts.ride), never a slide on its own clock */
+    rideOrSlide(c._tw, jobs, 520, 0);
   }
   function peakLabel(c, geo, spec, m, totals, Y, mids, dom, tw, live) {
     var f = c.f;
@@ -584,15 +721,26 @@
     put('<text class="pmu-tick is-peak" x="' + r1(x) + '" y="' + r1(y) + '" text-anchor="' + anchor + '">' + esc(label) + '</text>');
   }
   function bindAreaHover(c, geo, m, dom, mids, totals, cost, Y, YB, incSeries, include, t1) {
-    var spec = c.spec, n = mids.length;
+    var spec = c.spec, n = mids.length, costAt = null;
     var cfg = {
       n: n, pad: { t: geo.pad.t, h: geo.ph, l: geo.pad.l, r: geo.pad.r },
       xAt: function (i) { return mids[i]; },
+      /* the same rows the plot draws, in the order of dots(i) */
+      yAt: function (k, x) {
+        var rows = geo.token || geo.stacked ? [geo.tot] : geo.lv.slice();
+        /* the cost line is drawn as one monotone curve through its recorded points (costMixD), not as the sampled row */
+        if (cost && k === rows.length) { if (!costAt) { var cp = costPoints(cost, mids, YB); costAt = cp.length > 1 ? runsAt(cp.map(function (p) { return p.x; }), cp.map(function (p) { return p.y; })) : function (xx) { return cp.length && Math.abs(xx - cp[0].x) < 0.5 ? cp[0].y : null; }; } return costAt(x); }
+        return rowAt(rows[k], geo.x0, geo.x1, x);
+      },
       dots: function (i) {
         var out = [];
-        if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: 'all' } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
+        if (geo.token || geo.stacked) { if (finite(totals[i])) out.push({ y: Y(totals[i]), key: geo.token ? { tk: geo.totTk } : { idx: incSeries[incSeries.length - 1].idx }, dk: geo.token ? 'all' : null }); }
         else incSeries.forEach(function (s, j) { var v = (s.values || [])[i]; out.push({ y: finite(v) ? Y(v) : null, key: { idx: s.idx != null ? s.idx : j, vendor: s.vendor }, dk: geo.keys[j] }); });
         if (cost) out.push({ y: finite(cost[i]) ? YB(cost[i]) : null, key: c._ov.key, ink: c._ov.key.idx === 'ink', dk: 'cost' });
+        /* a token or series dot sits on the polyline the plot draws (its 2 px samples), not on the bucket's exact value: on a
+           narrow card a steep bend between samples put the dot up to 0.9 px off its drawn line, and its glide (yAt) rides the
+           same polyline. The cost line's curve passes through its recorded points, so a cost dot keeps its exact value */
+        out.forEach(function (d, k) { if (d.dk !== 'cost' && finite(d.y)) { var yy = cfg.yAt(k, mids[i]); if (finite(yy)) d.y = yy; } });
         return out;
       },
       html: function (i) {
@@ -607,7 +755,9 @@
             if (finite(v)) all += v; else anyMiss = true;
             h += ro.row({ tk: tk }, TK_NAMES[tk], finite(v) ? charts.fmtValue(v, 'tokens') : PMU.vs.STATES.unknown.word, include(tk) ? '' : 'is-dim');
           });
-          h += ro.sep() + ro.row({ tk: 'all' }, t('charts.all_tokens'), anyMiss ? '-' : charts.fmtValue(all, 'tokens'), 'is-total');
+          /* one token type (the savings trend's cache reads) has no all-tokens total: its row would repeat the value under the
+             all-tokens blue, a swatch no line or dot on that plot wears */
+          if (geo.totTk === 'all') h += ro.sep() + ro.row({ tk: 'all' }, t('charts.all_tokens'), anyMiss ? '-' : charts.fmtValue(all, 'tokens'), 'is-total');
           if (cost) h += ro.row(c._ov.key, c._ov.name, finite(cost[i]) ? charts.fmtValue(cost[i], c._ov.unit) : t('charts.none_recorded'), 'is-total', 'line');
         } else {
           var sum = 0;
@@ -845,6 +995,7 @@
       prev = { sig: sig, W: W, H: Hh, pad: pad, ph: ph, pts: prev.pts.map(function (row) { return row.map(function (v) { return finite(v) ? pad.t + (v - prev.pad.t) * ky : v; }); }) };
     }
     var morph = (mode === 'morph' || live) && prev && prev.sig === sig && prev.W === W && prev.H === Hh && !Mo.reduced();
+    var slid = null;
     function paint(cur) {
       var s = '';
       if (bandPts && bandPts.top.length > 1) s += '<path class="pmu-mark" data-mark="band" data-series-role="forecast" data-series-index="' + (series[0] && series[0].idx != null ? series[0].idx : 0) + '" data-key="fc" d="' +
@@ -885,25 +1036,29 @@
           '<div class="pmu-callout" data-tone="' + esc(co.tone || 'warn') + '" data-side="' + (left ? 'l' : 'r') + '" style="' + (left ? 'right:' + r1(W - cx + 16) : 'left:' + r1(cx + 16)) + 'px;top:' + r1(top) + 'px;--stem-y:' + r1(cy - top) + 'px">' +
           '<b>' + esc(co.title || '') + '</b>' + (co.sub ? '<span>' + esc(co.sub) + '</span>' : '') + '</div>';
       }
-      if (live && morph) c._liveAnims += slideMarks(f.hl, h, c._live); else charts.patchHtml(f.hl, h);
+      if (live && morph) slid = slideJobs(f.hl, h); else if (morph) morphMarks(c._tw, f.hl, h); else charts.patchHtml(f.hl, h);
     }
     if (c._tw) { c._tw.cancel(); c._tw = null; }
-    dots();
     if (morph) {
       var from = prev.pts;
       if (live) c._liveAnims++;
       c._tw = morphTween(live ? 420 : 520, function (k) { paint(pts.map(function (row, j) { return row.map(function (v, i) { return mix(from[j] ? from[j][i] : v, v, k); }); })); },
         function () { c._tw = null; paint(pts); paintIso(c); if (!live) rescan(c); });
-      if (!live) Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 0, offset: 0.7 }, { opacity: 1 }], 640, 0, Mo.EASE.out, 'none');
+      /* the end dots ride the lines' own tween on a live beat and a range morph (charts.ride, item 3) */
+      dots();
+      if (slid) c._liveAnims += rideOrSlide(c._tw, slid, 420, (c._live && c._live.delay) || 0);
     } else {
+      dots();
       paint(pts);
       /* a different bucket count re-scans the line left to right (WOW-SPEC 3.4: one light runs along the new line) */
       if (mode === 'morph' && prev && !Mo.reduced() && f.rv) { Mo.reveal(f.rv, f.rvin, 640, 60, 'x'); Mo.anim(f.hl, [{ opacity: 0 }, { opacity: 1 }], 220, 620, Mo.EASE.out, 'backwards'); }
     }
     c._lgeo = { sig: sig, W: W, H: Hh, pts: pts, pad: pad, ph: ph, xs: xs, lo: lo, top: ya.top, ya: ya, t0: dom.t0, t1: dom.t1 };
     if (!compact) {
+      var curves = [];
       var cfg = {
         n: n, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return xs[i]; },
+        yAt: function (k, x) { var cv = curves[k] || (curves[k] = pts[k] ? runsAt(xs, pts[k]) : function () { return null; }); return cv(x); },
         dots: function (i) { return series.map(function (sr, j) { return { y: pts[j][i], key: { idx: sr.idx != null ? sr.idx : j, vendor: sr.vendor, tk: sr.tk }, dk: 'S' + j }; }); },
         html: function (i) {
           var ro = charts.ro, lo2 = dom.x[i], h = ro.title(charts.spanLabel(lo2, lo2 + dom.bucket, dom.bucket));
@@ -1238,7 +1393,8 @@
       var li = lastFinite(pts.map(function (p) { return p ? 1 : null; })), d0 = li >= 0 && prev[li] ? prev[li][1] - pts[li][1] : 0;
       dot(pts);
       var de = f.hl.firstChild;
-      if (de && d0) Mo.anim(de, [{ translate: '0px ' + r1(d0) + 'px' }, { translate: '0px 0px' }], md, ld, MORPH_EASE, 'backwards');
+      /* the end dot rides the line's own tween (charts.ride, item 3) */
+      if (de && d0) rideOrSlide(c._tw, [{ el: de, dx: 0, dy: d0 }], md, ld);
     } else { paint(pts); dot(pts); }
     c._sp = pts;
   }
@@ -1396,15 +1552,27 @@
     }
     if (live) {
       var lo0 = c._live || {};
-      if (f._pS !== s && charts.livePatchSvg(f.plot, s, 420, lo0.delay)) c._liveAnims++;
-      if (f._pO !== fs && charts.livePatchSvg(f.over, fs, 420, lo0.delay)) c._liveAnims++;
-      if (f._pH !== hl) c._liveAnims += slideMarks(f.hl, hl, lo0);
+      var twP = f._pS !== s ? charts.livePatchSvg(f.plot, s, 420, lo0.delay) : null, twO = f._pO !== fs ? charts.livePatchSvg(f.over, fs, 420, lo0.delay) : null;
+      if (twP) c._liveAnims++;
+      if (twO) c._liveAnims++;
+      /* the today dot and the projection's hollow marker ride the paths' tween (both tweens share duration, delay and first
+         frame; charts.ride, item 3) */
+      if (f._pH !== hl) c._liveAnims += slideMarks(f.hl, hl, lo0, twP || twO);
     } else { charts.patchSvg(f.plot, s); charts.patchSvg(f.over, fs); charts.patchHtml(f.hl, hl); }
     f._pS = s; f._pO = fs; f._pH = hl;
     if (!compact) {
-      var n = days;
+      var n = days, lineAt = null;
       var cfg = {
         n: n, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return X(i + 1); },
+        /* on the spend line up to its last point, then on the projection's straight line to the period's end */
+        yAt: function (k, x) {
+          if (k || !pts.length) return null;
+          var lp = pts[pts.length - 1];
+          if (x <= lp[0] + 0.01) { if (!lineAt) lineAt = runsAt(pts.map(function (q) { return q[0]; }), pts.map(function (q) { return q[1]; })); return lineAt(x); }
+          if (!pr || !finite(pr.to) || !finite(cum[cum.length - 1])) return null;
+          var xa = X(cum.length), xb = X(days), ya0 = Y(cum[cum.length - 1]), yb0 = Y(pr.to);
+          return xb > xa ? ya0 + (yb0 - ya0) * clamp((x - xa) / (xb - xa), 0, 1) : ya0;
+        },
         dots: function (i) {
           if (i < cum.length && finite(cum[i])) return [{ y: Y(cum[i]), key: { idx: 0 } }];
           if (pr && finite(pr.to) && cum.length) { var a = cum[cum.length - 1], fr = (i + 1 - cum.length) / Math.max(1, days - cum.length); return [{ y: Y(a + (pr.to - a) * fr), key: { idx: 0 } }]; }
@@ -1713,6 +1881,8 @@
     var valAt = function (w, tt) { var v = null; (w.points || []).forEach(function (p) { if (p.t <= tt) v = p.v; }); return v; };
     var cfg = {
       n: times.length, pad: { t: pad.t, h: ph, l: pad.l, r: pad.r }, xAt: function (i) { return X(times[i]); },
+      /* the window's step line: each reading holds until the next */
+      yAt: function (k, x) { var w = wins[k]; if (!w) return null; var v = valAt(w, t0 + (x - pad.l) / Math.max(1, pw) * (t1 - t0) + 1); return finite(v) ? Y(v) : null; },
       dots: function (i) { return wins.map(function (w) { var v = valAt(w, times[i]); return { y: finite(v) ? Y(v) : null, key: { idx: 'ink' }, ink: true }; }); },
       html: function (i) {
         var ro = charts.ro, h = ro.title((charts.time.wmd(times[i]) + ' · ' + charts.time.clock(times[i])).toUpperCase());
