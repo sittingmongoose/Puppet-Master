@@ -24,7 +24,9 @@
       var tools = C.headTools(ctx, tkLegend(TK));
       var footText = (left.length ? left.map(function (m) { return m.name; }).join(', ') + (left.length > 1 ? ' are' : ' is') + ' left out: no tokens or value recorded. ' : '') +
         'Value by token type is a PM estimate at catalog rates; the parts add up to the recorded value.';
-      var rowH = two ? 48 : 42, reserve = (tools ? 34 : 0) + (two ? 0 : 28) + 44;
+      /* (lane c-presets, agent 5) the legend tools take two lines in a narrow card (NieR, Retro: about 50 px) and a
+         two-line foot 48 px with its gap: counted at 34 and 44, the NieR Compact card put "3 more models" under its foot */
+      var rowH = two ? 48 : 42, reserve = (tools ? (two ? 50 : 34) : 0) + (two ? 0 : 28) + 48;
       var fit = C.fit(ctx.tier.bh, rowH, reserve);
       var rows = shown.length > fit ? shown.slice(0, Math.max(1, fit * rowH + 22 + reserve <= ctx.tier.bh ? fit : fit - 1)) : shown;
       var maxV = Math.max.apply(null, shown.map(function (m) { return m.value.total; }).concat([1e-9]));
