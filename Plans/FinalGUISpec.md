@@ -3347,7 +3347,7 @@ All themes must show visible focus indicators:
 ### 13.3 Keyboard Navigation
 
 - All interactive elements reachable via Tab navigation
-- Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar
+- Focus order follows visual layout: Activity bar -> side panel -> primary content (on Home the panels in tree order) -> chat column -> status bar; F6 and Shift+F6 cycle the rail, the panels and the chat (amended 2026-10-09, DL-180: the former order through a bottom panel is lineage; F3-635)
 - Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item
 - Type-ahead filtering where appropriate (thread list, project list, file tree)
 
@@ -7696,11 +7696,14 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Reference space accounting records expected title/status/activity/side/bottom panel dimensions
   and resulting primary content dimensions for 1920x1080 and 1280x720 layouts.
+  Amended 2026-10-09 (DL-180): the bottom panel no longer exists; the home centre's width is the window minus the
+  activity bar, the side panel and the chat column, and its height the window minus the title bar and the status bar,
+  with the measured widths of F3-636.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -7732,7 +7735,8 @@ preserved_exact_tokens:
 - "644px"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom panel dimension and the 380 px side panel reference are lineage (section 3.6 as amended)."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16460,11 +16464,14 @@ canonical_text: >-
   All interactive elements are reachable by Tab; focus order follows Activity bar to primary
   content to side panel to bottom panel to status bar; lists, tables, and trees support
   Up/Down, Enter, Escape, Home/End, and type-ahead filtering where appropriate.
+  Amended 2026-10-09 (DL-180): the visual order is now the activity bar, the side panel, the primary content (on Home
+  the panels in tree order), the chat column and the status bar, so focus follows that order; F6 and Shift+F6 cycle the
+  rail, the panels and the chat (F3-635).
 gui_related: true
 gui_classification_reason: >-
   This unit defines keyboard navigation and focus order.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16497,7 +16504,8 @@ preserved_exact_tokens:
 - "file tree"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): \"side panel to bottom panel\" in the focus order is retired; there is no bottom panel and the side panel is on the left."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -16675,11 +16683,14 @@ canonical_text: >-
   Slint panel and window files live under `ui/panels/` and `ui/windows/`, including chat, file
   manager, bottom runtime panel, shared browser panel, debug panel, floating panel, and about
   window surfaces.
+  Amended 2026-10-09 (DL-180): the bottom runtime panel and the floating panel are no longer host surfaces; the home
+  centre is one reusable panel component inside row and column splits with one tab strip component (F3-HOME-005 as
+  amended), and each tab kind's body is its own component (F3-635).
 gui_related: true
 gui_classification_reason: >-
   This unit covers visible detachable panel and secondary-window Slint file placement.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -16711,7 +16722,8 @@ preserved_exact_tokens:
 - "about.slint"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-180): the bottom runtime panel and floating panel host files are retired for Home."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -20288,11 +20300,14 @@ canonical_text: >-
   auth/account owners, and Final GUI limited to their presentation, chrome, theme, layout, and motion,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
+  Amended 2026-10-09 (DL-180): the IDE shell layout is the activity bar and side panel on the left, the primary content
+  and the chat column fixed on the right, with no Bottom Panel zone; Home's primary content is one universal panel
+  system (Appendix B item 4 as amended; F3-630, F3-637).
 gui_related: true
 gui_classification_reason: >-
   This unit locks visible shell, framework, theme, settings, and persistence decisions.
 split_recommended: false
-depends_on: []
+depends_on: [DL-180]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20335,6 +20350,7 @@ compatibility_only_notes: []
 stale_retired_dispositions:
 - "The Friendly Dark factory-default and unified Settings + Login + Doctor ownership summaries are superseded by the later factory-default and owner-routing contracts."
 - "DL-139 supersedes the winit + FemtoVG-wgpu fallback and the no-HTML/CSS rule for the web GUI: desktop is Skia only, and the web GUI is a Rust Leptos client drawn with browser elements and CSS."
+- "Amended 2026-10-09 (DL-180): the preserved \"Activity Bar + Primary Content + Side Panel + Bottom Panel\" shell token is lineage."
 owner_boundary_notes:
 - "Settings_System owns the Settings shell and ordinary-setting semantics; N2-151 owns Doctor registry/router/projection; auth/account owners retain Login; Final GUI owns presentation only."
 owner_hints:
