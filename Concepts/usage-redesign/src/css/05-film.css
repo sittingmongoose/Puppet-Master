@@ -21,8 +21,10 @@ body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: abs
    the later slices, PERF-3); the frames enter at once and each body waits unseen by opacity until it is built (never
    by visibility: an animation created under visibility: hidden runs on the main thread) */
 #panel-usage .pmu-board > .pmu-card[data-body-wait] > .pmu-cardbody { opacity: 0; }
-/* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer */
-#panel-usage .pmu-board[data-film] > .pmu-card { will-change: transform, opacity; }
+/* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
+   its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
+   that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
+#panel-usage .pmu-board[data-film] > .pmu-card:not([data-film-rest]) { will-change: transform, opacity; }
 
 /* ---- the room key light (2.1; WOW-SPEC-3 4.2): one static light under the board, visible in the gutters and behind the
    transparent stage head; a key at the top-left and a low bounce light at the bottom-right (tokens --pmu-l-* in
