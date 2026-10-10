@@ -109,6 +109,8 @@ element) and `11bad014f6` (add selection).
     Console sub-tab states (D33) running `working`, paused `paused`, ended by how it ended (`complete`, `failed`, or
     `skipped` when you stopped it; not `idle`, which means ready for input), the "paused at <file:line>" link
     `ring-dot`, a session's run `play`, the dashboard's "Demo time" fact `clock`, its Live mark
-    `status('working')` (the vocabulary's "live"; it loops only while readings are live), Board menu rows: Start from
+    `status('working', 12, 'nx-still')` (the vocabulary's "live"): lit and still, and the board's beat event remounts
+    it so its act plays once per beat (P12: nothing moves between beats; Live stays on for hours); under Reduced
+    Motion it never moves. The ended mapping fits D33 as built (home-panels). Board menu rows: Start from
     `layout`, Save as preset `save`, Play the next hour `play`, Back to now `clock`, Live readings `signal`; the Output
     picker's "Open in new tab" `open`. The empty dashboard's sketch is an illustration, not a glyph.

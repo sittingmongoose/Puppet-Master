@@ -330,7 +330,7 @@
    * second drawing for one meaning would break one-meaning-per-shape from the other side. A Debug Console session that
    * ended takes the mark of how it ended, not idle (idle means "ready for input"). */
   G.map('server', { family: 'panels', replaces: ['panels "+" menu SSH hosts row (remote; D39; Retro text "//")'], surfaces: ['panels "+" menu'] });
-  G.map('st-working', { family: 'panels', replaces: ['dashboard header Live mark ("Live" text with a per-beat pulse)', 'Debug Console session sub-tab: running (D33)'], surfaces: ['dashboard header', 'Debug Console sub-tabs'] });
+  G.map('st-working', { family: 'panels', replaces: ['dashboard header Live mark ("Live" text with a per-beat pulse; still, its act once per beat: P12)', 'Debug Console session sub-tab: running (D33)'], surfaces: ['dashboard header', 'Debug Console sub-tabs'] });
   G.map('st-paused', { family: 'panels', replaces: ['Debug Console session sub-tab: paused (D33)'], surfaces: ['Debug Console sub-tabs'] });
   G.map('st-complete', { family: 'panels', replaces: ['Debug Console session sub-tab: ended normally (D33)'], surfaces: ['Debug Console sub-tabs'] });
   G.map('st-failed', { family: 'panels', replaces: ['Debug Console session sub-tab: ended with an error (D33)'], surfaces: ['Debug Console sub-tabs'] });
