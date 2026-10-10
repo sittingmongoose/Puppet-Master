@@ -1,22 +1,26 @@
 #!/usr/bin/env python3
 """Home layer: add the universal panel system (src/panels) and the terminal tab kind (src/terminal) to the built page.
 
-  text, notes = home_layer.apply(text, need)   # text = opus-5.5 build.build_text() (or after the Usage/rail layers)
-  problems = home_layer.lint()                 # source rules for ../src
-  problems = home_layer.syntax_check(text)     # node --check of <script id="pm-home-js">
+  text, notes = home_layer.apply(text, need)       # step 5 of opus-5.5 build.build_text(), after Usage and the rail
+  problems = home_layer.lint()                     # source rules for ../src (in build.py's lint_sources())
+  problems = home_layer.syntax_check(text)         # node --check of <script id="pm-home-early"> and "pm-home-js"
+  problems = home_layer.published_problems(text)   # build.py and --check: syntax, markers, the anchors kept exactly once
+
+opus-5.5 build.py publishes this layer (build.py --publish-pm7 writes PMConcept7.html with it); build_home.py writes
+the review copy, the same bytes.
 
 The layer follows the Usage and left-rail layer pattern (Concepts/usage-redesign, Concepts/leftrail-redesign): it never
 edits the page's own markup. apply() only adds:
   1. <style id="pm-home-css"> just before </head>: src/panels/css/*.css then src/terminal/css/*.css, with
-     url("o55font:<file>") refs inlined from src/terminal/fonts or src/panels/fonts.
+     url("o55font:<file>") refs inlined from src/panels/fonts (none today: the terminal's faces and JetBrains Mono are
+     the page's own, embedded by the opus-5.5 build from its src/fonts, DL-161).
   2. <script id="pm-home-js"> just before </body>: the panels core (src/panels/js/*.js in one strict scope that
      publishes window.PM_HOME and window.PMW), then the terminal (src/terminal/js/*.js in a scope of its own, given
      PM_HOME), then PM_HOME.boot(). Each part is guarded, so one failing part leaves the others running.
   2b. <script id="pm-home-early"> in <head> (src/panels/early/*.js): the PM_HOME_WORKSPACE shim, so the old Home
      controller's own guard skips it, and html[data-pmw-home="on"] (?home=current keeps today's Home for an A/B).
-     One guarded app JS patch (APP_PATCHES: homeActive) lets the chat stay one column on every page.
-     Every face in src/terminal/fonts/ is inlined as given and never mirrored into PM Symbols (terminals need their
-     own box-drawing glyphs); no list of families is kept here.
+     Guarded app JS patches (APP_PATCHES): homeActive lets the chat stay one column on every page; the status bar's
+     host item and NieR's readout of it.
   3. The panels' NieR hook classes (.pmw-cur, .pmw-chosen, .pmw-strip) in the Settings script's NieR selector lists, on
      anchors the Usage and rail layers do not use, so the three layers compose in either order.
 At run time the panels replace the Home centre (CONTRACT.md); the old Home model stays loaded for the pages and tour
@@ -93,7 +97,7 @@ NIER_SELECTOR_PATCHES: list[tuple[str, str, str]] = [
 ]
 
 FONT_URL = re.compile(r'url\("o55font:([^"]+)"\)')
-FONT_DIRS = [TERMINAL / 'fonts', PANELS / 'fonts']
+FONT_DIRS = [PANELS / 'fonts']
 BINARY_SUFFIXES = {'.woff2', '.woff', '.ttf', '.otf', '.png', '.jpg', '.jpeg', '.gif', '.webp'}
 SKIP_DIRS = {'harness'}
 
@@ -122,7 +126,8 @@ def inline_fonts(css: str) -> str:
                 mime = 'font/woff2' if name.endswith('.woff2') else 'font/ttf' if name.endswith('.ttf') else 'font/otf'
                 return ('url("data:' + mime + ';base64,'
                         + base64.b64encode(path.read_bytes()).decode('ascii').replace('/', '%2F') + '")')
-        raise ValueError(f'home layer: embedded font {name!r} is not in src/terminal/fonts or src/panels/fonts')
+        raise ValueError(f'home layer: embedded font {name!r} is not in src/panels/fonts (the page\'s own faces are in '
+                         f'opus-5.5 src/fonts)')
     return FONT_URL.sub(data_uri, css)
 
 
@@ -313,6 +318,34 @@ def lint() -> list[str]:
         for name, where in sorted(tops.items()):
             if len(where) > 1:
                 problems.append(f'top-level name {name!r} declared more than once in the {scope} scope: {", ".join(where)}')
+    return problems
+
+
+# what the published page must carry once the layer is in (build.py, build.py --check, build_home.py --check)
+MARKERS = [CSS_START, CSS_END, JS_START, JS_END, '<script id="pm-home-early">', '<style id="pm-home-css">',
+           '<script id="pm-home-js">']
+# the tour's restore snapshot contract: the old controller's anchor stays exactly once (BRIEF 3.9)
+EXACTLY_ONCE = ['    failNextPersistenceWrite: function () { faults.failNextWrite = true; },']
+KEPT = ['id="pm-home-workspace"', 'id="chatPanel"', 'window.PM_HOME_WORKSPACE', 'o55RestoreSnapshot']
+
+
+def published_problems(built: str) -> list[str]:
+    """The Home layer's checks on a built page (lint() runs separately, in build.py's lint_sources())."""
+    problems = syntax_check(built)
+    for marker in MARKERS:
+        if built.count(marker) != 1:
+            problems.append(f'home: marker {marker} appears {built.count(marker)} times (need exactly 1)')
+    for needle in EXACTLY_ONCE:
+        if built.count(needle) != 1:
+            problems.append(f'home: {needle.strip()[:60]} appears {built.count(needle)} times (need exactly 1)')
+    for kept in KEPT:
+        if kept not in built:
+            problems.append(f'home: kept reference missing: {kept}')
+    for _, new_js, label in APP_PATCHES:
+        if built.count(new_js) != 1:
+            problems.append(f'home: app patch {label} appears {built.count(new_js)} times (need exactly 1)')
+    if 0 <= built.find(JS_START) < built.find('<!-- RAIL:BODY:END -->'):
+        problems.append('home: the Home body block comes before the rail\'s (the layer runs after Usage and the rail)')
     return problems
 
 
