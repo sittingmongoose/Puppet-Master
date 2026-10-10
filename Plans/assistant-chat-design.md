@@ -1684,8 +1684,8 @@ Terminal empty, restore, and review states:
 
 Pane status, badges, and notifications:
 - terminal_session state includes creating, attaching, ready, running, interrupting, terminating, killing, exited, failed, and restoring; restore ends as ready, /exited/disconnected-equivalent, /restoring/disconnected/exited, or another honest outcome.
-- aggregate precedence for tabs and /sections is failed_to_start or /disconnect/failed-start, disconnected, restore_action_needed, exited_error, failed_command_since_focus, running, unseen_completion, unseen_output, context_changed, ready, then exited_clean.
-- visual-surface placement keeps exact runtime-state in pane headers, compact /badges with quiet /count semantics on tabs, summary attention on /dock entries, and high-priority /chrome attention on detached windows.
+- aggregate precedence for tabs and /sections (amended 2026-10-09, DL-181: tabs only, because sections are gone, ACD-139) is failed_to_start or /disconnect/failed-start, disconnected, restore_action_needed, exited_error, failed_command_since_focus, running, unseen_completion, unseen_output, context_changed, ready, then exited_clean.
+- visual-surface placement keeps exact runtime-state in pane headers, compact /badges with quiet /count semantics on tabs, summary attention on /dock entries, and high-priority /chrome attention on detached windows (amended 2026-10-09, DL-181: attention on dock entries and detached windows is retired; a terminal's state shows in its tab's header row, on its tab and in polite announcements, F3-640, SMPFS-183, ACD-139).
 - focused-pane events prefer inline-status and badges over intrusive notifications; /inactive/detached failures may notify.
 - focusing a pane clears unseen_output and unseen_completion; failed_command_since_focus clears only after the failed pane is focused/reviewed, and restore_action_needed clears only after the restore issue is fixed or the pane is intentionally /replaced.
 - TUI mouse-capture guidance is contextual, not a permanent warning banner.
@@ -1694,7 +1694,7 @@ Transcript, alternate-screen, and reset semantics:
 - persisted transcript is review continuity, not emulator-state resurrection.
 - /TUI and alternate-screen entering or /exiting are represented as events or /markers; normal-screen transcript continues after TUI exit.
 - clear scrollback starts a new visible transcript segment; /reset or /reinitialize does not delete history unless paired with clear.
-- Clear, reset, replace, and close remain separate card actions: clear affects reviewable and `/reviewable` history visibility, reset reinitializes display `/parser` state when supported, interrupt requests stop of the foreground command, terminate ends the session/process, kill force-stops where policy allows, replace starts a new runtime in the slot, and close is a workspace-structure action unless an explicit runtime termination policy is chosen.
+- Clear, reset, replace, and close remain separate card actions: clear affects reviewable and `/reviewable` history visibility, reset reinitializes display `/parser` state when supported, interrupt requests stop of the foreground command, terminate ends the session/process, kill force-stops where policy allows, replace starts a new runtime in the slot, and close is a workspace-structure action unless an explicit runtime termination policy is chosen (amended 2026-10-09, DL-181: closing a terminal tab ends its session after its inline ask, SMPFS-180, ACD-140).
 - block-level copy/export indicates partial backing history when only pruned transcript remains.
 - metadata-only command blocks may expose command metadata, duration, cwd, and exit status without fabricating output text.
 - per-project Terminal settings distinguish live scrollback depth, persisted transcript retention, clear-on-close, and preserve-on-close behavior.
@@ -10164,7 +10164,7 @@ gui_classification_reason: Terminal workspace controls, labels, linked surfaces,
 depends_on: [ACD-131, DL-181, ACD-502]
 unblocks: [ACD-136, ACD-138, ACD-139, ACD-140, ACD-141, ACD-142]
 acceptance_criteria:
-  - Terminal workspace state and controller APIs remain explicit.
+  - "The controller APIs (focus, send-input, interrupt, resize, state) remain explicit as the typed surface agents act through, under SMPFS-182's rules (DL-181)."
   - Terminal, Output, Problems, Ports, and chat ownership stay distinct.
   - Chat owns only preview/reveal cards for terminal work.
   - "The terminal keeps no workspace, docking or tab model of its own; its tabs are panel tabs (DL-181)."
@@ -10376,7 +10376,7 @@ canonical_text: >-
   mouse-capture guidance rather than permanent warning banners.
   Amended 2026-10-09 (DL-181): dock/chrome attention, attention on dock entries and attention on detached windows are
   retired. A terminal's state shows in its tab's header row, on its tab (the exit code of a failed command, the agent
-  mark, the hollow-square attention mark) and in polite announcements (F3-640, SMPFS-183); aggregate precedence covers
+  mark, the static busy mark, and the hollow square only for a tab opened in the background) and in polite announcements (F3-640, SMPFS-183); aggregate precedence covers
   tabs only, because sections are gone. The terminal owners now own this unit's rules
   (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180, #SMPFS-183, Plans/FinalGUISpec.md#F3-640, #F3-641;
   ACD-502); it stays as the chat's consumer record, and where it differs from them they win.
@@ -24160,6 +24160,9 @@ canonical_text: >-
   (ACD-478), and the thread's total file count is in Activity's Changes domain. Threads with
   diagnostics render a problems row that links to the Problems bottom tab. Rewind
   actions live in the composer rewind FAB and never render in the stream footer.
+  Amended 2026-10-09 (DL-184): the footer keeps this content and routing, but it is no longer a pill:
+  Plans/FinalGUISpec.md#F3-422 now draws it as a content-sized rectangle with the look's inner radius
+  (Plans/DRY_Rules.md#DR-069, Plans/FinalGUISpec.md#F3-648).
 gui_related: true
 gui_classification_reason: Defines visible chat footer content and routing behavior.
 depends_on: [ACD-013, ACD-058, ACD-059, ACD-216, ACD-217]
@@ -24197,7 +24200,7 @@ compatibility_only_notes:
 stale_retired_dispositions:
   - "Superseded 2026-09-27 by ACD-482 (DL-129): the subagent chip, the files chip and their separator no longer render above the composer; live runs are dock lines (ACD-476), each reply that changed files has its own files row (ACD-478), and the thread's total file count is in Activity's Changes domain. The problems row and its route to the Problems bottom tab are not part of that decision and are unchanged."
 owner_boundary_notes:
-  - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422); this unit records footer content and routing semantics."
+  - "Plans/FinalGUISpec.md owns the footer pill geometry (F3-422; a content-sized rectangle, no longer a pill, since 2026-10-09, DL-184); this unit records footer content and routing semantics."
 owner_hints:
   - Plans/assistant-chat-design.md
 ```
@@ -24689,7 +24692,7 @@ preserved_exact_tokens:
   - "Cycle layout"
   - "cmd.chat.archive"
 negative_constraints:
-  - "Do not register new commands for Duplicate, Pop out, Cycle layout, or Close in this pass; only `cmd.chat.archive` is cataloged among the menu actions."
+  - "Do not register new commands for Duplicate, Pop out, Dock back, Cycle layout, or Close in this pass; Archive uses `cmd.chat.archive`, and Pop out and Dock back use UCC-203's existing cmd.panel.undock and cmd.panel.redock (DL-180). Cycle layout is retired (DL-180)."
   - "The kebab glyph is an inline SVG, not an emoji glyph."
 compatibility_only_notes:
   - "Slint portability: the kebab menu renders as an opaque precomputed popup surface with translate/opacity/height animations via Slint property animations; no arbitrary-content backdrop blur, no SVG filters, and color math is precomputed rather than runtime-mixed."
@@ -25061,7 +25064,7 @@ This section incorporates the cumulative v3 repairs and supersessions from the A
 19. **Responsive Editor/Chat Split (`APR-066`)**: Opening a plan or document and resizing the split container enforces explicit grid placement and min-size rules (`min-width: 360px` for chat, DL-138; Assistant_Plan_Runtime APR-014), preventing the transcript from being squeezed into the resize handle track.
 20. **Reference-Layout Supersession (`USER-REFERENCE-LAYOUT-ROLLBACK-20260908`)**: The visual prescription derived from the reference video (`ScreenRecording_08-11-2026 19-26-05_1(1).mov`) mandating flattened row layouts and forced single-column presentations across Activity Detail (Goal, To-Dos, and all Activity families) and Context More Details is selectively superseded. Assistant surfaces restore prior native card, panel, and grid presentation by removing reference-derived CSS overrides (`narrow-review.css`). Independent requirements—including pinned Activity Detail defaults, floating Chat Activity Bar with pointer pass-through, transcript zero horizontal scrolling (`scrollWidth <= clientWidth`), in-flow Context Lens, single bounded hover previews, concise disclosures, elimination of decorative left stripes, and separate Simple Goal vs To-Do semantics—remain strictly preserved. Scoped exception (2026-09-27, DL-122): the Activity Detail body of the four collaboration kinds (Crew, Chat Room, BrainStorm, Review) is a short team list, and Back Seat Driver's section of Context Details is three plain facts and three native disclosures, because each run's full detail lives in its run view (ACD-480); FinalGUISpec F3-580 states both. Second scoped exception (2026-10-08, DL-147): the To-Do rows of Activity Detail are one-line checklist rows like the To-Do hover preview, inside the native panel (FinalGUISpec F3-593). Every other Activity Detail family and Context Details section keeps the restored native card, panel and grid presentation.
 
-Amended 2026-10-09 (DL-180): for Home, item 15's left editor/document tab system is the home centre's panels, where a plan or run view opens as its tab through the one opening module, and its Return to chat retires because no tab covers the chat (ACD-455, ACD-480, ACD-500); item 19's editor/chat split and its 360 px chat minimum give way to the fixed chat column of `Plans/FinalGUISpec.md#F3-637` (ACD-458).
+Amended 2026-10-09 (DL-180): for Home, item 15's left editor/document tab system is the home centre's panels, where a plan or run view opens as its tab through the one opening module, and its Return to chat retires because no tab covers the chat (ACD-455, ACD-480, ACD-500); item 19's editor/chat split and its 360 px chat minimum give way to the fixed chat column of `Plans/FinalGUISpec.md#F3-637` (ACD-458). Amended 2026-10-09 (DL-184): item 1's Activity Bar keeps its floating, pass-through and clearance rules but is no longer a pill in any look (`Plans/DRY_Rules.md#DR-069`, `Plans/FinalGUISpec.md#F3-648`, ACD-452).
 
 ```yaml
 plan_unit_id: ACD-452
@@ -25070,6 +25073,9 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   The styled inner Chat Activity Bar floats over the transcript with transparent side flanks and transparent bottom spacing, using pointer pass-through around the central pill so underlying transcript content remains clickable. The chat transcript maintains positive bottom padding ensuring that at settled bottom scroll (scrollTop === scrollHeight - clientHeight), the final transcript child element is completely visible above the pill. The chat transcript strictly enforces scrollWidth <= clientWidth with zero horizontal scrolling; rich cards, attachments, tables, and hidden previews wrap or reflow.
+  Amended 2026-10-09 (DL-184): the Activity Bar keeps its floating, pass-through and clearance rules but is no longer
+  a pill in any look; read "pill" in this unit as the bar's centred interactive body (Plans/DRY_Rules.md#DR-069,
+  Plans/FinalGUISpec.md#F3-648).
 gui_related: true
 gui_classification_reason: Floating activity bar geometry, pointer pass-through, and transcript horizontal extent.
 depends_on: [ACD-448]
@@ -27379,7 +27385,7 @@ canonical_text: >-
   square and a polite announcement, never takes keyboard focus and never changes the active tab of a panel the user
   is typing in; files an agent opens open kept, and terminals, browsers, dashboards and the tool tabs go where
   F3-634's kind affinity puts them. These stay out of the panels: Activity Detail stays inside the chat (D3,
-  APR-001); the wand's setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
+  F3-637, v3 item 2); the wand's setup sheets, the debug-target prompt and the thread dialogs are app modals in the one overlay
   root (Plans/DRY_Rules.md#DR-067); Plan Export and PDF are a download or a print window; Send to Planning Wizard goes
   to the Planning Wizard page; an attachment's More Info stays a popover. The chat's Goal tab is gone (DL-147): View
   goal shows the Goal panel of Activity Detail. The concept's lab-only workspaces open nowhere (ACD-474). The 5.6 Pro
@@ -27396,7 +27402,8 @@ canonical_text: >-
   ever covers the chat, and when the chat has folded to its narrow edge strip that strip opens it again (F3-636). The
   chat column is F3-637's: fixed on the right from the title bar to the status bar, never a tab, never in the split
   tree and never moved inside the window; Pop out is its only way to move and Dock back returns it to its column
-  (Plans/UI_Command_Catalog.md#UCC-203). Its default width, drag range, the limit that keeps the centre wide enough,
+  (Plans/UI_Command_Catalog.md#UCC-203). Showing and hiding the chat are F3-637's (cmd.panel.switch with chat,
+  UCC-203). Its default width, drag range, the limit that keeps the centre wide enough,
   how it eases and folds in narrow windows, and the setting Keep the chat open in narrow windows are F3-637's and
   F3-636's; they replace every chat minimum this document stated (ACD-458, ACD-480, v3 item 19). The chat sizes itself
   by its own column, never by the window (ACD-501). The History list is the 5.6 Pro chat's and the only thread-history
@@ -27404,9 +27411,9 @@ canonical_text: >-
   widens the column by the list's own width instead of narrowing the messages. The pin is kept in the chat column state
   of the home layout record (Plans/storage-plan.md#SP-330), and the setting general.interaction.chat-history-list
   (Plans/Settings_System.md#SSYS-050) gives only its starting value where no choice is saved. Activity Detail stays
-  inside the chat (APR-001, ACD-453), never a panel tab. The 5.6 Pro chat's inline Shell box is replaced by a compact
+  inside the chat (F3-637, ACD-453, v3 item 2), never a panel tab. The 5.6 Pro chat's inline Shell box is replaced by a compact
   command card (D27). It shows the command, the folder it ran in, its status as a glyph and words (Running, Exit 0,
-  Exit <code>, Interrupted, Needs input), so the exit code is part of the status, how long it ran (counting while it
+  Exit <code>, Failed when a failed command has no exit code, Interrupted, Needs input), so the exit code is part of the status, how long it ran (counting while it
   runs), the last lines of its output as plain text with the number of earlier lines (ACD-126's 5-line collapsed and
   15-line expanded preview; expanded also shows the whole command and folder), and who ran it: You, or the agent by
   name, from the command record's by (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-183). Its five states
