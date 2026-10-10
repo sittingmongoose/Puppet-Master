@@ -649,6 +649,9 @@ html:not([data-pmu-soft]) #panel-usage .pmu-donut path[data-mark="arc"] { filter
 #panel-usage .pmu-collab.is-zero i { font-style: normal; color: var(--pmu-ink-3); letter-spacing: .02em; }
 #panel-usage .pmu-legend-item .pmu-pmark { flex: none; margin-left: -2px; }
 #panel-usage .pmu-mark[data-mark="line"][data-role="cost"] { stroke-width: 1.75; opacity: .92; }
+/* a range morph cross-fades the old cost line (a ghost under its leaving dots) into the new one on the morph's own tween
+   (--xf from 1 to 0 on the ghost, 0 to 1 on the new line; item 3); no transition, so the fade is the tween's frame */
+#panel-usage .pmu-mark[data-mark="line"][data-role="cost"][data-xf] { opacity: calc(.92 * var(--xf, 1)); transition: none; }
 /* the hottest cell carries a 1 px inner highlight at rest and flashes once on arrival (WOW-SPEC 2.5, 3.3) */
 #panel-usage .pmu-hc[data-peak] { position: relative; box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 55%, transparent), 0 0 10px 1px color-mix(in srgb, var(--pmu-heat-6) 55%, transparent); }
 html[data-theme$="-light"] #panel-usage .pmu-hc[data-peak] { box-shadow: inset 0 0 0 1px color-mix(in srgb, #fff 70%, transparent), 0 0 8px 1px color-mix(in srgb, var(--pmu-heat-6) 45%, transparent); }
