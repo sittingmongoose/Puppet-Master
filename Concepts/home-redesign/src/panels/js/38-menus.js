@@ -314,9 +314,12 @@ menus.tab = function (tabId, anchor, at) {
     { id: 'split-right', label: 'Split right with this tab', icon: 'splitRight', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'right'); } },
     { id: 'split-down', label: 'Split down with this tab', icon: 'splitDown', disabled: narrow, run: function () { PMW.moveTabToSplit(tabId, p.id, 'bottom'); } }
   ].filter(Boolean);
+  /* a kind's own rows (CONTRACT 3: tabMenu(state, tabId) -> items in api.menu's shape; missing or [] adds nothing) go
+     last, after a hairline: the terminal's notification mute (D38) */
   var k = kindDef(rec.kind);
   if (k && typeof k.tabMenu === 'function') {
-    try { var extra = k.tabMenu(tabId, rec); if (extra && extra.length) rows = extra.concat(['-'], rows); } catch (_) {}
+    try { var extra = kindRows(k.tabMenu(rec.state || {}, tabId) || [], rec); if (extra.length) rows = rows.concat(['-'], extra); }
+    catch (err) { try { console.error('[pm-home] the ' + rec.kind + ' tab menu rows failed', err); } catch (_) {} }
   }
   return menu.open(anchor, { id: 'tab:' + tabId, title: tabLabel(rec), rows: rows, width: 270, at: at || null });
 };

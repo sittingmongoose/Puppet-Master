@@ -144,6 +144,18 @@ chatCol.dockBack = function () {
   bus.emit('chat', { floating: false });
   return { ok: true };
 };
+/* D32: a popped-out chat starts back in its column after a restart. The page asks for a pop out through the shim from
+   its saved Settings value (Chat Layout: Overlay or Detached) when it paints at start, and nothing a person does can ask
+   before their first press or key, so a request from the page before then is that saved value replaying: the chat
+   stays in its column. The chat's own Pop out and a Settings change made later go through as before. */
+var chatActed = false;
+function chatActedNow() { chatActed = true; doc.removeEventListener('pointerdown', chatActedNow, true); doc.removeEventListener('keydown', chatActedNow, true); }
+doc.addEventListener('pointerdown', chatActedNow, true);
+doc.addEventListener('keydown', chatActedNow, true);
+chatCol.popOutFromPage = function () {
+  if (!chatActed) return { ok: false, no_change: true, reason: 'restart' };
+  return chatCol.popOut();
+};
 chatCol.isFloating = function () { var ma = qs('.main-area'); return !!(ma && ma.hasAttribute('data-pmw-chat-float')); };
 
 /* the folded chat strip (D4, C < 480): a button opens the chat over the centre until Escape or a click outside */
