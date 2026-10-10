@@ -5953,7 +5953,7 @@ canonical_text: >-
   layouts (F3-630); the keyboard map in the desktop app and the web-client mapping, with every label, menu shortcut and
   hover tag showing the key that works where the app runs (F3-635); the tab kinds: each of F3-635's fifteen kinds
   registered once with its id prefixes and content minimum (terminal 320 x 120 px, browser 360 x 200, dashboard 320 x
-  120, run 360 x 200, every other kind 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
+  120, run 360 x 200, plan/document/artifact/transcript/context 280 x 160, editor/record/tools 280 x 120), an unknown prefix opening no tab, a restored background tab mounted
   only when it is first shown, and each tab body sized by its own box, never the window (F3-635); the shared header row,
   30 px tall with 24 px targets, 12 px text and 11 px secondary facts, labels from a 520 px body width and icons with
   hover tags below it, and hidden under 150 px of body height (F3-635, Plans/DRY_Rules.md#DR-065); every menu, the "+"
@@ -6047,6 +6047,7 @@ negative_constraints:
 compatibility_only_notes:
   - "The panels concept's harness hooks and storage keys are concept lineage and are not product test names."
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies the per-kind document content minima adopted from NUMBERS."
   - "Amended 2026-10-10 (R35, panels NUMBERS 6026fa8432): Certifies both text/state contrast and primary-button ink across looks and NieR."
   - "Amended 2026-10-10 (Addendum 2 D27, DL-183): Shares the code colour-scheme catalog and Appearance popover with the editor and terminal."
   - "Superseded 2026-10-09 (DL-180): ATS-029's four-panel live matrix and its exact 72-case visual matrix."
