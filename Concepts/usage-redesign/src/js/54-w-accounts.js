@@ -1238,7 +1238,11 @@
     else spec.options = levels;
     PMU.menu.choice(el, spec);
   });
-  C.act('pol-shared', function () { PMU.settings.open(null, 'ai.accounts.hard-switch-level'); });
+  /* the shared setting's line opens its Settings row (UCC-147: Settings opens reuse cmd.settings.open) */
+  C.act('pol-shared', function () {
+    var receipt = command('cmd.settings.open', { category: 'ai', setting_id: 'ai.accounts.hard-switch-level', provider_id: null, account_id: null }, { opened: true });
+    if (receipt.dispatch_accepted !== false) PMU.settings.open(null, 'ai.accounts.hard-switch-level');
+  });
   C.act('acct-use', function (el) { PMU.accounts.askUse(el.getAttribute('data-value'), el); });
   C.act('acct-settings', function (el) { var k = el.getAttribute('data-value').split('/'); PMU.accounts.openSettings(k[0], k[1]); });
   C.act('acct-inspect', function (el) { PMU.accounts.inspect(el.getAttribute('data-value'), el); });
