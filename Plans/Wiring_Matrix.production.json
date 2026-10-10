@@ -63239,7 +63239,7 @@
         "home.chat.pop_out dispatches cmd.panel.undock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with current_host, target_window, expected_layout_revision and idempotency_key; the same chat opens in its own window and exactly one chat exists (F3-637).",
         "Pop out is the chat's only way to move; the in-canvas float layer, the chat grip and every dock target are retired (UCC-203).",
-        "Availability class capability: offered in the desktop app; the web client's behaviour follows UCC-203 (not offered, unsupported) pending the lead's ruling against F3-637's web boundary sentence.",
+        "Availability class capability: offered in the desktop app (DL-180, UCC-203).",
         "Corrected 2026-10-09 (WM-092): the row declares panel.undocked only, exactly as catalog.panel_undock does.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
@@ -64915,7 +64915,7 @@
         "home.more_options.chat_pop_out reads state.home_workspace.home_more_options_chat_pop_out.availability and shows state.home_workspace.home_more_options_chat_pop_out.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.more_options.chat_pop_out dispatches cmd.panel.undock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with current_host, target_window, expected_layout_revision and idempotency_key; the same chat, with its History and Activity Detail, opens in its own window; exactly one chat exists.",
-        "Availability class capability: offered in the desktop app; the web client's behaviour follows UCC-203 (not offered, unsupported) pending the lead's ruling against F3-637's web boundary sentence.",
+        "Availability class capability: offered in the desktop app (DL-180, UCC-203).",
         "No home panel, tab or dashboard ever dispatches cmd.panel.undock (UCC-203).",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
