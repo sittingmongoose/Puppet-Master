@@ -93,7 +93,7 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 |---|---|
 | Default width | clamp(400, 0.26667 x window + 88, 640): 480 at 1470, 600 at 1920, 640 from 2070 |
 | Drag range | 400-760, and never so wide that the centre drops below 960 (where the ladder starts easing the chat back) |
-| Pop out | the only way to move it; in the browser concept it floats at 440x720 with History as a flyout and 680x720 with History pinned (+240 pinned, capped at 100vw - 48), at right 24 / bottom 48 (1470 with History pinned measured 25/49) with Dock back |
+| Pop out | the only way to move it; in the browser concept it floats at 440x720 with History as a flyout and 680x720 with History pinned (+240 pinned, capped at 100vw - 48), at right 24 / bottom 48 with Dock back |
 | Ladder (on C, the centre width) | C < 960: the rail side panel eases to 240, then folds to its icon bar below 760 (opens as an overlay), then the chat eases toward 400; C < 600: one panel column with a panel switcher ("2/3") in the strip; C < 480: the chat folds to a 32 px strip unless "Keep the chat open in narrow windows" is on |
 | Hysteresis | 48 px per step; nothing is ever saved |
 | Measured | 1920: rail 240, chat 600, C 1041. 1680: chat 441, C 960. 1470: rail folded, chat 473, C 960. 1440: chat 443. 1280: chat 400, C 847. 1024: one column, C 567. 900: chat strip, C 811 |
@@ -107,7 +107,7 @@ does the same. The empty-panel launcher shows the same rows (32 px list rows), t
 
 | What | Value |
 |---|---|
-| Header row | default labelsAt 520 px; with labelsAt set, icon-only buttons are 24 px wide; each kind's labelsAt: browser 1100 px, transcript 1100 px, context 720 px, record 600 px; stop-gap rules live in css/40-parts.css under :where(.pmw-hrow.is-icons > .pmw-hrow-actions) > .pmw-hbtn and the .is-labels variants |
+| Header row | default labelsAt 520 px; with labelsAt set, icon-only buttons are 24 px wide; each kind's labelsAt: browser 1100 px, transcript 1100 px, context 720 px, record 600 px; the rules live in css/40-parts.css under :where(.pmw-hrow.is-icons > .pmw-hrow-actions) > .pmw-hbtn and the .is-labels variants |
 | File references | 32 px tall (6 px radius, 12 px code face); inline: 24 px tall (4 px radius, 11.5 px); double-click window: 240 ms (FILEREF_DBL_MS in 41-fileref.js); rules live in css/45-frames.css |
 | File reference hover tag | label 'Open file', detail 'Click previews it. Double-click keeps it open.'; without a path: 'No file to open' / 'This reference names no file.' |
 | api.saveSoon | 250 ms coalesced (PMW.persist.saveSoon) |
@@ -174,7 +174,7 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Demo ids | `web:tastebook`, `web:query-dashboard`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Multicolumn%20Indexes`, `link:postgresql.org\|PostgreSQL%2016%20%C2%B7%20Index-Only%20Scans`, `link:wiki.postgresql.org\|Locking%20notes%20for%20concurrent%20index%20builds`, `output`, `problems`, `ports`, `debug-console:main` |
 | Output D28 channel picker | menu width 300 px (was 280); each row has trailing cell 'Open in new tab' (Alt+Enter; Alt+click opens in new panel), icon 'outputNewTab' (Retro glyph '+'); split-off tab shows plain fact with no picker, More menu adds 'Show in the Output tab' |
 | Output D28 kind and ids | tab ids: 'output' (one tab, channel is view state) and 'output:<channel>' (split-off, fixed); labels: 'Output', and 'Output · <Channel>'; prefixes ['output:', 'output']; reveal({ channel }) switches main Output tab |
-| Browser and Debug Console fields | border 0, no box-shadow, no outline at (0,2,0); the row draws the one ring; nav and More buttons specificity raised to (0,4,0) to beat header-row stop-gap |
+| Browser and Debug Console fields | one focus ring: the header row draws it, the field itself has no border, shadow or outline |
 
 ### Dashboard (kinds/30-dashboard.js)
 
@@ -272,11 +272,9 @@ header-row targets, 32 px document actions, nothing under 11 px) are in CONTRACT
 | Shared | header-row actions are 24 px targets (core); document actions are 32 px (PMW.frames.button and .pmw-rec-srcbtn); nothing under 11 px. |
 | Demo ids | `thread-agent-query`, `thread-agent-schema`, `thread-agent-bench`, `thread-agent-migration`, `thread-agent-rollback`, `thread-agent-motion`, `thread-agent-test`, `thread-agent-tokens`, `thread-agent-orphan`, `thread-agent-theme`, `thread-agent-plan`, `thread-agent-probe`, `thread-agent-fallback`, `thread-agent-evidence`, `context:query`, `search:postgres%20composite%20index%20write%20amplification\|8%20results`, `search:index%20only%20scan%20visibility%20map\|3%20results`, `search:autovacuum%20analyze%20threshold%20after%20create%20index\|6%20results`, `mcp:grafana.query-range\|Called%20grafana.query-range%20%E2%80%94%20p95%20series%2C%20last%2024h`, `mcp:linear.update-issue\|Called%20linear.update-issue%20%E2%80%94%20PERF-218%20%E2%86%92%20%22index%20landed%22`, `app:inspector`, `work-record:m-7` |
 | Header labelsAt | Transcript: 1100 px (icons-only buttons below that); Context: 720 px; Record: 600 px |
-| Context demo turn arithmetic | input 900 + (n*373 mod 1100) tokens, output 380 + (n*211 mod 520) tokens; window capped at 95% of the limit; cached grows by 80% of each turn's growth; API cost (in*3 + out*15)/1e6 USD; plan estimate (in*3 + out*15)/2.7e6 USD |
+| Context demo turn (demo data only, not canon) | input 900 + (n*373 mod 1100) tokens, output 380 + (n*211 mod 520) tokens; window capped at 95% of the limit; cached grows by 80% of each turn's growth; API cost (in*3 + out*15)/1e6 USD; plan estimate (in*3 + out*15)/2.7e6 USD |
 | Context first turn on unknown thread | starts from 6,068 System and provider tokens and a 131,000-token limit |
 | Friendly restatements | stretch head and context disclosure rows var(--pmw-row-radius); Parent link 6px; Jump to latest and Source-thread button min(var(--pmw-radius), 8px) |
-| Transcript inline file reference in record row | margin -3px -2px, padding 0 2px, code face; height 24 px from fileRef inline |
-| Parent link max-width | calc(100% + 8px) (it was 100% with -4px margins) |
 
 ### Stand-in chat (kinds/95-standin-chat.js)
 
