@@ -97,9 +97,11 @@
    take the surface colour at full strength: a row scrolled under the header or the tab strip does not show through */
 [data-rail-skin="d"][data-theme="glass-dark"] { --d-chrome: rgb(37, 28, 57); }
 [data-rail-skin="d"][data-theme="glass-light"] { --d-chrome: rgb(241, 242, 238); }
-/* Glass light's failure red (#C0566B) is 3.2:1 to 3.9:1 on its pale surfaces; darkened it reads 5.8:1 to 6.8:1, the
-   4.5:1 that 12 px words need, and stays the same hue */
-[data-rail-skin="d"][data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 70%, #000); }
+/* Glass light's failure red (#C0566B) read 1.6:1 where its translucent shelves sit over the backdrop's mid tones
+   (measured rgb 146,164,175 and 182,145,127 behind the words) and 3.9:1 on its pale plates. Half way to black it reads
+   3.9:1 to 4.3:1 over the darkest backdrop and 9.9:1 on the plates, and stays a red; a full 4.5:1 there needs a colour
+   too close to the body text to read as a failure */
+[data-rail-skin="d"][data-theme="glass-light"]:not([data-o55-nier="on"]) { --d-fail: color-mix(in srgb, var(--graph-failed) 50%, #000); }
 /* NieR Mode paints over Basic: ink and paper, hairlines; motion is a hard ink wipe. Corners follow the "Square
    hairlines" part, as everywhere else in the app (with that part off NieR keeps Basic's radii). */
 [data-rail-skin="d"][data-o55-nier="on"] {

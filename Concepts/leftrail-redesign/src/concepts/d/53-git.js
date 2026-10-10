@@ -30,12 +30,14 @@ const LANE_E = (() => {
     for (let n = w.nextNode(); n; n = w.nextNode()) {
       const p = n.parentElement;
       if (!p || p.closest('.pm6-tb-menu')) continue;
-      const t = n.nodeValue.trim();
-      if (t && (Object.prototype.hasOwnProperty.call(map, t) || t.indexOf(' -> ') >= 0 || t.indexOf(' · ') >= 0 || (keep && p.closest(keep)))) hits.push(n);
+      /* matched with plain spaces: the shared applyDetail (10-skin) has already glued each " · " in a fact value to the
+         word before it with a no-break space, so "4 success · 2 failed · 1 running" missed its entry */
+      const t = n.nodeValue.trim(), k = t.replace(/\u00A0/g, ' ');
+      if (t && (Object.prototype.hasOwnProperty.call(map, k) || t.indexOf(' -> ') >= 0 || t.indexOf(' · ') >= 0 || (keep && p.closest(keep)))) hits.push(n);
     }
     hits.forEach(n => {
-      const orig = n.nodeValue, t = orig.trim();
-      let v = Object.prototype.hasOwnProperty.call(map, t) ? orig.replace(t, map[t]) : orig;
+      const orig = n.nodeValue, t = orig.trim(), k = t.replace(/\u00A0/g, ' ');
+      let v = Object.prototype.hasOwnProperty.call(map, k) ? orig.replace(t, map[k]) : orig;
       v = v.replace(/ -> /g, ' → ').replace(/ · /g, '\u00A0· ');
       if (keep && n.parentElement.closest(keep)) {
         v = v.replace(/\S+/g, w => (w.length <= KEEP_MAX ? w.replace(/([0-9A-Za-z])-(?=[0-9A-Za-z])/g, '$1-\u2060') : w))
