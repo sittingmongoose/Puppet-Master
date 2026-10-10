@@ -5,7 +5,8 @@
    timeline (provider groups, a lane that has no reading, the pending marker of a passed reset) and the no-windows line. */
 
 /* ------------------------------------------------------------------ the account rows plate */
-#panel-usage .pmu-planplate .pmu-planrow.is-comfy { min-height: 60px; padding-top: 9px; padding-bottom: 9px; }
+/* 8 px, not 9: four Claude rows at 1440 in Retro, Glass and NieR ran their facts row 2-4 px past the body */
+#panel-usage .pmu-planplate .pmu-planrow.is-comfy { min-height: 60px; padding-top: 8px; padding-bottom: 8px; }
 /* stacked (a plate too narrow for a column per window): the identity, then the account's window meters side by side */
 #panel-usage .pmu-planrow.is-stack { grid-template-columns: minmax(0, 1fr); row-gap: 7px; align-items: start; padding-top: 10px; padding-bottom: 10px; }
 #panel-usage .pmu-planmeters { display: grid; column-gap: 10px; row-gap: 8px; min-width: 0; }
@@ -44,7 +45,9 @@
 #panel-usage .pmu-planline.is-two .pmu-plvals { grid-column: 2; justify-self: start; text-align: left; white-space: normal; }
 html[data-o55-nier="on"] #panel-usage .pmu-planline .pmu-plvals b[data-tone="warn"] { color: var(--o55-nier-warn, var(--o55-nier-ink)); }
 html[data-o55-nier="on"] #panel-usage .pmu-planline .pmu-plvals b:is([data-tone="crit"], [data-tone="exhausted"], [data-tone="over"]) { color: var(--o55-nier-error, var(--o55-nier-ink)); }
-#panel-usage .pmu-planplate > .pmu-facts { margin-top: 6px; }
+/* 2 px, not 6: the Claude plate at 1440 ran 2 px past its body with its facts row in every look, and the settled fit pass
+   took the row and left a 39 px band over the foot */
+#panel-usage .pmu-planplate > .pmu-facts { margin-top: 2px; }
 #panel-usage .pmu-planplate > .pmu-more { margin-top: 2px; }
 
 /* ------------------------------------------------------------------ the windows timeline: one lane per account */

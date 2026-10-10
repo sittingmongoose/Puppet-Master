@@ -106,7 +106,7 @@
   function rowsPlate(body, ctx, m) {
     var p = m.provider, accs = p.accounts, n = p.windows.length, bw = ctx.tier.bw, bh = ctx.tier.bh;
     var look = PMU.theme.look(), k = look.nier || look.family === 'retro' ? 1.12 : look.family === 'glass' ? 1.04 : 1;
-    var tw = function (s, px, wt) { return C.wrapW(s, px, wt) * k; };
+    var kOn = true, tw = function (s, px, wt) { return C.wrapW(s, px, wt) * (kOn ? k : 1); };
     /* the identity column: the widest nickname, state word or plan (AAC: sized to the widest identity; the meta line wraps
        at its middle dot), never under 96 px and never so wide that a window column falls under 92 px. Columns only where
        the identity keeps its longest word whole ("sittingmongoose" was broken inside the word at 138 px) */
@@ -128,14 +128,16 @@
     var textW = (cols ? identW : bw) - 24;
     /* the meta line's words are measured as drawn (the state word 600, the rest 400), so a wrap is counted where it happens */
     var identH = function (a) {
-      var am = a.amounts.length && n && !allHiddenP(a) ? 16 * C.wrapLines(amtText(a), textW, 12) : 0;
-      return 18 * C.wrapLines(a.nickname, textW, 13.5, 600) + 16 * Math.max(1, Math.ceil(metaW(a) * 1.02 / Math.max(40, textW))) + am;
+      var sl = kOn ? 1 : 1.06;   /* the likely heights give C.wrapLines back its own 6 % over-measure */
+      var am = a.amounts.length && n && !allHiddenP(a) ? 16 * C.wrapLines(amtText(a), textW * sl, 12) : 0;
+      return 18 * C.wrapLines(a.nickname, textW * sl, 13.5, 600) + 16 * Math.max(1, Math.ceil(metaW(a) * (kOn ? 1.02 : 1 / 1.04) / Math.max(40, textW))) + am;
     };
     /* one window cell: the value line (17), the track (14), the reset line (14 a line, wrapped in its column) */
     var cellH = function (a, w) {
-      if (w.pct === null) return 8 + (w.resetPending ? 15 : 17) * Math.min(4, C.wrapLines(PMU.roster.vsWord(w), cellW - 20, w.resetPending ? 12 : 13, 520));
+      var sl = kOn ? 1 : 1.06;
+      if (w.pct === null) return 8 + (w.resetPending ? 15 : 17) * Math.min(4, C.wrapLines(PMU.roster.vsWord(w), (cellW - 20) * sl, w.resetPending ? 12 : 13, 520));
       /* the meter foot puts the reset and the amount ("105 / 300 requests") side by side, each wrapping in its half */
-      var half = w.amount ? (cellW - 8) / 2 : cellW;
+      var half = (w.amount ? (cellW - 8) / 2 : cellW) * sl;
       return 17 + 14 + 4 + 14 * Math.min(4, Math.max(C.wrapLines(PMU.fmt.resetLine(w).text, half, 12), w.amount ? C.wrapLines(w.amount, half, 12) : 0));
     };
     var rowH = function (a) {
@@ -147,6 +149,11 @@
     };
     var bandH = cols ? 26 : 0, MORE = 26;
     var hs = accs.map(rowH);
+    /* the rows' likely heights, measured without the look factor (the canvas width already runs over the laid-out width):
+       the facts take their room by these (Retro at 1920 left a 46 px band where its facts row fits, the k measure
+       having wrapped every meta line); a fact the estimate lets through that does not fit is the first thing the fit
+       pass takes ([data-fit-first]), never an account row */
+    kOn = false; var hs1 = accs.map(rowH); kOn = true;
     /* the account line (small plates): an account with no room for its full row still shows, as one line (two where
        narrow): its state glyph, nickname and state word, then every window's value ("5H 78% · WK 54%"; a missing reading
        says its word, never 0 %). Content grows by rows: as the plate grows the first accounts take their full rows
@@ -242,7 +249,7 @@
     /* the provider's plan facts in the room the rows leave (two columns where pairs fit), the rest counted in the head. The
        row estimates lean long so an account row is never cut; the facts and the foot take the room by the rows' likely
        height instead (each a little shorter), and the fit pass trims a fact or the foot that does not fit, exactly */
-    var tight = 0; shown.forEach(function (a, i) { tight += hs[i] - (cols ? 4 : 8); }); asLines.forEach(function (a, i) { tight += lh[shownN + i]; });
+    var tight = 0; shown.forEach(function (a, i) { tight += Math.min(hs[i] - (cols ? 4 : 8), hs1[i]); }); asLines.forEach(function (a, i) { tight += lh[shownN + i]; });
     /* the foot's height from its wrapped words (one line 34 px, about 18 a line more: a 226 px plate wraps "+3 pts vs norm ·
        provider reported" to two lines, and a one-line estimate let it run past the body) */
     var footText = m.foot ? String(m.foot).replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ') : '';
@@ -262,6 +269,7 @@
        gives way joins the head count's hover tag */
     Array.prototype.forEach.call(body.querySelectorAll(fr.n ? '.pmu-planplate > .pmu-facts > .pmu-fact' : '.pmu-cardfoot'), function (el) { el.setAttribute('data-fit-first', ''); });
     if (headItems.length && !folded.length) body._pmuHeadFold = true;
+    body._pmuPlanEst = { bh: bh, hs: hs.slice(0, shownN), hs1: hs1.slice(0, shownN), lh: lh.slice(shownN, shownN + lineN), tight: tight, room: room, footH: footOk ? footH : 0, facts: fr.n };   /* for probes */
     shown.forEach(function (a) {
       var row = body.querySelector('.pmu-planrow[data-acct="' + a.key + '"]');
       if (!row || !n || allHiddenP(a)) return;
