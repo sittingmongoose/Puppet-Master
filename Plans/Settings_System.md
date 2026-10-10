@@ -3103,7 +3103,7 @@ canonical_text: >-
   nowhere and read by nothing: general.interaction.panel-dock, general.visual.chat-layout-mode (being popped out
   is a window state the layout record keeps, so the row retires whole), code.terminal.layout-style,
   code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations (D19, the
-  Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label). The chat width, revealing an already open file, an empty panel's
+  Teacher persona explains commands in the chat) and code.terminal.tab-role (shell profiles and the tab label), plus code.terminal.search (find is always present, F3-641; DL-181). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
   holds 963 rows (916 plus 47 added), of which 7 are retired, leaving 956 live rows.
 gui_related: true
@@ -3160,6 +3160,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L18): Adds code.terminal.search to the retired rows because find is always present (F3-641)."
   - "Retired 2026-10-09 (DL-180, DL-181): general.interaction.panel-dock, general.visual.chat-layout-mode, code.terminal.layout-style, code.terminal.auto-second-pane, code.editing.editor-strip-collapsed, code.terminal.explanations and code.terminal.tab-role."
 ```
 
@@ -3198,8 +3199,7 @@ canonical_text: >-
   code.terminal.allowed-profiles (shells, named profiles and SSH computers, as the "+" menu and New terminal list
   them), code.terminal.right-click-paste (off; a right click opens the terminal's menu), code.terminal.rendering-mode
   (render modes only, never colours, fonts or effects), code.terminal.shell-integration (a switch),
-  code.terminal.search (find is in every terminal, Ctrl+Shift+F, so the switch shows on and unavailable and nothing
-  reads it) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
+  code.terminal.search (retired: find is always present, F3-641; DL-181) and code.terminal.transcript-retention (Saved Terminal Output: Keep Saved Scrollback, the default, keeps
   the saved scrollback of Plans/storage-plan.md#SP-332 that restore brings back, or Session Only, which saves none). Degauss and
   a terminal's Text size zoom are not rows.
 gui_related: true
@@ -3216,7 +3216,7 @@ acceptance_criteria:
   - "Each detail row shows only while the row it depends on applies, keeps its stored value while hidden, and Terminal Opacity (Glass) shows only under a Glass theme."
   - "With any row set, effects stay in the focused terminal and every moving part stops under Reduce Animations and on battery saver."
   - "Settings shows the terminal rows under SSYS-040's groups and Terminal look: more options, with no row for degauss or the Text size zoom."
-  - "Search in Terminal shows on and unavailable because Find is in every terminal, and nothing reads its stored value."
+  - "code.terminal.search is retired by SSYS-050: find is always present (F3-641), the row renders nowhere and nothing reads its stored value."
   - "Saved Terminal Output offers Keep Saved Scrollback (the default) and Session Only; with the default a restored or reopened terminal shows its saved scrollback by SP-332's rule, and no choice keeps it longer than SP-332 allows."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -3260,6 +3260,7 @@ owner_hints:
   - Plans/settings_inventory.json
   - Plans/FinalGUISpec.md
 stale_retired_dispositions:
+  - "Amended 2026-10-10 (lead ruling L18): The search switch is retired; find stays always present and the retired row renders nowhere."
   - "Amended 2026-10-10 (lead ruling L16): All terminals is enabled and writes the project default through the Settings transaction, with the hover tag in this project and no app-wide write."
   - "Superseded 2026-10-09 (DL-183): the restart badges on code.terminal.theme and code.terminal.font-family, the six-entry colour list, and Fira Code, SF Mono and Custom as terminal fonts."
   - "Superseded 2026-10-09 (DL-182): code.terminal.transcript-retention's Session Only default and its 24 Hours, 7 Days, 30 Days and Forever choices, which SP-332's saved scrollback rule replaces."
