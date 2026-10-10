@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L41779-L41915
+Source lines: L41820-L41958
 
-Source SHA256: `8fac6b4ee9ae7ff85e815939520bcf4acab5620ca9ca45ca9cc6346101f29dac`
+Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
 
 ---
 
@@ -23,7 +23,8 @@ canonical_text: >-
   The transcript Plan card reads, top to bottom: its kicker (Plan, the version and strategy), the title and a summary
   of at most two lines, then one hairline that opens the card's status zone. The zone holds the schedule line when
   the Plan has a scheduled build (F3-607), the step count with the Plan's status in words ("6 steps · Ready"), and
-  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan. It sits on the card's
+  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan, which opens the
+  version the card shows (cmd.chat.plan.open_version, DL-157). It sits on the card's
   content edge with the card's own padding below it: no tinted band, no inset of its own and no second hairline.
   Every place a Plan shows actions uses one action row (DR-047): the transcript card, the editor's sticky footer and
   its More row, the compact Completed or Canceled card, a Building plan's attention actions, the schedule line's
@@ -44,6 +45,7 @@ depends_on: [DL-156, DR-047, F3-566, F3-597, F3-589]
 unblocks: [F3-607]
 acceptance_criteria:
   - "Build, Revise, Open plan and every other control in a Plan action row have the same height and type size in all ten themes."
+  - "Open plan on the card, on a Build-started or Plan-revised receipt and on a build schedule's row opens the version that surface names through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "The transcript card's action row starts on the card's content edge with no tinted band, and one hairline separates the summary from the status zone."
   - "Building…, Completed and Canceled render at full contrast while disabled."
   - "The To-Do count while building is plain words, not a chip, and an attention line's actions sit on their own row under its copy."

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L3875-L13235
+Source lines: L3942-L13438
 
-Source SHA256: `8c347183ecb5d13a5d0ed92b03f706cdaec0374eff02acb5b75a0204d42abb83`
+Source SHA256: `b1132a18b51eed37ac79fbd1982f7bfcd241371df1048fb05fec6a409e2bacf5`
 
 ---
 
@@ -8495,9 +8495,14 @@ canonical_text: >-
   Inter, Poppins with Nunito behind it, and IBM Plex Mono, at the weights and italics its looks use, as Latin woff2
   data, and Gelasio stands in under the name Georgia for the info-badge glyph because Georgia cannot be embedded
   (F3-430). Its Inter, Poppins and IBM Plex Mono files are the 5.6 Pro chat concept's, byte for byte (DR-050).
-  Orbitron, Rajdhani and JetBrains Mono are not embedded because no text draws in them, and platform font names
-  stay the computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded
-  beside every text face for those characters only, and form controls take the look's face (F3-430).
+  Orbitron and Rajdhani are not embedded because no text draws in them, and platform font names stay the
+  computer's. The page's symbol characters are PM Symbols, drawn for Puppet Master as SVG and embedded beside every
+  text face for those characters only, and form controls take the look's face (F3-430). Amended 2026-10-09 by the
+  owner's two follow-ups: every embedded family carries the scripts it supports as unicode-range slices, in both
+  concepts, and scripts no family carries are measured, not embedded; and code text follows the look's designated
+  code face, JetBrains Mono in Basic, Glass and Friendly (the home redesign's D17), embedded under that name with
+  PM NieR Mono's bytes, while Retro's stays IBM Plex Mono (owner, 2026-10-10) and NieR Mode's PM NieR Mono; the home
+  redesign's editor and terminal faces are decided separately in its own Plans record (F3-430, F3-426).
 gui_related: true
 gui_classification_reason: Records an owner request on the concepts' fonts.
 split_recommended: false
@@ -8506,6 +8511,7 @@ unblocks: [DR-050]
 acceptance_criteria:
   - "Every theme face PMConcept7 draws in Basic, Glass, Friendly and Retro comes from embedded data."
   - "Every symbol character the page uses draws from PM Symbols in every look."
+  - "Every script an embedded family carries draws from embedded data in both concepts, and code text in Basic, Glass and Friendly draws in the embedded JetBrains Mono."
   - "The owner's request is recorded in plain words with its source hashes."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -8524,13 +8530,19 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/README.md, SHA-256 51df0972bff7f0f909d1cf3438aa1389eaa9e76c3b12b5ac8363814fbded11e4"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/proof-after.json, SHA-256 bfda89d92f00e53a7ad8dec195de68ff5ef1774443e4fb70868ce32bc061a82a"
   - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-20261009/symbols-proof.json, SHA-256 e0f74c7c89eb6d80a7f48776822310df03989c1cf4e9d421cfe962af30f8ceae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/README.md, SHA-256 352dfdc3063e90c0ad68361057c6be9e089fd3835470baba6347d0590cd268ae"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pm7-final-verdict.json, SHA-256 47f3eccae609f6926e4e8240211a79b1032aab93184ed68a5dc0a923b6354006"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/pm7-fonts-scripts-20261009/pro-final-verdict.json, SHA-256 10aadd340894dc9bff422b2252828c48c04c9f7ac9a240f84b215c9a91792188"
 preserved_exact_tokens:
   - "DL-161"
   - "Gelasio"
   - "Georgia"
   - "PM Symbols"
+  - "JetBrains Mono"
+  - "unicode-range"
 negative_constraints:
   - "Do not load a concept font from the network."
+  - "Do not embed a face for a script no theme family carries without the owner's decision."
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
@@ -8655,8 +8667,8 @@ canonical_text: >-
   even gaps, Build as a boxed primary (DR-047). The transcript card has no tinted footer band: one hairline opens a
   status zone of the schedule line, the step count and the action row on the card's content edge (F3-606). The
   schedule line reads in rows, its decision controls on a row of their own (F3-607). Disabled Build labels keep full
-  contrast. By the lead's ruling, a schedule that Build or an ended run invalidated, with no newer version, reads
-  Schedule ended and offers no Use V<n> (SQR-015). No command, action id, wiring, setting or label is added or
+  contrast. A schedule that Build or an ended run invalidated, with no newer version, reads Schedule ended and offers
+  no Use V<n> (SQR-015); first the lead's ruling, its wording was approved by the owner on 2026-10-09 (DL-157). No command, action id, wiring, setting or label is added or
   removed. The record states the request in plain words, without quoting him.
 gui_related: true
 gui_classification_reason: Records an owner decision on the Plan card's action row and schedule line layout.
@@ -8747,6 +8759,56 @@ negative_constraints:
   - "Do not add a command, wiring row or setting for the removed button."
 owner_hints:
   - Plans/FinalGUISpec.md
+```
+
+### DL-159 - The Chat Opens In The Look You Chose, From Its First Frame
+
+```yaml
+plan_unit_id: DL-159
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-159 records the owner request of 2026-10-09. The assistant chat, as a page of its own, paints the viewer's stored
+  look in its first frame, applying F3-468's boot paint: a reader reads the chat's own look store before the first
+  frame, never writes it and keeps no copy of the theme, and the chat's renderer and NieR Mode's engine still own the
+  look (F3-612). NieR Mode's boot log and reboot moment behave as before. One first-paint reader serves a page, and the
+  chat's reader is dropped when the chat is ported into PMConcept7 (DR-054). No command, action id, setting or wiring
+  entry changes.
+gui_related: true
+gui_classification_reason: Records an owner decision on what the assistant chat shows in its first frame.
+split_recommended: false
+depends_on: [DL-144]
+unblocks: [F3-612, DR-054]
+acceptance_criteria:
+  - "The chat's first frame is the stored look, and opening the chat writes no look setting (F3-612)."
+  - "No command, action id, setting or wiring entry is added, changed or retired by this decision."
+  - "The owner's request is recorded in plain words with its source hash."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-159"
+  - "first frame"
+negative_constraints:
+  - "Do not store a new key or a copy of the theme to paint the first frame."
+  - "Do not play the reboot moment on a reload."
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/DRY_Rules.md
 ```
 
 ### DL-162 - The Left Rail Takes The Polish Design
@@ -9368,4 +9430,78 @@ negative_constraints:
 owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/DRY_Rules.md
+```
+
+### DL-157 - The Schedule Ended Wording, A Command To Open The Exact Plan, And Previews As The Hover Tag Exception
+
+```yaml
+plan_unit_id: DL-157
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-157 records three owner decisions of 2026-10-09. First, the Schedule ended wording is approved: after Build on a
+  scheduled Plan the schedule line reads Schedule ended · you started this build now, so the schedule won't start a
+  second one. (SQR-015), which DL-156 had recorded as the lead's ruling. Second, a bound Goal's Open exact Plan · Vn
+  gets a new command, cmd.chat.plan.open_version (navigation_wrapper, owner Assistant_Plan_Runtime, handler
+  handlers::assistant_plan::plan_open_version, AssistantPlanVersionRoute -> RouteResult), raised from goal_activity
+  and goal_hover; it opens Plan Vn's document, the Plan's own tab while Vn is current and Vn's retained read-only
+  document otherwise, and never Plan Details or a newer version (UCC-176, CS-088, WM-065, UIW-026, F3-593); by the
+  owner's answer of 2026-10-10 the same command serves every Open plan button, each with the version its surface
+  names: the Plan card's action row and its Build-started and Plan-revised receipts (plan_card) and a build
+  schedule's row (schedule_manager) (F3-606, APR-014). Third,
+  activity bar domain previews are the one exception to the hover tag rule: no control inside an open preview opens
+  a hover tag, since a tag would replace the preview card, and the controls F3-590 lists keep a native title or none
+  (F3-590, UIW-013). The record states the decisions in plain words, quoting only his short answers.
+gui_related: true
+gui_classification_reason: Records owner decisions on the schedule line's wording, the bound Goal's Plan opener and the preview hover exception.
+split_recommended: false
+depends_on: [DL-145, DL-147]
+unblocks: [SQR-015, UCC-176, CS-088, WM-065, UIW-026, F3-593, F3-590]
+acceptance_criteria:
+  - "SQR-015 and DL-156 state the Schedule ended wording as the owner's approved decision of 2026-10-09."
+  - "Open exact Plan · Vn is cmd.chat.plan.open_version in the catalog, Commands_System and the production wiring, and F3-593 binds it; it never opens Plan Details."
+  - "Every Open plan button raises cmd.chat.plan.open_version with the version its surface names (F3-606, APR-014)."
+  - "F3-590 and UIW-013 state the preview exception and list the controls it covers; no other surface is exempted."
+  - "The decisions are recorded with their date, 2026-10-09, and the source is cited by path and SHA-256."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: owner_decision_drift
+reasoning_tier: high
+context_scope: c56_owner_decisions_20261009
+implementation_surfaces:
+  - Plans/Decision_Log.md
+  - Plans/Scheduling_and_Quota_Resume.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/Assistant_Plan_Runtime.md
+  - Plans/Wiring_Matrix.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/UI_Wiring_Rules.md
+  - Plans/FinalGUISpec.md
+  - Concepts/chat-assistant-concepts/5.6 Pro/goals.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/plans.js
+  - Concepts/chat-assistant-concepts/5.6 Pro/scheduling.js
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISIONS.md, SHA-256 4a23e31ad4aa68385092c9f16132cf765c59f9da1d890dfdab1f8c33ac8b3208"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/JARED_DECISION_20261010.md, SHA-256 49590354c89d8c6bae54ff77eea7fc252a70d27716fccdc3a46086057c2df498"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-owner-decisions-20261009/preview-title-census.json, SHA-256 c05c8ca808724193643af423b228fdeb9d6df7800940d7f47d1ab07b041d9048"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md (concept lineage only)"
+preserved_exact_tokens:
+  - "DL-157"
+  - "Schedule ended"
+  - "cmd.chat.plan.open_version"
+  - "Previews as exception"
+negative_constraints:
+  - "Do not bind Open exact Plan · Vn or an Open plan button to Plan Details."
+  - "Do not extend the preview exception beyond controls inside an open activity bar domain preview."
+owner_hints:
+  - Plans/Decision_Log.md
+  - Plans/FinalGUISpec.md
 ```

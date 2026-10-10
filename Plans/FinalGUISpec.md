@@ -2008,7 +2008,7 @@ User-facing selector contract:
 | **border-radius** | 0px | 0px | 4px | 4px |
 | **display-font** | IBM Plex Mono Bold | IBM Plex Mono Bold | Inter / system-ui | Inter / system-ui |
 | **body-font** | IBM Plex Mono | IBM Plex Mono | Inter / system-ui | Inter / system-ui |
-| **mono-font** | System monospace | System monospace | System monospace | System monospace |
+| **mono-font** | IBM Plex Mono | IBM Plex Mono | JetBrains Mono (embedded) | JetBrains Mono (embedded) |
 | **base-font-size** | 14px | 14px | 15px | 15px |
 | **line-height** | 1.4 | 1.4 | 1.6 | 1.6 |
 | **letter-spacing** | default | default | 0.02em | 0.02em |
@@ -29838,6 +29838,13 @@ thread is told so PMConcept7 can match. Retro focus follows F3-201: lime on Retr
 These remain the app's only Retro tables (DR-043); the chat paints them through F3-597. Geometry, motion and type
 size rows already matched PMConcept7 and are unchanged.
 
+Amended 2026-10-09 (DL-161, the owner's code-face follow-up): the root contract's `--mono-font`, which the Basic,
+Glass and Friendly tables inherit, leads with `'JetBrains Mono'`, the code face the home redesign's D17 designates for
+every look, embedded under that name (F3-430). The Retro tables' `--mono-font` rows are unchanged: Retro's code text
+stays IBM Plex Mono, the face of its whole interface (owner, 2026-10-10, "Keep IBM Plex Mono"), and NieR Mode keeps
+its own PM NieR Mono, the same letters as JetBrains Mono. These are the code-text tokens; the home redesign's editor
+and terminal faces are decided separately (its D17, which its Plans thread records).
+
 ### F3-427 - Glass Composition Single-Blur Contract
 
 ```yaml
@@ -30049,7 +30056,15 @@ canonical_text: >-
   Concepts/onboarding/opus-5.5/src/css/01-webfonts.css from its src/fonts files and OFL-*.txt licences, and
   Gelasio, an SIL OFL face drawn to Georgia's metrics, stands in under the family name Georgia for the
   info-badge glyph because Georgia cannot be embedded. Its Inter, Poppins and IBM Plex Mono files are the
-  bytes the 5.6 Pro chat concept embeds (DR-050). The page's symbol characters (arrows, check and cross marks,
+  bytes the 5.6 Pro chat concept embeds (DR-050). Since 2026-10-09 (DL-161 amended) each embedded family also
+  carries the other scripts it supports, as unicode-range slices declared before its unchanged Latin file: Inter
+  Latin Extended, Vietnamese, Cyrillic and Greek with their extended blocks; Poppins Latin Extended and Devanagari;
+  Nunito and IBM Plex Mono Latin Extended, Vietnamese and Cyrillic; PM NieR Sans Latin Extended and Vietnamese; PM
+  NieR Mono those and Cyrillic and Greek. Scripts no family carries use the computer's fonts. Code text follows the
+  look's code face, the --mono-font token: JetBrains Mono, embedded under that name with PM NieR Mono's files and
+  slices and, in PMConcept7, JetBrains Mono's own italic with the same slices, in Basic, Glass and Friendly (the home redesign's D17), IBM Plex Mono in Retro, its whole face (owner,
+  2026-10-10), and PM NieR Mono in NieR Mode; both concepts set their code blocks, inline code, file paths and logs
+  through that token. The home redesign's editor and terminal faces are decided separately (its D17, which its Plans thread records). The page's symbol characters (arrows, check and cross marks,
   triangles, the warning sign, dots, math signs, the command key and box lines) are PM Symbols, drawn as SVG in
   src/fonts/symbols/svg and built into a proportional and a monospace variable font that are attached to every
   embedded text face for those characters only, with each face's own family, style and weight
@@ -30065,6 +30080,7 @@ acceptance_criteria:
   - "Inter, Poppins, Nunito and IBM Plex Mono are bundled locally and no runtime font CDN request is made."
   - "PMConcept7 draws Basic and Glass in Inter, Friendly in Poppins and Retro in IBM Plex Mono, and the info-badge glyph in the Gelasio stand-in for Georgia, from embedded data on a machine with none of those fonts installed; its Inter, Poppins and IBM Plex Mono files are byte-identical to 5.6 Pro's."
   - "PMConcept7 draws every symbol character it uses from PM Symbols in every look, and its buttons, inputs and menus in the look's face."
+  - "Both concepts draw every script an embedded family carries from embedded data on a machine with no fonts installed, and code text in Basic, Glass and Friendly in the embedded JetBrains Mono."
   - "The Friendly ground renders the paper texture with an 18px dot grid, and frosted 14px chrome blur is limited to the title bar, status bar, and bottom panel."
   - "The five category pastels (mint, sky, coral, lavender, butter) drive category surface tinting."
   - "Cross-family theme switches that change Retro or Friendly font families require restart, while same-family and Glass/Basic Inter switches stay live."
@@ -30083,6 +30099,7 @@ node_compile_hint:
 source_lineage:
   - "Plans/Decision_Log.md#DL-138 (owner answers, 2026-09-29)"
   - "Plans/Decision_Log.md#DL-161 (owner request, 2026-10-09)"
+  - "Plans/Decision_Log.md#DL-161 (owner follow-ups, 2026-10-09 and 2026-10-10: scripts and the code face)"
   - "Plans/FinalGUISpec.md:964"
   - "Plans/FinalGUISpec.md:7647"
   - "Concepts/pm6-build (PMConcept6 demo; source-lineage-only per Plans/usage-feature.md)"
@@ -30101,6 +30118,8 @@ preserved_exact_tokens:
   - "DR-050"
   - "DL-161"
   - "JetBrains Mono"
+  - "unicode-range"
+  - "--mono-font"
   - "M PLUS 1"
   - "PM NieR Mono"
   - "PM NieR Sans"
@@ -30228,7 +30247,7 @@ Variants inherit these values wherever a per-variant table row says "not defined
 | `--sheen-dur` | `.6s` |
 | `--display-font` | `'IBM Plex Mono', monospace` |
 | `--body-font` | `'IBM Plex Mono', monospace` |
-| `--mono-font` | `ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` |
+| `--mono-font` | `'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace` (JetBrains Mono embedded; DL-161 amended 2026-10-09) |
 | `--base-font-size` | `14px` |
 | `--line-height` | `1.4` |
 | `--letter-spacing` | `normal` |
@@ -35788,6 +35807,7 @@ acceptance_criteria:
   - "When Product Onboarding or Guided Tour is open, outside anchors cannot open or retain a tag, outside descriptions are temporarily removed from tooltip/accessibility semantics, and both bindings and semantics restore when the active overlay closes; tags inside the active overlay remain available."
   - "One bounded startup pass and incremental live binding preserve same-frame pointer/focus acknowledgement; exact old/current attribute reassertions schedule no tag work, while real attribute, character-data, insertion, removal, and subtree changes remain observable and auditable."
   - "A generated census fails on missing bindings, undocumented exemptions, duplicate keys, stale text, clipping, inaccessible disabled controls, or native-title-only behavior."
+  - "The controls inside an open assistant-chat activity bar domain preview that F3-590 lists are a documented exemption (DL-157): they open no tag, because a tag would replace the preview card, and the census counts them as exempt rather than as missing bindings."
 validation_surfaces:
   - "Plans/final_gui_interaction_contracts.schema.json and Plans/final_gui_interaction_contract_fixtures.json (separate 1600 ms pointer-residence, 1100 ms stationary-intent, 5 px radius, 1000 ms visual-focus dwell, immediate accessible-description binding, and 160 ms departure-grace fields are required for current acceptance)"
   - Concepts/pm7-tools/global_hover_tags_source.py authored guards
@@ -40737,15 +40757,29 @@ canonical_text: >-
   tags: a pointer opens one only after a deliberate dwell, long enough that passing between the composer and the bar
   opens none; keyboard focus on a domain opens its preview at once; moving to another domain while a preview is open
   switches at once; and a preview closes after the same short departure grace as a tag. The preview dwell the concept
-  measures is a lab value (ACD-474).
+  measures is a lab value (ACD-474). Previews are the one exception to the hover tag rule (owner decision of 2026-10-09,
+  DL-157): the chat shows one hover surface at a time, so a tag opened inside an open preview would replace the
+  preview card under the pointer, and no control inside an open activity bar domain preview opens a hover tag. Such a
+  control names itself by its visible text or accessible name, and a native title it carries there is the only
+  tooltip it has. As the 5.6 Pro concept draws them today: the Subagents preview's rows carry the native title Open
+  followed by the agent's name, the Artifacts preview's rows Open followed by the artifact's title, the Changes
+  preview's rows the file's path and its change summary, and the Crew preview's member rows, drawn while no Crew run
+  is live, the member's name; the Goal preview's controls (Pause or Resume, Edit, whose accessible name stays Edit
+  objective, Cancel Goal, Open exact Plan · Vn, Revise Plan and the Objective history disclosure), the To-Do
+  preview's rows and its more-items and blocked-count lines, a collaboration kind's run rows, a live Crew run's rows and every preview's
+  head carry neither a native title nor a tag. The exception covers only controls inside an open preview: the
+  activity bar's domain triggers, Activity Detail and every other chat surface keep the rule, so the Goal panel's Edit
+  objective and a To-Do row in Activity Detail keep their hover tags.
 gui_related: true
 gui_classification_reason: Defines how the assistant chat's icon controls name themselves and when its activity previews open.
 split_recommended: false
-depends_on: [DL-145, F3-523, ACD-474]
+depends_on: [DL-145, F3-523, ACD-474, DL-157]
 unblocks: []
 acceptance_criteria:
   - "No icon control in the assistant chat exposes its name only through a native title, and no chat tag opens before F3-523's thresholds."
   - "A pointer passing between the composer and the activity bar opens no preview; keyboard focus on a domain opens its preview at once."
+  - "No control inside an open activity bar domain preview opens a hover tag, and the preview stays open while the pointer rests on any of them (DL-157)."
+  - "Outside an open preview the hover tag rule holds unchanged: the Goal panel's Edit objective and a To-Do row in Activity Detail keep their hover tags."
   - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
 validation_surfaces:
   - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
@@ -40768,8 +40802,10 @@ preserved_exact_tokens:
   - "PMHoverTag"
   - "native title"
   - "deliberate dwell"
+  - "Previews are the one exception"
 negative_constraints:
   - "Do not restate or change F3-523's thresholds in this unit."
+  - "Do not open a hover tag inside an open activity bar domain preview, and do not extend the preview exception to any other surface."
   - "Do not add a hand-off that opens a second tag faster than F3-523 allows."
   - "Do not open an activity preview for a pointer passing through."
 compatibility_only_notes: []
@@ -40779,7 +40815,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474
+ContractRef: ContractName:Plans/Decision_Log.md#DL-145, ContractName:Plans/FinalGUISpec.md#F3-523, ContractName:Plans/assistant-chat-design.md#ACD-474, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-591 — Opening More Keeps The Message Chrome On Its Row
 
@@ -40912,7 +40948,10 @@ canonical_text: >-
   Goal (DL-147; behaviour GRS-055): Goal Activity Detail shows the objective, then one control row, Pause or Resume
   and Edit objective together at its start and Cancel Goal alone at the far edge in the danger tone, so the
   destructive action never sits in the safe group; a narrow panel may shorten Edit objective's visible label, never
-  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked), and the
+  its accessible name. A bound Goal adds the Plan row (Open exact Plan · Vn, and Revise Plan when blocked; Open exact Plan · Vn is
+  cmd.chat.plan.open_version (DL-157), which opens that exact version's document, the Plan's own tab while Vn is still
+  its version and Vn's retained read-only document once a later version exists, and never Plan Details or a newer
+  version), and the
   footer is an Objective history disclosure with the revision count, which opens the revision list in place. Editing
   shows the text-only objective editor with Save and Cancel edit. There is no View Goal route to a separate Goal
   document and no Ask for a replacement control; a replacement the agent proposes after the user asks for one in the
@@ -40950,10 +40989,11 @@ canonical_text: >-
 gui_related: true
 gui_classification_reason: Defines the Goal, To-Dos and Subagents Activity Detail presentation and the subagent live transcript's look.
 split_recommended: false
-depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160]
+depends_on: [DL-147, GRS-055, TDR-007, TDR-011, ACD-485, ACD-469, ACD-473, F3-580, F3-585, DL-160, DL-157]
 unblocks: []
 acceptance_criteria:
   - "Goal Activity Detail renders one control row with Cancel Goal alone at the far edge and an Objective history footer; no View Goal route or Ask for a replacement control exists."
+  - "On a bound Goal, Open exact Plan · Vn in Goal Activity Detail and in the Goal preview opens Plan Vn's document through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "Every To-Do row is one line with no button, shows an explicit assignment only when one exists, and Open work appears only in the selected detail."
   - "The To-Do navigation line holds the visible count and Expand all only, and no Last item control exists in the panel (DL-160)."
   - "A subagent's live transcript renders in the Turn Stage presentation with no composer, only Copy, More details and Expand or Collapse on messages, and each stretch of work as one collapsed row with a count."
@@ -40985,6 +41025,7 @@ preserved_exact_tokens:
   - "Read-only child thread"
   - "Step Rail"
 negative_constraints:
+  - "Do not bind Open exact Plan · Vn to Plan Details (cmd.chat.plan.open_details) or to a newer Plan version."
   - "Do not give a To-Do row a Start work, Run work or other mutation button."
   - "Do not drop a To-Do's explicit assignment from Activity Detail."
   - "Do not give the subagent live transcript a composer or a control that acts on the child or the parent thread."
@@ -41000,7 +41041,7 @@ owner_hints:
   - Plans/assistant-chat-design.md
 ```
 
-ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160
+ContractRef: ContractName:Plans/Decision_Log.md#DL-147, ContractName:Plans/Goal_Runtime_System.md#GRS-055, ContractName:Plans/ToDo_Runtime.md#TDR-011, ContractName:Plans/assistant-chat-design.md#ACD-485, ContractName:Plans/FinalGUISpec.md#F3-580, ContractName:Plans/Decision_Log.md#DL-160, ContractName:Plans/Decision_Log.md#DL-157
 
 ### F3-594 — Agents Are Puppets
 
@@ -41791,7 +41832,8 @@ canonical_text: >-
   The transcript Plan card reads, top to bottom: its kicker (Plan, the version and strategy), the title and a summary
   of at most two lines, then one hairline that opens the card's status zone. The zone holds the schedule line when
   the Plan has a scheduled build (F3-607), the step count with the Plan's status in words ("6 steps · Ready"), and
-  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan. It sits on the card's
+  the action row. The action row is Build, Revise only while the Plan is Ready, and Open plan, which opens the
+  version the card shows (cmd.chat.plan.open_version, DL-157). It sits on the card's
   content edge with the card's own padding below it: no tinted band, no inset of its own and no second hairline.
   Every place a Plan shows actions uses one action row (DR-047): the transcript card, the editor's sticky footer and
   its More row, the compact Completed or Canceled card, a Building plan's attention actions, the schedule line's
@@ -41812,6 +41854,7 @@ depends_on: [DL-156, DR-047, F3-566, F3-597, F3-589]
 unblocks: [F3-607]
 acceptance_criteria:
   - "Build, Revise, Open plan and every other control in a Plan action row have the same height and type size in all ten themes."
+  - "Open plan on the card, on a Build-started or Plan-revised receipt and on a build schedule's row opens the version that surface names through cmd.chat.plan.open_version, never Plan Details (DL-157)."
   - "The transcript card's action row starts on the card's content edge with no tinted band, and one hairline separates the summary from the status zone."
   - "Building…, Completed and Canceled render at full contrast while disabled."
   - "The To-Do count while building is plain words, not a chip, and an attention line's actions sit on their own row under its copy."
@@ -42140,6 +42183,73 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-153, ContractName:Plans/FinalGUISpec.md#F3-598, ContractName:Plans/FinalGUISpec.md#F3-599, ContractName:Plans/FinalGUISpec.md#F3-520, ContractName:Plans/DRY_Rules.md#DR-056
+
+## DL-159 — The Assistant Chat Paints The Stored Look From Its First Frame (2026-10-09)
+
+This addendum compiles the owner decision DL-159: the 5.6 Pro assistant chat concept opened on the browser's dark default and showed the viewer's stored look only when its first render ran, 1.3 to 1.7 seconds in, which flashed the whole window for a Light theme. The chat now applies the boot paint of F3-468 to its own page, as PMConcept7 does for its Project's look. The look's owners are unchanged: the theme token tables of F3-426, NieR Mode's contract (SSYS-043, F3-441) and the chat under NieR Mode (F3-589). The unit below owns the chat's first paint only. The concept is source lineage only: its store keys, its build script, its class names and every measured timing outside this unit are not canon.
+
+### F3-612 — The Assistant Chat Paints The Stored Look From Its First Frame
+
+```yaml
+plan_unit_id: F3-612
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  When the assistant chat opens as a page of its own, its first painted frame is the viewer's stored look (DL-159,
+  F3-468): the stored theme in its family and mode, Basic Dark when nothing is stored, and with NieR Mode on, Basic in
+  the stored mode under NieR Mode's attributes with the installed parts listed, so the ground of every family, NieR
+  Mode's parchment or ink and Glass's backdrop are right before the chat's content draws. A reader that runs before
+  the first frame reads the chat's own look store and never writes it. It stores nothing new, keeps no app-global
+  copy of the theme, and writes only what the chat's renderer and NieR Mode's engine write on their first render,
+  which still own the look and write the same values. No large surface changes colour between the first frame and
+  the rendered chat. Reduced motion is the system's setting and is not read from the store. NieR Mode's boot log plays
+  only when the chat opens in NieR Mode with the Boot sequence part installed and motion allowed, as it did; it
+  arrives with the first render, so the chat never shows before it, and the reboot moment never plays on a reload. A
+  pinned history drawer is in place from the first frame. When the chat is ported into PMConcept7 (the home
+  redesign), PMConcept7's head boot script owns first paint for the page and the chat's own reader is dropped
+  (DR-054).
+gui_related: true
+gui_classification_reason: Defines what the assistant chat paints in its first frame and which reader paints it.
+split_recommended: false
+depends_on: [DL-159, F3-468, F3-589]
+unblocks: []
+acceptance_criteria:
+  - "The first painted frame of the chat's page shows the stored look in each of the ten themes, in NieR Light and NieR Dark with all parts, no parts or Boot sequence removed, and under reduced motion; with nothing stored it shows Basic Dark."
+  - "Opening the page writes no look setting and adds no stored key; no global holds the theme."
+  - "No large surface changes colour between the first frame and the rendered chat, and the chat never shows before NieR Mode's boot log when the log plays."
+  - "The reboot moment does not play on a reload, and the pinned history drawer is in place from the first frame."
+  - "No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this unit."
+validation_surfaces:
+  - python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json
+  - python3 scripts/pm-plan-index.py validate
+risk_class: first_paint_drift
+reasoning_tier: standard
+context_scope: chat_fixes_20261009
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_promotion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Decision_Log.md#DL-159"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/REQUEST.md, SHA-256 8dcfcde107fc2d97bd3a884477a63dda5606ee04af23feba897a015474fd92be"
+  - "/mnt/Cursor/PuppetMaster-Evidence/scratch/c56-first-paint-20261009/MEASUREMENTS.md, SHA-256 edee5055e6a1ce894478b13a0c63a0103f5ef4ae0c20c615213a082b696469b7"
+  - "Concepts/chat-assistant-concepts/5.6 Pro/Chat updates.md, First paint: the stored look from the first frame (concept lineage only)"
+preserved_exact_tokens:
+  - "first frame"
+  - "Boot sequence"
+negative_constraints:
+  - "Do not write the look store, or a copy of the theme, while painting the first frame."
+  - "Do not keep the chat's own first-paint reader once the chat is a part of PMConcept7's page."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+  - Plans/FinalGUISpec.md
+```
+
+ContractRef: ContractName:Plans/Decision_Log.md#DL-159, ContractName:Plans/FinalGUISpec.md#F3-468, ContractName:Plans/FinalGUISpec.md#F3-589, ContractName:Plans/DRY_Rules.md#DR-054
 
 ## DL-162 — The Left Rail Takes The Polish Design (2026-10-09)
 

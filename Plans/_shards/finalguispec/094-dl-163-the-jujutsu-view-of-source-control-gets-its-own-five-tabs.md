@@ -1,10 +1,10 @@
-# Shard 093: DL-163 — The Jujutsu View Of Source Control Gets Its Own Five Tabs (2026-10-09)
+# Shard 094: DL-163 — The Jujutsu View Of Source Control Gets Its Own Five Tabs (2026-10-09)
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42601-L42785
+Source lines: L42711-L42895
 
-Source SHA256: `8fac6b4ee9ae7ff85e815939520bcf4acab5620ca9ca45ca9cc6346101f29dac`
+Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
 
 ---
 

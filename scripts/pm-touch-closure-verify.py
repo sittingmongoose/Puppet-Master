@@ -1892,6 +1892,10 @@ def verify() -> tuple[list[str], dict[str, Any]]:
     # TOUCH-SETLOC-004..008 (the NieR Mode editor's open/close/replay and the sound
     # library's look filter and takes toggle, TCP-SET-LOCAL) (676 -> 682). No profile,
     # production row, exclusion, alias, handler or proof is added.
+    # 2026-10-09 Open exact Plan · Vn (DL-157, UCC-176, WM-065): +1 production-intent
+    # entry, assistant.redesign.cmd.chat_plan_open_version for cmd.chat.plan.open_version
+    # (1155 -> 1156). Like cmd.chat.queue.send_now it has no Touch row; no row,
+    # profile, alias, exclusion, native handler or proof is added.
     exact_resolved_denominators = {
         "row_count": 682,
         # ATS-048 / RAP-056 split seven existing consumers out of capture's
@@ -1899,7 +1903,7 @@ def verify() -> tuple[list[str], dict[str, Any]]:
         "profile_count": 135,
         "excluded_token_count": 58,
         "alias_binding_count": 65,
-        "production_wiring_entry_count": 1155,
+        "production_wiring_entry_count": 1156,
     }
     observed_resolved_denominators = {
         "row_count": len(rows),

@@ -1,10 +1,10 @@
-# Shard 094: DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)
+# Shard 095: DL-173 to DL-179 — The Redesigned Usage Page In PMConcept7 (2026-10-09)
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L42787-L42969
+Source lines: L42897-L43079
 
-Source SHA256: `8fac6b4ee9ae7ff85e815939520bcf4acab5620ca9ca45ca9cc6346101f29dac`
+Source SHA256: `643904c4950b638495bc1a59e09b9d865935e2f1ad7298fb093789150d3f4b73`
 
 ---
 

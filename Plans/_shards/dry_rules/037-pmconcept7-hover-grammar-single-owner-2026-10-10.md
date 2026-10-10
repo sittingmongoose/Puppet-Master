@@ -1,10 +1,10 @@
-# Shard 036: PMConcept7 hover grammar single owner — 2026-10-10
+# Shard 037: PMConcept7 hover grammar single owner — 2026-10-10
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3227-L3291
+Source lines: L3283-L3347
 
-Source SHA256: `5627038fba52ffcc363b7e8c780ba9150d18e17926d82b509035ca2194d3eacc`
+Source SHA256: `ba9cf0aa7fbf57a2ac900f58bb6007c9f61ee301264b329566297a4c9c4843c3`
 
 ---
 

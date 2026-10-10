@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-10-10T16:12:06Z",
+  "generated_at_utc": "2026-10-10T19:36:51Z",
   "index_path": "Plans/_shards/dry_rules/00-index.md",
-  "index_sha256": "42b1f0c8a63d2c6b7dc67002243d4528838d796f8242fce283b87b1627e24564",
+  "index_sha256": "2fd6682b00bd53fc2610859ccb95057425d55a902045d1ea9269fcda08675a31",
   "manifest_path": "Plans/_shards/dry_rules/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/dry_rules/001-preamble.md",
-      "sha256": "d44eb004164455ac44f32f2f65dbfcb682b990cf1252b6c5e675853e75bc11d3",
+      "sha256": "a529424738953229d814b59aaab60b9cce99d849b1fcab1514816075e62eb3e9",
       "shard_id": "001",
       "source_line_end": 13,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/dry_rules/002-0.-scope.md",
-      "sha256": "fe1f5a877f0377e69bd9db06e5b964fde45d5491e750d47de0f0c70f958314b0",
+      "sha256": "da6b502011642eed5ee3d59eb580ed0fefa039416768e19e1673aa4fedb77bbf",
       "shard_id": "002",
       "source_line_end": 22,
       "source_line_start": 15,
@@ -26,7 +26,7 @@
     {
       "heading": "1. SSOT precedence (global)",
       "path": "Plans/_shards/dry_rules/003-1.-ssot-precedence-global.md",
-      "sha256": "873085a2c9166a821b74a3f8f97838c38c2c2874bc0454319cfa72885bb5576d",
+      "sha256": "6c2bbb8a9522eaacbbc6b016f3a4bfa90b1cea7ffcf4920e830009ec07c3560a",
       "shard_id": "003",
       "source_line_end": 34,
       "source_line_start": 24,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Don't duplicate canonical contracts",
       "path": "Plans/_shards/dry_rules/004-2.-don-t-duplicate-canonical-contracts.md",
-      "sha256": "d82d17cba02201c1ae19bc32b7e60ca1e87f2f3097d7b8ddaa09889928055b1a",
+      "sha256": "122cd5a763c7b37ad2d373944d08f66ab0abb089b617ddfe438cb45739aaf098",
       "shard_id": "004",
       "source_line_end": 98,
       "source_line_start": 36,
@@ -44,7 +44,7 @@
     {
       "heading": "3. \"Index-only\" guidance",
       "path": "Plans/_shards/dry_rules/005-3.-index-only-guidance.md",
-      "sha256": "d2ad73f18d1b87dad0116f2866884124454027824de189697b91ac8edf3b12b6",
+      "sha256": "257bd457c8cd91be4eb478d6f3b8f76b0ade31d29d5a14f7e72e3a65467d3445",
       "shard_id": "005",
       "source_line_end": 133,
       "source_line_start": 100,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Forbidden patterns (drift accelerators)",
       "path": "Plans/_shards/dry_rules/006-4.-forbidden-patterns-drift-accelerators.md",
-      "sha256": "005d58ce70cc7dfc68bb3e6fb2a40545ac8079ee6dfb40c526f8e9fc86439151",
+      "sha256": "29ddb64eff3c8ac78b97a8e1fbae5d278888796326574db209aec24862b13164",
       "shard_id": "006",
       "source_line_end": 142,
       "source_line_start": 135,
@@ -62,7 +62,7 @@
     {
       "heading": "5. MUST/SHALL/REQUIRED implies ContractRef",
       "path": "Plans/_shards/dry_rules/007-5.-must-shall-required-implies-contractref.md",
-      "sha256": "b9c0de1eafae234dbe30613f38ad8ef0754f11c7b7f032cf8ed86f697d71dd3d",
+      "sha256": "b9b6bf03102fa068a9d26f06ef4ed9534969b39cc963559562f2a296fe727d5e",
       "shard_id": "007",
       "source_line_end": 149,
       "source_line_start": 144,
@@ -71,7 +71,7 @@
     {
       "heading": "6. ContractRef taxonomy (allowed categories)",
       "path": "Plans/_shards/dry_rules/008-6.-contractref-taxonomy-allowed-categories.md",
-      "sha256": "ba78cfcec9992e66e8c5a72880701fe9d6cef12c186a68bb2a47031d58642984",
+      "sha256": "cb914eff68f7548862ddd99ea5f850da2d7b6f1c10e32972e099830c25007bb6",
       "shard_id": "008",
       "source_line_end": 172,
       "source_line_start": 151,
@@ -80,7 +80,7 @@
     {
       "heading": "7. ContractRef annotation rule (canonical)",
       "path": "Plans/_shards/dry_rules/009-7.-contractref-annotation-rule-canonical.md",
-      "sha256": "c9e279231ebdb00373b48e45861bfcb8eb1d3e2b42d0b6dd813f97b29673b702",
+      "sha256": "a6ee7e60d5bb545582ab9c77c57d7f767f6ef30fd5379bd6b0083273252251d8",
       "shard_id": "009",
       "source_line_end": 191,
       "source_line_start": 173,
@@ -89,7 +89,7 @@
     {
       "heading": "7.1 Packet-fidelity semantic matching",
       "path": "Plans/_shards/dry_rules/010-7.1-packet-fidelity-semantic-matching.md",
-      "sha256": "8dd49d397652661d8aa912a678269d1538322801a4c1cc4f58cfd01011079153",
+      "sha256": "3afa37a528372317b92f0dd491006a50d92d85b3b828ce14d03ec3169c97703a",
       "shard_id": "010",
       "source_line_end": 208,
       "source_line_start": 193,
@@ -98,7 +98,7 @@
     {
       "heading": "8. Reference style",
       "path": "Plans/_shards/dry_rules/011-8.-reference-style.md",
-      "sha256": "7ef9d92e3b963a29fbb89794fa6860d68075300cfee544c69a758ff9ded4d26f",
+      "sha256": "14a671f188834aa10278f1f7f7353aeb4af5f91e58dfb9d8eacbb923d506f5b5",
       "shard_id": "011",
       "source_line_end": 218,
       "source_line_start": 210,
@@ -107,7 +107,7 @@
     {
       "heading": "9. No unreferenced operational text",
       "path": "Plans/_shards/dry_rules/012-9.-no-unreferenced-operational-text.md",
-      "sha256": "66eaff078efdc5e0ba054bc95d6574917159e0013f5e32d4789afd1366959c8b",
+      "sha256": "c21476dbcb0438a0f3bc6d20d249b288620fc9fe407db012269ee66daf345972",
       "shard_id": "012",
       "source_line_end": 228,
       "source_line_start": 219,
@@ -116,7 +116,7 @@
     {
       "heading": "10. Inline requirement tag convention (readability only)",
       "path": "Plans/_shards/dry_rules/013-10.-inline-requirement-tag-convention-readability-only.md",
-      "sha256": "9ec9e47d5457e605b0aabaf62660ba038a80360147ade459ad99084d2484ccd4",
+      "sha256": "c7748a1b1357e1317666ad0c0b40151fd213fd6c48a5b9a49566194d64d39bbd",
       "shard_id": "013",
       "source_line_end": 250,
       "source_line_start": 229,
@@ -125,7 +125,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/dry_rules/014-references.md",
-      "sha256": "74f05f59260d7bc85788d3939f024a67a2ac653f4b1faae0c827e9cee4f125b6",
+      "sha256": "8043cc6bb6189585cd2dc14803ff67f35dfbcfe78f90883d057eef2ff18098c5",
       "shard_id": "014",
       "source_line_end": 257,
       "source_line_start": 252,
@@ -134,7 +134,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/dry_rules/015-owner-consumer-map.md",
-      "sha256": "2ddbd6bd1b0ef7ec6f4b3bdf7b11b4e3e21fa356f821c9008e76ec60573a6e75",
+      "sha256": "63fc61df020d89d627dd4f7fbd252bc9a75921d9e72b74453672f2212bec0e67",
       "shard_id": "015",
       "source_line_end": 263,
       "source_line_start": 259,
@@ -143,7 +143,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/dry_rules/016-planunits.md",
-      "sha256": "4e61ebb97618ec95d1cfdcbf094e6e5568e0f72c26f5717b663ea32d20d37f5e",
+      "sha256": "8ec62f61add683a817dcd85c6faae26e511d95e5295f556ab29e489cec52c7ff",
       "shard_id": "016",
       "source_line_end": 1968,
       "source_line_start": 265,
@@ -152,7 +152,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/dry_rules/017-migration-coverage.md",
-      "sha256": "7c897ef702b8c023582c8a99bca12c05c04a49d472849dd9a66ec73313e7d12c",
+      "sha256": "7bfa91501395b8a3084ac7e8be98383f346501bf91ff557b9806ce67ba03c876",
       "shard_id": "017",
       "source_line_end": 1981,
       "source_line_start": 1969,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/dry_rules/018-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "5d06a60246edfb829bfc32282f55a95dd7d98587527cac24457b28add9910d79",
+      "sha256": "c1373d1832065cdcdb1ca9ff4abdda7ca7eb3648a021409caf714e72b71e66ae",
       "shard_id": "018",
       "source_line_end": 2044,
       "source_line_start": 1983,
@@ -170,7 +170,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/dry_rules/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "2ee384653f20ae751de6cedbb67c99bf42fc0d872321cf78794db92865aae20d",
+      "sha256": "127cbbef6133374a88c5ee0e3849ad6a9f23e362a063d8e99ae31aa5a5d273db",
       "shard_id": "019",
       "source_line_end": 2050,
       "source_line_start": 2046,
@@ -179,7 +179,7 @@
     {
       "heading": "PMConcept7 Home Workspace owner boundary \u2014 2026-08-04",
       "path": "Plans/_shards/dry_rules/020-pmconcept7-home-workspace-owner-boundary-2026-08-04.md",
-      "sha256": "3a2589060db41c70ffc0d1d9ebd86ae89eccb02f3a4e878f9434d2a83d6b3f18",
+      "sha256": "5dbac3cba9a71edd0dc395ce1f32df298ec9621146ec83b9d4275871e3d6d6a9",
       "shard_id": "020",
       "source_line_end": 2072,
       "source_line_start": 2052,
@@ -188,7 +188,7 @@
     {
       "heading": "Shared Integration Runtime DRY service registry \u2014 2026-08-13",
       "path": "Plans/_shards/dry_rules/021-shared-integration-runtime-dry-service-registry-2026-08-13.md",
-      "sha256": "de2a7d2dce19a1e0bc29fb6859bcd9f82cca3cec8ebab36120b76c8c3aa0c507",
+      "sha256": "5e6b885936acb3a6162c774645b652ba4f8a9b034b330d4ef3df5142aca05152",
       "shard_id": "021",
       "source_line_end": 2198,
       "source_line_start": 2073,
@@ -197,7 +197,7 @@
     {
       "heading": "u11 Prism II Usage candidate-role dispositions - 2026-08-18",
       "path": "Plans/_shards/dry_rules/022-u11-prism-ii-usage-candidate-role-dispositions-2026-08-18.md",
-      "sha256": "594e511d6d623762183ba532b9700e078f84cf4bca9565305cf213014f8fd61f",
+      "sha256": "1401bffb5ca743e00e967f473694b6b246c9062e963f91d43bc643aa6e4a8678",
       "shard_id": "022",
       "source_line_end": 2315,
       "source_line_start": 2199,
@@ -206,7 +206,7 @@
     {
       "heading": "PMConcept7 Usage, command, and shared Assistant SSOT addendum - 2026-08-27",
       "path": "Plans/_shards/dry_rules/023-pmconcept7-usage-command-and-shared-assistant-ssot-addendum-2026.md",
-      "sha256": "de02182cdf8e0d8ecf330bd471d7cff57aa593d0caa0b434e1c56beaab24afeb",
+      "sha256": "13b1b90141fe9dd2009506227511bca6badeebd07407b6dbd5e9eacfec326dcc",
       "shard_id": "023",
       "source_line_end": 2404,
       "source_line_start": 2317,
@@ -215,7 +215,7 @@
     {
       "heading": "Universal touch-closure and projection-owner addendum - 2026-08-31",
       "path": "Plans/_shards/dry_rules/024-universal-touch-closure-and-projection-owner-addendum-2026-08-31.md",
-      "sha256": "7ee8b4e599ac0bd3843fa5d42512b860066e2be804ab1583c06c637ef3cb8963",
+      "sha256": "b84335aa88754f971bbcab557a44a002505e4e77a9ae1546dd6d8683f5fdf0b8",
       "shard_id": "024",
       "source_line_end": 2459,
       "source_line_start": 2406,
@@ -224,7 +224,7 @@
     {
       "heading": "Touch Closure Exact-Key Addendum - 2026-09-01",
       "path": "Plans/_shards/dry_rules/025-touch-closure-exact-key-addendum-2026-09-01.md",
-      "sha256": "8215c17fc21f818068cb6861c14521b0165e4cee707295344a945df2b7a6db88",
+      "sha256": "67eb6082ef59c74efebe50bb062552459865e0346cb672b08ff64c5a543a0c61",
       "shard_id": "025",
       "source_line_end": 2518,
       "source_line_start": 2461,
@@ -233,7 +233,7 @@
     {
       "heading": "Project recovery and Forge delete/CI central companion boundary \u2014 2026-09-26",
       "path": "Plans/_shards/dry_rules/026-project-recovery-and-forge-delete-ci-central-companion-boundary-.md",
-      "sha256": "e2c4ab4563ad455bd336ae1dd5bf9201ebf58a95ddca25449d59b11a0ec56428",
+      "sha256": "863d9115e8c5ce4baa010c658cd746cf375259a1296b03420cfe0525d9c74598",
       "shard_id": "026",
       "source_line_end": 2526,
       "source_line_start": 2520,
@@ -242,7 +242,7 @@
     {
       "heading": "Commands Shortcuts local-action namespace ownership \u2014 2026-09-26",
       "path": "Plans/_shards/dry_rules/027-commands-shortcuts-local-action-namespace-ownership-2026-09-26.md",
-      "sha256": "74c7fc2c848d22766c3b298b078016c4cf92ef0667c54f26c8ffcc262d38e840",
+      "sha256": "10e85b65c203a7c9535bfb3bb029e43af55b7e97c6536cfa48906a1a4e6c0749",
       "shard_id": "027",
       "source_line_end": 2592,
       "source_line_start": 2528,
@@ -251,7 +251,7 @@
     {
       "heading": "Chat transcript presentation single owners \u2014 2026-09-27",
       "path": "Plans/_shards/dry_rules/028-chat-transcript-presentation-single-owners-2026-09-27.md",
-      "sha256": "ae5be3bb645f7a4878329c4cd75d1c6b44887844fd901ed31421bcb1b124c0ec",
+      "sha256": "30cf1b6e1688873c2de14e0188f2bd34fd5a8f0aceaa7632a8d9a889f7ed0172",
       "shard_id": "028",
       "source_line_end": 2655,
       "source_line_start": 2594,
@@ -260,7 +260,7 @@
     {
       "heading": "Wand module presentation grammar single owner \u2014 2026-09-27",
       "path": "Plans/_shards/dry_rules/029-wand-module-presentation-grammar-single-owner-2026-09-27.md",
-      "sha256": "9c05fcaa044b09dda4b6111b4c1ac205f1b8c0bcda40d50762569e80953f83d5",
+      "sha256": "9ff6ae7b7870832b2ddde0dc4fe67e1b493cc614cccd1574737b1a9657dc2c36",
       "shard_id": "029",
       "source_line_end": 2722,
       "source_line_start": 2657,
@@ -269,70 +269,79 @@
     {
       "heading": "Concept web fonts share one set of files \u2014 2026-10-09",
       "path": "Plans/_shards/dry_rules/030-concept-web-fonts-share-one-set-of-files-2026-10-09.md",
-      "sha256": "c22c4d768e0681be107c2ce751a826a69ca14cad761cc20b82dc334fcb0cf9d4",
+      "sha256": "020220df250a5915d73d6035be40463663c5d43dc73a1d7bf55e970e55d0ad15",
       "shard_id": "030",
-      "source_line_end": 2838,
+      "source_line_end": 2840,
       "source_line_start": 2724,
       "split_rule": "heading-##"
     },
     {
       "heading": "Plan action row single shared row \u2014 2026-10-09",
       "path": "Plans/_shards/dry_rules/031-plan-action-row-single-shared-row-2026-10-09.md",
-      "sha256": "e574fea14140ce86822528c9278b8ee9074f61edb29cb580de349a69cdda1df2",
+      "sha256": "153e760881b124f999b615517c49016bb6c6a9b782289185b42253699199287e",
       "shard_id": "031",
-      "source_line_end": 2895,
-      "source_line_start": 2840,
+      "source_line_end": 2897,
+      "source_line_start": 2842,
       "split_rule": "heading-##"
     },
     {
       "heading": "5.6 Pro chat round single owners \u2014 2026-10-09",
       "path": "Plans/_shards/dry_rules/032-5.6-pro-chat-round-single-owners-2026-10-09.md",
-      "sha256": "0d4ee4f8603814e63b48e4808508f779d77a8aef770321b7d66a159cf580f8d1",
+      "sha256": "08d4b718b452e126ce6d16aab32d159ef4c202cbb3643fe44bdf21c499abceef",
       "shard_id": "032",
-      "source_line_end": 3007,
-      "source_line_start": 2897,
+      "source_line_end": 3009,
+      "source_line_start": 2899,
       "split_rule": "heading-##"
     },
     {
       "heading": "NieR Mode editor, reboot plate, look store and onboarding hero moments single owners \u2014 2026-10-09",
       "path": "Plans/_shards/dry_rules/033-nier-mode-editor-reboot-plate-look-store-and-onboarding-hero-mom.md",
-      "sha256": "9c2b2f5c1d7b84a42717b788fefddbe325a08aad76ba466b2fe8ebc162cd387b",
+      "sha256": "8ca191676abeb35ac522d08733aa3f03b4876ff3bd3e552b5bb161f30c4be893",
       "shard_id": "033",
-      "source_line_end": 3085,
-      "source_line_start": 3009,
+      "source_line_end": 3087,
+      "source_line_start": 3011,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "First paint single reader per page \u2014 2026-10-09",
+      "path": "Plans/_shards/dry_rules/034-first-paint-single-reader-per-page-2026-10-09.md",
+      "sha256": "0a21466474b2d0e66047f7bdde9e98773bdf4722fe503f2c92f01bb71ced3820",
+      "shard_id": "034",
+      "source_line_end": 3141,
+      "source_line_start": 3089,
       "split_rule": "heading-##"
     },
     {
       "heading": "Left rail presentation single owner \u2014 2026-10-09",
-      "path": "Plans/_shards/dry_rules/034-left-rail-presentation-single-owner-2026-10-09.md",
-      "sha256": "fa9279d9d7d5ace1018b3ceb6639fed5066dd8bd9b41f3cef8972c1b66946766",
-      "shard_id": "034",
-      "source_line_end": 3147,
-      "source_line_start": 3087,
+      "path": "Plans/_shards/dry_rules/035-left-rail-presentation-single-owner-2026-10-09.md",
+      "sha256": "5c07148a3d8267c4ad8cf8b833d7a4855758e613e8f0b5a1d4edad85d9c81e4e",
+      "shard_id": "035",
+      "source_line_end": 3203,
+      "source_line_start": 3143,
       "split_rule": "heading-##"
     },
     {
       "heading": "Usage presentation grammar single owner \u2014 2026-10-09",
-      "path": "Plans/_shards/dry_rules/035-usage-presentation-grammar-single-owner-2026-10-09.md",
-      "sha256": "7f20e9778050442e21451a06d8319a7ce9822d83757411385f761efed2c400f6",
-      "shard_id": "035",
-      "source_line_end": 3225,
-      "source_line_start": 3149,
+      "path": "Plans/_shards/dry_rules/036-usage-presentation-grammar-single-owner-2026-10-09.md",
+      "sha256": "b641c7b2b922ca86b42258237ae2290a6656c5b8d2100d2e284fabb4acd4928a",
+      "shard_id": "036",
+      "source_line_end": 3281,
+      "source_line_start": 3205,
       "split_rule": "heading-##"
     },
     {
       "heading": "PMConcept7 hover grammar single owner \u2014 2026-10-10",
-      "path": "Plans/_shards/dry_rules/036-pmconcept7-hover-grammar-single-owner-2026-10-10.md",
-      "sha256": "827e46679135e167c0cd05877b5f9bcbf9ba01b2eff5d8282357f8128198a8bd",
-      "shard_id": "036",
-      "source_line_end": 3291,
-      "source_line_start": 3227,
+      "path": "Plans/_shards/dry_rules/037-pmconcept7-hover-grammar-single-owner-2026-10-10.md",
+      "sha256": "99dda04739ddafa2c7cc8012d7e3883703ac83e09034513c91412d9d7e8ea01e",
+      "shard_id": "037",
+      "source_line_end": 3347,
+      "source_line_start": 3283,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3291,
+    "line_count": 3347,
     "path": "Plans/DRY_Rules.md",
-    "sha256": "5627038fba52ffcc363b7e8c780ba9150d18e17926d82b509035ca2194d3eacc"
+    "sha256": "ba9cf0aa7fbf57a2ac900f58bb6007c9f61ee301264b329566297a4c9c4843c3"
   }
 }

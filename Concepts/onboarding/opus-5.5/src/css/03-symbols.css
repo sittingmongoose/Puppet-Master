@@ -5,7 +5,8 @@
    style and weight. They must match exactly: Chrome groups a family's faces by style and weight, and a symbol face
    whose weight range differs from its text face's makes the browser drop that text face. tools/build.py --check
    fails if a mirror is missing or does not match (settings_layer.web_font_checks).
-   Not mirrored: Nunito (only behind Poppins, which carries the symbols) and Georgia (one "i").
+   Not mirrored: Nunito (only behind Poppins, which carries the symbols) and Georgia (one "i"). JetBrains Mono, the
+   code face, is mirrored like PM NieR Mono: its embedded slices carry none of these characters.
    Platform stacks reach the symbols through 'PM Symbols Mono' placed first in them, below. */
 
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("o55font:pm-symbols-sans.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
@@ -25,17 +26,11 @@
 @font-face { font-family: 'IBM Plex Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
 @font-face { font-family: 'IBM Plex Mono'; font-style: italic; font-weight: 400; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
 @font-face { font-family: 'IBM Plex Mono'; font-style: italic; font-weight: 600; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
+@font-face { font-family: 'JetBrains Mono'; font-style: italic; font-weight: 100 800; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
 @font-face { font-family: 'PM NieR Mono'; font-style: normal; font-weight: 100 800; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
 @font-face { font-family: 'PM Symbols Mono'; font-style: normal; font-weight: 100 900; font-display: swap; src: url("o55font:pm-symbols-mono.woff2") format('woff2'); unicode-range: U+0394, U+2192, U+2194, U+21B3, U+2248, U+2264, U+2304, U+2318, U+2500, U+2502, U+2550, U+25A0, U+25B6, U+25B8, U+25BC, U+25CF, U+26A0, U+2713, U+2715, U+2716, U+279C; }
 
-/* The platform monospace stacks name no embedded face, so 'PM Symbols Mono' goes first in them; it carries only the
-   symbols, so every other character falls through to the machine's monospace as before. Each value repeats the base
-   page's (Concepts/Onboarding concepts/TestPMConcept.html) with the symbols in front; settings_layer.web_font_checks
-   fails the build if the base value changes. Retro sets its own --mono-font (IBM Plex Mono, mirrored above) and NieR
-   Mode a more specific one, so the token is only re-stated outside Retro. */
-html:not([data-theme^="retro"]) { --mono-font: 'PM Symbols Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; }
-.message-files-touched { font-family: 'PM Symbols Mono', 'Consolas', monospace; }
-.terminal-pane { font-family: 'PM Symbols Mono', 'Consolas', 'Monaco', monospace; }
-.editor-gutter { font-family: 'PM Symbols Mono', 'Consolas', monospace; }
-.editor-code { font-family: 'PM Symbols Mono', 'Consolas', 'Monaco', monospace; }
-.project-card-path { font-family: 'PM Symbols Mono', 'Consolas', 'Monaco', monospace; }
+/* The page's code text takes --mono-font (src/css/01-webfonts.css, which also points the base page's fixed Consolas and
+   monospace stacks at it), and every face --mono-font names is mirrored above. 'PM Symbols Mono' remains for any stack
+   that names no embedded face; settings_layer.web_font_checks keeps any such re-stated stack equal to the base page's. */
