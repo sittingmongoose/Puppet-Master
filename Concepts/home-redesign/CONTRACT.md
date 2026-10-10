@@ -163,6 +163,10 @@ const row = api.headerRow({
 row.set({ left: [...] });   row.setAction('max', { label: 'Restore' });   row.el   // the row element
 ```
 
+An action's `menu` (an item list, a function returning one, or a whole menu spec) takes the same item shape as
+`api.menu` (section 4) and toggles on its button, which carries `aria-haspopup="menu"`; PMW.menu's own row names (a
+string `sub` as the detail line, `right`, `submenu`) are also accepted, so either shape works there.
+
 | Rule | Value (provisional until the panels thread confirms it in its report) |
 |---|---|
 | Row height | 30 px; controls are 24 px targets with 12 px text (11 px for secondary facts) |
@@ -431,3 +435,5 @@ root. A kind never appends its own overlay to `document.body`.
   Ctrl+PgDn/PgUp), so six chords get stand-ins; Mac Option typing, IME and key repeat are left alone; F6 works from
   every region and before `wantsKey`; menu key ownership written down. Commands: `cmd.workspace_layout.restore` added
   (pending the Plans thread). `api.menu` gains point anchors, `reason`, function submenus and `o`.
+  Same day: a header-row action's `menu` and `PMW.frames.button`'s `menu` map items through the same mapping as
+  `api.menu` (the terminal thread found contract items printed "[object Object]" there).

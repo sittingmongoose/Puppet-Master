@@ -45,13 +45,18 @@ PMW.headerRow = function (entry, spec) {
     b.addEventListener('click', function (e) {
       var cur = rec.spec;   // read at click time: setAction patches the spec in place
       if (b.getAttribute('aria-disabled') === 'true') return;
-      if (cur.menu) { PMW.menu.open(b, typeof cur.menu === 'function' ? toSpec(cur.menu()) : toSpec(cur.menu)); return; }
+      if (cur.menu) {
+        // the same mapping as api.menu (CONTRACT 4 items, PMW.menu rows or a whole spec), toggling on this button
+        var v = typeof cur.menu === 'function' ? cur.menu() : cur.menu;
+        var own = v && !Array.isArray(v) ? v : {};
+        kindMenu(entry, v, b, { align: own.align || 'end', width: own.width || 260 });
+        return;
+      }
       if (cur.run) cur.run(e, b);
     });
     actionEls[a.id] = rec;
     return b;
   }
-  function toSpec(m) { return Array.isArray(m) ? { id: 'hrow-menu', rows: m, width: 260, align: 'end' } : m; }
   function fillActions(list) {
     acts.textContent = '';
     actionEls = {};
