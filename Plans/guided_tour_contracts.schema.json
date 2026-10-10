@@ -242,7 +242,7 @@
           "type": "array",
           "prefixItems": [
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "chat_teacher"}, "purpose": {"const": "Open real Assistant Chat, select Teacher, send the supplied local question, and see the same answer in simple words as one extra, simpler reply."}}},
-            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "workspace"}, "purpose": {"const": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and perform a real widget action through its mounted owner."}}},
+            {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "workspace"}, "purpose": {"const": "Learn page and panel navigation, open a tab from a panel's +, open a file from the rail into a panel, split by dragging a tab to a panel edge, and add the Usage widget Upcoming resets to the Home dashboard and place it through its mounted owner."}}},
             {"type": "object", "additionalProperties": false, "required": ["id", "purpose"], "properties": {"id": {"const": "planning_wizard"}, "purpose": {"const": "Turn the book-club goal into three outcomes, edit a meaningful answer, and stop before approval with no work started."}}}
           ],
           "items": false,
@@ -453,7 +453,11 @@
         "observation": {"$ref": "#/$defs/owner_observation"},
         "evidence_scope": {"const": "contract_fixture_only"},
         "production_receipt_claim": {"const": false}
-      }
+      },
+      "$comment": "Amended 2026-10-10 (DL-186, PWIZ-035): the workspace widget practice adds the Usage widget Upcoming resets (ov-resets) to the Home dashboard board; the old Home widgets are gone.",
+      "allOf": [
+        {"if": {"properties": {"scene": {"const": "workspace"}, "owner_action_id": {"const": "cmd.widget.add"}}, "required": ["scene", "owner_action_id"]}, "then": {"properties": {"target_ref": {"const": "widget-catalog:ov-resets:home"}, "observation": {"properties": {"target_ref": {"const": "widget-catalog:ov-resets:home"}}}}}}
+      ]
     },
     "guided_tour_action_request": {
       "type": "object",
