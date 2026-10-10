@@ -526,22 +526,42 @@ B = {
     },
 }
 
-# The 'dashboard' default set (home/panels planner, 2026-10-10): a new dashboard tab (home-panels' per-instance boards)
-# starts from this small set, not from a Usage room. It is its own set id with its own version, so the Usage page's room
-# boards and their default_set_version (PMU_BOARDS.version) are untouched. Content: the usage summary (Overview's
-# Usage health tile: readings healthy, freshness, warnings, sync age, routes, policy) and one provider plate per provider
-# (the Accounts room's provider kind, roster order). Every card is placed at a preset of its kind: 'id@preset', the size
-# is the preset's at that class (validated). Compact plates show the active account; a provider's other accounts fold
-# to the plate's "N more" line (hover lists them, Details has everything). XL is written out here (the room boards
-# project it from L).
-SET_CLASSES = {'S': 12, 'M': 20, 'L': 24, 'XL': 30}
-SET_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
-              'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
-              'acct-gemini-direct', 'acct-cursor-cli']
-SETS = {
-    'dashboard': {
-        'version': 'pmu-dash-2026-10-10',
-        'boards': {cls: ['health@standard'] + [pid + '@compact' for pid in SET_PLATES] for cls in SET_CLASSES},
+# Host default sets (home/panels planner, 2026-10-10): the boards a host other than the Usage page starts from (the home
+# page and the dashboard tabs of home-panels' per-instance boards). PMU_BOARDS.hosts[id][class], with their own version:
+# the engine stores 'pmu-host:' + HOSTS_VERSION, independent of the Usage page's default_set_version (PMU_BOARDS.version),
+# so changing a host never resets a Usage room and the reverse. Every card is 'widget@preset': its size is that preset's at
+# the class (validated), packed first-fit with no hole like the room boards; written for S, M and L (XL is projected from L
+# as for the rooms). Positions keep the summary tiles first where they pack without a hole; where a short tile beside a
+# taller card would leave one, the tiles close the board instead. Compact provider plates show the active account and fold
+# a provider's other accounts to their "N more" line (hover, Details). HOSTS_DIGEST is the hash of the generated host
+# boards: --check fails when HOSTS changes without a new HOSTS_VERSION (and HOSTS_DIGEST) or a version without a change.
+HOSTS_VERSION = 'pmu-hosts-2026-10-10'
+HOSTS_DIGEST = '35d85701c81a51be'
+HOST_CLASSES = {'S': 12, 'M': 20, 'L': 24}
+HOST_PLATES = ['acct-claude-code', 'acct-openai-codex', 'acct-antigravity', 'acct-muse', 'acct-github-copilot',
+               'acct-qwen-coding', 'acct-zai-coding', 'acct-kimi-coding', 'acct-opencode-go', 'acct-anthropic-api',
+               'acct-gemini-direct', 'acct-cursor-cli']
+_PLATES = ' '.join(pid + '@compact' for pid in HOST_PLATES)
+HOSTS = {
+    # new dash-<n> tabs: the usage summary (Overview's Usage health) and one provider plate per provider
+    'dashboard': {cls: 'health@standard ' + _PLATES for cls in HOST_CLASSES},
+    'home': {
+        'S': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@expanded '
+             'attention-now@expanded ov-resets@wide',
+        'M': 'health@standard month@standard budget-now@standard next-reset@standard active-runs@standard '
+             'ov-resets@standard attention-now@expanded',
+        'L': 'health@standard month@standard next-reset@standard active-runs@standard budget-now@standard '
+             'attention-now@standard ov-resets@standard',
+    },
+    'metrics': {
+        'S': 'token-trend@wide quota-history@standard budget-now@expanded ov-headroom@panel cost-month@standard',
+        'M': 'token-trend@full quota-history@wide budget-now@standard ov-headroom@panel cost-month@standard',
+        'L': 'token-trend@full quota-history@wide budget-now@expanded ov-headroom@panel cost-month@compact',
+    },
+    'monitoring': {
+        'S': 'alert-0@compact provider-probe-state@compact anom@wide signal-history@wide tool-health@expanded',
+        'M': 'alert-0@compact provider-probe-state@compact tool-health@expanded anom@full signal-history@full',
+        'L': 'anom@full signal-history@full alert-0@compact provider-probe-state@compact tool-health@expanded',
     },
 }
 
@@ -713,9 +733,9 @@ def build():
                 top, h, first = e['y'], e['h'], FIRST_ROWS[cls]
                 if top >= first or (min(top + h, first) - top) * 2 < h:
                     problems.append(f'{room}/{cls}: hero {hid} rows {top}-{top + h} is not on the first screen ({first} rows)')
-    sets, set_problems = build_sets()
-    problems += set_problems
-    boards['_sets'] = sets
+    hosts, host_problems = build_hosts()
+    problems += host_problems
+    boards['_hosts'] = hosts
     placed_ids = {e['id'] for r in ROOMS for e in boards[r]['M']}
     dynamic = re.compile(r'^(plan-|tok-|free-\d|alert-\d|cache-\d|tool-\d|signal-\d)')
     for wid in known_ids():
@@ -727,38 +747,62 @@ def build():
     return boards, problems
 
 
-def build_sets():
-    """The non-room default sets: each card at a preset of its kind (size from the preset at that class), packed with
-    the room boards' first-fit rule, no hole, every widget a known one at Glance."""
+def build_hosts():
+    """The host default sets: each card at a preset of its kind (its size at that class), packed with the room boards'
+    first-fit rule, no hole, every widget a known one at Glance and none of the group kind, the same widgets at every
+    class; and the drift check of HOSTS_DIGEST against HOSTS_VERSION."""
     problems, out = [], {}
-    for sid, spec in SETS.items():
-        out[sid] = {'version': spec['version'], 'boards': {}}
-        for cls, cols in SET_CLASSES.items():
+    for hid, spec in HOSTS.items():
+        out[hid] = {}
+        for cls, cols in HOST_CLASSES.items():
             items, presets = [], {}
-            for tok in spec['boards'][cls]:
+            for tok in spec[cls].split():
                 wid, _, pid = tok.partition('@')
                 if wid not in W:
-                    problems.append(f'set {sid}/{cls}: {wid} is not a widget')
+                    problems.append(f'host {hid}/{cls}: {wid} is not a widget')
                     continue
                 kind = W[wid][0]
+                if kind == 'group':
+                    problems.append(f'host {hid}/{cls}: {wid} is a group band')
                 pr = next((p for p in KINDS[kind][4] if p['id'] == pid), None)
                 if pr is None:
-                    problems.append(f'set {sid}/{cls}: {wid} has no preset {pid!r} ({kind})')
+                    problems.append(f'host {hid}/{cls}: {wid} has no preset {pid!r} ({kind})')
                     continue
                 if pr.get('from') and CLS_ORDER.index(cls) < CLS_ORDER.index(pr['from']):
-                    problems.append(f'set {sid}/{cls}: preset {pid} of {kind} is offered from {pr["from"]}')
+                    problems.append(f'host {hid}/{cls}: preset {pid} of {kind} is offered from {pr["from"]}')
+                if pr.get('minPx'):
+                    problems.append(f'host {hid}/{cls}: preset {pid} of {kind} needs {pr["minPx"]} px (not offered on every board)')
                 if W[wid][1] != 'G':
-                    problems.append(f'set {sid}/{cls}: {wid} is not at Glance')
+                    problems.append(f'host {hid}/{cls}: {wid} is not at Glance')
                 w, h = pr['w'][cls], pr['h']
                 if w > cols:
-                    problems.append(f'set {sid}/{cls}: {wid} {w} tracks is wider than the board')
+                    problems.append(f'host {hid}/{cls}: {wid} {w} tracks is wider than the board')
                 items.append((wid, w, h))
                 presets[wid] = pid
             placed = pack(items, cols)
             if holes(placed, cols, 0):
-                problems.append(f'set {sid}/{cls}: {holes(placed, cols, 0)} empty cells inside the board')
-            out[sid]['boards'][cls] = [{'id': wid, 'x': x, 'y': y, 'w': w, 'h': h, 'preset': presets[wid]} for wid, x, y, w, h in placed]
+                problems.append(f'host {hid}/{cls}: {holes(placed, cols, 0)} empty cells inside the board')
+            out[hid][cls] = [{'id': wid, 'x': x, 'y': y, 'w': w, 'h': h, 'preset': presets[wid]} for wid, x, y, w, h in placed]
+        ids = [sorted(e['id'] for e in out[hid][c]) for c in HOST_CLASSES]
+        if any(i != ids[0] for i in ids):
+            problems.append(f'host {hid}: classes do not hold the same widgets')
+    digest = hosts_digest(out)
+    if digest != HOSTS_DIGEST:
+        problems.append(f'hosts changed since HOSTS_DIGEST was recorded: give HOSTS_VERSION a new value (now {HOSTS_VERSION!r}) '
+                        f'and set HOSTS_DIGEST = {digest!r}')
     return out, problems
+
+
+def host_rows(hosts):
+    return {hid: {cls: [[e['id'], e['x'], e['y'], e['w'], e['h'], e['preset']] for e in b] for cls, b in hb.items()}
+            for hid, hb in hosts.items()}
+
+
+def hosts_digest(hosts) -> str:
+    """The hash of the generated host boards with their version: HOSTS_DIGEST must be re-recorded with a new version."""
+    import hashlib
+    body = json.dumps({'version': HOSTS_VERSION, 'hosts': host_rows(hosts)}, sort_keys=True, separators=(',', ':'))
+    return hashlib.sha256(body.encode('utf-8')).hexdigest()[:16]
 
 
 def js(boards) -> str:
@@ -770,15 +814,15 @@ def js(boards) -> str:
     data = {'version': 'pmu-b2-boards-2026-10-10-presets', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED,
             'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS},
-            # sets[set_id] = {version, boards: {class: [[widget_id, x, y, w, h, preset_id], ...]}} for S, M, L and XL
-            'sets': {sid: {'version': st['version'], 'boards': {cls: [[e['id'], e['x'], e['y'], e['w'], e['h'], e['preset']] for e in b]
-                                                                  for cls, b in st['boards'].items()}} for sid, st in boards['_sets'].items()}}
+            # hosts[host_id][class] = [[widget_id, x, y, w, h, preset_id], ...] for S, M and L; the engine keys them by
+            # 'pmu-host:' + hosts_version (not by version, the Usage rooms' default set)
+            'hosts_version': HOSTS_VERSION, 'hosts': host_rows(boards['_hosts'])}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
     return ('/* Usage default boards (B v2), generated by tools/boards.py; do not edit by hand: change tools/boards.py and run it.\n'
             '   Data only. rooms[room][class] = [[widget_id, x, y, w, h], ...] in tracks and rows (row pitch 30 px);\n'
             '   classes S = 12 tracks, M = 20, L = 24 (XL = 30 is projected from L by the engine).\n'
-            '   sets[set_id].boards[class] = [[widget_id, x, y, w, h, preset_id], ...]: default sets that are not a room (the\n'
-            '   dashboard tab), with their own version, written for S, M, L and XL. */\n'
+            '   hosts[host_id][class] = [[widget_id, x, y, w, h, preset_id], ...]: the default sets of the other hosts (home,\n'
+            '   dashboard tabs), keyed by hosts_version, written for S, M and L. */\n'
             f'var PMU_BOARDS = {body};\n')
 
 
@@ -814,6 +858,9 @@ def main() -> int:
     for p in problems:
         print('BOARDS:', p)
     if '--check' in sys.argv:
+        if not OUT_JS.exists() or OUT_JS.read_text(encoding='utf-8') != js(boards):
+            problems.append(f'{OUT_JS.name} is not what boards.py writes: run tools/boards.py')
+            print('BOARDS:', problems[-1])
         print('boards', 'ok' if not problems else f'failed ({len(problems)})')
         return 1 if problems else 0
     if problems:

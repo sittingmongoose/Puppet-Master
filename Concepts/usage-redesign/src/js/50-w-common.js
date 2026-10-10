@@ -1644,13 +1644,17 @@
       if (!rowsOk && fit && C.h(ctx, 'h2') && headH + 30 + legH > ctx.tier.bh) rowsOk = true;
       /* no whole row fits: the chart's own legend rows name the segments instead of an empty "N more" */
       if (rowsOk && !fit) rowsOk = false;
+      /* and where those legend rows would run under the tile's edge too (a 4-track tile on a 400 px board, NieR and Retro:
+         "Settled API $2.14 · 9.9%" 134 px under it), the bar stands alone over a "N more" line whose hover tag names every
+         segment with its value and share */
+      var legRows = !rowsOk && C.h(ctx, 'h2') && headH + 30 + legH <= ctx.tier.bh, legMore = !rowsOk && !legRows && C.h(ctx, 'h2');
       var segFold = segs.slice(rowsOk ? fit : segs.length).map(function (s) { return s.name + ' ' + vt(s) + ' · ' + C.fmt(100 * s.value / total, 'pct') + (s.sub ? ' · ' + s.sub : ''); });
       body.innerHTML = '<div class="pmu-mix"' + (rowsOk && fit < segs.length ? '' : C.foldHover((rowsOk ? [] : segs.filter(function (s) { return s.sub; }).map(function (s) { return s.name + ' · ' + s.sub; })).concat(footFold))) + '>' + head + '<div class="pmu-mixhost"></div>' + (rowsOk ? '<div class="pmu-mixrows' + (stackRows ? ' is-stack' : '') + '">' + segs.slice(0, fit).map(function (s) {
         return '<div class="pmu-mixrow" data-reveal' + (s.prov ? ' data-prov="' + esc(s.prov) + '"' : '') + '><i class="pmu-swatch" data-sw="' + (s.est ? 'hatch' : 'box') + '"' + C.keyAttrs(s) + '></i><span class="pmu-mixname"' + (nm(s) !== s.name || (s.sub && !C.w(ctx, 'l')) ? C.hover(s.name, s.sub && !C.w(ctx, 'l') ? s.sub : '') : '') + '>' + esc(nm(s)) +
           (s.sub && C.w(ctx, 'l') ? '<em>' + esc(s.sub) + '</em>' : '') + '</span><b>' + esc(vt(s)) + '</b><span class="pmu-mixpct">' + esc(C.fmt(100 * s.value / total, 'pct')) + '</span></div>';
-      }).join('') + C.more(segs.length - Math.min(fit, segs.length), null, false, segFold.concat(footFold)) + '</div>' : '') + '</div>' + (m.foot && footShown ? C.foot(m.foot) : '');
+      }).join('') + C.more(segs.length - Math.min(fit, segs.length), null, false, segFold.concat(footFold)) + '</div>' : legMore ? C.more(segs.length, null, ctx.tier.bw < 260, segFold.concat(footFold)) : '') + '</div>' + (m.foot && footShown ? C.foot(m.foot) : '');
       /* a short mix keeps an inline swatch legend with the counts (the segment names never live only in hover tags) */
-      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: nm(s), value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: bwI < 240 && s.valueShort ? s.valueShort : s.valueText }; }), total: total, legend: rowsOk ? false : C.h(ctx, 'h2') ? 'rows' : false },
+      C.chart(body, 'mix', body.querySelector('.pmu-mixhost'), { segments: segs.map(function (s) { return { name: nm(s), value: s.value, idx: s.idx, tk: s.tk, vendor: s.vendor, est: !!s.est, valueText: bwI < 240 && s.valueShort ? s.valueShort : s.valueText }; }), total: total, legend: legRows ? 'rows' : false },
         { label: ctx.def.title });
     }
   });

@@ -655,9 +655,11 @@
           var next = items[i + 1], prev = items[i - 1];
           /* integ3: a label beyond the week also gives way to the previous MARKER itself, not only to its right-hand words
              (Friendly Light 1440: Kimi's "MO 36% · Nov 1" was printed over the WK 52% diamond) */
-          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -labW; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
+          if (it.beyond) { var pEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 16) : -8; it.side = pEnd > it.x - it.w ? 'none' : 'l'; it.m.side = it.side; return; }
           var rightEnd = it.x + it.w, nextStart = next ? (next.beyond ? next.x - next.w : next.x - 8) : trackW + edge;
-          var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -labW;
+          /* words read to the left stay on the track: the first marker's never run into the lane's name (Retro at 472 px:
+             "5H 12%" printed over "Qwen Global") */
+          var leftStart = it.x - it.w, prevEnd = prev ? (prev.side === 'r' ? prev.x + prev.w : prev.x + 8) : -8;
           it.side = rightEnd <= nextStart ? 'r' : leftStart >= prevEnd && !it.pend ? 'l' : 'none';
           it.m.side = it.side; if (it.pend) it.pend._side = it.side;
         });
