@@ -5,8 +5,11 @@
    with flip-above, side submenus, search for long lists, roving keyboard focus, type-ahead and Escape.
 
    PMR.menu.open(menu, anchor, opts) / toggle / close / closeAll / isOpen / trigger(menu, opts)
-   menu = Menu from DATA.md ({ id, label, value?, search?, groups: [{ label?, items: [MenuItem] }] }) or an item array.
-   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard } */
+   menu = Menu from DATA.md ({ id, label, value?, search?, multi?, groups: [{ label?, items: [MenuItem] }] }) or an item array.
+   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard }
+   multi: the items with a value are checkboxes (item.checked). A pick flips that item, calls onPick, which may change
+   any item's checked (an "All" item that clears the others), redraws every check and leaves the menu open, so several
+   can be chosen in one visit; an item with closes: true closes it after its pick. Escape or a click outside closes. */
 
 const CHECK_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>';
 const MENU_STACK = [];
@@ -18,19 +21,20 @@ function asMenu(def) { return Array.isArray(def) ? { id: PMR.util.uid('menu'), g
 function selectable(m) { return m.value != null || m.groups.some(g => (g.items || []).some(it => it.selected)); }
 
 function menuItemEl(m, it, entry) {
-  const radio = selectable(m) && !it.submenu && it.value != null;
-  const isSel = radio && (m.value != null ? m.value === it.value : !!it.selected);
+  const check = !!m.multi && !it.submenu && it.value != null;
+  const radio = !check && selectable(m) && !it.submenu && it.value != null;
+  const isSel = check ? !!it.checked : radio && (m.value != null ? m.value === it.value : !!it.selected);
   const a = PMR.actionAttrs(it);
   const el = PMR.h('button', Object.assign({
     type: 'button', class: ['pm6-chat-modelitem', 'pmr-mi', 'pmr-cur', isSel && 'active', it.danger && 'is-danger', it.submenu && 'has-sub'],
-    role: radio ? 'menuitemradio' : 'menuitem', 'aria-checked': radio ? String(isSel) : null,
+    role: check ? 'menuitemcheckbox' : radio ? 'menuitemradio' : 'menuitem', 'aria-checked': check || radio ? String(isSel) : null,
     'data-value': it.value != null ? String(it.value) : null, 'aria-haspopup': it.submenu ? 'menu' : null, tabindex: '-1',
   }, a),
   it.icon ? PMR.icon(it.icon, 'pmr-mi-ico') : (entry.reserveIcon ? PMR.h('span.pmr-mi-ico') : null),
   PMR.h('span.pm6-chat-modelname', { text: it.label }),
   it.meta ? PMR.h('span.pm6-chat-modeleffort', { text: it.meta }) : null,
   it.key ? PMR.h('kbd.pmr-key', { text: it.key }) : null,
-  it.submenu ? PMR.icon('chevR', 'pmr-mi-sub') : (radio ? PMR.h('span.pm6-chat-modelcheck', { html: CHECK_SVG }) : null));
+  it.submenu ? PMR.icon('chevR', 'pmr-mi-sub') : (check || radio ? PMR.h('span.pm6-chat-modelcheck', { html: CHECK_SVG }) : null));
   if (it.disabled) PMR.hover(el, it.label, it.disabled);
   el._pmrItem = it;
   return el;
@@ -179,6 +183,17 @@ function wireMenu(entry) {
     const it = b._pmrItem;
     if (b.getAttribute('aria-disabled') === 'true') return;   // the PM_DEMO router says why
     if (it.submenu) { ev.preventDefault(); openSub(entry, b, it, false); return; }
+    if (b.getAttribute('role') === 'menuitemcheckbox') {
+      ev.preventDefault();
+      it.checked = !it.checked;
+      if (typeof entry.opts.onPick === 'function') { try { entry.opts.onPick(it, b); } catch (e) { /* ignore */ } }
+      el.querySelectorAll('.pmr-mi[role="menuitemcheckbox"]').forEach(x => {
+        const on = !!x._pmrItem.checked;
+        if (x.classList.contains('active') !== on) { x.classList.toggle('active', on); x.setAttribute('aria-checked', String(on)); }
+      });
+      if (it.closes) setTimeout(() => closeEntry(entry, { returnFocus: lastInputWasKey }), 0);
+      return;
+    }
     if (b.getAttribute('role') === 'menuitemradio') {
       menu.value = it.value;
       menu.groups.forEach(g => (g.items || []).forEach(x => { x.selected = x === it; }));
