@@ -12395,14 +12395,15 @@ canonical_text: >-
   list, applying a named layout and narrowing the window never end, restart or mint a session. Closing the tab ends
   its session, after the tab first says what is still running ("Close this terminal? <process> is still running
   and will be stopped."). When a session ends by itself the tab stays and shows an inline "Session ended" row (with
-  the exit code when it is not zero), Restart and Close tab; Restart starts a new session in the same tab. Reopen
+  the exit code when it is not zero), Restart and Close tab, and its screen dims (the rows and the 72 % dim are
+  `Plans/FinalGUISpec.md#F3-640`'s); Restart starts a new session in the same tab. Reopen
   closed tab on a terminal opens a new session in the same folder and profile. After Puppet Master restarts, a
   terminal tab never pretends to be the old session (F3-226, F3-228): a session verified live is reattached
   (`restored_live`, SMPFS-063, SMPFS-128); otherwise the tab loads its saved scrollback (SMPFS-181,
   `Plans/storage-plan.md#SP-332`) before a new session starts in the same folder and profile, draws the dim rule
   `── Restored <time> · the earlier session ended ──`, then the new prompt, and says so in an inline notice: "This
   terminal was restored with its scrollback (N images were not kept). Its earlier session ended when the page
-  reloaded; this is a new session." The part in brackets appears only when images were not kept; a reopened tab's
+  reloaded; this is a new session." The part in parentheses appears only when images were not kept; a reopened tab's
   notice says it was reopened and that the earlier session ended when the tab closed; a tab whose saved copy did
   not load within SP-332's load budget starts without its scrollback and says so. A command still running when the
   earlier session ended comes back ended and indeterminate ("ended with the earlier session"), never done, through
