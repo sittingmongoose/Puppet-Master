@@ -1,51 +1,84 @@
-/* NieR Mode (D23): ink on parchment. The terminal's own scheme is YoRHa Parchment or YoRHa Ink; this file shapes the
-   chrome: square corners, ink rules, the square list cursor on selected rows, uppercase spaced headings, ink corner
-   brackets on focus (30-looks.css), the static parchment grain (50-fx.css), no glow anywhere. Colours come only from
-   the NieR helpers (--o55-nier-*); nothing here is a literal colour. */
+/* NieR Mode for the terminal (D23), under the binding rule for new surfaces (NIER-RULES-for-new-surfaces.md, DL-152,
+   SSYS-043, F3-598, DR-056): NieR paints only while html[data-o55-nier="on"], every touch is gated by an existing
+   installed part (html[data-o55-nier-parts~="<key>"]), colours come only from the NieR tokens, nothing glows, filters
+   or blurs, and motion is stepped or shows its end state at once.
+   Parts used here: square (square corners and hairlines), cursor (the menu-cursor ink bar on chosen rows), headers (the
+   YoRHa header band and kicker), ground (the parchment grid), brackets (target brackets on the focused terminal),
+   icons (square icon strokes: the command marks), blocks (block progress). The YoRHa schemes themselves are built from
+   the tokens in js/42-appearance.js. */
 
-html[data-o55-nier="on"] .pmt-root { --pmt-radius: 0px; letter-spacing: .02em; }
-html[data-o55-nier="on"] .pmt-pop, html[data-o55-nier="on"] .pmt-findbar, html[data-o55-nier="on"] .pmt-linktip, html[data-o55-nier="on"] .pmt-notice {
-  border-radius: 0; background: var(--o55-nier-raised); color: var(--o55-nier-ink); border-color: var(--o55-nier-line-strong);
+/* ---- square ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-root { --pmt-radius: 0px; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmt-pop, .pmt-findbar, .pmt-linktip, .pmt-notice, .pmt-seg, .pmt-seg button,
+  .pmt-pop-ctl select, .pmt-find-input, .pmt-textbtn, .pmt-scheme, .pmt-swatch, .pmt-step, .pmt-mark, .pmt-hint, .pmt-sb-thumb, .pmt-pop-search) { border-radius: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] :is(.pmt-pop, .pmt-findbar, .pmt-linktip) {
+  background: var(--o55-nier-raised); color: var(--o55-nier-ink); border-color: var(--o55-nier-line-strong);
   box-shadow: 0 2px 6px rgba(var(--o55-nier-shadow-rgb), .14);
 }
-html[data-o55-nier="on"] .pmt-pop-head { border-bottom: 2px solid var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-pop-title, html[data-o55-nier="on"] .pmt-pop-sec h4, html[data-o55-nier="on"] .pmt-scheme-group { text-transform: uppercase; letter-spacing: .12em; }
-html[data-o55-nier="on"] .pmt-seg button { letter-spacing: .02em; padding: 0 8px; }
-html[data-o55-nier="on"] .pmt-seg, html[data-o55-nier="on"] .pmt-seg button, html[data-o55-nier="on"] .pmt-pop-ctl select,
-html[data-o55-nier="on"] .pmt-find-input, html[data-o55-nier="on"] .pmt-textbtn, html[data-o55-nier="on"] .pmt-scheme,
-html[data-o55-nier="on"] .pmt-swatch, html[data-o55-nier="on"] .pmt-step, html[data-o55-nier="on"] .pmt-mark { border-radius: 0; }
-html[data-o55-nier="on"] .pmt-seg button[aria-checked="true"], html[data-o55-nier="on"] .pmt-find-toggle.pmt-on {
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-sb-thumb { background: transparent; border: 1px solid var(--o55-nier-line-strong); }
+html[data-o55-nier="on"][data-o55-nier-parts~="square"] .pmt-seg button { letter-spacing: .02em; padding: 0 8px; }
+
+/* ---- cursor: the chosen row is an ink bar with the square cursor ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmt-seg button[aria-checked="true"], .pmt-find-toggle.pmt-on, .pmt-scheme[aria-selected="true"]) {
   background: var(--o55-nier-ink); color: var(--o55-nier-on-ink);
 }
-/* the NieR square list cursor on the chosen scheme */
-html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"] { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"] .pmt-scheme-meta { color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"] .pmt-scheme::before { content: ""; width: 6px; height: 6px; flex: none; background: transparent; }
-html[data-o55-nier="on"] .pmt-scheme:hover::before, html[data-o55-nier="on"] .pmt-scheme:focus::before, html[data-o55-nier="on"] .pmt-scheme[aria-selected="true"]::before { background: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-scheme[aria-selected="true"] .pmt-scheme-meta { color: var(--o55-nier-on-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-scheme::before { content: ""; width: 6px; height: 6px; flex: none; background: transparent; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmt-scheme:hover, .pmt-scheme:focus, .pmt-scheme[aria-selected="true"])::before { background: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] .pmt-hint { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
 
-/* command marks: hollow square (done), filled rust square (failed), square with a dot (running) */
-html[data-o55-nier="on"] .pmt-mark svg { display: none; }
-html[data-o55-nier="on"] .pmt-mark::before { content: ""; width: 7px; height: 7px; border: 1.5px solid currentColor; }
-html[data-o55-nier="on"] .pmt-mark-ok { color: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-mark-fail { color: var(--o55-nier-error); }
-html[data-o55-nier="on"] .pmt-mark-fail::before { background: currentColor; }
-html[data-o55-nier="on"] .pmt-mark-run::before { background: radial-gradient(currentColor 0 1.5px, transparent 2px); }
-html[data-o55-nier="on"] .pmt-mark-idle::before { opacity: .45; }
-html[data-o55-nier="on"] .pmt-mark-agent::before { width: 8px; height: 8px; background: linear-gradient(currentColor, currentColor) center / 4px 1.5px no-repeat; }
-html[data-o55-nier="on"] .pmt-mark:hover { background: var(--o55-nier-hover); }
+/* ---- headers: the YoRHa band on the popover head and the agent row, uppercase spaced kickers ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-pop-head { border-bottom: 2px solid var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] :is(.pmt-pop-title, .pmt-pop-sec h4, .pmt-scheme-group, .pmt-a11y-body h3) { text-transform: uppercase; letter-spacing: .12em; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-agentrow { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-agentrow .pmt-textbtn:hover { background: rgba(var(--o55-nier-paper-rgb), .14); }
+html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmt-sticky { border-bottom: 1px solid var(--o55-nier-ink); }
 
-html[data-o55-nier="on"] .pmt-hint { border-radius: 0; background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
-html[data-o55-nier="on"] .pmt-sb-thumb { border-radius: 0; background: transparent; border: 0; border-left: 1px solid var(--o55-nier-ink); border-right: 1px solid var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-sticky { border-bottom: 1px solid var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-progress { height: 2px; background: rgba(var(--o55-nier-ink-rgb), .18); }
-html[data-o55-nier="on"] .pmt-progress::before { background: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-progress::after { content: ""; position: absolute; top: -2px; left: calc(var(--pmt-progress, 0%) - 3px); width: 6px; height: 6px; background: var(--o55-nier-ink); }
-html[data-o55-nier="on"] .pmt-agentrow { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); border-bottom: 0; text-transform: none; }
-html[data-o55-nier="on"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
-html[data-o55-nier="on"] .pmt-agentrow .pmt-textbtn:hover { background: rgba(var(--o55-nier-paper-rgb), .14); }
+/* ---- ground: the page's faint parchment grid behind the text ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="ground"] .pmt-body {
+  background-image:
+    linear-gradient(rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .045) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px; background-position: -1px -1px, -1px -1px;
+}
+
+/* ---- brackets: ink target brackets on the focused terminal; they appear at once (no fade) ---- */
+.pmt-root .pmt-body::before { content: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"] .pmt-root.pmt-focused .pmt-body::before {
+  content: ""; position: absolute; inset: 2px; z-index: 7; pointer-events: none;
+  --b: var(--o55-nier-ink);
+  background:
+    linear-gradient(var(--b), var(--b)) left top / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) left top / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) right top / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) right top / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) left bottom / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) left bottom / 2px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) right bottom / 10px 2px no-repeat, linear-gradient(var(--b), var(--b)) right bottom / 2px 10px no-repeat;
+}
+/* the bell snaps the brackets in, in three steps, only while a motion part is installed (Still and Colors only show
+   the end state at once) */
+html[data-o55-nier="on"][data-o55-nier-parts~="brackets"][data-o55-nier-parts~="glitch"] .pmt-root.pmt-bell .pmt-body::before {
+  content: ""; animation: pmt-nier-snap .24s steps(3, end);
+}
+@keyframes pmt-nier-snap { 0% { inset: 10px; } 100% { inset: 2px; } }
+
+/* ---- icons: square command marks (hollow done, filled rust failed, dotted running) ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark svg { display: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark::before { content: ""; width: 7px; height: 7px; border: 1.5px solid currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-ok { color: var(--o55-nier-ink); }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-fail { color: var(--o55-nier-error); }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-fail::before { background: currentColor; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-run::before { background: radial-gradient(currentColor 0 1.5px, transparent 2px); }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-idle::before { opacity: .45; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark-agent::before { width: 8px; height: 8px; background: linear-gradient(currentColor, currentColor) center / 4px 1.5px no-repeat; }
+html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmt-mark:hover { background: var(--o55-nier-hover); }
+
+/* ---- blocks: block progress like the page's own meters ---- */
+html[data-o55-nier="on"][data-o55-nier-parts~="blocks"] .pmt-progress { height: 4px; background: repeating-linear-gradient(90deg, rgba(var(--o55-nier-ink-rgb), .16) 0 5px, transparent 5px 7px); }
+html[data-o55-nier="on"][data-o55-nier-parts~="blocks"] .pmt-progress::before { background: repeating-linear-gradient(90deg, var(--o55-nier-ink) 0 5px, transparent 5px 7px); transition: none; }
+html[data-o55-nier="on"][data-o55-nier-parts~="blocks"] .pmt-progress[data-pmt-state="error"]::before { background: repeating-linear-gradient(90deg, var(--o55-nier-error) 0 5px, transparent 5px 7px); }
+html[data-o55-nier="on"][data-o55-nier-parts~="blocks"] .pmt-progress[data-pmt-state="indeterminate"]::before { animation: none; width: 100%; left: 0; opacity: .5; }
+
+/* ---- motion in NieR: no fades on large surfaces (inactive dimming switches at once), no indeterminate sweep ---- */
+html[data-o55-nier="on"] .pmt-body::after { transition: none; }
+html[data-o55-nier="on"] .pmt-progress::before { transition: none; }
 html[data-o55-nier="on"] .pmt-notice-warn { background: var(--o55-nier-warn-surface); }
-html[data-o55-nier="on"] .pmt-a11y-body h3 { text-transform: uppercase; letter-spacing: .1em; }
-
-/* parchment grain (50-fx.css .pmt-fx-paper) sits under the text, not over it, and stays quiet: ink keeps its contrast */
-html[data-o55-nier="on"] .pmt-fx-paper { --pmt-paper-strength: .55; }
-html[data-o55-nier="on"] .pmt-fx-paper::before { z-index: 0; }

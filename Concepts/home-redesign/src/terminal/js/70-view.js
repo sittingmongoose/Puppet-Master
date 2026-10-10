@@ -57,6 +57,9 @@
     this.overlays = el('div', 'pmt-overlays');
     this.input = el('textarea', 'pmt-input');
     this.input.setAttribute('aria-label', 'Terminal input');
+    /* terminal text gets no hover tag (D24): the page's tag controller skips these, the hover engine skips data-pmh=off */
+    this.input.setAttribute('data-pm-hover-exempt', 'terminal');
+    screen.setAttribute('data-pm-hover-exempt', 'terminal');
     this.input.setAttribute('autocapitalize', 'off'); this.input.setAttribute('autocomplete', 'off');
     this.input.setAttribute('autocorrect', 'off'); this.input.setAttribute('spellcheck', 'false');
     screen.appendChild(this.bgLayer); screen.appendChild(this.canvas); screen.appendChild(this.fxCanvas);
@@ -836,6 +839,10 @@
   View.prototype.onShow = function () { this.visible = true; this.layout(); this.schedule(true); if (this.fx) this.fx.visible(true); };
   View.prototype.onHide = function () { this.visible = false; if (this.fx) this.fx.visible(false); };
   View.prototype.onLook = function () {
+    var h = document.documentElement;
+    var sig = [h.getAttribute('data-theme'), h.getAttribute('data-o55-nier'), h.getAttribute('data-o55-nier-parts'), h.getAttribute('data-motion')].join('|');
+    if (sig === this._lookSig) return;
+    this._lookSig = sig;
     if (T.Appearance) this.applyAppearance(T.Appearance.resolve(this));
     else this.applyAppearance(this._fallbackAppearance());
   };

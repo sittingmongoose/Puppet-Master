@@ -90,7 +90,7 @@
     if (v.fxCanvas.width !== v.canvas.width || v.fxCanvas.height !== v.canvas.height) this.gl.resize(v.canvas.width, v.canvas.height, m.dpr);
     var changed = v.renderer.stats.frames !== this._frames; this._frames = v.renderer.stats.frames;
     var src = this.trail && this.trailStyle !== 'off' ? [v.canvas, { canvas: v.trailCanvas, blend: this.trail.blend }] : v.canvas;
-    var trailMoving = this.trail && this.trailStyle !== 'off' ? this.trail.frame(now) : false;
+    var trailMoving = this.trail && this.trailStyle !== 'off' ? this.trail.frame(this._stepTime(now)) : false;
     var p = this.params(now);
     this.gl.render(src, p, now, Array.isArray(src) ? [changed, true] : changed);
     this.lastParams = p;
@@ -99,8 +99,10 @@
   };
   Policy.prototype._trailOnly = function (now) {
     if (!this.trail || this.trailStyle === 'off') return;
-    if (this.trail.frame(now)) this.kick(0);
+    if (this.trail.frame(this._stepTime(now))) this.kick(0);
   };
+  /* NieR motion is stepped: its trace advances in 35 ms steps instead of every frame */
+  Policy.prototype._stepTime = function (now) { return this.cfg.look === 'nier' ? Math.floor(now / 35) * 35 : now; };
   Policy.prototype._trackCursor = function (now) {
     var v = this.view, cur = v.term.buf.cursor, m = v.metrics;
     if (!m || !this.trail || this.trailStyle === 'off' || !v.focused) { this.lastCursor = null; return; }

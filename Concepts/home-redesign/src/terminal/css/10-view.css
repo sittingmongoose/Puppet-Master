@@ -25,7 +25,7 @@
 .pmt-fxcanvas, .pmt-trail { pointer-events: none; }
 .pmt-overlays { position: absolute; inset: 0; pointer-events: none; }
 .pmt-overlays > * { pointer-events: auto; }
-.pmt-input { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; padding: 0; border: 0; resize: none; overflow: hidden; color: transparent; background: transparent; caret-color: transparent; font-size: 1px; }
+.pmt-input { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; padding: 0; border: 0; resize: none; overflow: hidden; color: transparent; background: transparent; caret-color: transparent; font-size: 1px; }
 .pmt-preedit {
   position: absolute; padding: 0 1px; font-family: var(--pmt-font); font-size: var(--pmt-font-size); line-height: var(--pmt-cell-h);
   color: var(--pmt-fg); background: var(--pmt-bg-solid); text-decoration: underline; text-underline-offset: 3px; white-space: pre;

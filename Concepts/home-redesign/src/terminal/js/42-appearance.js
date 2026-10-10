@@ -215,6 +215,8 @@
     var shape = f('cursorShape'); if (shape === 'follow') shape = L.cursorShape;
     var reduced = look.reduced;
     var trail = f('cursorTrail'); if (trail === 'follow') trail = L.trail;
+    /* NieR: the trace is motion, so it needs an installed motion part (Scan sweep); Still and Colors only get none */
+    if (lk === 'nier' && !/(^|\s)sweep(\s|$)/.test(document.documentElement.getAttribute('data-o55-nier-parts') || '')) trail = 'off';
     if (reduced) trail = 'off';
 
     /* background */
@@ -236,7 +238,7 @@
       focus: L.focus, bell: f('bell') === 'off' ? 'off' : L.bell, blink: L.blink,
       trail: fxOff ? 'off' : trail,
       smoothScroll: !reduced && gl('smoothScroll', lk !== 'retro'),
-      paper: lk === 'nier' && !fxOff,
+      paper: false, /* NieR's ground is the page's grid (40-nier.css, part 'ground'), never a texture */
       scanlines: { on: !fxOff && gl('scanlines', retroDark && !!L.scanlines), strength: f('scanStrength'), period: 3 },
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
       crt: !fxOff && !!f('crt'),

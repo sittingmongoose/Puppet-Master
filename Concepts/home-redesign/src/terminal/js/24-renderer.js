@@ -196,6 +196,7 @@
       var x1d = x + 1;
       while (x1d < cols && line.st[x1d] === line.st[x] && v.isHoverLink(abs, x1d, sd.link) === hoverLink) x1d++;
       var color = sd.ul ? (sd.ul < 0x200 ? pal[sd.ul - 0x100] : sd.ul & 0xffffff) : fgs[x];
+      if (sd.ul && th.mono && (sd.ul >= 0x200 || sd.ul - 0x100 >= 16)) color = mono(color, th);
       var thick = Math.max(1, Math.round(m.dpr));
       var uy = y0 + Math.min(H - thick, m.baseline + Math.max(thick, Math.round(m.descent * m.dpr * 0.45)));
       ctx.fillStyle = css(color); ctx.strokeStyle = css(color); ctx.lineWidth = thick;
