@@ -88,3 +88,6 @@ html[data-o55-nier="on"][data-o55-nier-parts~="slice"]:not([data-motion="reduced
 html[data-o55-nier="on"][data-o55-nier-parts~="ground"] #pm-home-centre { --pmw-gutter: transparent; }
 html[data-o55-nier="on"][data-o55-nier-parts~="icons"] .pmw-mlead { background: transparent; color: var(--o55-nier-ink); }
 html[data-o55-nier="on"] :is(.pmw-act.is-primary, .pmw-btn-primary) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); }
+/* a failed command's "exited 101" on a tab: the words carry it, so it takes the ink (the error mix measured 3.76:1 on a
+   strip) */
+html[data-o55-nier="on"] .pmw-exit { color: var(--pmw-text); }

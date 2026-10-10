@@ -46,12 +46,14 @@ function stripFont(stripEl) {
 // a look change (theme, NieR and its parts, motion) can change every label's width: measure again and refit
 bus.on('look', function () { measureCache = {}; fontCache.value = ''; render.schedule({ animate: false }); });
 
+/* a failed command's mark says what it is in words (a bare number did not; the cross-look review) */
+function exitWords(code) { return 'exited ' + code; }
 /* natural width of a tab: icon + gap + label + marks + close slot + padding, clamped */
 function naturalWidth(rec, font, host, active) {
   var label = tabLabel(rec);
   // padding, icon, the two 6 px gaps (icon-label, label-close), the label, the 24 px close slot, 2 px of slack
   var w = TAB.padL + TAB.iconSlot + TAB.iconGap + labelWidth(label, font, host, !!rec.preview, !!active) + TAB.iconGap + TAB.close + TAB.padR + 2;
-  if (rec.exitCode != null) w += labelWidth(String(rec.exitCode), font, host) + 18;
+  if (rec.exitCode != null && rec.exitCode !== 0) w += labelWidth(exitWords(rec.exitCode), font, host) + 18;
   if (rec.agent) w += 14;
   return clamp(w, TAB.natural, TAB.max);
 }
@@ -309,7 +311,7 @@ function updateTab(el, rec, p, l) {
   if (ico._name !== iconName) { ico.textContent = ''; ico.appendChild(kindIcon(iconName)); ico._name = iconName; }
   // marks: failed command's exit code (D12), agent mark
   var mark = el.querySelector('.pmw-tmark');
-  var markText = rec.exitCode != null && rec.exitCode !== 0 ? String(rec.exitCode) : '';
+  var markText = rec.exitCode != null && rec.exitCode !== 0 ? exitWords(rec.exitCode) : '';
   setAttr(mark, 'hidden', !markText && !rec.agent);
   if (mark._t !== markText + '|' + (rec.agent || '')) {
     mark.textContent = '';
@@ -322,7 +324,7 @@ function updateTab(el, rec, p, l) {
   if (rec.dirty) desc.push('unsaved changes');
   if (rec.pinned) desc.push('pinned');
   if (rec.attention) desc.push('new');
-  if (markText) desc.push('last command failed with exit code ' + markText);
+  if (markText) desc.push('last command failed with exit code ' + rec.exitCode);
   if (rec.agent) desc.push(rec.agent + ' is driving it');
   el.setAttribute('aria-label', label + (desc.length ? ', ' + desc.join(', ') : ''));
   var tag = hoverWords(rec, k);
