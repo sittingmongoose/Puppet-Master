@@ -188,6 +188,10 @@
       var m = ctx.model; if (!m) { body.innerHTML = C.empty('No free route in scope'); return; }
       var bw = ctx.tier.bw, bh = ctx.tier.bh, av = m.availability || {}, cool = m.stateTone === 'warn';
       var ringPx = bh >= 120 && bw >= 150 ? Math.round(Math.max(76, Math.min(bw * 0.4, bh - 70, 128))) : 0;
+      /* (lane c-presets) a narrow card (the 180-200 px Compact) keeps a smaller ring beside the state and the number and runs
+         the route line under them at the card's full width: beside the ring it wrapped a word a line and ran past the card */
+      var provBelow = !!ringPx && bw - ringPx - 16 < 110;
+      if (provBelow) ringPx = Math.max(56, Math.min(ringPx, bw - 16 - 80));
       var cap = capOf(m);
       var capHtml = cap.vs ? '<span class="pmu-freecapvs">' + C.vs(cap.vs, cap.word) + '</span>'
         : cap.value != null ? C.valHtml(cap.value, 'int', 'pmu-freecap', ctx.id + ':cap').replace('class="pmu-num"', 'class="pmu-num" data-count="kpi"') + '<span class="pmu-freecapu">' + esc(cap.unit) + '</span>'
@@ -195,13 +199,14 @@
       var head = '<div class="pmu-freehero' + (ringPx ? '' : ' no-ring') + '">' + (ringPx ? '<div class="pmu-freering" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' : '') +
         '<div class="pmu-freetop"><span class="pmu-freestate" data-tone="' + m.stateTone + '">' + C.glyph(m.stateGlyph) + esc(m.state) + '</span>' +
         '<span class="pmu-freecapline"' + C.hover('Capacity', m.capacitySource) + '>' + capHtml + '</span>' +
-        '<span class="pmu-freeprov">' + esc(m.provider) + '</span></div></div>';
+        (provBelow ? '' : '<span class="pmu-freeprov">' + esc(m.provider) + '</span>') + '</div></div>' +
+        (provBelow ? '<span class="pmu-freeprov is-below">' + esc(m.provider) + '</span>' : '');
       /* the hero's height from its wrapped words beside the ring (the state line wrapped to four lines in a 102 px column
          and the facts were placed under an 87 px estimate of a 188 px hero) */
       var topW = Math.max(60, ringPx ? bw - ringPx - 16 : bw);
       var capH = cap.vs ? 20 * C.wrapLines(cap.word, topW - 22, 14, 560) : 29 + (cap.value != null && C.wrapW(String(cap.value), 28, 640) + 8 + C.wrapW(cap.unit || '', 12.5) > topW ? 18 : 0);
-      var topH = 20 * C.wrapLines(m.state, topW - 22, 14, 640) + 4 + capH + 4 + 17 * C.wrapLines(m.provider, topW, 12);
-      var headH = Math.max(ringPx, topH) + 6 + 6;
+      var topH = 20 * C.wrapLines(m.state, topW - 22, 14, 640) + 4 + capH + (provBelow ? 0 : 4 + 17 * C.wrapLines(m.provider, topW, 12));
+      var headH = Math.max(ringPx, topH) + 6 + 6 + (provBelow ? 17 * C.wrapLines(m.provider, bw, 12) + 6 : 0);
       /* the price line, then the facts placed by C.factLayout (two columns where a pair fits); the facts that do not fit
          are counted on one "N more facts" line whose hover tag lists them (CONTENT-3) */
       var priceH = 30, facts = [['Context window', m.context]].concat((m.facts || []).filter(function (f) { return f[0] !== 'Capacity note' || f[1] !== m.capacity; }));

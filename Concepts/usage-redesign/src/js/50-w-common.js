@@ -1122,8 +1122,8 @@
       /* measured: the value line and the gap under it take 34 px (22 px value, xs / s) or 39 px (26 px value) */
       var LINE_H = ctx.tier.w === 'xs' || ctx.tier.w === 's' ? 34 : 39;
       /* one share-out for a given foot height (0 when the foot gives way) */
-      var alloc = function (fRoom) {
-        var base = wide ? bh : bh - LINE_H - fRoom - (trend ? trend + 4 : 0);
+      var alloc = function (fRoom, cRow) {
+        var base = wide ? bh : bh - LINE_H - fRoom - (trend ? trend + 4 : 0) - (cRow || 0);
         var sb = wide ? subAt(Math.min(subLines, Math.max(0, Math.floor((bh - LINE_H - fRoom - (trend ? trend + 4 : 0)) / 17)))) : subAt(Math.min(subLines, 2));
         if (!wide) while (sb.lines && sb.lines * 17 > base) sb = subAt(sb.lines - 1);
         /* the side column of the wide form keeps 6 px (census 1440: its facts ran 3 px past the tile) */
@@ -1134,10 +1134,14 @@
         if (f.n < facts.length && rm >= MORE_H && !headCount && (!inlineCount || inlineWrap)) { f = lay.fit(rm - MORE_H); ml = !inlineCount; }
         return { base: base, sub: sb, room: rm, fr: f, moreLine: ml };
       };
-      var A = alloc(footRoom), footShown = !!footRoom;
+      /* the count on its own short row under the value takes its 18 px from the share-out where facts fold (agent 4: a
+         4 x 4 Retro tile placed two sub lines under a 34 px estimate, then the count row pushed the second past the card) */
+      var cRow = inlineCount && inlineWrap && !wide ? 18 : 0;
+      var A = alloc(footRoom, 0), footShown = !!footRoom;
+      if (cRow && (A.fr.n < facts.length || (m.foot && !footRoom) || (subText && !A.sub.lines))) A = alloc(footRoom, cRow);
       /* a quiet foot line (source, policy) gives way to a fact it would hide; its words join the "N more" line's hover
          tag and Details. A foot with an action stays. */
-      if (footRoom && !hasBtn && !wide && A.fr.n < facts.length) { var A0 = alloc(0); if (A0.fr.n > A.fr.n) { A = A0; footShown = false; } }
+      if (footRoom && !hasBtn && !wide && A.fr.n < facts.length) { var A0 = alloc(0, cRow); if (A0.fr.n > A.fr.n) { A = A0; footShown = false; } }
       var base = A.base, sub = A.sub, room = A.room, fr = A.fr, moreLine = A.moreLine;
       var maxFacts = fr.n;
       /* every fact shows: the sub line takes the rest of the room, up to four lines */
@@ -1152,6 +1156,8 @@
       var hiddenFacts = facts.slice(maxFacts);
       var factsHtml = maxFacts ? lay.html(maxFacts) : '';
       var folded = hiddenFacts.map(C.factText).concat(m.foot && !footShown && footText ? [footText] : []);
+      /* a sub line with no room for one line joins the folded words (the count's hover tag lists it), never dropped */
+      if (subText && !sub.lines) folded.unshift(subText);
       var moreHtml = hiddenFacts.length && moreLine ? C.more(hiddenFacts.length, 'facts', bw < 260, folded) : '';
       if (headCount && folded.length) C.headMore(ctx, body, folded); else C.headMore(ctx, body, []);
       if (inlineCount && folded.length && !moreHtml) head = head.replace(/^<div class="pmu-kpiline"/, '<div class="pmu-kpiline' + (inlineWrap ? ' has-count-row' : '') + '"').replace(/<\/div>$/, C.countHtml(folded, true) + '</div>');
@@ -1177,7 +1183,10 @@
       var m = ctx.model || { cells: [] }, onlyValues = ctx.tier.bh < 60;
       var perRow = Math.max(1, Math.min(m.cells.length, Math.floor(ctx.tier.bw / 160))), cellW = ctx.tier.bw / perRow, short = cellW < 240;
       var tight = !onlyValues && ctx.tier.bh < 72;   /* a one-row strip of 4 rows keeps label, value and sub whole */
-      body.innerHTML = '<div class="pmu-kpis' + (onlyValues ? ' is-values' : '') + (tight ? ' is-tight' : '') + '">' + m.cells.map(function (c, i) {
+      /* a 3-row strip under a taller head (NieR: 40 px, a 30 px body) sets label and value closer and smaller and takes 4 px
+         of the body's bottom padding: the values sat on the frame's corner ticks (agent 4) */
+      var low = onlyValues && ctx.tier.bh < 37;
+      body.innerHTML = '<div class="pmu-kpis' + (onlyValues ? ' is-values' : '') + (low ? ' is-low' : '') + (tight ? ' is-tight' : '') + '">' + m.cells.map(function (c, i) {
         var key = c.key ? (c.key.half ? '<i class="pmu-key" data-sw="half" data-tk="' + c.key.half[0] + '"></i><i class="pmu-key" data-sw="half" data-tk="' + c.key.half[1] + '"></i>'
           : c.key.line ? '<i class="pmu-key" data-sw="line" data-tk="' + c.key.line + '"></i>' : '<i class="pmu-key" data-sw="box" data-tk="' + c.key.swatch + '"></i>') : '';
         return '<div class="pmu-kpicell"' + C.hover(c.label, c.hover || '') + '><span class="pmu-kpicell-l">' + key + esc(c.label) + '</span>' +
@@ -1651,22 +1660,26 @@
       /* CONTENT-3: the hero ring without a facts column runs its facts under the ring and the legend at the card's full
          width (three or four columns); the ring keeps the legend's height (at least 120 px), so the band under the ring
          holds facts instead of air ("4 more at a taller size" over free space at 1920) */
-      var below = heroRing && !factsRoom && m.facts && m.facts.length, belowLay = null, belowN = 0, belowMore = false;
+      /* (lane c-presets) every side layout without a facts column runs its facts under the ring and the legend where the
+         card has the height (the Expanded preset in a 486 px Glass card showed the Compact content, 16 % empty), and facts
+         that show nowhere are counted (head "+N", or "N more facts"), never dropped silently */
+      var below = side && !factsRoom && m.facts && m.facts.length, belowLay = null, belowN = 0, belowMore = false;
       if (side) { mixOk = true; ringPx = heroRing ? Math.round(Math.max(120, Math.min(168, bh - 8, ctx.tier.bw * 0.36))) : C.w(ctx, 'm') ? 96 : 68; avail = bh - 18; }
       else if (bh - 84 - 10 - 18 >= needRows * LEG) { mixOk = true; ringPx = 84; avail = bh - 84 - 10 - 18; }
       else { mixOk = false; ringPx = 68; avail = bh - 68 - 10; }
       if (below) {
         var legBlock = 18 + n * LEG;
-        ringPx = Math.round(Math.max(120, Math.min(ringPx, legBlock)));
+        if (heroRing) ringPx = Math.round(Math.max(120, Math.min(ringPx, legBlock)));
         var topH = Math.max(ringPx, legBlock), roomB = bh - topH - 4;   /* the body's 8 px gap less the block's own 4 (fitRows) */
-        belowLay = C.factLayout(m.facts, ctx.tier.bw, 0, 4);
+        belowLay = C.factLayout(m.facts, ctx.tier.bw, 0, heroRing ? 4 : 3);
         var frB = belowLay.fit(roomB);
         if (frB.n < m.facts.length && roomB >= 25) { frB = belowLay.fit(roomB - 25); belowMore = true; }
         belowN = frB.n;
-        avail = topH - 18;
+        avail = Math.min(topH, bh) - 18;
       }
       var legFit = C.fit(avail, LEG);
-      var factFit = factsRoom ? C.fit(bh, 26) : 0;
+      var factFit = factsRoom ? C.fit(bh, 26) : 0, factMore = false;
+      if (factsRoom && m.facts && factFit < m.facts.length) { factFit = C.fit(bh - 25, 26); factMore = true; }
       /* two legend columns only where a family name and its count both fit (about 145 px a column); every family shows or
          the hidden ones are counted on one line (complete or hidden) */
       var legCap = legFit * per;
@@ -1674,10 +1687,13 @@
       body.innerHTML = '<div class="pmu-ctx' + (side ? ' is-side' : '') + (heroRing ? ' is-hero' : '') + (factsRoom ? ' has-facts' : '') + (below ? ' has-below' : '') + (ctx.tier.bw < 300 ? ' is-narrow' : '') + '">' +
         '<div class="pmu-ctxring" style="width:' + ringPx + 'px;height:' + ringPx + 'px"></div>' +
         '<div class="pmu-ctxmain">' + (mixOk ? '<div class="pmu-ctxmix"></div>' : '') + '<div class="pmu-ctxlegs' + (oneCol ? '' : ' is-2col') + '">' + legendRows.slice(0, legCap).join('') + '</div>' + (legCap < legendRows.length ? C.more(legendRows.length - legCap, legendRows.length - legCap === 1 ? 'family' : 'families', ctx.tier.bw < 260, m.segments.slice(legCap).map(function (s) { return s.name + ' ' + PMU.fmt.tok(s.tokens) + ' · ' + s.pct + '%'; })) : '') + '</div>' +
-        (factsRoom ? '<div class="pmu-ctxfacts">' + C.facts(m.facts, factFit) + '</div>' : '') + '</div>';
+        (factsRoom ? '<div class="pmu-ctxfacts">' + C.facts(m.facts, factFit) + (factMore ? C.more(m.facts.length - factFit, 'facts', false, m.facts.slice(factFit).map(C.factText)) : '') + '</div>' : '') + '</div>';
       if (below && (belowN || belowMore)) {
         var hidF = m.facts.slice(belowN);
         body.insertAdjacentHTML('beforeend', '<div class="pmu-ctxfacts is-below">' + (belowN ? belowLay.html(belowN) : '') + (belowMore ? C.more(hidF.length, 'facts', false, hidF.map(C.factText)) : '') + '</div>');
+      } else if (!factsRoom && m.facts && m.facts.length && !(heroRing && below)) {
+        /* no room for one fact: the head counts them where it has the room, else the body's hover tag lists them */
+        if (!C.headMore(ctx, body, C.smallCard(ctx) ? m.facts.map(C.factText) : [])) { body.firstChild.setAttribute('data-pm-hover-label', C.FOLD_LABEL); body.firstChild.setAttribute('data-pm-hover-detail', m.facts.map(C.factText).join('; ')); }
       } else if (below) { body.firstChild.setAttribute('data-pm-hover-label', C.FOLD_LABEL); body.firstChild.setAttribute('data-pm-hover-detail', m.facts.map(C.factText).join('; ')); }
       C.chart(body, 'ring', body.querySelector('.pmu-ctxring'), { segments: m.segments.map(function (s) { return { name: s.name, value: s.tokens, idx: s.idx }; }).concat([{ name: 'Reserved output', value: m.reserved, idx: 7, hatched: true }]),
         limit: m.limit, value: m.used, max: m.limit, centre: m.pct + '%', caption: PMU.fmt.tok(m.used) + ' / ' + PMU.fmt.tok(m.limit), token: 'in', share: 'context', centreShare: 'num:context.pct' }, { label: 'Context window ' + m.pct + '% used' });

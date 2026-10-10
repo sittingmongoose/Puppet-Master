@@ -119,6 +119,10 @@ html[data-theme^="retro"] #panel-usage .pmu-caveat, html[data-o55-nier="on"] #pa
 #panel-usage .pmu-kpicell .pmu-kpisub b { font-weight: 600; color: var(--pmu-ink-2); }
 #panel-usage .pmu-kpis.is-values .pmu-kpicell .pmu-kpivalue { font-size: 20px; }
 #panel-usage .pmu-kpis.is-tight .pmu-kpicell .pmu-kpivalue { font-size: 22px; line-height: 1; }
+#panel-usage .pmu-kpis.is-low { margin-bottom: -4px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell { gap: 1px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell-l { font-size: 12px; line-height: 14px; }
+#panel-usage .pmu-kpis.is-low .pmu-kpicell .pmu-kpivalue { font-size: 18px; line-height: 1; }
 #panel-usage .pmu-kpis.is-tight .pmu-kpicell { gap: 1px; }
 
 /* ------------------------------------------------------------------ list rows */
@@ -532,7 +536,9 @@ html[data-theme$="-light"] #panel-usage .pmu-skyfill::before { box-shadow: 0 1px
 #panel-usage .pmu-skytrack.is-est .pmu-skyflare { display: none; }
 #panel-usage .pmu-skyfoot { display: inline-flex; align-items: center; gap: 4px; height: 22px; }
 #panel-usage .pmu-skyfoot b { font-family: var(--pmu-mono); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--pmu-ink-2); }
-#panel-usage .pmu-skyreset { max-width: 100%; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+/* the reset word is centred on its tower and may run a pixel or two past a 37 px column ("Oct 16" in the NieR face was
+   cut to "Oct 1", agent 4); every word is at most six characters, so neighbours never meet */
+#panel-usage .pmu-skyreset { max-width: none; font-size: 11px; line-height: 18px; color: var(--pmu-ink-3); white-space: nowrap; overflow: visible; }
 #panel-usage .pmu-skycol:hover .pmu-skytrack { box-shadow: var(--pmu-l-track-in, none), 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
 /* the plot keeps a 40 px gutter on the right for the auto-switch level, so its word never sits on a gauge's value; the
    floor is one lit rule the towers stand on */

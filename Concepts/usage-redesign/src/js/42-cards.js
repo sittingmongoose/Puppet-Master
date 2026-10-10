@@ -278,14 +278,17 @@
     var inside = function (el) { var r = el.getBoundingClientRect(); return r.height > 0 && r.top >= bb.top - 1 && r.bottom <= bb.bottom + 1; };
     var items = sel && body ? Array.prototype.filter.call(body.querySelectorAll(sel), inside).length : 0;
     var whole = WHOLE_SEL[kind] && body ? Array.prototype.filter.call(body.querySelectorAll(WHOLE_SEL[kind]), inside).length : 0;
-    /* clipped: a word, a mark or a chart running past the card's edges (a fragment, whatever the fold markers say) */
+    /* clipped: a word, a mark or a chart running past the card's edges (a fragment, whatever the fold markers say), or
+       more than 3 px into the body's bottom padding (agent 4: a NieR totals strip's last line sat on the frame's corner
+       ticks, 0 px from the card's edge, and passed); a plate's foot sits in that padding by design */
     var cr = card.getBoundingClientRect(), clipped = false;
+    var floor = body ? Math.min(cr.bottom + 1, bb.bottom - Math.max(0, (parseFloat(getComputedStyle(body).paddingBottom) || 0) - 3)) : cr.bottom + 1;
     if (body) Array.prototype.some.call(body.querySelectorAll('*'), function (el) {
       if (el.closest('svg') && !/^svg$/i.test(el.tagName)) return false;
       var own = /^svg$/i.test(el.tagName) || Array.prototype.some.call(el.childNodes, function (n) { return n.nodeType === 3 && n.nodeValue.trim(); });
       if (!own) return false;
       var r = el.getBoundingClientRect(); if (!r.width || !r.height) return false;
-      if (r.bottom > cr.bottom + 1 || r.top < bb.top - 1 || r.right > cr.right + 1 || r.left < cr.left - 1) { clipped = true; return true; }
+      if (r.bottom > (el.closest('.pmu-cardfoot') ? cr.bottom + 1 : floor) || r.top < bb.top - 1 || r.right > cr.right + 1 || r.left < cr.left - 1) { clipped = true; return true; }
       return false;
     });
     var hidden = 0;
@@ -313,7 +316,7 @@
     /* a preset's own floor (per class): the form it names needs its rows (the switch ladder) */
     var pm = pre && pre.hMin ? (typeof pre.hMin === 'object' ? pre.hMin[cls.name] || 0 : pre.hMin) : 0;
     var hMin = Math.max(ks.hMin || 3, 3, pm), hMax = Math.max(hMin, Math.min(ks.hMax || 30, 40));
-    var fb = Math.max(hMin, Math.min(hMax, pre ? pre.h : hMin)), want = fit === 'all' ? null : +fit;
+    var fb = Math.max(hMin, Math.min(hMax, pre ? pre.h : hMin)), want = fit === 'all' || fit === 'items' ? null : +fit;
     var card = null, top = null, lo = hMin, hi = hMax, phase = 'top';
     var at = function (h) {
       if (!card) { var host = hostEl(); if (!host) throw new Error('no host'); card = ghostCard(id); host.appendChild(card); }
@@ -328,6 +331,8 @@
         if (top.whole > 0 && r.whole < top.whole) return false;
         return top.folded ? r.hidden <= top.hidden : !r.folded;
       }
+      /* fit 'items': every item of the kind (every family of a context ring), its other facts may fold to the count */
+      if (fit === 'items' && top.items > 0) return r.items >= top.items;
       if (top.items > 0) return r.items >= Math.min(want, top.items);
       if (top.whole > 0) return r.whole >= top.whole;
       return top.folded ? r.hidden <= top.hidden : !r.folded;

@@ -1531,6 +1531,12 @@
       (pk ? ' · ' + esc(t('charts.busiest')) + ' <b>' + esc(pk.label) + '</b>' : '') + '</span>' +
       '<span class="pmu-hs-key is-first"><i data-step="0"></i>' + esc(t('charts.heat_nothing')) + '</span><span class="pmu-hs-key"><i data-step="-1"></i>' + esc(t('charts.heat_outside')) + '</span>');
     if (pk) { var pc = c.el.querySelector('.pmu-hc[data-r="' + pk.row + '"][data-c="' + pk.col + '"]'); if (pc) pc.setAttribute('data-peak', '1'); }
+    /* (lane c-presets) the legend as laid out: where its words wrap to more lines than the estimate (the NieR face, a bold
+       peak), the cells give up the difference, so the legend's last line never sits under the card's edge */
+    if (!ownLeg && Hh > 0) {
+      var over = grid.offsetHeight + 12 + lg.offsetHeight + 2 - Hh;
+      if (over > 0 && cellH > 11) { cellH = Math.max(11, cellH - Math.ceil(over / Math.max(1, rows.length))); grid.style.setProperty('--hc-h', cellH + 'px'); }
+    }
     void morph;
   }
 

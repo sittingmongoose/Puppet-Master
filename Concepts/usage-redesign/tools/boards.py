@@ -36,7 +36,8 @@ LEVELS = {'G': 'glance', 'D': 'detailed', 'X': 'diagnostics'}
 # 929 px), per board class (S / M / L / XL) where a class should offer a wider card, or the board's width ('full'); the
 # engine resolves it to the same pixel width at the live pitch (42-cards.js widthAt), so a preset is the same card on a
 # 400 px board and a 1600 px one. Its height is rows, or by content: fit = n (the smallest height that shows n complete
-# items: accounts, rows, resets, models) or 'all' (the smallest that folds nothing), measured at runtime by rendering the
+# items: accounts, rows, resets, models), 'items' (every item, other facts may fold to the head count: every family of a
+# context ring) or 'all' (the smallest that folds nothing), measured at runtime by rendering the
 # kind in a hidden card at that width (42-cards.js); h is then the fallback before the measure (and what --check
 # validates). hmin = the smallest height a fit preset may take (a form that needs its rows: the switch ladder); minpx =
 # the card width the preset's form needs (not offered on a narrower board: the one-line switch strip on a 400 px board).
@@ -102,7 +103,7 @@ KINDS = {
         P('compact', 'Compact', 6, 7, 'State, Settings link and note'),
         P('expanded', 'Expanded', 8, 8, 'Every setup fact', fit='all')]),
     'context': (4, 14, 5, 14, [
-        P('compact', 'Compact', 6, 10, 'The ring and every family', fit='all'),
+        P('compact', 'Compact', 6, 10, 'The ring and every family', fit='items'),
         P('expanded', 'Expanded', 12, 13, 'Adds every fact, route and compaction', fit='all')]),
     'trend': (4, None, 4, 20, [
         P('compact', 'Compact', 5, 5, 'The number and its sparkline'),
@@ -119,7 +120,9 @@ KINDS = {
         P('standard', 'Standard', 8, 10, 'Projection chart and burn facts'),
         P('expanded', 'Expanded', WIDE(), 10, 'Adds plan versus metered')]),
     'heat': (6, None, 5, 14, [
-        P('standard', 'Standard', 8, 10, 'Every hour of the week'),
+        # 11 rows: at 368 px the legend wraps to three lines and 10 rows left the cells at their 11 px floor with the
+        # legend's last line under the card's edge (NieR, agent 4)
+        P('standard', 'Standard', 8, 11, 'Every hour of the week'),
         P('wide', 'Wide', WIDE(), 11, 'Adds hour labels and Tokens / Cost')]),
     'agenda': (6, None, 4, 40, [
         P('compact', 'Compact', (6, 6, 6, 6), 10, 'The next four resets', fit=4),
@@ -628,8 +631,8 @@ def check_presets() -> list[str]:
                 pm = pm.get(cls) if isinstance(pm, dict) else pm
                 if pm is not None and not (hmin <= pm <= hmax):
                     problems.append(f'kind {kind} preset {p["id"]} at {cls}: hMin {pm} outside {hmin}-{hmax}')
-                if fit is not None and fit != 'all' and not (isinstance(fit, int) and fit > 0):
-                    problems.append(f'kind {kind} preset {p["id"]}: fit must be a positive count or "all"')
+                if fit is not None and fit not in ('all', 'items') and not (isinstance(fit, int) and fit > 0):
+                    problems.append(f'kind {kind} preset {p["id"]}: fit must be a positive count, "items" or "all"')
                 key = (w, h if fit is None else ('fit', fit))
                 if key in seen:
                     problems.append(f'kind {kind} at {cls}: presets {seen[key]} and {p["id"]} are the same size')
