@@ -43173,8 +43173,8 @@ canonical_text: >-
   The terminal's effects are Puppet Master's own (DL-183) and follow one policy. They are event-driven: the effect
   pass runs only after the screen repainted or while something is still animating. Only the focused, visible
   terminal animates; ambient motion stops when the terminal is idle; motion is off on battery saver; and where no GPU
-  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain, a static
-  scanline pattern and a static glow, curvature, burn-in and noise are not drawn, and the Appearance popover says
+  draws the terminal (on the desktop, the Skia CPU raster of F3-582), only the static fallbacks remain (a static
+  scanline pattern and a static glow), curvature, burn-in and noise are not drawn, and the Appearance popover says
   what it could not draw. Under Reduced Motion every moving part is off (cursor blink, cursor trail, smooth
   scrolling, burn-in, noise, flicker, degauss, bell flashes, progress sweeps and image animation) and the static looks
   stay (scanlines, glow, curvature and the parchment grain). The catalogue: inactive dimming, the focus ring, cursor
