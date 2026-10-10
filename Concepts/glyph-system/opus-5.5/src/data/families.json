@@ -1,0 +1,10 @@
+{
+  "list": [
+    {"id": "chat-modes", "title": "Chat modes and kinds", "from": "chat", "match": "^kind-|^grill$", "icon": "kind-crew", "intro": "The chat's session kinds. Every surface that names a session kind uses these."},
+    {"id": "chat-objects", "title": "Things", "from": "chat", "match": "^(goal|todo|users|changes|page|folder|folder-search|plan|clipboard|notebook|bookmark|calendar|table|image|camera|code|terminal|file-edit|monitor-play|flask|chart|plug|brain|globe|branch|history|clock|hourglass|shield|bug|quote|lens|user|chat|star|lightning|wand|sparkles|speaker|speaker-off|link|outbox|hand|sealed|lock|pin|pin-lock|archive)$", "icon": "folder", "intro": "Concept glyphs: they name a thing and stay lit and still until their host is hovered."},
+    {"id": "chat-actions", "title": "Actions and controls", "from": "chat", "exclude": "^kind-|^grill$|^(goal|todo|users|changes|page|folder|folder-search|plan|clipboard|notebook|bookmark|calendar|table|image|camera|code|terminal|file-edit|monitor-play|flask|chart|plug|brain|globe|branch|history|clock|hourglass|shield|bug|quote|lens|user|chat|star|lightning|wand|sparkles|speaker|speaker-off|link|outbox|hand|sealed|lock|pin|pin-lock|archive)$", "icon": "sliders", "intro": "Controls: unlit at rest, they ignite on hover or focus and play their act once."},
+    {"id": "terminal", "title": "Terminal", "from": "pmg", "icon": "terminal", "intro": "The terminal tab kind and the command marks (Jared, PLN-3: redesign them).", "empty": "Being drawn by the second designer."},
+    {"id": "panels", "title": "Panels and tab kinds", "from": "pmg", "icon": "page", "intro": "The universal panels' tab kinds and tab marks.", "empty": "Being drawn."},
+    {"id": "rail", "title": "Left rail", "from": "pmg", "icon": "sliders", "intro": "The rail's own items that the chat set does not draw.", "empty": "Being drawn."}
+  ]
+}

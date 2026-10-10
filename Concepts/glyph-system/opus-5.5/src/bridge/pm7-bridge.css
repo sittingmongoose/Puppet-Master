@@ -1,0 +1,32 @@
+/* pm7-bridge.css: hands PMConcept7's looks to the 5.6 Pro neon grammar (neon-icons.css).
+ * OWNER: pm7-glyphs (2026-10-10). Loads after pm7-looks.css and pm7-glyph-inks.css (both generated), before neon-icons.css.
+ *
+ * neon-icons.css reads the chat's token names on body (--danger, --warning, --accent, --accent-2, --positive, --muted,
+ * --subtle, --text) and keys light/dark on body[data-theme]. PMConcept7 names its tokens differently (--accent-error,
+ * --accent-warning, --accent-blue, ...) on html[data-theme]. This file restates the chat's names from the fitted glyph
+ * inks (tools/tune_inks.py: every tone >= 3.1:1 on every field of its look, one hue per tone), so the neon CSS runs
+ * unchanged. The page sets data-theme on body too (the rollout does the same in PMConcept7's theme writer).
+ * Glyph inks are not text inks: --text keeps PM7's primary text, which is what a hovered control lights to.
+ */
+html[data-theme] body {
+  --danger: var(--pmg-ink-blocked);
+  --warning: var(--pmg-ink-attention);
+  --accent: var(--pmg-ink-working);
+  --accent-2: var(--pmg-ink-changed);
+  --positive: var(--pmg-ink-done);
+  --muted: var(--pmg-ink-paused);
+  --subtle: var(--pmg-ink-idle);
+  --nx-idle: var(--pmg-ink-idle);
+  --text: var(--text-primary);
+  /* the default ink of a concept glyph: PM7's secondary text, lit by its halo (dark) or its ink alone (light) */
+  --pmg-ink-concept: var(--text-secondary);
+}
+/* NieR's tone inks are the NieR tables' (pm7-glyph-inks.css); the neon NieR section reads --o55-nier-ink-rgb. */
+
+/* The weight ladder (pm7-glyphs-designer2, NEON-GRAMMAR.md section 2, measured at dpr 1; confirmed 2026-10-10): the
+   source's 1.8 paints 0.9 px at 12 px, where a check almost vanishes. Keyed on the size the renderer writes, at zero
+   specificity, so any context that sets its own --nx-stroke-base (the rail, complete's bold check) still wins. */
+svg:where(.nx[width="10"], .nx[width="11"]) { --nx-stroke-base: 3; }
+svg:where(.nx[width="12"], .nx[width="13"]) { --nx-stroke-base: 2.6; }
+svg:where(.nx[width="14"], .nx[width="15"]) { --nx-stroke-base: 2.3; }
+svg:where(.nx[width="16"], .nx[width="17"], .nx[width="18"]) { --nx-stroke-base: 2; }
