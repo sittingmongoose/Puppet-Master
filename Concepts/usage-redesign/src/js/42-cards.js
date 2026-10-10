@@ -172,10 +172,33 @@
   /* the heights of the last opening of the picker: each opening measures afresh (the data may have changed), and until it
      has, a pick, a row and a Shift step use these (no 80-160 ms measure in the click; the idle measure corrects a row) */
   var fitStale = {};
-  /* widget id -> {class: {w, h, px, pid}}: the preset a panel was last set to from the menu at each board class (its fit
-     height); kept in the layout record (40-board, presets), so a reload keeps the preset's name */
+  /* widget id -> {class: {w, h, px, pid}}: the preset a panel was set to at each board class (from the size picker or a
+     keyboard Shift step), with its fit height and the pixel width that height belongs to. Not stored: the layout record
+     keeps only the preset's table id (preset_id, WS-020); the sizes come from that id and the preset table */
   var picked = {};
-  function pickedAt(id, cls) { return picked[id] ? picked[id][cls] || null : null; }
+  /* widget id -> the preset_id read from the layout record (a table id, or a legacy value to map once), until the card is
+     first seen on the board: the size it was saved at becomes that preset's entry at the board's class, and holdTarget
+     then re-resolves it there (a reload in another look, a narrower board) */
+  var held = {};
+  function pickedAt(id, cls) {
+    var pk = picked[id] ? picked[id][cls] || null : null;
+    if (pk || !held[id] || cls !== clsNow().name) return pk;
+    var r = PMU.board && PMU.board.rect ? PMU.board.rect(id) : null; if (!r) return null;
+    var h0 = held[id]; delete held[id];
+    var pid = typeof h0 === 'string' ? h0 : legacyId(id, r, h0);
+    return pid ? ((picked[id] = picked[id] || {})[cls] = { w: r.w, h: r.h, px: pxOf(r.w), pid: pid }) : null;
+  }
+  /* preset_id_restore (WS-020): a stored value that is not one of the kind's table ids (a display name such as
+     'Expanded', 'custom', a retired id, or the earlier per-class presets map) maps once to the current preset of the same
+     size, else to null; the next save writes the table id or null */
+  function legacyId(id, r, old) {
+    var cls = clsNow().name, e = old.map && old.map[cls], ids = old.ids || [];
+    var same = allPresets(id).filter(function (p) { return p.w === r.w && (p.fit == null || p.measured ? p.h === r.h : true); });
+    var fixed = same.filter(function (p) { return p.fit == null || p.measured; });
+    var byMap = e && e.w === r.w && e.h === r.h ? same.filter(function (p) { return p.id === e.id; })[0] : null;
+    var byName = same.filter(function (p) { return p.name === old.name && ids.indexOf(p.id) >= 0; })[0];
+    return (byMap || byName || fixed[0] || {}).id || null;
+  }
   function clsNow() { return PMU.board && PMU.board.cls ? PMU.board.cls() : { name: 'S', tracks: 12, pitchX: 47 }; }
   function viewKey(id) {
     var l = PMU.theme.look(), c = cfgOf(id);
@@ -229,19 +252,41 @@
   }
   /* the preset name of a size (the menu's "Current", the resize outline, the layout record's preset_id): with the widget
      id, the preset it was last set to or a measured preset of that size; without, a fixed preset of that size */
-  function sizeName(ks, w, h, id) {
+  function sizePreset(ks, w, h, id) {
     var cls = clsNow().name;
     if (id) {
       var pk = pickedAt(id, cls), list = presetsOf(id);
       if (pk && pk.w === w && pk.h === h) {
         var mine = function (p) { return p.id === pk.pid && p.w === w; };
-        var hit = list.filter(mine)[0] || allPresets(id).filter(mine)[0]; if (hit) return hit.name;
+        var hit = list.filter(mine)[0] || allPresets(id).filter(mine)[0]; if (hit) return hit;
       }
-      var m = list.filter(function (p) { return p.w === w && p.h === h && p.measured; })[0];
-      return m ? m.name : null;
+      return list.filter(function (p) { return p.w === w && p.h === h && p.measured; })[0] || null;
     }
-    var c0 = clsNow(), q = (ks && ks.presets || []).filter(function (x) { return offered(x, cls) && x.fit == null && widthAt(x, ks, c0) === w && x.h === h; })[0];
-    return q ? q.name : null;
+    var c0 = clsNow();
+    return (ks && ks.presets || []).filter(function (x) { return offered(x, cls) && x.fit == null && widthAt(x, ks, c0) === w && x.h === h; })[0] || null;
+  }
+  function sizeName(ks, w, h, id) { var p = sizePreset(ks, w, h, id); return p ? p.name : null; }
+  /* the layout record's and the resize command's preset_id: the preset's table id (compact, standard, expanded, wide,
+     full, strip, panel, ladder, band), never its display name; null for a size between presets (WS-020) */
+  function sizeId(ks, w, h, id) { var p = sizePreset(ks, w, h, id); return p ? p.id : null; }
+  /* WS-020: a chosen preset keeps its id when the board's pitch or its fit height changes (a look change, a reload in
+     another look, a narrower board): the card takes the preset's newly resolved size instead of reading as a custom
+     size. r: the card's rectangle now. -> {w, h} to resize to; {job} when a fit height must be measured first (the
+     board steps it in idle time and asks again); null when the card is not at its preset (resized away since: a custom
+     size), the preset is not offered here, or the card already has the preset's size */
+  function holdTarget(id, r) {
+    var cls = clsNow().name, pk = pickedAt(id, cls);
+    if (!pk || !r || r.w !== pk.w || r.h !== pk.h) return null;
+    var p = allPresets(id).filter(function (x) { return x.id === pk.pid; })[0]; if (!p) return null;
+    var h = p.h;
+    if (p.fit != null) {
+      var k = fitCache[fitKeyOf(id, cls, p.w, p.fit)];
+      if (k == null) return { job: fitJob(id, p.w, p.fit) };
+      h = k;
+    }
+    if (p.w === r.w && h === r.h) return null;
+    (picked[id] = picked[id] || {})[cls] = { w: p.w, px: pxOf(p.w), h: h, pid: p.id };
+    return { w: p.w, h: h };
   }
 
   /* ---- the hidden card: the real kind rendered at a preset's size (the fit measure and the picker's miniature) ---- */
@@ -850,30 +895,26 @@
     menu: function (id, anchor) { return PMU.menu.toggle(anchor, cardMenuSpec(id)); },
     sizeMenu: function (id, anchor) { if (!(pv && pv.id === id)) freshFits(id); return PMU.menu.toggle(anchor, sizeMenuSpec(id)); },
     gear: function (id, anchor) { return PMU.menu.toggle(anchor, gearSpec(id)); },
-    sizeName: sizeName,
+    sizeName: sizeName, sizeId: sizeId, holdTarget: holdTarget,
     /* the presets of a panel at the board's class now ([{id, name, desc, w, h, fit, measured}]), a fit preset's measured
        height, and applying one (the keyboard's Shift steps, the API, the probes) */
     presets: presetsOf, presetH: function (id, p) { return presetH(id, p); }, measureFit: measureFit,
     applyPreset: function (id, pid) { return applySize(id, 'size:' + pid); }, _fitLog: null, warmFits: warmFits,
     /* a preset the keyboard's Shift steps landed on, at the size it landed (40-board, on Enter) */
     notePick: function (id, pid, w, h) { (picked[id] = picked[id] || {})[clsNow().name] = { w: w, px: pxOf(w), h: h, pid: pid }; },
-    /* the layout record's presets ({class: {id, w, h, px}}): the preset a panel was set to at each class while its geometry
-       there is still that size (40-board writes and reads it) */
-    presetsSet: function (id, geo) {
-      var out = null, mine = picked[id] || {};
-      Object.keys(mine).forEach(function (cls) {
-        var pk = mine[cls], g = geo && geo[cls];
-        if (pk && g && g.w === pk.w && g.h === pk.h) (out = out || {})[cls] = { id: pk.pid, w: pk.w, h: pk.h, px: pk.px };
-      });
-      return out;
+    /* the layout record's preset_id, read on load (40-board): a table id of the widget's kind is held as it is; anything
+       else (a display name, 'custom', a retired id, with the earlier per-class presets map if the record has one) is
+       mapped once by size (legacyId); null holds nothing */
+    holdStored: function (id, stored, legacyMap) {
+      delete held[id];
+      var ids = ((PMU.widgets.spec(id) || {}).presets || []).map(function (p) { return p.id; });
+      if (typeof stored === 'string' && ids.indexOf(stored) >= 0) { held[id] = stored; return; }
+      if ((stored != null && stored !== '') || (legacyMap && typeof legacyMap === 'object')) held[id] = { name: stored, map: legacyMap || null, ids: ids };
     },
-    seedPresets: function (id, set, geo) {
-      Object.keys(set || {}).forEach(function (cls) {
-        var e = set[cls], g = geo && geo[cls];
-        if (!e || typeof e.id !== 'string' || !g || g.w !== e.w || g.h !== e.h) return;
-        (picked[id] = picked[id] || {})[cls] = { w: e.w, h: e.h, px: +e.px || 0, pid: e.id };
-      });
-    }
+    /* the preset id a card is held at but not yet seen at the board's class (another room): kept as it is by a save */
+    heldId: function (id) { return typeof held[id] === 'string' ? held[id] : null; },
+    /* the preset a card was set to at a board class, while its size there is still w x h */
+    pickedId: function (id, cls, w, h) { var pk = picked[id] && picked[id][cls]; return pk && pk.w === w && pk.h === h ? pk.pid : null; }
   };
 
   /* ---- the head's room for its actions (Jared's note 6b, 2026-10-09) ----
