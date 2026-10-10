@@ -177,6 +177,17 @@ lines leave scrollback. Text written over a sixel or iTerm2 image cuts the image
 saved scrollback or backups. While an image decodes or a file is read, later output waits, so text after an image
 always lands after it.
 
+Per renderer:
+- Skia (desktop): one draw per placement per frame, clipped to the rows being painted, in the tier order above; GPU
+  textures cached by (image id, frame); placeholder cells draw their slice of the fitted image like a glyph.
+- Leptos (web client, DL-139): the host streams row-model diffs; images travel as a separate image-store diff (id,
+  frame, size, bytes once) and are drawn on one canvas layer per tier inside the terminal's box, positioned by
+  (anchor row - viewport top) x row height and clipped to the box, so they scroll and clip with the rows. Negative-z
+  tiers need transparent default-background rows (the default background is painted by the box, as in the concept).
+  Placeholder cells are drawn as a CSS background slice of the image on their own cells.
+- The concept (canvas 2D) does the Skia order on one canvas and repaints only rows whose content, overlays or cursor
+  changed; a change to any image redraws the visible rows.
+
 Accessible buffer and agent reads: an image is described as `[image W×H px]` (with ", animated"); a Unicode-placeholder
 run as `[image]`. Image animation pauses under Reduced Motion and while the terminal is hidden.
 
