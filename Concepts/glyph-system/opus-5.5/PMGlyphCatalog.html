@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="770156b24022">
+<meta name="pmg-build" content="2fa274e64d9e">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -2910,6 +2910,25 @@ window.PMG_DATA = {"decisions":{"cards":[{"id":"GLY-0","title":"Make this the Pu
   G.map('st-working', { family: 'panels', replaces: ['panels 32-strip.js busy (no strip visual today)', 'panels 63-kind-docs.css plan-busy-dot'], surfaces: ['panels tab strip (mark slot)', 'plan Build button'] });
   G.map('st-info', { family: 'panels', replaces: ['panels 32-strip.js attention square for a background-opened tab or new output', 'terminal 70-view.js bell (unfocused) raising the attention square', 'panels 22-tools.js tools-mark:info'], surfaces: ['panels tab strip (mark slot)', 'Problems list'] });
   G.map('change-modified', { family: 'panels', replaces: ['panels 32-strip.js dirty dot in the close slot (.pmw-tdot, 10-panels.css:172)'], surfaces: ['panels tab strip (close slot)'] });
+
+  /* ---------------------------------------------------------------- home-panels round two and addendum 3 (2026-10-10) */
+  /* Icons added after the sources above, reviewed with home-panels: each maps to a glyph the system already has. The
+   * dashboard's Live mark is working's own (the vocabulary lists "live" as an alias of working), not a new shape: a
+   * second drawing for one meaning would break one-meaning-per-shape from the other side. A Debug Console session that
+   * ended takes the mark of how it ended, not idle (idle means "ready for input"). */
+  G.map('server', { family: 'panels', replaces: ['panels "+" menu SSH hosts row (remote; D39; Retro text "//")'], surfaces: ['panels "+" menu'] });
+  G.map('st-working', { family: 'panels', replaces: ['dashboard header Live mark ("Live" text with a per-beat pulse; still, its act once per beat: P12)', 'Debug Console session sub-tab: running (D33)'], surfaces: ['dashboard header', 'Debug Console sub-tabs'] });
+  G.map('st-paused', { family: 'panels', replaces: ['Debug Console session sub-tab: paused (D33)'], surfaces: ['Debug Console sub-tabs'] });
+  G.map('st-complete', { family: 'panels', replaces: ['Debug Console session sub-tab: ended normally (D33)'], surfaces: ['Debug Console sub-tabs'] });
+  G.map('st-failed', { family: 'panels', replaces: ['Debug Console session sub-tab: ended with an error (D33)'], surfaces: ['Debug Console sub-tabs'] });
+  G.map('st-skipped', { family: 'panels', replaces: ['Debug Console session sub-tab: stopped by you (D33)'], surfaces: ['Debug Console sub-tabs'] });
+  G.map('ring-dot', { family: 'panels', replaces: ['Debug Console "paused at <file:line>" link (target)'], surfaces: ['Debug Console'] });
+  G.map('play', { family: 'panels', replaces: ['session "run" (cargo run in a session)', 'Board menu "Play the next hour"'], surfaces: ['Debug Console', 'dashboard Board menu'] });
+  G.map('clock', { family: 'panels', replaces: ['dashboard "Demo time HH:MM" fact (Play the next hour)', 'Board menu "Back to now" (history means the past, so not history)'], surfaces: ['dashboard header', 'dashboard Board menu'] });
+  G.map('layout', { family: 'panels', replaces: ['Board menu "Start from"'], surfaces: ['dashboard Board menu'] });
+  G.map('save', { family: 'panels', replaces: ['Board menu "Save as preset" (keep, the bookmark, stays for keeping a preview tab)'], surfaces: ['dashboard Board menu'] });
+  G.map('signal', { family: 'panels', replaces: ['Board menu "Live readings" (the feed; the row\'s check stays the toggle state)'], surfaces: ['dashboard Board menu'] });
+  G.map('open', { family: 'panels', replaces: ['Output picker "Open in new tab" (outputNewTab)'], surfaces: ['Output picker'] });
 
   /* ---------------------------------------------------------------- tab kinds the chat set already draws */
   G.map('page', { family: 'panels', replaces: ['panels 06-icons.js file, document, artifact (tab kinds)'], surfaces: ['panels tab strip'] });
