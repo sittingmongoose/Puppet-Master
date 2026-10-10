@@ -44,7 +44,8 @@ slot holds.
 |---|---|
 | Strip height | 35 px for every panel (provisional: Jared set 35 for editors in rev 19; research suggested 32) |
 | Tab height | 31 px (the plate overlaps the body by 1 px: tab and body are one surface) |
-| Gap between tabs | 8 px (Retro 2 px) so the concave shoulders show mid-strip (provisional, question 1 to Jared) |
+| Glass dark active tab | no tinted plate: the active tab fuses with its panel's own surface, as in the other looks (Jared, 2026-10-10: the purple plate is dropped) |
+| Gap between tabs | 8 px (Retro 2 px) so the concave shoulders show mid-strip (approved by Jared, 2026-10-10) |
 | Silhouette contact | measured to the neighbour's content: its box inset by 8 px; morph window 20 px, linear |
 | Widths | natural 96-200; inactive tabs shrink to 72; then 36 px icons; the active tab keeps at least 120 and never hides; then a contiguous window around the active tab stays and "+N" counts the rest |
 | Pinned tab | 36 px, icon only, left, never hidden |
