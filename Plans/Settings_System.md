@@ -3105,14 +3105,14 @@ canonical_text: >-
   Teacher persona explains commands in the chat), code.terminal.tab-role (shell profiles and the tab label) and
   code.terminal.search (find is always there). The chat width, revealing an already open file, an empty panel's
   fate, what "+" does and the close button's side are not rows. With SSYS-051's thirty-six rows, the inventory
-  holds 963 rows (916 plus 47 added), of which 8 are retired, so Settings draws 955.
+  holds 963 rows (916 plus 47 added), of which 8 are retired, leaving 955 live rows.
 gui_related: true
 gui_classification_reason: Each row is a visible Settings control for the home panels, tabs, editor or chat column, and the retirements remove visible rows.
 split_recommended: false
 depends_on: [DL-180, DL-181, SSYS-002, SSYS-004, SSYS-009, SSYS-040, SSYS-042, F3-630, F3-636, F3-637, F3-639]
 unblocks: []
 acceptance_criteria:
-  - "A census of Plans/settings_inventory.json finds 963 unique ids in 12 categories; the 8 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, so 955 rows are drawn."
+  - "A census of Plans/settings_inventory.json finds 963 unique ids in 12 categories; the 8 rows retired here end their descriptions with (Superseded by ...) and render on no page, in no manager and in no search result, leaving 955 live rows."
   - "The eleven added rows exist once each with their listed type, choices and default, scope global, and a valid category.subgroup.key id."
   - "Changing any added or amended row applies at once with no restart badge, and no Settings change opens, closes, moves or rearranges a panel or tab that is already open."
   - "No row writes the Home layout record: dragging the chat's width, pinning History and popping the chat out change only the layout record, and Chat History List decides only how a workspace with no saved choice starts."
