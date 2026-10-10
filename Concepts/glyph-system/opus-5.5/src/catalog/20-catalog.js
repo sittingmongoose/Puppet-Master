@@ -62,7 +62,8 @@
   /* ------------------------------------------------------------ data */
   var STATUS = N.STATUS;
   var EXTRA = (D.status && D.status.extra) || {};           /* PMG statuses beyond the chat's 13 (10-status.js data) */
-  var SURF = (D.status && D.status.surfaces) || {};         /* status key -> the PM7 words that map to it, by surface */
+  var SURF = (D.status && D.status.surfaces) || {};
+  var MEANING = (D.status && D.status.meaning) || {};         /* status key -> the PM7 words that map to it, by surface */
   var STATUS_ORDER = ((D.status && D.status.order) || Object.keys(STATUS)).filter(function (k) { return STATUS[k] || EXTRA[k]; });
   var families = (D.families && D.families.list) || [];
   var records = G.records();
@@ -95,12 +96,12 @@
     var sec = SECTIONS[0];
     var rows = STATUS_ORDER.map(function (k) {
       var S = STATUS[k] || EXTRA[k], words = SURF[k] || {}, isNew = !STATUS[k];
-      var aliasHtml = Object.keys(words).map(function (s) { return '<b>' + esc(s) + '</b> ' + esc(words[s].join(', ')); }).join(' · ') || ('<b>chat</b> ' + esc((S.aliases || []).join(', ')));
+      var aliasHtml = Object.keys(words).map(function (s) { return '<b>' + esc(s) + '</b> ' + esc(words[s].join(', ')); }).join(' · ') || ((S.aliases || []).length ? '<b>chat</b> ' + esc(S.aliases.join(', ')) : '');
       return '<div class="pmg-st-row" data-status="' + esc(k) + '">' +
         '<div class="pmg-st-name">' + statusMark(k, 20) + '<div>' + esc(S.label || k) + (isNew ? ' <span class="pmg-origin-new">new</span>' : '') + '<small>' + esc(S.glyph) + ' · tone ' + esc(S.tone) + '</small></div></div>' +
         '<div class="pmg-sizes">' + SIZES.map(function (z) { return '<span>' + statusMark(k, z) + z + '</span>'; }).join('') + '</div>' +
         '<div class="pmg-line pmg-live">' + statusMark(k, 15) + '<span>' + esc((S.example || 'Refactor the settings store')) + '</span><span class="pmg-line-sub">' + esc(S.label || k) + '</span></div>' +
-        '<div><div class="pmg-meaning">' + esc(S.meaning || S.motion || '') + '</div><div class="pmg-aliases">' + aliasHtml + '</div></div>' +
+        '<div><div class="pmg-meaning">' + esc(MEANING[k] || S.meaning || '') + '</div>' + (S.motion && S.motion !== 'none' ? '<div class="pmg-motion">Motion: ' + esc(S.motion) + '</div>' : '') + '<div class="pmg-aliases">' + aliasHtml + '</div></div>' +
         '<div class="pmg-contrast" data-measure>…</div></div>';
     }).join('');
     el.innerHTML = head(sec, 'One meaning per shape, everywhere',

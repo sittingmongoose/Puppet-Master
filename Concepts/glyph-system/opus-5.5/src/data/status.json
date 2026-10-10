@@ -1,5 +1,555 @@
 {
-  "order": ["waiting", "blocked", "failed", "recovering", "reviewing", "working", "waiting-dep", "pending", "mixed", "complete", "paused", "skipped", "idle"],
-  "extra": {},
-  "surfaces": {}
+ "order": [
+  "waiting",
+  "blocked",
+  "failed",
+  "warning",
+  "offline",
+  "recovering",
+  "reviewing",
+  "working",
+  "waiting-dep",
+  "pending",
+  "mixed",
+  "complete",
+  "paused",
+  "skipped",
+  "off",
+  "idle",
+  "info",
+  "change-added",
+  "change-modified",
+  "change-deleted",
+  "change-renamed"
+ ],
+ "extra": {
+  "warning": {
+   "glyph": "st-warning",
+   "tone": "attention",
+   "label": "warning",
+   "meaning": "Something needs care, but nothing has failed: degraded, low quota, setup incomplete. Its shape waits on GLY-1 (shown here as option A).",
+   "example": "Quota at 92 % this week"
+  },
+  "offline": {
+   "glyph": "st-offline",
+   "tone": "attention",
+   "label": "offline",
+   "meaning": "A service, provider or machine that should answer cannot be reached.",
+   "example": "Codex provider unreachable"
+  },
+  "off": {
+   "glyph": "st-off",
+   "tone": "paused",
+   "label": "off",
+   "meaning": "Not set up, disabled or not installed: nothing is running and nothing is wrong.",
+   "example": "GitHub sync not set up"
+  },
+  "info": {
+   "glyph": "st-info",
+   "tone": "idle",
+   "label": "info",
+   "meaning": "A neutral notice: nothing is wrong and nothing is asked.",
+   "example": "Syncing the project index"
+  },
+  "change-added": {
+   "glyph": "change-added",
+   "tone": "done",
+   "label": "added",
+   "meaning": "A new file or item (editor, source control, document history). Not a run state.",
+   "example": "src/rail/menu.ts"
+  },
+  "change-modified": {
+   "glyph": "change-modified",
+   "tone": "changed",
+   "label": "modified",
+   "meaning": "Changed since it was saved or committed; also the dirty tab mark.",
+   "example": "src/rail/menu.ts"
+  },
+  "change-deleted": {
+   "glyph": "change-deleted",
+   "tone": "blocked",
+   "label": "deleted",
+   "meaning": "Removed.",
+   "example": "src/rail/legacy.ts"
+  },
+  "change-renamed": {
+   "glyph": "change-renamed",
+   "tone": "changed",
+   "label": "renamed",
+   "meaning": "Renamed or moved.",
+   "example": "src/rail/index.ts"
+  }
+ },
+ "meaning": {
+  "waiting": "Needs you: a question, a permission, a sign-in, a choice. Leads every list.",
+  "blocked": "Cannot go on until something outside it changes (stalled, locked, no access).",
+  "failed": "Ended in an error. Its shape waits on GLY-1 (shown here as the chat draws it today).",
+  "recovering": "Retrying or taking a fallback route on its own.",
+  "reviewing": "Checking or verifying work.",
+  "working": "Running now.",
+  "waiting-dep": "Waiting on something else to finish first (a dependency or a build window).",
+  "pending": "Queued or next; it will start on its own.",
+  "mixed": "Partly done, partly not (some checks passed, some failed).",
+  "complete": "Finished successfully.",
+  "paused": "Stopped on purpose; it can resume.",
+  "skipped": "Will not run: cancelled, expired, stale or set aside.",
+  "idle": "Ready; nothing is happening."
+ },
+ "surfaces": {
+  "complete": {
+   "chat": [
+    "complete",
+    "completed",
+    "wt-clean"
+   ],
+   "chrome": [
+    "healthy",
+    "logged-in"
+   ],
+   "home": [
+    "is-done"
+   ],
+   "onboarding": [
+    "done"
+   ],
+   "orchestrator": [
+    "complete"
+   ],
+   "panels": [
+    "complete",
+    "done",
+    "ok",
+    "ok line",
+    "pass",
+    "verified",
+    "yes"
+   ],
+   "projects": [
+    "healthy"
+   ],
+   "rail": [
+    "ok"
+   ],
+   "settings": [
+    "ok"
+   ],
+   "statusbar": [
+    "complete",
+    "dot-ok"
+   ],
+   "terminal": [
+    "exit 0",
+    "long command done",
+    "markok",
+    "ok"
+   ],
+   "toast": [
+    "success"
+   ],
+   "tour": [
+    "pip-done",
+    "tick-done"
+   ],
+   "wizard": [
+    "approved-ok"
+   ]
+  },
+  "failed": {
+   "chat": [
+    "failed"
+   ],
+   "chrome": [
+    "critical"
+   ],
+   "home": [
+    "is-fail"
+   ],
+   "panels": [
+    "bad",
+    "bad tone",
+    "error",
+    "error line",
+    "fail",
+    "failed",
+    "needs retry",
+    "tool-error"
+   ],
+   "projects": [
+    "error"
+   ],
+   "rail": [
+    "fail"
+   ],
+   "settings": [
+    "error",
+    "failed"
+   ],
+   "terminal": [
+    "error",
+    "exit n",
+    "fail",
+    "failed",
+    "invalid pattern",
+    "markfail"
+   ],
+   "toast": [
+    "error"
+   ],
+   "usage": [
+    "exhausted"
+   ]
+  },
+  "mixed": {
+   "chat": [
+    "wt-dirty"
+   ],
+   "rail": [
+    "c (conflict)",
+    "conflict",
+    "dirty",
+    "warn"
+   ]
+  },
+  "blocked": {
+   "chat": [
+    "blocked"
+   ],
+   "orchestrator": [
+    "blocked"
+   ],
+   "panels": [
+    "blocked",
+    "locked",
+    "no access",
+    "stalled"
+   ],
+   "rail": [
+    "blocked",
+    "immutable"
+   ],
+   "settings": [
+    "blocked",
+    "locked"
+   ],
+   "wizard": [
+    "blocked"
+   ]
+  },
+  "info": {
+   "chat": [
+    "unread"
+   ],
+   "rail": [
+    "info"
+   ],
+   "settings": [
+    "info",
+    "neutral"
+   ],
+   "toast": [
+    "info"
+   ]
+  },
+  "working": {
+   "chat": [
+    "running",
+    "working"
+   ],
+   "home": [
+    "is-run"
+   ],
+   "orchestrator": [
+    "compiling",
+    "live-run",
+    "planning",
+    "running"
+   ],
+   "panels": [
+    "agent-driven",
+    "busy",
+    "loading",
+    "reading",
+    "rendering",
+    "running",
+    "working"
+   ],
+   "projects": [
+    "running"
+   ],
+   "rail": [
+    "live",
+    "run"
+   ],
+   "settings": [
+    "active",
+    "in use",
+    "running"
+   ],
+   "statusbar": [
+    "running"
+   ],
+   "terminal": [
+    "driving",
+    "indeterminate",
+    "progress",
+    "running",
+    "running command",
+    "value"
+   ],
+   "usage": [
+    "active",
+    "on"
+   ],
+   "wizard": [
+    "active",
+    "interviewing",
+    "ledger_syncing"
+   ]
+  },
+  "idle": {
+   "chrome": [
+    "ready"
+   ],
+   "orchestrator": [
+    "ready"
+   ],
+   "panels": [
+    "idle",
+    "ready",
+    "waiting"
+   ],
+   "projects": [
+    "idle",
+    "ready"
+   ],
+   "rail": [
+    "idle"
+   ],
+   "settings": [
+    "active",
+    "clean",
+    "enabled",
+    "ok",
+    "ready"
+   ],
+   "terminal": [
+    "idle",
+    "markneutral"
+   ],
+   "wizard": [
+    "pack-ready",
+    "ready"
+   ]
+  },
+  "pending": {
+   "chat": [
+    "queued"
+   ],
+   "home": [
+    "is-queue"
+   ],
+   "onboarding": [
+    "next/todo"
+   ],
+   "orchestrator": [
+    "pending-launch"
+   ],
+   "panels": [
+    "attention",
+    "next",
+    "queued",
+    "unverified"
+   ],
+   "rail": [
+    "pending",
+    "unknown"
+   ],
+   "usage": [
+    "unknown"
+   ]
+  },
+  "skipped": {
+   "chat": [
+    "cancelled"
+   ],
+   "chrome": [
+    "auth-expired"
+   ],
+   "panels": [
+    "out of date",
+    "set aside",
+    "stale"
+   ],
+   "projects": [
+    "archived",
+    "stale"
+   ],
+   "rail": [
+    "orphan",
+    "stale",
+    "stash"
+   ],
+   "terminal": [
+    "interrupted"
+   ]
+  },
+  "warning": {
+   "chat": [
+    "degraded"
+   ],
+   "chrome": [
+    "needs-setup",
+    "warning"
+   ],
+   "projects": [
+    "attn"
+   ],
+   "settings": [
+    "attention",
+    "needs attention",
+    "needs sign-in",
+    "needs-attention",
+    "needs-setup",
+    "needs-sign-in",
+    "needs-signin",
+    "not set up",
+    "not-set-up",
+    "problem",
+    "restart",
+    "setup"
+   ],
+   "statusbar": [
+    "attention"
+   ],
+   "toast": [
+    "warn",
+    "warn/info"
+   ],
+   "usage": [
+    "signed-out"
+   ],
+   "wizard": [
+    "impacted",
+    "pack-warn"
+   ]
+  },
+  "paused": {
+   "orchestrator": [
+    "paused"
+   ],
+   "panels": [
+    "paused",
+    "waiting"
+   ],
+   "projects": [
+    "paused"
+   ],
+   "settings": [
+    "paused"
+   ],
+   "terminal": [
+    "paused"
+   ],
+   "usage": [
+    "paused",
+    "standby"
+   ]
+  },
+  "waiting": {
+   "chat": [
+    "awaiting"
+   ],
+   "panels": [
+    "needs"
+   ],
+   "settings": [
+    "adjudication",
+    "needs-sign-in(remote-link)"
+   ],
+   "terminal": [
+    "attention",
+    "bell",
+    "notification",
+    "permission",
+    "permission ask",
+    "secret",
+    "secret prompt",
+    "waiting"
+   ],
+   "usage": [
+    "needs-seat"
+   ]
+  },
+  "reviewing": {
+   "chrome": [
+    "validating"
+   ],
+   "settings": [
+    "checking",
+    "testing"
+   ],
+   "wizard": [
+    "auditing"
+   ]
+  },
+  "recovering": {
+   "panels": [
+    "fallback route",
+    "rendering",
+    "retrying",
+    "route-change"
+   ],
+   "usage": [
+    "cooldown"
+   ],
+   "wizard": [
+    "reopened"
+   ]
+  },
+  "change-modified": {
+   "rail": [
+    "m (modified)"
+   ]
+  },
+  "change-added": {
+   "rail": [
+    "? (untracked)",
+    "a (added)",
+    "q/? (untracked)"
+   ]
+  },
+  "change-deleted": {
+   "rail": [
+    "d (deleted)"
+   ]
+  },
+  "offline": {
+   "chrome": [
+    "disconnected"
+   ],
+   "settings": [
+    "offline",
+    "unavailable"
+   ]
+  },
+  "waiting-dep": {
+   "panels": [
+    "wait",
+    "waiting"
+   ]
+  },
+  "off": {
+   "settings": [
+    "disabled",
+    "not installed",
+    "not set up",
+    "not connected",
+    "off"
+   ]
+  }
+ },
+ "source": "pm7-glyphs inventory 2026-10-10: W2 + W2b source census (216 rows) and W3 panels+terminal census (122 rows); reports/pm7-glyphs-20261010/",
+ "notes": [
+  "Position markers (the tour pips, \"current\" in the rail and onboarding) show where you are, not a state; they stay out of the status set and keep their own marks."
+ ]
 }

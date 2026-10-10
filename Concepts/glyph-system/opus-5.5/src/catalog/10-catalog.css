@@ -97,6 +97,8 @@ html[data-theme^="friendly"] .pmg-panel { border-radius: 16px; box-shadow: var(-
 .pmg-sizes { display: flex; align-items: flex-end; gap: 14px; }
 .pmg-sizes > span { display: grid; justify-items: center; gap: 4px; color: var(--text-muted); font-size: 10.5px; font-variant-numeric: tabular-nums; }
 .pmg-st-row .pmg-meaning { color: var(--text-secondary); font-size: 13px; }
+/* the chat's motion note, kept so the reviewer sees what moves */
+.pmg-motion { color: var(--text-muted); font-size: 11.5px; font-style: italic; margin: 2px 0 4px; }
 .pmg-aliases { color: var(--text-muted); font-size: 12px; }
 .pmg-aliases b { color: var(--text-secondary); font-weight: 500; }
 .pmg-contrast { font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--text-secondary); text-align: right; }
