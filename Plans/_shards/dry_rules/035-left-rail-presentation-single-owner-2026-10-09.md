@@ -1,10 +1,10 @@
-# Shard 034: Left rail presentation single owner — 2026-10-09
+# Shard 035: Left rail presentation single owner — 2026-10-09
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L3087-L3147
+Source lines: L3143-L3203
 
-Source SHA256: `f74170d53bb0c3e40f22f0036119e31e5ec6ca1471fda28804f777671dd4dc7b`
+Source SHA256: `ba9cf0aa7fbf57a2ac900f58bb6007c9f61ee301264b329566297a4c9c4843c3`
 
 ---
 

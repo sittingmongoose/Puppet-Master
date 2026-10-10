@@ -1,0 +1,439 @@
+/* PMH: the merged hover system (engine: src/js/18-hover.js, which documents the whole contract). This file has two
+   parts. The ENGINE PART (registrations, pseudo plumbing, proxy bases, the PM8-parity resets, Reduced Motion and the
+   software-rendered path) is meant to stay. The PROVISIONAL PART (every token value and the three visual layers) is a
+   middle-ground placeholder: the design panel's result replaces it, and a design changes only CSS. */
+
+/* ===== ENGINE PART ===== */
+
+/* Continuous values, written only on the hovered target and its lit neighbours. Registered as NON-inherited, so a write
+   restyles that one element, not its subtree; a pseudo-element takes them with an explicit `inherit` (below). */
+@property --pmh-i  { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-x  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-y  { syntax: '<length>';     inherits: false; initial-value: 0px; }
+@property --pmh-px { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-py { syntax: '<percentage>'; inherits: false; initial-value: 50%; }
+@property --pmh-dx { syntax: '<number>';     inherits: false; initial-value: 0; }
+@property --pmh-dy { syntax: '<number>';     inherits: false; initial-value: 0; }
+[data-pmh-kind]::before,
+[data-pmh-kind]::after {
+  --pmh-i: inherit; --pmh-x: inherit; --pmh-y: inherit; --pmh-px: inherit; --pmh-py: inherit; --pmh-dx: inherit; --pmh-dy: inherit;
+}
+
+/* The Firefox scrollbar-reveal hook of the base (`:is(.pm6-sb-active, :hover) { --pm6-sb-ink: ... }`, base line 264, the
+   Usage layer's A1 anchor) matches every hovered element. Registered non-inherited, a hover change restyles only the
+   elements on the hover chain, not their subtrees. The base already registers it this way (line 241); this repeats the
+   registration so the hover cost does not depend on that line staying (measurements in the PMH ENGINE.md). */
+@property --pm6-sb-ink { syntax: '*'; inherits: false; }
+
+/* The token probe: one <i data-pmh-kind> per kind, read with getComputedStyle at the first frame and after a look
+   change. Never laid out, never painted. */
+#pmh-probe {
+  position: fixed; left: 0; top: 0; width: 0; height: 0; overflow: hidden;
+  visibility: hidden; pointer-events: none; contain: strict;
+}
+
+/* The magnet writes `translate` every frame while it moves; .pmh-mv keeps it out of hosts that transition `all`
+   (the PM8 .pm8-live rule did the same). */
+.pmh-mv { transition-property: transform, box-shadow, border-color, background-color, color, opacity !important; }
+
+/* PM8 parity: a hovered card, tile or row keeps its resting border and the elev-2 shadow instead of each page's own
+   :hover ring and glow (bento lime border, catalog accent border, and so on), so the PMH layers are the only hover
+   light. Also under Reduced Motion, where PM8 let the old rings come back. Usage plates keep their own border and
+   shadow (they take the family light on ::before, Usage 20-board.css, because their ::after is the rim light). */
+:is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover):not(.pmu-card) {
+  border-color: var(--border) !important;
+  box-shadow: var(--elev-2) !important;
+}
+/* The light layer below sits at z-index -1 inside its host; the PM8 hosts are already isolated (base pm6-css-global),
+   this one is not. */
+.pm6-orch-hist-state { isolation: isolate; }
+
+/* Proxy bases. Placed by transform, sized inline, clipped inline (clip-path) to the target's visible part. */
+#pmh-glow {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 95; pointer-events: none;
+}
+#pmh-glow > i {
+  position: absolute; left: 0; top: 0; display: block;
+  opacity: 0; will-change: opacity;
+  transition: opacity var(--pmh-glow-out-ms, 240ms) var(--ease-out, ease-out);
+}
+#pmh-glow > i.pmh-glow-on { opacity: 1; transition-duration: var(--pmh-glow-in-ms, 160ms); }
+#pmh-frame {
+  position: fixed; left: 0; top: 0; width: 0; height: 0;
+  z-index: 96; pointer-events: none; opacity: 0;
+  /* promoted once and kept (as the glow layers are): its opacity cut and its corners' stepped translate are
+     compositor animations, which otherwise create a layer at each lock and drop it at each release, two whole-page
+     layerizations per hover */
+  will-change: opacity;
+}
+#pmh-frame.pmh-frame-on { opacity: 1; }
+#pmh-frame > i { position: absolute; display: block; will-change: transform; }
+
+/* Reduced Motion: states switch at once (the engine stops the magnet, the travel and the pointer-following field). */
+[data-motion="reduced"] :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  :is(#pmh-glow > i, #pmh-frame) { transition: none; }
+}
+
+/* Software-rendered (html[data-pmh-soft], set by the engine from O55.motion.softwareRendered()): no pointer-following
+   light and no emitted glow; the state classes, the frame and the magnet stay. */
+html[data-pmh-soft] [data-pmh-kind] { --pmh-field: 0; --pmh-glow: 0; }
+html[data-pmh-soft] #pmh-glow { display: none; }
+
+/* ===== PROVISIONAL PART (replace with the design panel's result) ===== */
+
+/* Tokens the engine reads (defaults in 18-hover.js TOKENS) and the look's own values. Family rows sit on <html>; the
+   kind rows below apply to the targets and the probe directly, so they win over the family for what they name. */
+:root {
+  --pmh-mag: 3; --pmh-mag-k: .02; --pmh-stiff: 240; --pmh-damp: 30;
+  --pmh-bleed: 10; --pmh-edge: .4; --pmh-ramp: 16; --pmh-out-ms: 220;
+  --pmh-glow: 1; --pmh-glow-reach: 28; --pmh-frame: 0;
+  --pmh-light-r: 150px; --pmh-light-a: .07;
+  --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
+}
+/* Basic, Friendly and Glass: the FAMILY LOOK section below. */
+/* Retro and NieR: their own forms, the RETRO and NIER sections at the end of this file. */
+
+[data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+[data-pmh-kind="row"]  { --pmh-mag-gain: .35; --pmh-glow: 0; }
+[data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+
+/* ===== FAMILY LOOK: Basic, Friendly, Glass (final, 2026-10-10) =====
+   Usage's plate merged with PM8's field, both smaller and calmer. A hovered card, tile or row:
+     1. leans toward the pointer on the engine's `translate` spring, 2-2.5 px at an edge (icons never move);
+     2. takes ONE light, its own ::after UNDER the content (z-index -1 in the host's isolated stacking context): a faint
+        surface sheen and a hairline catch along the border, both pre-painted and revealed by a single soft radial mask
+        centred on the pointer (--pmh-x/-y, registered and non-inherited). Its opacity is the field intensity --pmh-i, so
+        a neighbour inside the bleed catches the same light on its near edge, continuously;
+     3. gets the plate: a short elevation shadow plus half of PM8's emitted bloom, pre-painted on #pmh-glow at the box's
+        REST rect. It never follows the magnet; only its opacity fades.
+   The box's own paint never changes. Only translate and opacity animate; no blend modes, filters, canvas or :has().
+   Every rule is scoped to the three families and leaves Retro and NieR (html[data-o55-nier]) alone. */
+
+/* --- engine tokens (read through the probe) and paint tokens --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) {
+  --pmh-pos: 1;                         /* only --pmh-x/-y are used */
+  --pmh-field: 1; --pmh-near: 1; --pmh-glow: 1; --pmh-frame: 0; --pmh-edge: .4;
+  --pmf-ease-out: cubic-bezier(.3, 0, .2, 1);
+  /* the light's falloff: a Gaussian exp(-4.5 t^2) tapered to 0 at the radius, sampled every 10 % (hand-set stops left
+     Mach rings in a warm pool). The few-% sheen shows only in the inner third; the hairline reads to about two thirds. */
+  --pmf-mask: #000 0, rgb(0 0 0 / .956) 10%, rgb(0 0 0 / .833) 20%, rgb(0 0 0 / .663) 30%, rgb(0 0 0 / .481) 40%, rgb(0 0 0 / .317) 50%, rgb(0 0 0 / .189) 60%, rgb(0 0 0 / .1) 70%, rgb(0 0 0 / .046) 80%, rgb(0 0 0 / .015) 90%, transparent 100%;
+}
+/* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
+   plate. */
+:root[data-theme="basic-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .07);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+:root[data-theme="basic-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
+  --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
+  --pmf-r: 90px; --pmf-band: 6px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 7.5%, transparent);
+  --pmf-in: 90ms; --pmf-out: 220ms;
+  --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
+  --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
+  --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
+}
+/* Friendly: soft and warm. A little more travel on a softer, slightly underdamped spring; no hard line, a wide warm
+   band in the area's own cozy accent (rule below); a warm sheen; a soft, deep plate with a warm bloom; slower. */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: rgb(255 228 206 / .1);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
+  --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
+  --pmf-r: 100px; --pmf-band: 16px;
+  --pmf-sheen: color-mix(in srgb, #f07a55 11%, transparent);
+  --pmf-in: 130ms; --pmf-out: 320ms;
+  --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
+  --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
+  --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
+}
+/* Glass: depth and light. A slow drift; a bright specular hairline (white into the accent in the dark, the accent in
+   the light) with a medium roll-off; the strongest sheen, light through glass (accent-tinted in the light look, where
+   white on white would not show); the deepest plate. */
+:root[data-theme="glass-dark"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 45%, #fff) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 38%, transparent);
+  --pmf-sheen: rgb(255 255 255 / .11);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 14px 28px -12px rgba(0, 4, 14, .55);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .2);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+:root[data-theme="glass-light"]:not([data-o55-nier]) {
+  --pmh-mag: 2.25; --pmh-mag-k: .028; --pmh-stiff: 130; --pmh-damp: 21;
+  --pmh-bleed: 20; --pmh-ramp: 20; --pmh-out-ms: 360; --pmh-glow-reach: 40;
+  --pmf-r: 96px; --pmf-band: 10px;
+  --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 85%, transparent);
+  --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 28%, transparent);
+  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 10%, transparent);
+  --pmf-in: 140ms; --pmf-out: 360ms;
+  --pmf-plate: 0 12px 24px -12px rgba(30, 40, 60, .18);
+  --pmf-bloom: 0 0 14px rgba(var(--accent-primary-rgb), .14);
+  --pmh-glow-in-ms: 220ms; --pmh-glow-out-ms: 380ms;
+}
+/* kinds: tiles lean and glow less, rows take the light and a token of the magnet but no plate, icons nothing (they keep
+   their own quiet hover tint; a lean on a 24-32 px button moves the click target) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"] { --pmh-mag-gain: .7; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"] { --pmh-mag-gain: .35; --pmh-glow: 0; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="icon"] { --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-glow: 0; --pmh-frame: 0; }
+
+/* --- the light: one ::after per card, tile and row, always present (opacity 0 at rest), under the content --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+  /* pre-painted: the sheen is the layer's flat tint, the hairline an inset line plus a soft inset band that follow any
+     border radius; only the mask moves with the pointer */
+  background: var(--pmf-sheen);
+  box-shadow: inset 0 0 0 1px var(--pmf-rim), inset 0 0 var(--pmf-band) 0 var(--pmf-rim2);
+  -webkit-mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+          mask: radial-gradient(circle var(--pmf-r) at var(--pmh-x) var(--pmh-y), var(--pmf-mask)) no-repeat;
+  opacity: var(--pmh-i);
+  /* going dark: the engine removes --pmh-i and the position together; the light fades where it was, and the position
+     falls back to its initial value only once the fade is over (a zero-length transition after a delay) */
+  transition: opacity var(--pmf-out) var(--pmf-ease-out), --pmh-x 0s linear var(--pmf-out), --pmh-y 0s linear var(--pmf-out);
+}
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card):is(.pmh-on, .pmh-near)::after {
+  transition: opacity var(--pmf-in) linear;
+}
+/* Friendly's catch takes the area's own cozy accent (--pm6-sheen-accent is set on panels, so it resolves on the box):
+   a faint line inside a wide warm band, no crisp edge */
+:root[data-theme="friendly-dark"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 45%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 60%, #ffe6d6) 50%, transparent);
+}
+:root[data-theme="friendly-light"]:not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  --pmf-rim: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 75%, transparent);
+  --pmf-rim2: color-mix(in srgb, color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 70%, #f07a55) 50%, transparent);
+}
+/* smaller boxes take a smaller light (a row is a strip; the card radius would light all of it) */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="tile"]::after { --pmf-r: 64px; }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind="row"]::after { --pmf-r: 56px; }
+
+/* --- the plate: elevation plus half bloom, pre-painted on the rest-rect proxy; only its opacity moves --- */
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i { box-shadow: var(--pmf-plate), var(--pmf-bloom); }
+:root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) #pmh-glow > i[data-pmh-kind="tile"] {
+  box-shadow: 0 4px 10px -5px rgba(0, 0, 0, .28), var(--pmf-bloom);
+}
+
+/* --- Glass's own dashboard-card :hover (base: a brighter fill, a deeper shadow and a translateY(-1px), all !important,
+   so the engine part's PM8-parity rule cannot reach them) swapped the whole card in one frame, a pop before the pointer
+   was even inside. The card keeps its resting paint; the plate and the light above are the hover. The two values
+   restate the base's resting Glass dash card. --- */
+html[data-theme^="glass"]:not([data-o55-nier]) .pm6-dash-card.pm6-dash-card[data-pmh-kind]:is(:hover, .pmh-on) {
+  transform: none !important;
+  background:
+    linear-gradient(152deg, rgba(255,255,255,.08), transparent 38%),
+    linear-gradient(var(--rg-card), var(--rg-card)) padding-box,
+    linear-gradient(145deg, var(--rg-rim-soft), rgba(255,255,255,.035) 65%, var(--rg-rim-low)) border-box !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.20), 0 16px 30px var(--rg-shadow-soft) !important;
+}
+
+/* --- Reduced Motion: no magnet and no following light (the engine). The state still reads at once: the whole
+   hairline at half strength, no sheen, and the plate (the base patch already makes every transition none). --- */
+:root[data-motion="reduced"]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+    -webkit-mask: none; mask: none; background: none; opacity: calc(var(--pmh-i) * .5); transition: none;
+  }
+}
+/* --- software-rendered (html[data-pmh-soft]): the engine writes no field and hides #pmh-glow, so the hovered box gets
+   the same static half-strength hairline, painted once per hover; the magnet is off too (a translate per frame
+   repaints the whole card on a software compositor). --- */
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) [data-pmh-kind] { --pmh-mag-gain: 0; }
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card)::after {
+  -webkit-mask: none; mask: none; background: none; opacity: 0; transition: none;
+}
+:root[data-pmh-soft]:is([data-theme^="basic"], [data-theme^="friendly"], [data-theme^="glass"]):not([data-o55-nier]) :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pmu-card).pmh-on::after { opacity: .5; }
+/* ===== end of FAMILY LOOK ===== */
+
+/* ===== RETRO: "Raise" (final, 2026-10-10; design/retro/FINAL.md) =====
+   Retro presses a control by stepping it into its hard shadow (the rail's .pm-btn:active translate(1px,1px), the
+   onboarding cards' translate(3px,3px), both hard cuts); a hover is the same move turned round. The plate rises 2 px
+   up-left in one hard cut while its hard shadow grows from 3 to 5 px, so the shadow's far edge stays exactly where it
+   was on the page and the card reads as raised off it, not slid. One 33 ms tick later a 1 px phosphor rule appears one
+   pixel inside the border: the Turbo Vision active window (single frame idle, double frame active). Leaving, the rule
+   goes at once and the plate drops one tick later (.pmh-out). Two beats in, two beats out, on the left rail's 33 ms tab
+   tick; nothing moves while the pointer moves inside, nothing glows, nothing is blurred, nothing scales, no neighbour
+   is lit. translate and box-shadow change in the same style change, so plate and shadow can never disagree; neither
+   is transitioned (cuts), the rule's one-tick hold is an opacity animation.
+   One phosphor: --accent-primary (#b8d066 dark, cobalt #0047AB light), the left rail's own Retro ink (activity tile,
+   seg-tab ink, focus ring); --accent-lime stays the shell's running/ok status green.
+   Engine: no magnet, no field, no glow, no frame, so the engine writes only the state classes (and the kind
+   attribute once): nothing per pointer frame. Kinds: cards rise 2 px with the rule; tiles rise 1 px over a 3 px cast,
+   no rule; rows take the left rail's row fill (3 steps in, 2 out); icons nothing (their own quiet hover stays). */
+html[data-theme^="retro"],
+html[data-theme^="retro"] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0;
+  --pmh-glow: 0; --pmh-frame: 0; --pmh-out-ms: 34;
+  /* the plate rises off 2 px of its own edge: the engine keeps the hover while a slow pointer crosses that strip */
+  --pmh-hold: 2;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"] { --pmh-hold: 1; }
+html[data-theme^="retro"] [data-pmh-kind="row"] { --pmh-out-ms: 66; --pmh-hold: 0; }
+html[data-theme^="retro"] [data-pmh-kind="icon"] { --pmh-hold: 0; }
+/* the cast is each card's own rest shadow colour (the dash cards' grey, elsewhere the elev-2 olive / ink) */
+html[data-theme="retro-dark"] {
+  --pmh-r-cast: rgba(107, 118, 84, .56);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 60%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+html[data-theme="retro-dark"] .pm6-dash-card { --pmh-r-cast: rgba(224, 224, 224, .35); }
+html[data-theme="retro-light"] {
+  --pmh-r-cast: rgba(26, 26, 26, .30);
+  --pmh-r-rule: color-mix(in srgb, var(--accent-primary) 70%, var(--surface));
+  --pmh-r-row: color-mix(in srgb, var(--accent-primary) 8%, transparent);
+}
+/* hard cuts: the base gives cards and tiles a 70-140 ms cubic on box-shadow, border and background (and pages their
+   own :hover lifts); only the transform transition stays, and hover never changes transform */
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]) { transition-property: transform !important; }
+html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out, :hover) { transform: none; }
+/* the plate: raised while hovered and through the one-tick drop (.pmh-out); a Usage plate too (its cast and its resize
+   zones: Usage 20-board.css) */
+html[data-theme^="retro"] [data-pmh-kind="card"]:is(.pmh-on, .pmh-out) {
+  translate: -2px -2px; box-shadow: 5px 5px 0 0 var(--pmh-r-cast) !important;
+}
+html[data-theme^="retro"] [data-pmh-kind="tile"]:is(.pmh-on, .pmh-out) {
+  translate: -1px -1px; box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important;
+}
+/* hovered while the engine rests (a gesture): the rest-sized cast, not the engine part's elev-2 swap */
+html[data-theme^="retro"] [data-pmh-kind="card"]:hover:not(.pmh-on, .pmh-out, .pmu-card) { box-shadow: 3px 3px 0 0 var(--pmh-r-cast) !important; }
+html[data-theme^="retro"] [data-pmh-kind="tile"]:hover:not(.pmh-on, .pmh-out) { box-shadow: 2px 2px 0 0 var(--pmh-r-cast) !important; }
+/* the border stays the card's rest border (the engine part's reset would ink the light-bordered ones; the rule is the mark) */
+html[data-theme^="retro"] :is(.pm6-orch-widget, .pm6-chat-card)[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover),
+html[data-theme="retro-light"] .pm6-dash-card[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--border-light) !important; }
+html[data-theme^="retro"] .pm6-orch-ctl-primary[data-pmh-kind]:is(.pmh-on, .pmh-out, :hover) { border-color: var(--accent-primary) !important; }
+/* the rule: double frame on the second beat; gone on the first beat out */
+html[data-theme^="retro"] [data-pmh-kind="card"].pmh-on::after {
+  content: ""; position: absolute; inset: 1px; z-index: 3; display: block; pointer-events: none;
+  border: 1px solid var(--pmh-r-rule); border-radius: 0;
+  background: none !important; box-shadow: none !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; transition: none; animation: pmh-r-hold 33ms step-end;
+}
+/* the hold is a visibility step, not an opacity one: an opacity animation is run on the compositor, so it would make a
+   layer for the rule at every hover and drop it 33 ms later; hidden and transparent draw the same nothing */
+@keyframes pmh-r-hold { from, to { visibility: hidden; } }
+/* the card's own hover tools (close, size, drag and resize grips) cut in with the raise instead of a cubic fade */
+html[data-theme^="retro"] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* rows (none renders in this build): the rail's row hover, a fill only, 3 steps in and 2 out; rows never rise */
+html[data-theme^="retro"] [data-pmh-kind="row"]:is(.pmh-on, .pmh-out)::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; display: block; pointer-events: none; border-radius: 0;
+  background: var(--pmh-r-row) !important; -webkit-mask: none !important; mask: none !important;
+  opacity: 1; animation: pmh-r-fill 99ms steps(3, jump-start);
+}
+html[data-theme^="retro"] [data-pmh-kind="row"].pmh-out::before { opacity: 0; animation: pmh-r-unfill 66ms steps(2, jump-start); }
+@keyframes pmh-r-fill { from { opacity: 0; } }
+@keyframes pmh-r-unfill { from { opacity: 1; } }
+/* Reduced Motion: the plate never moves; the shadow is 5 px (tiles 3) at once, so the state still reads as raised; the
+   rule shows at once and goes at once (the engine sets no .pmh-out under Reduced Motion) */
+html[data-motion="reduced"][data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::after,
+html[data-motion="reduced"][data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme^="retro"] :is([data-pmh-kind="card"], [data-pmh-kind="tile"]):is(.pmh-on, .pmh-out) { translate: none; }
+  html[data-theme^="retro"] [data-pmh-kind]::after, html[data-theme^="retro"] [data-pmh-kind]::before { animation: none !important; }
+}
+/* software-rendered: every piece is a hard rect painted once per hover, so Retro keeps its whole form */
+/* ===== end of RETRO ===== */
+
+/* ===== NIER: "Lock-on" (final, 2026-10-10; design/nier/FINAL.md) =====
+   A hovered card is acquired the way NieR's target brackets acquire a target. ONE reticle per page (#pmh-frame, never
+   the shared #o55np-reticle or #o55np-cursor, which focus, clicks and the left rail own): four hairline corners, 8 x 1 px
+   (the card ticks' own size, so each inner tick finds a twin 3 px outside the border), cut onto the card 4 px open and
+   closed in two hard steps (7, 5, 3 px out, 45 ms apart). On the landing step the card's frame inks: a 1 px line of
+   ink at .6 exactly over its own border (the corners stay full ink and carry the lock; a full-ink line beside them
+   was a second, louder mark). Leaving onto nothing, the line drops at once, the corners back off one step and the
+   reticle is gone at 90 ms. To a neighbour the reticle cuts across (never glides) and closes again there. The card
+   itself never changes: no lift, no magnet, no glow, no blur, no fill, no pointer-following field. Ink only through
+   the --o55-nier-* helpers (ink is dark in NieR light and parchment in NieR dark, so the form inverts for free); only
+   translate and opacity change, one-shot and stepped.
+   Gate: the corners are the "brackets" part (Target brackets); without it the lock is the ink line alone, on the same
+   90 ms beat. Kinds: cards only; tiles and rows take the left rail's NieR row hover (ink .10, a hard cut), the
+   dashboard catalog items stay with the Menu cursor part; icons keep their own hover with no motion. */
+html[data-o55-nier],
+html[data-o55-nier][data-theme] [data-pmh-kind] {
+  --pmh-mag: 0; --pmh-mag-gain: 0; --pmh-field: 0; --pmh-near: 0; --pmh-pos: 0; --pmh-glow: 0; --pmh-out-ms: 0;
+  /* the reticle on the rest rect, on whole device pixels (crisp hairlines); between targets a cut on the next frame,
+     and after any hidden frame it is placed, never moved (snap window 0) */
+  --pmh-frame: 1; --pmh-frame-follow: 0; --pmh-frame-hz: 120; --pmh-frame-k: 1; --pmh-frame-snap-ms: 0;
+  --pmh-frame-reach: 8; --pmh-snap: 1;
+}
+html[data-o55-nier][data-theme] :is([data-pmh-kind="tile"], [data-pmh-kind="row"], [data-pmh-kind="icon"]) { --pmh-frame: 0; }
+/* the release: the reticle stays 90 ms after .pmh-frame-on goes (the corners' backing-off step), then is cut */
+#pmh-frame[data-pmh-family="nier"] { transition: opacity 0s linear 90ms; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on { transition-delay: 0s; }
+/* the ink line over the card's own border; it lands with the corners' last step and drops at once */
+#pmh-frame[data-pmh-family="nier"]::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(var(--o55-nier-ink-rgb), .6); opacity: 0; transition: opacity 0s;
+  will-change: opacity;   /* kept promoted: see #pmh-frame */
+}
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 1; transition: opacity 0s linear 90ms; }
+/* the four corners: an 8 x 8 box drawing an L of two 1 px ink lines, 3 px outside the card; --pmh-n-o is the open offset */
+#pmh-frame[data-pmh-family="nier"] > i {
+  display: none; width: 8px; height: 8px; border: 0;
+  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 1px no-repeat,
+              linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 1px 100% no-repeat;
+  translate: var(--pmh-n-o); transition: translate 90ms steps(2, end);
+}
+html[data-o55-nier-parts~="brackets"] #pmh-frame[data-pmh-family="nier"] > i { display: block; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(1) { left: -3px;  top: -3px;    --pmh-n-o: -4px -4px; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(2) { right: -3px; top: -3px;    --pmh-n-o: 4px -4px;  scale: -1 1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(3) { right: -3px; bottom: -3px; --pmh-n-o: 4px 4px;   scale: -1 -1; }
+#pmh-frame[data-pmh-family="nier"] > i:nth-child(4) { left: -3px;  bottom: -3px; --pmh-n-o: -4px 4px;  scale: 1 -1; }
+#pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: 0 0; }
+/* the very first lock: the engine makes the frame and shows it in one frame, so there is no before-change style
+   (WebKit without @starting-style: the first lock of a page load cuts in closed, every later one steps) */
+@starting-style {
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on > i { translate: var(--pmh-n-o); }
+  #pmh-frame[data-pmh-family="nier"].pmh-frame-on::before { opacity: 0; }
+}
+/* the card itself does not change on hover. The engine part's PM8-parity reset (border --border, the blurred
+   --elev-2) and the pages' own :hover lifts and borders are answered with each card's rest values */
+html[data-o55-nier] :is([data-pmh-kind="card"], [data-pmh-kind="tile"], [data-pmh-kind="row"]):is(.pmh-on, :hover) { transform: none; translate: none; }
+html[data-o55-nier] .pm6-dash-card:is(:hover, .pmh-on) { box-shadow: var(--elev-1) !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-proj-card, .project-card-bento):is(:hover, .pmh-on) { box-shadow: var(--elev-2) !important; border-color: var(--border) !important; }
+html[data-o55-nier] :is(.pm6-chat-card, .pm6-orch-widget, .pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card):not(.selected):is(:hover, .pmh-on) { box-shadow: none !important; border-color: var(--border-light) !important; }
+html[data-o55-nier] :is(.pm6-wiz-attach-card, .pm6-wiz-choice-card, .pm6-wiz-disc-card, .pm6-wiz-topic-card).selected:is(:hover, .pmh-on) { box-shadow: 0 0 0 1px var(--o55-nier-ink), var(--elev-2) !important; border-color: var(--o55-nier-ink) !important; }
+html[data-o55-nier] .pm6-orch-ctl-primary[data-pmh-kind]:is(:hover, .pmh-on) { border-color: var(--o55-nier-ink) !important; }
+/* the card's own hover micro-motion (the base's .pm-hover-icon scale(1.06) on a spring overshoot, the tools' 120 ms
+   ease): NieR keeps the icon still and cuts the tools in */
+html[data-o55-nier] .pm-sheen .pm-hover-icon { transform: none; transition: none; }
+html[data-o55-nier] [data-pmh-kind="card"] :is(.pm6-dash-iconbtn, .pm7-dash-size-btn, .pm6-dash-drag, .pm6-dash-resize) { transition-duration: 0s !important; }
+/* tiles and rows: the left rail's NieR row hover, ink .10, a hard cut (the catalog items are Menu cursor items) */
+html[data-o55-nier] :is([data-pmh-kind="tile"], [data-pmh-kind="row"]):not(.pm6-dash-catalog-item).pmh-on {
+  background: rgba(var(--o55-nier-ink-rgb), .10) !important; box-shadow: none !important; transition-duration: 0s !important;
+}
+/* Reduced Motion: the lock is drawn and released at once (the engine already cuts the reticle between targets) */
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"],
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"]::before,
+html[data-motion="reduced"] #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #pmh-frame[data-pmh-family="nier"], #pmh-frame[data-pmh-family="nier"]::before, #pmh-frame[data-pmh-family="nier"] > i { transition: none !important; }
+}
+/* software-rendered: the engine keeps the frame on that path; four 8 px corners and a line are cheap anywhere */
+/* ===== end of NIER ===== */

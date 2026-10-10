@@ -5,11 +5,13 @@ Usage:
   python3 Concepts/onboarding/opus-5.5/tools/build.py          # build TestOpus only
   python3 Concepts/onboarding/opus-5.5/tools/build.py --publish-pm7  # build, then publish the exact bytes as Concepts/PMConcept7.html
   python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/x.html  # private build: lint, then write only that path
+  python3 Concepts/onboarding/opus-5.5/tools/build.py --out /tmp/ref.html --no-usage  # private build without the Usage layer (a reference page)
   python3 Concepts/onboarding/opus-5.5/tools/build.py --check  # verify the built file is current, every guard holds, and PMConcept7.html is byte-identical
 
 The base file is read-only. The legacy Product Onboarding and Guided Tour blocks are removed, the O55 modules are
 spliced between <!-- O55:*:START/END --> markers, and a short list of guarded, exactly-once patches re-point the shell's
 few remaining references (hover-tag overlay ids, labels, Doctor quiet actions, Teacher persona, owner exposures).
+The Usage page is the redesign in Concepts/usage-redesign: its usage_layer replaces the base's Prism Usage page at step 2b.
 Concepts/PMConcept7.html is published only from here (2026-09-26 user direction): --publish-pm7 writes the same built
 bytes to both outputs, and --check fails while PMConcept7.html is missing or differs by even one byte.
 """
@@ -34,6 +36,9 @@ TARGET = CONCEPTS / 'Onboarding concepts' / 'TestOpus5.5PmConcept.html'
 PM7_TARGET = CONCEPTS / 'PMConcept7.html'
 SRC = PKG / 'src'
 BASE_SHA256 = 'b3888fad4993f484ab4548e9ff212ec0042fa0a912947a7f316514db939326be'
+
+sys.path.insert(0, str(CONCEPTS / 'usage-redesign' / 'tools'))
+import usage_layer  # noqa: E402  (the Usage page: Concepts/usage-redesign/tools/usage_layer.py)
 
 EMOJI = re.compile('[\U0001F000-\U0001FAFF☀-➿⬀-⯿️]')
 BANNED_COPY = re.compile(r'\b(repository|repositories|forge|runtime|adapter|endpoint|execution host|credential profile|'
@@ -313,6 +318,9 @@ def lint_sources() -> list[str]:
         problems.append('NieR scene SVGs are stale; run tools/nier_scene_art.py --write')
     if nier_scenes.main(['--check']) != 0:
         problems.append('kit.d/21-nier-scenes.js is stale; run tools/nier_scenes.py --write')
+    # The Usage page's sources (Concepts/usage-redesign/src): emoji, banned copy, :has(), accent borders, pills,
+    # page-wide universal selectors, duplicate top-level names, copy and roster JSON.
+    problems.extend(usage_layer.lint())
     return problems
 
 
@@ -434,6 +442,83 @@ PATCHES = [
     ("var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer'];",
      "var PERSONA_CATALOG = ['Product Manager', 'Architect Reviewer', 'Rust Engineer', 'Teacher'];",
      'teacher persona'),
+    # PMH, the merged hover engine (src/js/18-hover.js + src/css/22-hover.css, 2026-10-09), owns hover on every card,
+    # row, tile and icon. The PM8 engine read every target's rect each pointer frame, wrote inherited custom properties
+    # on the cards (a subtree restyle per write), animated a blurred box-shadow on a card-sized proxy and never stopped
+    # its loop while the pointer rested on a box. It now stops right after it makes the shared pointermove dispatcher
+    # (canon F3-446: exactly one document pointermove handler; the glass parallax hook and PMH both ride it). What
+    # follows the return is dead code; its other patches (the nier-next theme observer, Usage A3) still find their
+    # anchors there and stay harmless.
+    ("    var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };\n",
+     "    /* O55 PMH (src/js/18-hover.js) owns hover; PM8 stops here. The shared pointermove dispatcher stays (F3-446). */\n"
+     "    window.PM7_PMOVE = window.PM7_PMOVE || [];\n"
+     "    document.addEventListener('pointermove', function (e) {\n"
+     "      var hooks = window.PM7_PMOVE;\n"
+     "      for (var i = 0; i < hooks.length; i++) { try { hooks[i](e); } catch (err) {} }\n"
+     "    });\n"
+     "    return;\n"
+     "    var F = { bleed: 12, edge: .45, ramp: 18, glow: .8, wash: .5, mag: 1, stiff: 170, damp: 22 };\n",
+     'pmh: pm8 engine off, dispatcher kept'),
+    # With no engine the PM8 ring ::after and wash ::before would still be generated, transparent, on about 100 hosts
+    # (each repaint of a card painted the ring through its four-gradient mask). Only `content` changes: the wash rule's
+    # z-index:-1 and the hosts' isolation stay, because the Glass ::before highlight (its own content) relies on them.
+    ('.pm6-search-hit)::after {\n      content: "";\n',
+     '.pm6-search-hit)::after {\n      content: none;   /* PMH: the PM8 ring is off */\n',
+     'pmh: pm8 ring off'),
+    ('.pm6-search-hit)::before {\n      content: "";\n',
+     '.pm6-search-hit)::before {\n      content: none;   /* PMH: the PM8 wash is off; z-index:-1 stays for Glass */\n',
+     'pmh: pm8 wash off'),
+    # The .pm-sheen:hover accent ring, glow and lift (base, Friendly, Glass) showed whenever the PM8 engine was not
+    # running, so Reduced Motion was glowier than motion. PMH's CSS defines every hover state now. The reduced twins
+    # and .pm-hover-icon stay.
+    ("    .pm-sheen:hover {\n"
+     "      transition-duration: var(--motion-fast);           /* fast in (120ms), instant-ish out (70ms base) */\n"
+     "      transform: translateY(-2px);\n"
+     "      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));\n"
+     "      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent),\n"
+     "                  0 6px 18px color-mix(in srgb, var(--accent-primary) 16%, transparent);\n"
+     "    }\n",
+     "    /* .pm-sheen:hover: removed, PMH (src/css/22-hover.css) owns hover */\n",
+     'pmh: sheen hover off (base)'),
+    ("    [data-theme^=\"friendly\"] .pm-sheen:hover {\n"
+     "      transform: translateY(-2px) scale(1.005);\n"
+     "      border-color: color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 45%, var(--border));\n"
+     "      box-shadow: 0 0 0 2px var(--pm6-sheen-accent, var(--accent-primary)),\n"
+     "                  0 0 22px color-mix(in srgb, var(--pm6-sheen-accent, var(--accent-primary)) 55%, transparent);\n"
+     "    }\n",
+     "    /* [data-theme^=\"friendly\"] .pm-sheen:hover: removed, PMH owns hover */\n",
+     'pmh: sheen hover off (friendly)'),
+    ("    [data-theme^=\"glass\"] .pm-sheen:hover {\n"
+     "      transform: translateY(-2px) scale(1.005);\n"
+     "      border-color: color-mix(in srgb, var(--accent-primary) 40%, var(--border));\n"
+     "      box-shadow: 0 0 0 1px var(--glass-hairline),\n"
+     "                  0 8px 22px rgba(var(--pm6-glass-a-rgb), .22);\n"
+     "    }\n",
+     "    /* [data-theme^=\"glass\"] .pm-sheen:hover: removed, PMH owns hover */\n",
+     'pmh: sheen hover off (glass)'),
+    # Hover tags swapped any label or detail that looked internal (a file name, a path, host:port, a dotted id) for
+    # generic copy ("Choose this option"), with no way out, so file refs and editor tabs in the home panels could not
+    # show their path. data-pmh-tag="literal" on the element or an ancestor keeps the tag's literal text (2026-10-10).
+    ("    if(looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     "    var literalTag=!!(el.closest&&el.closest('[data-pmh-tag=\"literal\"]'));   /* O55: opt out of the internal-copy swap */\n"
+     "    if(!literalTag&&looksInternal(label))label=actionCopy[0]||'Choose this option';\n",
+     'pmh: literal hover tag label'),
+    ("    if(looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     "    if(!literalTag&&looksInternal(detail))detail=actionCopy[1]||'See what this control does.';\n",
+     'pmh: literal hover tag detail'),
+    # NieR intel tags (src/settings/styles.d/15-nier-world.css) open below their target and go above only when below
+    # has no room; the clamps that follow keep them in the viewport. The tag also carries data-literal while its target
+    # opted out of the copy swap, so the intel band shows a path in its own case instead of uppercase.
+    ("    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n",
+     "    var top=anchor.top-rect.height-GAP,placement='above';\n"
+     "    if(top<viewport.top+marginY){top=anchor.bottom+GAP;placement='below';}\n"
+     "    if(document.documentElement.matches('[data-o55-nier-parts~=\"intel\"]')&&anchor.bottom+GAP+rect.height<=viewportBottom-marginY){top=anchor.bottom+GAP;placement='below';}   /* O55 NieR intel: below first */\n",
+     'pmh: nier intel tag below'),
+    ("    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     "    this.tag.toggleAttribute('data-literal',!!(this.active.closest&&this.active.closest('[data-pmh-tag=\"literal\"]')));   /* O55: before the measure */\n"
+     "    var rect=this.tag.getBoundingClientRect(),left=anchor.left+anchor.width/2-rect.width/2;\n",
+     'pmh: literal hover tag mark'),
     # Setup and tour previews stop on the same events as the built-in tone preview. That player is frozen, so these
     # call the hook the notifications manager exposes (window.PM51_NOTIF_APP_PREVIEW_STOP), which calls
     # O55.sound.stopPreview(). The close line stays a prefix of SETTINGS_ANCHOR so the exposure splice still matches.
@@ -723,7 +808,9 @@ def _rail():
     return rail_layer
 
 
-def build_text() -> str:
+def build_text(usage: bool = True) -> str:
+    """The built page. usage=False leaves the base's Prism Usage page in place: a private reference build only
+    (build.py --out PATH --no-usage, usage_boot.mjs), never published."""
     original = SOURCE.read_bytes()
     need(hashlib.sha256(original).hexdigest() == BASE_SHA256,
          'TestPMConcept.html changed since the pin; review the strip boundaries and patches, then re-pin BASE_SHA256.')
@@ -753,6 +840,15 @@ def build_text() -> str:
     text = replace_once(text, SETTINGS_ANCHOR, SETTINGS_EXPOSE + SETTINGS_ANCHOR, 'settings transfer exposure')
     text = replace_once(text, LAYOUT_ANCHOR, LAYOUT_EXPOSE + LAYOUT_ANCHOR, 'layout restore exposure')
 
+    # 2b. Usage: replace the Prism Usage page with the redesign in Concepts/usage-redesign. This runs after the
+    # PATCHES loop because the 'usage card cta :has restyle' patch needs the old rule present, and before the O55
+    # splice so the layer never sees the O55 modules (the left rail's layer, which anchors on <!-- O55:CSS:END -->,
+    # goes after the splice).
+    if usage:
+        text, SETTINGS_NOTES['usage'] = usage_layer.apply(text, need)
+    else:
+        SETTINGS_NOTES.pop('usage', None)
+
     # 3. Splice the O55 modules.
     css = settings_layer.inline_fonts(read_parts(SRC / 'css', '.css'), SRC / 'fonts')
     js = read_parts(SRC / 'js', '.js')
@@ -773,12 +869,18 @@ def build_text() -> str:
 
 def check(built: str) -> list[str]:
     problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
-    for removed in ['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
-                    'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
-                    "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')"]:
+    for removed in dict.fromkeys(['id="pm7-onboarding"', 'id="pm7-guided-tour"', 'pm7-onboarding-js', 'pm7-guided-tour-js',
+                                  'pm7-onboarding-css', 'pm7-guided-tour-css', "'.pm7gt-callout", ".closest('.pm7gt')",
+                                  "getElementById('pm7-onboarding')", "getElementById('pm7-guided-tour')",
+                                  'id="pm7UsageApp"', 'pm7-t31-usage-final', 'pm7-t24-usage-readability-and-fit']
+                                 + usage_layer.REMOVED):
         if removed in built:
             problems.append(f'removed reference still present: {removed}')
-    for marker in ['<!-- O55:CSS:START -->', '<!-- O55:CSS:END -->', '<!-- O55:BODY:START -->', '<!-- O55:BODY:END -->']:
+    for kept in usage_layer.KEPT:
+        if kept not in built:
+            problems.append(f'kept reference missing: {kept}')
+    for marker in ['<!-- O55:CSS:START -->', '<!-- O55:CSS:END -->', '<!-- O55:BODY:START -->', '<!-- O55:BODY:END -->',
+                   '<!-- USAGE:BODY:START -->', '<!-- USAGE:BODY:END -->']:
         if built.count(marker) != 1:
             problems.append(f'marker {marker} appears {built.count(marker)} times')
     expected = built.encode('utf-8')
@@ -793,12 +895,15 @@ def check(built: str) -> list[str]:
     return problems
 
 
-def syntax_check(built: str) -> list[str]:
-    """node --check the scripts this package writes (the Settings engine with its managers, and the O55 module)."""
+def syntax_check(built: str, usage: bool = True) -> list[str]:
+    """node --check the scripts this package writes (the Settings engine with its managers, the O55 module, and the
+    Usage page's pm-usage-js from Concepts/usage-redesign, which must be there exactly once unless usage=False), the
+    head boot script, and pm6-js-globals, which the base-engine PATCHES (the PMH switch-off, nier-next's next-frame
+    readers) rewrite: a broken patch there would otherwise pass the build and fail only in the browser."""
     import subprocess
     import tempfile
     out = []
-    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot'):
+    for sid in ('pm4-settings-js', 'pm-o55-js', 'pm6 boot', 'pm6-js-globals'):
         if sid == 'pm6 boot':  # the head boot script (no id), which first_paint_patches() extends
             m = re.search(r'<script>(\s*/\* pm6 boot: .*?)</script>', built, re.S)
         else:
@@ -813,12 +918,19 @@ def syntax_check(built: str) -> list[str]:
         Path(path).unlink(missing_ok=True)
         if r.returncode:
             out.append(f'syntax error in {sid}: ' + ' | '.join(r.stderr.strip().splitlines()[-4:])[:600])
+    if usage:
+        out.extend(usage_layer.syntax_check(built))
     return out
 
 
 def main() -> int:
+    usage = '--no-usage' not in sys.argv
+    if not usage and ('--out' not in sys.argv or '--check' in sys.argv or '--publish-pm7' in sys.argv):
+        print('--no-usage makes a private reference build only: use it with --out PATH, never --check or --publish-pm7',
+              file=sys.stderr)
+        return 2
     try:
-        built = build_text()
+        built = build_text(usage=usage)
     except BuildError as exc:
         print(f'BUILD FAILED: {exc}', file=sys.stderr)
         return 2
@@ -828,7 +940,7 @@ def main() -> int:
             print('CHECK:', p)
         print('check', 'ok' if not problems else f'failed ({len(problems)})')
         return 0 if not problems else 1
-    problems = lint_sources() + syntax_check(built) + _rail().published_problems(built)
+    problems = lint_sources() + syntax_check(built, usage=usage) + _rail().published_problems(built)
     if problems:
         for p in problems:
             print('LINT:', p)

@@ -410,7 +410,7 @@
       + '</div>';
     return group('Models on this account', modelsBody(p, acc))
       + group('This account', PM51.scoped.rows(about))
-      + group('When it runs low', low, 'Only for this account. The shared rules are under Limits & switching.')
+      + group('When it runs low', low, 'Only for this account. Its service\'s rules are under This service; the shared ones under Limits & switching.')
       + group('For experts', tech)
       + actions;
   }
@@ -456,16 +456,232 @@
     const routing = routingOf(p);
     const choices = runsOutChoices(p);
     const cur = choices.includes(routing.exhaustion) ? routing.exhaustion : choices[0];
-    const auto = PM51.value('ai.accounts.multi-account-switching');
+    const auto = autoOf(p);
     const rows = [
       p.id === 'opencode' ? PM51.bound.row('ai.accounts.opencode-enable', { label: 'Use OpenCode', help: 'Off hides its servers and models.' })
         : PM51.scoped.row('ai.models.provider-enabled', p.status !== 'disabled', { scope: SVC, data, label: 'Use this service', help: 'Off sends it nothing new. Accounts and choices are kept.' }),
       p.id === 'github-copilot' ? plainRow('Copilot plan', 'Separate from the GitHub account you use for your code.', PM51.dropdown(p.entitlement || 'Individual', ['Individual', 'Organization', 'Enterprise'], { action: 'pm51-providers-entitlement', data, label: 'Copilot plan' })) : '',
-      plainRow('When it runs out', (RUNS_OUT[cur] || [])[1] + (auto === false && cur === 'next-account' ? ' Automatic switching is off, so work stops and asks.' : ''), PM51.dropdown(cur, choices.map(c => ({ value: c, label: RUNS_OUT[c][0], meta: RUNS_OUT[c][1] })), { action: 'pm51-providers-exhaustion', data, label: 'When it runs out' })),
+      plainRow('When it runs out', (RUNS_OUT[cur] || [])[1] + (!auto && cur === 'next-account' ? ' Automatic switching is off for this service, so work stops and asks.' : ''), PM51.dropdown(cur, choices.map(c => ({ value: c, label: RUNS_OUT[c][0], meta: RUNS_OUT[c][1] })), { action: 'pm51-providers-exhaustion', data, label: 'When it runs out' })),
+      policyRows(p),
       p.id === 'free-models' ? PM51.bound.row('ai.usage.free-models-auto-apply', { label: 'Add newly free models by themselves', help: 'The list follows the community free-coding-models list.' }) : ''
     ];
     return PM51.section({ title: 'This service', body: PM51.scoped.rows(rows) });
   }
+
+  /* ---------- auto-switch, per service (Jared 2026-10-09: "Auto-Switch settings needs to be per provider") ----------
+     Four inventory rows carry a service scope: switch by themselves (ai.accounts.multi-account-switching), the switch
+     level (hard-switch-level) and the warn level (soft-warning-level), both stored as % LEFT, and the rest after a rate
+     limit (cooldown-policy). A service's own value lives in p.props[id]; a service without one follows the shared value
+     (the row under Limits & switching > Moving between accounts). One value resolves as: an account's own switch point
+     (ai.accounts.account-threshold-override, inside the account) > the service's own value > the project > the shared
+     value. As in the AI Account Center, the choices show only for a service with two or more accounts; otherwise one quiet
+     line says auto-switch is off until a second account is signed in. The same values are drawn three times and are one
+     value: in each service's "This service" section, in the "Auto-switch policies" overview under Limits & switching,
+     and on that service's plate on the Usage page (which writes through PM51.providerPolicy below, never a copy). */
+  const POLICY_IDS = ['ai.accounts.multi-account-switching', 'ai.accounts.hard-switch-level', 'ai.accounts.soft-warning-level', 'ai.accounts.cooldown-policy'];
+  const SWITCH_LEFT = [5, 10, 15, 20, 25, 30], WARN_LEFT = [10, 15, 20, 25, 30, 40, 50];
+  const COOLDOWNS = [['5 min', 'Five minutes'], ['15 min', 'A quarter of an hour'], ['30 min', 'Half an hour'], ['60 min', 'An hour']];
+  const canSwitch = p => !!p && p.id !== 'free-models' && p.kind !== 'URL' && p.kind !== 'Server';
+  const multiAccount = p => canSwitch(p) && (p.accounts || []).length > 1;
+  const ownPolicy = (p, id) => { const props = p && p.props; if (!props || !Object.prototype.hasOwnProperty.call(props, id)) return undefined; const v = props[id]; return v === null || v === '' ? undefined : v; };
+  const policyOf = (p, id) => { const v = ownPolicy(p, id); return v === undefined ? PM51.value(id) : v; };
+  const isOn = v => v !== false && v !== 'off' && v !== 'false' && v != null;
+  const autoOf = p => isOn(policyOf(p, 'ai.accounts.multi-account-switching'));
+  const pctLeft = v => { const n = Number(v); return Number.isFinite(n) ? n : null; };
+  const leftText = v => { const n = pctLeft(v); return n === null ? String(v || '') : `${n}% left · ${100 - n}% used`; };
+  const usedText = v => { const n = pctLeft(v); return n === null ? String(v || '') : `${100 - n}% used`; };
+  const cooldownText = v => { const c = COOLDOWNS.find(x => x[0] === v); return c ? c[0].replace('min', 'minutes').replace('60 minutes', 'an hour') : (v || 'provider defaults'); };
+  const hasOwnPolicy = p => POLICY_IDS.some(id => ownPolicy(p, id) !== undefined);
+  /* the shared value a service falls back to, in words */
+  const sharedText = id => id === 'ai.accounts.multi-account-switching' ? (isOn(PM51.value(id)) ? 'on' : 'off') : id === 'ai.accounts.cooldown-policy' ? cooldownText(PM51.value(id)) : usedText(PM51.value(id));
+  /* a level dropdown: the first choice follows the shared value; a service value off the list keeps its own entry */
+  function levelControl(p, id, list, label) {
+    const own = ownPolicy(p, id), shared = PM51.value(id), cool = id === 'ai.accounts.cooldown-policy';
+    /* the switch level stays under the warn level, as on the Usage page (one bound value, one rule): a switch choice at or
+       above the service's warn level, or a warn choice at or below its switch level, is shown but cannot be picked, and
+       says why (item 2 review: Settings let Codex switch and warn at the same 90%) */
+    const isSw = id === 'ai.accounts.hard-switch-level', isWarn = id === 'ai.accounts.soft-warning-level';
+    const warnN = pctLeft(policyOf(p, 'ai.accounts.soft-warning-level')), swN = pctLeft(policyOf(p, 'ai.accounts.hard-switch-level'));
+    const block = v => { const n = pctLeft(v); if (n === null) return ''; if (isSw && warnN !== null && n >= warnN) return `At or past ${p.name}'s warn level (${100 - warnN}% used). Lower the warn level first.`; if (isWarn && swN !== null && n <= swN) return `At or before ${p.name}'s switch level (${100 - swN}% used). Raise the switch level first.`; return ''; };
+    /* the shared choice and every level say their level in a few words, so neither the closed dropdown nor the open list
+       cuts them (item 2 review: "Shared · provider def…" in Retro, the notes cut to "M…"); where it comes from is said
+       in the field's About hover */
+    const sharedN = pctLeft(shared);
+    const opts = [{ value: '', label: `Shared · ${cool ? (COOLDOWNS.some(x => x[0] === shared) ? cooldownText(shared) : 'default') : sharedN === null ? String(shared || '') : `${sharedN}% left`}`,
+      meta: !cool && sharedN !== null ? `${100 - sharedN}% used` : '' }];
+    if (!cool && block(shared)) { opts[0].disabled = true; opts[0].reason = block(shared); opts[0].why = true; }
+    if (cool) COOLDOWNS.forEach(([v]) => opts.push({ value: v, label: cooldownText(v) }));
+    else {
+      const vals = list.slice(); const n = pctLeft(own); if (n !== null && !vals.includes(n)) { vals.push(n); vals.sort((x, y) => x - y); }
+      vals.forEach(v => { const why = String(v) === String(own) ? '' : block(v); opts.push(Object.assign({ value: String(v), label: leftText(v) }, why ? { disabled: true, reason: why, why: true } : {})); });
+    }
+    if (own !== undefined && !opts.some(o => o.value === String(own))) opts.push({ value: String(own), label: String(own) });
+    /* the open list is 264 px wide, so the shared choice keeps its % used beside it (the closed field keeps its own width:
+       61-providers.css) */
+    return PM51.dropdown(own === undefined ? '' : String(own), opts, { action: 'pm51-scoped-select', data: { scope: SVC, setting: id, provider: p.id }, label: `${label} for ${p.name}`, width: 264 });
+  }
+  /* a compact field (the account's "When it runs low" layout); "changed" here means the service has its own value */
+  function policyField(p, id, label, control) {
+    const own = ownPolicy(p, id) !== undefined;
+    return `<div class="o55-field o55-policy-field${own ? ' is-changed is-own' : ''}" data-setting-id="${a(id)}" data-provider="${a(p.id)}"><div class="o55-field-head"><span class="o55-field-label">${h(label)}</span><button type="button" class="icon-btn details-btn o55-about" data-action="setting-details" data-setting="${a(id)}" aria-label="${a('About ' + label)}" data-pm-hover-label="${a('About ' + label)}" data-pm-hover-detail="${a(own ? `${p.name} has its own value. The shared one is ${sharedText(id)} (Limits & switching › Moving between accounts).` : `${p.name} follows the shared value: ${sharedText(id)}, set under Limits & switching › Moving between accounts.`)}">${icon('help')}</button></div>${control}</div>`;
+  }
+  function policyHelp(p) {
+    const own = ownPolicy(p, 'ai.accounts.multi-account-switching') !== undefined, on = autoOf(p);
+    const at = usedText(policyOf(p, 'ai.accounts.hard-switch-level'));
+    return `${on ? `When an account reaches ${at}, the next one with room carries on, once the current task ends.` : 'Off: an account that runs low stays in use until you switch.'} ${own ? `On or off is ${p.name}'s own choice; the shared setting is ${sharedText('ai.accounts.multi-account-switching')}.` : 'On or off follows the shared setting.'}`;
+  }
+  function policyRows(p) {
+    if (!canSwitch(p)) return '';
+    const data = { provider: p.id };
+    if (!multiAccount(p)) return `<div class="setting-row o55-row o55-scoped o55-policy-off" data-setting-id="ai.accounts.multi-account-switching" data-provider="${a(p.id)}"><div class="setting-copy"><div class="setting-label">Switch accounts by themselves</div><div class="setting-description">Auto-switch is off until a second account is signed in.</div></div><div class="setting-control"></div><span></span></div>`;
+    const toggle = PM51.scoped.row('ai.accounts.multi-account-switching', autoOf(p), { scope: SVC, data, label: 'Switch accounts by themselves', help: policyHelp(p), noChanged: true });
+    const fields = PM51.scoped.fields([
+      policyField(p, 'ai.accounts.hard-switch-level', 'Switch when this much is left', levelControl(p, 'ai.accounts.hard-switch-level', SWITCH_LEFT, 'Switch when this much is left')),
+      policyField(p, 'ai.accounts.soft-warning-level', 'Warn when this much is left', levelControl(p, 'ai.accounts.soft-warning-level', WARN_LEFT, 'Warn when this much is left')),
+      policyField(p, 'ai.accounts.cooldown-policy', 'Rest after a rate limit', levelControl(p, 'ai.accounts.cooldown-policy', [], 'Rest after a rate limit'))
+    ]);
+    const reset = hasOwnPolicy(p) ? `<div class="o55-inline-actions o55-policy-reset">${PM51.btn({ label: 'Use the shared settings', icon: 'refresh', small: true, action: 'pm51-providers-policy-shared', data })}</div>` : '';
+    return toggle + `<div class="o55-policy-fields" data-provider="${a(p.id)}">${fields}${reset}</div>`;
+  }
+  /* Limits & switching: every service with two or more accounts on one line, the same bound values */
+  function policiesSection() {
+    const list = all().filter(multiAccount), single = all().filter(p => canSwitch(p) && (p.accounts || []).length === 1);
+    const rows = list.map(p => {
+      const data = { scope: SVC, setting: 'ai.accounts.multi-account-switching', provider: p.id };
+      const at = usedText(policyOf(p, 'ai.accounts.hard-switch-level')), warn = usedText(policyOf(p, 'ai.accounts.soft-warning-level'));
+      const own = POLICY_IDS.filter(id => ownPolicy(p, id) !== undefined);
+      const desc = `${autoOf(p) ? `Switches at ${at}` : 'Off'} · warns at ${warn} · ${own.length ? 'its own setting' : 'shared setting'} · ${(p.accounts || []).length} accounts`;
+      return `<div class="setting-row o55-row o55-scoped o55-policy-row${own.length ? ' is-own' : ''}" data-setting-id="ai.accounts.multi-account-switching" data-provider="${a(p.id)}">
+        <div class="setting-copy"><div class="setting-label">${h(p.name)}</div><div class="setting-description">${h(desc)}</div></div>
+        <div class="setting-control o55-policy-ctl">${PM51.toggle(autoOf(p), { action: 'pm51-scoped-toggle', data, label: `Auto-switch for ${p.name}` })}${levelControl(p, 'ai.accounts.hard-switch-level', SWITCH_LEFT, 'Switch when this much is left')}</div>
+        <button type="button" class="icon-btn details-btn o55-about" data-action="pm51-providers-policy-open" data-provider="${a(p.id)}" aria-label="${a('Open ' + p.name)}" data-pm-hover-label="${a('Open ' + p.name)}" data-pm-hover-detail="All of its choices, under Services.">${icon('arrowRight')}</button>
+      </div>`;
+    });
+    const quiet = single.length ? `<p class="o55-quiet-line o55-policy-quiet">${h(single.map(p => p.name).join(', '))}: one account each. Auto-switch is off until a second account is signed in.</p>` : '';
+    const body = (rows.length ? `<div class="setting-list o55-bound-rows o55-policies">${rows.join('')}</div>` : PM51.note('No service has two accounts yet. Auto-switch starts once a second account is signed in.')) + quiet;
+    return PM51.section({ title: 'Auto-switch policies', help: 'Each service with two or more accounts switches on its own terms. One without its own choice follows the shared setting below.', body, id: 'o55-auto-switch-policies' });
+  }
+  /* The switch level always stays below the warn level (MA-073, Settings_System section 8), held here at the owner's
+     write point as well as in the choices, so a write that does not come from a choice (the Usage page's transaction, a
+     host write, a script) cannot cross them either (polish pass). The level being written moves to the nearest choice on
+     its own list that keeps the order, and the other level never moves: lowering a warn level to or below the switch
+     level stores the lowest warn choice above the switch level; raising a switch level to or past the warn level stores
+     the highest switch choice below it. A write that leaves no such choice (or a return to the shared value that would
+     cross) is refused and nothing changes. The shared levels are held against every service that follows them.
+     changes: [{ id, value }] for one service p (null: the shared values); -> the changes as they will be stored, or null */
+  const SW_ID = 'ai.accounts.hard-switch-level', WARN_ID = 'ai.accounts.soft-warning-level';
+  function holdOrder(p, changes) {
+    const next = {}; (changes || []).forEach(c => { next[c.id] = c.value; });
+    const has = id => Object.prototype.hasOwnProperty.call(next, id), blank = v => v === null || v === undefined || v === '';
+    if (!has(SW_ID) && !has(WARN_ID)) return changes;
+    const shared = id => pctLeft(!p && has(id) && !blank(next[id]) ? next[id] : PM51.value(id));
+    const follows = (q, id) => (q === p && p && has(id)) ? blank(next[id]) : ownPolicy(q, id) === undefined;
+    const eff = (q, id) => follows(q, id) ? shared(id) : pctLeft(q === p && p && has(id) ? next[id] : ownPolicy(q, id));
+    const below = lim => { const c = SWITCH_LEFT.filter(v => v < lim); return c.length ? c[c.length - 1] : null; };
+    const above = floor => { const c = WARN_LEFT.filter(v => v > floor); return c.length ? c[0] : null; };
+    const out = changes.map(c => Object.assign({}, c)), at = id => out.find(c => c.id === id);
+    if (p) {
+      const sw = eff(p, SW_ID), warn = eff(p, WARN_ID);
+      if (sw === null || warn === null || sw < warn) return out;
+      if (has(SW_ID) && !blank(next[SW_ID])) { const v = below(warn); if (v === null) return null; at(SW_ID).value = v; return out; }
+      if (has(WARN_ID) && !blank(next[WARN_ID])) { const v = above(sw); if (v === null) return null; at(WARN_ID).value = v; return out; }
+      return null;
+    }
+    /* the shared levels: the shared pair itself and every service whose level follows the one written */
+    const pairs = [{ sw: shared(SW_ID), warn: shared(WARN_ID), fSw: true, fWarn: true }]
+      .concat(all().filter(canSwitch).map(q => ({ sw: eff(q, SW_ID), warn: eff(q, WARN_ID), fSw: follows(q, SW_ID), fWarn: follows(q, WARN_ID) })));
+    if (has(WARN_ID) && !blank(next[WARN_ID])) {
+      const floor = Math.max.apply(null, pairs.filter(x => x.fWarn && x.sw !== null).map(x => x.sw));
+      if (shared(WARN_ID) <= floor) { const v = above(floor); if (v === null) return null; at(WARN_ID).value = v; pairs.forEach(x => { if (x.fWarn) x.warn = v; }); }
+    }
+    if (has(SW_ID) && !blank(next[SW_ID])) {
+      const lim = Math.min.apply(null, pairs.filter(x => x.fSw && x.warn !== null).map(x => x.warn));
+      if (shared(SW_ID) >= lim) { const v = below(lim); if (v === null) return null; at(SW_ID).value = v; }
+    }
+    return out;
+  }
+  /* the shared rows commit through the page's one Settings write (commitSettingValue: the Settings rows and the Usage
+     page's setSettingFromHost alike), held to the same order */
+  const o55PolicyCommit = commitSettingValue;
+  commitSettingValue = function (id, value) {
+    if (id !== SW_ID && id !== WARN_ID) return o55PolicyCommit.apply(this, arguments);
+    const held = holdOrder(null, [{ id, value }]);
+    if (!held) { showToast('Setting was not changed', 'The switch level has to stay below the warn level.', 'warning'); return false; }
+    const args = Array.prototype.slice.call(arguments); args[1] = held[0].value;
+    return o55PolicyCommit.apply(this, args);
+  };
+  /* The shared rows (Limits & switching › Moving between accounts, their Details choices, All settings) offer no choice
+     that holdOrder would move: a crossing level is shown but cannot be picked, and says why, as each service's own
+     lists and the Usage page's level menu do (Settings_System section 8: "disabled with the reason, the shared choice
+     included"). A shared switch level crosses the shared warn level, or the own warn level of a service that follows
+     the shared switch level; a shared warn level crosses the shared switch level, or the own switch level of a service
+     that follows the shared warn level. The same pairs as holdOrder, so a choice offered here is stored as picked. */
+  function sharedCrossing(id, v) {
+    const n = pctLeft(v); if (n === null) return '';
+    const isSw = id === SW_ID, other = isSw ? WARN_ID : SW_ID;
+    const crosses = lvl => lvl !== null && (isSw ? n >= lvl : n <= lvl);
+    const shared = PM51.value(other), sharedOther = shared === null || shared === undefined || shared === '' ? null : pctLeft(shared);
+    if (crosses(sharedOther)) return isSw ? `At or past the warn level (${100 - sharedOther}% used). Lower the warn level first.` : `At or before the switch level (${100 - sharedOther}% used). Raise the switch level first.`;
+    const q = all().filter(canSwitch).find(x => ownPolicy(x, id) === undefined && crosses(pctLeft(ownPolicy(x, other))));
+    if (!q) return '';
+    const lvl = pctLeft(ownPolicy(q, other));
+    return isSw ? `At or past ${q.name}'s own warn level (${100 - lvl}% used), and it follows this shared level.` : `At or before ${q.name}'s own switch level (${100 - lvl}% used), and it follows this shared level.`;
+  }
+  PM51.choiceBlock(SW_ID, v => sharedCrossing(SW_ID, v));
+  PM51.choiceBlock(WARN_ID, v => sharedCrossing(WARN_ID, v));
+  function setPolicy(p, id, value) {
+    if (!p || !POLICY_IDS.includes(id)) return false;
+    if (!p.props || typeof p.props !== 'object') p.props = {};
+    if (value === null || value === undefined || value === '') delete p.props[id];
+    else p.props[id] = id === 'ai.accounts.multi-account-switching' ? isOn(value) : id === 'ai.accounts.cooldown-policy' ? String(value) : Number(value);
+    return true;
+  }
+  /* The provider-scope write the Usage page uses (one bound control: the same p.props value Settings draws). The value
+     is committed at once; the save to storage runs after the frame, so the click that changed it paints first. */
+  let policySave = 0;
+  const savePolicySoon = () => { if (policySave) return; policySave = window.setTimeout(() => { policySave = 0; saveState(); }, 0); };
+  const settingsShown = () => { const panel = document.getElementById('panel-settings'); return !!(panel && panel.classList.contains('active')); };
+  /* A write made while Settings is hidden (from the Usage page) marks the drawn page stale; it is redrawn the moment
+     the Settings panel is shown again, before that frame paints (item 2 review: the top Settings tab showed the old
+     toggle and level until a sub-tab was switched). Without a Settings panel (the standalone page) it redraws at once. */
+  let policyStale = false, policyObs = null;
+  const redrawWhenShown = () => {
+    const panel = document.getElementById('panel-settings');
+    if (!panel || typeof MutationObserver !== 'function') { PM51.refresh(ID, { swap: false }); return; }
+    policyStale = true;
+    if (policyObs) return;
+    policyObs = new MutationObserver(() => {
+      if (!policyStale || !panel.classList.contains('active')) return;
+      policyStale = false;
+      if (root.querySelector(`[data-continuous-workspace-body="${cssEscape(ID)}"]`)) PM51.refresh(ID, { swap: false });
+    });
+    policyObs.observe(panel, { attributes: true, attributeFilter: ['class'] });
+  };
+  PM51.providerPolicy = {
+    ids: POLICY_IDS.slice(),
+    /* {value, own, shared}: the value the service uses, whether it is the service's own, and the shared value */
+    get: (pid, id) => { const p = find(pid); if (!p || !POLICY_IDS.includes(id)) return null; const own = ownPolicy(p, id); return { value: own === undefined ? PM51.value(id) : own, own: own !== undefined, shared: PM51.value(id) }; },
+    /* the service's own values only: { id: value } */
+    own: pid => { const p = find(pid), out = {}; if (p) POLICY_IDS.forEach(id => { const v = ownPolicy(p, id); if (v !== undefined) out[id] = v; }); return out; },
+    multi: pid => multiAccount(find(pid)),
+    /* value null (or '') clears the service's own value: it follows the shared one again. Held to the switch-below-warn
+       order (holdOrder): a crossing write stores the nearest choice that keeps it, or is refused (false) */
+    set: (pid, id, value) => PM51.providerPolicy.setMany(pid, [{ id, value }]),
+    /* the changes as they will be stored (pid null: the shared values), or null when they would cross; the Usage page
+       sends these in its transaction, so the preview names what is stored */
+    hold: (pid, changes) => { if (!pid) return holdOrder(null, changes); const p = find(pid); return p ? holdOrder(p, changes) : null; },
+    /* several values of one service at once, held as one change (clearing all four at once never trips on the step
+       between them) */
+    setMany: (pid, changes) => {
+      const p = find(pid); if (!p) return false;
+      const held = holdOrder(p, changes); if (!held) return false;
+      let ok = true; held.forEach(c => { if (!setPolicy(p, c.id, c.value)) ok = false; });
+      savePolicySoon();
+      if (settingsShown()) PM51.refresh(ID, { swap: false }); else redrawWhenShown();
+      return ok;
+    }
+  };
+  POLICY_IDS.forEach(id => PM51.watch(id, () => PM51.refresh(ID, { swap: false })));
 
   function routesSection() {
     const items = routes().map(r => ({
@@ -559,12 +775,12 @@
 
   function render() {
     const tab = PM51.tab(ID, 'services');
-    const body = tab === 'services' ? servicesTab() : `<p class="o55-quiet-line">${h(TAB_LEADS[tab] || '')}</p>`;
+    const body = tab === 'services' ? servicesTab() : `<p class="o55-quiet-line">${h(TAB_LEADS[tab] || '')}</p>` + (tab === 'limits' ? policiesSection() : '');
     return PM51.page({ id: ID, key: KEY, tabs: TABS, active: tab, body, quiet: [{ label: 'How AI services work', action: 'pm51-providers-help' }, { label: 'Check every service', action: 'pm51-providers-diagnostics' }, { label: 'Reset services to the example defaults', action: 'pm51-providers-reset' }] });
   }
   const TAB_LEADS = {
     models: 'Which model answers by default, and which one does each kind of job. Each account also has its own default model, under Services.',
-    limits: 'What happens when an account or a service runs out. Each account can also have its own switch point, inside the account under Services.',
+    limits: 'What happens when an account or a service runs out. Each service with two or more accounts can switch on its own terms, and each account can have its own switch point, inside the account under Services.',
     usage: 'How much you are willing to spend, when to warn you, and what the Usage page shows.'
   };
 
@@ -654,6 +870,7 @@
   PM51.scopedSetter(SVC, (id, value, el) => {
     const p = prov(el);
     if (id === 'ai.models.provider-enabled') { if (value) turnOn(p, true); else turnOff(p, true); return p.name; }
+    if (POLICY_IDS.includes(id)) { const held = holdOrder(p, [{ id, value }]); if (held) setPolicy(p, id, held[0].value); save(); return p.name; }
     p.props[id] = value; saveState(); return p.name;
   });
   /* OpenCode's own switch is an inventory row; the service's state follows it. */
@@ -789,6 +1006,18 @@
   const prov = el => byId(ds(el, 'provider'));
   const acct = el => { const p = prov(el); const acc = (p.accounts || []).find(x => x.id === ds(el, 'account')); return [p, acc]; };
   PM51.on('providers-open', el => { const id = ds(el, 'provider'); if (!find(id)) return; state.selectedProvider = id; PM51.swapDetail(ID, id); });
+  /* Auto-switch policies: a service's arrow opens it under Services at its auto-switch row */
+  PM51.on('providers-policy-open', el => {
+    const id = ds(el, 'provider'); if (!find(id)) return;
+    state.selectedProvider = id; PM51.setTab(ID, 'services'); PM51.refresh(ID, { swap: false });
+    requestAnimationFrame(() => { const row = root.querySelector(`#panel-settings .o55-policy-fields[data-provider="${cssEscape(id)}"], #panel-settings .o55-policy-off[data-provider="${cssEscape(id)}"]`); if (row) row.scrollIntoView({ block: 'center' }); });
+  });
+  /* the service follows the shared auto-switch settings again (its own four values are cleared) */
+  PM51.on('providers-policy-shared', el => {
+    const p = prov(el); if (!p) return;
+    POLICY_IDS.forEach(id => setPolicy(p, id, null)); save();
+    PM51.toast('Saved', `${p.name} follows the shared auto-switch settings.`);
+  });
   PM51.on('providers-add', () => openDialog({
     title: 'Add a service', subtitle: 'For a service that is not in the list, such as a server that speaks the OpenAI format.',
     body: PM51.form([

@@ -96,11 +96,11 @@
  *                    padding, control spacing, overlapping or crowded text, line height, row and
  *                    button heights. Each hit: rule id, selector, text snippet, measured gap, the
  *                    minimum, and a 2x crop with the gap marked (see CROPS below).
- *   theme-font       owner amendment J-1: no @font-face family but Inter, Poppins and IBM Plex
- *                    Mono; the word Newsreader nowhere in the document; every pmx text computes to
- *                    the theme family (Inter; Poppins in friendly; IBM Plex Mono in retro), code is
- *                    IBM Plex Mono in retro and the existing system monospace stack elsewhere (never
- *                    Plex outside retro; J-1 correction), --font-mono is scoped the same way, no
+ *   theme-font       owner amendment J-1: no @font-face family but Inter, Poppins, IBM Plex
+ *                    Mono and JetBrains Mono; the word Newsreader nowhere in the document; every pmx
+ *                    text computes to the theme family (Inter; Poppins in friendly; IBM Plex Mono in
+ *                    retro), code is IBM Plex Mono in retro and JetBrains Mono elsewhere (never Plex
+ *                    outside retro; J-1 correction; DL-161 amended 2026-10-09), --font-mono is scoped the same way, no
  *                    italics at all (markdown emphasis included; lead ruling 2026-09-27: no italic
  *                    face is embedded); document.fonts.check() passes and a
  *                    loaded face covers every weight used; the font that actually drew sampled
@@ -1161,10 +1161,10 @@ export function inPageLint(o) {
       const th = document.body.getAttribute('data-theme') || '';
       const wantFam = /^retro/.test(th) ? 'ibm plex mono' : /^friendly/.test(th) ? 'poppins' : 'inter';
       const bad = [], done = new Set();
-      /* code (code, pre, kbd, samp): IBM Plex Mono in retro; elsewhere the existing system monospace
-         stack, never IBM Plex Mono (J-1 correction 2026-09-27: Plex is scoped to the retro themes) */
+      /* code (code, pre, kbd, samp): IBM Plex Mono in retro; elsewhere JetBrains Mono, never IBM Plex Mono
+         (J-1 correction 2026-09-27: Plex is scoped to the retro themes; DL-161 amended 2026-10-09 after the home
+         redesign's D17: JetBrains Mono is the code face of basic, glass and friendly) */
       const CODE = 'code, pre, kbd, samp, .pmx-code, .pmx-output-pre';
-      const SYSMONO = 'system-mono';
       /* for the document-level half (the runner): the (family, weight, style) triples pmx text uses,
          and one element per distinct look, whose rendered platform font the runner reads over CDP.
          An element is sampled only if nothing inside it is set in another family, because the
@@ -1172,17 +1172,15 @@ export function inPageLint(o) {
       const uses = new Map(), sample = new Map();
       const check = (el, txt) => {
         if (done.has(el)) return; done.add(el);
-        const code = !!el.closest(CODE), fam = code ? (wantFam === 'ibm plex mono' ? 'ibm plex mono' : SYSMONO) : wantFam;
+        const code = !!el.closest(CODE), fam = code ? (wantFam === 'ibm plex mono' ? 'ibm plex mono' : 'jetbrains mono') : wantFam;
         const cs = css(el), first = cs.fontFamily.split(',')[0].trim().replace(/^["']|["']$/g, '').toLowerCase();
         if (/newsreader/i.test(cs.fontFamily)) bad.push({ el: nm(el), newsreader: cs.fontFamily.slice(0, 60) });
-        else if (fam === SYSMONO) { if (/ibm plex mono/i.test(cs.fontFamily)) bad.push({ el: nm(el), family: first, want: 'the existing system monospace stack (code; IBM Plex Mono is retro-only)' }); }
         else if (first !== fam) bad.push({ el: nm(el), family: first, want: fam + (code ? ' (code)' : '') });
         /* no italics on pmx surfaces at all (J-1; lead ruling 2026-09-27: content emphasis, em / i /
            cite from markdown, is not exempt: no italic face is embedded, so it would be synthesized) */
         if (!code && cs.fontStyle !== 'normal') bad.push({ el: nm(el), italic: cs.fontStyle, emphasis: el.closest('em, i, cite') ? 'markdown or content emphasis' : undefined });
         const w = parseInt(cs.fontWeight, 10) || 400, st = cs.fontStyle === 'normal' ? 'normal' : 'italic';
-        /* embedded-face proof only for the theme families; system monospace has no face to prove */
-        if (fam !== SYSMONO) uses.set(fam + ' ' + w + ' ' + st, { family: fam, weight: w, style: st });
+        uses.set(fam + ' ' + w + ' ' + st, { family: fam, weight: w, style: st });
         const sig = [cs.fontFamily, w, st, cs.fontSize, typeof el.className === 'string' ? el.className : ''].join('|');
         const mixed = [...el.querySelectorAll('*')].some(d => !(d instanceof SVGElement) && css(d).fontFamily !== cs.fontFamily && (d.textContent || '').trim());
         if (!mixed && !sample.has(sig) && sample.size < 48) sample.set(sig, { el, want: fam, text: (txt || el.textContent || '').trim().slice(0, 28) });
@@ -1537,8 +1535,8 @@ export function inPageLint(o) {
 }
 
 /* theme-font, the document half (J-1). Runs right after inPageLint, in the same state.
-   o = { want: 'inter' | 'poppins' | 'ibm plex mono', uses: [{family, weight, style}] } (code uses IBM Plex Mono).
-   - faces: every @font-face family (FontFaceSet and CSSOM rules) is Inter, Poppins or IBM Plex Mono;
+   o = { want: 'inter' | 'poppins' | 'ibm plex mono', uses: [{family, weight, style}] } (code uses IBM Plex Mono in retro, JetBrains Mono elsewhere).
+   - faces: every @font-face family (FontFaceSet and CSSOM rules) is Inter, Poppins, IBM Plex Mono or JetBrains Mono;
    - newsreader: the word appears nowhere (markup, inline CSS and scripts, CSSOM rules, font set);
    - uses: for every (family, weight, style) pmx text uses, document.fonts.check() passes AND a loaded
      @font-face of that family covers that exact weight and style (check() alone returns true
@@ -1546,8 +1544,8 @@ export function inPageLint(o) {
 export async function inPageFonts(o) {
   try { await Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 3000))]); } catch (e) { }
   const norm = s => String(s || '').trim().replace(/^["']|["']$/g, '').toLowerCase();
-  const ALLOWED = ['inter', 'poppins', 'ibm plex mono'];
-  const DISPLAY = { inter: 'Inter', poppins: 'Poppins', 'ibm plex mono': 'IBM Plex Mono' };
+  const ALLOWED = ['inter', 'poppins', 'ibm plex mono', 'jetbrains mono'];
+  const DISPLAY = { inter: 'Inter', poppins: 'Poppins', 'ibm plex mono': 'IBM Plex Mono', 'jetbrains mono': 'JetBrains Mono' };
   const faces = [...document.fonts].map(f => ({ family: norm(f.family), weight: String(f.weight), style: f.style, status: f.status }));
   const ruleFams = new Set(); let cssomHits = 0;
   const walk = rules => {
@@ -1574,10 +1572,11 @@ export async function inPageFonts(o) {
       same.length ? 'no face at ' + u.weight + ' (faces: ' + same.map(f => f.weight).join(', ') + ')' : 'no ' + u.style + ' face of ' + fam;
     return { family: want, weight: u.weight, style: u.style, check, face };
   });
-  /* J-1 correction: --font-mono leads with IBM Plex Mono in retro and does not mention it elsewhere */
+  /* J-1 correction: --font-mono leads with IBM Plex Mono in retro and does not mention it elsewhere, where it leads
+     with JetBrains Mono (DL-161 amended 2026-10-09) */
   const fm = getComputedStyle(document.body).getPropertyValue('--font-mono').trim();
   const fontMono = o.want === 'ibm plex mono' ? (/^['"]?ibm plex mono/i.test(fm) ? null : { fontMono: fm.slice(0, 80), want: "leads with 'IBM Plex Mono' (retro)" })
-    : (/ibm plex mono/i.test(fm) ? { fontMono: fm.slice(0, 80), want: 'the existing system stack (IBM Plex Mono is retro-only)' } : null);
+    : (/ibm plex mono/i.test(fm) || !/^['"]?jetbrains mono/i.test(fm) ? { fontMono: fm.slice(0, 80), want: "leads with 'JetBrains Mono' (IBM Plex Mono is retro-only)" } : null);
   return { families: [...fams], badFaces, newsreader, uses, fontMono };
 }
 
@@ -1847,12 +1846,11 @@ async function fontDocument(h, cdp, res, font) {
   plat.forEach((fonts, i) => {
     if (!fonts || !fonts.length) return;
     const smp = font.sample[i] || {}, want = smp.want || font.want;
-    /* code outside retro: any face but IBM Plex Mono (the existing system stack) */
-    const sys = want === 'system-mono';
-    const isWant = f => sys ? !/^ibm plex mono/i.test(f.familyName) : f.isCustomFont && f.familyName.toLowerCase().startsWith(want);
+    /* code is a theme face too: IBM Plex Mono in retro, JetBrains Mono elsewhere (DL-161 amended 2026-10-09) */
+    const isWant = f => f.isCustomFont && f.familyName.toLowerCase().startsWith(want);
     const sorted = fonts.slice().sort((a, b) => b.glyphCount - a.glyphCount);
-    if (!isWant(sorted[0])) rendered.push({ el: smp.el, text: smp.text, rendered: sorted[0].familyName + (sorted[0].isCustomFont ? '' : ' (system font)'), glyphs: sorted[0].glyphCount, want: sys ? 'system monospace (not IBM Plex Mono)' : want });
-    for (const f of sorted.slice(1)) if (f.glyphCount > 0 && !isWant(f) && !sys) fallback.push({ el: smp.el, text: smp.text, font: f.familyName + (f.isCustomFont ? '' : ' (system font)'), glyphs: f.glyphCount, want });
+    if (!isWant(sorted[0])) rendered.push({ el: smp.el, text: smp.text, rendered: sorted[0].familyName + (sorted[0].isCustomFont ? '' : ' (system font)'), glyphs: sorted[0].glyphCount, want });
+    for (const f of sorted.slice(1)) if (f.glyphCount > 0 && !isWant(f)) fallback.push({ el: smp.el, text: smp.text, font: f.familyName + (f.isCustomFont ? '' : ' (system font)'), glyphs: f.glyphCount, want });
   });
   const probs = {};
   if (doc.badFaces.length) probs.fontFaces = doc.badFaces;

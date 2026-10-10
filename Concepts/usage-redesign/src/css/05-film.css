@@ -1,0 +1,247 @@
+/* Film core styles (owner: engine, creative direction 2026-10-02; WOW-SPEC.md sections 2, 3 and 10; PMU.film in
+   src/js/15-film.js). Every element styled here is either static light at rest (the key light) or a short-lived layer that
+   PMU.film adds for one animation and removes when it ends (odometer columns, comet, light front, head glow, sweep,
+   flash, ring, Glass glint, NieR scanline, Retro scan bar). Each is painted once and then moved or faded by transform and
+   opacity only, so it costs the CPU-only VM a compositor quad, not a repaint per frame. Nothing here animates by
+   itself: there is no CSS animation and no transition in this file. */
+
+/* ---- the first arrival: the outgoing Home page leaves the flow at once (MOTION-REVIEW-2 item 1). The app's rule
+   #panel-dashboard.pm-home-owned { position: relative } (1-2-0) beat .primary-content > .page.pm8-page-out
+   { position: absolute } (0-3-0), so Home stayed in flow through its fade and the Usage panel sat 504 px down for
+   about 600 ms, then jumped. The app already pins the outgoing page's top, left, width and height for this. ---- */
+body.pmu-page-active #panel-dashboard.pm-home-owned.pm8-page-out { position: absolute; }
+
+/* ---- the held board (3.1 Phase A): held cards are laid out (the build measures every body) but not painted, so the
+   slices cost the frame no paint and no layerization; the release animates them in from their first keyframe ---- */
+#panel-usage .pmu-board[data-held] > .pmu-card { visibility: hidden; }
+/* the first arrival (PERF-3): the plates show and enter from the first frame, their bodies wait unseen by opacity until
+   the release reveals them */
+#panel-usage .pmu-board[data-hold-bodies] > .pmu-card > .pmu-cardbody { opacity: 0; }
+/* a room change builds every new card's chrome in one batch (one child-list change of the board: no sibling restyles in
+   the later slices, PERF-3); the frames enter at once and each body waits unseen by opacity until it is built (never
+   by visibility: an animation created under visibility: hidden runs on the main thread) */
+#panel-usage .pmu-board > .pmu-card[data-body-wait] > .pmu-cardbody { opacity: 0; }
+/* while a film moment runs (data-film, set at the release and removed once at its end) each plate keeps its layer until
+   its own entrance has ended (data-film-rest, 15-film.js plateLayer): a plate at rest never draws its text from a layer
+   that kept the raster scale of a scaled entrance (Jared's note 5, 2026-10-09) */
+#panel-usage .pmu-board[data-film] > .pmu-card:not([data-film-rest]) { will-change: transform, opacity; }
+
+/* ---- the room key light (2.1; WOW-SPEC-3 4.2): one static light under the board, visible in the gutters and behind the
+   transparent stage head; a key at the top-left and a low bounce light at the bottom-right (tokens --pmu-l-* in
+   00-base.css). It blooms once on arrival and pans with the camera on a room change (15-film.js), never at rest. ---- */
+#panel-usage .pmu-film-key { position: absolute; inset: 0; z-index: 0; pointer-events: none; transform-origin: 50% 0;
+  --pmu-film-tint: var(--pmu-accent);
+  background: radial-gradient(80% 62% at 38% -6%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-a), transparent), transparent 72%),
+    radial-gradient(52% 44% at 96% 104%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-b), transparent), transparent 70%); }
+#panel-usage .pmu-film-key[data-room="costs"] { --pmu-film-tint: var(--pmu-tone-warn); }
+#panel-usage .pmu-film-key[data-room="attention"] { --pmu-film-tint: var(--pmu-tone-hot); }
+#panel-usage .pmu-film-key[data-room="accounts"], #panel-usage .pmu-film-key[data-room="free"] { --pmu-film-tint: var(--pmu-tone-calm); }
+html[data-theme^="friendly"] #panel-usage .pmu-film-key { --pmu-film-tint: var(--pmu-l-key); }
+/* Basic Light: the accent key with a cool cyan partner low right */
+html[data-theme="basic-light"] #panel-usage .pmu-film-key {
+  background: radial-gradient(85% 70% at 30% -8%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-a), transparent), transparent 72%),
+    radial-gradient(70% 60% at 100% 105%, color-mix(in srgb, #2FB3D9 var(--pmu-l-key-b), transparent), transparent 72%); }
+/* Friendly Light: a dawn wash (peach key top-left, lavender partner low right) */
+html[data-theme="friendly-light"] #panel-usage .pmu-film-key {
+  background: radial-gradient(85% 70% at 20% -8%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-a), transparent), transparent 72%),
+    radial-gradient(70% 60% at 100% 105%, color-mix(in srgb, #9C7BE0 var(--pmu-l-key-b), transparent), transparent 72%); }
+/* Glass: the second light is a cool cyan bounce */
+html[data-theme^="glass"] #panel-usage .pmu-film-key {
+  background: radial-gradient(70% 56% at 30% -6%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-a), transparent), transparent 72%),
+    radial-gradient(50% 46% at 96% 100%, color-mix(in srgb, #64D9FF var(--pmu-l-key-b), transparent), transparent 72%); }
+/* Retro: the scanline texture plus the 10 % phosphor light */
+html[data-theme^="retro"] #panel-usage .pmu-film-key { --pmu-film-tint: var(--pmu-s0);
+  background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--pmu-s0) 3%, transparent) 0 1px, transparent 1px 3px),
+    radial-gradient(80% 62% at 38% -6%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-a), transparent), transparent 72%),
+    radial-gradient(52% 44% at 96% 104%, color-mix(in srgb, var(--pmu-film-tint) var(--pmu-l-key-b), transparent), transparent 70%); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-key { display: none; }
+/* the board sits above the light: the light is the stage's first child at z-index 0, and the positioned scroll comes
+   later in tree order, so it paints over it without a stacking context of its own */
+
+/* ---- odometer (3.1 Phase C, 3.6): the final text stays in flow (transparent) and keeps width and baseline; the digit
+   columns roll in an overlay; PMU.film writes the plain text back when the roll ends ---- */
+#panel-usage .pmu-odo { position: relative; display: inline-block; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#panel-usage .pmu-odo-ghost { color: transparent; }
+#panel-usage .pmu-odo-layer { position: absolute; left: 0; top: 0; bottom: 0; display: flex; pointer-events: none; }
+#panel-usage .pmu-odo-c { position: relative; display: block; flex: none; white-space: pre; }
+#panel-usage .pmu-odo-c.is-d { overflow: hidden; }
+#panel-usage .pmu-odo-g { visibility: hidden; }
+#panel-usage .pmu-odo-s { position: absolute; left: 0; top: 0; right: 0; white-space: pre; text-align: center; will-change: transform; }
+#panel-usage .pmu-odo-s.is-swap { text-align: left; }
+
+/* ---- the comet (3.1 Phase C, 3.3): a light riding the primary line at the reveal edge, and its light front ---- */
+#panel-usage .pmu-film-comet { position: absolute; left: 0; top: 0; z-index: 3; width: 0; height: 0; pointer-events: none; will-change: transform, opacity;
+  --cc: var(--c, var(--pmu-accent)); }
+#panel-usage .pmu-film-comet::before { content: ""; position: absolute; left: -13px; top: -13px; width: 26px; height: 26px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--cc) 72%, transparent) 0, color-mix(in srgb, var(--cc) 30%, transparent) 38%, transparent 70%); }
+#panel-usage .pmu-film-comet::after { content: ""; position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%;
+  background: color-mix(in srgb, #fff 78%, var(--cc)); box-shadow: 0 0 6px 2px color-mix(in srgb, var(--cc) 70%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-film-comet::after { background: color-mix(in srgb, #fff 35%, var(--cc)); box-shadow: 0 0 5px 1px color-mix(in srgb, var(--cc) 45%, transparent); }
+#panel-usage .pmu-film-comet[data-voice="hop"]::after { left: -4.5px; top: -4.5px; width: 9px; height: 9px; }
+#panel-usage .pmu-film-comet[data-voice="hop"]::before { box-shadow: -10px 2px 0 -9px color-mix(in srgb, var(--cc) 60%, transparent), -19px 4px 0 -10px color-mix(in srgb, var(--cc) 40%, transparent); }
+#panel-usage .pmu-film-comet[data-voice="depth"]::before { left: -18px; top: -18px; width: 36px; height: 36px; }
+#panel-usage .pmu-film-comet[data-voice="type"]::before { left: -7px; top: -9px; width: 14px; height: 18px; border-radius: 0;
+  background: color-mix(in srgb, var(--cc) 26%, transparent); box-shadow: 0 0 12px 2px color-mix(in srgb, var(--cc) 40%, transparent); }
+#panel-usage .pmu-film-comet[data-voice="type"]::after { left: -3px; top: -6px; width: 6px; height: 12px; border-radius: 0; background: var(--cc); box-shadow: 0 0 8px var(--cc); }
+#panel-usage .pmu-film-comet[data-voice="game"]::before { display: none; }
+#panel-usage .pmu-film-comet[data-voice="game"]::after { left: -1px; top: -8px; width: 2px; height: 16px; border-radius: 0; background: var(--pmu-ink); box-shadow: none; }
+#panel-usage .pmu-film-front { position: absolute; left: 0; top: 0; bottom: 0; z-index: 2; width: 2px; margin-left: -1px; pointer-events: none; will-change: transform, opacity;
+  --cc: var(--c, var(--pmu-accent));
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--cc) 42%, transparent) 26%, color-mix(in srgb, var(--cc) 42%, transparent) 84%, transparent);
+  box-shadow: 0 0 16px 3px color-mix(in srgb, var(--cc) 16%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-film-front { box-shadow: none; }
+
+/* ---- the head glow (3.1 Phase C, 3.8): a track-wide transparent layer that slides with the fill and lights its head ---- */
+#panel-usage .pmu-film-head { position: absolute; left: 0; top: 0; z-index: 2; width: 100%; height: 100%; pointer-events: none; will-change: transform, opacity; }
+#panel-usage .pmu-film-head::after { content: ""; position: absolute; right: -13px; top: 50%; width: 26px; height: 26px; margin-top: -13px; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, #fff 60%, var(--c, var(--pmu-calm))) 0, color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent) 26%, transparent 68%); }
+html[data-theme$="-light"] #panel-usage .pmu-film-head::after { background: radial-gradient(circle, color-mix(in srgb, #fff 30%, var(--c, var(--pmu-calm))) 0, color-mix(in srgb, var(--c, var(--pmu-calm)) 40%, transparent) 26%, transparent 66%); }
+html[data-theme^="retro"] #panel-usage .pmu-film-head::after { right: -3px; width: 6px; height: 14px; margin-top: -7px; border-radius: 0; background: var(--c, var(--pmu-calm)); box-shadow: 0 0 10px var(--c, var(--pmu-calm)); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-head::after { right: -1px; width: 2px; height: 14px; margin-top: -7px; border-radius: 0; background: var(--pmu-ink); }
+
+/* ---- one light band across an element (sweep), the Glass specular glint ---- */
+#panel-usage .pmu-film-sweep, #panel-usage .pmu-film-glint { position: absolute; inset: 0; z-index: 6; overflow: hidden; border-radius: inherit; pointer-events: none; }
+#panel-usage .pmu-film-sweep > i, #panel-usage .pmu-film-glint > i { position: absolute; top: -20%; bottom: -20%; left: 0; width: 42%; will-change: transform, opacity;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.07) 30%, rgba(255,255,255,.17) 50%, rgba(255,255,255,.07) 70%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-film-sweep > i { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--pmu-accent) 7%, transparent) 30%,
+  color-mix(in srgb, var(--pmu-accent) 13%, transparent) 50%, color-mix(in srgb, var(--pmu-accent) 7%, transparent) 70%, transparent); }
+#panel-usage .pmu-film-glint > i { width: 30%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.10) 35%, rgba(255,255,255,.26) 50%, rgba(255,255,255,.10) 65%, transparent); }
+html[data-theme^="retro"] #panel-usage .pmu-film-sweep > i { width: 12%; background: color-mix(in srgb, var(--pmu-s0) 14%, transparent); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-sweep > i { width: 8%; background: color-mix(in srgb, var(--pmu-ink) 12%, transparent); }
+
+/* ---- the change flash and the exhausted ring (3.6) ---- */
+#panel-usage .pmu-film-flash { position: absolute; inset: 0; z-index: 5; border-radius: inherit; pointer-events: none; will-change: opacity;
+  background: radial-gradient(80% 90% at 50% 55%, color-mix(in srgb, var(--pmu-accent) 22%, transparent), transparent 72%); }
+#panel-usage .pmu-film-flash[data-tone="warn"] { background: radial-gradient(80% 90% at 50% 55%, color-mix(in srgb, var(--pmu-tone-warn) 24%, transparent), transparent 72%); }
+#panel-usage .pmu-film-flash[data-tone="crit"] { background: radial-gradient(80% 90% at 50% 55%, color-mix(in srgb, var(--pmu-tone-hot) 26%, transparent), transparent 72%); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-flash { background: var(--pmu-ink); mix-blend-mode: difference; }
+#panel-usage .pmu-film-ring { position: absolute; inset: -3px; z-index: 5; border-radius: inherit; pointer-events: none; will-change: transform, opacity;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--pmu-tone-exhausted) 55%, transparent), 0 0 18px 6px color-mix(in srgb, var(--pmu-tone-exhausted) 30%, transparent); }
+#panel-usage .pmu-film-halo { position: absolute; left: 50%; top: 50%; width: max(30px, 190%); aspect-ratio: 1; z-index: 5; border-radius: 50%; pointer-events: none;
+  will-change: transform, opacity; --pmu-halo: var(--pmu-accent);
+  background: radial-gradient(circle, transparent 46%, color-mix(in srgb, var(--pmu-halo) 55%, transparent) 58%, color-mix(in srgb, var(--pmu-halo) 18%, transparent) 70%, transparent 72%); }
+#panel-usage .pmu-film-halo[data-tone="good"] { --pmu-halo: var(--pmu-ink-good); }
+#panel-usage .pmu-film-halo[data-tone="warn"] { --pmu-halo: var(--pmu-tone-warn); }
+#panel-usage .pmu-film-halo[data-tone="crit"] { --pmu-halo: var(--pmu-tone-hot); }
+html[data-o55-nier="on"] #panel-usage .pmu-film-halo { border-radius: 0; background: none; box-shadow: 0 0 0 1px var(--pmu-ink); }
+
+/* ---- NieR boot scanline (5) and the Retro phosphor scan bar (7) ---- */
+#panel-usage .pmu-film-scan { position: absolute; left: 0; right: 0; top: 0; height: 100%; z-index: 7; pointer-events: none; will-change: transform, opacity; }
+#panel-usage .pmu-film-scan::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--pmu-ink); }
+#panel-usage .pmu-film-scanbar { position: absolute; left: 0; right: 0; top: 0; height: 100%; z-index: 40; pointer-events: none; will-change: transform, opacity; }
+#panel-usage .pmu-film-scanbar::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: color-mix(in srgb, var(--pmu-s0) 80%, transparent);
+  box-shadow: 0 0 12px 3px color-mix(in srgb, var(--pmu-s0) 35%, transparent); }
+
+/* Reduce Motion: PMU.film creates none of these layers; the key light shows at rest */
+/* a first NieR decode waits unseen through its delay (final fix M3; PMU.film decode) */
+#panel-usage .pmu-dec-wait { opacity: 0; }
+
+/* ---- WOW round 3 (WOW-SPEC-3) ---- */
+/* the outgoing room as ONE layer (6.2, film.ghost): the same grid at the old room's place, above the new board, inert */
+/* the scroll pane is one grid cell: the new board and the old one (the ghost, kept in place: nothing is moved or laid out
+   again) overlap in it; the ghost above, inert */
+#panel-usage .pmu-scroll { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; }
+#panel-usage .pmu-scroll > .pmu-board { grid-area: 1 / 1; min-width: 0; }
+#panel-usage .pmu-scroll > .pmu-board[hidden] { display: none; }
+/* no pointer-events here: it is inherited, and setting it restyled the old board's ~1,000 elements in the click (VM profile
+   84 ms); the board's handlers ignore cards that are not on the current board */
+#panel-usage .pmu-board.pmu-ghostboard { z-index: 2; will-change: transform, opacity; }
+#panel-usage .pmu-ghostboard > .pmu-card { transition: none; }
+#panel-usage .pmu-ghostboard > .pmu-film-scanbar, #panel-usage .pmu-ghostboard > .pmu-film-scan { z-index: 40; }
+/* the odometer keeps the hero's ink while it rolls (4.4, E3-10): while the columns roll the number itself carries no ink
+   (its ghost text, which keeps the width, would show the final value through the number's background-clip: text, so it is
+   not painted); every column and every glyph row of a strip
+   takes the same gradient (vertical: one gradient per line, 1lh repeat-y; Friendly: left to right across the number, each
+   column at its own x over the number's width) */
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-ghost { visibility: hidden; }
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-layer > .pmu-odo-c,
+html:not([data-theme^="retro"]):not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-s {
+  background-image: linear-gradient(180deg, var(--pmu-l-ink-top) 18%, var(--pmu-l-ink-bot) 96%); background-size: 100% 1lh; background-repeat: repeat-y;
+  -webkit-background-clip: text; background-clip: text; color: transparent; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-layer > .pmu-odo-c {
+  background-image: linear-gradient(100deg, var(--pmu-l-ink-top), var(--pmu-l-ink-bot)); background-size: var(--num-w, 4ch) 1lh; background-position: calc(-1 * var(--col-x, 0ch)) 0; }
+html[data-theme^="friendly"]:not([data-o55-nier="on"]) #panel-usage .pmu-heronum .pmu-odo-s {
+  background-image: linear-gradient(100deg, var(--pmu-l-ink-top), var(--pmu-l-ink-bot)); background-size: var(--num-w, 4ch) 1lh; background-position: calc(-1 * var(--col-x, 0ch)) 0; }
+/* the shared-element flight (6.3, film.flight): flyers in one layer above the board, under the menus (70) and the
+   inspector (50); each flyer is an outer (X) and an inner (Y + scale) element around a lift (takeoff) */
+#panel-usage .pmu-flight { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 45; pointer-events: none; }
+#panel-usage .pmu-flyer { position: absolute; transform-origin: 0 0; will-change: transform; pointer-events: none; contain: layout style; }
+#panel-usage .pmu-fly-in { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
+#panel-usage .pmu-fly-lift { position: absolute; inset: 0; will-change: transform; }
+#panel-usage .pmu-fly-lift > .pmu-fly-c { position: absolute; left: 0; top: 0; width: 100%; height: 100%; margin: 0; box-sizing: border-box; visibility: visible; }
+#panel-usage .pmu-flyer[data-kind="num"] .pmu-fly-c, #panel-usage .pmu-flyer[data-kind="reset"] .pmu-fly-c { width: auto; height: auto; }
+#panel-usage .pmu-fly-shadow { position: absolute; inset: 0; border-radius: 6px; opacity: 0; box-shadow: 0 10px 24px -8px rgba(0,0,0,.6); }
+html[data-theme$="-light"] #panel-usage .pmu-fly-shadow { box-shadow: 0 8px 18px -8px rgba(21,32,43,.25); }
+#panel-usage .pmu-fly-after { opacity: .4; }
+/* a flight's target waits unseen until its flyer lands (the swap is one frame) */
+#panel-usage [data-pmu-fly-target] { opacity: 0 !important; }
+/* A2 (PERF-3): the app's page-in slides and fades the whole Usage panel as one 300 ms layer; without a GPU every frame of it
+   redraws the panel on the CPU while the arrival's structure wave plays. Without a GPU Usage arrives without the panel
+   slide (the frames wave is the arrival); with a GPU the app's page-in is unchanged; other pages are untouched. */
+html[data-pmu-soft] .primary-content > #panel-usage.page.pm8-page-in { animation: none; }
+/* without a GPU the old room stays still and inert for the click's frame (40-board.js pendingOld); no z-index or other
+   paint change on it (a new stacking context repainted the whole board on the CPU in the click's frame); the new board
+   is empty until the frame that removes the old one */
+/* light at a measured rect in the flight layer (a landed flyer, a live lead): the flash and sweep fill it */
+#panel-usage .pmu-flight > .pmu-film-at { position: absolute; display: block; border-radius: 6px; pointer-events: none; }
+html[data-theme^="retro"] #panel-usage .pmu-flight > .pmu-film-at, html[data-o55-nier="on"] #panel-usage .pmu-flight > .pmu-film-at { border-radius: 0; }
+/* NieR: a flyer is selected before it travels (its four corner brackets snap in, two steps of 60) */
+#panel-usage .pmu-fly-brk { position: absolute; inset: -4px; pointer-events: none;
+  background: linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 0 / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 0 / 1.5px 7px,
+    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 0 / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 0 / 1.5px 7px,
+    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 0 100% / 1.5px 7px,
+    linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 7px 1.5px, linear-gradient(var(--pmu-ink), var(--pmu-ink)) 100% 100% / 1.5px 7px;
+  background-repeat: no-repeat; }
+
+/* ---- MOTION-4 (lane b-motion, Jared's items 7 and 8): the layers of the room-change camera and the voices. Each is one
+   short-lived element PMU.film adds for one animation (transform and opacity only) and removes at its end. ---- */
+/* the hold of a room's signature beat (RC4): what the beat reveals from invisible stays unseen from the card's reveal until
+   the beat creates its animations in the same task (15-film.js playBeat removes data-beat-hold; finish, end and Reduce
+   Motion release it too). Content can mark any further target with data-beat. */
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] [data-beat],
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-wmk,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-accrow.is-eff .pmu-acclight,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-freestate[data-tone="warn"],
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-alerttop .pmu-ico,
+#panel-usage .pmu-board > .pmu-card[data-beat-hold] .pmu-alerttop > svg { opacity: 0; }
+/* Glass: one refraction band crosses the stage in the camera's direction (a wide diagonal specular sheet) */
+#panel-usage .pmu-film-refract { position: absolute; inset: 0; z-index: 6; display: block; overflow: hidden; pointer-events: none; }
+#panel-usage .pmu-film-refract > i { position: absolute; top: -14%; bottom: -14%; left: 0; width: 38%; display: block; will-change: transform, opacity;
+  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.05) 40%, rgba(255,255,255,.12) 50%, rgba(214,238,255,.05) 60%, rgba(255,255,255,0) 74%, transparent 100%); }
+/* (normal blending: a blend mode on a stage-wide layer would make the GPU draw the whole stage into a render surface) */
+html[data-theme="glass-light"] #panel-usage .pmu-film-refract > i {
+  background: linear-gradient(100deg, transparent 0, rgba(255,255,255,0) 26%, rgba(255,255,255,.22) 42%, rgba(255,255,255,.46) 50%, rgba(220,236,255,.22) 58%, rgba(255,255,255,0) 74%, transparent 100%); }
+/* Basic: the ink stroke under a first-row head (draws from the left, then dries) */
+#panel-usage .pmu-cardhead > .pmu-film-ink { position: absolute; left: 14px; right: 14px; bottom: 0; height: 1.5px; display: block; pointer-events: none; transform-origin: 0 50%;
+  border-radius: 1px; will-change: transform, opacity; background: linear-gradient(90deg, var(--pmu-accent), color-mix(in srgb, var(--pmu-accent) 35%, transparent));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--pmu-accent) 45%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-cardhead > .pmu-film-ink { box-shadow: none; }
+/* the hero light floor (RC3). Basic and Glass: a light front crosses the hero (a track-wide layer slides and lights its
+   right edge, with a faint wash behind it) */
+#panel-usage .pmu-card > .pmu-film-floor { position: absolute; inset: 0; z-index: 6; display: block; overflow: hidden; border-radius: inherit; pointer-events: none; }
+#panel-usage .pmu-card > .pmu-film-floor > i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; display: block; will-change: transform, opacity;
+  background: linear-gradient(90deg, transparent 62%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 7%, transparent) 92%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 16%, transparent) 99.4%, transparent 100%); }
+#panel-usage .pmu-card > .pmu-film-floor > i::after { content: ""; position: absolute; right: -1px; top: 6%; bottom: 6%; width: 2px; border-radius: 1px;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, #fff 55%, var(--pmu-l-key, var(--pmu-accent))) 30%, color-mix(in srgb, #fff 55%, var(--pmu-l-key, var(--pmu-accent))) 70%, transparent);
+  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 30%, transparent); }
+html[data-theme$="-light"] #panel-usage .pmu-card > .pmu-film-floor > i::after { background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 70%, transparent) 30%, color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 70%, transparent) 70%, transparent);
+  box-shadow: 0 0 14px 3px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 18%, transparent); }
+/* Friendly: a warm bloom under the hero (behind its content: the plate is a stacking context while a moment runs) */
+#panel-usage .pmu-card > .pmu-film-warm { position: absolute; inset: -14% -6%; z-index: -1; display: block; pointer-events: none; will-change: transform, opacity;
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 58%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 20%, transparent) 52%, transparent 74%); }
+html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 46%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 15%, transparent) 52%, transparent 74%); }
+#panel-usage .pmu-board[data-film] > .pmu-card[data-hero] { isolation: isolate; }
+/* Friendly: the three warm dots of a landing on a meter or a control */
+#panel-usage .pmu-flight > .pmu-film-puff { position: absolute; width: 6px; height: 6px; margin: 0; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+  background: var(--pmu-l-key, #FF9F7A); box-shadow: 0 0 6px color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 60%, transparent); }
+/* the head glow in the voices: Friendly a round bead with two echo dots (the comet's hop texture), Glass a white core
+   in a wide halo */
+#panel-usage .pmu-film-head[data-voice="hop"]::after { right: -5px; width: 10px; height: 10px; margin-top: -5px;
+  background: color-mix(in srgb, #fff 45%, var(--c, var(--pmu-calm)));
+  box-shadow: 0 0 8px 1px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -9px 0 0 -2px color-mix(in srgb, var(--c, var(--pmu-calm)) 55%, transparent), -16px 0 0 -3px color-mix(in srgb, var(--c, var(--pmu-calm)) 35%, transparent); }
+#panel-usage .pmu-film-head[data-voice="depth"]::after { right: -18px; width: 36px; height: 36px; margin-top: -18px;
+  background: radial-gradient(circle, #fff 0, color-mix(in srgb, #fff 70%, var(--c, var(--pmu-calm))) 9%, color-mix(in srgb, var(--c, var(--pmu-calm)) 45%, transparent) 24%, transparent 66%); }
+/* a live lead or a landing in Friendly: the flash is warm (the key light's tint) */
+#panel-usage .pmu-flight > .pmu-film-at[data-voice="hop"] > .pmu-film-flash:not([data-tone]) {
+  background: radial-gradient(80% 90% at 50% 55%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 30%, transparent), transparent 72%); }

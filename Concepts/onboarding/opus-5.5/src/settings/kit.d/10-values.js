@@ -87,12 +87,22 @@ const o55Options = setting => {
   const seen = new Set(base.map(String));
   return base.concat(o55Extra(setting.id).filter(v => !seen.has(String(v))));
 };
+/* A choice the owner would not store as picked is shown but cannot be picked, and says why (Settings_System section 8:
+   the shared switch level at or past a warn level, or the shared warn level at or below a switch level, "is disabled
+   with the reason, the shared choice included"). The manager that owns the rule registers it:
+   PM51.choiceBlock(id, value => reason or ''). The current value is never held back. */
+const o55Blocks = {};
+PM51.choiceBlock = (id, fn) => { o55Blocks[id] = fn; };
+PM51.choiceReason = (id, value, current) => {
+  const fn = o55Blocks[id]; if (!fn || String(value) === String(current == null ? '' : current)) return '';
+  try { return fn(value) || ''; } catch (e) { return ''; }
+};
 const o55SegmentFits = (setting, opts) => opts.length <= 4 && opts.reduce((n, o) => n + PM51.valueLabel(setting.id, o).length, 0) <= 34;
 function o55Select(setting, value, opts) {
   const list = opts.slice();
   const cur = value == null ? '' : String(value);
   if (!list.map(String).includes(cur)) list.unshift(cur); /* never pretend the first choice is the current one */
-  return PM51.dropdown(cur, list.map(o => ({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) })), { action: 'change-setting', data: { setting: setting.id }, label: setting.label, search: list.length > 10 });
+  return PM51.dropdown(cur, list.map(o => { const why = PM51.choiceReason(setting.id, o, cur); return Object.assign({ value: o, label: PM51.valueLabel(setting.id, o), meta: PM51.valueHint(setting.id, o) }, why ? { disabled: true, reason: why, why: true } : {}); }), { action: 'change-setting', data: { setting: setting.id }, label: setting.label, search: list.length > 10 });
 }
 function o55Segmented(setting, value, opts) {
   return `<div class="segmented o55-seg" role="radiogroup" aria-label="${a(setting.label)}">${opts.map(o => { const on = String(o) === String(value); return `<button type="button" role="radio" class="${on ? 'active' : ''}" aria-checked="${on}" data-action="set-setting" data-setting="${a(setting.id)}" data-value="${a(o)}">${h(PM51.valueLabel(setting.id, o))}</button>`; }).join('')}</div>`;

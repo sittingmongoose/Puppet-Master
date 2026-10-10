@@ -1,0 +1,132 @@
+/* The inspector drawer (owner: engine; ARCHITECTURE.md section 4.9, DESIGN-SPEC section 12, DESIGN-SPEC-ATLAS 8.1).
+   Local: it dispatches nothing; content passes an InspectorSpec {kind, title, subtitle?, actions?, sections, raw?}. A
+   400 px drawer inside the stage that slides in from the right with the panel spring (520 ms); Curated / Raw switch
+   (Raw lists every field with credential handles masked); Escape or the close button closes it and focus returns to
+   the opener. */
+(function () {
+  var el = document.getElementById('pmuInspector'), body = document.getElementById('pmuInspBody'), title = document.getElementById('pmuInspTitle');
+  var sub = document.getElementById('pmuInspSub'), actions = document.getElementById('pmuInspActions'), modeSeg = document.getElementById('pmuInspMode');
+  var opener = null, spec = null, mode = 'curated';
+  var SECRET = /(token|secret|password|api[_-]?key|credential|handle|cookie|auth[_-]?header)/i;
+
+  function mask(key, value) {
+    if (value == null) return value;
+    if (SECRET.test(key) && typeof value === 'string' && value.length > 4) return value.slice(0, 2) + '…' + value.slice(-2) + ' (masked)';
+    return value;
+  }
+  function rawHtml(obj) {
+    var rows = [];
+    (function walk(o, prefix) {
+      Object.keys(o || {}).forEach(function (k) {
+        var v = o[k], key = prefix ? prefix + '.' + k : k;
+        if (v && typeof v === 'object' && !Array.isArray(v)) walk(v, key);
+        else rows.push('<span class="pmu-rawk">' + esc(key) + '</span><code class="pmu-rawv">' + esc(Array.isArray(v) ? JSON.stringify(v) : String(mask(key, v))) + '</code>');
+      });
+    })(obj, '');
+    return '<p class="pmu-inspnote">' + esc(t('inspector.raw_note')) + '</p><div class="pmu-inspgrid pmu-inspraw">' + (rows.join('') || '<span>None</span><code>-</code>') + '</div>';
+  }
+  function sectionsHtml(s) {
+    return (s.sections || []).map(function (sec) {
+      return '<section class="pmu-inspsec"><h4 class="pmu-cap">' + esc(sec.title) + '</h4>' + (sec.html != null ? sec.html : '<div class="pmu-inspgrid">' +
+        (sec.rows || []).map(function (r) { return '<span>' + esc(r[0]) + '</span><b>' + (r[1] == null ? '-' : r[1]) + '</b>'; }).join('') + '</div>') + '</section>';
+    }).join('');
+  }
+  function paint(first) {
+    if (!spec) return;
+    var raw = mode === 'raw';
+    body.innerHTML = raw ? rawHtml(spec.raw || flatten(spec)) : sectionsHtml(spec);
+    if (modeSeg) {
+      PMU.core.$$('button[data-insp-mode]', modeSeg).forEach(function (b) { var on = b.getAttribute('data-insp-mode') === mode; b.classList.toggle('active', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+      if (PMU.shell && PMU.shell.syncSegInk) PMU.shell.syncSegInk(modeSeg, first);
+    }
+    if (!first && PMU.motion) PMU.motion.reveal(body.querySelectorAll('.pmu-inspsec, .pmu-inspraw > *'), { step: 12, cap: 200 });
+  }
+  function flatten(s) {
+    var out = {};
+    (s.sections || []).forEach(function (sec) { (sec.rows || []).forEach(function (r) { out[sec.title + ' · ' + r[0]] = String(r[1] == null ? '' : r[1]).replace(/<[^>]+>/g, ''); }); });
+    return out;
+  }
+  /* the card that opened the drawer keeps a 1 px accent rim while it is open (WOW-SPEC 3.15); the rim fades 160 on close */
+  var rimCard = null;
+  function holdRim(card) {
+    if (rimCard === card) return;
+    dropRim();
+    if (!card || !card.classList || !card.classList.contains('pmu-card')) return;
+    var r = card.querySelector(':scope > .pmu-rim');
+    if (!r) { r = document.createElement('i'); r.className = 'pmu-rim'; r.setAttribute('aria-hidden', 'true'); card.appendChild(r); }
+    rimCard = card;
+    requestAnimationFrame(function () { if (rimCard === card) r.classList.add('is-held'); });
+  }
+  function dropRim() {
+    var card = rimCard; rimCard = null;
+    var r = card && card.querySelector(':scope > .pmu-rim'); if (!r) return;
+    r.classList.remove('is-held');
+    setTimeout(function () { if (!r.classList.contains('is-held') && r.isConnected && !r.getAnimations().length) r.remove(); }, 220 * (PMU.motion ? PMU.motion.speed() : 1));
+  }
+  function close(quiet) {
+    if (!el || !el.classList.contains('open')) return;
+    dropRim();
+    el.classList.remove('open'); el.setAttribute('aria-hidden', 'true');
+    if (quiet !== true && opener && opener.isConnected && typeof opener.focus === 'function') { try { opener.focus({ preventScroll: true }); } catch (e) {} }
+    opener = null;
+  }
+  function open(s, from) {
+    if (!el || !s) return;
+    if (PMU.menu) PMU.menu.close();
+    var wasOpen = el.classList.contains('open');
+    opener = from || (wasOpen ? opener : document.activeElement);
+    spec = s; mode = 'curated';
+    title.textContent = s.title || '';
+    if (sub) { sub.textContent = s.subtitle || ''; sub.hidden = !s.subtitle; }
+    if (actions) {
+      actions.innerHTML = (s.actions || []).map(function (a, i) {
+        return '<button type="button" class="pmu-inspact' + (a.primary ? ' primary' : '') + '" data-ai="' + i + '"' + (a.disabled ? ' disabled aria-disabled="true"' : '') +
+          (a.reason ? ' data-pm-hover-label="' + esc(a.reason) + '"' : '') + '>' + esc(a.label) + '</button>' + (a.disabled && a.reason ? '<span class="pmu-inspreason">' + esc(a.reason) + '</span>' : '');
+      }).join('');
+      actions.hidden = !(s.actions && s.actions.length);
+    }
+    paint(true);
+    el.classList.add('open'); el.setAttribute('aria-hidden', 'false');
+    holdRim(from && from.closest ? from.closest('.pmu-card') : null);
+    /* opening: the sections rise 22 apart from 120; switching panels while open: the content cross-fades 160 with a 6 px
+       slide and the drawer stays where it is */
+    if (!wasOpen && PMU.motion) PMU.motion.reveal(body.querySelectorAll('.pmu-inspsec'), { delay: 120, step: 22, cap: 320 });
+    else if (wasOpen && PMU.motion) [el.querySelector('.pmu-insphead'), actions, body].forEach(function (part) {
+      if (part && !part.hidden) PMU.motion.animate(part, [{ opacity: 0, transform: 'translateX(6px)' }, { opacity: 1, transform: 'none' }], { dur: 160, easing: 'cubic-bezier(.22,.8,.28,1)' });
+    });
+    var closeBtn = document.getElementById('pmuInspClose');
+    /* the close button takes focus once the drawer is shown; under Reduce Motion the app's 0.01 ms transitions can leave the
+       head hidden for a frame or more, so a refused focus is tried again a few times (FINAL-REVIEW-3 must-fix 6) */
+    var tries = 0;
+    (function focusClose() {
+      setTimeout(function () {
+        if (!closeBtn || !el.classList.contains('open') || document.activeElement === closeBtn || el.contains(document.activeElement)) return;
+        closeBtn.focus({ preventScroll: true });
+        if (document.activeElement !== closeBtn && ++tries < 6) focusClose();
+      }, tries ? 50 : 30);
+    })();
+  }
+  var closeBtn = document.getElementById('pmuInspClose');
+  if (closeBtn) closeBtn.addEventListener('click', function () { close(); });
+  /* Escape closes the drawer wherever focus is (FINAL-REVIEW-3 must-fix 6): a capture-phase listener on the document, for
+     keys from inside the Usage page or from no particular element; an open menu takes Escape first (45-menu.js), and a
+     board gesture keeps its own Escape (cancel with a glide back) */
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !el || !el.classList.contains('open')) return;
+    if (PMU.menu && PMU.menu.isOpen && PMU.menu.isOpen()) return;
+    if (PMU.board && PMU.board.gesture && PMU.board.gesture()) return;
+    var tg = event.target, panel = document.getElementById('panel-usage');
+    if (!(tg === document.body || tg === document.documentElement || (panel && panel.contains(tg)))) return;
+    event.preventDefault(); event.stopPropagation(); close();
+  }, true);
+  if (el) {
+    el.addEventListener('keydown', function (event) { if (event.key === 'Escape') { event.stopPropagation(); close(); } });
+    el.addEventListener('click', function (event) {
+      var m = event.target.closest('button[data-insp-mode]');
+      if (m) { mode = m.getAttribute('data-insp-mode'); paint(false); return; }
+      var a = event.target.closest('.pmu-inspact');
+      if (a && spec && spec.actions) { var act = spec.actions[+a.getAttribute('data-ai')]; if (act && !act.disabled && typeof act.onClick === 'function') { try { act.onClick(); } catch (error) { console.error('[pm-usage] inspector action', error); } } }
+    });
+  }
+  PMU.inspector = { open: open, close: close, isOpen: function () { return !!(el && el.classList.contains('open')); }, spec: function () { return spec; } };
+})();
