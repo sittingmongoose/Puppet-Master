@@ -75,7 +75,7 @@ menu.open = function (anchor, spec) {
     }
     if (sp.search) {
       var wrap = h('label', { class: 'pmw-msearch' }, [icon('search', { size: 14 })]);
-      hnd.search = h('input', { type: 'text', class: 'pmw-msearchin', placeholder: (sp.search && sp.search.placeholder) || 'Type to filter', 'aria-label': 'Filter', spellcheck: 'false', autocomplete: 'off' });
+      hnd.search = h('input', { type: 'text', class: 'pmw-msearchin', placeholder: (sp.search && sp.search.placeholder) || 'Type to filter', 'aria-label': 'Filter', spellcheck: 'false', autocomplete: 'off', 'data-pm-hover-visual-suppressed': 'true' });
       hnd.search.value = q;
       wrap.appendChild(hnd.search);
       el.appendChild(wrap);
@@ -361,7 +361,7 @@ menu.open = function (anchor, spec) {
 menu.prompt = function (anchor, o) {
   var hnd = menu.open(anchor, { id: 'prompt', title: o.title, rows: [], width: 280, className: 'pmw-mprompt' });
   if (!hnd) return;
-  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off' });
+  var input = h('input', { type: 'text', class: 'pmw-msearchin pmw-mpromptin', value: o.value || '', 'aria-label': o.title, spellcheck: 'false', autocomplete: 'off', 'data-pm-hover-visual-suppressed': 'true' });
   var row = h('div', { class: 'pmw-mpromptrow' }, [input]);
   var btns = h('div', { class: 'pmw-mpromptbtns' }, [
     h('button', { type: 'button', class: 'pmw-btn', text: 'Cancel', onclick: function () { hnd.close({}); } }),
