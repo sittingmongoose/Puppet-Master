@@ -7,9 +7,9 @@
      the PM8 set, every .pm-sheen, the Usage .pmu-card (not the band, nor while it is pending, leaving, lifted,
      resized, settling after a drop, morphing or flying), and any element with [data-pmh] (an opt-in for future
      panels; its value names the kind: card | row | tile | icon, empty = card; data-pmh="off" takes an element out of
-     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and nothing
-     inside [data-pm-hover-exempt] (the home redesign's terminal input and text surfaces; on a Usage plate itself the
-     attribute is only its hover-tag opt-out) is a target or hovers one.
+     the set). Tabs, text surfaces (inputs, editors, terminals) and resize dividers are never targets, and a pointer on a
+     [data-pm-hover-exempt] surface inside a target (the home terminal's input and text) hovers nothing; a target that
+     carries the attribute itself, or sits inside an exempt container, still hovers.
    Kinds: every target gets data-pmh-kind="card|row|tile|icon" once for its lifetime, ahead of time at idle (a few per
      idle callback, after load, after a look change and after a frame met a new target), so CSS and tokens can differ
      per kind and no hover frame writes it; a frame stamps only a target that appeared since.
@@ -75,11 +75,11 @@
     var SEL = '[data-pmh],.pm-sheen,' + KIND_ORDER.map(function (k) { return KINDS[k]; }).join(',');
     var BOUNDARY = '[role="tab"],.page-tab,[class*="resizer"],[class*="-divider"],.xterm,textarea,input,select,' +
       '[contenteditable=""],[contenteditable="true"]';
-    /* data-pm-hover-exempt is the app's hover-TAG opt-out, read here as "no hover chrome on or under this element" (the
-       home redesign's terminal input and text surfaces). A Usage plate carries it on itself only because its title holds
-       the panel's tag (Usage 42-cards.js), so on a plate it exempts nothing from PMH; an exempt element inside a plate,
-       or around the board (data-pm-hover-exempt="entering" during an arrival), still does. */
-    var EXEMPT = '[data-pm-hover-exempt]:not(.pmu-card)';
+    /* [data-pm-hover-exempt] marks surfaces that must not hover (the home terminal's input and text) and, in the page's
+       hover-tag controller, containers and plates whose tags are off. PMH honours it only where it sits INSIDE the
+       target under the pointer (a text surface in a card): a target that carries it itself, or sits inside an
+       exempt container (a focus landmark, the Usage board), still hovers. */
+    var EXEMPT = '[data-pm-hover-exempt]';
     /* Usage plates: the whole head is a move handle and seven resize zones sit 4 px outside the edge, so the magnet
        stays off there (light and glow only); a plate is not a target while the board runs an operation on it, nor
        while it settles into its slot after a drop (a transform animation: a rect read then is not where it lands). */
@@ -150,22 +150,23 @@
       }
       kindQueue.length = 0;
     }
-    function valid(el, exemptChecked) {
+    function valid(el) {
       var v = el.getAttribute('data-pmh');
       if (v === 'off' || v === 'none') return false;
-      if (el.matches(BOUNDARY) || (!exemptChecked && el.closest(EXEMPT))) return false;
+      if (el.matches(BOUNDARY)) return false;
       if (el.classList.contains('pmu-card') &&
           (el.matches(PMU_SKIP) || el._pmuLeaving || el.closest('.pmu-ghostboard,#pmuFlight,.pmu-board[data-op]'))) return false;
       return true;
     }
     function resolve(start) {
-      if (start && start.closest && start.closest(EXEMPT)) return null;   /* the pointer is on an exempt surface */
       var t = start && start.closest ? start.closest(SEL) : null, best = null;
       while (t) {
-        if (valid(t, true)) best = t;   /* start is not inside an exempt subtree, so no ancestor of it is */
+        if (valid(t)) best = t;
         var p = t.parentElement;
         t = p ? p.closest(SEL) : null;
       }
+      var ex = best && start.closest(EXEMPT);
+      if (ex && ex !== best && best.contains(ex)) return null;   /* the pointer is on an exempt surface inside the target */
       return best;
     }
 
@@ -217,14 +218,13 @@
     /* The outermost valid targets of a querySelectorAll list (document order): a match inside the last kept target is
        nested and belongs to it. No target sits above the container (in hover mode the container is above the resolved,
        outermost target; in gap mode the pointer's element resolved to none), so the whole parent chain of every match
-       is never walked again (it was a closest(SEL) per level per candidate, 2-6 ms per scope). The exempt walk runs once
-       per container, not once per candidate. */
+       is never walked again (it was a closest(SEL) per level per candidate, 2-6 ms per scope). */
     function outermostIn(list, c) {
-      var out = [], outer = null, ex = !(c && (c.closest(EXEMPT) || c.querySelector(EXEMPT)));
+      var out = [], outer = null;
       for (var i = 0; i < list.length && out.length < CAP; i++) {
         var el = list[i];
         if (outer && outer.contains(el)) continue;   /* nested: the outer box owns it */
-        if (valid(el, ex)) { out.push(el); outer = el; }
+        if (valid(el)) { out.push(el); outer = el; }
       }
       return out;
     }
