@@ -30143,6 +30143,83 @@ html[data-pmw-home="on"] .main-area[data-pmw-chat-float] #chatPanel.chat-panel {
   .pmw-empty-short { display: block; }
   .pmw-empty { padding: 0 16px; align-items: center; }
 }
+/* ---- panels/css/45-frames.css ---- */
+/* The shared document and run frames (27-frames.js). Sizes key on the tab body (@container pmw-body), never the window.
+   No pills: meta is a plain text row with dot separators; toggles are text options on a hairline; notices are a full
+   1 px box or a plain line, never a coloured side border. */
+
+.pmw-frame { position: absolute; inset: 0; display: flex; flex-direction: column; color: var(--pmw-text); font-family: var(--pm-font-ui); }
+.pmw-frame-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.pmw-doc, .pmw-run { box-sizing: border-box; max-width: 960px; margin: 0 auto; padding: 24px 28px 48px; font-size: 13px; line-height: 20px; }
+@container pmw-body (max-width: 719.98px) { .pmw-doc, .pmw-run { padding: 16px 16px 40px; } }
+.pmw-doc-head { margin: 0 0 18px; }
+.pmw-doc-titlerow { display: flex; align-items: baseline; gap: 12px; }
+.pmw-doc-title, .pmw-run-title { margin: 0; font-size: 22px; line-height: 1.25; font-weight: 650; letter-spacing: -.015em; flex: 1 1 auto; min-width: 0; }
+@container pmw-body (max-width: 419.98px) { .pmw-doc-title, .pmw-run-title { font-size: 18px; } }
+.pmw-doc-badge { flex: none; font-size: 12px; color: var(--pmw-text-2); font-variant-numeric: tabular-nums; }
+.pmw-doc-meta { margin: 8px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 12px; line-height: 18px; color: var(--pmw-text-2); }
+.pmw-doc-meta .is-ok { color: var(--pmw-ok); }
+.pmw-doc-meta .is-warn { color: var(--pmw-warn); }
+.pmw-doc-meta .is-bad { color: var(--pmw-bad); }
+.pmw-doc-meta .is-mono { font-family: var(--pm-font-code); font-size: 11.5px; }
+.pmw-doc-sep { color: var(--pmw-text-3); }
+.pmw-doc-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.pmw-doc-body > * + * { margin-top: 12px; }
+.pmw-doc-body p { max-width: 78ch; color: var(--pmw-text-2); margin: 0; }
+.pmw-doc-footer { flex: none; border-top: 1px solid var(--pmw-line); background: var(--pmw-surface); padding: 8px 16px; display: flex; gap: 6px; align-items: center; }
+
+.pmw-sec { margin-top: 24px; }
+.pmw-sec-head { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; }
+.pmw-sec-head h2 { margin: 0; font-size: 15px; line-height: 21px; font-weight: 620; }
+.pmw-fine { font-size: 11.5px; color: var(--pmw-text-3); }
+
+.pmw-seg { display: flex; align-items: stretch; gap: 18px; border-bottom: 1px solid var(--pmw-line); min-height: 32px; overflow-x: auto; scrollbar-width: none; }
+.pmw-seg::-webkit-scrollbar { display: none; }
+.pmw-seg-opt { position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 2px; border: 0; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12.5px; font-weight: 500; cursor: pointer; }
+.pmw-seg-opt small { font-size: 11px; color: var(--pmw-text-3); font-variant-numeric: tabular-nums; }
+.pmw-seg-opt:hover { color: var(--pmw-text); }
+.pmw-seg-opt[aria-selected="true"] { color: var(--pmw-text); font-weight: 600; }
+.pmw-seg-opt[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--pmw-text); }
+.pmw-seg-opt:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 2px; border-radius: 4px; }
+
+.pmw-notice { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0; padding: 9px 11px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); font-size: 12.5px; color: var(--pmw-text-2); }
+.pmw-notice.is-warn { border-color: color-mix(in srgb, var(--pmw-warn) 55%, transparent); }
+.pmw-notice.is-bad { border-color: color-mix(in srgb, var(--pmw-bad) 55%, transparent); }
+.pmw-notice.is-ok { border-color: color-mix(in srgb, var(--pmw-ok) 55%, transparent); }
+.pmw-notice .pmw-ico { margin-top: 3px; flex: none; }
+
+.pmw-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@container pmw-body (max-width: 519.98px) { .pmw-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container pmw-body (max-width: 319.98px) { .pmw-tiles { grid-template-columns: minmax(0, 1fr); } }
+.pmw-tile { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: var(--pmw-radius); background: var(--pmw-surface-2); border: 1px solid var(--pmw-line); }
+.pmw-tile-label { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--pmw-text-3); }
+.pmw-tile-value { font-size: 16px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.pmw-tile-sub { font-size: 11.5px; color: var(--pmw-text-2); }
+.pmw-tile.is-ok .pmw-tile-value { color: var(--pmw-ok); }
+.pmw-tile.is-warn .pmw-tile-value { color: var(--pmw-warn); }
+.pmw-tile.is-bad .pmw-tile-value { color: var(--pmw-bad); }
+
+.pmw-act { height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border: 1px solid var(--pmw-line-2); border-radius: var(--pmw-radius); background: transparent; color: var(--pmw-text); font: inherit; font-size: 12.5px; font-weight: 550; cursor: pointer; }
+.pmw-act:hover { background: var(--pmw-hover); }
+.pmw-act:focus-visible { outline: 2px solid var(--pmw-focus); outline-offset: 1px; }
+.pmw-act.is-primary { background: var(--pmw-accent); border-color: transparent; color: var(--pmw-surface); }
+.pmw-act.is-primary:hover { background: color-mix(in srgb, var(--pmw-accent) 88%, #fff); }
+.pmw-act.is-danger { color: var(--pmw-bad); }
+.pmw-act[aria-disabled="true"] { opacity: .5; cursor: default; }
+.pmw-act .pmw-ico { width: 14px; height: 14px; }
+
+.pmw-run-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: start; }
+.pmw-run-kind { margin: 6px 0 0; display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--pmw-text-2); }
+.pmw-run-acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+@container pmw-body (max-width: 599.98px) { .pmw-run-head { grid-template-columns: minmax(0, 1fr); } .pmw-run-acts { justify-content: flex-start; } }
+.pmw-run-plate { margin: 18px 0 0; }
+.pmw-run-tabs { margin-top: 18px; }
+.pmw-run-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 16px; }
+@container pmw-body (min-width: 900px) { .pmw-run-grid { grid-template-columns: minmax(0, 1fr) 220px; gap: 32px; } }
+.pmw-run-aside { font-size: 12px; color: var(--pmw-text-2); }
+.pmw-run-aside h3 { margin: 0 0 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-weight: 600; }
+
+.pmw-code { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--pmw-line); border-radius: var(--pmw-radius); background: var(--pmw-surface-2); font-family: var(--pm-font-code); font-size: 12.5px; line-height: 1.6; color: var(--pmw-text); overflow: auto; white-space: pre; }
 /* ---- panels/css/90-reduced.css ---- */
 /* Reduced Motion: every moving part off (instant), every gesture still works (1:1 drag follow stays: it is not motion,
    it is the pointer). Both the page's switch and the system preference. */
@@ -118338,6 +118415,155 @@ COMMAND_HANDLERS[CMD.saveNamed] = function (a) { return PMW.saveNamedLayout(a.na
 COMMAND_HANDLERS[CMD.reset] = function () { return PMW.resetLayout(); };
 COMMAND_HANDLERS[UI.activate] = function (a) { return PMW.activateTab(a.tabId, { focus: !!a.focus }); };
 COMMAND_HANDLERS[UI.maximize] = function (a) { return PMW.toggleMaximize(a.panelId); };
+/* ---- panels/js/27-frames.js ---- */
+/* Shared body frames (DRY): one rendering grammar for every document-like kind (plan, document, artifact, record,
+   context, transcript) and every run view, so they read as one system in every look. Replaces the chat's pills with a
+   plain meta row, its boxed chips with text, its accent-underlined toggles with text options on a hairline.
+     PMW.frames.doc({ title, meta: [..] | 'a · b', aside, body: el | [els], actions: [btn specs], footer: el }) -> el
+     PMW.frames.run({ title, kind: { icon, word }, status: [..], actions, more, plate, tabs: { items, value, onChange }, main, aside }) -> el
+     PMW.frames.meta(items) -> <p>    items: strings, or { text, state: 'ok'|'warn'|'bad', mono }
+     PMW.frames.seg(options, value, onChange, { label }) -> el    options: [{ value, label, count }]
+     PMW.frames.section(title, meta, body) -> <section>
+     PMW.frames.notice(text, { state, icon }) -> <p>
+     PMW.frames.tiles([{ label, value, sub, state }]) -> el
+     PMW.frames.button({ label, icon, primary, run, menu }) -> <button> (32 px document action)
+   Every frame scrolls inside its own .pmw-frame-scroll; sizes key on @container pmw-body. */
+
+var frames = PMW.frames = {};
+
+frames.meta = function (items) {
+  var p = h('p', { class: 'pmw-doc-meta' });
+  if (typeof items === 'string') items = items.split(' · ');
+  (items || []).filter(function (x) { return x != null && x !== ''; }).forEach(function (it, i) {
+    if (i) p.appendChild(h('span', { class: 'pmw-doc-sep', 'aria-hidden': 'true', text: '·' }));
+    if (typeof it === 'string' || typeof it === 'number') p.appendChild(h('span', { text: String(it) }));
+    else p.appendChild(h('span', { class: (it.state ? 'is-' + it.state : '') + (it.mono ? ' is-mono' : ''), text: it.text }));
+  });
+  return p;
+};
+
+frames.seg = function (options, value, onChange, o) {
+  o = o || {};
+  var wrap = h('div', { class: 'pmw-seg' + (o.cls ? ' ' + o.cls : ''), role: 'tablist', 'aria-label': o.label || 'View' });
+  function paint(v) {
+    Array.prototype.forEach.call(wrap.children, function (b) {
+      var on = b._v === v;
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+      b.tabIndex = on ? 0 : -1;
+    });
+  }
+  options.forEach(function (op) {
+    var b = h('button', { type: 'button', class: 'pmw-seg-opt', role: 'tab' }, [h('span', { text: op.label })]);
+    if (op.count != null) b.appendChild(h('small', { text: String(op.count) }));
+    b._v = op.value;
+    b.addEventListener('click', function () { paint(op.value); if (onChange) onChange(op.value); });
+    b.addEventListener('keydown', function (e) {
+      var opts = Array.prototype.slice.call(wrap.children), i = opts.indexOf(b);
+      var go = e.key === 'ArrowRight' ? opts[(i + 1) % opts.length] : e.key === 'ArrowLeft' ? opts[(i - 1 + opts.length) % opts.length] : null;
+      if (go) { e.preventDefault(); go.focus(); go.click(); }
+    });
+    wrap.appendChild(b);
+  });
+  paint(value);
+  wrap.setValue = paint;
+  return wrap;
+};
+
+frames.section = function (title, meta, body) {
+  var head = h('header', { class: 'pmw-sec-head' }, [h('h2', { text: title })]);
+  if (meta) head.appendChild(typeof meta === 'string' ? h('span', { class: 'pmw-fine', text: meta }) : meta);
+  var s = h('section', { class: 'pmw-sec' }, [head]);
+  append(s, body);
+  return s;
+};
+
+frames.notice = function (text, o) {
+  o = o || {};
+  var p = h('p', { class: 'pmw-notice' + (o.state ? ' is-' + o.state : '') });
+  p.appendChild(icon(o.icon || (o.state === 'bad' ? 'problems' : o.state === 'warn' ? 'clock' : 'eye'), { size: 14 }));
+  p.appendChild(h('span', { text: text }));
+  return p;
+};
+
+frames.tiles = function (items) {
+  var g = h('div', { class: 'pmw-tiles' });
+  (items || []).forEach(function (t) {
+    g.appendChild(h('div', { class: 'pmw-tile' + (t.state ? ' is-' + t.state : '') }, [
+      h('span', { class: 'pmw-tile-label', text: t.label }),
+      h('b', { class: 'pmw-tile-value', text: t.value }),
+      t.sub ? h('span', { class: 'pmw-tile-sub', text: t.sub }) : null
+    ]));
+  });
+  return g;
+};
+
+frames.button = function (b) {
+  var el = h('button', { type: 'button', class: 'pmw-act' + (b.primary ? ' is-primary' : '') + (b.danger ? ' is-danger' : ''), 'data-pmh': 'icon',
+    'data-pm-hover-label': b.label, 'data-pm-hover-detail': b.detail || '' });
+  if (b.icon) el.appendChild(icon(b.icon, { size: 14 }));
+  el.appendChild(h('span', { text: b.label }));
+  if (b.disabled) { el.setAttribute('aria-disabled', 'true'); if (b.reason) el.setAttribute('data-disabled-reason', b.reason); }
+  if (b.menu) el.setAttribute('aria-haspopup', 'menu');
+  el.addEventListener('click', function (e) {
+    if (el.getAttribute('aria-disabled') === 'true') return;
+    if (b.menu) { PMW.menu.open(el, Array.isArray(b.menu) ? { id: 'act-menu', rows: b.menu, width: 260 } : (typeof b.menu === 'function' ? b.menu() : b.menu)); return; }
+    if (b.run) b.run(e, el);
+  });
+  return el;
+};
+
+frames.doc = function (spec) {
+  var scroll = h('div', { class: 'pmw-frame-scroll' });
+  var col = h('article', { class: 'pmw-doc' + (spec.cls ? ' ' + spec.cls : '') });
+  var head = h('header', { class: 'pmw-doc-head' });
+  var titleRow = h('div', { class: 'pmw-doc-titlerow' }, [h('h1', { class: 'pmw-doc-title', text: spec.title || '' })]);
+  if (spec.badge) titleRow.appendChild(h('span', { class: 'pmw-doc-badge', text: spec.badge }));
+  head.appendChild(titleRow);
+  if (spec.meta) head.appendChild(frames.meta(spec.meta));
+  if (spec.actions && spec.actions.length) head.appendChild(h('div', { class: 'pmw-doc-actions' }, spec.actions.map(frames.button)));
+  col.appendChild(head);
+  var body = h('div', { class: 'pmw-doc-body' });
+  append(body, spec.body);
+  col.appendChild(body);
+  scroll.appendChild(col);
+  var wrap = h('div', { class: 'pmw-frame' }, [scroll]);
+  if (spec.footer) wrap.appendChild(h('footer', { class: 'pmw-doc-footer' }, [spec.footer]));
+  wrap._body = body; wrap._head = head; wrap._scroll = scroll;
+  return wrap;
+};
+
+frames.run = function (spec) {
+  var scroll = h('div', { class: 'pmw-frame-scroll' });
+  var view = h('article', { class: 'pmw-run' + (spec.cls ? ' ' + spec.cls : '') });
+  var head = h('header', { class: 'pmw-run-head' });
+  var left = h('div', { class: 'pmw-run-headl' }, [h('h1', { class: 'pmw-run-title', text: spec.title || '' })]);
+  if (spec.kind) left.appendChild(h('p', { class: 'pmw-run-kind' }, [spec.kind.icon ? kindIcon(spec.kind.icon) : null, h('span', { text: spec.kind.word || '' })]));
+  if (spec.status) left.appendChild(frames.meta(spec.status));
+  head.appendChild(left);
+  if (spec.actions && spec.actions.length) head.appendChild(h('div', { class: 'pmw-run-acts' }, spec.actions.map(frames.button)));
+  view.appendChild(head);
+  if (spec.plate) view.appendChild(h('figure', { class: 'pmw-run-plate' }, [spec.plate]));
+  var main = h('div', { class: 'pmw-run-main' });
+  var tabsEl = null;
+  if (spec.tabs) {
+    tabsEl = frames.seg(spec.tabs.items, spec.tabs.value, function (v) { if (spec.tabs.onChange) spec.tabs.onChange(v, main); }, { cls: 'pmw-run-tabs', label: 'Run sections' });
+    view.appendChild(tabsEl);
+  }
+  append(main, spec.main);
+  var grid = h('div', { class: 'pmw-run-grid' }, [main]);
+  if (spec.aside) grid.appendChild(h('aside', { class: 'pmw-run-aside' }, Array.isArray(spec.aside) ? spec.aside : [spec.aside]));
+  view.appendChild(grid);
+  scroll.appendChild(view);
+  var wrap = h('div', { class: 'pmw-frame' }, [scroll]);
+  wrap._main = main; wrap._tabs = tabsEl; wrap._head = head; wrap._scroll = scroll;
+  return wrap;
+};
+
+/* a code or log block in the code face */
+frames.code = function (text, o) {
+  o = o || {};
+  return h('pre', { class: 'pmw-code' + (o.cls ? ' ' + o.cls : '') }, [h('code', { text: text })]);
+};
 /* ---- panels/js/28-hrow.js ---- */
 /* The shared header row (CONTRACT section 5, D12): one component for every kind that needs a row of controls above
    its content, so terminals, browsers, plan viewers and the rest look and behave alike. 30 px tall; 24 px targets with
