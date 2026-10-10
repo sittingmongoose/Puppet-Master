@@ -9,7 +9,7 @@
     "Plans/Decision_Log.md#DL-180"
   ],
   "source_lineage": [
-    "/home/sittingmongoose/hpt-canon/NUMBERS-407e6fb6fe.md is a copy of /mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (named layout trees; concept lineage only)",
+    "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (named layout trees; concept lineage only)",
     "Concepts/home-redesign/src/panels/js/14-layouts.js on branch concept/home-panels-20261009 (the default Home tabs; concept lineage only)"
   ],
   "notes": "Each valid record validates against the schema and passes the semantic invariants S1-S12 listed in the schema's $comment. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid record; rejected_by says whether the schema or a named semantic invariant rejects it. An op value of the form {\"$generate\": {\"repeat\": c, \"count\": n}} stands for a string of n copies of c. The migration case's inputs are illustrative extracts: the v1 record validates against Plans/home_workspace_layout.schema.json, editor_groups stands for the editor's own workspace state (editor_workspace_state.v1) and terminal_sections for the terminal section, workgroup, pane and session records; expected_v2 is the record SP-330's conversion produces.",
