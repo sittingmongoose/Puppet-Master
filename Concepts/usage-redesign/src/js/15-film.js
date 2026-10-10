@@ -294,7 +294,9 @@
     o = o || {};
     if (!el) return { cancel: function () {} };
     if (el._pmuDecode) el._pmuDecode.cancel();
-    if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); el.textContent = text; return { cancel: function () {} }; }
+    /* a card title's nowrap spans (42-cards.js nbHyphen, item 9) come back when the decode lands */
+    var html0 = el.firstElementChild && el.textContent === text ? el.innerHTML : null, land = function () { if (html0 != null) el.innerHTML = html0; else el.textContent = text; };
+    if (reduced() || !text) { el.classList.remove('pmu-dec-wait'); land(); return { cancel: function () {} }; }
     var n = text.length, per = Math.min(35, 420 / Math.max(1, n)), total = per * n + 60, lastBucket = -1;
     var same = o.from != null && String(o.from).length === n ? String(o.from) : null;
     function glyphs(ms, bucket) {
@@ -319,7 +321,7 @@
         var bucket = Math.floor(ms / 30); if (bucket === lastBucket) return; lastBucket = bucket;
         el.textContent = glyphs(ms, bucket);
       },
-      done: function () { show(); el.textContent = text; if (el._pmuDecode === handle) el._pmuDecode = null; } });
+      done: function () { show(); land(); if (el._pmuDecode === handle) el._pmuDecode = null; } });
     var handle = { cancel: function () { tw.cancel(); show(); if (el._pmuDecode === handle) el._pmuDecode = null; } };
     el._pmuDecode = handle;
     return handle;

@@ -112,6 +112,11 @@
     /* measured (VM 1920, plan card): head padding 28, the key 18 + its 8 px gap, the count about 44 + its 8 px gap */
     var avail = (+card.dataset.w || 0) * cls.pitchX - 8 - 28 - (card.querySelector('.pmu-cardkey:not([hidden])') ? 26 : 0) - 4
       - (aside ? PMU.charts.textW(aside, 12.5, false, 500) * k + 10 : 0) - 52;
+    /* a plate's subtitle shares the title's column: the count stays in the body where it would cut the subtitle (item 9,
+       embedded fonts: Inter's narrower title let the count in and Muse Code's "alex@orbit.example" ended in an ellipsis at
+       Basic 1440); NieR's plate ticks keep 34 px at the subtitle's right */
+    var sub = form === 'plate' ? ((card.querySelector('.pmu-cardsub') || {}).textContent || '').trim() : '';
+    if (sub && PMU.charts.textW(sub, 12, false, 400) * k > avail - (nier ? 34 : 0)) return false;
     if (tw(title) <= avail) return true;
     if (form !== 'tile') return false;
     var words = title.split(/\s+/), lines = 1, cur = 0;
@@ -240,6 +245,7 @@
     width = Math.max(24, width || 0);
     var key = text + '|' + Math.round(width) + '|' + (px || 13) + '|' + (weight || 400) + '|' + PMU.theme.look().key;
     if (wrapMemo[key]) return wrapMemo[key];
+    var miss0 = PMU.charts && PMU.charts.faceMisses ? PMU.charts.faceMisses() : 0;
     var tw = function (s) { return PMU.charts && PMU.charts.textW ? PMU.charts.textW(s, px || 13, false, weight || 400) * 1.06 : s.length * (px || 13) * 0.55; };
     var words = text.split(/(?<=[\s·/_:])/), lines = 1, cur = 0;
     words.forEach(function (w) {
@@ -248,6 +254,8 @@
       else { lines += 1; cur = ww; }
       while (cur > width + 0.5 && tw(w.replace(/\s+$/, '')) > width) { lines += 1; cur -= width; }
     });
+    /* a count measured in a fallback face (an embedded face still loading) is used once and never kept */
+    if (PMU.charts && PMU.charts.faceMisses && PMU.charts.faceMisses() !== miss0) return lines;
     if (++wrapN > 4000) { wrapMemo = {}; wrapN = 0; }
     wrapMemo[key] = lines;
     return lines;
@@ -704,6 +712,39 @@
       requestAnimationFrame(fitSettled);
     });
   } catch (error) {}
+  /* an embedded face that landed after the board measured in its fallback (30-charts-core.js faceReady; item 9): the
+     wrap memo forgets every count, and each body re-renders at its size in place (no entrance, no count roll), so its
+     rows, short names and line counts are chosen again in the real face; the fit pass follows each render. In slices of
+     about 6 ms a frame, the cards in view first (a whole board in one task was 100-250 ms on the CPU-only VM); never inside
+     a moment or a gesture (it waits for their end, about 10 s at most), never on a hidden page. */
+  var refaceT = 0, refaceTries = 0, refaceQ = null;
+  function reface() {
+    refaceT = 0;
+    var panel = document.getElementById('panel-usage');
+    if (!panel || !panel.classList.contains('active')) { refaceTries = 0; return; }
+    var busy = (PMU.film && PMU.film.moment && PMU.film.moment()) || (PMU.board && PMU.board.gesture && PMU.board.gesture());
+    if (busy && ++refaceTries < 40) { refaceT = setTimeout(reface, 250); return; }
+    refaceTries = 0;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('#pmuBoard > .pmu-card')), inV = PMU.board && PMU.board.inView;
+    if (inV) cards = cards.filter(function (c) { return inV(c); }).concat(cards.filter(function (c) { return !inV(c); }));
+    var q = refaceQ = { list: cards };
+    (function slice() {
+      if (refaceQ !== q) return;
+      var t0 = performance.now(), run = function () {
+        while (q.list.length && performance.now() - t0 < 6) {
+          var card = q.list.shift(), body = card.isConnected && card.querySelector(':scope > .pmu-cardbody'), tier = body && body._pmuCtx && body._pmuCtx.tier;
+          if (!tier || !body._pmuKind || card._pmuLeaving || card.hasAttribute('data-leaving')) continue;
+          try { PMU.cards.resizeBody(card, tier); if (PMU.charts.flush) PMU.charts.flush(); } catch (error) { console.error('[pm-usage] reface', error); }
+        }
+      };
+      if (PMU.board && PMU.board.fitSliced) PMU.board.fitSliced(run); else run();
+      if (q.list.length) requestAnimationFrame(slice); else if (refaceQ === q) refaceQ = null;
+    })();
+  }
+  if (PMU.charts && PMU.charts.onFaces) PMU.charts.onFaces(function () {
+    wrapMemo = {}; wrapN = 0;
+    if (!refaceT) refaceT = setTimeout(reface, 0);
+  });
   /* a card at its kind's tallest size cannot show more rows: the line then points at Details (the inspector) */
   function atMax(b) {
     var card = b.closest('.pmu-card'); if (!card) return false;
@@ -1531,8 +1572,12 @@
       /* two-line rows when they show every row; otherwise the one-line form whenever it shows more rows */
       var fit2 = C.fit(ctx.tier.bh, 48, 4), fit1 = C.fit(ctx.tier.bh, 34, 4);
       var inline = !C.w(ctx, 'm') || (fit2 < rows.length && fit1 > fit2), rowH = inline ? 34 : 48;
-      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, 38) >= rows.length;
-      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? 38 : 0) + 4);
+      /* the foot's real height: a plate's foot takes up to two lines (17.5 px each) plus 17 px of padding and rule and the
+         body's 12 px above it, and a row can run a px past rowH (item 9, embedded fonts: Provider value at Basic 1440 kept
+         a two-line foot that its one-line 38 px reserve did not hold, 2 px past the body until the room's moment ended) */
+      var footRes = !m.foot ? 0 : (ctx.card && ctx.card.getAttribute('data-head') === 'plate' ? 29 + 17.5 * Math.min(2, C.wrapLines(String(m.foot).replace(/<[^>]+>/g, ''), ctx.tier.bw - 4, 12.5)) : 38) + rows.length;
+      var footOk = m.foot && C.fit(ctx.tier.bh, rowH, footRes) >= rows.length;
+      var fit = C.fit(ctx.tier.bh, rowH, (footOk ? footRes : 0) + 4);
       var shown = rows.length > fit ? rows.slice(0, Math.max(1, fit * rowH + 22 + 4 <= ctx.tier.bh ? fit : fit - 1)) : rows;
       /* the rows past the card and a foot that gave way are listed in the "N more" line's hover tag, or the host's (CONTENT-3) */
       var rankFold = rows.slice(shown.length).map(function (r) { return r.name + ' ' + (r.valueText || '') + (r.role ? ' · ' + r.role : ''); });
