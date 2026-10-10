@@ -3390,7 +3390,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 | `mcp_server_record.v1:{mcp_server_id}` | MCP server configuration and readiness metadata | On save/change |
 | `skill_record.v1:{skill_id}` | Skill registry entry, enablement, source, and settings summary | On save/change |
 | `web_operation_payload` | Stored child-run metadata for web search, fetch/read, extract, research, crawl, and map summaries referenced by GUI projections; `read` is the semantic `web_operation` for the `webfetch` tool. | On completion/update |
-| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome | On change (debounced 300ms) |
+| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome. Amended 2026-10-09 (DL-180, DL-181): a migration input only; terminal tabs and their panels are kept in the Home layout record (SP-330) and the old sections and pane arrangement are read once (SP-332) | On change (debounced 300ms) |
 | `terminal_session.v1:{terminal_session_id}` | PTY session continuity record for terminal restore and historical/live verification | On lifecycle change |
 | `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
 
@@ -3406,7 +3406,7 @@ Normative mapping notes:
 - `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
 - §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 - Viewer-mode and MCP readiness copy must mirror owner-doc precision. When the active durable store is locked by another writer or the selected `pm.lock` cannot be acquired, the GUI enters `/viewer-mode` and labels the state as read-only/viewer rather than implying ordinary edit capability. MCP readiness rows consume `mcp_server_record` and `mcp_runtime_availability` from the MCP owner docs; cost-display and `/account/readiness` copy must route to the canonical Usage/cost and account/readiness owner pipelines instead of creating local MCP, account, or cost buckets.
-- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness.
+- Terminal GUI persistence imports the full storage-owned terminal key catalog instead of forking a local subset: `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`, `terminal_section_record.v1:{project_id}:{terminal_section_id}`, `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`, `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`, `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`, `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`, `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`, `terminal_session_record.v1:{project_id}:{terminal_session_id}`, and `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`. Wildcard audit shorthands such as `terminal_workspace_state.v1:*` and `terminal_command_block.v1:*` resolve to these concrete key families. The GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows above are projection and compatibility summaries only; restore and open/focus flows resolve through the storage key catalog before claiming liveness. Amended 2026-10-09 (DL-181): SP-332 re-scopes this catalog for one session per tab. A terminal tab is a tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override sits in its serialized state (SP-331), the session record's view link is optional, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and saved scrollback with its images is the terminal restore record's transcript chunks (F3-221).
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -3431,7 +3431,7 @@ On startup:
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_workspace_state.v1:{project_id}` and restore open tabs and view positions. Restore each dirty per-file buffer from `editor_state.v1:{project_id}:{file_path_hash}` before focusing the active tab; if the disk baseline differs, present a diff and never overwrite either side implicitly.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
-7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
+7. Terminal tabs restore with the Home layout record (SP-330), each bound to its `terminal_session_id`; a terminal tab mounts when it is first shown and, if its session did not survive, loads its saved scrollback and starts a new session in the same folder and shell profile, saying so (F3-640, F3-226). Amended 2026-10-09 (DL-181): `terminal_layout.v1:{project_id}`, the linked `terminal_session.v1:{terminal_session_id}` records and the earlier terminal section layout, tabs, pane tree, labels, and selected focus targets are read once as migration inputs (SP-332). On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
 8. Read `hotreload_state.v1:{project_id}` and rehydrate only historical dev-session UI state; revalidate process, watcher, port, and session liveness before any live badge or control is enabled.
 9. Read the current `onboarding_state` session binding from SP-252 and revalidate the bounded draft, actual Project commit and phase against their owners before showing first-run/provider hints. Guided Tour's separate checkpoint disposition remains SP-251; it is not inferred from Onboarding progress.
 10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
@@ -3441,11 +3441,11 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 Restore rules:
 - Compatibility aliases are consumed only by an admitted migration. Ordinary startup never falls back from a missing canonical dotted key to an alias and never rewrites an alias opportunistically.
 - Resettable hot-reload/onboarding corruption follows `detected -> secured -> reset_to_default -> purged`: raw bytes are secured before reset and the warning card names the reset. Editor buffer/workspace corruption is canonical non-rebuildable loss, follows mandatory-backup recovery, and cannot be relabeled as first run or an empty project.
-- terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification
+- terminal restore MUST preserve each terminal tab's identity and its bound session before attempting any session liveness verification (amended 2026-10-09, DL-181: sections and panes retire; the earlier rule preserved section, tab, and pane identity)
 - restored historical sessions may appear immediately, but live-state badges wait for verification
-- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically
-- project `/reopen` restores saved sections, tabs, panes, layout style, labels, dock/detach state, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists
-- `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; replace with new terminal or `/restart` attaches a fresh runtime to the same slot, while close removes the workspace container
+- startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically; a saved terminal tab whose session did not survive comes back with its saved scrollback above a new session in the same folder and profile (F3-640), which is not a new empty terminal
+- project `/reopen` restores the saved terminal tabs, their panels, labels, and session cwd/profile metadata before liveness checks; it must not fall back to a default single-pane layout when durable terminal layout exists (amended 2026-10-09, DL-181: the earlier sections, panes, layout style and dock/detach state are migration inputs, SP-332)
+- `/restored`, `/exited`, and `/disconnected` UI copy must keep structural restore separate from live PTY proof; a restored terminal tab whose session did not survive says so in its restored notice and starts a new session in the same tab (F3-640), Restart session (`/restart`) attaches a fresh runtime to the same tab, and Close tab removes it (amended 2026-10-09, DL-181: the earlier slot and workspace container are now the tab)
 - Session restore is project-scoped and `/session-aware`: thread-specific restoration prompts before rebinding thread, chat, terminal, or editor focus, and the saved `/layout` projection may restore only after that scope is confirmed.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
@@ -3463,11 +3463,11 @@ Recoverable state:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
 
 Terminal and dev-session recovery rules:
-- terminal sections, tabs, panes, labels, pin state, and selected focus restore from durable terminal workspace state
+- terminal tabs, their labels, pin state, and selected focus restore from the Home layout record (SP-330); amended 2026-10-09 (DL-181): terminal sections, panes and the durable terminal workspace state are migration inputs only (SP-332)
 - terminal sessions restore only as verified-live or historical records; Puppet Master MUST NOT fake live PTY continuity after restart
 - canonical recovery outcomes are `restored_live`, `restored_exited`, `restored_disconnected`, and `restored_without_history`
 - dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs
-- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab
+- restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab; amended 2026-10-09 (DL-181): for a terminal tab whose session did not survive, the banner is F3-640's restored notice above its saved scrollback, and the tab starts a new session in the same folder and shell profile, except a tab whose profile is itself a privileged attachment, which follows the next rule (F3-228)
 - Restart recovery treats privileged interactive sessions as crash-interrupted unless liveness is revalidated. `docker exec/attach`, `kubectl exec`, and `kubectl port-forward` sessions never `auto-resume` a live attachment after crash or restart. They restore as `interrupted_session` records with target identity, last-known timestamps, the source-specific blind-spot window, and a `Reconnect / Start new session` CTA; prior buffers remain historical evidence, not proof of a live attachment.
 - A restored `log_stream_session` stores source identity plus resume cursor or `/bookmark` semantics. Source-specific resume requires the exact cursor when the backend has one, best-effort tail timestamp when it does not, or a metadata-only reopen state when no cursor model exists. GitHub Actions restart recovery distinguishes `remote run still executing`, `remote run completed while app was down`, and `local observation interrupted`: the GUI restores selection context, shows a gap marker if logs advanced while the app was down, and does not claim uninterrupted local stream continuity.
 - Receipt finalization for crash-interrupted operation observers uses explicit lifecycle states `started`, `observation_interrupted`, `reconciled_completed`, `reconciled_failed`, and `abandoned_unknown` for exec and `/attach`, port-forward, log streams, `workflow-run` observation, and publish `/deploy` follow chains. Orchestrator `/restart` reconciliation uses `external-continuity` classifications `resumable_local`, `externally_continued`, `externally_completed`, `stale_historical`, and `unknown_after_crash` when hosted runs, containers, or Kubernetes rollouts continued while the UI observer was down.
@@ -17298,18 +17298,24 @@ canonical_text: >-
   Terminal GUI persistence imports the full storage-owned terminal key catalog, resolves
   wildcard audit shorthands to concrete key families, and treats GUI-facing
   `terminal_layout.v1` / `terminal_session.v1` rows as projection and compatibility summaries
-  only before claiming restore liveness.
+  only before claiming restore liveness. Since DL-180 and DL-181 SP-332 re-scopes that catalog: a terminal tab's
+  place is its tab record `terminal:<session>` in the Home layout record (SP-330), its appearance override lives in
+  the tab's serialized state (SP-331), the session record's view link is optional so a session survives every view
+  change, the workspace, section, workgroup and editor-terminal-panel families are read only as migration inputs, and
+  saved scrollback, its images included, is the terminal restore record's transcript chunks, kept and excluded as
+  SP-332 says.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves terminal GUI persistence compatibility and storage-owner boundaries.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-331, SP-332]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "Terminal tabs persist only through the Home layout record and the families SP-332 keeps; no terminal section, workgroup or editor-terminal-panel record is written after migration."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17342,7 +17348,9 @@ negative_constraints:
 - "Restore and open/focus flows must resolve through the storage key catalog before claiming liveness."
 compatibility_only_notes:
 - "GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows are projection and compatibility summaries only."
-stale_retired_dispositions: []
+- "`terminal_workspace_state`, `terminal_section_record`, `terminal_workgroup_record` and `editor_terminal_panel_state` are read-only migration inputs since DL-181 (SP-332)."
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): the terminal key catalog is re-scoped by SP-332 for one session per tab; the Home layout record (SP-330) holds terminal tabs, and saved scrollback with its images is the restore record's transcript chunks."
 owner_boundary_notes:
 - "Plans/storage-plan.md owns the complete terminal key catalog."
 owner_hints:
@@ -17581,18 +17589,25 @@ canonical_text: >-
   session and canonical terminal record families, preserves section/tab/pane identity before
   liveness verification, prefers prior selected terminal containers, keeps structural restore
   copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as
-  compatibility input only.
+  compatibility input only. Since DL-181 the terminal containers are terminal tabs, which restore with the Home
+  layout record (SP-330), each bound to its session; `terminal_layout.v1` and the section and pane families are read
+  once as migration inputs (SP-332). A restored terminal tab mounts when it is first shown (F3-635). If its session
+  survived, it shows that live session; if not, it loads its saved scrollback, draws the dim rule, starts a new
+  session in the same folder and shell profile and says so in its restored notice (F3-640, F3-645, SMPFS-180), and a
+  command that was running comes back ended and indeterminate, never done. That notice is the structural-restore
+  copy: the tab never presents itself as its earlier live session.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal startup restore and live-state claims.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "After a restart, every saved terminal tab is back in its panel; one whose session did not survive shows its saved scrollback, the dim rule and the restored notice above a new session in the same folder and profile."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17624,9 +17639,11 @@ negative_constraints:
 - "Startup restore must not fall back to a default single-pane layout when durable terminal layout exists."
 - "Startup restore must not create new empty terminals automatically when saved terminal containers exist."
 - "Structural restore must not be presented as live PTY proof."
+- "A restored terminal tab must not present itself as its earlier live session, and startup restore must not add terminal tabs that were not saved."
 compatibility_only_notes:
 - "Deprecated `terminal_state:v1` may be ingested only by compatibility readers that rewrite into canonical terminal key families."
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal sections and panes retire; terminal tabs restore with the Home layout record, and a tab whose session did not survive restores its saved scrollback above a new session that says so."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
@@ -17705,18 +17722,25 @@ canonical_text: >-
   historical terminal records, canonical recovery outcomes, workflow records, explicit
   historical banners, and privileged-session interrupted records; `docker exec/attach`,
   `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
-  restart.
+  restart. Since DL-181 the terminal workspace state it restores is the Home layout record's terminal tabs (SP-330),
+  terminal sections and panes being migration inputs only (SP-332). For a terminal tab whose session did not
+  survive, the explicit historical banner is F3-640's restored notice, an inline row above its saved scrollback, and
+  the tab starts a new session in the same folder and shell profile (the lead ruling in DL-181); a command that was
+  running comes back ended and indeterminate, never done, and is never run again. A terminal tab whose profile is
+  itself a privileged attachment (`docker exec/attach`, `kubectl exec`, `kubectl port-forward`) starts no new session
+  by itself: it restores as an `interrupted_session` with Reconnect / Start new session, as above.
 gui_related: true
 gui_classification_reason: >-
   This unit constrains terminal/dev-session recovery and privileged attach semantics.
 split_recommended: false
-depends_on: []
+depends_on: [DL-181, SP-330, SP-332, F3-640]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+- "After a restart a terminal tab whose session ended shows the restored notice and a new session, its running command reads as ended with the earlier session, and a privileged-attachment tab waits for Reconnect / Start new session."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
@@ -17748,8 +17772,10 @@ preserved_exact_tokens:
 negative_constraints:
 - "Puppet Master MUST NOT fake live PTY continuity after restart."
 - "Privileged interactive sessions never `auto-resume` a live attachment after crash or restart."
+- "A restored terminal tab never re-runs a command that was running when its earlier session ended."
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Amended 2026-10-09 (DL-181): terminal sections and panes leave the restored state; a terminal tab whose session did not survive gets F3-640's restored notice and a new session, except a privileged-attachment tab, which keeps the interrupted-session rule."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
