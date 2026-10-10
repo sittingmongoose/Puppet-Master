@@ -5092,7 +5092,9 @@
       "profile_id": "TCP-PANEL",
       "requirement_refs": [
         "Plans/FinalGUISpec.md#F3-HOME-003",
-        "Plans/Planning_Wizard.md#PWIZ-023"
+        "Plans/Planning_Wizard.md#PWIZ-023",
+        "Plans/FinalGUISpec.md#F3-637",
+        "Plans/UI_Command_Catalog.md#UCC-203"
       ],
       "owner_plan": "Plans/FinalGUISpec.md",
       "plan_unit": "F3-HOME-003",
@@ -5106,9 +5108,9 @@
       "handler_owner": "Final GUI panel shell controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "PMConcept7 Home retains undock/redock controls. Current tour visibility switching and workspace-layout move practice share their respective existing owners; no native execution is evidenced.",
+      "production_or_simulation": "PMConcept7 Home retains undock/redock controls. Current tour visibility switching and workspace-layout move practice share their respective existing owners; no native execution is evidenced. Amended 2026-10-09 (DL-180): from Home, undock and redock take only the chat, into its own window in the desktop app; no panel, tab or dashboard pops out (UCC-203).",
       "gui_triggers": [
-        "Home panel undock/redock controls",
+        "The chat's Pop out and Dock back, the only panel undock/redock from Home (cmd.panel.undock / cmd.panel.redock with chat; amended 2026-10-09, DL-180)",
         "Guided Tour Chat visibility and captured-state restoration"
       ],
       "return_route": "Tour target plus restorable pre-tour layout/focus.",
@@ -5236,7 +5238,10 @@
       "requirement_refs": [
         "Plans/FinalGUISpec.md#F3-HOME-004",
         "Plans/FinalGUISpec.md#F3-502",
-        "Plans/UI_Command_Catalog.md#UCC-144"
+        "Plans/UI_Command_Catalog.md#UCC-144",
+        "Plans/FinalGUISpec.md#F3-630",
+        "Plans/UI_Command_Catalog.md#UCC-200",
+        "Plans/Wiring_Matrix.md#WM-090"
       ],
       "owner_plan": "Plans/FinalGUISpec.md",
       "plan_unit": "F3-HOME-004",
@@ -5250,10 +5255,10 @@
       "handler_owner": "Final GUI workspace layout controller; production-native implementation evidence is absent.",
       "handler_status": "specified",
       "wiring_status": "concept_simulated",
-      "production_or_simulation": "Home and the current tour share settled move/resize owner methods for practice and checked restoration. T48 is source refresh only; no native execution or durable recovery is evidenced.",
+      "production_or_simulation": "Home and the current tour share settled move/resize owner methods for practice and checked restoration. T48 is source refresh only; no native execution or durable recovery is evidenced. Amended 2026-10-09 (DL-180): Home is one universal panel system on pm.home_workspace_layout.v2 (SP-330); these four commands now act on panels and splits, Collapse Bottom Terminal retires in favour of any panel folding to its strip, and the tab and new layout commands of UCC-200 are wired in Plans/Wiring_Matrix.md#WM-090. The PMConcept7 sources and verifiers named here are the superseded fixed-zone concept.",
       "gui_triggers": [
-        "Home move, resize, collapse/expand, and reset controls",
-        "Guided Tour real Chat move/dock and bounded restoration"
+        "Home panel grip and Move panel, dividers and their keys, Collapse to tabs / Expand on any panel, and Restore home layout (amended 2026-10-09, DL-180)",
+        "Guided Tour panel practice and bounded restoration of the captured v2 layout; the Chat move/dock practice retired 2026-10-09 (DL-180)"
       ],
       "return_route": "Current Home target plus revision-checked settled workspace layout and focus.",
       "reverse_consumers": [
@@ -11139,7 +11144,7 @@
       "command",
       "cmd.panel.undock",
       "partial",
-      "The retained Home panel-undock control has an authored concept route independently of Guided Tour; native Final GUI handling and post-approval Home interaction evidence remain pending or unproven."
+      "The retained Home panel-undock control has an authored concept route independently of Guided Tour; native Final GUI handling and post-approval Home interaction evidence remain pending or unproven. Amended 2026-10-09 (DL-180): the control is now the chat's Pop out only; the dashboard and editor panel pop-outs are retired."
     ],
     [
       "TOUCH-GPAN-003",
@@ -11147,7 +11152,7 @@
       "command",
       "cmd.panel.redock",
       "partial",
-      "Retained Home redock is independent of the current tour's workspace-layout move practice. Native handling and exhaustive Home interaction evidence remain unproven."
+      "Retained Home redock is independent of the current tour's workspace-layout move practice. Native handling and exhaustive Home interaction evidence remain unproven. Amended 2026-10-09 (DL-180): redock is the popped-out chat's Dock back only; the tour no longer practises moving the chat."
     ],
     [
       "TOUCH-GWID-001",
@@ -11195,7 +11200,7 @@
       "command",
       "cmd.workspace_layout.move_surface",
       "partial",
-      "Home and current Tour share settled moves for practice and restoration. Full constrained-layout, durable recovery and native evidence remain unproven."
+      "Home and current Tour share settled moves for practice and restoration. Full constrained-layout, durable recovery and native evidence remain unproven. Amended 2026-10-09 (DL-180): moves are whole panels by their grip or Move panel on the v2 record; the tour practises tab drags rather than surface moves."
     ],
     [
       "TOUCH-GLAY-002",
@@ -11203,7 +11208,7 @@
       "command",
       "cmd.workspace_layout.resize_surface",
       "partial",
-      "The bounded owner method requires current-revision semantic size inputs and rolls back failed saves; the Tour reuses it for restoration. Full geometry, durable recovery and native evidence remain unproven."
+      "The bounded owner method requires current-revision semantic size inputs and rolls back failed saves; the Tour reuses it for restoration. Full geometry, durable recovery and native evidence remain unproven. Amended 2026-10-09 (DL-180): resizes are divider commits between panels, plus the chat width as surface chat."
     ],
     [
       "TOUCH-GLAY-003",
@@ -11211,7 +11216,7 @@
       "command",
       "cmd.workspace_layout.set_collapsed",
       "partial",
-      "The current Home collapse/expand command is exercised only in the browser concept; native layout handling and persisted round-trip evidence are absent."
+      "The current Home collapse/expand command is exercised only in the browser concept; native layout handling and persisted round-trip evidence are absent. Amended 2026-10-09 (DL-180): collapse applies to any panel, which folds to its strip; Collapse Bottom Terminal retires."
     ],
     [
       "TOUCH-GLAY-004",
@@ -11219,7 +11224,7 @@
       "command",
       "cmd.workspace_layout.reset",
       "partial",
-      "T48 refreshes the current factory/default projection and concept reset path only; native reset, exact migration, persistence, and recovery evidence are absent."
+      "T48 refreshes the current factory/default projection and concept reset path only; native reset, exact migration, persistence, and recovery evidence are absent. Amended 2026-10-09 (DL-180): reset is Restore home layout on the v2 record, from the panel menu, the title bar and Settings."
     ],
     [
       "TOUCH-HOVER-001",
