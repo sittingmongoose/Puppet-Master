@@ -78,10 +78,10 @@
   container-type: size;
   container-name: pmw-empty;
 }
-.pmw-empty-col { width: 100%; max-width: 360px; }
+.pmw-empty-col { width: 100%; max-width: 400px; }
 .pmw-empty-title { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--pmw-text-2); }
 .pmw-empty-list { display: flex; flex-direction: column; gap: 2px; }
-.pmw-empty-row { display: flex; align-items: stretch; border-radius: var(--pmw-row-radius); }
+.pmw-empty-row { display: flex; align-items: stretch; gap: 2px; border-radius: var(--pmw-row-radius); }
 .pmw-empty-btn {
   flex: 1 1 auto;
   min-width: 0;
@@ -89,7 +89,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 10px;
+  padding: 0 12px 0 10px;
   border: 0;
   border-radius: var(--pmw-row-radius);
   background: transparent;
@@ -101,10 +101,11 @@
 }
 .pmw-empty-btn b { font-weight: 550; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pmw-empty-btn:hover, .pmw-empty-btn:focus-visible { background: var(--pmw-hover); outline: none; }
-.pmw-empty-key { margin-left: auto; font-size: 12px; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
-.pmw-empty-path { margin-left: auto; font-size: 12px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pmw-empty-key { flex: none; margin-left: auto; padding-left: 12px; font-size: 12px; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
+.pmw-empty-path { margin-left: auto; padding-left: 12px; font-size: 12px; color: var(--pmw-text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .pmw-empty-cell { flex: none; width: 32px; border: 0; border-radius: var(--pmw-row-radius); background: transparent; color: var(--pmw-text-3); display: grid; place-items: center; cursor: pointer; }
 .pmw-empty-cell:hover, .pmw-empty-cell:focus-visible { background: var(--pmw-hover); color: var(--pmw-text); outline: none; }
+.pmw-empty-chev { flex: none; margin-left: auto; padding-left: 12px; color: var(--pmw-text-3); display: grid; place-items: center; }
 .pmw-empty-sec { margin: 18px 0 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--pmw-text-3); font-family: var(--pm-font-code); }
 .pmw-empty-hint { margin: 18px 0 0; font-size: 12px; color: var(--pmw-text-3); }
 .pmw-empty-short { display: none; margin: 0; align-self: center; font-size: 12px; color: var(--pmw-text-3); }

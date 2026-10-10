@@ -7,16 +7,19 @@ html[data-o55-nier="on"] :is(#pm-home-centre, #pmw-overlay, #pmw-chat, .pmw-scop
   --pmw-surface-2: var(--o55-nier-raised);
   --pmw-strip: var(--o55-nier-paper);
   --pmw-gutter: var(--o55-nier-paper);
-  --pmw-text: var(--o55-nier-ink); --pmw-text-2: var(--text-secondary); --pmw-text-3: var(--text-muted);
+  /* dim text and the state inks pulled toward the ink so they reach 4.5:1 on the menus and bodies, dark and light */
+  --pmw-text: var(--o55-nier-ink); --pmw-text-2: color-mix(in srgb, var(--text-secondary) 70%, var(--o55-nier-ink));
+  --pmw-text-3: color-mix(in srgb, var(--text-muted) 60%, var(--o55-nier-ink));
   --pmw-line: rgba(var(--o55-nier-ink-rgb), .22); --pmw-line-2: var(--o55-nier-line-strong);
   --pmw-accent: var(--o55-nier-ink); --pmw-focus: var(--o55-nier-ink);
-  --pmw-ok: var(--o55-nier-ok); --pmw-warn: var(--o55-nier-warn); --pmw-bad: var(--o55-nier-error);
+  --pmw-ok: color-mix(in srgb, var(--o55-nier-ok) 55%, var(--o55-nier-ink)); --pmw-warn: color-mix(in srgb, var(--o55-nier-warn) 36%, var(--o55-nier-ink));
+  --pmw-bad: color-mix(in srgb, var(--o55-nier-error) 44%, var(--o55-nier-ink));
   --pmw-pop: var(--o55-nier-overlay); --pmw-pop-line: var(--o55-nier-ink);
   --pmw-pop-shadow: 3px 3px 0 rgba(var(--o55-nier-shadow-rgb), .16);
   --pmw-hover: var(--o55-nier-hover); --pmw-press: var(--o55-nier-active);
   --pm-font-ui: var(--body-font, inherit);
   --pm-font-code: 'JetBrains Mono', 'PM NieR Mono', ui-monospace, monospace;
-  --pmw-tab-active: var(--o55-nier-ink); --pmw-tab-inactive: rgba(var(--o55-nier-ink-rgb), .65);
+  --pmw-tab-active: var(--o55-nier-ink); --pmw-tab-inactive: rgba(var(--o55-nier-ink-rgb), .76);
   --pmw-tab-weight: 500;
   --pmw-tab-hover: var(--o55-nier-hover);
   --pmw-tab-idle-fill: transparent;
@@ -67,7 +70,7 @@ html[data-o55-nier="on"][data-o55-nier-parts~="headers"] .pmw-empty-title, html[
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn, .pmw-mru-row, .pmw-mlink):is(:hover, :focus-visible, .is-current) {
   background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important;
 }
-html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn):is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-empty-key, .pmw-empty-path, .pmw-mlead) { color: inherit; background: transparent; }
+html[data-o55-nier="on"][data-o55-nier-parts~="cursor"] :is(.pmw-mitem, .pmw-empty-btn):is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-empty-key, .pmw-empty-path, .pmw-empty-chev, .pmw-mlead) { color: inherit; background: transparent; }
 /* ticks part: corner ticks on every panel (the old W-01 map ticks lived on the retired Home surfaces) */
 html[data-o55-nier="on"][data-o55-nier-parts~="ticks"] .pmw-panel::after {
   content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none;

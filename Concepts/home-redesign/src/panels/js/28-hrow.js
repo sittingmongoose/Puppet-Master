@@ -103,7 +103,9 @@ PMW.headerRow = function (entry, spec) {
     setAttr(b, 'data-id', a.id != null ? String(a.id) : null);
     setAttr(b, 'aria-label', label + (key ? ' (' + key + ')' : ''));
     setAttr(b, 'data-pm-hover-label', label);
-    setAttr(b, 'data-pm-hover-detail', a.detail || key);
+    // a menu button with nothing else to say names what it holds (with no detail the page's tag controller fills in
+    // "Choose this option")
+    setAttr(b, 'data-pm-hover-detail', a.detail || key || (a.menu ? menuWords(a.menu) : '') || null);
     setIcon(b, a.icon, 14);
     var lab = b._pmwText || (b._pmwText = h('span', { class: 'pmw-hbtn-label' }));
     setText(lab, label);
@@ -111,6 +113,20 @@ PMW.headerRow = function (entry, spec) {
     setAttr(b, 'aria-pressed', a.pressed != null ? (a.pressed ? 'true' : 'false') : null);
     setAttr(b, 'aria-disabled', a.disabled ? 'true' : null);
     setAttr(b, 'aria-haspopup', a.menu ? 'menu' : null);
+  }
+  function menuWords(m) {
+    var v;
+    try { v = typeof m === 'function' ? m() : m; } catch (_) { return 'Opens a menu'; }
+    var rows = [];
+    if (Array.isArray(v)) rows = v;
+    else if (v) {
+      var secs = typeof v.sections === 'function' ? v.sections() : v.sections;
+      if (Array.isArray(secs)) secs.forEach(function (sec) { rows = rows.concat(sec && sec.rows || []); });
+      else rows = typeof v.rows === 'function' ? v.rows() : (v.rows || []);
+    }
+    var names = (rows || []).filter(function (r) { return r && typeof r === 'object' && r.label && !r.disabled; }).map(function (r) { return String(r.label).replace(/\.\.\.$|\u2026$/, ''); });
+    if (!names.length) return 'Opens a menu';
+    return names.slice(0, 3).join(', ') + (names.length > 3 ? ' and more' : '');
   }
   function actionEl(a) {
     var b = h('button', { type: 'button', class: 'pmw-hbtn', 'data-pmh': 'icon' });

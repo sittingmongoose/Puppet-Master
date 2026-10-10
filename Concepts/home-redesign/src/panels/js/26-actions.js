@@ -40,9 +40,28 @@ PMW.focusPanelDom = function (panelId) {
     var el = render.panelEl(panelId);
     if (!el) return;
     var tab = el.querySelector('.pmw-tab[aria-selected="true"]') || el.querySelector('.pmw-plus');
-    if (tab) tab.focus({ preventScroll: true });
+    if (tab) quietFocus(tab);
   });
 };
+/* focus the program moves (an open, a panel focus, F6) is not a hover: the page's tag controller opens a tag on every
+   focusin, which then covered the header row with no pointer near it. The control stays quiet until the pointer comes
+   to it or focus leaves it; arrowing along the strip focuses other tabs, which tag as usual. */
+function quietFocus(el) {
+  if (doc.activeElement === el) return;
+  if (!el.hasAttribute('data-pm-hover-visual-suppressed')) {
+    el.setAttribute('data-pm-hover-visual-suppressed', 'true');
+    el.setAttribute('data-pmw-quiet', '');
+  }
+  el.focus({ preventScroll: true });
+}
+function unquiet(el) {
+  if (!el || !el.hasAttribute || !el.hasAttribute('data-pmw-quiet')) return;
+  el.removeAttribute('data-pmw-quiet');
+  el.removeAttribute('data-pm-hover-visual-suppressed');
+}
+// window capture runs before the tag controller's document listeners, so the first hover already gets its tag
+window.addEventListener('pointerover', function (e) { unquiet(e.target && e.target.closest && e.target.closest('[data-pmw-quiet]')); }, true);
+doc.addEventListener('focusout', function (e) { unquiet(e.target); }, true);
 
 function touchMru(l, tabId) {
   var m = l.view.mru || (l.view.mru = []);

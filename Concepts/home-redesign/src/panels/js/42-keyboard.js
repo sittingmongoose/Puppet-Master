@@ -121,8 +121,19 @@ function cycleRegion(back) {
   if (i < 0) i = Math.max(0, regions.indexOf(state.centre));   // from nowhere (the body, a bar): count from the panels
   var next = regions[(i + (back ? -1 : 1) + regions.length) % regions.length];
   if (!next) return;
-  if (next.id === 'pm-home-centre') PMW.focusPanelDom(focusedPanelId());
-  else { var f = next.querySelector('[tabindex="0"], button, textarea, input, [tabindex]'); (f || next).focus(); }
+  if (next.id === 'pm-home-centre') { PMW.focusPanelDom(focusedPanelId()); return; }
+  // the first control that really takes focus: the first match can be a hidden or inert field (the chat's first input
+  // is one), and focus() on it silently does nothing, which left F6 stuck in the panels. The chat's composer first.
+  var cands = Array.prototype.slice.call(next.querySelectorAll('textarea, [tabindex="0"], button, input, [tabindex]:not([tabindex="-1"])'));
+  if (next.id === 'chatPanel') cands.sort(function (x, y) { return (y.tagName === 'TEXTAREA') - (x.tagName === 'TEXTAREA'); });
+  for (var c = 0; c < cands.length; c++) {
+    var el = cands[c];
+    if (el.disabled || el.offsetParent === null || el.closest('[hidden], [inert], [aria-hidden="true"]')) continue;
+    try { el.focus({ preventScroll: true }); } catch (_) {}
+    if (doc.activeElement === el) return;
+  }
+  if (next.tabIndex < 0 && !next.hasAttribute('tabindex')) next.setAttribute('tabindex', '-1');
+  next.focus({ preventScroll: true });
 }
 
 var dirOf = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };

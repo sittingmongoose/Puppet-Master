@@ -20,6 +20,13 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-tclose { border-radius:
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more::before { content: "["; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more::after { content: "]"; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-more { font-family: var(--pm-font-code); color: var(--accent-lime); border-radius: 0; }
+/* the collapsed column is 35 px wide: "+N" drops its brackets there, and the active tab is the reverse-video cell */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip[data-column] .pmw-more::before, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip[data-column] .pmw-more::after { content: none; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip[data-column] .pmw-tab { border-radius: 0; }
+/* a collapsed panel hides the plate (10-panels.css), so its active tab keeps the reverse video as a cell of its own
+   (it kept the plate's reverse-video ink on the bare strip and disappeared) */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-strip[data-column] .pmw-tab[data-active],
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-panel[data-collapsed] .pmw-tab[data-active] { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plus > svg { display: none; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-plus::before { content: "[+]"; font-family: var(--pm-font-code); font-size: 12px; color: var(--accent-lime); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-sbtn, html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-hbtn { border-radius: 0; }
@@ -35,6 +42,10 @@ html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-pop { border: 1px solid
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) { background: var(--accent-lime); color: var(--surface); }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mitem:is(:hover, :focus-visible, .is-current) :is(.pmw-mcopy span, .pmw-mright, .pmw-mlead, .pmw-mchev) { color: var(--surface); background: transparent; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-mlead { background: transparent; }
+/* the empty panel's launcher rows take the same reverse video as the menu rows */
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn, .pmw-empty-cell):is(:hover, :focus-visible) { background: var(--accent-lime); color: var(--surface); }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-empty-btn:is(:hover, :focus-visible) :is(.pmw-empty-key, .pmw-empty-path, .pmw-empty-chev) { color: inherit; }
+html[data-theme^="retro"]:not([data-o55-nier="on"]) :is(.pmw-empty-btn, .pmw-empty-cell) { border-radius: 0; }
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-menu[data-mstate] { transition: none; transform: none; }
 /* the landing preview: a dithered half-tone with a box-drawn outline */
 html[data-theme^="retro"]:not([data-o55-nier="on"]) .pmw-landing { border: 1px solid var(--accent-lime); border-radius: 0; background: repeating-conic-gradient(color-mix(in srgb, var(--accent-lime) 22%, transparent) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px; }

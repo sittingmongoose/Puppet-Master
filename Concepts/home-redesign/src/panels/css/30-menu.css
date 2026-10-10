@@ -107,6 +107,7 @@
 .pmw-mlink { border: 0; padding: 2px 4px; border-radius: 5px; background: transparent; color: var(--pmw-text-2); font: inherit; font-size: 12px; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--pmw-text-2) 35%, transparent); text-underline-offset: 3px; outline: none; }
 .pmw-mlink:hover, .pmw-mlink:focus-visible { background: var(--pmw-hover); color: var(--pmw-text); }
 .pmw-mlinksep { color: var(--pmw-text-3); }
+.pmw-mlinkpair { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .pmw-mempty { margin: 0; padding: 10px 8px; color: var(--pmw-text-3); font-size: 13px; }
 .pmw-mfoot { margin: 6px 0 0; padding: 6px 8px 2px; border-top: 1px solid var(--pmw-pop-line); font-size: 12px; color: var(--pmw-text-3); }
 .pmw-mpromptrow { padding: 2px 2px 8px; }
