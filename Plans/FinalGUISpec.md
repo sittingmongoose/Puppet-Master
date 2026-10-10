@@ -43083,8 +43083,8 @@ canonical_text: >-
   its legacy YAML, base16 and base24 YAML, and Xresources; input is capped at 256 KB, nothing in a file is evaluated,
   and every error message is fixed and never echoes the file. The fields and their defaults: scheme (Follow theme,
   or a scheme); Switch with light and dark (on); minimum contrast (4.5:1); font (Follow theme, JetBrains Mono,
-  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour or the system monospace; F3-644); font size and line
-  height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
+  Atkinson Hyperlegible Mono, VT323, Departure Mono, Sixtyfour, Sixtyfour Raster or the system monospace; F3-644);
+  font size and line height (the face's defaults, F3-644); weight (400); letter spacing (0); ligatures (on); bold as bright (off); cursor
   shape (Follow theme, block, bar or underline); cursor blink (on); cursor trail (Follow theme, off, soft, glow,
   phosphor or trace); background (Follow theme, theme surface, solid colour, gradient or image) with its colour, its
   gradient (dusk, dawn, deep or paper), its image (hills, grid, paper or a custom image), image dim (0.45) and image
@@ -43289,7 +43289,7 @@ unblocks: [ATS-076]
 acceptance_criteria:
   - "The editor draws JetBrains Mono in every look, Retro included."
   - "A new terminal draws JetBrains Mono in every look but Retro and VT323 in Retro, and each face listed above can be chosen."
-  - "Each face opens at the default size and line height listed for it."
+  - "Each face that has a default size and line height listed above opens at them."
   - "JetBrains Mono's bytes are the page's code-face files, never a second copy inside the terminal, and the terminal's own faces total 84,572 bytes before base64."
   - "Box drawing, block, braille, powerline and sextant glyphs are drawn by the terminal and meet their neighbours with no gaps."
   - "Every built-in face is under the SIL Open Font License, Apache or MIT and ships with its licence and source record."
