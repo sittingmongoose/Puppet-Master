@@ -1,0 +1,1172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/home_workspace_layout/2.0.0/home_workspace_layout_v2.schema.json",
+  "title": "Puppet Master Home Workspace Layout V2",
+  "description": "The sole Home layout record (DL-180, Plans/storage-plan.md#SP-330), stored per project and workspace tab under home_workspace_layout.v2:{project_id}:{workspace_tab_id}. It holds the panel split tree, the tab records, the view-state block, the chat column, the user's saved named layouts, the closed-tab stack and the migration stamp. It stores stable references only: it never owns editor buffers, terminal sessions, PTYs or scrollback, browser sessions, chat messages, or a dashboard's widget layout (each dashboard tab keeps its own under widget_layout:v1:dashboard:<board_id>, Plans/Widget_System.md#WS-030). Narrow-window states, overlays, open menus, hover and drag state are never saved. Invariants JSON Schema cannot express are listed in $comment and are checked by the owner before a write.",
+  "$comment": "Semantic invariants (Plans/storage-plan.md#SP-330, Plans/FinalGUISpec.md#F3-630): S1 each split has as many sizes as children and the sizes sum to 1, each above 0.02; S2 split, panel and tab ids are unique in the record; S3 every tab id placed in a panel has a record in tabs, every record in tabs is placed in exactly one panel, and no tab id is in two panels; S4 a panel's first pinned_count tab ids are exactly its pinned tabs (pinned tabs first); S5 at most one preview tab per panel: preview_tab_id is null or one of the panel's tab ids whose record has mode preview, and every tab with mode preview is its panel's preview_tab_id; S6 active_tab_id is null only for a panel with no tabs and otherwise one of its tab ids; S7 a panel with no tabs is either the only panel in the tree or locked; S8 no two open terminal tabs name the same ref.terminal_session_id (one session per tab); a terminal tab's id is terminal:<the session it was first opened with> and never changes, while ref.terminal_session_id is the session it shows now, which differs from the id's suffix after Restart or a restore whose session did not survive (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180); S9 view_state.focused_panel_id and maximized_panel_id are null or ids of panels in the tree, and recent_tab_ids are open tab ids; S10 the canonical JSON encoding of a tab's state is at most 16 KB (16,384 bytes); S11 closed_tabs entries hold tab ids that are not open; S12 a named layout's slot tree follows S1 and the never-the-parent's-axis rule.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "workspace_tab_id",
+    "revision",
+    "updated_at",
+    "root",
+    "tabs",
+    "view_state",
+    "chat_column",
+    "named_layouts",
+    "closed_tabs",
+    "migration"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.home_workspace_layout.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "project_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "workspace_tab_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Advances by exactly one on every committed structural change (Plans/Contracts_V0.md#CV-361). View-state writes do not advance it."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    },
+    "tabs": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/tab_id"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/tab"
+      },
+      "description": "Tab records keyed by tab id. A tab id is opaque and stable; its prefix names its kind; one id is one tab in the whole workspace (Plans/FinalGUISpec.md#F3-635)."
+    },
+    "view_state": {
+      "$ref": "#/$defs/view_state"
+    },
+    "chat_column": {
+      "$ref": "#/$defs/chat_column"
+    },
+    "named_layouts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/named_layout"
+      },
+      "description": "Only layouts the user saved. The shipped layouts (Home, Build, Terminals 2x2, Focus) are canon in Plans/FinalGUISpec.md#F3-630 and are not stored here."
+    },
+    "closed_tabs": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/closed_tab"
+      },
+      "description": "The Reopen closed tab stack, newest first, holding at most 20 tabs (terminal SPEC section 7, revised: the reopen stack holds 20)."
+    },
+    "migration": {
+      "$ref": "#/$defs/migration_stamp"
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "panel_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "description": "Opaque, stable panel id; never shown as text in the UI."
+    },
+    "split_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+      "description": "Opaque, stable split id; never shown as text in the UI."
+    },
+    "tab_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(?:[:-].+)?$",
+      "description": "Opaque, stable tab id whose prefix names its kind (file:, buffer:, terminal:, browser:, link:, dashboard:, plan:, artifact:, output:, problems, ports, debug-console: and the rest of Plans/FinalGUISpec.md#F3-635). Forms without a colon (problems, ports, thread-<agentId>) are allowed; the part after the prefix may hold any characters. Never shown as text in the UI."
+    },
+    "tab_kind": {
+      "type": "string",
+      "enum": [
+        "editor",
+        "terminal",
+        "browser",
+        "dashboard",
+        "plan",
+        "document",
+        "artifact",
+        "run",
+        "transcript",
+        "context",
+        "record",
+        "output",
+        "problems",
+        "ports",
+        "debug_console"
+      ]
+    },
+    "size": {
+      "type": "number",
+      "exclusiveMinimum": 0.02,
+      "maximum": 1,
+      "description": "A proportion of the parent split, above 0.02."
+    },
+    "node": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/panel"
+        },
+        {
+          "$ref": "#/$defs/row_split"
+        },
+        {
+          "$ref": "#/$defs/column_split"
+        }
+      ]
+    },
+    "row_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "id",
+        "axis",
+        "children",
+        "sizes"
+      ],
+      "properties": {
+        "node": {
+          "const": "split"
+        },
+        "id": {
+          "$ref": "#/$defs/split_id"
+        },
+        "axis": {
+          "const": "row"
+        },
+        "children": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/panel"
+              },
+              {
+                "$ref": "#/$defs/column_split"
+              }
+            ]
+          }
+        },
+        "sizes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/size"
+          },
+          "description": "One proportion per child, in child order. Semantic invariant: as many sizes as children, and they sum to 1."
+        }
+      },
+      "description": "A row split. Its child splits are always column splits: a split never has its parent's axis."
+    },
+    "column_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "id",
+        "axis",
+        "children",
+        "sizes"
+      ],
+      "properties": {
+        "node": {
+          "const": "split"
+        },
+        "id": {
+          "$ref": "#/$defs/split_id"
+        },
+        "axis": {
+          "const": "column"
+        },
+        "children": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/panel"
+              },
+              {
+                "$ref": "#/$defs/row_split"
+              }
+            ]
+          }
+        },
+        "sizes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/size"
+          },
+          "description": "One proportion per child, in child order. Semantic invariant: as many sizes as children, and they sum to 1."
+        }
+      },
+      "description": "A column split. Its child splits are always row splits: a split never has its parent's axis."
+    },
+    "panel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "id",
+        "tab_ids",
+        "active_tab_id",
+        "preview_tab_id",
+        "pinned_count",
+        "collapsed",
+        "locked"
+      ],
+      "properties": {
+        "node": {
+          "const": "panel"
+        },
+        "id": {
+          "$ref": "#/$defs/panel_id"
+        },
+        "tab_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/tab_id"
+          },
+          "description": "The panel's tabs in strip order, pinned tabs first."
+        },
+        "active_tab_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/tab_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview_tab_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/tab_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pinned_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "collapsed": {
+          "type": "boolean",
+          "description": "Folded to its strip; it keeps its tabs and their state."
+        },
+        "locked": {
+          "type": "boolean",
+          "description": "Skipped by automatic placement and kept when its last tab closes."
+        }
+      }
+    },
+    "tab": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "label",
+        "pinned",
+        "mode",
+        "state",
+        "ref"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/tab_kind"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The user's own label, or null for the kind's label."
+        },
+        "pinned": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "kept",
+            "preview"
+          ],
+          "description": "preview is the panel's one italic preview tab, for files only."
+        },
+        "state": {
+          "type": "object",
+          "description": "The kind's own serialized state, at most 16 KB of canonical JSON. No buffers, scrollback, transcripts, secrets or widget layout."
+        },
+        "ref": {
+          "$ref": "#/$defs/domain_ref"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "editor"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "path": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "path"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "terminal"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "terminal_session_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "terminal_session_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "browser"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "browser_session_id": true
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "dashboard"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "board_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "board_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "plan"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "plan_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "plan_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "document"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "path": true
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "artifact"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "artifact_id": true,
+                  "artifact_version": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "artifact_id",
+                  "artifact_version"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "run"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "run_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "run_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "transcript"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "thread_id": true
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "context"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "thread_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "thread_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "record"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "record_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "record_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "output"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "problems"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ports"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "debug_console"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "ref": {
+                "properties": {
+                  "debug_session_id": true
+                },
+                "additionalProperties": false,
+                "required": [
+                  "debug_session_id"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "preview"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "kind": {
+                "const": "editor"
+              },
+              "pinned": {
+                "const": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "domain_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The domain identity the tab shows, separate from the tab id. Which keys a kind carries is fixed per kind in the tab definition.",
+      "properties": {
+        "path": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Workspace file path; null for an editor buffer that has no file."
+        },
+        "terminal_session_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "browser_session_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "board_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "plan_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "artifact_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "artifact_version": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A pinned artifact version, or null for the latest."
+        },
+        "thread_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "run_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The Crew, Review, Chat Room or BrainStorm run, or its evidence, that a run tab shows (Plans/Contracts_V0.md shared record envelopes carry run_id)."
+        },
+        "record_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The read-only tool-call record (search, MCP, app or work record) that a record tab shows (Plans/Contracts_V0.md shared record envelopes carry record_id)."
+        },
+        "debug_session_id": {
+          "$ref": "#/$defs/non_empty_string",
+          "description": "The debug session a Debug Console tab shows (the debug_session_id of Plans/UI_Command_Catalog.md#UCC-077)."
+        }
+      }
+    },
+    "view_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "focused_panel_id",
+        "maximized_panel_id",
+        "recent_tab_ids"
+      ],
+      "description": "View state written with the record but never a structural change: no receipt, no event, no revision advance (ui.panel_tab.activate, ui.workspace_layout.maximize, ui.workspace_layout.focus_panel).",
+      "properties": {
+        "focused_panel_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/panel_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "maximized_panel_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/panel_id"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximize is a flag outside the tree."
+        },
+        "recent_tab_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/tab_id"
+          },
+          "description": "Most recently used first, across panels and kinds (Ctrl+Tab order)."
+        }
+      }
+    },
+    "chat_column": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "width_px",
+        "history_pinned",
+        "popped_out",
+        "shown"
+      ],
+      "description": "The fixed chat column on the right (Plans/FinalGUISpec.md#F3-637). It has no position: it is never in the split tree and never moved inside the window.",
+      "properties": {
+        "width_px": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 400,
+              "maximum": 760
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The user's dragged width, or null for the window default clamp(400, 0.26667 x window width + 88, 640)."
+        },
+        "history_pinned": {
+          "type": "boolean",
+          "description": "The 5.6 Pro History list pinned open, which widens the chat by the list's own width. Written like view state: no receipt, no event, no revision advance."
+        },
+        "popped_out": {
+          "type": "boolean"
+        },
+        "shown": {
+          "type": "boolean"
+        }
+      }
+    },
+    "named_layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "saved_at",
+        "root"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "name": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "saved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "root": {
+          "$ref": "#/$defs/slot_node"
+        }
+      },
+      "description": "A saved layout keeps shape, sizes and the kinds each slot holds, never tabs, sessions or buffers."
+    },
+    "slot_node": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/slot"
+        },
+        {
+          "$ref": "#/$defs/slot_row_split"
+        },
+        {
+          "$ref": "#/$defs/slot_column_split"
+        }
+      ]
+    },
+    "slot_row_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "id",
+        "axis",
+        "children",
+        "sizes"
+      ],
+      "properties": {
+        "node": {
+          "const": "split"
+        },
+        "id": {
+          "$ref": "#/$defs/split_id"
+        },
+        "axis": {
+          "const": "row"
+        },
+        "children": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/slot"
+              },
+              {
+                "$ref": "#/$defs/slot_column_split"
+              }
+            ]
+          }
+        },
+        "sizes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/size"
+          },
+          "description": "One proportion per child, in child order. Semantic invariant: as many sizes as children, and they sum to 1."
+        }
+      },
+      "description": "A row split. Its child splits are always column splits: a split never has its parent's axis."
+    },
+    "slot_column_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "id",
+        "axis",
+        "children",
+        "sizes"
+      ],
+      "properties": {
+        "node": {
+          "const": "split"
+        },
+        "id": {
+          "$ref": "#/$defs/split_id"
+        },
+        "axis": {
+          "const": "column"
+        },
+        "children": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/slot"
+              },
+              {
+                "$ref": "#/$defs/slot_row_split"
+              }
+            ]
+          }
+        },
+        "sizes": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/size"
+          },
+          "description": "One proportion per child, in child order. Semantic invariant: as many sizes as children, and they sum to 1."
+        }
+      },
+      "description": "A column split. Its child splits are always row splits: a split never has its parent's axis."
+    },
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node",
+        "kinds"
+      ],
+      "properties": {
+        "node": {
+          "const": "slot"
+        },
+        "kinds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/tab_kind"
+          },
+          "description": "The tab kinds this slot held when the layout was saved."
+        }
+      }
+    },
+    "closed_tab": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tab_id",
+        "tab",
+        "panel_id",
+        "index",
+        "closed_at"
+      ],
+      "description": "A closed tab that Reopen closed tab can bring back. A terminal comes back as a new session in the same folder and profile, never as the old one (Plans/Section15_MVP_Promoted_Features_Spec.md#SMPFS-180).",
+      "properties": {
+        "tab_id": {
+          "$ref": "#/$defs/tab_id"
+        },
+        "tab": {
+          "$ref": "#/$defs/tab"
+        },
+        "panel_id": {
+          "$ref": "#/$defs/panel_id"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "closed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "migration_stamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "source_key",
+        "source_schema_id",
+        "source_revision",
+        "migrated_at"
+      ],
+      "description": "Where this record came from (Plans/storage-plan.md#SP-330). A converted source stays where it was, read-only.",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": [
+            "created_default",
+            "home_workspace_layout_v1",
+            "layout_v1_home",
+            "default_after_unreadable_source"
+          ]
+        },
+        "source_key": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_schema_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/non_empty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_revision": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "migrated_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "created_default"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_key": {
+                "type": "null"
+              },
+              "source_schema_id": {
+                "type": "null"
+              },
+              "source_revision": {
+                "type": "null"
+              },
+              "migrated_at": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "source_key": {
+                "$ref": "#/$defs/non_empty_string"
+              },
+              "migrated_at": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "origin": {
+                "const": "home_workspace_layout_v1"
+              }
+            },
+            "required": [
+              "origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_schema_id": {
+                "const": "pm.home_workspace_layout.v1"
+              },
+              "source_revision": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

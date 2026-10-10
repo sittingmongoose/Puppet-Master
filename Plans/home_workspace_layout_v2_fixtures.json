@@ -1,0 +1,2661 @@
+{
+  "schema_id": "pm.home_workspace_layout.v2.fixtures",
+  "status": "STATIC_SCHEMA_AND_SEMANTIC_EXAMPLES",
+  "native_execution": "NOT_RUN",
+  "schema_ref": "Plans/home_workspace_layout_v2.schema.json#",
+  "owner_refs": [
+    "Plans/storage-plan.md#SP-330",
+    "Plans/FinalGUISpec.md#F3-630",
+    "Plans/Decision_Log.md#DL-180"
+  ],
+  "source_lineage": [
+    "/mnt/Cursor/PuppetMaster-Evidence/scratch/home-panels-terminal-20261009/canon-inputs/panels-NUMBERS-407e6fb6fe.md, SHA-256 019721f5215d95c80b999d5b61e1ee4bf79b29afc5b229a12bccde6f738c5162 (named layout trees; concept lineage only)",
+    "Concepts/home-redesign/src/panels/js/14-layouts.js at commit 35e51da2314d186d21798ebf2ae4823a6b2e284a (branch concept/home-panels-20261009), SHA-256 8d05d9b09028725d7a0bff444b20d7e655047bb7485350c8e771323223f5316e (the default Home tabs; concept lineage only)"
+  ],
+  "notes": "Each valid record validates against the schema and passes the semantic invariants S1-S12 listed in the schema's $comment. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid record; rejected_by says whether the schema or a named semantic invariant rejects it. An op value of the form {\"$generate\": {\"repeat\": c, \"count\": n}} stands for a string of n copies of c. The migration case's inputs are illustrative extracts: the v1 record validates against Plans/home_workspace_layout.schema.json, editor_groups stands for the editor's own workspace state (editor_workspace_state.v1) and terminal_sections for the terminal section, workgroup, pane and session records; expected_v2 is the record SP-330's conversion produces.",
+  "valid": [
+    {
+      "name": "default_home",
+      "description": "The default Home layout: a column of a 0.6 row [dashboard 0.5, documents 0.5] over a 0.4 tools row, with NUMBERS' default tabs.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 0,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "terminal:t1",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "terminals_2x2",
+      "description": "Terminals 2x2 applied to an open workspace: four terminal panels at 0.5; the other open tabs joined the first panel.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 7,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-upper",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-t1",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "terminal:t1",
+                    "file:src/main.rs"
+                  ],
+                  "active_tab_id": "terminal:t1",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-t2",
+                  "tab_ids": [
+                    "terminal:t2"
+                  ],
+                  "active_tab_id": "terminal:t2",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "split",
+              "id": "split-lower",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-t3",
+                  "tab_ids": [
+                    "terminal:t3"
+                  ],
+                  "active_tab_id": "terminal:t3",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-t4",
+                  "tab_ids": [
+                    "terminal:t4"
+                  ],
+                  "active_tab_id": "terminal:t4",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            }
+          ],
+          "sizes": [
+            0.5,
+            0.5
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "terminal:t3": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t3"
+            }
+          },
+          "terminal:t4": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t4"
+            }
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-t1",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "terminal:t1",
+            "terminal:t2"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "focus",
+      "description": "Focus: one panel holding every tab.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 12,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "panel",
+          "id": "panel-all",
+          "tab_ids": [
+            "dashboard:home",
+            "dashboard:agents",
+            "file:src/main.rs",
+            "file:src/routes/recipes.rs",
+            "plan:ap-index",
+            "terminal:t1",
+            "terminal:t2",
+            "output:build"
+          ],
+          "active_tab_id": "file:src/main.rs",
+          "preview_tab_id": null,
+          "pinned_count": 1,
+          "collapsed": false,
+          "locked": false
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-all",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "collapsed_and_maximized",
+      "description": "Home with the tools panel collapsed to its strip and the documents panel maximized; a preview tab, a user label, a saved named layout, one closed tab, and a popped-out chat with History pinned at 520 px.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 19,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index",
+                    "file:README.md"
+                  ],
+                  "active_tab_id": "file:README.md",
+                  "preview_tab_id": "file:README.md",
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": true,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": "API server",
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          },
+          "file:README.md": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "preview",
+            "state": {},
+            "ref": {
+              "path": "README.md"
+            }
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": "panel-docs",
+          "recent_tab_ids": [
+            "file:README.md",
+            "file:src/main.rs",
+            "terminal:t1"
+          ]
+        },
+        "chat_column": {
+          "width_px": 520,
+          "history_pinned": true,
+          "popped_out": true,
+          "shown": true
+        },
+        "named_layouts": [
+          {
+            "id": "saved-review",
+            "name": "Review",
+            "saved_at": "2026-10-09T12:00:00Z",
+            "root": {
+              "node": "split",
+              "id": "slot-root",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "slot",
+                  "kinds": [
+                    "editor",
+                    "plan"
+                  ]
+                },
+                {
+                  "node": "split",
+                  "id": "slot-right",
+                  "axis": "column",
+                  "children": [
+                    {
+                      "node": "slot",
+                      "kinds": [
+                        "browser"
+                      ]
+                    },
+                    {
+                      "node": "slot",
+                      "kinds": [
+                        "terminal",
+                        "output"
+                      ]
+                    }
+                  ],
+                  "sizes": [
+                    0.5,
+                    0.5
+                  ]
+                }
+              ],
+              "sizes": [
+                0.66,
+                0.34
+              ]
+            }
+          }
+        ],
+        "closed_tabs": [
+          {
+            "tab_id": "file:Cargo.toml",
+            "tab": {
+              "kind": "editor",
+              "label": null,
+              "pinned": false,
+              "mode": "kept",
+              "state": {},
+              "ref": {
+                "path": "Cargo.toml"
+              }
+            },
+            "panel_id": "panel-docs",
+            "index": 2,
+            "closed_at": "2026-10-09T12:00:00Z"
+          }
+        ],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "three_dashboards",
+      "description": "Three dashboard tabs in one panel, each with its own board and widget layout kept outside this record.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 4,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:metrics",
+                    "dashboard:monitoring"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          },
+          "dashboard:metrics": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "metrics"
+            }
+          },
+          "dashboard:monitoring": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "monitoring"
+            }
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-dash",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "dashboard:metrics",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "terminal_restarted",
+      "description": "The default Home layout after terminal:t2's session ended and Restart started session t7 in the same tab: the tab keeps its id terminal:t2 while its ref names t7 (SMPFS-180), and the record's revision is unchanged because Restart is no structural change.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 0,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t7"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "terminal:t1",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "created_default",
+          "source_key": null,
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": null
+        }
+      }
+    },
+    {
+      "name": "default_after_unreadable_source",
+      "description": "An unreadable v1 record: the default Home layout, the old record kept where it was, and a notice.",
+      "record": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 0,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "panel-dash",
+                  "tab_ids": [
+                    "dashboard:home",
+                    "dashboard:agents"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "panel-docs",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/routes/recipes.rs",
+                    "plan:ap-index"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            },
+            {
+              "node": "panel",
+              "id": "panel-tools",
+              "tab_ids": [
+                "terminal:t1",
+                "terminal:t2",
+                "output:build"
+              ],
+              "active_tab_id": "terminal:t1",
+              "preview_tab_id": null,
+              "pinned_count": 0,
+              "collapsed": false,
+              "locked": false
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "dashboard:agents": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "agents"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/routes/recipes.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/routes/recipes.rs"
+            }
+          },
+          "plan:ap-index": {
+            "kind": "plan",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "plan_id": "ap-index"
+            }
+          },
+          "terminal:t1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t1"
+            }
+          },
+          "terminal:t2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "profile": "zsh",
+              "cwd": "~/tastebook/api"
+            },
+            "ref": {
+              "terminal_session_id": "t2"
+            }
+          },
+          "output:build": {
+            "kind": "output",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "channel": "build"
+            },
+            "ref": {}
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "panel-docs",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "terminal:t1",
+            "dashboard:home"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "default_after_unreadable_source",
+          "source_key": "home_workspace_layout.v1:proj-tastebook:wt-main",
+          "source_schema_id": null,
+          "source_revision": null,
+          "migrated_at": "2026-10-09T12:00:00Z"
+        }
+      }
+    }
+  ],
+  "migration": [
+    {
+      "name": "v1_four_editor_panels_dashboard_two_terminal_sections_floating_chat",
+      "description": "Four v1 editor panels (two shown, one hidden with a tab, one hidden and empty), a dashboard docked left, two terminal sections with workgroups docked at the bottom, and a floating chat.",
+      "inputs": {
+        "home_workspace_layout_v1": {
+          "schema_id": "pm.home_workspace_layout.v1",
+          "schema_version": "1.0.0",
+          "project_id": "proj-tastebook",
+          "workspace_tab_id": "wt-main",
+          "layout_revision": 41,
+          "surfaces": [
+            {
+              "surface_instance_id": "dashboard",
+              "surface_kind": "dashboard",
+              "domain_ref": {
+                "dashboard_surface_id": "dashboard"
+              },
+              "host": "dock_left",
+              "slot_index": 0,
+              "split_path": "root",
+              "size": {
+                "basis_px": 320,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "home_main",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 3
+            },
+            {
+              "surface_instance_id": "editor_panel_1",
+              "surface_kind": "editor_panel",
+              "domain_ref": {
+                "editor_panel_id": "editor_panel_1",
+                "editor_group_id": "group-1",
+                "worktree_id": "wt-main-tree",
+                "browser_session_id": null,
+                "browser_active": false
+              },
+              "host": "home_main",
+              "slot_index": 0,
+              "split_path": "root/0",
+              "size": {
+                "basis_px": 480,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "home_main",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 9
+            },
+            {
+              "surface_instance_id": "editor_panel_2",
+              "surface_kind": "editor_panel",
+              "domain_ref": {
+                "editor_panel_id": "editor_panel_2",
+                "editor_group_id": "group-2",
+                "worktree_id": "wt-main-tree",
+                "browser_session_id": "bs-1",
+                "browser_active": true
+              },
+              "host": "home_main",
+              "slot_index": 1,
+              "split_path": "root/1",
+              "size": {
+                "basis_px": 480,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "home_main",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 7
+            },
+            {
+              "surface_instance_id": "editor_panel_3",
+              "surface_kind": "editor_panel",
+              "domain_ref": {
+                "editor_panel_id": "editor_panel_3",
+                "editor_group_id": "group-3",
+                "worktree_id": "wt-main-tree",
+                "browser_session_id": null,
+                "browser_active": false
+              },
+              "host": "home_main",
+              "slot_index": 2,
+              "split_path": "root/2",
+              "size": {
+                "basis_px": 480,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": false,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "home_main",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 2
+            },
+            {
+              "surface_instance_id": "editor_panel_4",
+              "surface_kind": "editor_panel",
+              "domain_ref": {
+                "editor_panel_id": "editor_panel_4",
+                "editor_group_id": "group-4",
+                "worktree_id": "wt-main-tree",
+                "browser_session_id": null,
+                "browser_active": false
+              },
+              "host": "home_main",
+              "slot_index": 3,
+              "split_path": "root/3",
+              "size": {
+                "basis_px": 480,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": false,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "home_main",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 0
+            },
+            {
+              "surface_instance_id": "terminal_section:sec-a",
+              "surface_kind": "terminal_section",
+              "domain_ref": {
+                "terminal_section_id": "sec-a",
+                "terminal_workgroup_id": "wg-a",
+                "pane_ids": "pane-a1",
+                "terminal_session_ids": "ts-a1"
+              },
+              "host": "dock_bottom",
+              "slot_index": 0,
+              "split_path": "root/0",
+              "size": {
+                "basis_px": 640,
+                "cross_basis_px": 360,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "dock_bottom",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 5
+            },
+            {
+              "surface_instance_id": "terminal_section:sec-b",
+              "surface_kind": "terminal_section",
+              "domain_ref": {
+                "terminal_section_id": "sec-b",
+                "terminal_workgroup_id": "wg-b",
+                "pane_ids": "pane-b1",
+                "terminal_session_ids": "ts-b1"
+              },
+              "host": "dock_bottom",
+              "slot_index": 1,
+              "split_path": "root/1",
+              "size": {
+                "basis_px": 640,
+                "cross_basis_px": 360,
+                "flex_weight": 1,
+                "min_width_px": 280,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": null,
+              "last_docked_host": "dock_bottom",
+              "last_docked_slot_index": 1,
+              "last_focus_seq": 4
+            },
+            {
+              "surface_instance_id": "chat",
+              "surface_kind": "chat",
+              "domain_ref": {
+                "chat_surface_id": "chat"
+              },
+              "host": "floating",
+              "slot_index": 0,
+              "split_path": "root",
+              "size": {
+                "basis_px": 420,
+                "cross_basis_px": 0,
+                "flex_weight": 1,
+                "min_width_px": 360,
+                "min_height_px": 120
+              },
+              "visible": true,
+              "collapsed": false,
+              "floating_bounds": {
+                "x": 900,
+                "y": 80,
+                "width": 420,
+                "height": 640
+              },
+              "last_docked_host": "dock_right",
+              "last_docked_slot_index": 0,
+              "last_focus_seq": 8
+            }
+          ],
+          "saved_at_utc": "2026-10-01T09:30:00Z",
+          "validation": {
+            "status": "valid",
+            "max_editor_panels": 4,
+            "max_terminal_sections": 4,
+            "max_visible_terminal_panes": 4,
+            "fallback_host": "home_main",
+            "safe_offscreen_fallback": true,
+            "last_validation_errors": []
+          },
+          "migration": {
+            "from_schema_version": null,
+            "migrated_at_utc": "2026-08-20T10:00:00Z",
+            "source_key": null,
+            "disposition": "current"
+          }
+        },
+        "editor_groups": {
+          "group-1": {
+            "tabs": [
+              "src/main.rs",
+              "src/lib.rs"
+            ],
+            "active": "src/main.rs"
+          },
+          "group-2": {
+            "tabs": [
+              "README.md"
+            ],
+            "active": "README.md"
+          },
+          "group-3": {
+            "tabs": [
+              "docs/notes.md"
+            ],
+            "active": "docs/notes.md"
+          },
+          "group-4": {
+            "tabs": [],
+            "active": null
+          }
+        },
+        "terminal_sections": {
+          "sec-a": {
+            "workgroups": [
+              {
+                "terminal_workgroup_id": "wg-a",
+                "title": "API",
+                "panes": [
+                  {
+                    "terminal_pane_id": "pane-a1",
+                    "terminal_leaf_pane_id": "leaf-a1",
+                    "terminal_session_id": "ts-a1",
+                    "tab_title": null,
+                    "shell_profile_ref": "profile:zsh",
+                    "cwd_ref": "cwd:api"
+                  },
+                  {
+                    "terminal_pane_id": "pane-a2",
+                    "terminal_leaf_pane_id": "leaf-a2",
+                    "terminal_session_id": "ts-a2",
+                    "tab_title": "API server",
+                    "shell_profile_ref": "profile:zsh",
+                    "cwd_ref": "cwd:api"
+                  }
+                ]
+              }
+            ],
+            "active_terminal_session_id": "ts-a1"
+          },
+          "sec-b": {
+            "workgroups": [
+              {
+                "terminal_workgroup_id": "wg-b",
+                "title": "Web",
+                "panes": [
+                  {
+                    "terminal_pane_id": "pane-b1",
+                    "terminal_leaf_pane_id": "leaf-b1",
+                    "terminal_session_id": "ts-b1",
+                    "tab_title": null,
+                    "shell_profile_ref": "profile:zsh",
+                    "cwd_ref": "cwd:web"
+                  }
+                ]
+              },
+              {
+                "terminal_workgroup_id": "wg-b2",
+                "title": "Logs",
+                "panes": [
+                  {
+                    "terminal_pane_id": "pane-b2",
+                    "terminal_leaf_pane_id": "leaf-b2",
+                    "terminal_session_id": "ts-b2",
+                    "tab_title": null,
+                    "shell_profile_ref": "profile:bash",
+                    "cwd_ref": "cwd:logs"
+                  }
+                ]
+              }
+            ],
+            "active_terminal_session_id": "ts-b2"
+          }
+        }
+      },
+      "expected_v2": {
+        "schema_id": "pm.home_workspace_layout.v2",
+        "schema_version": "2.0.0",
+        "project_id": "proj-tastebook",
+        "workspace_tab_id": "wt-main",
+        "revision": 42,
+        "updated_at": "2026-10-09T12:00:00Z",
+        "root": {
+          "node": "split",
+          "id": "split-root",
+          "axis": "column",
+          "children": [
+            {
+              "node": "split",
+              "id": "split-top",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "dashboard",
+                  "tab_ids": [
+                    "dashboard:home"
+                  ],
+                  "active_tab_id": "dashboard:home",
+                  "preview_tab_id": null,
+                  "pinned_count": 1,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "editor_panel_1",
+                  "tab_ids": [
+                    "file:src/main.rs",
+                    "file:src/lib.rs"
+                  ],
+                  "active_tab_id": "file:src/main.rs",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "editor_panel_2",
+                  "tab_ids": [
+                    "file:README.md",
+                    "browser:1"
+                  ],
+                  "active_tab_id": "browser:1",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "editor_panel_3",
+                  "tab_ids": [
+                    "file:docs/notes.md"
+                  ],
+                  "active_tab_id": "file:docs/notes.md",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": true,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.25,
+                0.25,
+                0.25,
+                0.25
+              ]
+            },
+            {
+              "node": "split",
+              "id": "split-bottom",
+              "axis": "row",
+              "children": [
+                {
+                  "node": "panel",
+                  "id": "terminal_section:sec-a",
+                  "tab_ids": [
+                    "terminal:ts-a1",
+                    "terminal:ts-a2"
+                  ],
+                  "active_tab_id": "terminal:ts-a1",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                },
+                {
+                  "node": "panel",
+                  "id": "terminal_section:sec-b",
+                  "tab_ids": [
+                    "terminal:ts-b1",
+                    "terminal:ts-b2"
+                  ],
+                  "active_tab_id": "terminal:ts-b2",
+                  "preview_tab_id": null,
+                  "pinned_count": 0,
+                  "collapsed": false,
+                  "locked": false
+                }
+              ],
+              "sizes": [
+                0.5,
+                0.5
+              ]
+            }
+          ],
+          "sizes": [
+            0.6,
+            0.4
+          ]
+        },
+        "tabs": {
+          "dashboard:home": {
+            "kind": "dashboard",
+            "label": null,
+            "pinned": true,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "board_id": "home"
+            }
+          },
+          "file:src/main.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/main.rs"
+            }
+          },
+          "file:src/lib.rs": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "src/lib.rs"
+            }
+          },
+          "file:README.md": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "README.md"
+            }
+          },
+          "browser:1": {
+            "kind": "browser",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "browser_session_id": "bs-1"
+            }
+          },
+          "file:docs/notes.md": {
+            "kind": "editor",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {},
+            "ref": {
+              "path": "docs/notes.md"
+            }
+          },
+          "terminal:ts-a1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "shell_profile_ref": "profile:zsh",
+              "cwd_ref": "cwd:api"
+            },
+            "ref": {
+              "terminal_session_id": "ts-a1"
+            }
+          },
+          "terminal:ts-a2": {
+            "kind": "terminal",
+            "label": "API server",
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "shell_profile_ref": "profile:zsh",
+              "cwd_ref": "cwd:api"
+            },
+            "ref": {
+              "terminal_session_id": "ts-a2"
+            }
+          },
+          "terminal:ts-b1": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "shell_profile_ref": "profile:zsh",
+              "cwd_ref": "cwd:web"
+            },
+            "ref": {
+              "terminal_session_id": "ts-b1"
+            }
+          },
+          "terminal:ts-b2": {
+            "kind": "terminal",
+            "label": null,
+            "pinned": false,
+            "mode": "kept",
+            "state": {
+              "shell_profile_ref": "profile:bash",
+              "cwd_ref": "cwd:logs"
+            },
+            "ref": {
+              "terminal_session_id": "ts-b2"
+            }
+          }
+        },
+        "view_state": {
+          "focused_panel_id": "editor_panel_1",
+          "maximized_panel_id": null,
+          "recent_tab_ids": [
+            "file:src/main.rs",
+            "browser:1",
+            "terminal:ts-a1",
+            "terminal:ts-b2",
+            "dashboard:home",
+            "file:docs/notes.md"
+          ]
+        },
+        "chat_column": {
+          "width_px": null,
+          "history_pinned": false,
+          "popped_out": false,
+          "shown": true
+        },
+        "named_layouts": [],
+        "closed_tabs": [],
+        "migration": {
+          "origin": "home_workspace_layout_v1",
+          "source_key": "home_workspace_layout.v1:proj-tastebook:wt-main",
+          "source_schema_id": "pm.home_workspace_layout.v1",
+          "source_revision": 41,
+          "migrated_at": "2026-10-09T12:00:00Z"
+        }
+      },
+      "conversion_notes": [
+        "Non-terminal surfaces form the top row in host order (dock_left, home_main by slot, dock_right, dock_top, then floating), terminal sections form the bottom row by slot; the column is 0.6 over 0.4.",
+        "Row proportions come from each surface's flex_weight, normalized; all weights here are 1.",
+        "editor_panel_2's active browser becomes a browser tab bound to its session and stays the active tab.",
+        "editor_panel_3 was hidden but held a tab, so it becomes a collapsed panel; editor_panel_4 was hidden and empty, so it is dropped.",
+        "Each workgroup pane becomes its own terminal tab terminal:<terminal_session_id>, bound to its existing session; a pane's own tab title becomes the tab's user label; section and workgroup titles are not carried.",
+        "The floating chat returns to the fixed column, shown, at the window's default width.",
+        "The v2 revision is the v1 layout_revision plus one, and the conversion emits one workspace.layout_changed with change migrated_from_v1 (Plans/Contracts_V0.md#CV-361)."
+      ]
+    }
+  ],
+  "invalid": [
+    {
+      "name": "sizes_not_summing_to_one",
+      "base_valid": "default_home",
+      "rejected_by": "semantic:S1",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/root/sizes",
+          "value": [
+            0.6,
+            0.3
+          ]
+        }
+      ],
+      "why": "A split's sizes must sum to 1."
+    },
+    {
+      "name": "tab_id_in_two_panels",
+      "base_valid": "default_home",
+      "rejected_by": "semantic:S3",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/root/children/0/children/1/tab_ids/-",
+          "value": "terminal:t1"
+        }
+      ],
+      "why": "One tab lives in exactly one panel."
+    },
+    {
+      "name": "unknown_kind",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/tabs/output:build/kind",
+          "value": "goal"
+        }
+      ],
+      "why": "The kind enum is closed; the chat's Goal tab is retired (DL-147)."
+    },
+    {
+      "name": "state_over_16_kb",
+      "base_valid": "default_home",
+      "rejected_by": "semantic:S10",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/tabs/file:src~1main.rs/state/padding",
+          "value": {
+            "$generate": {
+              "repeat": "x",
+              "count": 16385
+            }
+          }
+        }
+      ],
+      "why": "A tab's serialized state is at most 16 KB (16,384 bytes); the generator expands to a 16,385-character string."
+    },
+    {
+      "name": "split_with_one_child",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/root/children/0",
+          "value": {
+            "node": "split",
+            "id": "split-top",
+            "axis": "row",
+            "children": [
+              {
+                "node": "panel",
+                "id": "panel-dash",
+                "tab_ids": [
+                  "dashboard:home",
+                  "dashboard:agents"
+                ],
+                "active_tab_id": "dashboard:home",
+                "preview_tab_id": null,
+                "pinned_count": 1,
+                "collapsed": false,
+                "locked": false
+              }
+            ],
+            "sizes": [
+              1.0
+            ]
+          }
+        }
+      ],
+      "why": "A split has two or more children."
+    },
+    {
+      "name": "split_with_parent_axis",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/root/children/0/axis",
+          "value": "column"
+        }
+      ],
+      "why": "A split never has its parent's axis."
+    },
+    {
+      "name": "size_at_or_below_0_02",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/root/sizes",
+          "value": [
+            0.98,
+            0.02
+          ]
+        }
+      ],
+      "why": "Every size is above 0.02."
+    },
+    {
+      "name": "narrow_state_saved",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/view_state/narrow_step",
+          "value": "one_column"
+        }
+      ],
+      "why": "Narrow-window states are never saved."
+    },
+    {
+      "name": "preview_terminal_tab",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/tabs/terminal:t1/mode",
+          "value": "preview"
+        }
+      ],
+      "why": "Only a file tab can be the preview tab."
+    },
+    {
+      "name": "two_preview_tabs_in_one_panel",
+      "base_valid": "collapsed_and_maximized",
+      "rejected_by": "semantic:S5",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/tabs/file:src~1routes~1recipes.rs/mode",
+          "value": "preview"
+        }
+      ],
+      "why": "One preview tab per panel."
+    },
+    {
+      "name": "pinned_tab_not_first",
+      "base_valid": "default_home",
+      "rejected_by": "semantic:S4",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/root/children/0/children/0/tab_ids",
+          "value": [
+            "dashboard:agents",
+            "dashboard:home"
+          ]
+        }
+      ],
+      "why": "Pinned tabs come first."
+    },
+    {
+      "name": "two_terminal_tabs_one_session",
+      "base_valid": "default_home",
+      "rejected_by": "semantic:S8",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/tabs/terminal:t2/ref/terminal_session_id",
+          "value": "t1"
+        }
+      ],
+      "why": "One session per tab: two open terminal tabs never show the same session."
+    },
+    {
+      "name": "closed_tab_stack_over_20",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/closed_tabs",
+          "value": [
+            {
+              "tab_id": "file:old0.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old0.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old1.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old1.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old2.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old2.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old3.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old3.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old4.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old4.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old5.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old5.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old6.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old6.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old7.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old7.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old8.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old8.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old9.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old9.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old10.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old10.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old11.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old11.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old12.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old12.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old13.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old13.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old14.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old14.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old15.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old15.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old16.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old16.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old17.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old17.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old18.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old18.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old19.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old19.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            },
+            {
+              "tab_id": "file:old20.rs",
+              "tab": {
+                "kind": "editor",
+                "label": null,
+                "pinned": false,
+                "mode": "kept",
+                "state": {},
+                "ref": {
+                  "path": "old20.rs"
+                }
+              },
+              "panel_id": "panel-docs",
+              "index": 0,
+              "closed_at": "2026-10-09T12:00:00Z"
+            }
+          ]
+        }
+      ],
+      "why": "The reopen stack holds 20."
+    },
+    {
+      "name": "chat_width_out_of_range",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "replace",
+          "path": "/chat_column/width_px",
+          "value": 800
+        }
+      ],
+      "why": "The chat is dragged between 400 and 760 px."
+    },
+    {
+      "name": "chat_position_saved",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/chat_column/host",
+          "value": "dock_left"
+        }
+      ],
+      "why": "The chat has no position; it is never moved inside the window."
+    },
+    {
+      "name": "widget_layout_in_record",
+      "base_valid": "default_home",
+      "rejected_by": "schema",
+      "ops": [
+        {
+          "op": "add",
+          "path": "/widget_layout",
+          "value": {}
+        }
+      ],
+      "why": "A dashboard's widget layout lives under widget_layout:v1:dashboard:<board_id>, never in the Home record."
+    }
+  ],
+  "event_payload_examples": {
+    "schema_ref": "Plans/event_payloads/workspace_layout_changed_v2.schema.json#",
+    "owner_refs": [
+      "Plans/Contracts_V0.md#CV-360",
+      "Plans/Contracts_V0.md#CV-361"
+    ],
+    "notes": "Payload examples for workspace.layout_changed 2.0.0. Each valid payload validates against the payload schema. Each invalid case applies its JSON Patch ops (RFC 6902) to the named valid payload and is rejected by the schema. Ids and refs are illustrative.",
+    "valid": [
+      {
+        "name": "tab_kept_by_double_click_open",
+        "description": "A double click (cmd.file.open with mode keep) on src/routes/recipes.rs, which is the docs panel's preview tab: the tab is kept in place, one tab_kept under the open's own command id (CV-360).",
+        "payload": {
+          "schema_id": "pm.event.workspace_layout_changed.v2",
+          "schema_version": "2.0.0",
+          "project_id": "proj-tastebook",
+          "workspace_tab_id": "wt-main",
+          "change": "tab_kept",
+          "command_id": "cmd.file.open",
+          "actor": "user",
+          "interaction_transaction_id": "txn-ex-keep",
+          "origin": "home_workspace",
+          "correlation_id": "corr-txn-ex-keep",
+          "command_result_ref": "result-txn-ex-keep",
+          "receipt_refs": [
+            "receipt-txn-ex-keep"
+          ],
+          "prior_layout_revision": 4,
+          "new_layout_revision": 5,
+          "affected_tab_ids": [
+            "file:src/routes/recipes.rs"
+          ],
+          "affected_panel_ids": [
+            "panel-docs"
+          ],
+          "affected_split_ids": [],
+          "created_panel_ids": [],
+          "removed_panel_ids": [],
+          "named_layout_id": null,
+          "chat_column_fields": [],
+          "commit_origin": "pointer_release",
+          "migration_source_schema_id": null,
+          "settled_layout_ref": "home_layout_settlement:txn-ex-keep",
+          "settled_at_utc": "2026-10-09T12:05:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true
+        }
+      },
+      {
+        "name": "tab_opened_replacing_preview",
+        "description": "A single click on src/lib.rs opens a preview in the docs panel, whose preview tab src/routes/recipes.rs is replaced in place: one tab_opened naming both tabs; the replaced preview is not put on the closed-tab stack (CV-360).",
+        "payload": {
+          "schema_id": "pm.event.workspace_layout_changed.v2",
+          "schema_version": "2.0.0",
+          "project_id": "proj-tastebook",
+          "workspace_tab_id": "wt-main",
+          "change": "tab_opened",
+          "command_id": "cmd.file.open",
+          "actor": "user",
+          "interaction_transaction_id": "txn-ex-preview",
+          "origin": "home_workspace",
+          "correlation_id": "corr-txn-ex-preview",
+          "command_result_ref": "result-txn-ex-preview",
+          "receipt_refs": [
+            "receipt-txn-ex-preview"
+          ],
+          "prior_layout_revision": 5,
+          "new_layout_revision": 6,
+          "affected_tab_ids": [
+            "file:src/lib.rs",
+            "file:src/routes/recipes.rs"
+          ],
+          "affected_panel_ids": [
+            "panel-docs"
+          ],
+          "affected_split_ids": [],
+          "created_panel_ids": [],
+          "removed_panel_ids": [],
+          "named_layout_id": null,
+          "chat_column_fields": [],
+          "commit_origin": "pointer_release",
+          "migration_source_schema_id": null,
+          "settled_layout_ref": "home_layout_settlement:txn-ex-preview",
+          "settled_at_utc": "2026-10-09T12:05:00Z",
+          "settled_only": true,
+          "preview_state_included": false,
+          "persisted": true
+        }
+      }
+    ],
+    "invalid": [
+      {
+        "name": "tab_kept_under_close_command",
+        "base_valid": "tab_kept_by_double_click_open",
+        "rejected_by": "schema",
+        "ops": [
+          {
+            "op": "replace",
+            "path": "/command_id",
+            "value": "cmd.panel_tab.close"
+          }
+        ],
+        "why": "tab_kept is bound to cmd.panel_tab.keep and the open routes of CV-360; a close command never keeps a tab."
+      }
+    ]
+  }
+}

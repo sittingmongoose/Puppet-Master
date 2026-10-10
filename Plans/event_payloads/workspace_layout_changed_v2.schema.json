@@ -1,0 +1,798 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0",
+  "title": "workspace.layout_changed settled event payload, version 2",
+  "description": "One event for every committed structural change of the v2 Home layout (Plans/Contracts_V0.md#CV-361, DL-180). change names what happened; the id lists name what it touched. An open that only reveals an existing tab, view-state writes (activate, focus, maximize, recent order, the chat's shown and History pinned), the chat's pop-out and return (which append panel.undocked or panel.redocked), menus, hover and drags emit nothing; a reveal that expands its tab's collapsed panel is one panel_expanded, and an open with mode keep of a panel's preview tab one tab_kept, each under the open's command id. Events written at 1.1.0 stay readable through $defs/workspace_layout_changed_v1_compatibility_reader.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "project_id",
+    "workspace_tab_id",
+    "change",
+    "command_id",
+    "actor",
+    "interaction_transaction_id",
+    "origin",
+    "correlation_id",
+    "command_result_ref",
+    "receipt_refs",
+    "prior_layout_revision",
+    "new_layout_revision",
+    "affected_tab_ids",
+    "affected_panel_ids",
+    "affected_split_ids",
+    "created_panel_ids",
+    "removed_panel_ids",
+    "named_layout_id",
+    "chat_column_fields",
+    "commit_origin",
+    "migration_source_schema_id",
+    "settled_layout_ref",
+    "settled_at_utc",
+    "settled_only",
+    "preview_state_included",
+    "persisted"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "pm.event.workspace_layout_changed.v2"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "project_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "workspace_tab_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "change": {
+      "type": "string",
+      "enum": [
+        "tab_opened",
+        "tab_closed",
+        "tab_moved",
+        "tab_kept",
+        "tab_pinned",
+        "tab_unpinned",
+        "tab_renamed",
+        "panel_split",
+        "panel_moved",
+        "panel_resized",
+        "panel_collapsed",
+        "panel_expanded",
+        "panel_closed",
+        "panel_locked",
+        "panel_unlocked",
+        "named_layout_applied",
+        "named_layout_saved",
+        "layout_reset",
+        "chat_column_changed",
+        "migrated_from_v1"
+      ]
+    },
+    "command_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "cmd.browser.open_workspace_preview",
+            "cmd.editor.close_tab",
+            "cmd.file.open",
+            "cmd.nav.open_subject",
+            "cmd.panel_tab.close",
+            "cmd.panel_tab.keep",
+            "cmd.panel_tab.move",
+            "cmd.panel_tab.open",
+            "cmd.panel_tab.pin",
+            "cmd.panel_tab.rename",
+            "cmd.panel_tab.reopen_closed",
+            "cmd.panel_tab.unpin",
+            "cmd.terminal.open",
+            "cmd.workspace_layout.apply_named",
+            "cmd.workspace_layout.close_panel",
+            "cmd.workspace_layout.lock",
+            "cmd.workspace_layout.move_surface",
+            "cmd.workspace_layout.reset",
+            "cmd.workspace_layout.resize_surface",
+            "cmd.workspace_layout.save_named",
+            "cmd.workspace_layout.set_collapsed",
+            "cmd.workspace_layout.split"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The admitted command, under the id its caller used (aliases keep their ids: Plans/UI_Command_Catalog.md#UCC-200, Plans/Commands_System.md#CS-101); null only for the v1-to-v2 migration."
+    },
+    "actor": {
+      "type": "string",
+      "pattern": "^(user|system|agent:.+)$",
+      "description": "user, agent:<name> (the by field of Plans/Contracts_V0.md#CV-360), or system for the migration."
+    },
+    "interaction_transaction_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "origin": {
+      "const": "home_workspace"
+    },
+    "correlation_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "command_result_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "receipt_refs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "prior_layout_revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "new_layout_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "affected_tab_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "description": "Tabs whose record or placement changed. A preview open that replaces its panel's preview tab names the new tab and the replaced one (Plans/Contracts_V0.md#CV-360)."
+    },
+    "affected_panel_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "description": "Panels whose tabs, flags or share changed."
+    },
+    "affected_split_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "description": "Splits whose children or sizes changed."
+    },
+    "created_panel_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "description": "Panels this change created."
+    },
+    "removed_panel_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "description": "Panels this change removed."
+    },
+    "named_layout_id": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "The applied or saved named layout; null for every other change."
+    },
+    "chat_column_fields": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "width_px"
+        ]
+      },
+      "description": "The chat column fields a chat_column_changed changed: only width_px, from a width drag. shown and history_pinned are view state and popped_out is written with the pop-out's own panel.undocked or panel.redocked; none of them appends this event. Empty for every other change."
+    },
+    "commit_origin": {
+      "type": "string",
+      "enum": [
+        "pointer_release",
+        "keyboard_commit",
+        "direct_control",
+        "reset",
+        "restore",
+        "migration",
+        "recovery"
+      ]
+    },
+    "migration_source_schema_id": {
+      "anyOf": [
+        {
+          "enum": [
+            "pm.home_workspace_layout.v1",
+            "layout:v1"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "For migrated_from_v1, which source was converted: the v1 record or the Home part of layout:v1."
+    },
+    "settled_layout_ref": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "settled_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "settled_only": {
+      "const": true
+    },
+    "preview_state_included": {
+      "const": false
+    },
+    "persisted": {
+      "const": true
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_opened"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.open",
+              "cmd.panel_tab.reopen_closed",
+              "cmd.file.open",
+              "cmd.nav.open_subject",
+              "cmd.browser.open_workspace_preview",
+              "cmd.terminal.open"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_closed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.close",
+              "cmd.editor.close_tab"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_moved"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.move"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_kept"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.keep",
+              "cmd.panel_tab.open",
+              "cmd.file.open",
+              "cmd.nav.open_subject",
+              "cmd.browser.open_workspace_preview",
+              "cmd.terminal.open"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_pinned"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.pin"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_unpinned"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.unpin"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "tab_renamed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.panel_tab.rename"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_split"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.split"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_moved"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.move_surface"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_resized"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.resize_surface"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_collapsed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.set_collapsed"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_expanded"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.set_collapsed",
+              "cmd.panel_tab.open",
+              "cmd.file.open",
+              "cmd.nav.open_subject",
+              "cmd.browser.open_workspace_preview",
+              "cmd.terminal.open"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_closed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.close_panel"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_locked"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.lock"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "panel_unlocked"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.lock"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "named_layout_applied"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.apply_named"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "named_layout_saved"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.save_named"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "layout_reset"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.reset"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "chat_column_changed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "enum": [
+              "cmd.workspace_layout.resize_surface"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "migrated_from_v1"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "command_id": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "migrated_from_v1"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "actor": {
+            "const": "system"
+          },
+          "commit_origin": {
+            "const": "migration"
+          },
+          "interaction_transaction_id": {
+            "type": "null"
+          },
+          "migration_source_schema_id": {
+            "enum": [
+              "pm.home_workspace_layout.v1",
+              "layout:v1"
+            ]
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "interaction_transaction_id": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "migration_source_schema_id": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "enum": [
+              "named_layout_applied",
+              "named_layout_saved"
+            ]
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "named_layout_id": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "named_layout_id": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "change": {
+            "const": "chat_column_changed"
+          }
+        },
+        "required": [
+          "change"
+        ]
+      },
+      "then": {
+        "properties": {
+          "chat_column_fields": {
+            "minItems": 1
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "chat_column_fields": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workspace_layout_changed_v1_compatibility_reader": {
+      "$ref": "https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/1.1.0",
+      "description": "Reads events written at 1.1.0 (Plans/event_payloads/workspace_layout_changed.schema.json, referenced by its $id; one resource per URI). No 1.1.0 event is rewritten."
+    }
+  }
+}

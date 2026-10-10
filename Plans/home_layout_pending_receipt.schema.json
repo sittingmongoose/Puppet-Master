@@ -21296,6 +21296,6 @@
       }
     }
   },
-  "$comment": "SP-273/SIR-046: native source, original receipt, migration, activation, locking and durability execution remain NOT_RUN. This canonical contract does not establish deployed versions, event depth or readiness.",
+  "$comment": "SP-273/SIR-046: native source, original receipt, migration, activation, locking and durability execution remain NOT_RUN. This canonical contract does not establish deployed versions, event depth or readiness. Amended 2026-10-09 (DL-180, Plans/storage-plan.md#SP-330): this contract is typed for v1 Home layouts and the 1.1.0 workspace.layout_changed payload, and it stays the reader for v1 records and their unresolved operations, which SP-330's conversion reads as input. A v2 Home layout write needs a successor slot and receipt contract that references pm.home_workspace_layout.v2 (Plans/home_workspace_layout_v2.schema.json) and the 2.0.0 payload of Plans/Contracts_V0.md#CV-361 by $ref instead of copying them; until it exists no v2 write is admitted through this contract.",
   "$ref": "#/$defs/transaction_slot"
 }
