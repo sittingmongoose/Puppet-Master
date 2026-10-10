@@ -38,7 +38,8 @@ LEAD = {
     'memory': 'kind-memory', 'brackets': 'code', 'book': 'notebook', 'dots': 'more', 'spark': 'sparkles',
     'checkcircle': 'check-circle', 'zap': 'lightning', 'oplog': 'history', 'chat-check': 'check',
     'usage-grip': 'grip', 'usage-kebab': 'more', 'tools-mark:error': 'st-failed-ring', 'doc:cross': 'close',
-    'jump': 'arrow-down', 'box': 'archive',
+    'jump': 'arrow-down', 'box': 'archive', 'cpu': 'cpu', 'database': 'database', 'hammer': 'hammer', 'radio': 'signal',
+    'wifi': 'signal', 'network': 'signal', 'system': 'cpu', 'helpcircle': 'help',
     # the rail's status marks are the status set (F3-619; DL-162)
     'live': 'st-working', 'run': 'st-working', 'idle': 'st-idle', 'pending': 'st-pending', 'stale': 'st-skipped',
     'orphan': 'st-skipped', 'unknown': 'st-pending', 'dirty': 'change-modified',

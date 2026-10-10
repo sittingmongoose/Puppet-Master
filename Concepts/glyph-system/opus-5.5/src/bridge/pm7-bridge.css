@@ -34,3 +34,9 @@ svg:where(.nx[width="16"], .nx[width="17"], .nx[width="18"]) { --nx-stroke-base:
 /* The change marks (added, modified, deleted, renamed) are facts about a file, not alarms: their tone inks them, but
    they never take a status backlight (a deleted file must not glow like a blocked run). */
 .nx-st:is(.nx-st-change-added, .nx-st-change-modified, .nx-st-change-deleted, .nx-st-change-renamed)::before { display: none; }
+
+/* NieR Dark's quiet tones (neon-icons.css section 11 paints idle and paused as the ink at .45) read 2.70-2.98:1 on
+   every NieR Dark field in PMConcept7 (measured by pm7-glyphs-designer2 on the terminal sheet, 2026-10-10); .55 reads
+   3.29-3.72:1 and keeps the quiet order (idle and paused stay under every live tone). NieR Light keeps the chat's
+   .545 and .63. Same specificity as the source rule, later in the cascade. */
+html[data-o55-nier="on"] body[data-theme="basic-dark"] { --nx-idle-a: .55; --nx-paused-a: .55; }

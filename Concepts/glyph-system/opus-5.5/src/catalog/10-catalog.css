@@ -13,9 +13,9 @@ html[data-theme^="retro"] body { font-family: var(--mono-font, "IBM Plex Mono", 
 /* Glass sits on a wallpaper: a stand-in of soft colour fields under the frosted panels (the GPU film uses PM7's own) */
 html[data-theme^="glass"]:not([data-o55-nier]) body {
   background:
-    radial-gradient(60% 50% at 12% 8%, rgb(var(--accent-primary-rgb) / .30), transparent 70%),
-    radial-gradient(50% 45% at 88% 14%, rgb(178 140 255 / .22), transparent 70%),
-    radial-gradient(70% 60% at 60% 100%, rgb(104 242 189 / .14), transparent 70%),
+    radial-gradient(60% 50% at 12% 8%, rgba(var(--accent-primary-rgb), .30), transparent 70%),
+    radial-gradient(50% 45% at 88% 14%, rgba(178, 140, 255, .22), transparent 70%),
+    radial-gradient(70% 60% at 60% 100%, rgba(104, 242, 189, .14), transparent 70%),
     var(--background);
   background-attachment: fixed;
 }
