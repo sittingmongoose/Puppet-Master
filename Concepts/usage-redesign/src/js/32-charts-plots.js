@@ -1665,6 +1665,15 @@
         esc(row[2] || (row[0] === 'switch' ? t('charts.switch_at', { pct: row[1] }) : t('charts.warn_at', { pct: row[1] }))) + '</text>';
     });
     (spec.resets || []).forEach(function (tt) { if (tt > t0 && tt < t1) { var x = r1(X(tt)); extra += '<path class="pmu-reset" d="M' + x + ' ' + pad.t + 'V' + (pad.t + ph) + '"/>'; } });
+    /* lane d-plans: when the account was the active one (AAC's active band; the spans come from the switch log): a 3 px rule
+       along the plot's top edge, its word at its left (or right where the plot starts), never a tinted box */
+    (spec.bands || []).forEach(function (bd) {
+      var a0 = Math.max(t0, bd.from), a1 = Math.min(t1, bd.to); if (!(a1 > a0)) return;
+      var yb = pad.t - 8, xa = r1(X(a0)), xb = r1(Math.max(X(a1), X(a0) + 3));
+      extra += '<path class="pmu-qband" d="M' + xa + ' ' + yb + 'H' + xb + '"/>';
+      if (bd.label) extra += xa - pad.l >= 46 ? '<text class="pmu-tick is-band" x="' + (xa - 5) + '" y="' + (yb + 4) + '" text-anchor="end">' + esc(bd.label) + '</text>'
+        : pad.l + pw - xb >= 46 ? '<text class="pmu-tick is-band" x="' + (xb + 5) + '" y="' + (yb + 4) + '">' + esc(bd.label) + '</text>' : '';
+    });
     var xn = r1(X(Math.min(now, t1)));
     extra += '<path class="pmu-now is-strong" d="M' + xn + ' ' + (pad.t - 2) + 'V' + (pad.t + ph) + '"/>';
     var ya = { step: 25, top: 100, k: 4 };

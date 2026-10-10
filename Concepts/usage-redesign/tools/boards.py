@@ -33,7 +33,10 @@ LEVELS = {'G': 'glance', 'D': 'detailed', 'X': 'diagnostics'}
 KINDS = {
     'kpi':       (3, 12, 3, 12, [('Strip', 4, 3), ('Compact', 3, 4), ('Standard', 4, 4), ('Wide', 6, 4), ('Tall', 4, 6), ('Expanded', 6, 6), ('Maximum', 8, 6)]),
     'kpis':      (6, None, 3, 9, [('Strip', 12, 3), ('Row', 20, 4), ('Wide', 24, 4), ('Two rows', 12, 7)]),
-    'limit':     (3, 10, 3, 12, [('Strip', 6, 3), ('Compact', 4, 6), ('Standard', 4, 8), ('Wide', 6, 7), ('Expanded', 8, 9), ('Maximum', 10, 11)]),
+    # lane d-plans (2026-10-09, Jared item 4): a plan plate lists every account of its provider as a row, so it may be as
+    # wide as the board and as tall as four comfortable rows plus the plan facts ('Rows' / 'Rows wide' presets)
+    'limit':     (3, None, 3, 20, [('Strip', 6, 3), ('Compact', 4, 6), ('Standard', 4, 8), ('Wide', 6, 7), ('Expanded', 8, 9), ('Maximum', 10, 11),
+                                   ('Rows', 10, 13), ('Rows wide', 12, 14)]),
     'provider':  (3, None, 3, 20, [('Strip', 6, 3), ('Compact', 4, 5), ('Standard', 4, 7), ('Wide', 6, 7), ('Expanded', 8, 9), ('Group', 10, 11), ('Group wide', 14, 11), ('Group full', 20, 11)]),
     'switch':    (4, None, 3, 14, [('Strip', 12, 3), ('Wide', 20, 3), ('Two lines', 10, 4), ('Panel', 4, 8), ('Ladder', 20, 8)]),
     'providers': (4, None, 3, 12, [('Compact', 4, 4), ('Standard', 6, 5), ('Wide', 10, 4), ('Strip', 20, 3)]),
@@ -62,7 +65,8 @@ KINDS = {
     'skyline':   (8, None, 6, 16, [('Standard', 12, 10), ('Tall', 12, 12), ('Wide', 20, 10)]),
     'attempts':  (8, None, 5, 14, [('Standard', 12, 8), ('Wide', 20, 10)]),
     'flow':      (10, None, 7, 14, [('Standard', 14, 10), ('Wide', 20, 11)]),
-    'windows':   (8, None, 6, 14, [('Standard', 12, 9), ('Wide', 20, 10)]),
+    # lane d-plans: one lane per account (16 in the review roster) needs up to 18 rows
+    'windows':   (8, None, 6, 20, [('Standard', 12, 9), ('Wide', 20, 10), ('Every account', 20, 17)]),
 }
 
 # id: (kind, level, title, meta). Titles and metas are the old page's (PARITY section 2), with countdown-free wording.
@@ -79,6 +83,13 @@ W = {
     'plan-gemini': ('limit', 'G', 'Gemini API', 'Monthly budget'),
     'plan-kimi': ('limit', 'G', 'Kimi Code', 'Weekly window'),
     'plan-copilot': ('limit', 'G', 'GitHub Copilot', 'Premium requests'),
+    # lane d-plans: every provider of the review roster with an account has its plan plate in Plans & limits
+    'plan-muse': ('limit', 'G', 'Muse Code', 'Weekly window'),
+    'plan-antigravity': ('limit', 'G', 'Google Antigravity', 'No plan windows'),
+    'plan-zai-coding': ('limit', 'G', 'Z.AI Coding Plan', 'No plan windows'),
+    'plan-opencode-go': ('limit', 'G', 'OpenCode Go', 'Monthly window'),
+    'plan-anthropic-api': ('limit', 'G', 'Anthropic API', 'Monthly spend'),
+    'plan-cursor-cli': ('limit', 'G', 'Cursor', 'No plan windows'),
     'context-now': ('context', 'G', 'Context window', 'current thread'),
     'budget-now': ('budget', 'G', 'Budget projection', 'month to date'),
     'plan-value-now': ('mix', 'G', 'Plan allocation', 'range'),
@@ -268,15 +279,21 @@ B = {
              'context-now 6x13 route-pressure 7x13 plan-value-now 6x6 ov-headroom 5x13 active-runs 6x7 '
              'forecast 12x7 completion-capacity 6x7 capacity-reservations 6x7 run-attribution 24x9',
     },
+    # lane d-plans (2026-10-09, Jared item 4): the timeline holds one lane per account (16 in the review roster) and each
+    # provider's plate lists every account: Claude (4) and ChatGPT / Codex (3) as wide row plates, Qwen (3 windows) wide,
+    # the single-account providers as plan cards
     'plans': {
-        'S': 'plans-timeline 12x12 plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 plan-copilot 4x9 '
-             'reset-map 12x14 quota-history 12x31 plan-settlement 12x17 '
+        'S': 'plans-timeline 12x18 plan-claude 12x15 plan-codex 12x13 plan-qwen 12x11 plan-copilot 12x9 plan-kimi 8x10 '
+             'plan-gemini 4x10 plan-muse 4x10 plan-opencode-go 4x10 plan-anthropic-api 4x10 plan-antigravity 4x10 plan-cursor-cli 4x10 '
+             'plan-zai-coding 4x10 reset-map 12x14 quota-history 12x31 plan-settlement 12x17 '
              'plan-pressure 6x12 plan-authority 6x12 allowance-attribution 12x8 counting-basis 6x14 native-allowance-units 6x14',
-        'M': 'plans-timeline 20x12 plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 '
-             'plan-copilot 4x12 reset-map 16x12 quota-history 20x30 plan-settlement 20x12 '
+        'M': 'plans-timeline 20x18 plan-claude 10x16 plan-codex 10x16 plan-qwen 10x11 plan-copilot 5x11 plan-kimi 5x11 '
+             'plan-gemini 4x9 plan-muse 4x9 plan-opencode-go 4x9 plan-anthropic-api 4x9 plan-cursor-cli 4x9 '
+             'plan-antigravity 4x12 plan-zai-coding 4x12 reset-map 12x12 quota-history 20x30 plan-settlement 20x12 '
              'plan-pressure 7x12 plan-authority 7x12 allowance-attribution 6x12 counting-basis 10x13 native-allowance-units 10x13',
-        'L': 'plans-timeline 24x12 plan-claude 4x9 plan-codex 4x9 plan-qwen 4x9 plan-gemini 4x9 plan-kimi 4x9 plan-copilot 4x9 '
-             'reset-map 24x12 quota-history 24x30 plan-settlement 24x12 '
+        'L': 'plans-timeline 24x18 plan-claude 12x16 plan-codex 12x16 plan-qwen 12x11 plan-copilot 6x11 plan-kimi 6x11 '
+             'plan-gemini 4x9 plan-muse 4x9 plan-opencode-go 4x9 plan-anthropic-api 4x9 plan-cursor-cli 4x9 plan-antigravity 4x9 '
+             'plan-zai-coding 4x12 reset-map 20x12 quota-history 24x30 plan-settlement 24x12 '
              'plan-pressure 8x12 plan-authority 8x12 allowance-attribution 8x12 counting-basis 12x13 native-allowance-units 12x13',
     },
     'costs': {
@@ -539,7 +556,7 @@ def js(boards) -> str:
     rooms = {}
     for room in ROOMS:
         rooms[room] = {cls: [[e['id'], e['x'], e['y'], e['w'], e['h']] for e in boards[room][cls]] for cls in CLASSES}
-    data = {'version': 'pmu-b2-boards-2026-10-02-h', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
+    data = {'version': 'pmu-b2-boards-2026-10-09-dplans', 'classes': CLASSES, 'kinds': kinds, 'widgets': widgets, 'rooms': rooms,
             'migrate': MIGRATE, 'promoted_from': PROMOTED,
             'heroes': {room: {cls: HEROES[room] for cls in list(CLASSES) + ['XL']} for room in ROOMS}}
     body = json.dumps(data, ensure_ascii=False, separators=(',', ':'))

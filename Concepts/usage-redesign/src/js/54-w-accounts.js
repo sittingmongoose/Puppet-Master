@@ -252,6 +252,10 @@
     /* with two or more windows the identity column may go to 100 px, so a plate whose action column reserves its widest
        word ("Sign in") keeps its 5-hour and weekly columns at 1920 instead of falling back to the binding window */
     if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) IDENT = 100;
+    /* lane d-plans (2026-10-09, Jared's review: the Claude plate at 1920 in Glass, Retro and Friendly showed one BINDING
+       WINDOW column, and Qwen's three windows did too): every window keeps its column before the plate falls back to the
+       binding window; the window columns may narrow to 88 px (a reset line then wraps to two lines, the row grows) */
+    if (n >= 2 && bw < IDENT + n * WIN + actW + GAP * (n + 1)) WIN = Math.max(88, Math.min(WIN, Math.floor((bw - IDENT - actW - GAP * (n + 1)) / n)));
     var mode = !n ? 'none' : bw >= IDENT + n * WIN + actW + GAP * (n + 1) ? 'full' : bw >= 100 + WIN + actW + GAP * 2 ? 'binding' : 'narrow';
     var winTmpl = mode === 'full' ? p.windows.map(function () { return 'minmax(' + WIN + 'px,1fr)'; }).join(' ') : mode === 'binding' ? 'minmax(' + WIN + 'px,1fr)' : '';
     var tmpl = mode === 'none' ? 'minmax(0,1.3fr) minmax(0,1fr) ' + actW + 'px'

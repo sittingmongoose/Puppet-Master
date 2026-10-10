@@ -814,7 +814,7 @@
       if (prov) cand.push('acct-' + prov);
       if (kind === 'reset') cand.push('acct-resets');
     } else if (room === 'plans') {
-      if (leg && kind !== 'reset') cand.push('plan-' + leg);
+      if ((leg || prov) && kind !== 'reset') cand.push('plan-' + (leg || prov));   /* lane d-plans: every provider has a plan plate */
       if (kind === 'win') cand.push('plans-timeline', 'quota-history');
       if (kind === 'reset') cand.push('reset-map');
     } else if (room === 'analytics') {
