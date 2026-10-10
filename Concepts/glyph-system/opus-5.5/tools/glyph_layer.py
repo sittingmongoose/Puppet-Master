@@ -7,7 +7,8 @@ nothing that is already drawn. A surface adopts the set in its own source by cal
 PMG.status(key, size); until it does, the page renders exactly as before (neon CSS styles only svg.nx and .nx-st).
 
 What it adds, between <!-- GLYPHS:START --> and <!-- GLYPHS:END --> just before </head>:
-  <style id="pm-glyph-css">  pm7-glyph-inks.css, pm7-bridge.css, neon-icons.css, pm7-retro-phosphor.css
+  <style id="pm-glyph-css">  pm7-glyph-inks.css, pm7-bridge.css, neon-icons.css, pm7-retro-phosphor.css,
+                             pm7-hover-bridge.css (the ignite under PMH)
   <script id="pm-glyph-js">  neon-icons.js, src/registry/*.js, src/registry/families/*.js
 The script is in the head so window.PMG exists before any body script draws. pm7-looks.css is the catalog's copy of
 PM7's own tokens and is never added (the page has the real ones).
@@ -46,8 +47,8 @@ def html_theme(css: str) -> str:
 
 def css_parts():
     parts = [SRC / 'bridge' / 'pm7-glyph-inks.css', SRC / 'bridge' / 'pm7-bridge.css', NEON / 'neon-icons.css']
-    phos = SRC / 'bridge' / 'pm7-retro-phosphor.css'
-    return parts + ([phos] if phos.exists() else [])
+    after = [SRC / 'bridge' / n for n in ('pm7-retro-phosphor.css', 'pm7-hover-bridge.css')]
+    return parts + [p for p in after if p.exists()]
 
 
 def js_parts():

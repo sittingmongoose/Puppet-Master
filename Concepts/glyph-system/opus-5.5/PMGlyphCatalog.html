@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="pmg-build" content="3af1e8630f4f">
+<meta name="pmg-build" content="ed8aa5516b0d">
 <title>Puppet Master glyphs: the neon set for every surface</title>
 <script>
 /* first paint: the look, mode and motion come from the URL (frames) or the last choice, before any CSS paints */
@@ -907,6 +907,58 @@ html[data-theme="retro-dark"]:not([data-o55-nier]) body {
 }
 html[data-theme^="retro"][data-motion="reduced"] svg.nx .nx-f,
 html[data-theme^="retro"] body.pm56-reduced svg.nx .nx-f { transition: none !important; }
+
+/* ==== glyph-system/opus-5.5/src/bridge/pm7-hover-bridge.css ==== */
+/* pm7-hover-bridge.css: the neon hover ignite (neon-icons.css section 8) under PMConcept7's hover engine, PMH
+ * (Concepts/onboarding/opus-5.5/src/js/18-hover.js). OWNER: pm7-glyphs, agreed with pm7-hover 2026-10-10.
+ *
+ * PMH styles the plate (classes, pseudo-elements, fixed proxies); the neon ignite changes only custom properties on the
+ * svg inside it, so they never touch the same thing. One rule joins them: where the glyph's host IS a PMH target
+ * (PMH stamps every target with data-pmh-kind), the ignite follows PMH's .pmh-on instead of :hover, so it inherits
+ * PMH's rests (no hover while resizing or dragging, Usage board operations and moments), its outermost-target
+ * resolution and its exemption ([data-pm-hover-exempt] between host and pointer hovers nothing). A glyph in an ordinary
+ * button inside a card keeps the neon :hover / :focus-visible rule. Timing fits inside PMH's: the 180 ms halo lands
+ * within the families' 90-130 ms light-in and 220-380 ms fade-out. Retro is designer2's phosphor (pm7-retro-phosphor.css).
+ * NieR: one cut on, a two-step decay while PMH holds .pmh-out, no flicker. Reduced Motion: the neon section 10 rule
+ * already ends every animation and transition, so the end state comes at once and no act plays.
+ * No filter or blend (F3-465, Slint).
+ */
+
+/* 1. A PMH target's own :hover does not ignite its glyph; .pmh-on does. Back to rest (role defaults, sections 4-5). */
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > svg.nx-r-control:not(.nx-self),
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-control:not(.nx-self) {
+  --nx-hiv: hidden; --nx-hi-a: 0; --nx-fl: none; --nx-1: initial;
+}
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > svg.nx-r-concept:not(.nx-self),
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-concept:not(.nx-self) {
+  --nx-hi-a: var(--nx-h-concept-i); --nx-1: initial;
+}
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > svg.nx:not(.nx-self, [class*="nx-t-"]),
+[data-pmh-kind]:is(:hover, :focus-visible):not(.pmh-on) > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"]) {
+  --nx-ink: initial;
+}
+
+/* 2. The ignite on .pmh-on: the neon section 8 values, keyed on PMH's state. */
+[data-pmh-kind].pmh-on > svg.nx-r-control:not(.nx-self),
+[data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-control:not(.nx-self) {
+  --nx-hiv: visible; --nx-hi-a: var(--nx-h-hover-i); --nx-fl: nx-flick 300ms linear; --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+[data-pmh-kind].pmh-on > svg.nx-r-concept:not(.nx-self),
+[data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx-r-concept:not(.nx-self) {
+  --nx-hi-a: var(--nx-h-swell-i); --nx-1: var(--nx-d1) var(--nx-ease) backwards;
+}
+[data-pmh-kind].pmh-on > svg.nx:not(.nx-self, [class*="nx-t-"]),
+[data-pmh-kind].pmh-on > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"]) {
+  --nx-ink: var(--text);
+}
+
+/* 3. NieR: a cut on (no flicker tween) and, on a PMH target, a two-step decay while .pmh-out holds. */
+html[data-o55-nier="on"] :is(button, summary, [role="button"], [data-action]):is(:hover, :focus-visible) svg.nx .nx-c { animation: none; }
+html[data-o55-nier="on"] [data-pmh-kind].pmh-out > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c,
+html[data-o55-nier="on"] [data-pmh-kind].pmh-out > :not(button, summary, [role="button"], [data-action]) > svg.nx:not(.nx-self, [class*="nx-t-"]) .nx-c {
+  animation: pmg-nier-decay var(--pmh-out-ms, 220ms) steps(2, end) both;
+}
+@keyframes pmg-nier-decay { from { stroke: var(--text); } to { stroke: var(--nx-ink, currentColor); } }
 
 /* ==== glyph-system/opus-5.5/src/catalog/10-catalog.css ==== */
 /* 10-catalog.css: the catalog's own chrome. Quiet on purpose: the glyphs are the subject. PM7 tokens only.
