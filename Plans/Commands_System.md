@@ -6192,6 +6192,8 @@ Plan Rich/Markdown toggle is `cmd.chat.plan.view.set`, and To-Do parent expansio
 is no separate `local.plan_view.toggle` action. The Review and BrainStorm Formatted and Plain text
 toggles are local view state with no catalog row (CDRY-021).
 
+Amended 2026-10-09 (DL-180): local tabs include the home panels' tabs. Choosing a panel tab, maximizing or restoring a panel and focusing a panel are view state (`ui.panel_tab.activate`, `ui.workspace_layout.maximize`, `ui.workspace_layout.focus_panel`); opening, closing, moving, pinning, keeping and renaming a tab are catalog commands that emit `workspace.layout_changed` (CS-100).
+
 ### CDRY-007..009 — Family reuse
 
 Collaboration start, reconfigure, pause, resume, cancel, message, and export reuse the shared
@@ -7050,10 +7052,11 @@ canonical_text: >-
   Open command palette and Close current tab/panel. The clash predates the wand redesign and now also
   reaches every redesigned sheet's main text field. The redesign adds no binding and changes no
   default; which binding wins inside a text field is the Commands and Shortcuts owner's decision.
+  Amended 2026-10-09 (DL-180): Close current tab is now cmd.panel_tab.close for every panel tab, Ctrl+W in the native app and Alt+W in the web client (UCC-200); the text-field clash and its owner decision are unchanged.
 gui_related: true
 gui_classification_reason: "Keyboard behaviour inside visible composer and sheet text fields."
 split_recommended: false
-depends_on: [UCC-169]
+depends_on: [UCC-169, DL-180]
 unblocks: []
 acceptance_criteria:
   - "The clash is recorded for the Commands and Shortcuts owner and no document claims it resolved."
@@ -7081,6 +7084,8 @@ preserved_exact_tokens:
 negative_constraints:
   - "Do not change a text-editing-keys or shortcut default under this unit."
   - "Do not claim the clash was introduced or resolved by the wand redesign."
+stale_retired_dispositions:
+  - "Amended 2026-10-09 (DL-180): the close-tab chord dispatches cmd.panel_tab.close."
 owner_hints:
   - Plans/Commands_System.md
 ```
