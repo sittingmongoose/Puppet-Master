@@ -98,9 +98,13 @@
       var m = ctx.model; if (!m || !m.rows.length) { body.innerHTML = C.empty('No token activity in this range.'); return; }
       var tools = C.headTools(ctx, '<span class="pmu-legend pmu-legend-inline"><span class="pmu-legend-item"><i class="pmu-swatch" data-sw="soft" data-tk="all"></i><span class="pmu-legend-name">Share of tokens</span></span>' +
         '<span class="pmu-legend-item"><i class="pmu-swatch" data-sw="box" data-tk="all"></i><span class="pmu-legend-name">Share of cost</span></span></span>');
-      var narrow = ctx.tier.bw < 360, rowH = narrow ? 41 : 36, gap = 12;
-      var rows = m.rows, need = rows.length * rowH + (rows.length - 1) * gap + (tools ? 34 : 0);
-      var footOk = m.foot && need + 50 <= ctx.tier.bh + 12;
+      /* (lane c-presets, agent 5) measured at 266-271 px: a narrow row 43 px (Retro), the legend tools 40 px with their 4 px
+         gap where the two legend names wrap (Glass, Retro); the foot only where it fits with no slack. With 41 / 34 and 12 px
+         of slack the foot showed in a Retro 6 x 14 card whose rows then overflowed upward past the body's top, which the
+         fit measure read as clipped at every height and settled the Compact preset on 5 rows */
+      var narrow = ctx.tier.bw < 360, rowH = narrow ? 43 : 36, gap = 12;
+      var rows = m.rows, need = rows.length * rowH + (rows.length - 1) * gap + (tools ? (narrow ? 44 : 34) : 0);
+      var footOk = m.foot && need + 50 <= ctx.tier.bh + 2;
       body.innerHTML = '<div class="pmu-breakw">' + tools + '<div class="pmu-breakhost"></div></div>' + (footOk ? C.foot(esc(m.foot), 'info') : '');
       var c = C.chart(body, 'sharebars', body.querySelector('.pmu-breakhost'), { rows: rows, narrow: narrow }, { label: 'Token breakdown' });
       if (!c && !body._pmuDry) body.querySelector(".pmu-breakhost").innerHTML = rows.map(function (r) { return '<div class="pmu-lrow"><span class="pmu-lname"><b>' + esc(r.name) + '</b></span><span class="pmu-lval">' + esc(PMU.fmt.tok(r.tokens) + ' · ' + C.money(r.value)) + '</span></div>'; }).join('');
