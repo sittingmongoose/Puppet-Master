@@ -7,7 +7,11 @@
      (open_from_plus), open a file from the rail (open_file_from_rail), split by dragging a tab to a panel edge
      (split_by_drag; the tab menu's Split right / Split down with this tab counts too);
    - widget_action first shows the Home dashboard tab, then keeps its own add-and-place logic.
-   Steps are re-indexed after the splice (checkpoints hold step ids; the kept steps keep theirs). Back puts the panels
+   Steps are re-indexed after the splice. A saved checkpoint holds a position, not a step id, so a run saved under
+   another step order (the published page's 18 steps) would pick up at the wrong step: every save is stamped with its
+   step id and this order's signature, and at install a checkpoint without this signature is moved to its step by id.
+   A checkpoint whose step is retired (move_or_dock_chat) picks up at the first step of that step's chapter, and done
+   ids of retired steps are dropped (Plans rule proposed by the planning thread, 2026-10-10). Back puts the panels
    back as they were when the step began (PMW.snapshot at entry, PMW.restoreSnapshot on Back). The tour's own start
    snapshot and its Skip / Finish restore go through PM_HOME_WORKSPACE.layout.pmw and o55RestoreSnapshot (00-shim.js).
    At publish these defs move into 83-tour-steps.js and their copy into copy.json. */
@@ -367,6 +371,56 @@ function splice(TR, steps) {
   list.forEach(function (d, i) { d.index = i; });
 }
 
+/* ---- checkpoints across step orders ---- */
+// a retired step's chapter, for a checkpoint that names it when the published defs are not at hand to say so
+var RETIRED = { move_or_dock_chat: 'workspace' };
+function orderSignature(TR) {
+  var str = TR.defs.map(function (d) { return d.id; }).join('|'), h = 5381;
+  for (var i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return 'pmw-' + TR.defs.length + '-' + h.toString(36);
+}
+function chapterStart(TR, chapter) {
+  for (var i = 0; i < TR.defs.length; i++) if (TR.defs[i].chapter === chapter) return i;
+  return -1;
+}
+// every checkpoint this page writes names its step and this step order
+function stampSaves(TR) {
+  var O = window.O55;
+  if (!O || !O.store || typeof O.store.set !== 'function' || O.store.set._pmwTour) return;
+  var set0 = O.store.set;
+  O.store.set = function (name, value) {
+    if (name === 'tour' && value && typeof value === 'object' && !Array.isArray(value) && Number.isInteger(value.index)) {
+      var d = TR.defs[value.index];
+      value = Object.assign({}, value, { order: tour.order, step: d ? d.id : null });
+    }
+    return set0.call(this, name, value);
+  };
+  O.store.set._pmwTour = true;
+}
+/* A checkpoint written under another step order goes to its own step by id, or, when that step is retired, to the
+   first step of its chapter. before: the published defs' ids and chapters, read before the splice. Returns true when
+   the checkpoint moved. */
+function migrateCheckpoint(TR, before) {
+  var O = window.O55;
+  if (!O || !O.store) return false;
+  var saved = O.store.get('tour', null);
+  if (!saved || saved.v !== 2 || !Number.isInteger(saved.index) || saved.order === tour.order) return false;
+  var id = saved.step || (before[saved.index] && before[saved.index].id) || null;
+  if (!id) return false;
+  var at = -1;
+  if (TR.byId[id]) at = TR.byId[id].index;
+  else {
+    var chapter = RETIRED[id] || null;
+    before.forEach(function (b) { if (b.id === id && b.chapter) chapter = b.chapter; });
+    at = chapter ? chapterStart(TR, chapter) : -1;
+  }
+  if (at < 0) return false;
+  var done = (Array.isArray(saved.done) ? saved.done : []).filter(function (d) { return TR.byId[d] && TR.byId[d].index < at; });
+  O.store.set('tour', Object.assign({}, saved, { index: at, done: done }));
+  tour.migrated = { from: id, to: TR.defs[at].id };
+  return true;
+}
+
 function wireEvents(TR) {
   // the "+" menu opened (by its button, Ctrl+Shift+Space or the empty-panel launcher's "+"): the plus step may count
   // the open that follows
@@ -413,7 +467,12 @@ tour.install = function () {
     mergeCopy(window.O55);
     patchOrientation(TR);
     patchWidget(TR);
+    var before = TR.defs.map(function (d) { return { id: d.id, chapter: d.chapter || null }; });
     splice(TR, defs(TR));
+    tour.order = orderSignature(TR);
+    stampSaves(TR);
+    // Settings' Resume row and its "step N of M" are redrawn on o55:tour
+    if (migrateCheckpoint(TR, before)) { try { window.dispatchEvent(new CustomEvent('o55:tour', { detail: { type: 'steps-changed' } })); } catch (_) {} }
     wireEvents(TR);
     if (TR.running) { try { TR.renderBar(); TR.refresh(); } catch (_) {} }
   } catch (err) {
