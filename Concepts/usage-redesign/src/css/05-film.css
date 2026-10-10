@@ -226,12 +226,12 @@ html[data-theme$="-light"] #panel-usage .pmu-card > .pmu-film-floor > i::after {
   box-shadow: 0 0 14px 3px color-mix(in srgb, var(--pmu-l-key, var(--pmu-accent)) 18%, transparent); }
 /* Friendly: a warm bloom under the hero (behind its content: the plate is a stacking context while a moment runs) */
 #panel-usage .pmu-card > .pmu-film-warm { position: absolute; inset: -14% -6%; z-index: -1; display: block; pointer-events: none; will-change: transform, opacity;
-  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 40%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 12%, transparent) 52%, transparent 74%); }
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 58%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 20%, transparent) 52%, transparent 74%); }
 html[data-theme="friendly-light"] #panel-usage .pmu-card > .pmu-film-warm {
-  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 30%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 9%, transparent) 52%, transparent 74%); }
+  background: radial-gradient(60% 70% at 30% 34%, color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 46%, transparent), color-mix(in srgb, var(--pmu-l-key, #FF8F6B) 15%, transparent) 52%, transparent 74%); }
 #panel-usage .pmu-board[data-film] > .pmu-card[data-hero] { isolation: isolate; }
 /* Friendly: the three warm dots of a landing on a meter or a control */
-#panel-usage .pmu-flight > .pmu-film-puff { position: absolute; width: 5px; height: 5px; margin: 0; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
+#panel-usage .pmu-flight > .pmu-film-puff { position: absolute; width: 6px; height: 6px; margin: 0; display: block; border-radius: 50%; pointer-events: none; will-change: transform, opacity;
   background: var(--pmu-l-key, #FF9F7A); box-shadow: 0 0 6px color-mix(in srgb, var(--pmu-l-key, #FF9F7A) 60%, transparent); }
 /* the head glow in the voices: Friendly a round bead with two echo dots (the comet's hop texture), Glass a white core
    in a wide halo */

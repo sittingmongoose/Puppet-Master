@@ -72,7 +72,7 @@
   var VOICES = {
     basic: { name: 'ink', from: 'translateY(32px)', dist: 32, dur: 620, ease: E.settle, fade: T.fade, fadeEase: E.out, row: 45, col: 25 },
     friendly: { name: 'hop', from: 'translateY(40px) rotate(-1.2deg) scale(.94)', dist: 40, dur: 680, ease: E.hop, fade: T.fade, fadeEase: E.out, row: 45, col: 25 },
-    glass: { name: 'depth', from: 'translateY(24px) scale(1.03)', dist: 24, dur: 720, ease: E.depth, fade: T.fade, fadeEase: E.out, row: 45, col: 25, blur: 10 },
+    glass: { name: 'depth', from: 'translateY(24px) scale(1.03)', dist: 24, dur: 720, ease: E.depth, fade: T.fade, fadeEase: E.out, row: 45, col: 25 },
     retro: { name: 'type', from: 'translateY(16px)', dist: 16, dur: 320, ease: 'steps(4,jump-start)', fade: 200, fadeEase: 'steps(2,jump-start)', row: 60, col: 15 },
     nier: { name: 'game', from: null, dist: 0, dur: 300, ease: 'steps(5,jump-start)', fade: 120, fadeEase: 'steps(3,jump-start)', row: 45, col: 30 }
   };
@@ -130,7 +130,6 @@
       anim(card, [{ opacity: 0 }, { opacity: 1 }], { dur: v.fade, delay: d, easing: v.fadeEase, fill: fill });
       var from = dir < 0 && v.dist ? v.from.replace(/translateY\((\d+)px\)/, function (m0, n) { return 'translateY(-' + n + 'px)'; }) : v.from;
       var a = [{ transform: from }, { transform: 'none' }];
-      if (f === 'glass' && !soft()) { a[0].filter = 'blur(' + v.blur + 'px)'; a[1].filter = 'blur(0px)'; }
       anim(card, a, { dur: v.dur, delay: d, easing: v.ease, fill: fill });
       if (f === 'glass') glint(card, d + v.dur * 0.35);
     });
@@ -542,8 +541,9 @@
        and a small alternating tilt (a lilting wave); warm light blooms under the hero; flyers hop along an arc and land
        with a squash (marks, numbers) or a puff of three dots (meters, controls never scale).
      Glass is depth: a dolly through glass. Down the rail the camera pushes in (the old room passes the lens: it grows and
-       blurs), up the rail it pulls out; the new room comes out of depth and blur into focus with the hero first (rack
-       focus); one refraction band crosses the board; flyers rise toward the lens.
+       blurs), up the rail it pulls out; the focus racks from the old room (defocused as it passes the lens) to the new
+       room, which arrives sharp out of depth with the hero first (an arriving plate never draws through a blur); one
+       refraction band crosses the board; flyers rise toward the lens.
      Values never overshoot in any voice (numbers, meters, bar and ring fills land exactly on their value): springs, the
      hop and the squash move plates, marks, dots and paths only. Every blur ends at exactly 0 (fill backwards: no filter
      after the end) or dies with its layer; finishMoment ends every one at once. */
@@ -555,10 +555,10 @@
   var CAMV = {
     basic: { ghost: { y: -1, sc: 0.985, ms: 360, ease: E.slide }, fade: 180,
       frame: { y: 1, ms: 520, ease: E.settle, fade: 200 }, wave: [28, 16, 160], body: { y: 6, fade: 200, ms: 280, ease: E.settle } },
-    friendly: { ghost: { y: -0.8, sc: 0.96, rot: -1.4, ms: 380, ease: 'cubic-bezier(.3,0,.5,1)' }, fade: 200,
-      frame: { y: 0.9, sc: 0.94, tilt: 8, spring: [260, 21], fade: 220 }, wave: [40, 26, 280], body: { y: 10, fade: 220, ms: 320, ease: E.settle } },
-    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 8, ms: 400, ease: E.slide }, fade: 220,
-      frame: { y: 0.35, push: 0.93, pull: 1.07, blur: 8, blurHero: 300, blurMs: 420, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
+    friendly: { ghost: { y: -0.8, sc: 0.95, rot: -2.2, ms: 400, ease: 'cubic-bezier(.3,0,.5,1)' }, fade: 200,
+      frame: { y: 0.9, sc: 0.94, tilt: 14, spring: [260, 21], fade: 220 }, wave: [40, 26, 280], body: { y: 10, fade: 220, ms: 320, ease: E.settle } },
+    glass: { ghost: { y: -0.35, push: 1.06, pull: 0.94, blur: 6, ms: 400, ease: E.slide }, fade: 240,
+      frame: { y: 0.35, push: 0.93, pull: 1.07, ms: 560, ease: E.depth, fade: 260 }, wave: [24, 14, 140], heroFirst: true,
       body: { sc: 0.985, fade: 240, ms: 320, ease: E.depth } },
     retro: { wave: [60, 15, 240] },
     nier: { wave: [45, 30, 240] }
@@ -655,7 +655,7 @@
   }
   /* the hero light floor (MOTION-4 RC3): a hero whose instruments made no light (Plans: bars and markers only) still
      carries light in every voice. Basic and Glass: one light front crosses the hero body (800 DRAW); Friendly: a warm
-     bloom under the hero (opacity 0 -> .85 -> 0, 900 OUT); Retro and NieR have their scan bar and boot scanline. */
+     bloom under the hero (opacity 0 -> 1 -> .7 -> 0, 1300 OUT); Retro and NieR have their scan bar and boot scanline. */
   var LIGHTS = '.pmu-film-comet, .pmu-film-front, .pmu-film-head, .pmu-film-sweep, .pmu-film-glint, .pmu-film-floor, .pmu-film-warm, .pmu-odo';
   function heroFloor(card, d) {
     var f = fam(); if (f === 'retro' || f === 'nier' || !lit(card)) return null;
@@ -664,7 +664,7 @@
     if (f === 'friendly') {
       /* appended (never before the head: no child of the plate changes its position); z-index -1 puts it under the content */
       var w = H('i', 'pmu-film-warm', card); w.setAttribute('aria-hidden', 'true');
-      a = anim(w, [{ opacity: 0, transform: 'scale(.86)' }, { opacity: 0.85, transform: 'scale(1)', offset: 0.34 }, { opacity: 0, transform: 'scale(1.04)' }], { dur: 900, delay: d, easing: E.out, fill: 'both' });
+      a = anim(w, [{ opacity: 0, transform: 'scale(.8)' }, { opacity: 1, transform: 'scale(1)', offset: 0.3 }, { opacity: 0.7, transform: 'scale(1.03)', offset: 0.62 }, { opacity: 0, transform: 'scale(1.06)' }], { dur: 1300, delay: d, easing: E.out, fill: 'both' });
       gone(a, w);
       return a;
     }
@@ -764,7 +764,7 @@
 
   /* ---- film.frames (5 Phase A, 6.2): the structure wave. Each frame (a card's chrome) fades in and travels as ONE
      animation: Basic 200 OUT fade + 14 px rise 420 SETTLE (a room change 16 px x dir), Friendly 18 px + rotate(-1deg)
-     520 HOP, Glass scale(1.02) 520 DEPTH (+ blur 6 -> 0 with a GPU), Retro STEP(4) 240 with rows 60 apart, NieR boots the
+     520 HOP, Glass scale(1.02) 520 DEPTH (no blur on an arriving plate), Retro STEP(4) 240 with rows 60 apart, NieR boots the
      frame first. Without a GPU: the fade only (o.from lets a room change start part-way). Cards outside the viewport get
      no entrance. o.wave === false keeps the cards' own _pmuEnterDelay. ---- */
   function frames(cards, o) {
@@ -806,7 +806,7 @@
       if (f === 'retro') { anim(card, [{ opacity: 0, transform: 'translateY(' + (8 * sgn) + 'px)' }, { opacity: 1, transform: 'none' }], { dur: 240, delay: d, easing: 'steps(4,jump-start)' }); return; }
       var F = V.frame, keys, total;
       if (f === 'friendly') {
-        /* hop: up from the plate's feet with one soft bounce, tilted so the plate's corner lifts 8 px whatever its width,
+        /* hop: up from the plate's feet with one soft bounce, tilted so the plate's corner lifts 14 px whatever its width,
            alternating by column (+ even, - odd) */
         var sprg = springFn(F.spring[0], F.spring[1]), w = cardBox(card).w || 300;
         var th = Math.atan(F.tilt / Math.max(40, w / 2)) * 180 / Math.PI * (card._pmuCol % 2 ? -1 : 1);
@@ -814,11 +814,14 @@
         keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, sc: F.sc, rot: th, ms: total, fn: sprg.fn, origin: '50% 100%' } }, 24);
       } else if (f === 'glass') {
         /* depth: out of the distance (push) or from in front of the lens (pull), about the board's visible centre (a real
-           dolly: plates far from the centre travel further), out of blur into focus, the hero focused first */
+           dolly: plates far from the centre travel further), the hero first. The focus pull is the old room's: it defocuses
+           as it passes the lens while the new room arrives sharp. An arriving plate never draws through a blur (fix cycle
+           1, GPU screencasts at 1920: eight-px blurs on every arriving plate, each over its own 18 px backdrop-filter, read
+           as an empty violet board for 300-500 ms in Glass Dark; with the blur on the old room only the board never fell
+           below Basic's detail and no frame gap grew) */
         var bx = cardBox(card), org = centre ? (centre.x - bx.l).toFixed(1) + 'px ' + (centre.y - bx.t).toFixed(1) + 'px' : null;
         total = F.ms;
-        keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, sc: push ? F.push : F.pull, ms: total, fn: M.curve(F.ease), origin: org },
-          blur: { px: F.blur, ms: hero ? F.blurHero : F.blurMs, fn: M.curve(E.depth) } }, 18);
+        keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, sc: push ? F.push : F.pull, ms: total, fn: M.curve(F.ease), origin: org } }, 18);
       } else {
         total = F.ms;
         keys = camKeys(total, { op: { from: o.from || 0, to: 1, ms: F.fade, fn: M.curve(E.out) }, tr: { y: F.y * P * sgn, ms: total, fn: M.curve(F.ease) } }, 16);
@@ -945,7 +948,7 @@
       /* MOTION-4 RC1 / RC2 and 4.2: the camera's first half. The old room moves from the click (this task) on its voice's
          path, at full opacity: Basic pans P up the rail (-P x dir, scale .985, 360 SLIDE); Friendly steps back and tilts
          away about the visible centre (-0.8 P, scale .96, -1.4 deg x dir, 380); Glass passes the lens (push: scale 1.06,
-         pull: .94, -0.35 P, 400) and blurs out (8 px) on a separate animation that leaves no filter behind. Its fade
+         pull: .94, -0.35 P, 400) and blurs out (6 px) on a separate animation that leaves no filter behind. Its fade
          starts when the new chrome is in (frames(): fadeGhost), so the board is never empty between the rooms. */
       var CV = camVoice(f), gv = CV.ghost, P = camP(), cy = viewCentre().y + (o.sTop || 0);
       var sc = f === 'glass' ? (dir > 0 ? gv.push : gv.pull) : gv.sc;
@@ -1487,14 +1490,14 @@
     if (!last) { land(fl); return; }
     last.finished.then(function () { land(fl); }, function () {});
   }
-  /* MOTION-4 4.2 flight paths per voice: Basic 460 on the arc; Friendly hops (the path bows 28 px against gravity at
-     mid-flight, 520); Glass rises toward the lens (the lift grows 10 % at mid-flight, 500). The outer element carries X
+  /* MOTION-4 4.2 flight paths per voice: Basic 460 on the arc; Friendly hops (the path bows 44 px against gravity at
+     mid-flight, 560); Glass rises toward the lens (the lift grows 10 % at mid-flight, 500). The outer element carries X
      (and Friendly's hop, in screen pixels whatever the flyer's scale); the lift carries the takeoff and the lens. */
-  function flightMs(f) { return f === 'friendly' ? 520 : f === 'glass' ? 500 : T3.flight; }
+  function flightMs(f) { return f === 'friendly' ? 560 : f === 'glass' ? 500 : T3.flight; }
   function outerPath(x0, x1, f) {
     if (f !== 'friendly') return { keys: [{ transform: 'translateX(' + x0.toFixed(2) + 'px)' }, { transform: 'translateX(' + x1.toFixed(2) + 'px)' }], easing: E.slide };
     var fx = M.curve(E.slide), out = [];
-    for (var i = 0; i <= 16; i++) { var t = i / 16; out.push({ offset: t, transform: 'translate(' + (x0 + (x1 - x0) * fx(t)).toFixed(2) + 'px,' + (-28 * Math.sin(Math.PI * t)).toFixed(2) + 'px)' }); }
+    for (var i = 0; i <= 16; i++) { var t = i / 16; out.push({ offset: t, transform: 'translate(' + (x0 + (x1 - x0) * fx(t)).toFixed(2) + 'px,' + (-44 * Math.sin(Math.PI * t)).toFixed(2) + 'px)' }); }
     return { keys: out, easing: 'linear' };
   }
   function liftPath(fl, dur, delay, f) {
@@ -1514,7 +1517,7 @@
       var dot = H('i', 'pmu-film-puff', layer);
       dot.style.left = cx.toFixed(1) + 'px'; dot.style.top = cy.toFixed(1) + 'px';
       gone(anim(dot, [{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { opacity: 0.95, offset: 0.2 },
-        { transform: 'translate(calc(-50% + ' + (10 * v[0]) + 'px), calc(-50% + ' + (10 * v[1]) + 'px)) scale(1)', opacity: 0 }], { dur: 360, delay: 20 * i, easing: E.out, fill: 'both' }), dot);
+        { transform: 'translate(calc(-50% + ' + (16 * v[0]) + 'px), calc(-50% + ' + (16 * v[1]) + 'px)) scale(1)', opacity: 0 }], { dur: 440, delay: 24 * i, easing: E.out, fill: 'both' }), dot);
     });
   }
   /* NieR's afterimages on a flight that continues an early leg: copies of the flyer follow 60 and 120 later on the same
