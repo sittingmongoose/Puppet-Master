@@ -11943,9 +11943,9 @@
         }
       ],
       "event_test_requirements": [
-        "Assert targeted placement emits workspace.layout_changed only when panel visibility or Browser placement changes, with exact affected IDs, hosts, slot, revision, and persisted status.",
+        "Assert an open emits workspace.layout_changed only when it adds a browser tab, with the v2 payload's affected tab and panel ids, revisions and persisted status (CV-361); a reveal of an open tab emits no layout event (amended 2026-10-09, DL-180: hosts and slots are retired).",
         "Assert first creation emits browser.session.created with command_id, origin, correlation_id, browser_session_id, and receipt linkage.",
-        "Assert every applied or no-change focus emits browser.session.state_changed with the stable browser_session_id and exact target editor panel/group."
+        "Assert every applied or no-change focus emits browser.session.state_changed with the stable browser_session_id and the exact target panel tab, named by the tab_id and panel_id of the CV-360 open result, never an editor panel or group (amended 2026-10-09, DL-180)."
       ]
     },
     "catalog.browser_page_activate": {
@@ -41172,7 +41172,7 @@
         "cmd.panel.switch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
         "cmd.panel.switch must have a typed payload/result contract or explicit route/open no-persist disposition",
         "cmd.panel.switch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification",
-        "When PMConcept7 switches Chat visibility, shell wiring shows/hides or re-seats the same Assistant node/controller/transcript/context store rather than cloning it.",
+        "When PMConcept7 switches Chat visibility, shell wiring shows or hides the fixed chat column, and the same Assistant node/controller/transcript/context store serves its Pop out window, rather than cloning it (amended 2026-10-09, DL-180: re-seating the chat into a saved Home dock is retired).",
         "Cross-page seating preserves active thread, draft, attachments, transcript, context detail, and focus-return identity; a failed switch restores the prior seat.",
         "From Home, cmd.panel.switch shows or hides the chat column with panel_id chat (home.chat.activity_toggle, home.more_options.chat_visibility); home panels never join this vocabulary (UCC-138, UCC-203)."
       ],
@@ -41221,7 +41221,7 @@
       ],
       "event_test_requirements": [
         "Assert cmd.panel.switch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event.",
-        "Assert PMConcept7 Chat visibility/re-seating preserves one Assistant identity and emits only the row-declared receipt/event set."
+        "Assert PMConcept7 Chat visibility and the chat's Pop out window preserve one Assistant identity and emit only the row-declared receipt/event set (amended 2026-10-09, DL-180: re-seating is retired)."
       ]
     },
     "catalog.panel_undock": {
@@ -63108,7 +63108,7 @@
       "handler_location": "handlers::panel::switch",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.panel.switch is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.switch is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.chat.activity_toggle reads state.home_workspace.home_chat_activity_toggle.availability and shows state.home_workspace.home_chat_activity_toggle.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.chat.activity_toggle dispatches cmd.panel.switch exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat; the chat column is fixed on the right from the title bar to the status bar and is never a tab or a split-tree surface (F3-637).",
@@ -63117,7 +63117,7 @@
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "home.chat.activity_toggle emits no event and no workspace.layout_changed."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_chat_activity_toggle.availability",
       "disabled_reason_projection": "state.home_workspace.home_chat_activity_toggle.disabled_reason",
       "effect_contract": {
@@ -63169,14 +63169,14 @@
         "panel.redocked"
       ],
       "acceptance_checks": [
-        "cmd.panel.redock is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.redock is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.chat.dock_back reads state.home_workspace.home_chat_dock_back.availability and shows state.home_workspace.home_chat_dock_back.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.chat.dock_back dispatches cmd.panel.redock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with window_id and target_host (the chat column); the chat returns to its column, which keeps its width (F3-637).",
         "Closing the popped-out window does the same through this command, never by cloning or discarding the chat.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_chat_dock_back.availability",
       "disabled_reason_projection": "state.home_workspace.home_chat_dock_back.disabled_reason",
       "effect_contract": {
@@ -63234,7 +63234,7 @@
         "panel.undocked"
       ],
       "acceptance_checks": [
-        "cmd.panel.undock is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.undock is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.chat.pop_out reads state.home_workspace.home_chat_pop_out.availability and shows state.home_workspace.home_chat_pop_out.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.chat.pop_out dispatches cmd.panel.undock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with current_host, target_window, expected_layout_revision and idempotency_key; the same chat opens in its own window and exactly one chat exists (F3-637).",
@@ -63243,7 +63243,7 @@
         "Corrected 2026-10-09 (WM-092): the row declares panel.undocked only, exactly as catalog.panel_undock does.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_chat_pop_out.availability",
       "disabled_reason_projection": "state.home_workspace.home_chat_pop_out.disabled_reason",
       "effect_contract": {
@@ -65459,13 +65459,13 @@
         "panel.redocked"
       ],
       "acceptance_checks": [
-        "cmd.panel.redock is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.redock is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.more_options.chat_dock_back reads state.home_workspace.home_more_options_chat_dock_back.availability and shows state.home_workspace.home_more_options_chat_dock_back.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.more_options.chat_dock_back dispatches cmd.panel.redock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with window_id, target_host (the chat column), expected_layout_revision and idempotency_key; the chat returns to its column with the same node, thread and draft.",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_more_options_chat_dock_back.availability",
       "disabled_reason_projection": "state.home_workspace.home_more_options_chat_dock_back.disabled_reason",
       "effect_contract": {
@@ -65523,7 +65523,7 @@
         "panel.undocked"
       ],
       "acceptance_checks": [
-        "cmd.panel.undock is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.undock is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.more_options.chat_pop_out reads state.home_workspace.home_more_options_chat_pop_out.availability and shows state.home_workspace.home_more_options_chat_pop_out.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.more_options.chat_pop_out dispatches cmd.panel.undock exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat with current_host, target_window, expected_layout_revision and idempotency_key; the same chat, with its History and Activity Detail, opens in its own window; exactly one chat exists.",
@@ -65531,7 +65531,7 @@
         "No home panel, tab or dashboard ever dispatches cmd.panel.undock (UCC-203).",
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_more_options_chat_pop_out.availability",
       "disabled_reason_projection": "state.home_workspace.home_more_options_chat_pop_out.disabled_reason",
       "effect_contract": {
@@ -65587,7 +65587,7 @@
       "handler_location": "handlers::panel::switch",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.panel.switch is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
+        "cmd.panel.switch is registered with typed arguments (UCC-203) and its owner revision and idempotency contract.",
         "home.more_options.chat_visibility reads state.home_workspace.home_more_options_chat_visibility.availability and shows state.home_workspace.home_more_options_chat_visibility.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.more_options.chat_visibility dispatches cmd.panel.switch exactly once per activation and preserves command_id, correlation_id and the receipt.",
         "The payload is panel_id: chat (the rail's closed vocabulary, unchanged); the same command as the activity bar's Chat (home.chat.activity_toggle).",
@@ -65595,7 +65595,7 @@
         "Opening the menu or row that holds this control dispatches nothing; a refused dispatch changes nothing.",
         "home.more_options.chat_visibility emits no event and no workspace.layout_changed."
       ],
-      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-200. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
+      "evidence_required": "handler_status: planned. Required future evidence only; this row does not assert that the planned handler, dispatcher or runtime exists. owner_doc_ref: Plans/FinalGUISpec.md#F3-637. Registration: Plans/UI_Command_Catalog.md#UCC-203. Wiring: Plans/Wiring_Matrix.md#WM-090; census: Plans/UI_Wiring_Rules.md#UIW-040. Production certification requires render/control evidence, a dispatcher fixture, the typed payload and result, the projected state selector and disabled reason, the receipt or event assertion, an accessibility check and a regression test. The fixed-model cases of Concepts/pm7-tools/verify/home_workspace_matrix.mjs do not prove this row; replacement executable cases are owed (Plans/Automated_Testing_System.md#ATS-075).",
       "state_selector": "state.home_workspace.home_more_options_chat_visibility.availability",
       "disabled_reason_projection": "state.home_workspace.home_more_options_chat_visibility.disabled_reason",
       "effect_contract": {
@@ -68940,7 +68940,7 @@
         "cmd.file.open is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.quick_open.open reads state.home_workspace.home_quick_open_open.availability and shows state.home_workspace.home_quick_open_open.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.quick_open.open dispatches cmd.file.open exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "The payload is the file path with mode: keep (a deliberate open, F3-634); Alt+Enter opens it as a new panel.",
+        "The payload is the file path with mode: keep (a deliberate open, F3-634); Alt+Enter, or Enter in a Quick Open opened from a File... row's trailing cell, opens it as a new panel (where: panel).",
         "Opening Quick Open and typing in it dispatch nothing.",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "An open that adds a tab emits exactly one workspace.layout_changed (CV-361); an open of an id already open anywhere reveals that tab where it is, never moves or duplicates it, and emits nothing."
@@ -69064,7 +69064,7 @@
     },
     "home.settings.reset_layout": {
       "ui_element_id": "home.settings.reset_layout",
-      "ui_location": "Settings > General & Appearance > Startup & Recovery > the row general.startup.reset-home-layout",
+      "ui_location": "Settings > General & Appearance > Startup & Recovery > Restore home layout",
       "ui_command_id": "cmd.workspace_layout.reset",
       "handler_location": "handlers::workspace_layout::reset",
       "expected_event_types": [
@@ -69074,7 +69074,7 @@
         "cmd.workspace_layout.reset is registered with typed arguments (UCC-200) and its owner revision and idempotency contract.",
         "home.settings.reset_layout reads state.home_workspace.home_settings_reset_layout.availability and shows state.home_workspace.home_settings_reset_layout.disabled_reason before dispatch; while unavailable it dispatches nothing and announces the reason.",
         "home.settings.reset_layout dispatches cmd.workspace_layout.reset exactly once per activation and preserves command_id, correlation_id and the receipt.",
-        "Dispatches the same cmd.workspace_layout.reset as the Home options menu after one confirmation (UIW-020; the action-row confirm flow of Plans/Settings_System.md#SSYS-040 and the row's wording in SSYS-050); every open tab stays open.",
+        "Dispatches the same cmd.workspace_layout.reset as the Home options menu after one confirmation (UIW-020; the action-row confirm flow of Plans/Settings_System.md#SSYS-040); every open tab stays open. Its row is general.startup.reset-home-layout, labelled Restore home layout (SSYS-050).",
         "Opening a menu, a list, a picker or a prompt, hovering and every drag preview dispatch nothing; an unchanged or cancelled gesture dispatches nothing and restores the earlier picture, and a failed commit rolls back and emits nothing (F3-630, UIW-012).",
         "A changed commit writes pm.home_workspace_layout.v2 once (SP-330) and emits exactly one workspace.layout_changed with the v2 payload naming the change (CV-361); nothing else is emitted."
       ],

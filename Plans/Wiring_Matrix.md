@@ -5529,6 +5529,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | "+" > Output, Problems, Ports, Debug Console > Debug Console: the row's body | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: tab` | `home.plus_menu.debug_console` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > Output, Problems, Ports, Debug Console > Debug Console: the trailing cell, Alt+click, Alt+Enter | `cmd.panel_tab.open` with `{ kind: debug_console }`, `where: panel` | `home.plus_menu.debug_console_new_panel` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | "+" > File... (the row's body); "+" > Plan or document... and Artifact... (opening the picker); "+" > the tool row (opening its submenu) | opens Quick Open, a picker or a submenu | none | view-local, dispatches nothing |
+| "+" > File...: the trailing cell, Alt+click, Alt+Enter | opens Quick Open for a new panel; its Enter dispatches `cmd.file.open` with `mode: keep`, `where: panel` through `home.quick_open.open` | none | view-local, dispatches nothing |
 | "+" > Split right | `cmd.workspace_layout.split` with `direction: right` | `home.plus_menu.split_right` | `workspace.layout_changed` |
 | "+" > Split down | `cmd.workspace_layout.split` with `direction: down` | `home.plus_menu.split_down` | `workspace.layout_changed` |
 | "+" > Reopen closed tab | `cmd.panel_tab.reopen_closed` | `home.plus_menu.reopen_closed` | `workspace.layout_changed` |
@@ -5556,6 +5557,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Empty-panel launcher > Reopen closed tab | `cmd.panel_tab.reopen_closed` | `home.launcher.reopen_closed` | `workspace.layout_changed` |
 | Empty-panel launcher > one of the five recent files | `cmd.file.open` with `mode: keep` | `home.launcher.recent_file` | `workspace.layout_changed` when a tab is added; none on a reveal |
 | Empty-panel launcher > File...; the hint line | opens Quick Open; the hint dispatches nothing | none | view-local, dispatches nothing |
+| Empty-panel launcher > File...: the trailing cell, Alt+click, Alt+Enter | opens Quick Open for a new panel; its Enter dispatches `cmd.file.open` with `mode: keep`, `where: panel` through `home.quick_open.open` | none | view-local, dispatches nothing |
 
 **Panels: grip, Move panel, dividers, panel menu, named layouts** (`Plans/FinalGUISpec.md#F3-630`, `#F3-502`)
 
@@ -5584,7 +5586,7 @@ Every control below commits through the gesture transaction of `Plans/UI_Wiring_
 | Home options menu > a named or saved layout | `cmd.workspace_layout.apply_named` | `home.more_options.apply_layout` | `workspace.layout_changed` |
 | Home options menu > Save this layout..., then Save | `cmd.workspace_layout.save_named` | `home.more_options.save_layout` | `workspace.layout_changed` |
 | Home options menu > Restore home layout | `cmd.workspace_layout.reset` | `home.more_options.reset_layout` | `workspace.layout_changed` |
-| Settings > Startup & Recovery > `general.startup.reset-home-layout` | `cmd.workspace_layout.reset` after one confirmation | `home.settings.reset_layout` | `workspace.layout_changed` |
+| Settings > General & Appearance > Startup & Recovery > Restore home layout | `cmd.workspace_layout.reset` after one confirmation (its row is `general.startup.reset-home-layout`, `Plans/Settings_System.md#SSYS-050`) | `home.settings.reset_layout` | `workspace.layout_changed` |
 | Home options menu > Run setup wizard | `ui.onboarding.start` (UCC-106, WM-041) | none | typed local action, no receipt, no event |
 
 **The chat column** (`Plans/FinalGUISpec.md#F3-637`, `Plans/UI_Command_Catalog.md#UCC-203`)
