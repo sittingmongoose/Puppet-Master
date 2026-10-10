@@ -132,13 +132,16 @@
       view.scrollTo(a - 1); view.schedule();
     };
     view.openLink = function (link, e) {
+      /* D7: a person's single click on a file reference opens the panel's preview tab (the host's default for a user
+         file open); a double click keeps it; Alt opens a new panel */
       var where = e && e.altKey ? 'panel' : 'auto';
+      var keep = e && e.detail >= 2;
       var spec;
-      if (link.kind === 'path') spec = { kind: 'editor', path: link.path, line: link.line || undefined, col: link.col || undefined, mode: 'preview', where: where };
+      if (link.kind === 'path') { spec = { kind: 'editor', path: link.path, line: link.line || undefined, col: link.col || undefined, where: where }; if (keep) spec.mode = 'keep'; }
       else if (link.kind === 'osc8' && /^file:\/\//.test(link.uri)) {
         var path = decodeURIComponent(link.uri.replace(/^file:\/\/[^/]*/, '').replace(/#.*$/, ''));
         var mm = /#L?(\d+)(?::(\d+))?$/.exec(link.uri);
-        spec = { kind: 'editor', path: path, line: mm ? +mm[1] : undefined, col: mm && mm[2] ? +mm[2] : undefined, mode: 'preview', where: where };
+        spec = { kind: 'editor', path: path, line: mm ? +mm[1] : undefined, col: mm && mm[2] ? +mm[2] : undefined, where: where }; if (keep) spec.mode = 'keep';
       }
       else spec = { kind: 'browser', url: link.uri, where: where };
       if (view.api && view.api.open) view.api.open(spec); else if (window.PM_HOME) window.PM_HOME.open(spec);

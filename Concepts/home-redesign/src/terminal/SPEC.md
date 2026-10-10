@@ -53,11 +53,17 @@ in an editor tab · Select output.
 | Text size | Ctrl+= / Ctrl+- / Ctrl+0 (Cmd+= / Cmd+- / Cmd+0) |
 | Clear | Ctrl+Shift+K (Cmd+K) |
 | Split | Ctrl+Shift+5 (Cmd+D) |
-| Links | Ctrl+click opens (Cmd+click); Ctrl+Alt+click opens in a new panel |
 
-Given back to the host while a terminal is focused: Ctrl+Tab, Ctrl+Shift+Tab, Ctrl+PageUp/PageDown, Ctrl+Shift+T,
-Ctrl+Shift+backtick, Ctrl+\\ (note: this is SIGQUIT in shells; programs that need it get it from Send signal), F6.
-Every other Ctrl+letter belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T ...).
+Given back to the host while a terminal is focused (CONTRACT.md section 9): Alt+1..9, Alt+Shift+1..9, Alt+arrows,
+Alt+Shift+arrows, Ctrl+PageUp/PageDown, Ctrl+Shift+PageUp/PageDown, Ctrl+\\ and Ctrl+Shift+\\ (Ctrl+\\ is SIGQUIT in
+shells; programs that need it get it from Send signal), Shift+Escape, F6 and Shift+F6, Ctrl+Shift+Space,
+Ctrl+Shift+backtick, Ctrl+Tab, and the browser stand-ins Alt+T, Alt+W, Alt+Shift+T and Alt+backtick. The shell loses
+zsh's Alt+digit arguments, Alt+arrow word moves (Ctrl+Left/Right still move by word) and Alt+T / Alt+W; that is the
+accepted cost. Every other Ctrl+key belongs to the shell (Ctrl+W, Ctrl+K, Ctrl+T ...).
+
+Links (D7): Ctrl+click (Cmd+click) opens a file reference in the panel's preview tab, a Ctrl+double-click keeps it,
+Ctrl+Alt+click opens it in a new panel; a plain click selects text, as in every terminal. URLs open a Browser tab.
+"Open output in an editor tab" opens a buffer, never a preview.
 
 ## 4. Fonts (D17)
 

@@ -615,12 +615,22 @@
     return false;
   };
   View.prototype.wantsKey = function (e) {
-    /* keys the shell needs even though the host has a binding for them */
+    /* the terminal keeps the shell's keys (Ctrl+W, Ctrl+K, Ctrl+T ...) and its own shortcuts, and gives the host back
+       its navigation keys (CONTRACT.md section 9) */
+    var k = e.key, ctrl = e.ctrlKey, alt = e.altKey, sh = e.shiftKey;
     if (T.keys.match(e)) return true;
-    var giveBack = (e.ctrlKey && (e.key === 'Tab' || e.key === 'PageUp' || e.key === 'PageDown')) ||
-      (e.ctrlKey && e.shiftKey && (e.key === 'T' || e.key === 't' || e.key === '`' || e.key === '~')) || e.key === 'F6' || (e.ctrlKey && e.key === '\\');
-    if (giveBack) return false;
-    if (e.ctrlKey && !e.metaKey) return true; /* Ctrl+W, Ctrl+K, Ctrl+T ... belong to the shell */
+    var digit = /^Digit[1-9]$/.test(e.code || '') || /^[1-9]$/.test(k);
+    var arrow = /^Arrow(Up|Down|Left|Right)$/.test(k);
+    var backtick = e.code === 'Backquote' || k === '`' || k === '~';
+    if (alt && !ctrl && (digit || arrow)) return false;                         /* Alt(+Shift)+1..9, Alt(+Shift)+arrows */
+    if (alt && !ctrl && (k === 't' || k === 'T' || k === 'w' || k === 'W' || backtick)) return false; /* browser stand-ins */
+    if (ctrl && (k === 'PageUp' || k === 'PageDown')) return false;              /* Ctrl(+Shift)+PgUp/PgDn */
+    if (ctrl && (k === '\\' || k === '|' || e.code === 'Backslash')) return false; /* Ctrl(+Shift)+\\ split */
+    if (sh && k === 'Escape') return false;                                      /* maximize / restore */
+    if (k === 'F6') return false;
+    if (ctrl && sh && (k === ' ' || e.code === 'Space' || backtick)) return false; /* "+" menu, new terminal */
+    if (ctrl && k === 'Tab') return false;
+    if (ctrl && !e.metaKey) return true;                                         /* every other Ctrl+key is the shell's */
     return false;
   };
   View.prototype.zoom = function (d) {
