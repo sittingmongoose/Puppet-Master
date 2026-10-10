@@ -22,7 +22,7 @@ Concepts/home-redesign/
 
 | Owner | JS global | CSS classes | Data attributes | Storage keys |
 |---|---|---|---|---|
-| Panels | `window.PM_HOME` (public API), `window.PMW` (engine internals, tests only) | `pmw-` | `data-pmw-*` | `pm.home.panels:v1:<project>`, `pm.home.settings:v1` |
+| Panels | `window.PM_HOME` (public API), `window.PMW` (engine internals, tests only) | `pmw-` | `data-pmw-*` | `pm.home.panels:v1:<project>`, `pm.home.settings:v1`, `pm.home.dashboards:v1:<project>` (custom dashboard names, section 3.1) |
 | Terminal | `window.PMT` | `pmt-` | `data-pmt-*` | under `pm.home.terminal:v1:*` if it needs its own |
 
 Nobody else's prefix is used in either tree. The hover thread owns `PMH` / `pmh-` / `data-pmh*`, Usage owns `PMU` /
@@ -57,7 +57,7 @@ lands in the right kind. One id is one tab in the whole workspace: opening an id
 | `editor` | `file:<path>`, `buffer:<n>` | `file:` also carries diff mode (`state.mode = 'diff'`), the chat's diff views use it |
 | `terminal` | `terminal:<session>` | one session per tab (D11); the terminal kind mints the session id |
 | `browser` | `browser:<n>`, `link:<host>\|<title>` | `link:` is the chat's fetched-page record |
-| `dashboard` | `dashboard:<board>` | `dashboard:home` is the pinned Home dashboard |
+| `dashboard` | `dashboard:<board>` | `dashboard:home` is the pinned Home dashboard; the built-in boards are `home`, `metrics`, `monitoring` and `agents`, and a custom dashboard is `dashboard:dash-<n>` (section 3.1) |
 | `plan` | `plan:<id>`, `plan-query`, `deep-discovery:<run>` | sticky Build / Revise / More footer |
 | `document` | `teach:`, `memory:`, `revert:`, `debug:`, `lens-source:`, `lens-effective:`, `wonderer:`, `wonder-source:`, `doc:<path>` | rules, memory, revert, debug investigation, lens source, wonderer |
 | `artifact` | `artifact:<id>`, `artifact:<id>@v<n>`, `artifact-revision:<encoded JSON>` (the chat's versioned route), and the chat's bare artifact ids passed with `kind: 'artifact'` | per-kind subtype in `state.subtype` |
@@ -151,6 +151,74 @@ The returned instance may implement any of:
 | `canClose()` | before a close; return `true`, `false` or a Promise of either (dirty editors confirm here; a running terminal says what it ends) |
 | `focus()` | the host wants keyboard focus inside the body (activation by keyboard, `open` with focus) |
 | `reveal(fields)` | an open of this tab's id while it is mounted: every kind field the open carries (`line`, `col`, `mode`, `url`, `channel`, `invocation`, `rerun`, `title` ...). It must tolerate keys it does not know. Without `reveal`, or while the tab is not mounted, the fields merge into its saved state |
+
+### 3.1 The Dashboard kind (D10, D35; `kinds/30-dashboard.js`)
+
+A dashboard tab holds one board of the Usage board engine (`PMU.boards.create`, `Concepts/usage-redesign/src/js/40-board.js`),
+except Agents, which the kind draws itself. The tab serializes `{ board }` (plus `filter` on Agents); everything on the
+board lives in the board's own store, written by the engine.
+
+- **Boards and keys (D10 round two P5).** A board's contents belong to the project the panels' layout is bound to
+  (`PMW.persist.boundId`): `widget_layout:v1:<project>:<board>`. Every board is created with `projectId` and never a
+  `storeKey`; the Usage page's own key stays `widget_layout:v1:usage`. A board's unscoped key from before
+  (`widget_layout:v1:<board>`) is adopted once, by the first project that shows that board, and removed. A project switch
+  (16-persist.js `checkProject`, seen through the `'layout'` event and the project label) calls `board.setProject(id)` on
+  every mounted board whose tab the new layout keeps, hidden ones too; a tab the new layout drops unmounts and writes
+  its last state to the project it belonged to.
+- **Custom dashboards (D35, PLN-4).** New dashboard mints `dash-<n>`: one more than the largest `n` over the open tabs,
+  the reopen list, this project's keys, the unscoped `widget_layout:v1:dash-<n>` keys not adopted yet, the names and
+  the live boards. It starts empty (P13). A custom dashboard has a name, kept per project in
+  `pm.home.dashboards:v1:<project>` = `{ schema_id: 'pm.home.dashboards.v1', names: { 'dash-<n>': name } }` (trimmed,
+  80 characters at most; "Dashboard n" is the default and is not stored). Rename dashboard... sets it and renames the
+  tab with `cmd.panel_tab.rename`; a rename of the tab sets it too, and clearing that rename clears it. The name shows on the
+  tab, in the header facts, in the Board menu's dashboards, in the "+" menu's Dashboard sub-row and in the catalog
+  (`PM_HOME.catalog`, item `dashboard:dash-<n>`; the catalog has no removal yet, so an item added for a dashboard that
+  is later deleted, or that belongs to the project left behind, stays in it until the page reloads). A project lists only
+  its own custom dashboards: the open ones, the stored ones (a closed one keeps its key while it is in the reopen list,
+  P6) and the named ones. Delete dashboard... (custom only, confirmed) closes the tab, drops it from the reopen list and
+  forgets it. Home, Metrics, Monitoring and Agents can be reset but never renamed as a board or deleted.
+- **Forgetting.** `PMW.dashboard.forget(board, project?)` is the one place that drops a board's stores:
+  `PMU.boards.forgetKey(board, project)` (the key and its `:quarantine`) and a custom dashboard's name. Delete
+  dashboard and P6 (a custom dashboard leaving the reopen list while not open) go through it.
+- **Header row.** Facts: the name (strong); the Live mark while Live readings are on and the board holds a Usage widget
+  (the Usage page's indicator in each look's words: Live, `[LIVE]`, `LIVE`; one pulse per beat the board patches, from
+  the board's `'beat'` event through `PMU.live.pulse`, none between beats, none under Reduced Motion); "Demo time HH:MM"
+  (`PMU.boards.hour.label()`) while the demo hour runs, read on paint, on each beat and every 2 s while it plays and the
+  tab is on screen; "N widgets" (or "No widgets"); the range, and the scope when it is not All. Actions: Add widget,
+  Board, Maximize.
+- **Add widget.** Every widget the board can be given (`board.catalog()`), one section per Usage room in room order,
+  then one section per other widget source (P3: `PMU.boards.sources`; its widgets have no home room and a prefixed id
+  such as `orch:<id>`) under the source's label; a widget on the board is checked and disabled. A pick is `board.add(id)`
+  (`cmd.widget.add`).
+- **The Board menu, in order.** Dashboards: Home, Metrics, Monitoring, Agents, each custom dashboard of this project by
+  name (its widget count as the second line), New dashboard; the current one is checked and has focus. This dashboard:
+  Range, Scope, Start from, Save as preset..., Tidy, Reset widgets. Live: Live readings (checked while on; one switch
+  for the whole page, the Usage page's own, `PMU.boards.live.set(on)`), then Play the next hour
+  (`PMU.boards.hour.play()`; disabled with a reason where `PMU.boards.hour.available()` is false) or, while the hour
+  runs, Back to now (`PMU.boards.hour.back()`). Then, on a custom dashboard only, after a hairline: Rename dashboard...
+  and Delete dashboard.... Agents has Dashboards and Show (its filters).
+- **Start from (P4).** A submenu of `board.sets()` in four groups: This dashboard (`default`), Dashboard starter
+  (`host:dashboard`), Usage rooms (the 13 `room:<id>` sets in room order), Your presets (`user:<id>`); each row its
+  label, its detail as the second line (without the words its group already says; a preset adds the day it was saved),
+  the active set checked and focused. With no presets, Your presets holds "Save this dashboard as a preset..."; with
+  some, a last row "Rename or delete presets" opens them (each: Start from this preset, Rename preset..., Delete
+  preset... with a confirm). A filter field appears once there are more than three presets. A pick is
+  `board.startFrom(id)`: one `cmd.widget.reset_layout { scope: 'room', room: <board>, set_id: <id> }`. `null` (a set that
+  is gone) says so; `dispatch_accepted: false` is left to the engine's own notice. Otherwise the board was snapshotted
+  first (`PMW.dashboard.snapshot([board])`) and an Undo notice offers to put it back (`PMW.dashboard.restore`) for 8 s,
+  held while the pointer or focus is on it, ended by any later change to the widgets (not by the preset hold's own
+  resizes) and by Escape. Reset widgets (`board.reset('room')`) goes back to the board's own default set.
+- **Presets (P4).** Per user, shown on every dashboard: `PMU.boards.presets` (store `widget_presets:v1`). Save as
+  preset... asks for a name in the package's prompt (`PMW.menu.prompt`, default the dashboard's name, made unique);
+  rename uses the same prompt; delete is confirmed. Dashboards that started from a deleted preset keep their widgets.
+- **An empty board** (count 0) shows the kind's invitation over the board, which stays laid out under it: a sketch of a
+  board, "<Name> is empty", what to do, and Add widget and Start from... buttons; focus goes to its Add widget.
+- **`PMW.dashboard`**: `reveal(board)`, `reset(board)`, `holder()`, `boards()` (the built-in ids, then this project's
+  custom ones), `board(id)`, `name(board)`, `rename(board, name)`, `project()`, `key(board)`, `forget(board, project?)`,
+  `snapshot(ids?)` (each listed board flushed, then its own key read: `b.STORE_KEY` for a mounted board, this project's
+  key otherwise) and `restore(snap)` (each board's own key written, `null` removes it, mounted boards reloaded; an
+  envelope saved in another project is written as this project's). The tour's snapshots and the named layouts' boards
+  (P6) use these two, so both are per project.
 
 ## 4. The per-tab host API (`api` in `mount`)
 
@@ -374,7 +442,7 @@ Kinds join through `plus` (section 3). Built order:
 | (10) | SSH hosts (only when an entry has `group: 'ssh'`) | | one row with a submenu, right under Terminal: one row per host (label, detail as the second line), the body opens it here, the trailing cell in a new panel (D39) |
 | 20 | Browser | Ctrl+Shift+B | |
 | 30 | File... | Ctrl+P | three recent files inline, each clickable |
-| 40 | Dashboard | | |
+| 40 | Dashboard | | Home, Metrics, Monitoring, Agents, this project's custom dashboards by name, New dashboard (section 3.1) |
 | 50 | Plan or document... | | |
 | 60 | Artifact... | | |
 | 70 | Output, Problems, Ports, Debug Console | | one row with a submenu |
@@ -600,3 +668,8 @@ root. A kind never appends its own overlay to `document.body`.
   capped. Section 6.1: the chat column's API, the rail's Chat entry toggling the column on every page (D40), and a
   popped-out chat starting back in its column after a restart (D32). Section 7: the SSH hosts row, the filter finding
   hosts, the launcher's inline sub-rows.
+  Same version, D10 round two (dashboards, D35/PLN-4): new section 3.1, the Dashboard kind: board keys per project
+  (`widget_layout:v1:<project>:<board>`, adopted once from the unscoped key, re-keyed on a project switch), custom
+  dashboards made, named per project (`pm.home.dashboards:v1:<project>`) and deleted, Start from with `set_id`, saved
+  presets, Live readings and Play the next hour, other widget sources in Add widget, the empty board, and the Board
+  menu's rows in order; sections 2 and 7 name the custom dashboards.
