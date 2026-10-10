@@ -408,8 +408,8 @@
       { id: 'find', label: 'Find', icon: 'search', shortcut: T.keys.label('find'), run: function () { self.openFind(); } },
       { id: 'split', label: 'Split', icon: 'splitRight', shortcut: T.keys.label('split'), run: function () { self.split(); } },
       { id: 'max', label: api && api.isMaximized && api.isMaximized() ? 'Restore' : 'Maximize', icon: api && api.isMaximized && api.isMaximized() ? 'restore' : 'maximize', run: function () { self.toggleMaximize(); } },
-      /* through api.menu (the contract's item shape: sub menus, shortcuts); the row's own `menu` takes raw rows */
-      { id: 'more', label: 'More', icon: 'more', run: function (e, b) { self.menu(self.moreMenu(), b || e, { align: 'end', width: 260 }); } }
+      /* the row's `menu` takes the contract's item shape (CONTRACT section 5) and toggles on its button */
+      { id: 'more', label: 'More', icon: 'more', menu: function () { return self.moreMenu(); } }
     ];
   };
   View.prototype._updateHeader = function () {
@@ -644,8 +644,9 @@
       if (self.handleShortcut(e)) { e.preventDefault(); e.stopPropagation(); return; }
       var bytes = T.Input.encodeKey(e, self.term, self.opts);
       if (bytes === null) return;
-      /* printable keys without modifiers come through 'input' so IME and dead keys work */
-      if (bytes.length === 1 && bytes >= ' ' && !e.ctrlKey && !e.altKey && !e.metaKey) return;
+      /* printable keys without modifiers come through 'input' so IME and dead keys work (DEL, Backspace's byte, sorts
+         above the space but is not printable: the empty textarea fires no input event for it) */
+      if (bytes.length === 1 && bytes >= ' ' && bytes !== '\x7f' && !e.ctrlKey && !e.altKey && !e.metaKey) return;
       e.preventDefault();
       self.type(bytes);
     });
