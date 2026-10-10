@@ -1690,6 +1690,16 @@
          that show nowhere are counted (head "+N", or "N more facts"), never dropped silently */
       var below = side && !factsRoom && m.facts && m.facts.length, belowLay = null, belowN = 0, belowMore = false;
       if (side) { mixOk = true; ringPx = heroRing ? Math.round(Math.max(120, Math.min(168, bh - 8, ctx.tier.bw * 0.36))) : C.w(ctx, 'm') ? 96 : 68; avail = bh - 18; }
+      /* (lane c-presets, agent 5) the side ring gives way to the longest family name: in Retro at 287 px (the Compact
+         preset on a 700 px board) "Instructio/ns" broke beside the 96 px ring and ran into the Tools row. The legend row:
+         the 10 px swatch, 7 px gaps, the name, the count (and its share where shown); the ring's 16 px gap */
+      if (side && !heroRing) {
+        var kLeg = PMU.theme.look().nier || PMU.theme.look().family === 'retro' ? 1.12 : 1, legNeed = 0;
+        m.segments.forEach(function (s) {
+          legNeed = Math.max(legNeed, 10 + 7 + C.wrapW(s.name, 12.5) * kLeg + 7 + C.wrapW(PMU.fmt.tok(s.tokens), 12.5, 600) * kLeg + (oneCol && ctx.tier.bw >= 300 ? 7 + 30 : 0));
+        });
+        while (ringPx > 56 && ctx.tier.bw - ringPx - 16 < legNeed) ringPx = Math.max(56, ringPx - 12);
+      }
       else if (bh - 84 - 10 - 18 >= needRows * LEG) { mixOk = true; ringPx = 84; avail = bh - 84 - 10 - 18; }
       else { mixOk = false; ringPx = 68; avail = bh - 68 - 10; }
       if (below) {
