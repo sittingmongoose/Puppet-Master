@@ -74,7 +74,7 @@
       glow: { on: on(gw, D.glow.on), strength: clamp(num(gw.strength, D.glow.strength), L.glowStrength[0], L.glowStrength[1]),
         radius: clamp(num(gw.radius, D.glow.radius), L.glowRadius[0], L.glowRadius[1]) },
       curvature: { on: on(cv, D.curvature.on), amount: clamp(num(cv.amount, D.curvature.amount), L.curvature[0], L.curvature[1]) },
-      bezel: { on: on(bz, D.bezel.on) },
+      bezel: { on: on(bz, D.bezel.on), light: !!bz.light },
       vignette: { on: on(vg, D.vignette.on), strength: clamp(num(vg.strength, D.vignette.strength), L.vignette[0], L.vignette[1]) },
       burnIn: { on: on(bi, D.burnIn.on), persistMs: clamp(num(bi.persistMs, D.burnIn.persistMs), L.persistMs[0], L.persistMs[1]) },
       noise: { on: on(nz, D.noise.on), amount: clamp(num(nz.amount, D.noise.amount), L.noise[0], L.noise[1]) },
@@ -214,7 +214,7 @@
   var FS_FINAL = PREC + [
     'uniform sampler2D uSrc; uniform sampler2D uAcc; uniform sampler2D uGlow;',
     'uniform vec2 uOut; uniform vec2 uSrcPx; uniform float uDpr;',
-    'uniform float uCurv; uniform vec2 uInset; uniform float uRadius; uniform float uBezel; uniform float uBezelPx;',
+    'uniform float uCurv; uniform vec2 uInset; uniform float uRadius; uniform float uBezel; uniform float uBezelPx; uniform float uBezelLight;',
     'uniform vec2 uScan; uniform float uGlowK; uniform float uBurnK; uniform float uVig;',
     'uniform vec2 uNoise; uniform float uGain; uniform vec2 uDeg; uniform float uDim;',
     'vec2 warp(vec2 p) { vec2 c = p - 0.5; float d = dot(c, c) * uCurv; return p + c * (1.0 + d) * d; }',
@@ -222,18 +222,30 @@
     'float lin1(float c) { return c <= 0.04045 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4); }',
     'float srgb1(float c) { return c <= 0.0031308 ? c * 12.92 : 1.055 * pow(c, 1.0 / 2.4) - 0.055; }',
     'float luma(vec3 c) { return dot(c, vec3(0.2126, 0.7152, 0.0722)); }',
+    /* The case: moulded plastic (charcoal, or warm beige on a light scheme). The inner 45 % of the bezel is a chamfer
+       sloping down to the tube, lit from above: its lower lip catches the light, its upper lip falls into shadow. The
+       outer edge is rounded over, the plastic has a fine static grain, the screen's own light falls on the chamfer,
+       and the glass sits in a thin contact shadow. Nothing here moves. */
     'vec3 bezel(vec2 uv, vec2 s, float dist) {',
     '  float k = clamp(dist / max(uBezelPx, 1.0), 0.0, 1.0);',
-    '  vec3 base = mix(vec3(0.050, 0.049, 0.046), vec3(0.118, 0.114, 0.106), uv.y);',
+    '  vec3 base = mix(vec3(0.118, 0.113, 0.104), vec3(0.792, 0.760, 0.690), uBezelLight);',
+    '  vec3 col = base * (0.90 + 0.16 * uv.y);',
+    '  vec2 n = normalize((s - 0.5) * uSrcPx + vec2(0.0001));',
+    '  float ch = 1.0 - smoothstep(0.0, 0.45, k);',
+    '  float lit = dot(-n, normalize(vec2(-0.3, 1.0)));',
+    '  col *= 1.0 + ch * lit * mix(1.10, 0.30, uBezelLight);',
+    '  col += ch * max(lit, 0.0) * mix(0.050, 0.045, uBezelLight);',
+    '  vec2 e = min(uv, 1.0 - uv) * uOut / uDpr;',
+    '  float over = 1.0 - smoothstep(0.0, 3.5, min(e.x, e.y));',
+    '  col += over * (uv.y > 0.5 ? mix(0.05, 0.08, uBezelLight) : -mix(0.02, 0.10, uBezelLight));',
+    '  col *= 0.982 + 0.036 * hash12(floor(gl_FragCoord.xy / uDpr));',
     '  vec2 r = s;',
     '  r = mix(r, -r, step(r, vec2(0.0)));',
     '  r = mix(r, 2.0 - r, step(vec2(1.0), r));',
     '  vec3 refl = texture2D(uSrc, r).rgb * 0.10;',
     '  if (uGlowK > 0.0) refl += texture2D(uGlow, r).rgb * 0.9;',
-    '  vec3 col = base + refl * (1.0 - k) * (1.0 - k) * 0.55;',
-    '  col *= 1.0 - 0.55 * (1.0 - smoothstep(0.0, 2.5 * uDpr, dist));',
-    '  float rim = smoothstep(uBezelPx - 1.5 * uDpr, uBezelPx, dist);',
-    '  col += rim * 0.035;',
+    '  col += refl * ch * ch * mix(0.65, 0.18, uBezelLight);',
+    '  col *= 1.0 - mix(0.65, 0.35, uBezelLight) * (1.0 - smoothstep(0.0, 3.0 * uDpr, dist));',
     '  return col;',
     '}',
     'void main() {',
@@ -294,6 +306,18 @@
     '    vec3 st = c.rgb / max(c.a, 0.0001);',
     '    st = vec3(srgb1(lin1(st.r) * uGain), srgb1(lin1(st.g) * uGain), srgb1(lin1(st.b) * uGain));',
     '    c.rgb = st * c.a;',
+    '  }',
+    /* the tube's glass, under the case: it darkens into the case at its edge (depth), and a broad soft highlight
+       from the same light as the case sits up and to the left, with a faint glare along the top. Static. */
+    '  if (uBezel > 0.0) {',
+    '    float depth = smoothstep(0.0, 4.0 * uDpr, -dist);',
+    '    c.rgb *= mix(0.80, 0.90, uBezelLight) + mix(0.20, 0.10, uBezelLight) * depth;',
+    '    vec2 hp = (s - vec2(0.24, 0.80)) * vec2(1.0, 1.7);',
+    '    float spec = exp(-dot(hp, hp) * 6.0) * mix(0.11, 0.05, uBezelLight);',
+    '    float arc = s.y - 0.95 + 0.30 * (s.x - 0.5) * (s.x - 0.5);',
+    '    spec += (1.0 - smoothstep(0.0, 0.035, abs(arc))) * smoothstep(0.08, 0.35, s.x) * (1.0 - smoothstep(0.65, 0.92, s.x)) * mix(0.06, 0.025, uBezelLight);',
+    '    c.rgb += spec * (vec3(c.a) - c.rgb) + spec * (1.0 - c.a);',
+    '    c.a = max(c.a, spec);',
     '  }',
     '  c.rgb = min(c.rgb * (1.0 - uDim), vec3(c.a));',
     '  vec4 outside = vec4(0.0, 0.0, 0.0, 1.0);',
@@ -575,7 +599,7 @@
     this._bind(2, this.glowValid ? this.targets.glowA.tex : null, pf, 'uGlow');
     gl.uniform2f(u.uOut, W, H); gl.uniform2f(u.uSrcPx, W, H); gl.uniform1f(u.uDpr, this.dpr);
     gl.uniform1f(u.uCurv, g.curv); gl.uniform2f(u.uInset, g.ix, g.iy); gl.uniform1f(u.uRadius, g.radius);
-    gl.uniform1f(u.uBezel, p.bezel.on ? 1 : 0); gl.uniform1f(u.uBezelPx, g.bezelPx);
+    gl.uniform1f(u.uBezel, p.bezel.on ? 1 : 0); gl.uniform1f(u.uBezelPx, g.bezelPx); gl.uniform1f(u.uBezelLight, p.bezel.light ? 1 : 0);
     gl.uniform2f(u.uScan, p.scanlines.on ? p.scanlines.strength : 0, p.scanlines.period);
     gl.uniform1f(u.uGlowK, this.glowValid ? p.glow.strength * GLOW_GAIN : 0);
     gl.uniform1f(u.uBurnK, burnK);

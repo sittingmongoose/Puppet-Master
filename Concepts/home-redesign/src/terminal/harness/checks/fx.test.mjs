@@ -63,7 +63,7 @@ test('defaults are the Retro dark defaults from the brief', () => {
   assert.deepEqual(d.scanlines, { on: true, strength: 0.30, period: 3 });
   assert.deepEqual(d.glow, { on: true, strength: 0.45, radius: 2.5 });
   assert.deepEqual(d.curvature, { on: false, amount: 0.08 });
-  assert.deepEqual(d.bezel, { on: false });
+  assert.deepEqual(d.bezel, { on: false, light: false });
   assert.deepEqual(d.vignette, { on: false, strength: 0.25 });
   assert.deepEqual(d.burnIn, { on: false, persistMs: 450 });
   assert.deepEqual(d.noise, { on: false, amount: 0.035 });

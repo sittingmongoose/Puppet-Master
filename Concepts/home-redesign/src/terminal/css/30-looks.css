@@ -46,6 +46,26 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="retro"] .pmt-progress::before { background: repeating-linear-gradient(90deg, var(--pmt-fg) 0 6px, transparent 6px 8px); transition: none; }
 .pmt-root[data-pmt-look="friendly"] .pmt-progress { height: 3px; }
 
+/* ---- grounds (D23 polish) ----
+   Friendly: the ground (42-appearance.js) is a stage lit from above; here it sits a little recessed under the header,
+   with a faint paper grain. Glass: the ground reads the shared look tokens (--pmw-surface, which Glass maps to its
+   reading surface), so an app-wide Glass restyle reaches the terminal; --pmt-glass-veil is the hook. Static. */
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::after {
+  content: ""; position: absolute; inset: 0;
+  box-shadow: inset 0 16px 20px -16px rgb(76 56 110 / .34), inset 0 -12px 16px -16px rgb(76 56 110 / .16);
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::after {
+  box-shadow: inset 0 16px 20px -16px rgb(0 0 0 / .7), inset 0 -12px 16px -16px rgb(0 0 0 / .4);
+}
+.pmt-root[data-pmt-look="friendly"] .pmt-bglayer.pmt-bg-gradient::before {
+  content: ""; position: absolute; inset: 0; opacity: .045; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.30 0 0 0 0 0.22 0 0 0 0 0.40 0 0 0 1.6 -0.55'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url%28%23n%29'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+}
+.pmt-root[data-pmt-look="friendly"][data-pmt-scheme="dark"] .pmt-bglayer.pmt-bg-gradient::before { mix-blend-mode: screen; opacity: .05; }
+.pmt-root[data-pmt-look="glass"] { --pmt-glass-veil: color-mix(in srgb, var(--pmw-surface, transparent) 28%, transparent); }
+.pmt-root[data-pmt-look="glass"] .pmt-bglayer.pmt-bg-theme { background: var(--pmt-glass-veil); }
+
 /* ---- chrome shapes per look ---- */
 .pmt-root[data-pmt-look="friendly"] { --pmt-radius: 8px; }
 .pmt-root[data-pmt-look="glass"] { --pmt-radius: 10px; }
@@ -76,10 +96,12 @@ html[data-theme="glass-light"] .pmt-root[data-pmt-focusfx="rim"].pmt-focused .pm
 .pmt-root[data-pmt-look="retro"] .pmt-agentrow .pmt-agent-sq { stroke: currentColor; }
 .pmt-root[data-pmt-look="retro"] .pmt-notice { border-radius: 0; }
 
-/* ---- Reduced Motion: no animation anywhere in the terminal ---- */
-html[data-motion="reduced"] .pmt-root *, html[data-motion="reduced"] .pmt-root *::before, html[data-motion="reduced"] .pmt-root *::after { animation: none !important; transition: none !important; }
+/* ---- Reduced Motion: nothing moves in the terminal. An element whose calm version is a deliberate cross-fade carries
+   .pmt-calm (60-motion.css gives it that fade); everything else is still. ---- */
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm), html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::before,
+html[data-motion="reduced"] .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 html[data-motion="reduced"] .pmt-root.pmt-bell .pmt-body { box-shadow: inset 0 0 0 1px var(--pmw-warn, var(--accent-warning)); }
 html[data-motion="reduced"] .pmt-progress[data-pmt-state="indeterminate"]::before { width: 100%; left: 0; opacity: .5; }
 @media (prefers-reduced-motion: reduce) {
-  .pmt-root *, .pmt-root *::before, .pmt-root *::after { animation: none !important; transition: none !important; }
+  .pmt-root :not(.pmt-calm), .pmt-root :not(.pmt-calm)::before, .pmt-root :not(.pmt-calm)::after { animation: none !important; transition: none !important; }
 }

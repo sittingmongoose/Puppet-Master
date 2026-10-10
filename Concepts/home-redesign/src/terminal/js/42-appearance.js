@@ -260,7 +260,13 @@
 
     /* background */
     var bg = { kind: bgKind };
-    if (f('background') === 'follow' && lk === 'friendly') bg = { kind: 'gradient', css: mode === 'dark' ? 'linear-gradient(180deg, ' + C.toHex(theme.bg) + ' 0%, ' + C.toHex(C.mix(theme.bg, C.hex('#3b3550'), 0.35)) + ' 100%)' : 'linear-gradient(180deg, ' + C.toHex(theme.bg) + ' 0%, ' + C.toHex(C.mix(theme.bg, C.hex('#f6e9f2'), 0.6)) + ' 100%)', soft: true };
+    if (f('background') === 'follow' && lk === 'friendly') {
+      /* Friendly's stage: a soft light from above over a gentle fall to the look's tint; 30-looks.css adds the recess
+         under the header and the paper grain */
+      var top = C.toHex(theme.bg), foot = C.toHex(C.mix(theme.bg, C.hex(mode === 'dark' ? '#3b3550' : '#f6e9f2'), mode === 'dark' ? 0.35 : 0.6));
+      bg = { kind: 'gradient', soft: true, css: 'radial-gradient(120% 70% at 50% -8%, ' + (mode === 'dark' ? 'rgb(255 236 250 / .10)' : 'rgb(255 255 255 / .8)') +
+        ', transparent 62%), linear-gradient(180deg, ' + top + ' 0%, ' + foot + ' 100%)' };
+    }
     else if (bgKind === 'solid') bg.color = f('bgColor') || C.toHex(theme.bg);
     else if (bgKind === 'gradient') bg.css = GRADIENTS[f('bgGradient')] || GRADIENTS.dusk;
     else if (bgKind === 'image') { bg.url = T.Appearance.imageUrl(f('bgImage'), f('bgImageData'), f('bgBlur')); bg.dim = f('bgDim'); }
@@ -285,7 +291,7 @@
       glow: { on: !fxOff && gl('glow', retroDark && !!L.glow), strength: f('glowStrength'), radius: 2.5 },
       crt: crtOn,
       curvature: { on: crtOn, amount: f('curvature') },
-      bezel: { on: crtOn }, vignette: { on: crtOn, strength: 0.25 },
+      bezel: { on: crtOn, light: mode === 'light' }, vignette: { on: crtOn, strength: mode === 'light' ? 0.10 : 0.25 },
       burnIn: { on: crtOn && f('burnIn') && !reduced, persistMs: 450 },
       noise: { on: crtOn && f('noise') > 0 && !reduced, amount: f('noise') },
       flicker: { on: !fxOff && !follow && !!f('flicker') && !reduced, amount: Math.min(0.03, f('flickerAmount')) },
